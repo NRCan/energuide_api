@@ -1,0 +1,27 @@
+{
+  "name": "nrcan_api",
+  "version": "1.0.0",
+  "description": "The NRCAN Engerguide API",
+  "main": "index.js",
+  "author": "Mike Williamson <mike.williamson@tbs-sct.gc.ca>",
+  "license": "MIT",
+  "scripts": {
+    "test": "jest",
+    "start": "node dist/index.js",
+    "build": "babel src --copy-files --out-dir dist"
+  },
+  "dependencies": {
+    "apollo-server-express": "^1.2.0",
+    "express": "^4.16.2",
+    "graphql": "^0.11.7"
+  },
+  "devDependencies": {
+    "babel-core": "^6.26.0",
+    "babel-jest": "^21.2.0",
+    "babel-preset-env": "^1.6.1",
+    "graphql-tools": "^2.8.0",
+    "jest": "^21.2.1",
+    "regenerator-runtime": "^0.11.0",
+    "supertest": "^3.0.0"
+  }
+}
