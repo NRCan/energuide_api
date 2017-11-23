@@ -1,6 +1,14 @@
 const typeDefs = `
   type Query {
-    hello: String
+    evaluations: [Evaluation]
+  }
+
+  type Evaluation {
+    yearBuilt: String
+    floorArea: String
+    footprint: String
+    furnaceType: String
+    furnaceFuel: String
   }
 `
 
