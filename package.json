@@ -51,7 +51,7 @@
   },
   "lint-staged": {
     "*.{js}": [
-      "prettier --trailing-comma=es5 --no-semi --write",
+      "prettier --write",
       "yarn lint",
       "git add"
     ]
