@@ -7,7 +7,7 @@ import resolvers from './resolvers'
 
 const schema = makeExecutableSchema({ typeDefs, resolvers })
 
-function Server(context = {}) {
+function Server(context = {}, ...middlewares) {
   const server = express()
   server.use(
     '/graphql',
@@ -15,6 +15,8 @@ function Server(context = {}) {
     graphqlExpress(request => ({
       schema,
       context,
+      tracing: true,
+      cacheControl: true,
     })),
   )
   server.get('/graphiql', graphiqlExpress({ endpointURL: '/graphql' }))
