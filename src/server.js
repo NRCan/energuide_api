@@ -7,14 +7,17 @@ import resolvers from './resolvers'
 
 const schema = makeExecutableSchema({ typeDefs, resolvers })
 
-function Server(context = {}) {
+function Server(context = {}, ...middlewares) {
   const server = express()
+  middlewares.forEach(middleware => server.use(middleware))
   server.use(
     '/graphql',
     bodyParser.json(),
     graphqlExpress(request => ({
       schema,
       context,
+      tracing: true,
+      cacheControl: true,
     })),
   )
   server.get('/graphiql', graphiqlExpress({ endpointURL: '/graphql' }))
