@@ -6,15 +6,13 @@ const engine = new Engine({
   engineConfig: {
     apiKey: process.env.NRCAN_ENGINE_API_KEY,
     logging: {
-      level: 'DEBUG', // Engine Proxy logging level. DEBUG, INFO, WARN or ERROR
+      level: 'ERROR',
     },
   },
   graphqlPort: 3000,
-  endpoint: '/graphql', // GraphQL endpoint suffix - '/graphql' by default
-  dumpTraffic: true, // Debug configuration that logs traffic between Proxy and GraphQL server
+  endpoint: '/graphql',
   frontend: {
     extensions: {
-      // Configuration for GraphQL response extensions
       strip: ['cacheControl', 'tracing'], // Extensions to remove from responses served to clients
     },
   },

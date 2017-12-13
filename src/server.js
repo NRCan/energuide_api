@@ -9,6 +9,7 @@ const schema = makeExecutableSchema({ typeDefs, resolvers })
 
 function Server(context = {}, ...middlewares) {
   const server = express()
+  middlewares.forEach(middleware => server.use(middleware))
   server.use(
     '/graphql',
     bodyParser.json(),
