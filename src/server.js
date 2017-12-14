@@ -11,8 +11,9 @@ i18n.load({
   en: unpackCatalog(require('./locale/en/messages.js')),
 })
 
-function Server(context = {}) {
+function Server(context = {}, ...middlewares) {
   const server = express()
+  middlewares.forEach(middleware => server.use(middleware))
   server
   .use(
     requestLanguage({
@@ -27,6 +28,8 @@ function Server(context = {}) {
       return {
         schema: new Schema(i18n),
         context,
+        tracing: true,
+        cacheControl: true,
       }
     }),
   )

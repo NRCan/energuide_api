@@ -9,11 +9,22 @@
     "test": "jest",
     "start": "node dist/index.js",
     "build": "babel src --copy-files --out-dir dist",
-    "dockerize": "yarn build && docker build -t cdssnc/nrcan_api ."
+    "dockerize": "yarn build && docker build -t cdssnc/nrcan_api .",
+    "precommit": "lint-staged",
+    "lint": "eslint src/**, test/**",
+    "build": "babel src --copy-files --out-dir dist"
   },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/cds-snc/nrcan_api.git"
+  },
+  "bugs": {
+    "url": "https://github.com/cds-snc/nrcan_api/issues"
+  },
+  "homepage": "https://github.com/cds-snc/nrcan_api",
   "dependencies": {
+    "apollo-engine": "^0.6.1",
     "apollo-server-express": "^1.2.0",
-    "babel-plugin-transform-runtime": "^6.23.0",
     "express": "^4.16.2",
     "express-request-language": "^1.1.15",
     "graphql": "^0.11.7",
@@ -23,13 +34,34 @@
   "devDependencies": {
     "babel-cli": "^6.26.0",
     "babel-core": "^6.26.0",
+    "babel-eslint": "^8.0.2",
     "babel-jest": "^21.2.0",
     "babel-plugin-lingui-transform-js": "^1.0.6",
+    "babel-plugin-transform-runtime": "^6.23.0",
     "babel-preset-env": "^1.6.1",
+    "eslint": "^4.10.0",
+    "eslint-config-prettier": "^2.7.0",
+    "eslint-config-standard": "^10.2.1",
+    "eslint-plugin-import": "^2.8.0",
+    "eslint-plugin-jest": "^21.3.2",
+    "eslint-plugin-node": "^5.2.1",
+    "eslint-plugin-prettier": "^2.3.1",
+    "eslint-plugin-promise": "^3.6.0",
+    "eslint-plugin-standard": "^3.0.1",
     "graphql-tools": "^2.8.0",
+    "husky": "^0.14.3",
     "jest": "^21.2.1",
+    "lint-staged": "^5.0.0",
+    "prettier": "^1.8.1",
     "regenerator-runtime": "^0.11.0",
     "supertest": "^3.0.0"
+  },
+  "lint-staged": {
+    "*.{js}": [
+      "prettier --write",
+      "yarn lint",
+      "git add"
+    ]
   },
   "jest": {
     "verbose": true
