@@ -15,13 +15,16 @@
     "apollo-server-express": "^1.2.0",
     "babel-plugin-transform-runtime": "^6.23.0",
     "express": "^4.16.2",
+    "express-request-language": "^1.1.15",
     "graphql": "^0.11.7",
+    "lingui-i18n": "^1.3.3",
     "mssql": "^4.1.0"
   },
   "devDependencies": {
     "babel-cli": "^6.26.0",
     "babel-core": "^6.26.0",
     "babel-jest": "^21.2.0",
+    "babel-plugin-lingui-transform-js": "^1.0.6",
     "babel-preset-env": "^1.6.1",
     "graphql-tools": "^2.8.0",
     "jest": "^21.2.1",
@@ -30,5 +33,11 @@
   },
   "jest": {
     "verbose": true
+  },
+  "lingui": {
+    "localeDir": "<rootDir>/src/locale",
+    "srcPathDirs": [
+      "<rootDir>/src"
+    ]
   }
 }

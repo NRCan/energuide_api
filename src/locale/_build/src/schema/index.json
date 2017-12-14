@@ -1,0 +1,50 @@
+{
+  "This is a description of evaluations": {
+    "origin": [
+      [
+        "src/schema/index.js",
+        11
+      ]
+    ]
+  },
+  "Year house was built in": {
+    "origin": [
+      [
+        "src/schema/index.js",
+        13
+      ]
+    ]
+  },
+  "Square footage of home": {
+    "origin": [
+      [
+        "src/schema/index.js",
+        15
+      ]
+    ]
+  },
+  "Footprint": {
+    "origin": [
+      [
+        "src/schema/index.js",
+        17
+      ]
+    ]
+  },
+  "Type of furnace in home": {
+    "origin": [
+      [
+        "src/schema/index.js",
+        19
+      ]
+    ]
+  },
+  "Type of fuel that furnace runs on": {
+    "origin": [
+      [
+        "src/schema/index.js",
+        21
+      ]
+    ]
+  }
+}

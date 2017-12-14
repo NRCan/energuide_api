@@ -1,0 +1,56 @@
+{
+  "This is a description of evaluations": {
+    "translation": "Ceci est une description des évaluations",
+    "origin": [
+      [
+        "src/schema/index.js",
+        11
+      ]
+    ]
+  },
+  "Year house was built in": {
+    "translation": "Année de construction de la maison",
+    "origin": [
+      [
+        "src/schema/index.js",
+        13
+      ]
+    ]
+  },
+  "Square footage of home": {
+    "translation": "La superficie de la maison",
+    "origin": [
+      [
+        "src/schema/index.js",
+        15
+      ]
+    ]
+  },
+  "Footprint": {
+    "translation": "Empreinte",
+    "origin": [
+      [
+        "src/schema/index.js",
+        17
+      ]
+    ]
+  },
+  "Type of furnace in home": {
+    "translation": "Type de four à la maison",
+    "origin": [
+      [
+        "src/schema/index.js",
+        19
+      ]
+    ]
+  },
+  "Type of fuel that furnace runs on": {
+    "translation": "Type de combustible sur lequel le four fonctionne",
+    "origin": [
+      [
+        "src/schema/index.js",
+        21
+      ]
+    ]
+  }
+}
