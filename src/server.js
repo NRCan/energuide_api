@@ -1,5 +1,6 @@
 import express from 'express'
 import bodyParser from 'body-parser'
+import cors from 'cors'
 import { graphqlExpress, graphiqlExpress } from 'apollo-server-express'
 import { makeExecutableSchema } from 'graphql-tools'
 import Schema from './schema'
@@ -20,6 +21,7 @@ function Server(context = {}, ...middlewares) {
       languages: i18n.availableLanguages.sort(),
     }),
   )
+  .use(cors())
   .use(
     '/graphql',
     bodyParser.json(),

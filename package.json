@@ -11,8 +11,7 @@
     "build": "babel src --copy-files --out-dir dist",
     "dockerize": "yarn build && docker build -t cdssnc/nrcan_api .",
     "precommit": "lint-staged",
-    "lint": "eslint src/**, test/**",
-    "build": "babel src --copy-files --out-dir dist"
+    "lint": "eslint src/**, test/**"
   },
   "repository": {
     "type": "git",
@@ -25,6 +24,7 @@
   "dependencies": {
     "apollo-engine": "^0.6.1",
     "apollo-server-express": "^1.2.0",
+    "cors": "^2.8.4",
     "express": "^4.16.2",
     "express-request-language": "^1.1.15",
     "graphql": "^0.11.7",

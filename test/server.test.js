@@ -71,6 +71,28 @@ describe('Server', () => {
     expect(response.status).toEqual(200)
   })
 
+  it('has Cross Origin Resource Sharing enabled for all domains', async () => {
+    let server = Server()
+
+    let response = await request(server)
+      .post('/graphql')
+      .set('Content-Type', 'application/json; charset=utf-8')
+      .send({
+        query: `{ 
+        __schema {
+          queryType { 
+            fields {
+              name
+            }
+          }
+        }
+      }`,
+      })
+
+    let { headers } = response
+    expect(headers['access-control-allow-origin']).toEqual('*')
+  })
+
   it('returns evaluations with nicely camel-cased names', async () => {
     let server = new Server({
       sql,
