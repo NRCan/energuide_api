@@ -1,22 +1,16 @@
 const resolvers = {
   Query: {
-    evaluations: async (root, args, { sql }) => {
-      let results
-      try {
-        results = await sql.query`select * from new_evaluationBase;`
-      } catch (err) {
-        throw new Error(err)
-      }
-
-      return results.recordset
+    evaluations: async (root, args, { client }) => {
+      let results = await client.find()
+      return results.toArray()
     },
   },
   Evaluation: {
-    yearBuilt: root => root.new_YEARBUILT,
-    floorArea: root => root.new_FLOORAREA,
-    footprint: root => root.new_FOOTPRINT,
-    furnaceType: root => root.new_FURNACETYPE,
-    furnaceFuel: root => root.new_FURNACEFUEL,
+    yearBuilt: root => root.YEARBUILT,
+    floorArea: root => root.FLOORAREA,
+    footprint: root => root.FOOTPRINT,
+    furnaceType: root => root.FURNACETYPE,
+    furnaceFuel: root => root.FURNACEFUEL,
   },
 }
 

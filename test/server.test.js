@@ -1,56 +1,31 @@
+import { MongoClient } from 'mongodb'
 import request from 'supertest'
-import sql from 'mssql'
 import Server from '../src/server'
-import data from './data'
+import testData from './data'
 
-const config = {
-  user: process.env.NRCAN_API_USERNAME,
-  password: process.env.NRCAN_API_PASSWORD,
-  server: process.env.NRCAN_API_HOST,
-  database: 'nrcan_test',
-}
-
-let pool
+let client, db, collection
+const url = 'mongodb://localhost:27017'
+// const url = process.env.COSMOSDB_URL
+const dbName = 'nrcan_test'
 
 describe('Server', () => {
-  beforeAll(async () => {
-    pool = await sql.connect(config)
-  })
-
   beforeEach(async () => {
-    try {
-      const transaction = pool.transaction()
-      await transaction.begin()
-      let request = transaction.request()
-      await request.query(data)
-      await transaction.commit()
-    } catch (e) {
-      console.log(e)
-    }
+    client = await MongoClient.connect(url)
+    db = client.db(dbName)
+    collection = db.collection('buildings')
+    // CosmosDB apparently automatically indexes everything
+    // but for Mongo we need to add an index
+    await collection.createIndex({ location: '2dsphere' })
   })
 
   afterEach(async () => {
-    try {
-      const transaction = pool.transaction()
-      await transaction.begin()
-      let request = transaction.request()
-      await request.batch('truncate table new_evaluationBase')
-      await request.batch('truncate table new_homeownerBase')
-      await transaction.commit()
-    } catch (e) {
-      console.log(e)
-    }
-  })
-
-
-  afterAll(async () => {
-    // https://github.com/patriksimek/node-mssql/issues/457
-    pool.close()
+    await collection.remove()
+    client.close()
   })
 
   it('has GraphQL middleware mounted at /graphql', async () => {
     let server = new Server({
-      sql,
+      client,
     })
 
     let response = await request(server)
@@ -94,8 +69,10 @@ describe('Server', () => {
   })
 
   it('returns evaluations with nicely camel-cased names', async () => {
+    await collection.insertMany(testData)
+
     let server = new Server({
-      sql,
+      client: collection,
     })
 
     let response = await request(server)
@@ -109,12 +86,13 @@ describe('Server', () => {
       }`,
       })
 
-    let { evaluations } = response.body.data
-    expect(evaluations[0].yearBuilt).toEqual('2010')
+    let { evaluations: [first] } = response.body.data
+    expect(first.yearBuilt).toEqual('1980')
   })
 
-  describe('Description language', () => {
+})
 
+describe('Description language', () => {
   it('returns french description when french language header sent', async () => {
     let lang = 'fr'
     let server = Server()
@@ -124,14 +102,14 @@ describe('Server', () => {
       .set('Accept-Language', lang)
       .set('Content-Type', 'application/json; charset=utf-8')
       .send({
-            query: `query {
+        query: `query {
            __type(name: "Evaluation") {
              name
              description
            }
         }`,
-          })
-  
+      })
+
     let { __type: { description } } = response.body.data
     expect(description).toEqual('Ceci est une description des évaluations')
   })
@@ -145,14 +123,14 @@ describe('Server', () => {
       .set('Accept-Language', lang)
       .set('Content-Type', 'application/json; charset=utf-8')
       .send({
-            query: `query {
+        query: `query {
            __type(name: "Evaluation") {
              name
              description
            }
         }`,
-          })
-  
+      })
+
     let { __type: { description } } = response.body.data
     expect(description).toEqual('This is a description of evaluations')
   })
@@ -164,19 +142,15 @@ describe('Server', () => {
       .post('/graphql')
       .set('Content-Type', 'application/json; charset=utf-8')
       .send({
-            query: `query {
+        query: `query {
            __type(name: "Evaluation") {
              name
              description
            }
         }`,
-          })
-  
+      })
+
     let { __type: { description } } = response.body.data
     expect(description).toEqual('This is a description of evaluations')
   })
-  
 })
-})
-
-
