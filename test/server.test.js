@@ -5,8 +5,6 @@ import testData from './data'
 
 let client, db, collection
 const url = 'mongodb://localhost:27017'
-// const url = 'mongodb+srv://admin:O7RAKDUKaSi6@cluster0-1ymhe.mongodb.net/test'
-// const url = 'mongodb+srv://nrcan_api:pxJrCHxdrzhpW1sP@cluster0-1ymhe.mongodb.net'
 // const url = process.env.COSMOSDB_URL
 const dbName = 'nrcan_test'
 
