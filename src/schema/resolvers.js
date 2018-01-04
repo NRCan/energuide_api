@@ -1,8 +1,25 @@
+import Longitude from './types/Longitude'
+import Latitude from './types/Latitude'
+
 const resolvers = {
+  Longitude,
+  Latitude,
   Query: {
-    evaluations: async (root, args, { client }) => {
-      let results = await client.find()
-      return results.toArray()
+    evaluations: async (root, { withinPolygon }, { client }) => {
+      let coordinates = withinPolygon.map(el => [el.lng, el.lat])
+      let cursor = await client.find({
+        'location.coordinates': {
+          $geoWithin: {
+            $geometry: {
+              type: 'Polygon',
+              coordinates: [coordinates],
+            },
+          },
+        },
+      })
+
+      let results = await cursor.toArray()
+      return results
     },
   },
   Evaluation: {

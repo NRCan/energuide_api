@@ -2,10 +2,17 @@ import resolvers from './resolvers'
 import { makeExecutableSchema } from 'graphql-tools'
 
 const Schema = i18n => {
+  const typeDefs = `
+    scalar Longitude
+    scalar Latitude
 
-  const typeDefs =`
+    input GeoPoint {
+      lat: Latitude!
+      lng: Longitude!
+    }
+
     type Query {
-      evaluations: [Evaluation]
+      evaluations(withinPolygon: [GeoPoint]!): [Evaluation]
     }
     
     # ${i18n.t`This is a description of evaluations`}
@@ -23,14 +30,7 @@ const Schema = i18n => {
     }
   `
 
-  return makeExecutableSchema({typeDefs, resolvers})
-
+  return makeExecutableSchema({ typeDefs, resolvers })
 }
 
 export default Schema
-
-
-
-
-
-
