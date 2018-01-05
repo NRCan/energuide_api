@@ -5,6 +5,17 @@ const resolvers = {
   Longitude,
   Latitude,
   Query: {
+    evaluationsFor: async (root, { account }, { client }) => {
+      let cursor = await client.find({
+        $query: { HOUSE_ID: account },
+        $orderby: { CREATION_DATE: -1 },
+      })
+
+      let results = await cursor.toArray()
+      // Merge the results into a single object
+      // representing the sum of all evaluations
+      return Object.assign({}, ...results)
+    },
     evaluations: async (root, { withinPolygon }, { client }) => {
       let coordinates = withinPolygon.map(el => [el.lng, el.lat])
       let cursor = await client.find({
@@ -359,7 +370,7 @@ const resolvers = {
     eid: root => root.EID,
     house_id: root => root.HOUSE_ID,
     justify: root => root.JUSTIFY,
-    ersrating: root => root.ERSRATING,
+    energuideRating: root => root.ERSRATING,
     ugrersrating: root => root.UGRERSRATING,
     ersenergyintensity: root => root.ERSENERGYINTENSITY,
     ugrersenergyintensity: root => root.UGRERSENERGYINTENSITY,

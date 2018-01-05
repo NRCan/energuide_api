@@ -12,6 +12,7 @@ const Schema = i18n => {
     }
 
     type Query {
+      evaluationsFor(account: Int!): Evaluation
       evaluations(withinPolygon: [GeoPoint]!): [Evaluation]
     }
     
@@ -371,7 +372,8 @@ const Schema = i18n => {
       eid: String
       house_id: String
       justify: String
-      ersrating: String
+      # ${i18n.t`The actual EnerGuide rating for house`}
+      energuideRating: String
       ugrersrating: String
       ersenergyintensity: String
       ugrersenergyintensity: String
