@@ -1,10 +1,13 @@
-import sql from 'mssql'
+import { MongoClient } from 'mongodb'
 import Server from './server'
 import { Engine } from 'apollo-engine'
 
+const apiKey = process.env.NRCAN_ENGINE_API_KEY
+if (!apiKey) throw new Error('No Apollo Engine API key was found in the ENV.')
+
 const engine = new Engine({
   engineConfig: {
-    apiKey: process.env.NRCAN_ENGINE_API_KEY,
+    apiKey,
     logging: {
       level: 'ERROR',
     },
@@ -18,23 +21,18 @@ const engine = new Engine({
   },
 })
 
-const config = {
-  user: process.env.NRCAN_API_USERNAME,
-  password: process.env.NRCAN_API_PASSWORD,
-  server: process.env.NRCAN_API_HOST,
-  database: process.env.NRCAN_API_DATABASE,
-  options: {
-    encrypt: true,
-  },
-}
+const url = process.env.NRCAN_DB_CONNECTION_STRING
+if (!url) throw new Error('No DB connection string found in the ENV.')
 
-sql
-  .connect(config)
-  .then(async connection => {
+MongoClient.connect(url)
+  .then(async client => {
+    // start Apollo Engine
     await engine.start()
+    const db = client.db('nrcan_api')
+    const collection = db.collection('buildings')
     const server = new Server(
       {
-        sql,
+        client: collection,
       },
       engine.expressMiddleware(),
     )
