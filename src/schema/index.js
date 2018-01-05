@@ -58,20 +58,31 @@ const Schema = i18n => {
       footPrint: String
       # ${i18n.t`Type of furnace in home`}
       furnaceType: String
-      fursseff: String
-      # ${i18n.t`Type of fuel that furnace runs on`}
+      furnaceSteadyStateEfficiency: String
+      # ${i18n.t`Primary heating equipment fuel type`}
       furnaceFuel: String
-      hpsource: String
-      cop: String
-      pdhwtype: String
-      pdhwef: String
-      pdhwfuel: String
-      dhwhptype: String
-      dhwhpcop: String
-      csia: String
+      # ${i18n.t`Heat pump source of supply`}
+      heatPumpSupplySource: String
+      # ${i18n.t`Heat pump co-efficient of performance`}
+      heatPumpCoeffiecientOfPerformance: String
+      # ${i18n.t`Primary domestic hot water equipment type`}
+      hotWaterEquipmentType: String
+      # ${i18n.t`Domestic hot water equipment efficiency`}
+      hotWaterEquipmentEfficiency: String
+      # ${i18n.t`Primary domestic hot water equipment fuel type`}
+      hotWaterEquipmentFuelType: String
+      # ${i18n.t`Domestic hot water heat pump system type`}
+      hotWaterHeatPumpSystemType: String
+      # ${i18n.t`Domestic hot water heat pump system co-efficient of performance`}
+      hotWaterHeatPumpSystemCoefficienctOfPerformance: String
+      # ${i18n.t`Canadian Solar Industry Association rating for solar DHW system (MJ/y)`}
+      csiaRating: String
+      # ${i18n.t`Type of house (detached, semi-detached, or row housing)`}
       typeOfHouse: String
-      ceilins: String
-      fndwallins: String
+      # ${i18n.t`Ceiling insulation RSI value`}
+      ceilingInsulationRSIvalue: String
+      # ${i18n.t`Foundation insulation RSI value`}
+      foundationWallInsulationRSIvalue: String
       mainwallins: String
       storeys: String
       totalOccupants: String
