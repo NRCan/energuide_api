@@ -22,7 +22,7 @@
   },
   "homepage": "https://github.com/cds-snc/nrcan_api",
   "dependencies": {
-    "apollo-engine": "^0.6.1",
+    "apollo-engine": "^0.8.1",
     "apollo-server-express": "^1.2.0",
     "cors": "^2.8.4",
     "express": "^4.16.2",
