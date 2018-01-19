@@ -21,7 +21,6 @@ const Schema = i18n => {
       yearBuilt: String
       # ${i18n.t`Square footage of home`}
       floorArea: String
-      yearBuilt: String
       evalId: String
       idNumber: String
       partner: String
@@ -54,7 +53,6 @@ const Schema = i18n => {
       info8: String
       info9: String
       info10: String
-      floorArea: String
       # ${i18n.t`Footprint`}
       footPrint: String
       # ${i18n.t`Type of furnace in home`}
