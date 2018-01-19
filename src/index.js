@@ -22,14 +22,22 @@ const engine = new Engine({
 })
 
 const url = process.env.NRCAN_DB_CONNECTION_STRING
-if (!url) throw new Error('No DB connection string found in the ENV.')
+if (!url)
+  throw new Error('NRCAN_DB_CONNECTION_STRING was not defined in the ENV.')
+
+const dbName = process.env.NRCAN_DB_NAME
+if (!dbName) throw new Error('NRCAN_DB_NAME was not defined in the ENV.')
+
+const collectionName = process.env.NRCAN_COLLECTION_NAME
+if (!dbName)
+  throw new Error('NRCAN_COLLECTION_NAME was not defined in the ENV.')
 
 MongoClient.connect(url)
   .then(async client => {
     // start Apollo Engine
     await engine.start()
-    const db = client.db('nrcan_api')
-    const collection = db.collection('buildings')
+    const db = client.db(dbName)
+    const collection = db.collection(collectionName)
     const server = new Server(
       {
         client: collection,
