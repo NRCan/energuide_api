@@ -1,9 +1,11 @@
 import Longitude from './types/Longitude'
 import Latitude from './types/Latitude'
+import PostalCode from './types/PostalCode'
 
 const resolvers = {
   Longitude,
   Latitude,
+  PostalCode,
   Query: {
     evaluationsFor: async (root, { account, postalCode }, { client }) => {
       let cursor = await client.find({

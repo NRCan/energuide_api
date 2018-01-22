@@ -5,6 +5,7 @@ const Schema = i18n => {
   const typeDefs = `
     scalar Longitude
     scalar Latitude
+    scalar PostalCode
 
     input GeoPoint {
       lat: Latitude!
@@ -12,7 +13,7 @@ const Schema = i18n => {
     }
 
     type Query {
-      evaluationsFor(account: Int! postalCode: String!): Evaluation
+      evaluationsFor(account: Int! postalCode: PostalCode!): Evaluation
       evaluations(withinPolygon: [GeoPoint]!): [Evaluation]
     }
     
@@ -20,7 +21,6 @@ const Schema = i18n => {
     type Evaluation {
       yearBuilt: String
       # ${i18n.t`Square footage of home`}
-      floorArea: String
       evalId: String
       idNumber: String
       partner: String
@@ -53,6 +53,7 @@ const Schema = i18n => {
       info8: String
       info9: String
       info10: String
+      floorArea: String
       # ${i18n.t`Footprint`}
       footPrint: String
       # ${i18n.t`Type of furnace in home`}
