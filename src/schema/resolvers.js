@@ -5,9 +5,9 @@ const resolvers = {
   Longitude,
   Latitude,
   Query: {
-    evaluationsFor: async (root, { account }, { client }) => {
+    evaluationsFor: async (root, { account, postalCode }, { client }) => {
       let cursor = await client.find({
-        $query: { HOUSE_ID: account },
+        $query: { HOUSE_ID: account, MAIL_PCODE: postalCode },
         $orderby: { CREATION_DATE: -1 },
       })
 

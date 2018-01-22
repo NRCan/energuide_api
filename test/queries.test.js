@@ -96,7 +96,7 @@ describe('queries', () => {
     expect(first.yearBuilt).toEqual('1980')
   })
 
-  it('retrieves evaluations given an account id', async () => {
+  it('retrieves evaluations given an account id and a postalcode', async () => {
     await collection.insertMany(testData)
 
     let server = new Server({
@@ -108,8 +108,9 @@ describe('queries', () => {
       .set('Content-Type', 'application/json; charset=utf-8')
       .send({
         query: `{
-         evaluationsFor(account: 761266) {
+         evaluationsFor(account: 761266 postalCode: "M8H 1N1") {
           yearBuilt
+          mailingAddressPostalCode
         }
       }`,
       })

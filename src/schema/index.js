@@ -12,7 +12,7 @@ const Schema = i18n => {
     }
 
     type Query {
-      evaluationsFor(account: Int!): Evaluation
+      evaluationsFor(account: Int! postalCode: String!): Evaluation
       evaluations(withinPolygon: [GeoPoint]!): [Evaluation]
     }
     
