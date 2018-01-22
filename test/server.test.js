@@ -25,6 +25,18 @@ describe('configuration', () => {
     expect(response.status).toEqual(200)
   })
 
+  it('serves the Graphiql IDE from the /graphiql endpoint', async () => {
+    let server = new Server({
+      client: jest.fn(),
+    })
+
+    let response = await request(server)
+      .get('/graphiql')
+      .set('Accept', '*/*')
+
+    expect(response.text).toMatch(/<title>GraphiQL<\/title>/)
+  })
+
   it('has Cross Origin Resource Sharing enabled for all domains', async () => {
     let server = Server()
 
