@@ -83,25 +83,42 @@ const Schema = i18n => {
       ceilingInsulationRSIvalue: String
       # ${i18n.t`Foundation insulation RSI value`}
       foundationWallInsulationRSIvalue: String
-      mainwallins: String
+      # ${i18n.t`Main walls insulation RSI value`}
+      mainWallInsulationRSI: String
+      # ${i18n.t`Number of floors above grade`}
       storeys: String
+      # ${i18n.t`Total number of occupants`}
       totalOccupants: String
-      planshape: String
-      tbsmnt: String
-      tmain: String
-      hsevol: String
+      # ${i18n.t`House shape`}
+      planShape: String
+      # ${i18n.t`Temperature of the basement in Celsius`}
+      basementTemperature: String
+      # ${i18n.t`Temperature of the main floor in Celsius`}
+      mainFloorTemperature: String
+      # ${i18n.t`House volume in m3`}
+      houseVolume: String
       # ${i18n.t`Air leakage at 50 pascals`}
       airLeakageAt50Pascals: String
-      leakar: String
-      cenventsystype: String
+      # ${i18n.t`Equivalent leakage area at 10 pascals`}
+      leakageAreaAt10Pascals: String
+      # ${i18n.t`Ventilation type installed`}
+      centralVentilationSystemType: String
+      # ${i18n.t`Indicates which version of hot2000 was used: General Mode or Expert Version (EA version)`}
       registration: String
-      programname: String
-      eghfconelec: String
-      eghfconngas: String
-      eghfconoil: String
-      eghfconprop: String
-      eghfcontotal: String
-      eghspaceenergy: String
+      # ${i18n.t`Name of program used (indicates which build of hot2000 was used….9.34c, 10.50, etc.)`}
+      programName: String 
+      # ${i18n.t`Consumption of electricity in kWh`}
+      eghfElectricityConsumption: String
+      # ${i18n.t`Consumption of gas in m3`}
+      eghfGasConsumption: String
+      # ${i18n.t`Consumption of oil in L`}
+      eghfOilConsumption: String
+      # ${i18n.t`Consumption of propane in L`}
+      eghfPropaneConsumption: String
+      # ${i18n.t`Total energy consumption in MJ`}
+      eghfTotalEnergyConsumption: String
+      # ${i18n.t`Estimated annual space heating energy consumption + ventilator electrical consumption (heating hour) heating energy in MJ`}
+      eghEstimatedAnnualSpaceHeatingEnergyConsumption: String
       eghfcostelec: String
       eghfcostngas: String
       eghfcostoil: String

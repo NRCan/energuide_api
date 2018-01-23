@@ -1,10 +1,316 @@
 {
+  "Primary heating equipment fuel type": {
+    "translation": "",
+    "origin": [
+      [
+        "src/schema/index.js",
+        62
+      ]
+    ]
+  },
+  "Heat pump source of supply": {
+    "translation": "",
+    "origin": [
+      [
+        "src/schema/index.js",
+        64
+      ]
+    ]
+  },
+  "Heat pump co-efficient of performance": {
+    "translation": "",
+    "origin": [
+      [
+        "src/schema/index.js",
+        66
+      ]
+    ]
+  },
+  "Primary domestic hot water equipment type": {
+    "translation": "",
+    "origin": [
+      [
+        "src/schema/index.js",
+        68
+      ]
+    ]
+  },
+  "Domestic hot water equipment efficiency": {
+    "translation": "",
+    "origin": [
+      [
+        "src/schema/index.js",
+        70
+      ]
+    ]
+  },
+  "Primary domestic hot water equipment fuel type": {
+    "translation": "",
+    "origin": [
+      [
+        "src/schema/index.js",
+        72
+      ]
+    ]
+  },
+  "Domestic hot water heat pump system type": {
+    "translation": "",
+    "origin": [
+      [
+        "src/schema/index.js",
+        74
+      ]
+    ]
+  },
+  "Domestic hot water heat pump system co-efficient of performance": {
+    "translation": "",
+    "origin": [
+      [
+        "src/schema/index.js",
+        76
+      ]
+    ]
+  },
+  "Canadian Solar Industry Association rating for solar DHW system (MJ/y)": {
+    "translation": "",
+    "origin": [
+      [
+        "src/schema/index.js",
+        78
+      ]
+    ]
+  },
+  "Type of house (detached, semi-detached, or row housing)": {
+    "translation": "",
+    "origin": [
+      [
+        "src/schema/index.js",
+        80
+      ]
+    ]
+  },
+  "Ceiling insulation RSI value": {
+    "translation": "",
+    "origin": [
+      [
+        "src/schema/index.js",
+        82
+      ]
+    ]
+  },
+  "Foundation insulation RSI value": {
+    "translation": "",
+    "origin": [
+      [
+        "src/schema/index.js",
+        84
+      ]
+    ]
+  },
+  "Main walls insulation RSI value": {
+    "translation": "",
+    "origin": [
+      [
+        "src/schema/index.js",
+        86
+      ]
+    ]
+  },
+  "Number of floors above grade": {
+    "translation": "",
+    "origin": [
+      [
+        "src/schema/index.js",
+        88
+      ]
+    ]
+  },
+  "Total number of occupants": {
+    "translation": "",
+    "origin": [
+      [
+        "src/schema/index.js",
+        90
+      ]
+    ]
+  },
+  "House shape": {
+    "translation": "",
+    "origin": [
+      [
+        "src/schema/index.js",
+        92
+      ]
+    ]
+  },
+  "Temperature of the basement in Celsius": {
+    "translation": "",
+    "origin": [
+      [
+        "src/schema/index.js",
+        94
+      ]
+    ]
+  },
+  "Temperature of the main floor in Celsius": {
+    "translation": "",
+    "origin": [
+      [
+        "src/schema/index.js",
+        96
+      ]
+    ]
+  },
+  "House volume in m3": {
+    "translation": "",
+    "origin": [
+      [
+        "src/schema/index.js",
+        98
+      ]
+    ]
+  },
+  "Air leakage at 50 pascals": {
+    "translation": "",
+    "origin": [
+      [
+        "src/schema/index.js",
+        100
+      ]
+    ]
+  },
+  "Equivalent leakage area at 10 pascals": {
+    "translation": "",
+    "origin": [
+      [
+        "src/schema/index.js",
+        102
+      ]
+    ]
+  },
+  "Ventilation type installed": {
+    "translation": "",
+    "origin": [
+      [
+        "src/schema/index.js",
+        104
+      ]
+    ]
+  },
+  "Indicates which version of hot2000 was used: General Mode or Expert Version (EA version)": {
+    "translation": "",
+    "origin": [
+      [
+        "src/schema/index.js",
+        106
+      ]
+    ]
+  },
+  "Name of program used (indicates which build of hot2000 was used….9.34c, 10.50, etc.)": {
+    "translation": "",
+    "origin": [
+      [
+        "src/schema/index.js",
+        108
+      ]
+    ]
+  },
+  "Consumption of electricity in kWh": {
+    "translation": "",
+    "origin": [
+      [
+        "src/schema/index.js",
+        110
+      ]
+    ]
+  },
+  "Consumption of gas in m3": {
+    "translation": "",
+    "origin": [
+      [
+        "src/schema/index.js",
+        112
+      ]
+    ]
+  },
+  "Consumption of oil in L": {
+    "translation": "",
+    "origin": [
+      [
+        "src/schema/index.js",
+        114
+      ]
+    ]
+  },
+  "Consumption of propane in L": {
+    "translation": "",
+    "origin": [
+      [
+        "src/schema/index.js",
+        116
+      ]
+    ]
+  },
+  "Total energy consumption in MJ": {
+    "translation": "",
+    "origin": [
+      [
+        "src/schema/index.js",
+        118
+      ]
+    ]
+  },
+  "Estimated annual space heating energy consumption + ventilator electrical consumption (heating hour) heating energy in MJ": {
+    "translation": "",
+    "origin": [
+      [
+        "src/schema/index.js",
+        120
+      ]
+    ]
+  },
+  "The actual EnerGuide rating for house": {
+    "translation": "",
+    "origin": [
+      [
+        "src/schema/index.js",
+        391
+      ]
+    ]
+  },
   "This is a description of evaluations": {
     "translation": "Ceci est une description des évaluations",
     "origin": [
       [
         "src/schema/index.js",
-        11
+        20
+      ]
+    ]
+  },
+  "Square footage of home": {
+    "translation": "La superficie de la maison",
+    "origin": [
+      [
+        "src/schema/index.js",
+        23
+      ]
+    ]
+  },
+  "Footprint": {
+    "translation": "Empreinte",
+    "origin": [
+      [
+        "src/schema/index.js",
+        57
+      ]
+    ]
+  },
+  "Type of furnace in home": {
+    "translation": "Type de four à la maison",
+    "origin": [
+      [
+        "src/schema/index.js",
+        59
       ]
     ]
   },
@@ -15,34 +321,8 @@
         "src/schema/index.js",
         13
       ]
-    ]
-  },
-  "Square footage of home": {
-    "translation": "La superficie de la maison",
-    "origin": [
-      [
-        "src/schema/index.js",
-        15
-      ]
-    ]
-  },
-  "Footprint": {
-    "translation": "Empreinte",
-    "origin": [
-      [
-        "src/schema/index.js",
-        17
-      ]
-    ]
-  },
-  "Type of furnace in home": {
-    "translation": "Type de four à la maison",
-    "origin": [
-      [
-        "src/schema/index.js",
-        19
-      ]
-    ]
+    ],
+    "obsolete": true
   },
   "Type of fuel that furnace runs on": {
     "translation": "Type de combustible sur lequel le four fonctionne",
@@ -51,6 +331,7 @@
         "src/schema/index.js",
         21
       ]
-    ]
+    ],
+    "obsolete": true
   }
 }
