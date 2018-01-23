@@ -4,7 +4,7 @@
 #
 version: 2
 jobs:
-  build:
+  node:
     docker:
       # specify the version you desire here
       - image: circleci/node:7.10
@@ -39,3 +39,39 @@ jobs:
           command: |
             yarn test
             yarn lint
+  python:
+    docker:
+      - image: circleci/python:3.6.1
+      - image: mongo:3.6.2
+
+    working_directory: ~/repo
+
+    steps:
+      - checkout
+
+      # Download and cache dependencies
+      - restore_cache:
+          key: deps1-{{ .Branch }}-{{ checksum "python/requirements.txt" }}
+
+      - run:
+          name: Installing dependencies
+          command: |
+            python3 -m venv venv
+            . venv/bin/activate
+            pip install -r python/requirements.txt
+
+      - save_cache:
+          key: deps1-{{ .Branch }}-{{ checksum "python/requirements.txt" }}
+          paths:
+            - "venv"
+      - run:
+          name: Running tests
+          command: |
+            . venv/bin/activate
+            pytest python/tests
+workflows:
+  version: 2
+  node_and_python:
+    jobs:
+      - node
+      - python
