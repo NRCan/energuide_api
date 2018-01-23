@@ -68,6 +68,7 @@
     ]
   },
   "jest": {
+    "testPathIgnorePatterns": ["/test/queries*"],
     "verbose": true
   },
   "lingui": {
