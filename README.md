@@ -1,5 +1,7 @@
 # Energuide
 
+CircleCI Status: [![CircleCI](https://circleci.com/gh/cds-snc/nrcan_api.svg?style=svg)](https://circleci.com/gh/cds-snc/nrcan_api)
+
 This is the API for NRCAN's Energuide data.
 
 ## Running the server
