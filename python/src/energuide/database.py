@@ -20,7 +20,7 @@ class EnvDefaults(enum.Enum):
     host = 'localhost'
     port = 27017
     database = 'energuide'
-    collection = 'buildings'
+    collection = 'dwellings'
 
 class DatabaseCoordinates(typing.NamedTuple):
     username: str
