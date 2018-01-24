@@ -1,3 +1,4 @@
+from contextlib import contextmanager
 import enum
 import typing
 
@@ -35,14 +36,15 @@ class DatabaseCoordinates(typing.NamedTuple):
 
 CHUNKSIZE = 1000
 
-def prod() -> bool:
-    return os.environ.get('PROD') is not None
+
+def _is_prod() -> bool:
+    return bool(os.environ.get('PROD'))
 
 
-def build_connection_string(coords: DatabaseCoordinates):
+def _build_connection_string(coords: DatabaseCoordinates):
     username, password, host, port, _, _ = coords
 
-    if prod():
+    if _is_prod():
         connection_string = f'mongodb+srv://{username}:{password}@{host}'
     else:
         prefix = f'{username}:{password}@' if username and password else ''
@@ -51,13 +53,19 @@ def build_connection_string(coords: DatabaseCoordinates):
     return connection_string
 
 
+@contextmanager  # type: ignore
+def mongo_client(database_coordinates: DatabaseCoordinates) -> typing.Iterable[pymongo.MongoClient]:
+    connection_string = _build_connection_string(database_coordinates)
+    with pymongo.MongoClient(f'{connection_string}') as client:
+        yield client
+
+
 def load(coords: DatabaseCoordinates, data: str, columns: typing.Optional[typing.List[str]] = None) -> None:
     database_name = coords.database
     collection_name = coords.collection
 
-    connection_string = build_connection_string(coords)
-
-    with pymongo.MongoClient(f'{connection_string}') as client, open(data, 'r') as csvfile:
+    client: pymongo.MongoClient
+    with mongo_client(coords) as client, open(data, 'r') as csvfile:
         database = client[database_name]
         collection = database[collection_name]
 
