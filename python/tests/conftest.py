@@ -54,6 +54,6 @@ def database_coordinates(username: str,
 
 @pytest.fixture
 def mongo_client(database_coordinates: database.DatabaseCoordinates) -> typing.Iterable[pymongo.MongoClient]:
-    connection_string = database.build_connection_string(database_coordinates)
-    with pymongo.MongoClient(f'{connection_string}') as client:
+    client: pymongo.MongoClient
+    with database.mongo_client(database_coordinates) as client:
         yield client
