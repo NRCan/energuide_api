@@ -8,11 +8,10 @@ This is the API for NRCAN's Energuide data.
 
 Running the sever requires a SQL server running somewhere and the following environmental variables defined:
 
-* NRCAN_API_USERNAME
-* NRCAN_API_PASSWORD
-* NRCAN_API_HOST
-* NRCAN_API_DATABASE
 * NRCAN_ENGINE_API_KEY
+* NRCAN_DB_CONNECTION_STRING
+* NRCAN_DB_NAME
+* NRCAN_COLLECTION_NAME
 
 With those defined you can run the server like this:
 
