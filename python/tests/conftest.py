@@ -9,25 +9,31 @@ from energuide import database
 def username() -> str:
     return os.environ.get(database.EnvVariables.username.value, database.EnvDefaults.username.value)
 
+
 @pytest.fixture
 def password() -> str:
     return os.environ.get(database.EnvVariables.password.value, database.EnvDefaults.password.value)
+
 
 @pytest.fixture
 def host() -> str:
     return os.environ.get(database.EnvVariables.host.value, database.EnvDefaults.host.value)
 
+
 @pytest.fixture
 def port() -> int:
     return int(os.environ.get(database.EnvVariables.port.value, database.EnvDefaults.port.value))
+
 
 @pytest.fixture
 def database_name():
     return os.environ.get(database.EnvVariables.database.value, database.EnvDefaults.database.value)
 
+
 @pytest.fixture
 def collection() -> str:
     return os.environ.get(database.EnvVariables.collection.value, database.EnvDefaults.collection.value)
+
 
 @pytest.fixture
 def database_coordinates(username: str,
@@ -44,6 +50,7 @@ def database_coordinates(username: str,
         database=database_name,
         collection=collection
     )
+
 
 @pytest.fixture
 def mongo_client(database_coordinates: database.DatabaseCoordinates) -> typing.Iterable[pymongo.MongoClient]:

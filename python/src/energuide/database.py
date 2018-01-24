@@ -5,6 +5,7 @@ import os
 import pymongo
 import pandas as pd
 
+
 class EnvVariables(enum.Enum):
     username = 'ENERGUIDE_USERNAME'
     password = 'ENERGUIDE_PASSWORD'
@@ -22,6 +23,7 @@ class EnvDefaults(enum.Enum):
     database = 'energuide'
     collection = 'dwellings'
 
+
 class DatabaseCoordinates(typing.NamedTuple):
     username: str
     password: str
@@ -30,10 +32,12 @@ class DatabaseCoordinates(typing.NamedTuple):
     database: str
     collection: str
 
+
 CHUNKSIZE = 1000
 
 def prod() -> bool:
     return os.environ.get('PROD') is not None
+
 
 def build_connection_string(coords: DatabaseCoordinates):
     username, password, host, port, _, _ = coords
@@ -64,5 +68,5 @@ def load(coords: DatabaseCoordinates, data: str, columns: typing.Optional[typing
                 columns = dataframe.columns
             dataframe = dataframe.where((pd.notnull(dataframe)), None)
 
-            inserts = map(pymongo.InsertOne, dataframe[columns].to_dict('records'))
-            collection.bulk_write(list(inserts))
+            inserts = [pymongo.InsertOne(record) for record in dataframe[columns].to_dict('records')]
+            collection.bulk_write(inserts)
