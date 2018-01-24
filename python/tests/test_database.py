@@ -11,12 +11,10 @@ def energuide_data(energuide_fixture: str) -> pd.DataFrame:
 
 def test_load_all(database_coordinates: database.DatabaseCoordinates,
                   mongo_client: pymongo.MongoClient,
+                  database_name: str,
+                  collection: str,
                   energuide_data: pd.DataFrame) -> None:
 
-    database_name = database_coordinates.database
-    collection_name = database_coordinates.collection
+    database.load(database_coordinates, database_name, collection, energuide_data)
 
-    mongo_client[database_name][collection_name].drop()
-    database.load(database_coordinates, energuide_data)
-
-    assert mongo_client[database_name][collection_name].count() == 3
+    assert mongo_client[database_name][collection].count() == 3

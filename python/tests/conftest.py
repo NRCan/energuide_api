@@ -1,4 +1,5 @@
 import os
+import random
 import typing
 
 import pymongo
@@ -26,8 +27,15 @@ def port() -> int:
 
 
 @pytest.fixture
-def database_name():
-    return os.environ.get(database.EnvVariables.database.value, database.EnvDefaults.database.value)
+def database_name(database_coordinates: database.DatabaseCoordinates) -> typing.Iterable[str]:
+    db_name = os.environ.get(database.EnvVariables.database.value, database.EnvDefaults.database.value)
+    db_name = f'{db_name}_test_{random.randint(1000, 9999)}'
+
+    yield db_name
+
+    client: pymongo.MongoClient
+    with database.mongo_client(database_coordinates) as client:
+        client.drop_database(db_name)
 
 
 @pytest.fixture
@@ -39,16 +47,12 @@ def collection() -> str:
 def database_coordinates(username: str,
                          password: str,
                          host: str,
-                         port: int,
-                         database_name: str,
-                         collection: str) -> database.DatabaseCoordinates:
+                         port: int) -> database.DatabaseCoordinates:
     return database.DatabaseCoordinates(
         username=username,
         password=password,
         host=host,
         port=port,
-        database=database_name,
-        collection=collection
     )
 
 
