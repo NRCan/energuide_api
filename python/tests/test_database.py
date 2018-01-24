@@ -1,5 +1,4 @@
 import os
-import typing
 
 import pymongo
 import pytest
@@ -12,10 +11,11 @@ def energuide_data() -> str:
 
 
 def test_load_all(database_coordinates: database.DatabaseCoordinates,
-              mongo_client: pymongo.MongoClient,
-              energuide_data: str) -> None:
+                  mongo_client: pymongo.MongoClient,
+                  energuide_data: str) -> None:
 
-    _, _, _, _, database_name, collection_name = database_coordinates
+    database_name = database_coordinates.database
+    collection_name = database_coordinates.collection
 
     mongo_client[database_name][collection_name].drop()
     database.load(database_coordinates, energuide_data)

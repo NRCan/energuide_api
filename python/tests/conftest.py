@@ -37,13 +37,13 @@ def database_coordinates(username: str,
                          database_name: str,
                          collection: str) -> database.DatabaseCoordinates:
     return database.DatabaseCoordinates(
-               username=username,
-               password=password,
-               host=host,
-               port=port,
-               database=database_name,
-               collection=collection
-           )
+        username=username,
+        password=password,
+        host=host,
+        port=port,
+        database=database_name,
+        collection=collection
+    )
 
 @pytest.fixture
 def mongo_client(database_coordinates: database.DatabaseCoordinates) -> typing.Iterable[pymongo.MongoClient]:

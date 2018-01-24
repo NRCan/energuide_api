@@ -48,7 +48,8 @@ def build_connection_string(coords: DatabaseCoordinates):
 
 
 def load(coords: DatabaseCoordinates, data: str, columns: typing.Optional[typing.List[str]] = None) -> None:
-    _, _, _, _, database_name, collection_name = coords
+    database_name = coords.database
+    collection_name = coords.collection
 
     connection_string = build_connection_string(coords)
 
