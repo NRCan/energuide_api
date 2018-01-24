@@ -20,4 +20,4 @@ def test_load_all(database_coordinates: database.DatabaseCoordinates,
     mongo_client[database_name][collection_name].drop()
     database.load(database_coordinates, energuide_data)
 
-    assert mongo_client[database_name][collection_name].count() == 2001
+    assert mongo_client[database_name][collection_name].count() == 3
