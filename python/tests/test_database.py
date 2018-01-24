@@ -7,7 +7,7 @@ from energuide import database
 
 @pytest.fixture
 def energuide_data() -> str:
-    return os.path.join(os.path.dirname(__file__), 'anonymized_energuide_sample_data.csv')
+    return os.path.join(os.path.dirname(__file__), 'sample.csv')
 
 
 def test_load_all(database_coordinates: database.DatabaseCoordinates,
