@@ -34,14 +34,11 @@ class DatabaseCoordinates(typing.NamedTuple):
     collection: str
 
 
-CHUNKSIZE = 1000
-
-
 def _is_prod() -> bool:
     return bool(os.environ.get('PROD'))
 
 
-def _build_connection_string(coords: DatabaseCoordinates):
+def _build_connection_string(coords: DatabaseCoordinates) -> str:
     username, password, host, port, _, _ = coords
 
     if _is_prod():
@@ -60,20 +57,14 @@ def mongo_client(database_coordinates: DatabaseCoordinates) -> typing.Iterable[p
         yield client
 
 
-def load(coords: DatabaseCoordinates, data: str, columns: typing.Optional[typing.List[str]] = None) -> None:
+def load(coords: DatabaseCoordinates,
+         dataframe: pd.DataFrame) -> None:
     database_name = coords.database
     collection_name = coords.collection
 
     client: pymongo.MongoClient
-    with mongo_client(coords) as client, open(data, 'r') as csvfile:
+    with mongo_client(coords) as client:
         database = client[database_name]
         collection = database[collection_name]
 
-        chunks = pd.read_csv(csvfile, chunksize=CHUNKSIZE)
-
-        for dataframe in chunks:
-            if columns is None:
-                columns = dataframe.columns
-            dataframe = dataframe.where((pd.notnull(dataframe)), None)
-
-            collection.insert_many(dataframe[columns].to_dict('records'))
+        collection.insert_many(dataframe.to_dict('records'))
