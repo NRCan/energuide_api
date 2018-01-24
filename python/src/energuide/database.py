@@ -56,7 +56,8 @@ def _build_connection_string(coords: DatabaseCoordinates):
 @contextmanager  # type: ignore
 def mongo_client(database_coordinates: DatabaseCoordinates) -> typing.Iterable[pymongo.MongoClient]:
     connection_string = _build_connection_string(database_coordinates)
-    yield pymongo.MongoClient(f'{connection_string}')
+    with pymongo.MongoClient(f'{connection_string}') as client:
+        yield client
 
 
 def load(coords: DatabaseCoordinates, data: str, columns: typing.Optional[typing.List[str]] = None) -> None:
