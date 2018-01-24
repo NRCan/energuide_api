@@ -68,5 +68,4 @@ def load(coords: DatabaseCoordinates, data: str, columns: typing.Optional[typing
                 columns = dataframe.columns
             dataframe = dataframe.where((pd.notnull(dataframe)), None)
 
-            inserts = [pymongo.InsertOne(record) for record in dataframe[columns].to_dict('records')]
-            collection.bulk_write(inserts)
+            collection.insert_many(dataframe[columns].to_dict('records'))
