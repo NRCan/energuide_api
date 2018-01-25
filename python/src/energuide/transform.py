@@ -27,7 +27,7 @@ def rename_columns(dataframe: pd.DataFrame) -> pd.DataFrame:
     return dataframe
 
 
-def extract_postal(dataframe: pd.DataFrame) -> pd.DataFrame:
+def extract_fsa(dataframe: pd.DataFrame) -> pd.DataFrame:
     dataframe.loc[:, 'clientForwardSortationArea'] = dataframe['clientPostalCode'].str[:3]
 
     return dataframe
@@ -55,7 +55,7 @@ def group_dates(dataframe: pd.DataFrame) -> pd.DataFrame:
 TRANSFORMERS = [
     clear_blanks,
     rename_columns,
-    extract_postal,
+    extract_fsa,
     parse_dates,
     group_dates
 ]

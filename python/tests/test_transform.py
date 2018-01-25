@@ -20,10 +20,6 @@ def sample() -> pd.DataFrame:
     }
     return pd.DataFrame.from_dict(data)
 
-@pytest.fixture()
-def renamed_sample(sample: pd.DataFrame) -> pd.DataFrame:
-    return transform.rename_columns(sample)
-
 
 def test_clear_blanks() -> None:
     dataframe = pd.DataFrame.from_dict({'foo': [np.NaN], 'bar': ['some']}, orient='columns')
@@ -49,34 +45,32 @@ def test_rename_columns(sample: pd.DataFrame)  -> None:
     assert sorted(list(dataframe.columns)) == expected
 
 
-def test_extract_postal(renamed_sample: pd.DataFrame)  -> None:
-    output = transform.extract_postal(renamed_sample).to_dict('records')
+def test_extract_fsa()  -> None:
+    data = {
+        'clientPostalCode': ['K0H 1Y0']
+    }
+    dataframe = pd.DataFrame.from_dict(data)
+
+    output = transform.extract_fsa(dataframe).to_dict('records')
 
     expected = [{
-        'evalId': 123456,
-        'idNumber': 23,
-        'yearBuilt': 1979,
-        'houseRegion': 'Ontario',
-        'clientCity': 'Kingston',
         'clientForwardSortationArea': 'K0H',
-        'clientPostalCode': 'K0H 1Y0',
-        'creationDate': '2009-01-01 12:01:02',
-        'modificationDate': '2011-01-01 00:01:02'
+        'clientPostalCode': 'K0H 1Y0'
     }]
 
     assert output == expected
 
 
-def test_parse_dates(renamed_sample: pd.DataFrame)  -> None:
-    output = transform.parse_dates(renamed_sample).to_dict('records')
+def test_parse_dates()  -> None:
+    data = {
+        'creationDate': ['2009-01-01 12:01:02'],
+        'modificationDate': ['2011-01-01 00:01:02']
+    }
+    dataframe = pd.DataFrame.from_dict(data)
+
+    output = transform.parse_dates(dataframe).to_dict('records')
 
     expected = [{
-        'evalId': 123456,
-        'idNumber': 23,
-        'yearBuilt': 1979,
-        'houseRegion': 'Ontario',
-        'clientCity': 'Kingston',
-        'clientPostalCode': 'K0H 1Y0',
         'creationDate': datetime.datetime(2009, 1, 1, 12, 1, 2),
         'modificationDate': datetime.datetime(2011, 1, 1, 0, 1, 2),
     }]
@@ -84,16 +78,16 @@ def test_parse_dates(renamed_sample: pd.DataFrame)  -> None:
     assert output == expected
 
 
-def test_group_dates(renamed_sample: pd.DataFrame)  -> None:
-    output = transform.group_dates(renamed_sample).to_dict('records')
+def test_group_dates()  -> None:
+    data = {
+        'creationDate': ['2009-01-01 12:01:02'],
+        'modificationDate': ['2011-01-01 00:01:02']
+    }
+
+    dataframe = pd.DataFrame.from_dict(data)
+    output = transform.group_dates(dataframe).to_dict('records')
 
     expected = [{
-        'evalId': 123456,
-        'idNumber': 23,
-        'yearBuilt': 1979,
-        'houseRegion': 'Ontario',
-        'clientCity': 'Kingston',
-        'clientPostalCode': 'K0H 1Y0',
         'evaluations': [{
             'creationDate': '2009-01-01 12:01:02',
             'modificationDate': '2011-01-01 00:01:02'
