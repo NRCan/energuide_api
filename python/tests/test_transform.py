@@ -15,11 +15,9 @@ def test_clean() -> None:
 
 def test_run(database_coordinates: database.DatabaseCoordinates,
              mongo_client: pymongo.MongoClient,
+             database_name: str,
+             collection: str,
              energuide_fixture: str) -> None:
 
-    database_name = database_coordinates.database
-    collection_name = database_coordinates.collection
-    mongo_client[database_name][collection_name].drop()
-
-    transform.run(database_coordinates, energuide_fixture)
-    assert mongo_client[database_name][collection_name].count() == 3
+    transform.run(database_coordinates, database_name, collection, energuide_fixture)
+    assert mongo_client[database_name][collection].count() == 3

@@ -30,8 +30,6 @@ class DatabaseCoordinates(typing.NamedTuple):
     password: str
     host: str
     port: int
-    database: str
-    collection: str
 
 
 def _is_prod() -> bool:
@@ -39,7 +37,7 @@ def _is_prod() -> bool:
 
 
 def _build_connection_string(coords: DatabaseCoordinates) -> str:
-    username, password, host, port, _, _ = coords
+    username, password, host, port = coords
 
     if _is_prod():
         connection_string = f'mongodb+srv://{username}:{password}@{host}'
@@ -58,9 +56,9 @@ def mongo_client(database_coordinates: DatabaseCoordinates) -> typing.Iterable[p
 
 
 def load(coords: DatabaseCoordinates,
+         database_name: str,
+         collection_name: str,
          dataframe: pd.DataFrame) -> None:
-    database_name = coords.database
-    collection_name = coords.collection
 
     client: pymongo.MongoClient
     with mongo_client(coords) as client:
