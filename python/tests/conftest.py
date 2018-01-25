@@ -57,3 +57,8 @@ def mongo_client(database_coordinates: database.DatabaseCoordinates) -> typing.I
     client: pymongo.MongoClient
     with database.mongo_client(database_coordinates) as client:
         yield client
+
+
+@pytest.fixture
+def energuide_fixture() -> str:
+    return os.path.join(os.path.dirname(__file__), 'sample.csv')
