@@ -92,7 +92,7 @@ class Dwelling:
         self._evaluations = evaluations
 
     SCHEMA = {
-        'EVAL_TYPE': {'type': 'string', 'required': True},
+        'EVAL_ID': {'type': 'integer', 'required': True},
     }
 
     @classmethod
