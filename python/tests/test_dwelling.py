@@ -154,6 +154,17 @@ class TestDwelling:
         output = dwelling.Dwelling.from_data(sample)
         assert output.house_id == 123
 
+    def test_year_built(self, sample: typing.List[dwelling.ParsedDwellingDataRow]) -> None:
+        output = dwelling.Dwelling.from_data(sample)
+        assert output.year_built == 2000
+
+    def test_address_data(self, sample: typing.List[dwelling.ParsedDwellingDataRow]) -> None:
+        output = dwelling.Dwelling.from_data(sample)
+        assert output.city == 'Ottawa'
+        assert output.region == dwelling.Region.ONTARIO
+        assert output.postal_code == 'K1P 0A6'
+        assert output.forward_sortation_area == 'K1P'
+
     def test_evaluations(self, sample: typing.List[dwelling.ParsedDwellingDataRow]) -> None:
         output = dwelling.Dwelling.from_data(sample)
         assert len(output.evaluations) == 2

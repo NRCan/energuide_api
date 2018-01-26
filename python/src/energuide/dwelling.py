@@ -162,8 +162,18 @@ class Dwelling:
 
     def __init__(self, *,
                  house_id: int,
+                 year_built: int,
+                 city: str,
+                 region: Region,
+                 postal_code: str,
+                 forward_sortation_area: str,
                  evaluations: typing.List[Evaluation]) -> None:
         self._house_id = house_id
+        self._year_built = year_built
+        self._city = city
+        self._region = region
+        self._postal_code = postal_code
+        self._forward_sortation_area = forward_sortation_area
         self._evaluations = evaluations
 
     @classmethod
@@ -172,6 +182,11 @@ class Dwelling:
             evaluations = [Evaluation.from_data(row) for row in data]
             return Dwelling(
                 house_id=data[0].eval_id,
+                year_built=data[0].year_built,
+                city=data[0].city,
+                region=data[0].region,
+                postal_code=data[0].postal_code,
+                forward_sortation_area=data[0].forward_sortation_area,
                 evaluations=evaluations,
             )
         else:
@@ -180,6 +195,26 @@ class Dwelling:
     @property
     def house_id(self) -> int:
         return self._house_id
+
+    @property
+    def year_built(self) -> int:
+        return self._year_built
+
+    @property
+    def city(self) -> str:
+        return self._city
+
+    @property
+    def region(self) -> Region:
+        return self._region
+
+    @property
+    def postal_code(self) -> str:
+        return self._postal_code
+
+    @property
+    def forward_sortation_area(self) -> str:
+        return self._forward_sortation_area
 
     @property
     def evaluations(self) -> typing.List[Evaluation]:
