@@ -1,5 +1,6 @@
 import enum
 import typing
+import cerberus
 
 
 class NoInputDataException(Exception):
@@ -34,14 +35,15 @@ class Evaluation:
     def __init__(self, *, evaluation_type: EvaluationType) -> None:
         self._evaluation_type = evaluation_type
 
-    @staticmethod
-    def _verify_schema(data: EvaluationData):
-        if 'EVAL_TYPE' not in data.keys():
-            raise InvalidInputDataException()
+    SCHEMA = {
+        'EVAL_TYPE': {'type': 'string', 'required': True},
+    }
 
     @classmethod
     def from_data(cls, data: EvaluationData) -> 'Evaluation':
-        cls._verify_schema(data)
+        validator = cerberus.Validator(cls.SCHEMA, allow_unknown=True)
+        if not validator.validate(data):
+            raise InvalidInputDataException()
         eval_type = EvaluationType.from_code(data['EVAL_TYPE'])
         return Evaluation(evaluation_type=eval_type)
 
@@ -58,17 +60,19 @@ class Dwelling:
         self._house_id = house_id
         self._evaluations = evaluations
 
-    @staticmethod
-    def _verify_schema(data: DwellingData):
-        for row in data:
-            if 'EVAL_ID' not in row.keys():
-                raise InvalidInputDataException()
+    SCHEMA = {
+        'EVAL_TYPE': {'type': 'string', 'required': True},
+    }
 
     @classmethod
     def from_data(cls, data: DwellingData) -> 'Dwelling':
         data = list(data)
         if data:
-            cls._verify_schema(data)
+            validator = cerberus.Validator(cls.SCHEMA, allow_unknown=True)
+
+            if not all([validator.validate(row) for row in data]):
+                raise InvalidInputDataException()
+
             house_id = data[0]['EVAL_ID']
             evaluations = [Evaluation.from_data(row) for row in data]
             return Dwelling(
