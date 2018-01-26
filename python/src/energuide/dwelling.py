@@ -31,12 +31,57 @@ class EvaluationType(enum.Enum):
             raise InvalidInputDataException()
 
 
+@enum.unique
+class Region(enum.Enum):
+    BRITISH_COLUMBIA = 'BC'
+    ALBERTA = 'AB'
+    SASKATCHEWAN = 'SK'
+    MANITOBA = 'MB'
+    ONTARIO = 'ON'
+    QUEBEC = 'QC'
+    NEW_BRUNSWICK = 'NB'
+    PRINCE_EDWARD_ISLAND = 'PE'
+    NOVA_SCOTIA = 'NS'
+    NEWFOUNDLAND_AND_LABRADOR = 'NL'
+    YUKON = 'YT'
+    NORTHWEST_TERRITORIES = 'NT'
+    NUNAVUT = 'NU'
+    UNKNOWN = '??'
+
+    @classmethod
+    def _from_name(cls, name: str) -> typing.Optional['Region']:
+        snake_name = name.upper().replace(' ', '_')
+        return Region[snake_name] if snake_name in Region.__members__ else None
+
+    @classmethod
+    def _from_code(cls, code: str) -> typing.Optional['Region']:
+        code = code.upper()
+        for region in Region:
+            if code == region.value:
+                return region
+        return None
+
+    @classmethod
+    def from_data(cls, data: str) -> 'Region':
+        output = cls._from_name(data)
+        if not output:
+            output = cls._from_code(data)
+        if not output:
+            output = Region.UNKNOWN
+        return output
+
+
 class _ParsedDwellingDataRow(typing.NamedTuple):
     eval_id: int
     eval_type: EvaluationType
     entry_date: datetime.date
     creation_date: datetime.datetime
     modification_date: datetime.datetime
+    year_built: int
+    city: str
+    region: Region
+    postal_code: str
+    forward_sortation_area: str
 
 
 class ParsedDwellingDataRow(_ParsedDwellingDataRow):
@@ -47,13 +92,18 @@ class ParsedDwellingDataRow(_ParsedDwellingDataRow):
         'ENTRYDATE': {'type': 'string', 'required': True},
         'CREATIONDATE': {'type': 'string', 'required': True},
         'MODIFICATIONDATE': {'type': 'string', 'required': True},
+        'YEARBUILT': {'type': 'integer', 'required': True},
+        'CLIENTCITY': {'type': 'string', 'required': True},
+        'CLIENTPCODE': {'type': 'string', 'required': True, 'regex': '[A-Z][0-9][A-Z] [0-9][A-Z][0-9]'},
+        'HOUSEREGION': {'type': 'string', 'required': True},
     }
 
     @classmethod
     def from_row(cls, row: EvaluationData) -> 'ParsedDwellingDataRow':
         validator = cerberus.Validator(cls._SCHEMA, allow_unknown=True)
         if not validator.validate(row):
-            raise InvalidInputDataException()
+            error_keys = ', '.join(validator.errors.keys())
+            raise InvalidInputDataException(f'Validator failed on keys: {error_keys}')
 
         return ParsedDwellingDataRow(
             eval_id=row['EVAL_ID'],
@@ -61,6 +111,11 @@ class ParsedDwellingDataRow(_ParsedDwellingDataRow):
             entry_date=parser.parse(row['ENTRYDATE']).date(),
             creation_date=parser.parse(row['CREATIONDATE']),
             modification_date=parser.parse(row['MODIFICATIONDATE']),
+            year_built=row['YEARBUILT'],
+            city=row['CLIENTCITY'],
+            region=Region.from_data(row['HOUSEREGION']),
+            postal_code=row['CLIENTPCODE'],
+            forward_sortation_area=row['CLIENTPCODE'][0:3]
         )
 
 
@@ -107,8 +162,18 @@ class Dwelling:
 
     def __init__(self, *,
                  house_id: int,
+                 year_built: int,
+                 city: str,
+                 region: Region,
+                 postal_code: str,
+                 forward_sortation_area: str,
                  evaluations: typing.List[Evaluation]) -> None:
         self._house_id = house_id
+        self._year_built = year_built
+        self._city = city
+        self._region = region
+        self._postal_code = postal_code
+        self._forward_sortation_area = forward_sortation_area
         self._evaluations = evaluations
 
     @classmethod
@@ -117,6 +182,11 @@ class Dwelling:
             evaluations = [Evaluation.from_data(row) for row in data]
             return Dwelling(
                 house_id=data[0].eval_id,
+                year_built=data[0].year_built,
+                city=data[0].city,
+                region=data[0].region,
+                postal_code=data[0].postal_code,
+                forward_sortation_area=data[0].forward_sortation_area,
                 evaluations=evaluations,
             )
         else:
@@ -125,6 +195,26 @@ class Dwelling:
     @property
     def house_id(self) -> int:
         return self._house_id
+
+    @property
+    def year_built(self) -> int:
+        return self._year_built
+
+    @property
+    def city(self) -> str:
+        return self._city
+
+    @property
+    def region(self) -> Region:
+        return self._region
+
+    @property
+    def postal_code(self) -> str:
+        return self._postal_code
+
+    @property
+    def forward_sortation_area(self) -> str:
+        return self._forward_sortation_area
 
     @property
     def evaluations(self) -> typing.List[Evaluation]:
