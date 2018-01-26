@@ -14,6 +14,10 @@ def sample_eval_d() -> dwelling.EvaluationData:
         'ENTRYDATE': '2018-01-01',
         'CREATIONDATE': '2018-01-08 09:00:00',
         'MODIFICATIONDATE': '2018-06-01 09:00:00',
+        'CLIENTCITY': 'Ottawa',
+        'CLIENTPCODE': 'K1P 0A6',
+        'HOUSEREGION': 'Ontario',
+        'YEARBUILT': 2000,
     }
 
 
@@ -30,6 +34,10 @@ def sample_eval_e() -> dwelling.EvaluationData:
         'ENTRYDATE': '2018-02-01',
         'CREATIONDATE': '2018-02-08 09:00:00',
         'MODIFICATIONDATE': '2018-06-01 09:00:00',
+        'CLIENTCITY': 'Montreal',
+        'CLIENTPCODE': 'G1A 1A3',
+        'HOUSEREGION': 'Quebec',
+        'YEARBUILT': 2001,
     }
 
 
@@ -56,14 +64,26 @@ class TestParsedDwellingDataRow:
             entry_date=datetime.date(2018, 1, 1),
             creation_date=datetime.datetime(2018, 1, 8, 9),
             modification_date=datetime.datetime(2018, 6, 1, 9),
+            year_built=2000,
+            city='Ottawa',
+            region=dwelling.Region.ONTARIO,
+            postal_code='K1P 0A6',
+            forward_sortation_area='K1P',
         )
+
+    def test_bad_postal_code(self, sample_eval_d: dwelling.EvaluationData) -> None:
+        sample_eval_d['CLIENTPCODE'] = 'K1P 016'
+        with pytest.raises(dwelling.InvalidInputDataException):
+            dwelling.ParsedDwellingDataRow.from_row(sample_eval_d)
 
     def test_from_bad_row(self) -> None:
         input_data = {
-            'eval_id': 123
+            'EVAL_ID': 123
         }
-        with pytest.raises(dwelling.InvalidInputDataException):
+        with pytest.raises(dwelling.InvalidInputDataException) as ex:
             dwelling.ParsedDwellingDataRow.from_row(input_data)
+        assert 'EVAL_TYPE' in ex.exconly()
+        assert 'EVAL_ID' not in ex.exconly()
 
 
 class TestDwellingEvaluation:
