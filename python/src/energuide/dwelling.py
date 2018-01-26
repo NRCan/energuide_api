@@ -14,7 +14,6 @@ class InvalidInputDataException(Exception):
 
 
 EvaluationData = typing.Dict[str, typing.Any]
-DwellingData = typing.Iterable[EvaluationData]
 
 
 @enum.unique
@@ -32,6 +31,39 @@ class EvaluationType(enum.Enum):
             raise InvalidInputDataException()
 
 
+class _ParsedDwellingDataRow(typing.NamedTuple):
+    eval_id: int
+    eval_type: EvaluationType
+    entry_date: datetime.date
+    creation_date: datetime.datetime
+    modification_date: datetime.datetime
+
+
+class ParsedDwellingDataRow(_ParsedDwellingDataRow):
+
+    _SCHEMA = {
+        'EVAL_ID': {'type': 'integer', 'required': True},
+        'EVAL_TYPE': {'type': 'string', 'required': True, 'allowed': [eval_type.value for eval_type in EvaluationType]},
+        'ENTRYDATE': {'type': 'string', 'required': True},
+        'CREATIONDATE': {'type': 'string', 'required': True},
+        'MODIFICATIONDATE': {'type': 'string', 'required': True},
+    }
+
+    @classmethod
+    def from_row(cls, row: EvaluationData) -> 'ParsedDwellingDataRow':
+        validator = cerberus.Validator(cls._SCHEMA, allow_unknown=True)
+        if not validator.validate(row):
+            raise InvalidInputDataException()
+
+        return ParsedDwellingDataRow(
+            eval_id=row['EVAL_ID'],
+            eval_type=EvaluationType.from_code(row['EVAL_TYPE']),
+            entry_date=parser.parse(row['ENTRYDATE']).date(),
+            creation_date=parser.parse(row['CREATIONDATE']),
+            modification_date=parser.parse(row['MODIFICATIONDATE']),
+        )
+
+
 class Evaluation:
 
     def __init__(self, *,
@@ -45,25 +77,13 @@ class Evaluation:
         self._creation_date = creation_date
         self._modification_date = modification_date
 
-    SCHEMA = {
-        'EVAL_TYPE': {'type': 'string', 'required': True},
-        'ENTRYDATE': {'type': 'string', 'required': True},
-        'CREATIONDATE': {'type': 'string', 'required': True},
-        'MODIFICATIONDATE': {'type': 'string', 'required': True},
-    }
-
     @classmethod
-    def from_data(cls, data: EvaluationData) -> 'Evaluation':
-        validator = cerberus.Validator(cls.SCHEMA, allow_unknown=True)
-        if not validator.validate(data):
-            raise InvalidInputDataException()
-
-        eval_type = EvaluationType.from_code(data['EVAL_TYPE'])
+    def from_data(cls, data: ParsedDwellingDataRow) -> 'Evaluation':
         return Evaluation(
-            evaluation_type=eval_type,
-            entry_date=parser.parse(data['ENTRYDATE']).date(),
-            creation_date=parser.parse(data['CREATIONDATE']),
-            modification_date=parser.parse(data['MODIFICATIONDATE']),
+            evaluation_type=data.eval_type,
+            entry_date=data.entry_date,
+            creation_date=data.creation_date,
+            modification_date=data.modification_date,
         )
 
     @property
@@ -91,23 +111,12 @@ class Dwelling:
         self._house_id = house_id
         self._evaluations = evaluations
 
-    SCHEMA = {
-        'EVAL_ID': {'type': 'integer', 'required': True},
-    }
-
     @classmethod
-    def from_data(cls, data: DwellingData) -> 'Dwelling':
-        data = list(data)
+    def from_data(cls, data: typing.List[ParsedDwellingDataRow]) -> 'Dwelling':
         if data:
-            validator = cerberus.Validator(cls.SCHEMA, allow_unknown=True)
-
-            if not all([validator.validate(row) for row in data]):
-                raise InvalidInputDataException()
-
-            house_id = data[0]['EVAL_ID']
             evaluations = [Evaluation.from_data(row) for row in data]
             return Dwelling(
-                house_id=house_id,
+                house_id=data[0].eval_id,
                 evaluations=evaluations,
             )
         else:
