@@ -18,7 +18,7 @@ class Dwelling:
         self._house_id = house_id
 
     @staticmethod
-    def verify_schema(data: DwellingData):
+    def _verify_schema(data: DwellingData):
         for row in data:
             if 'EVAL_ID' not in row.keys():
                 raise InvalidInputDataException()
@@ -27,7 +27,7 @@ class Dwelling:
     def from_data(cls, data: DwellingData) -> 'Dwelling':
         data = list(data)
         if data:
-            cls.verify_schema(data)
+            cls._verify_schema(data)
             house_id = data[0]['EVAL_ID']
             return Dwelling(house_id=house_id)
         else:
