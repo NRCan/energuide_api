@@ -54,6 +54,42 @@ class TestEvaluationType:
         assert output == dwelling.EvaluationType.PRE_RETROFIT
 
 
+class TestRegion:
+
+    def test_from_name(self):
+        data = [
+            'Ontario',
+            'british columbia',
+            'NOVA SCOTIA',
+        ]
+        output = [dwelling.Region.from_data(row) for row in data]
+
+        assert output == [
+            dwelling.Region.ONTARIO,
+            dwelling.Region.BRITISH_COLUMBIA,
+            dwelling.Region.NOVA_SCOTIA,
+        ]
+
+    def test_from_unknown_name(self):
+        assert dwelling.Region.from_data('foo') == dwelling.Region.UNKNOWN
+
+    def test_from_code(self):
+        data = [
+            'ON',
+            'bc',
+            'Ns',
+        ]
+        output = [dwelling.Region.from_data(row) for row in data]
+        assert output == [
+            dwelling.Region.ONTARIO,
+            dwelling.Region.BRITISH_COLUMBIA,
+            dwelling.Region.NOVA_SCOTIA,
+        ]
+
+    def test_from_unknown_code(self):
+        assert dwelling.Region.from_data('CA') == dwelling.Region.UNKNOWN
+
+
 class TestParsedDwellingDataRow:
 
     def test_from_row(self, sample_eval_d: dwelling.EvaluationData) -> None:

@@ -51,8 +51,7 @@ class Region(enum.Enum):
     @classmethod
     def _from_name(cls, name: str) -> typing.Optional['Region']:
         snake_name = name.upper().replace(' ', '_')
-        if snake_name in Region.__members__:
-            return Region[snake_name]
+        return Region[snake_name] if snake_name in Region.__members__ else None
 
     @classmethod
     def _from_code(cls, code: str) -> typing.Optional['Region']:
@@ -60,6 +59,7 @@ class Region(enum.Enum):
         for region in Region:
             if code == region.value:
                 return region
+        return None
 
     @classmethod
     def from_data(cls, data: str) -> 'Region':
