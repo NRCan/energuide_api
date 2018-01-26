@@ -1,8 +1,8 @@
 import datetime
-from dateutil import parser
 import enum
 import typing
 import cerberus
+from dateutil import parser
 
 
 class NoInputDataException(Exception):
@@ -37,13 +37,19 @@ class Evaluation:
     def __init__(self, *,
                  evaluation_type: EvaluationType,
                  entry_date: datetime.date,
-                 ) -> None:
+                 creation_date: datetime.datetime,
+                 modification_date: datetime.datetime
+                ) -> None:
         self._evaluation_type = evaluation_type
         self._entry_date = entry_date
+        self._creation_date = creation_date
+        self._modification_date = modification_date
 
     SCHEMA = {
         'EVAL_TYPE': {'type': 'string', 'required': True},
         'ENTRYDATE': {'type': 'string', 'required': True},
+        'CREATIONDATE': {'type': 'string', 'required': True},
+        'MODIFICATIONDATE': {'type': 'string', 'required': True},
     }
 
     @classmethod
@@ -56,6 +62,8 @@ class Evaluation:
         return Evaluation(
             evaluation_type=eval_type,
             entry_date=parser.parse(data['ENTRYDATE']).date(),
+            creation_date=parser.parse(data['CREATIONDATE']),
+            modification_date=parser.parse(data['MODIFICATIONDATE']),
         )
 
     @property
@@ -65,6 +73,14 @@ class Evaluation:
     @property
     def entry_date(self) -> datetime.date:
         return self._entry_date
+
+    @property
+    def creation_date(self) -> datetime.datetime:
+        return self._creation_date
+
+    @property
+    def modification_date(self) -> datetime.datetime:
+        return self._modification_date
 
 
 class Dwelling:
