@@ -1,3 +1,4 @@
+import datetime
 import typing
 import pytest
 from energuide import dwelling
@@ -10,6 +11,7 @@ def sample_eval_d() -> dwelling.EvaluationData:
     return {
         'EVAL_ID': 123,
         'EVAL_TYPE': 'D',
+        'ENTRYDATE': '2018-01-01',
     }
 
 
@@ -18,6 +20,7 @@ def sample_eval_e() -> dwelling.EvaluationData:
     return {
         'EVAL_ID': 123,
         'EVAL_TYPE': 'E',
+        'ENTRYDATE': '2018-02-01',
     }
 
 
@@ -34,6 +37,10 @@ class TestDwellingEvaluation:
     def test_eval_type(self, sample_eval_d: dwelling.EvaluationData) -> None:
         output = dwelling.Evaluation.from_data(sample_eval_d)
         assert output.evaluation_type == dwelling.EvaluationType.PRE_RETROFIT
+
+    def test_entry_date(self, sample_eval_d: dwelling.EvaluationData):
+        output = dwelling.Evaluation.from_data(sample_eval_d)
+        assert output.entry_date == datetime.date(2018, 1, 1)
 
     def test_no_data(self) -> None:
         data: dwelling.EvaluationData = {}
