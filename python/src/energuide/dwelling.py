@@ -157,6 +157,14 @@ class Evaluation:
     def modification_date(self) -> datetime.datetime:
         return self._modification_date
 
+    def to_dict(self) -> typing.Dict[str, typing.Any]:
+        return {
+            'evaluationType': self.evaluation_type.name,
+            'entryDate': self.entry_date,
+            'creationDate': self.creation_date,
+            'modificationDate': self.modification_date,
+        }
+
 
 class Dwelling:
 
@@ -219,3 +227,13 @@ class Dwelling:
     @property
     def evaluations(self) -> typing.List[Evaluation]:
         return self._evaluations
+
+    def to_dict(self) -> typing.Dict[str, typing.Any]:
+        return {
+            'houseId': self.house_id,
+            'yearBuilt': self.year_built,
+            'city': self.city,
+            'region': self.region,
+            'forwardSortationArea': self.forward_sortation_area,
+            'evaluations': [evaluation.to_dict() for evaluation in self.evaluations]
+        }

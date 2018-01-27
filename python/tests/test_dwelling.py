@@ -140,6 +140,10 @@ class TestDwellingEvaluation:
         output = dwelling.Evaluation.from_data(sample_parsed_d)
         assert output.modification_date == datetime.datetime(2018, 6, 1, 9)
 
+    def test_to_dict(self, sample_parsed_d: dwelling.ParsedDwellingDataRow) -> None:
+        output = dwelling.Evaluation.from_data(sample_parsed_d).to_dict()
+        assert output['evaluationType'] == 'PRE_RETROFIT'
+
 
 class TestDwelling:
 
@@ -173,3 +177,9 @@ class TestDwelling:
         data: typing.List[typing.Any] = []
         with pytest.raises(dwelling.NoInputDataException):
             dwelling.Dwelling.from_data(data)
+
+    def test_to_dict(self, sample: typing.List[dwelling.ParsedDwellingDataRow]) -> None:
+        output = dwelling.Dwelling.from_data(sample).to_dict()
+        assert output['houseId'] == 123
+        assert len(output['evaluations']) == 2
+        assert 'postalCode' not in output
