@@ -65,4 +65,8 @@ def mongo_client(database_coordinates: database.DatabaseCoordinates) -> typing.I
 
 @pytest.fixture
 def energuide_fixture() -> str:
+    return os.path.join(os.path.dirname(__file__), 'randomized_energuide_data.csv')
+
+@pytest.fixture
+def sample_fixture() -> str:
     return os.path.join(os.path.dirname(__file__), 'sample.csv')

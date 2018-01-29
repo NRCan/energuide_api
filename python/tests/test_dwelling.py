@@ -143,7 +143,7 @@ class TestDwellingEvaluation:
 
     def test_to_dict(self, sample_parsed_d: dwelling.ParsedDwellingDataRow) -> None:
         output = dwelling.Evaluation.from_data(sample_parsed_d).to_dict()
-        assert output['evaluationType'] == dwelling.EvaluationType.PRE_RETROFIT
+        assert output['evaluationType'] == dwelling.EvaluationType.PRE_RETROFIT.value
 
 
 class TestDwelling:

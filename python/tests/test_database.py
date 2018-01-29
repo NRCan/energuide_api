@@ -7,8 +7,8 @@ from energuide import dwelling
 
 
 @pytest.fixture
-def energuide_data(energuide_fixture: str) -> pd.DataFrame:
-    return pd.read_csv(energuide_fixture)
+def energuide_data(sample_fixture: str) -> pd.DataFrame:
+    return pd.read_csv(sample_fixture)
 
 
 @pytest.fixture

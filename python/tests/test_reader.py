@@ -20,8 +20,8 @@ def sample() -> typing.List[reader.InputData]:
     ]
 
 
-def test_read(energuide_fixture: str):
-    data = reader.read(energuide_fixture)
+def test_read(sample_fixture: str):
+    data = reader.read(sample_fixture)
 
     expected = [{'EVAL_ID': '123456',
                  'IDNUMBER': '23',

@@ -125,4 +125,4 @@ def test_run(database_coordinates: database.DatabaseCoordinates,
              energuide_fixture: str) -> None:
 
     transform.run(database_coordinates, database_name, collection, energuide_fixture)
-    assert mongo_client[database_name][collection].count() == 3
+    assert mongo_client[database_name][collection].count() == 7
