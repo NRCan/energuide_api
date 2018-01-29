@@ -119,4 +119,38 @@ describe('queries', () => {
     let { evaluationsFor } = response.body.data
     expect(evaluationsFor.yearBuilt).toEqual('1980')
   })
+
+  it('filters the results', async () => {
+    let geocoded = testData.slice()
+    geocoded[0].location = {
+      type: 'Point',
+      coordinates: [-79.348650200148, 43.8036022863624],
+    }
+
+    await collection.insertMany(geocoded)
+
+    let server = new Server({
+      client: collection,
+    })
+
+    let response = await request(server)
+      .post('/graphql')
+      .set('Content-Type', 'application/json; charset=utf-8')
+      .send({
+        query: `{
+           evaluations(filter: {field: yearBuilt gt: "1979"} withinPolygon: [
+            {lng: -150.82031249999997, lat: -0.3515602939922709}
+            {lng: -41.8359375, lat: -0.3515602939922709},
+            {lng: -41.8359375, lat: 73.62778879339942},
+            {lng: -150.82031249999997, lat: 73.62778879339942},
+            {lng: -150.82031249999997, lat: -0.3515602939922709},
+          ]) {
+          yearBuilt
+        }
+      }`,
+      })
+
+    let { evaluations: [first] } = response.body.data
+    expect(first.yearBuilt).toEqual('1980')
+  })
 })
