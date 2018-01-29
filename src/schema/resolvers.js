@@ -1,6 +1,8 @@
 import Longitude from './types/Longitude'
 import Latitude from './types/Latitude'
 import PostalCode from './types/PostalCode'
+import {GraphQLError} from 'graphql'
+import { comparators, hasMoreThanOneComparator } from '../utilities'
 
 const resolvers = {
   Longitude,
@@ -19,6 +21,12 @@ const resolvers = {
       return Object.assign({}, ...results)
     },
     evaluations: async (root, { filter, withinPolygon }, { client }) => {
+
+      if (hasMoreThanOneComparator(filter)) {
+        return new GraphQLError(
+          `You can only use ${Object.keys(comparators)} one at a time`,
+        )
+      }
       let coordinates = withinPolygon.map(el => [el.lng, el.lat])
       let query = {
         $and: [
@@ -33,13 +41,6 @@ const resolvers = {
             },
           },
         ],
-      }
-
-      // Mongodb filter map:
-      const comparators = {
-        gt: '$gt',
-        lt: '$lt',
-        eq: '$eq',
       }
 
       // { field: 'yearBuilt', gt: '1990' }
