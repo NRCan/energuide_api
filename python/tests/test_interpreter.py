@@ -114,7 +114,7 @@ class TestParsedDwellingDataRow:
 
     def test_from_bad_row(self) -> None:
         input_data = {
-            'EVAL_ID': '123'
+            'EVAL_ID': 123
         }
         with pytest.raises(interpreter.InvalidInputDataException) as ex:
             interpreter.ParsedDwellingDataRow.from_row(input_data)
@@ -122,7 +122,7 @@ class TestParsedDwellingDataRow:
         assert 'EVAL_ID' not in ex.exconly()
 
 
-def test_read(energuide_fixture: str,):
+def test_read(energuide_fixture: str):
     data = interpreter.read(energuide_fixture)
 
     expected = [{'EVAL_ID': '123456',
@@ -152,37 +152,6 @@ def test_read(energuide_fixture: str,):
 
     assert list(data) == expected
 
-def chunked():
-    yield [{'EVAL_ID': 123456,
-            'IDNUMBER': '23',
-            'EVAL_TYPE': 'E',
-            'CREATIONDATE': '2009-01-01 12:00:00',
-            'MODIFICATIONDATE': '2011-01-01 00:00:00',
-            'ENTRYDATE': '2018-02-01',
-            'YEARBUILT': 1979,
-            'HOUSEREGION': 'Ontario',
-            'CLIENTCITY': 'Kingston',
-            'CLIENTPCODE': 'K0H 1Y0'},
-           {'EVAL_ID': 123457,
-            'IDNUMBER': '24',
-            'EVAL_TYPE': 'E',
-            'CREATIONDATE': '2009-01-02 12:00:00',
-            'MODIFICATIONDATE': '2011-01-02 00:00:00',
-            'ENTRYDATE': '2018-02-01',
-            'YEARBUILT': 1978,
-            'HOUSEREGION': 'Alberta',
-            'CLIENTCITY': 'Kingston',
-            'CLIENTPCODE': 'K0H 1Y1'},
-           {'EVAL_ID': 123458,
-            'IDNUMBER': '25',
-            'EVAL_TYPE': 'E',
-            'CREATIONDATE': '2009-01-03 12:00:00',
-            'MODIFICATIONDATE': '2011-01-03 00:00:00',
-            'ENTRYDATE': '2018-02-01',
-            'YEARBUILT': 1980,
-            'HOUSEREGION': 'Quebec',
-            'CLIENTCITY': 'Kingston',
-            'CLIENTPCODE': 'K0H 1Y2'}]
 
 @pytest.fixture
 def chunked_data() -> typing.Iterator[typing.List[interpreter.InputData]]:
