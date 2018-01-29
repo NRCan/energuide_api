@@ -179,7 +179,7 @@ class Dwelling:
         self._evaluations = evaluations
 
     @classmethod
-    def from_data(cls, data: typing.List[ParsedDwellingDataRow]) -> 'Dwelling':
+    def _from_parsed_group(cls, data: typing.List[ParsedDwellingDataRow]) -> 'Dwelling':
         if data:
             evaluations = [Evaluation.from_data(row) for row in data]
             return Dwelling(
@@ -193,6 +193,11 @@ class Dwelling:
             )
         else:
             raise NoInputDataException()
+
+    @classmethod
+    def from_group(cls, data: typing.List[reader.InputData]) -> 'Dwelling':
+        parsed_data = [ParsedDwellingDataRow.from_row(row) for row in data]
+        return cls._from_parsed_group(parsed_data)
 
     @property
     def house_id(self) -> int:

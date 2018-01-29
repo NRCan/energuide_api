@@ -8,39 +8,7 @@ from energuide import dwelling, reader
 
 
 @pytest.fixture
-def sample_parsed_d() -> dwelling.ParsedDwellingDataRow:
-    return dwelling.ParsedDwellingDataRow(
-        eval_id=123,
-        eval_type=dwelling.EvaluationType.PRE_RETROFIT,
-        entry_date=datetime.date(2018, 1, 1),
-        creation_date=datetime.datetime(2018, 1, 8, 9),
-        modification_date=datetime.datetime(2018, 6, 1, 9),
-        city='Ottawa',
-        region=dwelling.Region.ONTARIO,
-        postal_code='K1P 0A6',
-        forward_sortation_area='K1P',
-        year_built=2000
-    )
-
-
-@pytest.fixture
-def sample_parsed_e() -> dwelling.ParsedDwellingDataRow:
-    return dwelling.ParsedDwellingDataRow(
-        eval_id=123,
-        eval_type=dwelling.EvaluationType.POST_RETROFIT,
-        entry_date=datetime.date(2018, 2, 1),
-        creation_date=datetime.datetime(2018, 2, 8, 9),
-        modification_date=datetime.datetime(2018, 6, 1, 9),
-        city='Montreal',
-        region=dwelling.Region.QUEBEC,
-        postal_code='G1A 1A3',
-        forward_sortation_area='G1A',
-        year_built=2001,
-    )
-
-
-@pytest.fixture
-def sample_eval_d() -> reader.InputData:
+def sample_input_d() -> reader.InputData:
     return {
         'EVAL_ID': 123,
         'EVAL_TYPE': 'D',
@@ -55,7 +23,7 @@ def sample_eval_d() -> reader.InputData:
 
 
 @pytest.fixture
-def sample_eval_e() -> reader.InputData:
+def sample_input_e() -> reader.InputData:
     return {
         'EVAL_ID': 123,
         'EVAL_TYPE': 'E',
@@ -67,6 +35,16 @@ def sample_eval_e() -> reader.InputData:
         'HOUSEREGION': 'Quebec',
         'YEARBUILT': 2001,
     }
+
+
+@pytest.fixture
+def sample_parsed_d(sample_input_d: reader.InputData) -> dwelling.ParsedDwellingDataRow:
+    return dwelling.ParsedDwellingDataRow.from_row(sample_input_d)
+
+
+@pytest.fixture
+def sample_parsed_e(sample_input_e: reader.InputData) -> dwelling.ParsedDwellingDataRow:
+    return dwelling.ParsedDwellingDataRow.from_row(sample_input_e)
 
 
 class TestEvaluationType:
@@ -115,8 +93,8 @@ class TestRegion:
 
 class TestParsedDwellingDataRow:
 
-    def test_from_row(self, sample_eval_d: reader.InputData) -> None:
-        output = dwelling.ParsedDwellingDataRow.from_row(sample_eval_d)
+    def test_from_row(self, sample_input_d: reader.InputData) -> None:
+        output = dwelling.ParsedDwellingDataRow.from_row(sample_input_d)
         assert output == dwelling.ParsedDwellingDataRow(
             eval_id=123,
             eval_type=dwelling.EvaluationType.PRE_RETROFIT,
@@ -130,10 +108,10 @@ class TestParsedDwellingDataRow:
             forward_sortation_area='K1P',
         )
 
-    def test_bad_postal_code(self, sample_eval_d: reader.InputData) -> None:
-        sample_eval_d['CLIENTPCODE'] = 'K1P 016'
+    def test_bad_postal_code(self, sample_input_d: reader.InputData) -> None:
+        sample_input_d['CLIENTPCODE'] = 'K1P 016'
         with pytest.raises(reader.InvalidInputDataException):
-            dwelling.ParsedDwellingDataRow.from_row(sample_eval_d)
+            dwelling.ParsedDwellingDataRow.from_row(sample_input_d)
 
     def test_from_bad_row(self) -> None:
         input_data = {
@@ -172,37 +150,37 @@ class TestDwelling:
 
     @pytest.fixture
     def sample(self,
-               sample_parsed_d: dwelling.ParsedDwellingDataRow,
-               sample_parsed_e: dwelling.ParsedDwellingDataRow,
-              ) -> typing.List[dwelling.ParsedDwellingDataRow]:
-        return [sample_parsed_d, sample_parsed_e]
+               sample_input_d: reader.InputData,
+               sample_input_e: reader.InputData,
+              ) -> typing.List[reader.InputData]:
+        return [sample_input_d, sample_input_e]
 
-    def test_house_id(self, sample: typing.List[dwelling.ParsedDwellingDataRow]) -> None:
-        output = dwelling.Dwelling.from_data(sample)
+    def test_house_id(self, sample: typing.List[reader.InputData]) -> None:
+        output = dwelling.Dwelling.from_group(sample)
         assert output.house_id == 123
 
-    def test_year_built(self, sample: typing.List[dwelling.ParsedDwellingDataRow]) -> None:
-        output = dwelling.Dwelling.from_data(sample)
+    def test_year_built(self, sample: typing.List[reader.InputData]) -> None:
+        output = dwelling.Dwelling.from_group(sample)
         assert output.year_built == 2000
 
-    def test_address_data(self, sample: typing.List[dwelling.ParsedDwellingDataRow]) -> None:
-        output = dwelling.Dwelling.from_data(sample)
+    def test_address_data(self, sample: typing.List[reader.InputData]) -> None:
+        output = dwelling.Dwelling.from_group(sample)
         assert output.city == 'Ottawa'
         assert output.region == dwelling.Region.ONTARIO
         assert output.postal_code == 'K1P 0A6'
         assert output.forward_sortation_area == 'K1P'
 
-    def test_evaluations(self, sample: typing.List[dwelling.ParsedDwellingDataRow]) -> None:
-        output = dwelling.Dwelling.from_data(sample)
+    def test_evaluations(self, sample: typing.List[reader.InputData]) -> None:
+        output = dwelling.Dwelling.from_group(sample)
         assert len(output.evaluations) == 2
 
     def test_no_data(self) -> None:
         data: typing.List[typing.Any] = []
         with pytest.raises(dwelling.NoInputDataException):
-            dwelling.Dwelling.from_data(data)
+            dwelling.Dwelling.from_group(data)
 
-    def test_to_dict(self, sample: typing.List[dwelling.ParsedDwellingDataRow]) -> None:
-        output = dwelling.Dwelling.from_data(sample).to_dict()
+    def test_to_dict(self, sample: typing.List[reader.InputData]) -> None:
+        output = dwelling.Dwelling.from_group(sample).to_dict()
         assert output['houseId'] == 123
         assert len(output['evaluations']) == 2
         assert 'postalCode' not in output
