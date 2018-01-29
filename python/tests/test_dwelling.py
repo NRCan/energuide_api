@@ -184,3 +184,4 @@ class TestDwelling:
         assert output['houseId'] == 123
         assert len(output['evaluations']) == 2
         assert 'postalCode' not in output
+        assert output['region'] == dwelling.Region.ONTARIO.value

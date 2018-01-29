@@ -232,7 +232,7 @@ class Dwelling:
             'houseId': self.house_id,
             'yearBuilt': self.year_built,
             'city': self.city,
-            'region': self.region,
+            'region': self.region.value,
             'forwardSortationArea': self.forward_sortation_area,
             'evaluations': [evaluation.to_dict() for evaluation in self.evaluations]
         }
