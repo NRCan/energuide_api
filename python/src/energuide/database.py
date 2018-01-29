@@ -79,9 +79,9 @@ def _chunk_data(data: typing.Iterable[dwelling.Dwelling],
 
 
 def load(coords: DatabaseCoordinates,
-                 database_name: str,
-                 collection_name: str,
-                 data: typing.Iterable[dwelling.Dwelling]) -> None:
+         database_name: str,
+         collection_name: str,
+         data: typing.Iterable[dwelling.Dwelling]) -> None:
     client: pymongo.MongoClient
     with mongo_client(coords) as client:
         database = client[database_name]

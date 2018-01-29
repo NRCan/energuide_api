@@ -18,9 +18,9 @@ def load_data() -> typing.List[dwelling.Dwelling]:
 
 
 def test_load(database_coordinates: database.DatabaseCoordinates,
-                      mongo_client: pymongo.MongoClient,
-                      database_name: str,
-                      collection: str,
-                      load_data: typing.List[dwelling.Dwelling]):
+              mongo_client: pymongo.MongoClient,
+              database_name: str,
+              collection: str,
+              load_data: typing.List[dwelling.Dwelling]):
     database.load(database_coordinates, database_name, collection, load_data)
     assert mongo_client[database_name][collection].count() == 3
