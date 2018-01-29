@@ -1,3 +1,4 @@
+import csv
 import datetime
 import enum
 import typing
@@ -113,3 +114,10 @@ class ParsedDwellingDataRow(_ParsedDwellingDataRow):
             postal_code=row['CLIENTPCODE'],
             forward_sortation_area=row['CLIENTPCODE'][0:3]
         )
+
+
+def read(filename: str) -> typing.Iterator[InputData]:
+    with open(filename, 'r') as csvfile:
+        reader = csv.DictReader(csvfile)
+        for row in reader:
+            yield row
