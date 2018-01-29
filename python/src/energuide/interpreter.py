@@ -1,16 +1,12 @@
-import csv
 import datetime
 import enum
 import typing
 import cerberus
 from dateutil import parser
+from energuide import reader
 
 
-class InvalidInputDataException(Exception):
-    pass
 
-
-InputData = typing.Dict[str, typing.Any]
 
 
 @enum.unique
@@ -25,7 +21,7 @@ class EvaluationType(enum.Enum):
         elif code == cls.POST_RETROFIT.value:
             return EvaluationType.POST_RETROFIT
         else:
-            raise InvalidInputDataException()
+            raise reader.InvalidInputDataException()
 
 
 @enum.unique
@@ -96,11 +92,11 @@ class ParsedDwellingDataRow(_ParsedDwellingDataRow):
     }
 
     @classmethod
-    def from_row(cls, row: InputData) -> 'ParsedDwellingDataRow':
+    def from_row(cls, row: reader.InputData) -> 'ParsedDwellingDataRow':
         validator = cerberus.Validator(cls._SCHEMA, allow_unknown=True)
         if not validator.validate(row):
             error_keys = ', '.join(validator.errors.keys())
-            raise InvalidInputDataException(f'Validator failed on keys: {error_keys}')
+            raise reader.InvalidInputDataException(f'Validator failed on keys: {error_keys}')
 
         return ParsedDwellingDataRow(
             eval_id=row['EVAL_ID'],
@@ -114,10 +110,3 @@ class ParsedDwellingDataRow(_ParsedDwellingDataRow):
             postal_code=row['CLIENTPCODE'],
             forward_sortation_area=row['CLIENTPCODE'][0:3]
         )
-
-
-def read(filename: str) -> typing.Iterator[InputData]:
-    with open(filename, 'r') as csvfile:
-        reader = csv.DictReader(csvfile)
-        for row in reader:
-            yield row
