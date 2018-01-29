@@ -123,7 +123,7 @@ class TestParsedDwellingDataRow:
 
 def test_read(energuide_fixture: str):
     data = interpreter.read(energuide_fixture)
-    
+
     expected = [{'EVAL_ID': '123456',
                  'IDNUMBER': '23',
                  'CREATIONDATE': '2009-01-01 12:01:02',
