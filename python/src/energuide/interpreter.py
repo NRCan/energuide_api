@@ -118,12 +118,6 @@ class ParsedDwellingDataRow(_ParsedDwellingDataRow):
 
 def read(filename: str) -> typing.Iterator[InputData]:
     with open(filename, 'r') as csvfile:
-        reader = csv.reader(csvfile)
-        #pylint: disable=stop-iteration-return
-        columns = next(reader)
-
-        def to_dict(row) -> InputData:
-            return {k: v for k, v in zip(columns, row)}
-
+        reader = csv.DictReader(csvfile)
         for row in reader:
-            yield to_dict(row)
+            yield row
