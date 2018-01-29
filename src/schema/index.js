@@ -26,6 +26,7 @@ const Schema = i18n => {
     
     # ${i18n.t`This is a description of evaluations`}
     type Evaluation {
+      # ${i18n.t`Year of construction`}
       yearBuilt: String
       # ${i18n.t`Square footage of home`}
       evalId: String
@@ -443,6 +444,7 @@ const Schema = i18n => {
     }
 
     enum Field {
+      # ${i18n.t`Year of construction`}
       yearBuilt
       evalId
       idNumber
