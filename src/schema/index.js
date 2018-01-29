@@ -6,6 +6,7 @@ const Schema = i18n => {
     scalar Longitude
     scalar Latitude
     scalar PostalCode
+    scalar ForwardSortationArea
 
     input GeoPoint {
       lat: Latitude!
@@ -22,8 +23,9 @@ const Schema = i18n => {
     type Query {
       evaluationsFor(account: Int! postalCode: PostalCode!): Evaluation
       evaluations(filter: Filter withinPolygon: [GeoPoint]!): [Evaluation]
+      evaluationsInFSA(filter: Filter forwardSortationArea: ForwardSortationArea!): [Evaluation]
     }
-    
+
     # ${i18n.t`This is a description of evaluations`}
     type Evaluation {
       # ${i18n.t`Year of construction`}
