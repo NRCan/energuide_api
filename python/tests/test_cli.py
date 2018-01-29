@@ -14,4 +14,4 @@ def test_load(energuide_fixture: str, database_name: str, collection: str, mongo
     assert result.exit_code == 0
 
     coll = mongo_client.get_database(database_name).get_collection(collection)
-    assert coll.count() == 3
+    assert coll.count() == 7

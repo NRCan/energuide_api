@@ -81,12 +81,12 @@ class _ParsedDwellingDataRow(typing.NamedTuple):
 class ParsedDwellingDataRow(_ParsedDwellingDataRow):
 
     _SCHEMA = {
-        'EVAL_ID': {'type': 'integer', 'required': True},
+        'EVAL_ID': {'type': 'integer', 'required': True, 'coerce': int},
         'EVAL_TYPE': {'type': 'string', 'required': True, 'allowed': [eval_type.value for eval_type in EvaluationType]},
         'ENTRYDATE': {'type': 'string', 'required': True},
         'CREATIONDATE': {'type': 'string', 'required': True},
         'MODIFICATIONDATE': {'type': 'string', 'required': True},
-        'YEARBUILT': {'type': 'integer', 'required': True},
+        'YEARBUILT': {'type': 'integer', 'required': True, 'coerce': int},
         'CLIENTCITY': {'type': 'string', 'required': True},
         'CLIENTPCODE': {'type': 'string', 'required': True, 'regex': '[A-Z][0-9][A-Z] [0-9][A-Z][0-9]'},
         'HOUSEREGION': {'type': 'string', 'required': True},
@@ -153,14 +153,16 @@ class Evaluation:
 
     def to_dict(self) -> typing.Dict[str, typing.Any]:
         return {
-            'evaluationType': self.evaluation_type,
-            'entryDate': self.entry_date,
-            'creationDate': self.creation_date,
-            'modificationDate': self.modification_date,
+            'evaluationType': self.evaluation_type.value,
+            'entryDate': self.entry_date.isoformat(),
+            'creationDate': self.creation_date.isoformat(),
+            'modificationDate': self.modification_date.isoformat(),
         }
 
 
 class Dwelling:
+
+    GROUPING_FIELD = 'EVAL_ID'
 
     def __init__(self, *,
                  house_id: int,
