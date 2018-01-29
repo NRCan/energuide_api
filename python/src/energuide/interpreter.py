@@ -1,3 +1,4 @@
+import csv
 import datetime
 import enum
 import typing
@@ -113,3 +114,16 @@ class ParsedDwellingDataRow(_ParsedDwellingDataRow):
             postal_code=row['CLIENTPCODE'],
             forward_sortation_area=row['CLIENTPCODE'][0:3]
         )
+
+
+def read(filename: str) -> typing.Iterator[InputData]:
+    with open(filename, 'r') as csvfile:
+        reader = csv.reader(csvfile)
+        #pylint: disable=stop-iteration-return
+        columns = next(reader)
+
+        def to_dict(row) -> InputData:
+            return {k: v for k, v in zip(columns, row)}
+
+        for row in reader:
+            yield to_dict(row)
