@@ -1,5 +1,3 @@
-import datetime
-import pandas as pd
 from energuide import database, reader, dwelling
 
 
