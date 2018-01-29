@@ -1,12 +1,13 @@
 import datetime
 import pytest
+from energuide import reader
 from energuide import interpreter
 
 # pylint: disable=no-self-use
 
 
 @pytest.fixture
-def sample_eval_d() -> interpreter.InputData:
+def sample_eval_d() -> reader.InputData:
     return {
         'EVAL_ID': 123,
         'EVAL_TYPE': 'D',
@@ -21,12 +22,12 @@ def sample_eval_d() -> interpreter.InputData:
 
 
 @pytest.fixture
-def sample_parsed_d(sample_eval_d: interpreter.InputData) -> interpreter.ParsedDwellingDataRow:
+def sample_parsed_d(sample_eval_d: reader.InputData) -> interpreter.ParsedDwellingDataRow:
     return interpreter.ParsedDwellingDataRow.from_row(sample_eval_d)  # pylint: disable=no-member
 
 
 @pytest.fixture
-def sample_eval_e() -> interpreter.InputData:
+def sample_eval_e() -> reader.InputData:
     return {
         'EVAL_ID': 123,
         'EVAL_TYPE': 'E',
@@ -41,7 +42,7 @@ def sample_eval_e() -> interpreter.InputData:
 
 
 @pytest.fixture
-def sample_parsed_e(sample_eval_e: interpreter.InputData) -> interpreter.ParsedDwellingDataRow:
+def sample_parsed_e(sample_eval_e: reader.InputData) -> interpreter.ParsedDwellingDataRow:
     return interpreter.ParsedDwellingDataRow.from_row(sample_eval_e)
 
 
@@ -91,7 +92,7 @@ class TestRegion:
 
 class TestParsedDwellingDataRow:
 
-    def test_from_row(self, sample_eval_d: interpreter.InputData) -> None:
+    def test_from_row(self, sample_eval_d: reader.InputData) -> None:
         output = interpreter.ParsedDwellingDataRow.from_row(sample_eval_d)
         assert output == interpreter.ParsedDwellingDataRow(
             eval_id=123,
@@ -106,47 +107,16 @@ class TestParsedDwellingDataRow:
             forward_sortation_area='K1P',
         )
 
-    def test_bad_postal_code(self, sample_eval_d: interpreter.InputData) -> None:
+    def test_bad_postal_code(self, sample_eval_d: reader.InputData) -> None:
         sample_eval_d['CLIENTPCODE'] = 'K1P 016'
-        with pytest.raises(interpreter.InvalidInputDataException):
+        with pytest.raises(reader.InvalidInputDataException):
             interpreter.ParsedDwellingDataRow.from_row(sample_eval_d)
 
     def test_from_bad_row(self) -> None:
         input_data = {
             'EVAL_ID': 123
         }
-        with pytest.raises(interpreter.InvalidInputDataException) as ex:
+        with pytest.raises(reader.InvalidInputDataException) as ex:
             interpreter.ParsedDwellingDataRow.from_row(input_data)
         assert 'EVAL_TYPE' in ex.exconly()
         assert 'EVAL_ID' not in ex.exconly()
-
-
-def test_read(energuide_fixture: str):
-    data = interpreter.read(energuide_fixture)
-
-    expected = [{'EVAL_ID': '123456',
-                 'IDNUMBER': '23',
-                 'CREATIONDATE': '2009-01-01 12:01:02',
-                 'MODIFICATIONDATE': '2011-01-01 00:01:02',
-                 'YEARBUILT': '1979',
-                 'HOUSEREGION': 'Ontario',
-                 'CLIENTCITY': 'Kingston',
-                 'CLIENTPCODE': 'K0H 1Y0'},
-                {'EVAL_ID': '123457',
-                 'IDNUMBER': '24',
-                 'CREATIONDATE': '2009-01-02 12:01:02',
-                 'MODIFICATIONDATE': '2011-01-02 00:01:02',
-                 'YEARBUILT': '1978',
-                 'HOUSEREGION': 'Alberta',
-                 'CLIENTCITY': 'Kingston',
-                 'CLIENTPCODE': 'K0H 1Y1'},
-                {'EVAL_ID': '123458',
-                 'IDNUMBER': '25',
-                 'CREATIONDATE': '2009-01-03 12:01:02',
-                 'MODIFICATIONDATE': '2011-01-03 00:01:02',
-                 'YEARBUILT': '1980',
-                 'HOUSEREGION': 'Québec',
-                 'CLIENTCITY': 'Kingston',
-                 'CLIENTPCODE': 'K0H 1Y2'}]
-
-    assert list(data) == expected
