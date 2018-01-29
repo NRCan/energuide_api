@@ -4,7 +4,6 @@ import typing
 
 import os
 import pymongo
-import pandas as pd
 
 from energuide import dwelling
 
@@ -57,19 +56,6 @@ def mongo_client(database_coordinates: DatabaseCoordinates) -> typing.Iterable[p
         yield client
 
 
-def load(coords: DatabaseCoordinates,
-         database_name: str,
-         collection_name: str,
-         dataframe: pd.DataFrame) -> None:
-
-    client: pymongo.MongoClient
-    with mongo_client(coords) as client:
-        database = client[database_name]
-        collection = database[collection_name]
-
-        collection.insert_many(dataframe.to_dict('records'))
-
-
 _DEFAULT_CHUNK_SIZE = 1000
 
 
@@ -92,7 +78,7 @@ def _chunk_data(data: typing.Iterable[dwelling.Dwelling],
         yield chunked_list
 
 
-def grouped_load(coords: DatabaseCoordinates,
+def load(coords: DatabaseCoordinates,
                  database_name: str,
                  collection_name: str,
                  data: typing.Iterable[dwelling.Dwelling]) -> None:

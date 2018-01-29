@@ -9,4 +9,4 @@ def run(coords: database.DatabaseCoordinates,
     raw_data = reader.read(filename)
     grouped = reader.grouper(raw_data, dwelling.Dwelling.GROUPING_FIELD)
     dwellings = (dwelling.Dwelling.from_group(group) for group in grouped)
-    database.grouped_load(coords, database_name, collection, dwellings)
+    database.load(coords, database_name, collection, dwellings)
