@@ -1,4 +1,5 @@
 import datetime
+import typing
 import pytest
 from energuide import interpreter
 
@@ -150,3 +151,79 @@ def test_read(energuide_fixture: str):
                  'CLIENTPCODE': 'K0H 1Y2'}]
 
     assert list(data) == expected
+
+
+@pytest.fixture
+def chunked_data() -> typing.Iterator[typing.List[interpreter.InputData]]:
+    return iter([[{'EVAL_ID': 123456,
+                   'IDNUMBER': '23',
+                   'EVAL_TYPE': 'E',
+                   'CREATIONDATE': '2009-01-01 12:00:00',
+                   'MODIFICATIONDATE': '2011-01-01 00:00:00',
+                   'ENTRYDATE': '2018-02-01',
+                   'YEARBUILT': 1979,
+                   'HOUSEREGION': 'Ontario',
+                   'CLIENTCITY': 'Kingston',
+                   'CLIENTPCODE': 'K0H 1Y0'},
+                  {'EVAL_ID': 123457,
+                   'IDNUMBER': '24',
+                   'EVAL_TYPE': 'E',
+                   'CREATIONDATE': '2009-01-02 12:00:00',
+                   'MODIFICATIONDATE': '2011-01-02 00:00:00',
+                   'ENTRYDATE': '2018-02-01',
+                   'YEARBUILT': 1978,
+                   'HOUSEREGION': 'Alberta',
+                   'CLIENTCITY': 'Kingston',
+                   'CLIENTPCODE': 'K0H 1Y1'},
+                  {'EVAL_ID': 123458,
+                   'IDNUMBER': '25',
+                   'EVAL_TYPE': 'E',
+                   'CREATIONDATE': '2009-01-03 12:00:00',
+                   'MODIFICATIONDATE': '2011-01-03 00:00:00',
+                   'ENTRYDATE': '2018-02-01',
+                   'YEARBUILT': 1980,
+                   'HOUSEREGION': 'Quebec',
+                   'CLIENTCITY': 'Kingston',
+                   'CLIENTPCODE': 'K0H 1Y2'}]])
+
+
+def test_parse(chunked_data: typing.Iterator[typing.List[interpreter.InputData]]) -> None:
+    print(chunked_data)
+    parsed = interpreter.parse(chunked_data)
+
+    expected = [interpreter.ParsedDwellingDataRow(
+        eval_id=123456,
+        eval_type=interpreter.EvaluationType.POST_RETROFIT,
+        entry_date=datetime.date(2018, 2, 1),
+        creation_date=datetime.datetime(2009, 1, 1, 12),
+        modification_date=datetime.datetime(2011, 1, 1, 0),
+        year_built=1979,
+        city='Kingston',
+        region=interpreter.Region.ONTARIO,
+        postal_code='K0H 1Y0',
+        forward_sortation_area='K0H',
+        ), interpreter.ParsedDwellingDataRow(
+            eval_id=123457,
+            eval_type=interpreter.EvaluationType.POST_RETROFIT,
+            entry_date=datetime.date(2018, 2, 1),
+            creation_date=datetime.datetime(2009, 1, 2, 12),
+            modification_date=datetime.datetime(2011, 1, 2, 0),
+            year_built=1978,
+            city='Kingston',
+            region=interpreter.Region.ALBERTA,
+            postal_code='K0H 1Y1',
+            forward_sortation_area='K0H',
+        ), interpreter.ParsedDwellingDataRow(
+            eval_id=123458,
+            eval_type=interpreter.EvaluationType.POST_RETROFIT,
+            entry_date=datetime.date(2018, 2, 1),
+            creation_date=datetime.datetime(2009, 1, 3, 12),
+            modification_date=datetime.datetime(2011, 1, 3, 0),
+            year_built=1980,
+            city='Kingston',
+            region=interpreter.Region.QUEBEC,
+            postal_code='K0H 1Y2',
+            forward_sortation_area='K0H',
+        )]
+
+    assert list(parsed)[0] == expected
