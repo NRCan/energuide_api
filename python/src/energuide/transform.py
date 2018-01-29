@@ -1,71 +1,4 @@
-import datetime
-import pandas as pd
 from energuide import database, reader, dwelling
-
-
-CHUNKSIZE = 1000
-
-_COLUMN_MAPPING = {
-    'EVAL_ID': 'evalId',
-    'IDNUMBER': 'idNumber',
-    'CREATIONDATE': 'creationDate',
-    'MODIFICATIONDATE': 'modificationDate',
-    'YEARBUILT': 'yearBuilt',
-    'HOUSEREGION': 'houseRegion',
-    'CLIENTCITY': 'clientCity',
-    'CLIENTPCODE': 'clientPostalCode'
-}
-
-
-def clear_blanks(dataframe: pd.DataFrame) -> pd.DataFrame:
-    return dataframe.where((pd.notnull(dataframe)), None)
-
-
-def rename_columns(dataframe: pd.DataFrame) -> pd.DataFrame:
-    dataframe.rename(columns=_COLUMN_MAPPING, inplace=True)
-
-    return dataframe
-
-
-def extract_fsa(dataframe: pd.DataFrame) -> pd.DataFrame:
-    dataframe.loc[:, 'clientForwardSortationArea'] = dataframe['clientPostalCode'].str[:3]
-
-    return dataframe
-
-
-def parse_date_string(date: str) -> datetime.datetime:
-    return datetime.datetime.strptime(date, '%Y-%m-%d %H:%M:%S')
-
-
-def parse_dates(dataframe: pd.DataFrame) -> pd.DataFrame:
-    dataframe['creationDate'] = dataframe['creationDate'].apply(parse_date_string)
-    dataframe['modificationDate'] = dataframe['modificationDate'].apply(parse_date_string)
-
-    return dataframe
-
-
-def group_dates(dataframe: pd.DataFrame) -> pd.DataFrame:
-    dataframe['evaluations'] = [[x] for x in dataframe[['creationDate', 'modificationDate']].to_dict('records')]
-    del dataframe['creationDate']
-    del dataframe['modificationDate']
-
-    return dataframe
-
-
-TRANSFORMERS = [
-    clear_blanks,
-    rename_columns,
-    extract_fsa,
-    parse_dates,
-    group_dates
-]
-
-
-def clean(dataframe: pd.DataFrame) -> pd.DataFrame:
-    for transformation in TRANSFORMERS:
-        dataframe = transformation(dataframe)
-
-    return dataframe
 
 
 def run(coords: database.DatabaseCoordinates,
@@ -76,4 +9,4 @@ def run(coords: database.DatabaseCoordinates,
     raw_data = reader.read(filename)
     grouped = reader.grouper(raw_data, dwelling.Dwelling.GROUPING_FIELD)
     dwellings = (dwelling.Dwelling.from_group(group) for group in grouped)
-    database.grouped_load(coords, database_name, collection, dwellings)
+    database.load(coords, database_name, collection, dwellings)
