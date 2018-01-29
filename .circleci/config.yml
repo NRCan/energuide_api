@@ -39,7 +39,6 @@ jobs:
           command: |
             yarn test
             yarn lint
-
   python:
     docker:
       - image: circleci/python:3.6.1
@@ -74,7 +73,6 @@ jobs:
             pylint src tests
             mypy --ignore-missing-imports src tests
             pytest tests
-
   python_integration:
     docker:
       - image: circleci/python:3.6.1
@@ -117,13 +115,12 @@ jobs:
             . ~/.venv/bin/activate
             energuide --load tests/randomized_energuide_data.csv
 
-
       - run: mkdir -p workspace
+
       - persist_to_workspace:
           root: workspace
           paths:
             - mongo-dump
-
   node_integration:
     docker:
       # specify the version you desire here
@@ -159,7 +156,6 @@ jobs:
           command: |
             yarn test
             yarn lint
-
 workflows:
   version: 2
   node_and_python:
