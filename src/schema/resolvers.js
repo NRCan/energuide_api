@@ -1,13 +1,15 @@
 import Longitude from './types/Longitude'
 import Latitude from './types/Latitude'
 import PostalCode from './types/PostalCode'
-import {GraphQLError} from 'graphql'
+import ForwardSortationArea from './types/ForwardSortationArea'
+import { GraphQLError } from 'graphql'
 import { comparators, hasMoreThanOneComparator } from '../utilities'
 
 const resolvers = {
   Longitude,
   Latitude,
   PostalCode,
+  ForwardSortationArea,
   Query: {
     evaluationsFor: async (root, { account, postalCode }, { client }) => {
       let cursor = await client.find({
@@ -21,7 +23,6 @@ const resolvers = {
       return Object.assign({}, ...results)
     },
     evaluations: async (root, { filter, withinPolygon }, { client }) => {
-
       if (hasMoreThanOneComparator(filter)) {
         return new GraphQLError(
           `You can only use ${Object.keys(comparators)} one at a time`,
@@ -38,6 +39,40 @@ const resolvers = {
                   coordinates: [coordinates],
                 },
               },
+            },
+          },
+        ],
+      }
+
+      // { field: 'yearBuilt', gt: '1990' }
+      if (filter) {
+        if (filter.gt) {
+          query['$and'].push({
+            [filter.field]: { [comparators.gt]: parseInt(filter.gt) },
+          })
+        }
+      }
+
+      let cursor = await client.find(query)
+
+      let results = await cursor.toArray()
+      return results
+    },
+    evaluationsInFSA: async (
+      root,
+      { filter, forwardSortationArea },
+      { client },
+    ) => {
+      if (hasMoreThanOneComparator(filter)) {
+        return new GraphQLError(
+          `You can only use ${Object.keys(comparators)} one at a time`,
+        )
+      }
+      let query = {
+        $and: [
+          {
+            MAIL_PCODE: {
+              $regex: new RegExp(`^${forwardSortationArea}`), // eslint-disable-line security/detect-non-literal-regexp
             },
           },
         ],
