@@ -84,12 +84,12 @@ class _ParsedDwellingDataRow(typing.NamedTuple):
 class ParsedDwellingDataRow(_ParsedDwellingDataRow):
 
     _SCHEMA = {
-        'EVAL_ID': {'type': 'integer', 'required': True},
+        'EVAL_ID': {'type': 'integer', 'required': True, 'coerce': int},
         'EVAL_TYPE': {'type': 'string', 'required': True, 'allowed': [eval_type.value for eval_type in EvaluationType]},
         'ENTRYDATE': {'type': 'string', 'required': True},
         'CREATIONDATE': {'type': 'string', 'required': True},
         'MODIFICATIONDATE': {'type': 'string', 'required': True},
-        'YEARBUILT': {'type': 'integer', 'required': True},
+        'YEARBUILT': {'type': 'integer', 'required': True, 'coerce': int},
         'CLIENTCITY': {'type': 'string', 'required': True},
         'CLIENTPCODE': {'type': 'string', 'required': True, 'regex': '[A-Z][0-9][A-Z] [0-9][A-Z][0-9]'},
         'HOUSEREGION': {'type': 'string', 'required': True},
@@ -97,7 +97,7 @@ class ParsedDwellingDataRow(_ParsedDwellingDataRow):
 
     @classmethod
     def from_row(cls, row: InputData) -> 'ParsedDwellingDataRow':
-        validator = cerberus.Validator(cls._SCHEMA, allow_unknown=True)
+        validator = cerberus.Validator(cls._SCHEMA, allow_unknown=True, ignore_none_values=True)
         if not validator.validate(row):
             error_keys = ', '.join(validator.errors.keys())
             raise InvalidInputDataException(f'Validator failed on keys: {error_keys}')
@@ -121,3 +121,8 @@ def read(filename: str) -> typing.Iterator[InputData]:
         reader = csv.DictReader(csvfile)
         for row in reader:
             yield row
+
+
+def parse(chunked_data: typing.Iterator[typing.List[InputData]]) -> typing.Iterator[typing.List[ParsedDwellingDataRow]]:
+    for chunk in chunked_data:
+        yield [ParsedDwellingDataRow.from_row(row) for row in chunk]
