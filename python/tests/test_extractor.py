@@ -1,4 +1,5 @@
 import json
+import itertools
 import typing
 import os
 import pytest
@@ -6,11 +7,12 @@ from energuide import extractor
 
 
 def test_extract(energuide_fixture: str):
-    output = extractor.extract(energuide_fixture, extract_out)
+    with open(energuide_fixture, 'r') as file_in:
+        output = extractor.extract(file_in)
+        item = next(output)
 
-    for row in output:
-        print(row)
+        assert 'EVAL_ID' in item
+        assert 'EVAL_TYPE' in item
 
-    assert False
-
-
+        for coll in extractor.DROP_FIELDS:
+            assert not coll in item
