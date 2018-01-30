@@ -163,6 +163,6 @@ workflows:
       - node
       - python
       - python_integration
-      - node_integration
+      - node_integration:
           requires:
             - python_integration
