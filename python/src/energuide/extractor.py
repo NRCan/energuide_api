@@ -24,15 +24,10 @@ _SCHEMA = {
     'RAW_XML': {'type': 'string', 'required': True}
     }
 
-DROP_FIELDS = ['HOUSEREGION',
-               'WEATHERLOC',
-               'ENTRYBY',
-               'CLIENTCITY',
-               'CLIENTPCODE',
+DROP_FIELDS = ['ENTRYBY',
                'CLIENTNAME',
+               'CLIENTPCODE',
                'TELEPHONE',
-               'MAIL_CITY',
-               'MAIL_REGION',
                'MAIL_PCODE',
                'TAXNUMBER',
                'RAW_XML']
@@ -45,9 +40,10 @@ def validated(data: typing.Iterable[reader.InputData], validator) -> typing.Iter
             raise reader.InvalidInputDataException(f'Validator failed on keys: {error_keys}')
 
         document = validator.document
-
+        document['FORWARDSORTATIONAREA'] = document['CLIENTPCODE'][:3]
         for key in DROP_FIELDS:
             document.pop(key)
+        document
 
         yield document
 
