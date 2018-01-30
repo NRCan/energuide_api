@@ -43,7 +43,6 @@ def validated(data: typing.Iterable[reader.InputData], validator) -> typing.Iter
         document['FORWARDSORTATIONAREA'] = document['CLIENTPCODE'][:3]
         for key in DROP_FIELDS:
             document.pop(key)
-        document
 
         yield document
 
