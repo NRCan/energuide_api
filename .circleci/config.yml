@@ -118,7 +118,7 @@ jobs:
 
       - run: mkdir -p workspace
       - run: 
-          name: export database
+          name: Exporting database
           command: |
             mongoexport --db energuide --collection dwellings --out workspace/mongo_dump
 
@@ -170,7 +170,7 @@ jobs:
           key: v1-dependencies-{{ checksum "package.json" }}
 
       - run:
-          name: import database
+          name: Importing database
           command: |
             mongoimport --db energuide --collection dwellings --file /tmp/workspace/mongo_dump
 
