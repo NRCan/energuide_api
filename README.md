@@ -39,11 +39,11 @@ Assuming the DB credentials/connectivity is correct, the command above will
 start a graphql endpoint that will respond to the following `curl` commands:
 
 ```
-curl -s -H "Content-Type: application/json" -d '{"query": "{evaluationsInFSA(forwardSortationArea: "M8H"){ yearBuilt }}"}'  "localhost:3000/graphql"
+curl -s -H "Content-Type: application/json" -d '{"query": "{evaluationsInFSA(forwardSortationArea: \"M8H\"){ yearBuilt }}"}'  "localhost:3000/graphql"
 
 # or
 
-curl -s -H "Content-Type: application/json" -d '{"query": "{ evaluations( filter: {field: eghrating gt: "77"} withinPolygon: [ {lng: -80.5572509765625, lat: 43.40903821777055} {lng: -78.7774658203125, lat: 43.40903821777055} {lng: -78.7774658203125, lat: 44.3670601700202} {lng: -80.5572509765625, lat: 44.3670601700202} {lng: -80.5572509765625, lat: 43.40903821777055} ]) { houseRegion yearBuilt eghrating } }"}'  "localhost:3000/graphql"
+curl -s -H "Content-Type: application/json" -d '{"query": "{ evaluations( filter: {field: eghrating gt: \"77\"} withinPolygon: [ {lng: -80.5572509765625, lat: 43.40903821777055} {lng: -78.7774658203125, lat: 43.40903821777055} {lng: -78.7774658203125, lat: 44.3670601700202} {lng: -80.5572509765625, lat: 44.3670601700202} {lng: -80.5572509765625, lat: 43.40903821777055} ]) { houseRegion yearBuilt eghrating } }"}'  "localhost:3000/graphql"
 ```
 
 It is also possible to access the API via `/graphiql` which will serve up a Graphical IDE to allow you to experiment with the API.
