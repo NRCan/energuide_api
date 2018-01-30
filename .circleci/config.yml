@@ -73,9 +73,118 @@ jobs:
             pylint src tests
             mypy --ignore-missing-imports src tests
             pytest tests
+  python_integration:
+    docker:
+      - image: circleci/python:3.6.1
+      - image: mongo:3.6.2
+
+    working_directory: ~/repo/python
+
+    steps:
+      - checkout:
+          path: ~/repo
+
+      # Download and cache dependencies
+      - restore_cache:
+          key: deps1-{{ .Branch }}-{{ checksum "requirements.txt" }}
+
+      - run:
+          name: Installing packages
+          command: |
+            sudo apt-get install apt-transport-https
+            sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv 2930ADAE8CAF5059EE73BB4B58712A2291FA4AD5
+            echo "deb http://repo.mongodb.org/apt/debian jessie/mongodb-org/3.6 main" | sudo tee /etc/apt/sources.list.d/mongodb-org-3.6.list
+            sudo apt-get update
+            sudo apt-get install -y mongodb-org-tools=3.6.2
+
+      - run:
+          name: Installing dependencies
+          command: |
+            python3 -m venv ~/.venv
+            . ~/.venv/bin/activate
+            pip install -r requirements.txt
+            pip install -e .
+
+      - save_cache:
+          key: deps1-{{ .Branch }}-{{ checksum "requirements.txt" }}
+          paths:
+            - "~/.venv"
+
+      - run:
+          name: Loading data
+          command: |
+            . ~/.venv/bin/activate
+            energuide load  --db_name energuide --collection dwellings --filename tests/randomized_energuide_data.csv
+
+      - run: mkdir -p workspace
+      - run: 
+          name: Exporting database
+          command: |
+            mongoexport --db energuide --collection dwellings --out workspace/mongo_dump
+
+
+      - persist_to_workspace:
+          root: workspace
+          paths:
+            - mongo_dump
+  node_integration:
+    docker:
+      # specify the version you desire here
+      - image: circleci/node:7.10
+      - image: mongo:3.6.2
+
+      # Specify service dependencies here if necessary
+      # CircleCI maintains a library of pre-built images
+      # documented at https://circleci.com/docs/2.0/circleci-images/
+      # - image: circleci/mongo:3.4.4
+
+    working_directory: ~/repo
+
+    steps:
+      - checkout
+      - attach_workspace:
+          # Must be absolute path or relative path from working_directory
+          at: /tmp/workspace
+
+      # Download and cache dependencies
+      - restore_cache:
+          keys:
+          - v1-dependencies-{{ checksum "package.json" }}
+          # fallback to using the latest cache if no exact match is found
+          - v1-dependencies-
+
+      - run:
+          name: Installing packages
+          command: |
+            sudo apt-get install apt-transport-https
+            sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv 2930ADAE8CAF5059EE73BB4B58712A2291FA4AD5
+            echo "deb http://repo.mongodb.org/apt/debian jessie/mongodb-org/3.6 main" | sudo tee /etc/apt/sources.list.d/mongodb-org-3.6.list
+            sudo apt-get update
+            sudo apt-get install -y mongodb-org-tools=3.6.2
+
+      - run: yarn install
+
+      - save_cache:
+          paths:
+            - node_modules
+          key: v1-dependencies-{{ checksum "package.json" }}
+
+      - run:
+          name: Importing database
+          command: |
+            mongoimport --db energuide --collection dwellings --file /tmp/workspace/mongo_dump
+
+      - run:
+          name: Running integration tests
+          command: |
+            echo Hello World!
 workflows:
   version: 2
   node_and_python:
     jobs:
       - node
       - python
+      - python_integration
+      - node_integration:
+          requires:
+            - python_integration
