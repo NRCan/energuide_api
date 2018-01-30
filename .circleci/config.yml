@@ -114,13 +114,13 @@ jobs:
           name: Loading data
           command: |
             . ~/.venv/bin/activate
-            energuide load --filename tests/randomized_energuide_data.csv
+            energuide load  --db_name energuide --collection dwellings --filename tests/randomized_energuide_data.csv
 
       - run: mkdir -p workspace
       - run: 
           name: export database
           command: |
-            mongoexport --out workspace/mongo_dump
+            mongoexport --db energuide --collection dwellings --out workspace/mongo_dump
 
 
       - persist_to_workspace:
@@ -172,7 +172,7 @@ jobs:
       - run:
           name: import database
           command: |
-            mongoimport --file /tmp/workspace/mongo_dump
+            mongoimport --db energuide --collection dwellings --file /tmp/workspace/mongo_dump
 
       - run:
           name: Running tests & linter
