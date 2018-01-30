@@ -1,12 +1,11 @@
 import csv
-import json
 import itertools
 import sys
 import typing
 
 
 InputData = typing.Dict[str, typing.Any]
-                
+
 
 class InvalidInputDataException(Exception):
     pass

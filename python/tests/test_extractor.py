@@ -1,8 +1,3 @@
-import json
-import itertools
-import typing
-import os
-import pytest
 from energuide import extractor
 
 
