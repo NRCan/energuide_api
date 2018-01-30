@@ -1,5 +1,6 @@
 import csv
 import itertools
+import sys
 import typing
 
 
@@ -11,6 +12,7 @@ class InvalidInputDataException(Exception):
 
 
 def read(filename: str) -> typing.Iterator[InputData]:
+    csv.field_size_limit(sys.maxsize)
     with open(filename, 'r') as csvfile:
         reader = csv.DictReader(csvfile)
         for row in reader:
