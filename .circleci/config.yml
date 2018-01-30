@@ -114,14 +114,19 @@ jobs:
           name: Loading data
           command: |
             . ~/.venv/bin/activate
-            energuide --load tests/randomized_energuide_data.csv
+            energuide load --filename tests/randomized_energuide_data.csv
 
       - run: mkdir -p workspace
+      - run: 
+          name: export database
+          command: |
+            mongoexport --out workspace/mongo_dump
+
 
       - persist_to_workspace:
           root: workspace
           paths:
-            - mongo-dump
+            - mongo_dump
   node_integration:
     docker:
       # specify the version you desire here
@@ -137,6 +142,9 @@ jobs:
 
     steps:
       - checkout
+      - attach_workspace:
+          # Must be absolute path or relative path from working_directory
+          at: /tmp/workspace
 
       # Download and cache dependencies
       - restore_cache:
@@ -145,12 +153,26 @@ jobs:
           # fallback to using the latest cache if no exact match is found
           - v1-dependencies-
 
+      - run:
+          name: Installing packages
+          command: |
+            sudo apt-get install apt-transport-https
+            sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv 2930ADAE8CAF5059EE73BB4B58712A2291FA4AD5
+            echo "deb http://repo.mongodb.org/apt/debian jessie/mongodb-org/3.6 main" | sudo tee /etc/apt/sources.list.d/mongodb-org-3.6.list
+            sudo apt-get update
+            sudo apt-get install -y mongodb-org-tools=3.6.2
+
       - run: yarn install
 
       - save_cache:
           paths:
             - node_modules
           key: v1-dependencies-{{ checksum "package.json" }}
+
+      - run:
+          name: import database
+          command: |
+            mongoimport --file /tmp/workspace/mongo_dump
 
       - run:
           name: Running tests & linter
