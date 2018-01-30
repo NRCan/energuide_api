@@ -5,7 +5,7 @@ from energuide import extractor
 
 @pytest.fixture
 def extract_out() -> str:
-    path =  os.path.join(os.path.dirname(__file__), 'randomized_energuide_data.csv')
+    path =  os.path.join(os.path.dirname(__file__), 'extractor_out.json')
     yield path
     os.remove(path)
 
