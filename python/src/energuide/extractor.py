@@ -86,5 +86,3 @@ def write_data(data: typing.Iterable[reader.InputData], output_path: str) -> Non
             blob_id = blob.get('BUILDER')
             if blob_id:
                 output_zip.writestr(blob_id, json.dumps(blob))
-            # else:
-                # log(f'Invalid data: {blob}, must contain field \'BUILDER\'')
