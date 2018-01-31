@@ -1,3 +1,5 @@
+import csv
+import typing
 import zipfile
 import py
 import _pytest
@@ -7,22 +9,52 @@ import pytest
 from energuide import cli
 
 
-@pytest.fixture(params=[
-    '''EVAL_ID,EVAL_TYPE,ENTRYBY,CLIENTADDR,CLIENTPCODE,CLIENTNAME,TELEPHONE,MAIL_ADDR,\
-MAIL_PCODE,TAXNUMBER,RAW_XML,BUILDER\n123,D,Fred Johnson,123 Main st.,M5E 1W5,John \
-Fredson,999 999 9999,123 Main st.,M5E 1W5,999999999999,<tag>thing</tag>,4K13D01404''',
-    '''EVAL_ID,EVAL_TYPE,ENTRYBY,CLIENTADDR,CLIENTPCODE,CLIENTNAME,TELEPHONE,MAIL_ADDR,\
-MAIL_PCODE,TAXNUMBER,RAW_XML,BUILDER,other_1,other_2\n123,D,Fred Johnson,123 Main st.,M5E 1W5,John \
-Fredson,999 999 9999,123 Main st.,M5E 1W5,999999999999,<tag>thing</tag>,4K02E90020,foo,bar'''])
-def passing_str(request: _pytest.fixtures.SubRequest) -> str:
+def data1() -> typing.Dict[str, str]:
+    return {
+        'EVAL_ID': '123',
+        'EVAL_TYPE': 'D',
+        'ENTRYBY': 'Fred Johnson',
+        'CLIENTADDR': '123 Main st.',
+        'CLIENTPCODE': 'M5E 1W5',
+        'CLIENTNAME': 'John Fredson',
+        'TELEPHONE': '999 999 9999',
+        'MAIL_ADDR': '123 Main st.',
+        'MAIL_PCODE': 'M5E 1W5',
+        'TAXNUMBER': '999999999999',
+        'RAW_XML': '<tag>thing</tag>',
+        'BUILDER': '4K13D01404',
+        'INFO1': None,
+        'INFO2': None,
+        'INFO3': None,
+        'INFO4': None,
+        'INFO5': None,
+        'INFO6': None,
+        'INFO7': None,
+        'INFO8': None,
+        'INFO9': None,
+        'INFO10': None
+    }
+
+
+def data2() -> typing.Dict[str, str]:
+    data = data1()
+    data['other_1'] = 'foo'
+    data['other_2'] = 'bar'
+    return data
+
+
+@pytest.fixture(params=[data1(), data2()])
+def data_dict(request: _pytest.fixtures.SubRequest) -> typing.Dict[str, str]:
     return request.param
 
 
 @pytest.fixture
-def valid_filepath(tmpdir: py._path.local.LocalPath, passing_str: str) -> str:
+def valid_filepath(tmpdir: py._path.local.LocalPath, data_dict: typing.Dict[str, str]) -> str:
     filepath = f'{tmpdir}/sample.csv'
     with open(filepath, 'w') as file:
-        file.write(passing_str)
+        writer = csv.DictWriter(file, fieldnames=list(data_dict.keys()))
+        writer.writeheader()
+        writer.writerow(data_dict)
 
     return filepath
 
@@ -30,8 +62,11 @@ def valid_filepath(tmpdir: py._path.local.LocalPath, passing_str: str) -> str:
 @pytest.fixture
 def invalid_filepath(tmpdir: py._path.local.LocalPath) -> str:
     filepath = f'{tmpdir}/sample.csv'
+    data = {'EVAL_ID': 'foo', 'EVAL_TYPE': 'bar'}
     with open(filepath, 'w') as file:
-        file.write('EVAL_ID,EVAL_TYPE,BUILDER\nfoo,bar,\nfoo,bar,4K02E90020')
+        writer = csv.DictWriter(file, fieldnames=list(data.keys()))
+        writer.writeheader()
+        writer.writerow(data)
 
     return filepath
 
