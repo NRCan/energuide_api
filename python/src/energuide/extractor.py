@@ -52,7 +52,7 @@ def _extract_snippets(data: typing.Iterable[reader.InputData]) -> typing.Iterato
         doc = ElementTree.fromstring(row['RAW_XML'])
         house = doc.find('House')
         if house:
-            extra_data = snippets.snip_house(house) if house else None
+            extra_data = snippets.snip_house(house)
 
             for key, value in extra_data.items():
                 assert key not in row
