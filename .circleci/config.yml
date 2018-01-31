@@ -114,7 +114,7 @@ jobs:
           name: Loading data
           command: |
             . ~/.venv/bin/activate
-            energuide load  --db_name energuide --collection dwellings --filename tests/randomized_energuide_data.csv
+            energuide load  --db_name energuide --collection dwellings --filename tests/randomized_energuide_data.zip
 
       - run: mkdir -p workspace
       - run: 
