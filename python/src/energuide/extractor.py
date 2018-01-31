@@ -12,20 +12,24 @@ REQUIRED_FIELDS = [
     'CLIENTPCODE',
     'CLIENTNAME',
     'TELEPHONE',
+    'MAIL_ADDR',
     'MAIL_PCODE',
     'TAXNUMBER',
+    'CLIENTADDR',
     'RAW_XML'
 ]
 
-_SCHEMA = {field: {'type': 'string', 'required': True} for field in REQUIRED_FIELDS}
-
 DROP_FIELDS = ['ENTRYBY',
                'CLIENTNAME',
+               'CLIENTADDR',
                'CLIENTPCODE',
                'TELEPHONE',
+               'MAIL_ADDR',
                'MAIL_PCODE',
                'TAXNUMBER',
                'RAW_XML']
+
+_SCHEMA = {field: {'type': 'string', 'required': True} for field in REQUIRED_FIELDS}
 
 
 def validated(data: typing.Iterable[reader.InputData], validator) -> typing.Iterator[reader.InputData]:
