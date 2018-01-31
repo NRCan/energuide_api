@@ -213,10 +213,6 @@ class Dwelling:
         return self._region
 
     @property
-    def postal_code(self) -> str:
-        return self._postal_code
-
-    @property
     def forward_sortation_area(self) -> str:
         return self._forward_sortation_area
 
