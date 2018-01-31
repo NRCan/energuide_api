@@ -1,8 +1,8 @@
 import typing
-from xml.etree import ElementTree
+from lxml import etree
 
 
-def _ceiling_snippet(ceiling: ElementTree) -> typing.Dict[str, typing.Any]:
+def _ceiling_snippet(ceiling: etree.ElementTree) -> typing.Dict[str, typing.Any]:
     label = ceiling.findtext('Label')
     type_english = ceiling.findtext('Construction/Type/English')
     type_french = ceiling.findtext('Construction/Type/French')
@@ -20,7 +20,7 @@ def _ceiling_snippet(ceiling: ElementTree) -> typing.Dict[str, typing.Any]:
     }
 
 
-def snip_house(house: ElementTree) -> typing.Dict[str, typing.Any]:
+def snip_house(house: etree.ElementTree) -> typing.Dict[str, typing.Any]:
     ceilings = house.findall('Components/Ceiling')
     return {
         'ceilings': [_ceiling_snippet(node) for node in ceilings]
