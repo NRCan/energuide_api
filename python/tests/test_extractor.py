@@ -1,8 +1,9 @@
+import csv
 import json
 import typing
 import zipfile
-import _pytest
-import py
+import _pytest.fixtures
+import py._path.local
 import pytest
 from energuide import extractor, reader
 
@@ -53,6 +54,45 @@ def test_extract_missing(invalid_filepath: str) -> None:
     assert 'EVAL_ID' not in ex.exconly()
 
     assert 'CLIENTADDR' in ex.exconly()
+
+
+def test_extract_with_snippets(tmpdir: py._path.local.LocalPath) -> None:
+    xml_data = """
+<HouseFile><House><Components><Ceiling>
+    <Label>Attic</Label>
+    <Construction>
+        <Type>
+            <English>Attic/gable</English>
+            <French>Combles/pignon</French>
+        </Type>
+        <CeilingType idref="Code 3" rValue="2.9463" nominalInsulation="2.864">2401191000</CeilingType>
+    </Construction>
+</Ceiling></Components></House></HouseFile>
+    """
+
+    data = {
+        'EVAL_ID': '123',
+        'EVAL_TYPE': 'D',
+        'ENTRYBY': 'Fred Johnson',
+        'CLIENTADDR': '123 Main st.',
+        'CLIENTPCODE': 'M5E 1W5',
+        'CLIENTNAME': 'John Fredson',
+        'TELEPHONE': '999 999 9999',
+        'MAIL_ADDR': '123 Main st.',
+        'MAIL_PCODE': 'M5E 1W5',
+        'TAXNUMBER': '999999999999',
+        'RAW_XML': xml_data,
+    }
+
+    input_file = tmpdir.join('input.csv')
+    with open(input_file, 'w') as csvfile:
+        writer = csv.DictWriter(csvfile, fieldnames=data.keys())
+        writer.writeheader()
+        writer.writerow(data)
+
+    output = list(extractor.extract_data(str(input_file)))
+    assert 'ceilings' in output[0]
+    assert output[0]['ceilings'][0]['label'] == 'Attic'
 
 
 def test_write_data(tmpdir: py._path.local.LocalPath) -> None:
