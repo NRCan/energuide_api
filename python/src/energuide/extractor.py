@@ -18,7 +18,17 @@ DROP_FIELDS = ['ENTRYBY',
                'MAIL_ADDR',
                'MAIL_PCODE',
                'TAXNUMBER',
-               'RAW_XML']
+               'RAW_XML',
+               'INFO1',
+               'INFO2',
+               'INFO3',
+               'INFO4',
+               'INFO5',
+               'INFO6',
+               'INFO7',
+               'INFO8',
+               'INFO9',
+               'INFO10']
 
 REQUIRED_FIELDS = DROP_FIELDS + [
     'EVAL_ID',

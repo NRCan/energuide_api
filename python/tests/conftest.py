@@ -8,6 +8,7 @@ import pytest
 from energuide import database
 from energuide import extractor
 
+
 @pytest.fixture
 def username() -> str:
     return os.environ.get(database.EnvVariables.username.value, database.EnvDefaults.username.value)
