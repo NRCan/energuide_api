@@ -76,7 +76,7 @@ def test_extract_invalid(invalid_filepath: str, tmpdir: py._path.local.LocalPath
     assert not os.path.isfile(outfile)
 
 
-def test_extract_empty(tmpdir: py._path.local.LocalPath) -> None:
+def test_extract_missing(tmpdir: py._path.local.LocalPath) -> None:
     outfile = f'{tmpdir}/output.json'
     infile = f'{tmpdir}/idontexist.csv'
     runner = testing.CliRunner()
