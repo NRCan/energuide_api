@@ -86,8 +86,5 @@ def test_extract_missing(tmpdir: py._path.local.LocalPath) -> None:
         '--outfile', outfile
     ])
 
-    assert result.exit_code != 0 
+    assert result.exit_code != 0
     assert not os.path.isfile(outfile)
-
-
-
