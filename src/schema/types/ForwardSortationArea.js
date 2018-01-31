@@ -1,18 +1,8 @@
 import { GraphQLScalarType, GraphQLError } from 'graphql'
 import { Kind } from 'graphql/language'
 
-function isFSA({ kind, value }) {
-  // Is it a string?
-  if (kind !== Kind.STRING) {
-    return null
-  }
-  // Regex taken from The Regular Expressions Cookbook:
-  // https://www.safaribooksonline.com/library/view/regular-expressions-cookbook/9781449327453/ch04s15.html
-  if (value.match(/^(?!.*[DFIOQU])[A-VXY][0-9][A-Z]$/)) {
-    return value
-  } else {
-    throw new GraphQLError('Not a valid Forward Sortation Area')
-  }
+function isFSA(value) {
+  return value.match(/^(?!.*[DFIOQU])[A-VXY][0-9][A-Z]$/)
 }
 
 const ForwardSortationArea = new GraphQLScalarType({
@@ -20,8 +10,20 @@ const ForwardSortationArea = new GraphQLScalarType({
   description:
     'A Forward Sortation Area as defined by Canada Post. Basically the first 3 digits of a postal code.',
   serialize: String,
-  parseValue: isFSA, // TODO: is this truely needed?
-  parseLiteral: isFSA,
+  parseValue: value => {
+    if (isFSA(value)) {
+      return value
+    } else {
+      throw new GraphQLError('Not a valid Forward Sortation Area')
+    }
+  },
+  parseLiteral: ({ kind, value }) => {
+    if (kind === Kind.STRING && isFSA(value)) {
+      return value
+    } else {
+      throw new GraphQLError('Not a valid Forward Sortation Area')
+    }
+  },
 })
 
 export default ForwardSortationArea
