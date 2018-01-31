@@ -9,14 +9,15 @@ from energuide import cli
 
 @pytest.fixture(params=[
     '''EVAL_ID,EVAL_TYPE,ENTRYBY,CLIENTADDR,CLIENTPCODE,CLIENTNAME,TELEPHONE,MAIL_ADDR,\
-MAIL_PCODE,TAXNUMBER,RAW_XML,BUILDER\n123,D,Fred Johnson,123 Main st.,M5E 1W5,John \
-Fredson,999 999 9999,123 Main st.,M5E 1W5,999999999999,<tag>thing</tag>,4K13D01404''',
+MAIL_PCODE,TAXNUMBER,RAW_XML,BUILDER,INFO1,INFO2,INFO3,INFO4,INFO5,INFO6,INFO7,INFO8,INFO9,INFO10\n\
+123,D,Fred Johnson,123 Main st.,M5E 1W5,John Fredson,999 999 9999,123 Main st.,M5E 1W5,999999999999,\
+<tag>thing</tag>,4K13D01404,,,,,,,,,,''',
     '''EVAL_ID,EVAL_TYPE,ENTRYBY,CLIENTADDR,CLIENTPCODE,CLIENTNAME,TELEPHONE,MAIL_ADDR,\
-MAIL_PCODE,TAXNUMBER,RAW_XML,BUILDER,other_1,other_2\n123,D,Fred Johnson,123 Main st.,M5E 1W5,John \
-Fredson,999 999 9999,123 Main st.,M5E 1W5,999999999999,<tag>thing</tag>,4K02E90020,foo,bar'''])
+MAIL_PCODE,TAXNUMBER,RAW_XML,BUILDER,,INFO1,INFO2,INFO3,INFO4,INFO5,INFO6,INFO7,INFO8,INFO9,INFO10,other_1,other_2\n\
+123,D,Fred Johnson,123 Main st.,M5E 1W5,John Fredson,999 999 9999,123 Main st.,M5E 1W5,999999999999,<tag>thing</tag>,\
+4K02E90020,,,,,,,,,,,foo,bar'''])
 def passing_str(request: _pytest.fixtures.SubRequest) -> str:
     return request.param
-
 
 @pytest.fixture
 def valid_filepath(tmpdir: py._path.local.LocalPath, passing_str: str) -> str:
