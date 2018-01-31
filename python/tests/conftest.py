@@ -2,9 +2,10 @@ import os
 import random
 import typing
 
+import py
 import pymongo
 import pytest
-from energuide import database
+from energuide import database, extractor
 
 @pytest.fixture
 def username() -> str:
@@ -69,8 +70,12 @@ def energuide_fixture() -> str:
 
 
 @pytest.fixture
-def energuide_zip_fixture() -> str:
-    return os.path.join(os.path.dirname(__file__), 'randomized_energuide_data.zip')
+def energuide_zip_fixture(tmpdir: py._path.local.LocalPath, energuide_fixture: str) -> str:
+    outfile = f'{tmpdir}/randomized_energuide_data.zip'
+
+    data = extractor.extract_data(energuide_fixture)
+    extractor.write_data(data, outfile)
+    return outfile
 
 
 @pytest.fixture
