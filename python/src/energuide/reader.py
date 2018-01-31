@@ -1,7 +1,9 @@
 import csv
 import itertools
+import json
 import sys
 import typing
+import zipfile
 
 
 InputData = typing.Dict[str, typing.Any]
@@ -9,6 +11,13 @@ InputData = typing.Dict[str, typing.Any]
 
 class InvalidInputDataException(Exception):
     pass
+
+
+def zip_read(filename: str) -> typing.Iterator[InputData]:
+    with zipfile.ZipFile(filename) as zip_input:
+        files = zip_input.namelist()
+        for file in files:
+            yield json.loads(zip_input.read(file))
 
 
 def read(filename: str) -> typing.Iterator[InputData]:

@@ -56,3 +56,8 @@ def test_grouper(sample: typing.List[reader.InputData]) -> None:
 
     assert output[0] == sample[0:2]
     assert output[1] == sample[2:]
+
+
+def test_zip_read(energuide_zip_fixture: str) -> None:
+    output = list(reader.zip_read(energuide_zip_fixture))
+    assert len(output) == 14

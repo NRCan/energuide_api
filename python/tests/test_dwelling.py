@@ -16,7 +16,7 @@ def sample_input_d() -> reader.InputData:
         'CREATIONDATE': '2018-01-08 09:00:00',
         'MODIFICATIONDATE': '2018-06-01 09:00:00',
         'CLIENTCITY': 'Ottawa',
-        'CLIENTPCODE': 'K1P 0A6',
+        'ForwardSortationArea': 'K1P',
         'HOUSEREGION': 'Ontario',
         'YEARBUILT': 2000,
     }
@@ -31,7 +31,7 @@ def sample_input_e() -> reader.InputData:
         'CREATIONDATE': '2018-02-08 09:00:00',
         'MODIFICATIONDATE': '2018-06-01 09:00:00',
         'CLIENTCITY': 'Montreal',
-        'CLIENTPCODE': 'G1A 1A3',
+        'ForwardSortationArea': 'G1A',
         'HOUSEREGION': 'Quebec',
         'YEARBUILT': 2001,
     }
@@ -104,12 +104,11 @@ class TestParsedDwellingDataRow:
             year_built=2000,
             city='Ottawa',
             region=dwelling.Region.ONTARIO,
-            postal_code='K1P 0A6',
             forward_sortation_area='K1P',
         )
 
     def test_bad_postal_code(self, sample_input_d: reader.InputData) -> None:
-        sample_input_d['CLIENTPCODE'] = 'K1P 016'
+        sample_input_d['ForwardSortationArea'] = 'K16'
         with pytest.raises(reader.InvalidInputDataException):
             dwelling.ParsedDwellingDataRow.from_row(sample_input_d)
 
@@ -167,7 +166,6 @@ class TestDwelling:
         output = dwelling.Dwelling.from_group(sample)
         assert output.city == 'Ottawa'
         assert output.region == dwelling.Region.ONTARIO
-        assert output.postal_code == 'K1P 0A6'
         assert output.forward_sortation_area == 'K1P'
 
     def test_evaluations(self, sample: typing.List[reader.InputData]) -> None:
