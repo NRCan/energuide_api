@@ -2,9 +2,11 @@ import os
 import random
 import typing
 
+import py
 import pymongo
 import pytest
 from energuide import database
+from energuide import extractor
 
 @pytest.fixture
 def username() -> str:
@@ -66,6 +68,16 @@ def mongo_client(database_coordinates: database.DatabaseCoordinates) -> typing.I
 @pytest.fixture
 def energuide_fixture() -> str:
     return os.path.join(os.path.dirname(__file__), 'randomized_energuide_data.csv')
+
+
+@pytest.fixture
+def energuide_zip_fixture(tmpdir: py._path.local.LocalPath, energuide_fixture: str) -> str:
+    outfile = f'{tmpdir}/randomized_energuide_data.zip'
+
+    data = extractor.extract_data(energuide_fixture)
+    extractor.write_data(data, outfile)
+    return outfile
+
 
 @pytest.fixture
 def sample_fixture() -> str:

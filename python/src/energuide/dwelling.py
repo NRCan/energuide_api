@@ -74,7 +74,6 @@ class _ParsedDwellingDataRow(typing.NamedTuple):
     year_built: int
     city: str
     region: Region
-    postal_code: str
     forward_sortation_area: str
 
 
@@ -88,7 +87,7 @@ class ParsedDwellingDataRow(_ParsedDwellingDataRow):
         'MODIFICATIONDATE': {'type': 'string', 'required': True},
         'YEARBUILT': {'type': 'integer', 'required': True, 'coerce': int},
         'CLIENTCITY': {'type': 'string', 'required': True},
-        'CLIENTPCODE': {'type': 'string', 'required': True, 'regex': '[A-Z][0-9][A-Z] [0-9][A-Z][0-9]'},
+        'ForwardSortationArea': {'type': 'string', 'required': True, 'regex': '[A-Z][0-9][A-Z]'},
         'HOUSEREGION': {'type': 'string', 'required': True},
     }
 
@@ -108,8 +107,7 @@ class ParsedDwellingDataRow(_ParsedDwellingDataRow):
             year_built=row['YEARBUILT'],
             city=row['CLIENTCITY'],
             region=Region.from_data(row['HOUSEREGION']),
-            postal_code=row['CLIENTPCODE'],
-            forward_sortation_area=row['CLIENTPCODE'][0:3]
+            forward_sortation_area=row['ForwardSortationArea']
         )
 
 
@@ -169,14 +167,12 @@ class Dwelling:
                  year_built: int,
                  city: str,
                  region: Region,
-                 postal_code: str,
                  forward_sortation_area: str,
                  evaluations: typing.List[Evaluation]) -> None:
         self._house_id = house_id
         self._year_built = year_built
         self._city = city
         self._region = region
-        self._postal_code = postal_code
         self._forward_sortation_area = forward_sortation_area
         self._evaluations = evaluations
 
@@ -189,7 +185,6 @@ class Dwelling:
                 year_built=data[0].year_built,
                 city=data[0].city,
                 region=data[0].region,
-                postal_code=data[0].postal_code,
                 forward_sortation_area=data[0].forward_sortation_area,
                 evaluations=evaluations,
             )
@@ -216,10 +211,6 @@ class Dwelling:
     @property
     def region(self) -> Region:
         return self._region
-
-    @property
-    def postal_code(self) -> str:
-        return self._postal_code
 
     @property
     def forward_sortation_area(self) -> str:

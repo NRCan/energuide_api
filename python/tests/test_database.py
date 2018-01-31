@@ -9,11 +9,11 @@ from energuide import dwelling
 def load_data() -> typing.List[dwelling.Dwelling]:
     return [
         dwelling.Dwelling(house_id=1, year_built=2000, city='Ottawa', region=dwelling.Region.ONTARIO,
-                          postal_code='K1P 0A6', forward_sortation_area='K1P', evaluations=[]),
+                          forward_sortation_area='K1P', evaluations=[]),
         dwelling.Dwelling(house_id=1, year_built=2000, city='Ottawa', region=dwelling.Region.ONTARIO,
-                          postal_code='K1P 0A6', forward_sortation_area='K1P', evaluations=[]),
+                          forward_sortation_area='K1P', evaluations=[]),
         dwelling.Dwelling(house_id=1, year_built=2000, city='Ottawa', region=dwelling.Region.ONTARIO,
-                          postal_code='K1P 0A6', forward_sortation_area='K1P', evaluations=[]),
+                          forward_sortation_area='K1P', evaluations=[]),
     ]
 
 
