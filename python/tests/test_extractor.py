@@ -86,7 +86,7 @@ def test_extract_with_snippets(tmpdir: py._path.local.LocalPath) -> None:
 
     input_file = tmpdir.join('input.csv')
     with open(input_file, 'w') as csvfile:
-        writer = csv.DictWriter(csvfile, fieldnames=data.keys())
+        writer = csv.DictWriter(csvfile, fieldnames=list(data.keys()))
         writer.writeheader()
         writer.writerow(data)
 

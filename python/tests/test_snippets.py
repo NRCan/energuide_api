@@ -1,21 +1,21 @@
 import os
-from xml.etree import ElementTree
+from lxml import etree
 import pytest
 from energuide import snippets
 
 
 @pytest.fixture
-def house() -> ElementTree:
+def house() -> etree.ElementTree:
     sample_filename = os.path.join(os.path.dirname(__file__), 'sample.h2k')
     with open(sample_filename, 'r') as h2k:
-        doc = ElementTree.parse(h2k)
+        doc = etree.ElementTree.parse(h2k)
 
     house_node = doc.find('House')
     assert house_node
     return house_node
 
 
-def test_ceiling_snippet(house: ElementTree) -> None:
+def test_ceiling_snippet(house: etree.ElementTree) -> None:
     output = snippets.snip_house(house)
     assert 'ceilings' in output
     assert len(output['ceilings']) == 2
