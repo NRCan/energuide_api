@@ -30,13 +30,7 @@ def _validated(data: typing.Iterable[reader.InputData], validator) -> typing.Ite
         if not validator.validate(row):
             error_keys = ', '.join(validator.errors.keys())
             raise reader.InvalidInputDataException(f'Validator failed on keys: {error_keys}')
-
-        document = validator.document
-        document['FORWARDSORTATIONAREA'] = document['CLIENTPCODE'][:3]
-        for key in DROP_FIELDS:
-            document.pop(key)
-
-        yield document
+        yield row
 
 
 def _read_csv(filepath: str) -> typing.Iterator[reader.InputData]:
@@ -47,9 +41,26 @@ def _read_csv(filepath: str) -> typing.Iterator[reader.InputData]:
             yield row
 
 
+def _extract_snippets(data: typing.Iterable[reader.InputData]) -> typing.Iterator[reader.InputData]:
+    for row in data:
+        row['ForwardSortationArea'] = row['CLIENTPCODE'][:3]
+        yield row
+
+
+def _remove_pii_fields(data: typing.Iterable[reader.InputData]) -> typing.Iterator[reader.InputData]:
+    for row in data:
+        for key in DROP_FIELDS:
+            row.pop(key)
+        yield row
+
+
 def extract_data(input_path: str) -> typing.Iterator[reader.InputData]:
     validator = cerberus.Validator(_SCHEMA, allow_unknown=True)
-    return _validated(_read_csv(input_path), validator)
+    data = _read_csv(input_path)
+    validated_data = _validated(data, validator)
+    data_with_snippets = _extract_snippets(validated_data)
+    safe_extract = _remove_pii_fields(data_with_snippets)
+    return safe_extract
 
 
 class _SerializableGenerator(list):
