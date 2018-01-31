@@ -2,10 +2,12 @@ import csv
 import itertools
 import json
 import typing
+from xml.etree import ElementTree
 import sys
 import zipfile
 import cerberus
 from energuide import reader
+from energuide import snippets
 
 
 DROP_FIELDS = ['ENTRYBY',
@@ -46,6 +48,16 @@ def _read_csv(filepath: str) -> typing.Iterator[reader.InputData]:
 def _extract_snippets(data: typing.Iterable[reader.InputData]) -> typing.Iterator[reader.InputData]:
     for row in data:
         row['ForwardSortationArea'] = row['CLIENTPCODE'][:3]
+
+        doc = ElementTree.fromstring(row['RAW_XML'])
+        house = doc.find('House')
+        if house:
+            extra_data = snippets.snip_house(house)
+
+            for key, value in extra_data.items():
+                assert key not in row
+                row[key] = value
+
         yield row
 
 
