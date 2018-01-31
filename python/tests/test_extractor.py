@@ -1,3 +1,4 @@
+import json
 import _pytest
 import py
 import pytest
@@ -34,7 +35,7 @@ def invalid_filepath(tmpdir: py._path.local.LocalPath) -> str:
 
 
 def test_extract_valid(valid_filepath: str) -> None:
-    output = extractor.extract(valid_filepath)
+    output = extractor.extract_data(valid_filepath)
     item = dict(next(output))
 
     assert 'EVAL_ID' in item
@@ -44,9 +45,24 @@ def test_extract_valid(valid_filepath: str) -> None:
 
 def test_extract_missing(invalid_filepath: str) -> None:
     with pytest.raises(reader.InvalidInputDataException) as ex:
-        output = extractor.extract(invalid_filepath)
+        output = extractor.extract_data(invalid_filepath)
         _ = dict(next(output))
 
     assert 'EVAL_ID' not in ex.exconly()
 
     assert 'CLIENTADDR' in ex.exconly()
+
+
+def test_write_data(tmpdir: py._path.local.LocalPath) -> None:
+    output_path = f'{tmpdir}/output.json'
+
+    data = [
+        {'foo': 1},
+        {'bar': 2, 'baz': 3},
+    ]
+
+    extractor.write_data(data, output_path)
+
+    with open(output_path, 'r') as output_file:
+        output = json.load(output_file)
+    assert output == data
