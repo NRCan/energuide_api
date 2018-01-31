@@ -1,26 +1,69 @@
-from io import StringIO
+import _pytest
 import pytest
-from energuide import extractor
+from energuide import extractor, reader
+
+
+@pytest.fixture(params=[
+    '''EVAL_ID,EVAL_TYPE,ENTRYBY,CLIENTADDR,CLIENTPCODE,CLIENTNAME,TELEPHONE,MAIL_ADDR,\
+MAIL_PCODE,TAXNUMBER,RAW_XML\n123,D,Fred Johnson,123 Main st.,M5E 1W5,John \
+Fredson,999 999 9999,123 Main st.,M5E 1W5,999999999999,<tag>thing</tag>''',
+    '''EVAL_ID,EVAL_TYPE,ENTRYBY,CLIENTADDR,CLIENTPCODE,CLIENTNAME,TELEPHONE,MAIL_ADDR,\
+MAIL_PCODE,TAXNUMBER,RAW_XML,other_1,other_2\n123,D,Fred Johnson,123 Main st.,M5E 1W5,John \
+Fredson,999 999 9999,123 Main st.,M5E 1W5,999999999999,<tag>thing</tag>,foo,bar'''])
+def passing_str(request: _pytest.fixtures.SubRequest) -> str:
+    return request.param
 
 
 @pytest.fixture
-def csv_string():
-    return '''EVAL_ID,EVAL_TYPE,ENTRYBY,CLIENTADDR,CLIENTPCODE,CLIENTNAME,TELEPHONE,MAIL_ADDR,\
-MAIL_PCODE,TAXNUMBER,RAW_XML\n123,D,Fred Johnson,123 Main st.,M5E 1W5,John \
-Fredson,999 999 9999,123 Main st.,M5E 1W5,999999999999,<tag>thing</tag>'''
+def valid_filepath(tmpdir, passing_str: str):
+    filepath = f'{tmpdir}/sample.csv'
+    with open(filepath, 'w') as file:
+        file.write(passing_str)
+
+    return filepath
 
 
-def test_extract(csv_string: str):
-    with StringIO() as file_in:
-        file_in.write(csv_string)
-        file_in.seek(0)
+@pytest.fixture
+def invalid_filepath(tmpdir):
+    filepath = f'{tmpdir}/sample.csv'
+    with open(filepath, 'w') as file:
+        file.write('EVAL_ID,EVAL_TYPE\nfoo,bar')
 
-        output = extractor.extract(file_in)
-        item = dict(next(output))
+    return filepath
 
-        assert item == {
-            'EVAL_ID': '123',
-            'EVAL_TYPE': 'D',
 
-            'FORWARDSORTATIONAREA':'M5E'
-        }
+def test_extract_valid(valid_filepath: str):
+    output = extractor.extract(valid_filepath)
+    item = dict(next(output))
+
+    assert 'EVAL_TYPE' in item
+    assert 'EVAL_ID' in item
+
+    assert 'ENTRYBY' not in item
+    assert 'CLIENTPCODE' not in item
+    assert 'CLIENTNAME' not in item
+    assert 'TELEPHONE' not in item
+    assert 'MAIL_ADDR' not in item
+    assert 'MAIL_PCODE' not in item
+    assert 'TAXNUMBER' not in item
+    assert 'CLIENTADDR' not in item
+    assert 'RAW_XML' not in item
+
+
+def test_extract_missing(invalid_filepath: str):
+    with pytest.raises(reader.InvalidInputDataException) as ex:
+        output = extractor.extract(invalid_filepath)
+        _ = dict(next(output))
+
+    assert 'EVAL_TYPE' not in ex.exconly()
+    assert 'EVAL_ID' not in ex.exconly()
+
+    assert 'ENTRYBY' in ex.exconly()
+    assert 'CLIENTPCODE' in ex.exconly()
+    assert 'CLIENTNAME' in ex.exconly()
+    assert 'TELEPHONE' in ex.exconly()
+    assert 'MAIL_ADDR' in ex.exconly()
+    assert 'MAIL_PCODE' in ex.exconly()
+    assert 'TAXNUMBER' in ex.exconly()
+    assert 'CLIENTADDR' in ex.exconly()
+    assert 'RAW_XML' in ex.exconly()

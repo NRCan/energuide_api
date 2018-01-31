@@ -46,10 +46,16 @@ def validated(data: typing.Iterable[reader.InputData], validator) -> typing.Iter
         yield document
 
 
-def extract(csv_input: typing.Iterable[str]) -> typing.Iterator[reader.InputData]:
+def _read_csv(filepath: str):
     csv.field_size_limit(sys.maxsize)
+    with open(filepath, 'r') as file:
+        csv_reader = csv.DictReader(file)
+        for row in csv_reader:
+            yield row
 
+
+def extract(filepath: str) -> typing.Iterator[reader.InputData]:
     validator = cerberus.Validator(_SCHEMA, allow_unknown=True)
-    csv_reader = csv.DictReader(csv_input)
-    for blob in validated(csv_reader, validator):
+
+    for blob in validated(_read_csv(filepath), validator):
         yield blob
