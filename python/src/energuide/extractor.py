@@ -5,20 +5,6 @@ import cerberus
 from energuide import reader
 
 
-REQUIRED_FIELDS = [
-    'EVAL_ID',
-    'EVAL_TYPE',
-    'ENTRYBY',
-    'CLIENTPCODE',
-    'CLIENTNAME',
-    'TELEPHONE',
-    'MAIL_ADDR',
-    'MAIL_PCODE',
-    'TAXNUMBER',
-    'CLIENTADDR',
-    'RAW_XML'
-]
-
 DROP_FIELDS = ['ENTRYBY',
                'CLIENTNAME',
                'CLIENTADDR',
@@ -28,6 +14,11 @@ DROP_FIELDS = ['ENTRYBY',
                'MAIL_PCODE',
                'TAXNUMBER',
                'RAW_XML']
+
+REQUIRED_FIELDS = DROP_FIELDS + [
+    'EVAL_ID',
+    'EVAL_TYPE'
+]
 
 _SCHEMA = {field: {'type': 'string', 'required': True} for field in REQUIRED_FIELDS}
 
@@ -46,7 +37,7 @@ def validated(data: typing.Iterable[reader.InputData], validator) -> typing.Iter
         yield document
 
 
-def _read_csv(filepath: str):
+def _read_csv(filepath: str) -> typing.Iterator[reader.InputData]:
     csv.field_size_limit(sys.maxsize)
     with open(filepath, 'r') as file:
         csv_reader = csv.DictReader(file)
