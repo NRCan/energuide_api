@@ -5,9 +5,9 @@ from energuide import extractor
 
 @pytest.fixture
 def csv_string():
-    return '''EVAL_ID,EVAL_TYPE,HOUSEREGION,WEATHERLOC,ENTRYBY,CLIENTCITY,CLIENTPCODE,CLIENTNAME,TELEPHONE,\
-MAIL_CITY,MAIL_REGION,MAIL_PCODE,TAXNUMBER,RAW_XML\n123,D,Ontario,somewhere,Fred Johnson,Toronto,M5E 1W5,John \
-Fredson,999 999 9999,Toronto,Ontario,M5E 1W5,999999999999,<tag>thing</tag>'''
+    return '''EVAL_ID,EVAL_TYPE,ENTRYBY,CLIENTPCODE,CLIENTNAME,TELEPHONE,\
+MAIL_PCODE,TAXNUMBER,RAW_XML\n123,D,Fred Johnson,M5E 1W5,John \
+Fredson,999 999 9999,M5E 1W5,999999999999,<tag>thing</tag>'''
 
 
 def test_extract(csv_string: str):
@@ -22,10 +22,5 @@ def test_extract(csv_string: str):
             'EVAL_ID': '123',
             'EVAL_TYPE': 'D',
 
-            'HOUSEREGION': 'Ontario',
-            'WEATHERLOC': 'somewhere',
-            'CLIENTCITY': 'Toronto',
-            'MAIL_CITY': 'Toronto',
-            'MAIL_REGION': 'Ontario',
             'FORWARDSORTATIONAREA':'M5E'
         }

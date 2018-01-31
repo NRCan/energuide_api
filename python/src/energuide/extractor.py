@@ -5,19 +5,19 @@ import cerberus
 from energuide import reader
 
 
-_SCHEMA = {
-    'EVAL_ID': {'type': 'string', 'required': True},
-    'EVAL_TYPE': {'type': 'string', 'required': True},
+REQUIRED_FIELDS = [
+    'EVAL_ID',
+    'EVAL_TYPE',
+    'ENTRYBY',
+    'CLIENTPCODE',
+    'CLIENTNAME',
+    'TELEPHONE',
+    'MAIL_PCODE',
+    'TAXNUMBER',
+    'RAW_XML'
+]
 
-    'ENTRYBY': {'type': 'string', 'required': True},
-    'CLIENTPCODE': {'type': 'string', 'required': True},
-    'CLIENTNAME': {'type': 'string', 'required': True},
-    'TELEPHONE': {'type': 'string', 'required': True},
-    'MAIL_PCODE': {'type': 'string', 'required': True},
-    'TAXNUMBER': {'type': 'string', 'required': True},
-
-    'RAW_XML': {'type': 'string', 'required': True}
-    }
+_SCHEMA = {field: {'type': 'string', 'required': True} for field in REQUIRED_FIELDS}
 
 DROP_FIELDS = ['ENTRYBY',
                'CLIENTNAME',
