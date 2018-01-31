@@ -1,6 +1,7 @@
 import click
 from energuide import database
 from energuide import transform
+from energuide import extractor
 
 
 @click.group()
@@ -27,3 +28,11 @@ def load(username: str, password: str, host: str, port: int, db_name: str, colle
     )
 
     transform.run(coords, db_name, collection, filename)
+
+
+@main.command()
+@click.option('--infile', required=True)
+@click.option('--outfile', required=True)
+def extract(infile: str, outfile: str) -> None:
+    extracted = extractor.extract_data(infile)
+    extractor.write_data(extracted, outfile)
