@@ -37,18 +37,9 @@ def test_extract_valid(valid_filepath: str) -> None:
     output = extractor.extract(valid_filepath)
     item = dict(next(output))
 
-    assert 'EVAL_TYPE' in item
     assert 'EVAL_ID' in item
 
-    assert 'ENTRYBY' not in item
-    assert 'CLIENTPCODE' not in item
-    assert 'CLIENTNAME' not in item
-    assert 'TELEPHONE' not in item
-    assert 'MAIL_ADDR' not in item
-    assert 'MAIL_PCODE' not in item
-    assert 'TAXNUMBER' not in item
     assert 'CLIENTADDR' not in item
-    assert 'RAW_XML' not in item
 
 
 def test_extract_missing(invalid_filepath: str) -> None:
@@ -56,15 +47,6 @@ def test_extract_missing(invalid_filepath: str) -> None:
         output = extractor.extract(invalid_filepath)
         _ = dict(next(output))
 
-    assert 'EVAL_TYPE' not in ex.exconly()
     assert 'EVAL_ID' not in ex.exconly()
 
-    assert 'ENTRYBY' in ex.exconly()
-    assert 'CLIENTPCODE' in ex.exconly()
-    assert 'CLIENTNAME' in ex.exconly()
-    assert 'TELEPHONE' in ex.exconly()
-    assert 'MAIL_ADDR' in ex.exconly()
-    assert 'MAIL_PCODE' in ex.exconly()
-    assert 'TAXNUMBER' in ex.exconly()
     assert 'CLIENTADDR' in ex.exconly()
-    assert 'RAW_XML' in ex.exconly()
