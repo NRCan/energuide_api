@@ -22,6 +22,16 @@ def data1() -> typing.Dict[str, str]:
         'TAXNUMBER': '999999999999',
         'RAW_XML': '<tag>thing</tag>',
         'BUILDER': '4K13D01404',
+        'INFO1': None,
+        'INFO2': None,
+        'INFO3': None,
+        'INFO4': None,
+        'INFO5': None,
+        'INFO6': None,
+        'INFO7': None,
+        'INFO8': None,
+        'INFO9': None,
+        'INFO10': None
     }
 
 
