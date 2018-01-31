@@ -9,15 +9,10 @@ _SCHEMA = {
     'EVAL_ID': {'type': 'string', 'required': True},
     'EVAL_TYPE': {'type': 'string', 'required': True},
 
-    'HOUSEREGION': {'type': 'string', 'required': True},
-    'WEATHERLOC': {'type': 'string', 'required': True},
     'ENTRYBY': {'type': 'string', 'required': True},
-    'CLIENTCITY': {'type': 'string', 'required': True},
     'CLIENTPCODE': {'type': 'string', 'required': True},
     'CLIENTNAME': {'type': 'string', 'required': True},
     'TELEPHONE': {'type': 'string', 'required': True},
-    'MAIL_CITY': {'type': 'string', 'required': True},
-    'MAIL_REGION': {'type': 'string', 'required': True},
     'MAIL_PCODE': {'type': 'string', 'required': True},
     'TAXNUMBER': {'type': 'string', 'required': True},
 
