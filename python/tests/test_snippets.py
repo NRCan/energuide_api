@@ -8,10 +8,10 @@ from energuide import snippets
 def house() -> etree.ElementTree:
     sample_filename = os.path.join(os.path.dirname(__file__), 'sample.h2k')
     with open(sample_filename, 'r') as h2k:
-        doc = etree.ElementTree.parse(h2k)
+        doc = etree.parse(h2k)
 
     house_node = doc.find('House')
-    assert house_node
+    assert house_node is not None
     return house_node
 
 
