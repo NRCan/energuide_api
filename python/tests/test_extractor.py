@@ -81,6 +81,7 @@ def test_extract_with_snippets(tmpdir: py._path.local.LocalPath) -> None:
         'MAIL_ADDR': '123 Main st.',
         'MAIL_PCODE': 'M5E 1W5',
         'TAXNUMBER': '999999999999',
+        'BUILDER': '4D01D00002',
         'RAW_XML': xml_data,
     }
 
