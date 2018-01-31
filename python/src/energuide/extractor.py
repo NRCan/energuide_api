@@ -3,6 +3,7 @@ import itertools
 import json
 import typing
 import sys
+import zipfile
 import cerberus
 from energuide import reader
 
@@ -19,7 +20,8 @@ DROP_FIELDS = ['ENTRYBY',
 
 REQUIRED_FIELDS = DROP_FIELDS + [
     'EVAL_ID',
-    'EVAL_TYPE'
+    'EVAL_TYPE',
+    'BUILDER'
 ]
 
 _SCHEMA = {field: {'type': 'string', 'required': True} for field in REQUIRED_FIELDS}
@@ -79,6 +81,8 @@ class _SerializableGenerator(list):
 
 
 def write_data(data: typing.Iterable[reader.InputData], output_path: str) -> None:
-    output_data = _SerializableGenerator(data)
-    with open(output_path, 'w') as output_file:
-        json.dump(output_data, output_file)
+    with zipfile.ZipFile(output_path, mode='w') as output_zip:
+        for blob in data:
+            blob_id = blob.get('BUILDER')
+            if blob_id:
+                output_zip.writestr(blob_id, json.dumps(blob))
