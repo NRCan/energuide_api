@@ -11,12 +11,17 @@ def _ceiling_snippet(ceiling: etree.ElementTree) -> typing.Dict[str, typing.Any]
     nominal_rsi = nominal_rsi_node.attrib['nominalInsulation'] if nominal_rsi_node is not None else None
     effective_rsi_node = ceiling.find('Construction/CeilingType')
     effective_rsi = effective_rsi_node.attrib['rValue'] if effective_rsi_node is not None else None
+    measurements_node = ceiling.find('Measurements')
+    area = measurements_node.attrib['area'] if measurements_node is not None else None
+    length = measurements_node.attrib['length'] if measurements_node is not None else None
     return {
         'label': label,
         'type_english': type_english,
         'type_french': type_french,
         'nominal_rsi': nominal_rsi,
         'effective_rsi': effective_rsi,
+        'area': area,
+        'length': length,
     }
 
 

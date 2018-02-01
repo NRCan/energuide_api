@@ -87,7 +87,7 @@ class ParsedDwellingDataRow(_ParsedDwellingDataRow):
         'MODIFICATIONDATE': {'type': 'string', 'required': True},
         'YEARBUILT': {'type': 'integer', 'required': True, 'coerce': int},
         'CLIENTCITY': {'type': 'string', 'required': True},
-        'ForwardSortationArea': {'type': 'string', 'required': True, 'regex': '[A-Z][0-9][A-Z]'},
+        'forwardSortationArea': {'type': 'string', 'required': True, 'regex': '[A-Z][0-9][A-Z]'},
         'HOUSEREGION': {'type': 'string', 'required': True},
     }
 
@@ -107,7 +107,7 @@ class ParsedDwellingDataRow(_ParsedDwellingDataRow):
             year_built=row['YEARBUILT'],
             city=row['CLIENTCITY'],
             region=Region.from_data(row['HOUSEREGION']),
-            forward_sortation_area=row['ForwardSortationArea']
+            forward_sortation_area=row['forwardSortationArea']
         )
 
 
