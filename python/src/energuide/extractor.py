@@ -57,7 +57,7 @@ def _read_csv(filepath: str) -> typing.Iterator[reader.InputData]:
 
 def _extract_snippets(data: typing.Iterable[reader.InputData]) -> typing.Iterator[reader.InputData]:
     for row in data:
-        row['ForwardSortationArea'] = row['CLIENTPCODE'][:3]
+        row['forwardSortationArea'] = row['CLIENTPCODE'][:3]
 
         doc = ElementTree.fromstring(row['RAW_XML'])
         house = doc.find('House')

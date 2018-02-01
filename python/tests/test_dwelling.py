@@ -16,7 +16,7 @@ def sample_input_d() -> reader.InputData:
         'CREATIONDATE': '2018-01-08 09:00:00',
         'MODIFICATIONDATE': '2018-06-01 09:00:00',
         'CLIENTCITY': 'Ottawa',
-        'ForwardSortationArea': 'K1P',
+        'forwardSortationArea': 'K1P',
         'HOUSEREGION': 'Ontario',
         'YEARBUILT': 2000,
     }
@@ -31,7 +31,7 @@ def sample_input_e() -> reader.InputData:
         'CREATIONDATE': '2018-02-08 09:00:00',
         'MODIFICATIONDATE': '2018-06-01 09:00:00',
         'CLIENTCITY': 'Montreal',
-        'ForwardSortationArea': 'G1A',
+        'forwardSortationArea': 'G1A',
         'HOUSEREGION': 'Quebec',
         'YEARBUILT': 2001,
     }
@@ -108,7 +108,7 @@ class TestParsedDwellingDataRow:
         )
 
     def test_bad_postal_code(self, sample_input_d: reader.InputData) -> None:
-        sample_input_d['ForwardSortationArea'] = 'K16'
+        sample_input_d['forwardSortationArea'] = 'K16'
         with pytest.raises(reader.InvalidInputDataException):
             dwelling.ParsedDwellingDataRow.from_row(sample_input_d)
 
