@@ -1,7 +1,5 @@
-import csv
 import itertools
 import json
-import sys
 import typing
 import zipfile
 
