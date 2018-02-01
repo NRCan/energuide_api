@@ -75,12 +75,20 @@ class _Ceiling(typing.NamedTuple):
     length_metres: typing.Optional[float]
 
 
+class _Floor(typing.NamedTuple):
+    label: typing.Optional[str]
+    nominal_rsi: typing.Optional[float]
+    effective_rsi: typing.Optional[float]
+    area_metres: typing.Optional[float]
+    length_metres: typing.Optional[float]
+
+
+_RSI_MULTIPLIER = 5.678263337
+_FEET_MULTIPLIER = 3.28084
+_FEET_SQUARED_MULTIPLIER = _FEET_MULTIPLIER**2
+
+
 class Ceiling(_Ceiling):
-
-    _RSI_MULTIPLIER = 5.678263337
-    _FEET_SQUARED_MULTIPLIER = 10.7639
-    _FEET_MULTIPLIER = 3.28084
-
     @classmethod
     def from_data(cls, ceiling: typing.Dict[str, typing.Any]):
         return Ceiling(
@@ -99,14 +107,41 @@ class Ceiling(_Ceiling):
             'label': self.label,
             'typeEnglish': self.type_english,
             'typeFrench': self.type_french,
-            'nominalRSI': self.nominal_rsi,
-            'nominalR': (self.nominal_rsi * self._RSI_MULTIPLIER) if self.nominal_rsi is not None else None,
-            'effectiveRSI': self.effective_rsi,
-            'effectiveR': (self.effective_rsi * self._RSI_MULTIPLIER) if self.effective_rsi is not None else None,
+            'nominalRsi': self.nominal_rsi,
+            'nominalR': (self.nominal_rsi * _RSI_MULTIPLIER) if self.nominal_rsi is not None else None,
+            'effectiveRsi': self.effective_rsi,
+            'effectiveR': (self.effective_rsi * _RSI_MULTIPLIER) if self.effective_rsi is not None else None,
             'areaMetres': self.area_metres,
-            'areaFeet': (self.area_metres * self._FEET_SQUARED_MULTIPLIER) if self.area_metres is not None else None,
+            'areaFeet': (self.area_metres * _FEET_SQUARED_MULTIPLIER) if self.area_metres is not None else None,
             'lengthMetres': self.length_metres,
-            'lengthFeet': (self.length_metres * self._FEET_MULTIPLIER) if self.length_metres is not None else None
+            'lengthFeet': (self.length_metres * _FEET_MULTIPLIER) if self.length_metres is not None else None
+        }
+
+
+class Floor(_Floor):
+
+    @classmethod
+    def from_data(cls, ceiling: typing.Dict[str, typing.Any]):
+        return Floor(
+            label=ceiling['label'],
+            nominal_rsi=ceiling['nominalRsi'],
+            effective_rsi=ceiling['effectiveRsi'],
+            area_metres=ceiling['area'],
+            length_metres=ceiling['length']
+
+        )
+
+    def to_dict(self):
+        return {
+            'label': self.label,
+            'nominalRsi': self.nominal_rsi,
+            'nominalR': (self.nominal_rsi * _RSI_MULTIPLIER) if self.nominal_rsi is not None else None,
+            'effectiveRsi': self.effective_rsi,
+            'effectiveR': (self.effective_rsi * _RSI_MULTIPLIER) if self.effective_rsi is not None else None,
+            'areaMetres': self.area_metres,
+            'areaFeet': (self.area_metres * _FEET_SQUARED_MULTIPLIER) if self.area_metres is not None else None,
+            'lengthMetres': self.length_metres,
+            'lengthFeet': (self.length_metres * _FEET_MULTIPLIER) if self.length_metres is not None else None
         }
 
 
@@ -121,6 +156,7 @@ class _ParsedDwellingDataRow(typing.NamedTuple):
     region: Region
     forward_sortation_area: str
     ceilings: typing.List[Ceiling]
+    floors: typing.List[Floor]
 
 
 class ParsedDwellingDataRow(_ParsedDwellingDataRow):
@@ -151,6 +187,21 @@ class ParsedDwellingDataRow(_ParsedDwellingDataRow):
                     'length': {'type': 'float', 'required': True, 'coerce': float}
                 }
             }
+        },
+
+        'floors': {
+            'type': 'list',
+            'required': True,
+            'schema': {
+                'type': 'dict',
+                'schema': {
+                    'label': {'type': 'string', 'required': True},
+                    'nominalRsi': {'type': 'float', 'required': True, 'coerce': float},
+                    'effectiveRsi': {'type': 'float', 'required': True, 'coerce': float},
+                    'area': {'type': 'float', 'required': True, 'coerce': float},
+                    'length': {'type': 'float', 'required': True, 'coerce': float}
+                }
+            }
         }
     }
 
@@ -173,7 +224,8 @@ class ParsedDwellingDataRow(_ParsedDwellingDataRow):
             city=parsed['CLIENTCITY'],
             region=Region.from_data(parsed['HOUSEREGION']),
             forward_sortation_area=parsed['forwardSortationArea'],
-            ceilings=[Ceiling.from_data(ceiling) for ceiling in parsed['ceilings']]
+            ceilings=[Ceiling.from_data(ceiling) for ceiling in parsed['ceilings']],
+            floors=[Floor.from_data(floor) for floor in parsed['floors']],
         )
 
 
@@ -185,12 +237,14 @@ class Evaluation:
                  creation_date: datetime.datetime,
                  modification_date: datetime.datetime,
                  ceilings: typing.List[Ceiling],
+                 floors: typing.List[Floor],
                 ) -> None:
         self._evaluation_type = evaluation_type
         self._entry_date = entry_date
         self._creation_date = creation_date
         self._modification_date = modification_date
         self._ceilings = ceilings
+        self._floors = floors
 
     @classmethod
     def from_data(cls, data: ParsedDwellingDataRow) -> 'Evaluation':
@@ -200,6 +254,7 @@ class Evaluation:
             creation_date=data.creation_date,
             modification_date=data.modification_date,
             ceilings=data.ceilings,
+            floors=data.floors,
         )
 
     @property
@@ -222,13 +277,18 @@ class Evaluation:
     def ceilings(self) -> typing.List[Ceiling]:
         return self._ceilings
 
+    @property
+    def floors(self) -> typing.List[Floor]:
+        return self._floors
+
     def to_dict(self) -> typing.Dict[str, typing.Any]:
         return {
             'evaluationType': self.evaluation_type.value,
             'entryDate': self.entry_date.isoformat(),
             'creationDate': self.creation_date.isoformat(),
             'modificationDate': self.modification_date.isoformat(),
-            'ceilings': [ceiling.to_dict() for ceiling in self.ceilings]
+            'ceilings': [ceiling.to_dict() for ceiling in self.ceilings],
+            'floors': [floor.to_dict() for floor in self.floors],
         }
 
 

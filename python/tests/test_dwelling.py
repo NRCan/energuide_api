@@ -18,8 +18,21 @@ def ceiling_input() -> reader.InputData:
         'length': '23.875',
     }
 
+
 @pytest.fixture
-def sample_input_d(ceiling_input: reader.InputData) -> reader.InputData:
+def floor_input() -> reader.InputData:
+    return {
+        'label': 'Rm over garage',
+        'nominalRsi': '2.46',
+        'effectiveRsi': '2.9181',
+        'area': '9.2903',
+        'length': '3.048',
+    }
+
+
+@pytest.fixture
+def sample_input_d(ceiling_input: reader.InputData,
+                   floor_input: reader.InputData) -> reader.InputData:
     return {
         'EVAL_ID': '123',
         'EVAL_TYPE': 'D',
@@ -32,6 +45,9 @@ def sample_input_d(ceiling_input: reader.InputData) -> reader.InputData:
         'YEARBUILT': '2000',
         'ceilings': [
             ceiling_input
+        ],
+        'floors': [
+            floor_input
         ]
     }
 
@@ -99,7 +115,7 @@ class TestRegion:
 class TestCeiling:
 
     @pytest.fixture
-    def sample(self, sample_input_d):
+    def sample(self, sample_input_d: reader.InputData):
         ceiling = sample_input_d['ceilings'][0]
         ceiling['nominalRsi'] = float(ceiling['nominalRsi'])
         ceiling['effectiveRsi'] = float(ceiling['effectiveRsi'])
@@ -111,6 +127,23 @@ class TestCeiling:
         output = dwelling.Ceiling.from_data(sample)
         assert output.label == 'Main attic'
         assert output.area_metres == 46.4515
+
+
+class TestFloor:
+
+    @pytest.fixture
+    def sample(self, sample_input_d: reader.InputData):
+        floor = sample_input_d['floors'][0]
+        floor['nominalRsi'] = float(floor['nominalRsi'])
+        floor['effectiveRsi'] = float(floor['effectiveRsi'])
+        floor['area'] = float(floor['area'])
+        floor['length'] = float(floor['length'])
+        return floor
+
+    def test_from_data(self, sample):
+        output = dwelling.Floor.from_data(sample)
+        assert output.label == 'Rm over garage'
+        assert output.area_metres == 9.2903
 
 
 class TestParsedDwellingDataRow:
@@ -136,6 +169,15 @@ class TestParsedDwellingDataRow:
                     effective_rsi=2.9463,
                     area_metres=46.4515,
                     length_metres=23.875
+                )
+            ],
+            floors=[
+                dwelling.Floor(
+                    label='Rm over garage',
+                    nominal_rsi=2.46,
+                    effective_rsi=2.9181,
+                    area_metres=9.2903,
+                    length_metres=3.048,
                 )
             ]
         )
