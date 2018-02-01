@@ -80,9 +80,9 @@ class _Ceiling(typing.NamedTuple):
 
 class Ceiling(_Ceiling):
 
-    _RSI_RATIO = 5.678263337
-    _FEET_SQUARED_RATIO = 10.7639
-    _FEET_RATIO = 3.28084
+    _RSI_MULTIPLIER = 5.678263337
+    _FEET_SQUARED_MULTIPLIER = 10.7639
+    _FEET_MULTIPLIER = 3.28084
 
     @classmethod
     def from_data(cls, ceiling: typing.Dict[str, typing.Any]):
@@ -105,13 +105,13 @@ class Ceiling(_Ceiling):
             'typeEnglish': self.type_english,
             'typeFrench': self.type_french,
             'nominalRSI': self.nominal_rsi,
-            'nominalR': self.nominal_rsi*self._RSI_RATIO if self.nominal_rsi is not None else None,
+            'nominalR': (self.nominal_rsi * self._RSI_MULTIPLIER) if self.nominal_rsi is not None else None,
             'effectiveRSI': self.effective_rsi,
-            'effectiveR': self.effective_rsi*self._RSI_RATIO if self.effective_rsi is not None else None,
+            'effectiveR': (self.effective_rsi * self._RSI_MULTIPLIER) if self.effective_rsi is not None else None,
             'areaMetres': self.area_metres,
-            'areaFeet': self.area_metres*self._FEET_SQUARED_RATIO if self.area_metres is not None else None,
+            'areaFeet': (self.area_metres * self._FEET_SQUARED_MULTIPLIER) if self.area_metres is not None else None,
             'lengthMetres': self.length_metres,
-            'lengthFeet': self.length_metres*self._FEET_RATIO if self.length_metres is not None else None
+            'lengthFeet': (self.length_metres * self._FEET_MULTIPLIER) if self.length_metres is not None else None
         }
 
 
@@ -161,9 +161,8 @@ class ParsedDwellingDataRow(_ParsedDwellingDataRow):
 
     @classmethod
     def from_row(cls, row: reader.InputData) -> 'ParsedDwellingDataRow':
-        validator = cerberus.Validator(cls._SCHEMA, allow_unknown=True)
+        validator = cerberus.Validator(cls._SCHEMA, allow_unknown=True, ignore_none_values=True)
         if not validator.validate(row):
-            # import pdb; pdb.set_trace()
             error_keys = ', '.join(validator.errors.keys())
             raise reader.InvalidInputDataException(f'Validator failed on keys: {error_keys}')
 
