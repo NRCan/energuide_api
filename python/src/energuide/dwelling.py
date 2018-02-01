@@ -189,7 +189,7 @@ class Evaluation:
                  entry_date: datetime.date,
                  creation_date: datetime.datetime,
                  modification_date: datetime.datetime,
-                 ceilings: typing.List[Ceiling]
+                 ceilings: typing.List[Ceiling],
                 ) -> None:
         self._evaluation_type = evaluation_type
         self._entry_date = entry_date
