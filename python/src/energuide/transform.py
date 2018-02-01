@@ -6,7 +6,7 @@ def run(coords: database.DatabaseCoordinates,
         collection: str,
         filename: str) -> None:
 
-    raw_data = reader.zip_read(filename)
+    raw_data = reader.read(filename)
     grouped = reader.grouper(raw_data, dwelling.Dwelling.GROUPING_FIELD)
     dwellings = (dwelling.Dwelling.from_group(group) for group in grouped)
     database.load(coords, database_name, collection, dwellings)

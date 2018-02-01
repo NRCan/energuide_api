@@ -1,5 +1,4 @@
 import csv
-import itertools
 import json
 import typing
 from xml.etree import ElementTree
@@ -85,21 +84,6 @@ def extract_data(input_path: str) -> typing.Iterator[reader.InputData]:
     data_with_snippets = _extract_snippets(validated_data)
     safe_extract = _remove_pii_fields(data_with_snippets)
     return safe_extract
-
-
-class _SerializableGenerator(list):
-
-    def __init__(self, iterable):
-        super().__init__()
-        tmp_body = iter(iterable)
-        try:
-            self._head = iter([next(tmp_body)])
-            self.append(tmp_body)
-        except StopIteration:
-            self._head = []
-
-    def __iter__(self):
-        return itertools.chain(self._head, *self[:1])
 
 
 def write_data(data: typing.Iterable[reader.InputData], output_path: str) -> None:
