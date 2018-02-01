@@ -69,11 +69,8 @@ class _Ceiling(typing.NamedTuple):
     label: typing.Optional[str]
     type_english: typing.Optional[str]
     type_french: typing.Optional[str]
-
     nominal_rsi: typing.Optional[float]
-
     effective_rsi: typing.Optional[float]
-
     area_metres: typing.Optional[float]
     length_metres: typing.Optional[float]
 
@@ -91,9 +88,7 @@ class Ceiling(_Ceiling):
             type_english=ceiling['type_english'],
             type_french=ceiling['type_french'],
             nominal_rsi=ceiling['nominal_rsi'],
-
             effective_rsi=ceiling['effective_rsi'],
-
             area_metres=ceiling['area'],
             length_metres=ceiling['length']
 

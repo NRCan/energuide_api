@@ -38,8 +38,9 @@ def sample_input_d(ceiling_input: reader.InputData) -> reader.InputData:
 
 @pytest.fixture
 def sample_input_e(sample_input_d: reader.InputData) -> reader.InputData:
-    sample_input_d.update(EVAL_TYPE='E')
-    return sample_input_d
+    output = sample_input_d.copy()
+    output['EVAL_TYPE'] = 'E'
+    return output
 
 
 @pytest.fixture
@@ -132,9 +133,7 @@ class TestParsedDwellingDataRow:
                     type_english='Attic/gable',
                     type_french='Combles/pignon',
                     nominal_rsi=2.864,
-
                     effective_rsi=2.9463,
-
                     area_metres=46.4515,
                     length_metres=23.875
                 )
