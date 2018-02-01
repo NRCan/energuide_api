@@ -65,6 +65,47 @@ class Region(enum.Enum):
         return output
 
 
+class _CeilingTuple(typing.NamedTuple):
+    label: typing.Optional[str]
+    type_english: typing.Optional[str]
+    type_french: typing.Optional[str]
+
+    nominal_rsi: typing.Optional[float]
+    nominal_r: typing.Optional[float]
+
+    effective_rsi: typing.Optional[float]
+    effective_r: typing.Optional[float]
+
+    length: typing.Optional[float]
+    area: typing.Optional[float]
+
+
+
+
+class _Ceiling(_CeilingTuple):
+
+    _RSI_RATIO = 5.678263337
+
+    @classmethod
+    def from_data(cls, ceiling):
+        return _Ceiling(
+            label=ceiling['label'],
+            type_english=ceiling['type_english'],
+            type_french=ceiling['type_french'],
+            nominal_rsi=ceiling['nominal_rsi'],
+            nominal_r=ceiling['nominal_rsi']*cls._RSI_RATIO if ceiling['nominal_rsi'] is not None else None,
+
+            effective_rsi=ceiling['effective_rsi'],
+            effective_r=ceiling['effective_rsi']*cls._RSI_RATIO if ceiling['effective_rsi'] is not None else None
+        )
+
+    def to_dict(self):
+        return {
+            'label': self.label,
+            ''
+        }
+
+
 class _ParsedDwellingDataRow(typing.NamedTuple):
     eval_id: int
     eval_type: EvaluationType
@@ -75,6 +116,7 @@ class _ParsedDwellingDataRow(typing.NamedTuple):
     city: str
     region: Region
     forward_sortation_area: str
+    ceilings: typing.List[_Ceiling]
 
 
 class ParsedDwellingDataRow(_ParsedDwellingDataRow):
@@ -89,6 +131,21 @@ class ParsedDwellingDataRow(_ParsedDwellingDataRow):
         'CLIENTCITY': {'type': 'string', 'required': True},
         'forwardSortationArea': {'type': 'string', 'required': True, 'regex': '[A-Z][0-9][A-Z]'},
         'HOUSEREGION': {'type': 'string', 'required': True},
+
+        'ceilings': {
+            'type': 'list': 
+            'required': True, 
+            'schema': {
+                'type': 'dict', 
+                'schema': {
+                    'label': {'type': 'string', 'required': True}
+                    'type_english': {'type': 'string', 'required': True}
+                    'type_french': {'type': 'string', 'required': True}
+                    'nominal_rsi': {'type': 'float', 'required': True, 'coerce': float}
+                    'effective_rsi': {'type': 'float', 'required': True, 'coerce': float}
+                }
+            }
+        }
     }
 
     @classmethod
@@ -97,6 +154,8 @@ class ParsedDwellingDataRow(_ParsedDwellingDataRow):
         if not validator.validate(row):
             error_keys = ', '.join(validator.errors.keys())
             raise reader.InvalidInputDataException(f'Validator failed on keys: {error_keys}')
+
+        parsed = validator.document
 
         return ParsedDwellingDataRow(
             eval_id=row['EVAL_ID'],
@@ -108,6 +167,7 @@ class ParsedDwellingDataRow(_ParsedDwellingDataRow):
             city=row['CLIENTCITY'],
             region=Region.from_data(row['HOUSEREGION']),
             forward_sortation_area=row['forwardSortationArea']
+            ceilings=[_Ceiling.from_data(ceiling) for ceiling in parsed['ceilings']]
         )
 
 
@@ -117,12 +177,14 @@ class Evaluation:
                  evaluation_type: EvaluationType,
                  entry_date: datetime.date,
                  creation_date: datetime.datetime,
-                 modification_date: datetime.datetime
+                 modification_date: datetime.datetime,
+                 ceilings: typing.List[typing.Dict[str, typing.Any]]
                 ) -> None:
         self._evaluation_type = evaluation_type
         self._entry_date = entry_date
         self._creation_date = creation_date
         self._modification_date = modification_date
+        self._ceilings = ceilings
 
     @classmethod
     def from_data(cls, data: ParsedDwellingDataRow) -> 'Evaluation':
@@ -131,6 +193,7 @@ class Evaluation:
             entry_date=data.entry_date,
             creation_date=data.creation_date,
             modification_date=data.modification_date,
+            ceilings=data.ceilings,
         )
 
     @property
@@ -149,12 +212,17 @@ class Evaluation:
     def modification_date(self) -> datetime.datetime:
         return self._modification_date
 
+    @property
+    def ceilings(self) -> typing.List[typing.Dict[str, typing.Any]]:
+        return self._ceilings
+
     def to_dict(self) -> typing.Dict[str, typing.Any]:
         return {
             'evaluationType': self.evaluation_type.value,
             'entryDate': self.entry_date.isoformat(),
             'creationDate': self.creation_date.isoformat(),
             'modificationDate': self.modification_date.isoformat(),
+            'ceilings': self.ceilings
         }
 
 
