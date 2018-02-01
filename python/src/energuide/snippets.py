@@ -29,10 +29,8 @@ def _floor_snippet(floor: etree.ElementTree) -> typing.Dict[str, typing.Any]:
     label = floor.findtext('Label')
 
     rsi_node = floor.find('Construction/Type')
-    # import pdb; pdb.set_trace()
     nominal_rsi = rsi_node.attrib['nominalInsulation'] if rsi_node is not None else None
     effective_rsi = rsi_node.attrib['rValue'] if rsi_node is not None else None
-
     measurements_node = floor.find('Measurements')
     area = measurements_node.attrib['area']
     length = measurements_node.attrib['length']
