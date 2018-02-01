@@ -10,7 +10,7 @@ from energuide import dwelling, reader
 @pytest.fixture
 def sample_input_d() -> reader.InputData:
     return {
-        'EVAL_ID': 123,
+        'EVAL_ID': '123',
         'EVAL_TYPE': 'D',
         'ENTRYDATE': '2018-01-01',
         'CREATIONDATE': '2018-01-08 09:00:00',
@@ -18,14 +18,25 @@ def sample_input_d() -> reader.InputData:
         'CLIENTCITY': 'Ottawa',
         'forwardSortationArea': 'K1P',
         'HOUSEREGION': 'Ontario',
-        'YEARBUILT': 2000,
+        'YEARBUILT': '2000',
+        'ceilings': [
+            {
+                'label': 'Main attic',
+                'type_english': 'Attic/gable',
+                'type_french': 'Combles/pignon',
+                'nominal_rsi': '2.864',
+                'effective_rsi': '2.9463',
+                'area': '46.4515',
+                'length': '23.875',
+            }
+        ]
     }
 
 
 @pytest.fixture
 def sample_input_e() -> reader.InputData:
     return {
-        'EVAL_ID': 123,
+        'EVAL_ID': '123',
         'EVAL_TYPE': 'E',
         'ENTRYDATE': '2018-02-01',
         'CREATIONDATE': '2018-02-08 09:00:00',
@@ -33,7 +44,18 @@ def sample_input_e() -> reader.InputData:
         'CLIENTCITY': 'Montreal',
         'forwardSortationArea': 'G1A',
         'HOUSEREGION': 'Quebec',
-        'YEARBUILT': 2001,
+        'YEARBUILT': '2001',
+        'ceilings': [
+            {
+                'label': 'Main attic',
+                'type_english': 'Attic/gable',
+                'type_french': 'Combles/pignon',
+                'nominal_rsi': '2.864',
+                'effective_rsi': '2.9463',
+                'area': '46.4515',
+                'length': '23.875',
+            }
+        ]
     }
 
 
@@ -90,6 +112,25 @@ class TestRegion:
     def test_from_unknown_code(self):
         assert dwelling.Region.from_data('CA') == dwelling.Region.UNKNOWN
 
+class TestCeiling:
+
+    @pytest.fixture
+    def sample(self):
+        return {
+                'label': 'Main attic',
+                'type_english': 'Attic/gable',
+                'type_french': 'Combles/pignon',
+                'nominal_rsi': 2.864,
+                'effective_rsi': 2.9463,
+                'area': 46.4515,
+                'length': 23.875,
+            }
+
+    def test_from_data(self, sample):
+        output = dwelling.Ceiling.from_data(sample)
+        assert output.label == 'Main attic'
+        assert output.area_metres == 46.4515
+
 
 class TestParsedDwellingDataRow:
 
@@ -105,6 +146,19 @@ class TestParsedDwellingDataRow:
             city='Ottawa',
             region=dwelling.Region.ONTARIO,
             forward_sortation_area='K1P',
+            ceilings=[
+                dwelling.Ceiling(
+                    label='Main attic',
+                    type_english='Attic/gable',
+                    type_french='Combles/pignon',
+                    nominal_rsi=2.864,
+
+                    effective_rsi=2.9463,
+
+                    area_metres=46.4515,
+                    length_metres=23.875
+                )
+            ]
         )
 
     def test_bad_postal_code(self, sample_input_d: reader.InputData) -> None:

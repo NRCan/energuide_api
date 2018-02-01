@@ -65,44 +65,53 @@ class Region(enum.Enum):
         return output
 
 
-class _CeilingTuple(typing.NamedTuple):
+class _Ceiling(typing.NamedTuple):
     label: typing.Optional[str]
     type_english: typing.Optional[str]
     type_french: typing.Optional[str]
 
     nominal_rsi: typing.Optional[float]
-    nominal_r: typing.Optional[float]
 
     effective_rsi: typing.Optional[float]
-    effective_r: typing.Optional[float]
 
-    length: typing.Optional[float]
-    area: typing.Optional[float]
-
+    area_metres: typing.Optional[float]
+    length_metres: typing.Optional[float]
 
 
-
-class _Ceiling(_CeilingTuple):
+class Ceiling(_Ceiling):
 
     _RSI_RATIO = 5.678263337
+    _FEET_SQUARED_RATIO = 10.7639
+    _FEET_RATIO = 3.28084
 
     @classmethod
-    def from_data(cls, ceiling):
-        return _Ceiling(
+    def from_data(cls, ceiling: typing.Dict[str, typing.Any]):
+        return Ceiling(
             label=ceiling['label'],
             type_english=ceiling['type_english'],
             type_french=ceiling['type_french'],
             nominal_rsi=ceiling['nominal_rsi'],
-            nominal_r=ceiling['nominal_rsi']*cls._RSI_RATIO if ceiling['nominal_rsi'] is not None else None,
 
             effective_rsi=ceiling['effective_rsi'],
-            effective_r=ceiling['effective_rsi']*cls._RSI_RATIO if ceiling['effective_rsi'] is not None else None
+
+            area_metres=ceiling['area'],
+            length_metres=ceiling['length']
+
         )
 
     def to_dict(self):
         return {
             'label': self.label,
-            ''
+            'type_english': self.type_english,
+            'type_french': self.type_french,
+            'nominal_rsi': self.nominal_rsi,
+            'nominal_r': self.nominal_rsi*self._RSI_RATIO if self.nominal_rsi is not None else None,
+            'effective_rsi': self.effective_rsi,
+            'effective_r': self.effective_rsi*self._RSI_RATIO if self.effective_rsi is not None else None,
+            'area_metres': self.area_metres,
+            'area_feet': self.area_metres*self._FEET_SQUARED_RATIO if self.area_metres is not None else None,
+            'length_metres': self.length_metres,
+            'length_feet': self.length_metres*self._FEET_RATIO if self.length_metres is not None else None
         }
 
 
@@ -116,7 +125,7 @@ class _ParsedDwellingDataRow(typing.NamedTuple):
     city: str
     region: Region
     forward_sortation_area: str
-    ceilings: typing.List[_Ceiling]
+    ceilings: typing.List[Ceiling]
 
 
 class ParsedDwellingDataRow(_ParsedDwellingDataRow):
@@ -133,16 +142,18 @@ class ParsedDwellingDataRow(_ParsedDwellingDataRow):
         'HOUSEREGION': {'type': 'string', 'required': True},
 
         'ceilings': {
-            'type': 'list': 
+            'type': 'list',
             'required': True, 
             'schema': {
                 'type': 'dict', 
                 'schema': {
-                    'label': {'type': 'string', 'required': True}
-                    'type_english': {'type': 'string', 'required': True}
-                    'type_french': {'type': 'string', 'required': True}
-                    'nominal_rsi': {'type': 'float', 'required': True, 'coerce': float}
-                    'effective_rsi': {'type': 'float', 'required': True, 'coerce': float}
+                    'label': {'type': 'string', 'required': True},
+                    'type_english': {'type': 'string', 'required': True},
+                    'type_french': {'type': 'string', 'required': True},
+                    'nominal_rsi': {'type': 'float', 'required': True, 'coerce': float},
+                    'effective_rsi': {'type': 'float', 'required': True, 'coerce': float},
+                    'area': {'type': 'float', 'required': True, 'coerce': float},
+                    'length': {'type': 'float', 'required': True, 'coerce': float}
                 }
             }
         }
@@ -152,22 +163,23 @@ class ParsedDwellingDataRow(_ParsedDwellingDataRow):
     def from_row(cls, row: reader.InputData) -> 'ParsedDwellingDataRow':
         validator = cerberus.Validator(cls._SCHEMA, allow_unknown=True)
         if not validator.validate(row):
+            # import pdb; pdb.set_trace()
             error_keys = ', '.join(validator.errors.keys())
             raise reader.InvalidInputDataException(f'Validator failed on keys: {error_keys}')
 
         parsed = validator.document
 
         return ParsedDwellingDataRow(
-            eval_id=row['EVAL_ID'],
-            eval_type=EvaluationType.from_code(row['EVAL_TYPE']),
-            entry_date=parser.parse(row['ENTRYDATE']).date(),
-            creation_date=parser.parse(row['CREATIONDATE']),
-            modification_date=parser.parse(row['MODIFICATIONDATE']),
-            year_built=row['YEARBUILT'],
-            city=row['CLIENTCITY'],
-            region=Region.from_data(row['HOUSEREGION']),
-            forward_sortation_area=row['forwardSortationArea']
-            ceilings=[_Ceiling.from_data(ceiling) for ceiling in parsed['ceilings']]
+            eval_id=parsed['EVAL_ID'],
+            eval_type=EvaluationType.from_code(parsed['EVAL_TYPE']),
+            entry_date=parser.parse(parsed['ENTRYDATE']).date(),
+            creation_date=parser.parse(parsed['CREATIONDATE']),
+            modification_date=parser.parse(parsed['MODIFICATIONDATE']),
+            year_built=parsed['YEARBUILT'],
+            city=parsed['CLIENTCITY'],
+            region=Region.from_data(parsed['HOUSEREGION']),
+            forward_sortation_area=parsed['forwardSortationArea'],
+            ceilings=[Ceiling.from_data(ceiling) for ceiling in parsed['ceilings']]
         )
 
 
@@ -222,7 +234,7 @@ class Evaluation:
             'entryDate': self.entry_date.isoformat(),
             'creationDate': self.creation_date.isoformat(),
             'modificationDate': self.modification_date.isoformat(),
-            'ceilings': self.ceilings
+            'ceilings': [ceiling.to_dict() for ceiling in self.ceilings]
         }
 
 
