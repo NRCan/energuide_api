@@ -65,6 +65,51 @@ class Region(enum.Enum):
         return output
 
 
+class _Ceiling(typing.NamedTuple):
+    label: typing.Optional[str]
+    type_english: typing.Optional[str]
+    type_french: typing.Optional[str]
+    nominal_rsi: typing.Optional[float]
+    effective_rsi: typing.Optional[float]
+    area_metres: typing.Optional[float]
+    length_metres: typing.Optional[float]
+
+
+class Ceiling(_Ceiling):
+
+    _RSI_MULTIPLIER = 5.678263337
+    _FEET_SQUARED_MULTIPLIER = 10.7639
+    _FEET_MULTIPLIER = 3.28084
+
+    @classmethod
+    def from_data(cls, ceiling: typing.Dict[str, typing.Any]):
+        return Ceiling(
+            label=ceiling['label'],
+            type_english=ceiling['type_english'],
+            type_french=ceiling['type_french'],
+            nominal_rsi=ceiling['nominal_rsi'],
+            effective_rsi=ceiling['effective_rsi'],
+            area_metres=ceiling['area'],
+            length_metres=ceiling['length']
+
+        )
+
+    def to_dict(self):
+        return {
+            'label': self.label,
+            'typeEnglish': self.type_english,
+            'typeFrench': self.type_french,
+            'nominalRSI': self.nominal_rsi,
+            'nominalR': (self.nominal_rsi * self._RSI_MULTIPLIER) if self.nominal_rsi is not None else None,
+            'effectiveRSI': self.effective_rsi,
+            'effectiveR': (self.effective_rsi * self._RSI_MULTIPLIER) if self.effective_rsi is not None else None,
+            'areaMetres': self.area_metres,
+            'areaFeet': (self.area_metres * self._FEET_SQUARED_MULTIPLIER) if self.area_metres is not None else None,
+            'lengthMetres': self.length_metres,
+            'lengthFeet': (self.length_metres * self._FEET_MULTIPLIER) if self.length_metres is not None else None
+        }
+
+
 class _ParsedDwellingDataRow(typing.NamedTuple):
     eval_id: int
     eval_type: EvaluationType
@@ -75,6 +120,7 @@ class _ParsedDwellingDataRow(typing.NamedTuple):
     city: str
     region: Region
     forward_sortation_area: str
+    ceilings: typing.List[Ceiling]
 
 
 class ParsedDwellingDataRow(_ParsedDwellingDataRow):
@@ -82,32 +128,52 @@ class ParsedDwellingDataRow(_ParsedDwellingDataRow):
     _SCHEMA = {
         'EVAL_ID': {'type': 'integer', 'required': True, 'coerce': int},
         'EVAL_TYPE': {'type': 'string', 'required': True, 'allowed': [eval_type.value for eval_type in EvaluationType]},
-        'ENTRYDATE': {'type': 'string', 'required': True},
-        'CREATIONDATE': {'type': 'string', 'required': True},
-        'MODIFICATIONDATE': {'type': 'string', 'required': True},
+        'ENTRYDATE': {'type': 'date', 'required': True, 'coerce': parser.parse},
+        'CREATIONDATE': {'type': 'datetime', 'required': True, 'coerce': parser.parse},
+        'MODIFICATIONDATE': {'type': 'datetime', 'required': True, 'coerce': parser.parse},
         'YEARBUILT': {'type': 'integer', 'required': True, 'coerce': int},
         'CLIENTCITY': {'type': 'string', 'required': True},
         'forwardSortationArea': {'type': 'string', 'required': True, 'regex': '[A-Z][0-9][A-Z]'},
         'HOUSEREGION': {'type': 'string', 'required': True},
+
+        'ceilings': {
+            'type': 'list',
+            'required': True,
+            'schema': {
+                'type': 'dict',
+                'schema': {
+                    'label': {'type': 'string', 'required': True},
+                    'type_english': {'type': 'string', 'required': True},
+                    'type_french': {'type': 'string', 'required': True},
+                    'nominal_rsi': {'type': 'float', 'required': True, 'coerce': float},
+                    'effective_rsi': {'type': 'float', 'required': True, 'coerce': float},
+                    'area': {'type': 'float', 'required': True, 'coerce': float},
+                    'length': {'type': 'float', 'required': True, 'coerce': float}
+                }
+            }
+        }
     }
 
     @classmethod
     def from_row(cls, row: reader.InputData) -> 'ParsedDwellingDataRow':
-        validator = cerberus.Validator(cls._SCHEMA, allow_unknown=True)
+        validator = cerberus.Validator(cls._SCHEMA, allow_unknown=True, ignore_none_values=True)
         if not validator.validate(row):
             error_keys = ', '.join(validator.errors.keys())
             raise reader.InvalidInputDataException(f'Validator failed on keys: {error_keys}')
 
+        parsed = validator.document
+
         return ParsedDwellingDataRow(
-            eval_id=row['EVAL_ID'],
-            eval_type=EvaluationType.from_code(row['EVAL_TYPE']),
-            entry_date=parser.parse(row['ENTRYDATE']).date(),
-            creation_date=parser.parse(row['CREATIONDATE']),
-            modification_date=parser.parse(row['MODIFICATIONDATE']),
-            year_built=row['YEARBUILT'],
-            city=row['CLIENTCITY'],
-            region=Region.from_data(row['HOUSEREGION']),
-            forward_sortation_area=row['forwardSortationArea']
+            eval_id=parsed['EVAL_ID'],
+            eval_type=EvaluationType.from_code(parsed['EVAL_TYPE']),
+            entry_date=parsed['ENTRYDATE'].date(),
+            creation_date=parsed['CREATIONDATE'],
+            modification_date=parsed['MODIFICATIONDATE'],
+            year_built=parsed['YEARBUILT'],
+            city=parsed['CLIENTCITY'],
+            region=Region.from_data(parsed['HOUSEREGION']),
+            forward_sortation_area=parsed['forwardSortationArea'],
+            ceilings=[Ceiling.from_data(ceiling) for ceiling in parsed['ceilings']]
         )
 
 
@@ -117,12 +183,14 @@ class Evaluation:
                  evaluation_type: EvaluationType,
                  entry_date: datetime.date,
                  creation_date: datetime.datetime,
-                 modification_date: datetime.datetime
+                 modification_date: datetime.datetime,
+                 ceilings: typing.List[Ceiling],
                 ) -> None:
         self._evaluation_type = evaluation_type
         self._entry_date = entry_date
         self._creation_date = creation_date
         self._modification_date = modification_date
+        self._ceilings = ceilings
 
     @classmethod
     def from_data(cls, data: ParsedDwellingDataRow) -> 'Evaluation':
@@ -131,6 +199,7 @@ class Evaluation:
             entry_date=data.entry_date,
             creation_date=data.creation_date,
             modification_date=data.modification_date,
+            ceilings=data.ceilings,
         )
 
     @property
@@ -149,12 +218,17 @@ class Evaluation:
     def modification_date(self) -> datetime.datetime:
         return self._modification_date
 
+    @property
+    def ceilings(self) -> typing.List[Ceiling]:
+        return self._ceilings
+
     def to_dict(self) -> typing.Dict[str, typing.Any]:
         return {
             'evaluationType': self.evaluation_type.value,
             'entryDate': self.entry_date.isoformat(),
             'creationDate': self.creation_date.isoformat(),
             'modificationDate': self.modification_date.isoformat(),
+            'ceilings': [ceiling.to_dict() for ceiling in self.ceilings]
         }
 
 
