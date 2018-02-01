@@ -85,10 +85,10 @@ class Ceiling(_Ceiling):
     def from_data(cls, ceiling: typing.Dict[str, typing.Any]):
         return Ceiling(
             label=ceiling['label'],
-            type_english=ceiling['type_english'],
-            type_french=ceiling['type_french'],
-            nominal_rsi=ceiling['nominal_rsi'],
-            effective_rsi=ceiling['effective_rsi'],
+            type_english=ceiling['typeEnglish'],
+            type_french=ceiling['typeFrench'],
+            nominal_rsi=ceiling['nominalRsi'],
+            effective_rsi=ceiling['effectiveRsi'],
             area_metres=ceiling['area'],
             length_metres=ceiling['length']
 
@@ -143,10 +143,10 @@ class ParsedDwellingDataRow(_ParsedDwellingDataRow):
                 'type': 'dict',
                 'schema': {
                     'label': {'type': 'string', 'required': True},
-                    'type_english': {'type': 'string', 'required': True},
-                    'type_french': {'type': 'string', 'required': True},
-                    'nominal_rsi': {'type': 'float', 'required': True, 'coerce': float},
-                    'effective_rsi': {'type': 'float', 'required': True, 'coerce': float},
+                    'typeEnglish': {'type': 'string', 'required': True},
+                    'typeFrench': {'type': 'string', 'required': True},
+                    'nominalRsi': {'type': 'float', 'required': True, 'coerce': float},
+                    'effectiveRsi': {'type': 'float', 'required': True, 'coerce': float},
                     'area': {'type': 'float', 'required': True, 'coerce': float},
                     'length': {'type': 'float', 'required': True, 'coerce': float}
                 }
@@ -158,6 +158,7 @@ class ParsedDwellingDataRow(_ParsedDwellingDataRow):
     def from_row(cls, row: reader.InputData) -> 'ParsedDwellingDataRow':
         validator = cerberus.Validator(cls._SCHEMA, allow_unknown=True, ignore_none_values=True)
         if not validator.validate(row):
+            # import pdb; pdb.set_trace()
             error_keys = ', '.join(validator.errors.keys())
             raise reader.InvalidInputDataException(f'Validator failed on keys: {error_keys}')
 

@@ -10,10 +10,10 @@ from energuide import dwelling, reader
 def ceiling_input() -> reader.InputData:
     return {
         'label': 'Main attic',
-        'type_english': 'Attic/gable',
-        'type_french': 'Combles/pignon',
-        'nominal_rsi': '2.864',
-        'effective_rsi': '2.9463',
+        'typeEnglish': 'Attic/gable',
+        'typeFrench': 'Combles/pignon',
+        'nominalRsi': '2.864',
+        'effectiveRsi': '2.9463',
         'area': '46.4515',
         'length': '23.875',
     }
@@ -101,8 +101,8 @@ class TestCeiling:
     @pytest.fixture
     def sample(self, sample_input_d):
         ceiling = sample_input_d['ceilings'][0]
-        ceiling['nominal_rsi'] = float(ceiling['nominal_rsi'])
-        ceiling['effective_rsi'] = float(ceiling['effective_rsi'])
+        ceiling['nominalRsi'] = float(ceiling['nominalRsi'])
+        ceiling['effectiveRsi'] = float(ceiling['effectiveRsi'])
         ceiling['area'] = float(ceiling['area'])
         ceiling['length'] = float(ceiling['length'])
         return ceiling
