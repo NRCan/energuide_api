@@ -35,10 +35,16 @@ pip install -e .
 
 The ETL application is accessed from the `energuide` CLI. Run `energuide --help` for help.
 
-There is currently a single command for energuide: 
+There are currently two commands for energuide: 
+```
+energuide extract --infile /path/to/file --outfile /path/to/other/file
+```
+
 ```
 energuide load --filename /path/to/file
 ```
+
+These two commands are meant to be chained together,`energuide load` accepts a file that is output by `energuide extract`.
 
 A sample file is included for demonstration purposes at `./tests/randomized_energuide_data.csv`
 
