@@ -102,16 +102,16 @@ class Ceiling(_Ceiling):
     def to_dict(self):
         return {
             'label': self.label,
-            'type_english': self.type_english,
-            'type_french': self.type_french,
-            'nominal_rsi': self.nominal_rsi,
-            'nominal_r': self.nominal_rsi*self._RSI_RATIO if self.nominal_rsi is not None else None,
-            'effective_rsi': self.effective_rsi,
-            'effective_r': self.effective_rsi*self._RSI_RATIO if self.effective_rsi is not None else None,
-            'area_metres': self.area_metres,
-            'area_feet': self.area_metres*self._FEET_SQUARED_RATIO if self.area_metres is not None else None,
-            'length_metres': self.length_metres,
-            'length_feet': self.length_metres*self._FEET_RATIO if self.length_metres is not None else None
+            'typeEnglish': self.type_english,
+            'typeFrench': self.type_french,
+            'nominalRSI': self.nominal_rsi,
+            'nominalR': self.nominal_rsi*self._RSI_RATIO if self.nominal_rsi is not None else None,
+            'effectiveRSI': self.effective_rsi,
+            'effectiveR': self.effective_rsi*self._RSI_RATIO if self.effective_rsi is not None else None,
+            'areaMetres': self.area_metres,
+            'areaFeet': self.area_metres*self._FEET_SQUARED_RATIO if self.area_metres is not None else None,
+            'lengthMetres': self.length_metres,
+            'lengthFeet': self.length_metres*self._FEET_RATIO if self.length_metres is not None else None
         }
 
 
