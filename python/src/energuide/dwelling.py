@@ -143,9 +143,9 @@ class ParsedDwellingDataRow(_ParsedDwellingDataRow):
 
         'ceilings': {
             'type': 'list',
-            'required': True, 
+            'required': True,
             'schema': {
-                'type': 'dict', 
+                'type': 'dict',
                 'schema': {
                     'label': {'type': 'string', 'required': True},
                     'type_english': {'type': 'string', 'required': True},
@@ -190,7 +190,7 @@ class Evaluation:
                  entry_date: datetime.date,
                  creation_date: datetime.datetime,
                  modification_date: datetime.datetime,
-                 ceilings: typing.List[typing.Dict[str, typing.Any]]
+                 ceilings: typing.List[Ceiling]
                 ) -> None:
         self._evaluation_type = evaluation_type
         self._entry_date = entry_date
@@ -225,7 +225,7 @@ class Evaluation:
         return self._modification_date
 
     @property
-    def ceilings(self) -> typing.List[typing.Dict[str, typing.Any]]:
+    def ceilings(self) -> typing.List[Ceiling]:
         return self._ceilings
 
     def to_dict(self) -> typing.Dict[str, typing.Any]:

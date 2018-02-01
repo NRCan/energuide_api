@@ -117,13 +117,13 @@ class TestCeiling:
     @pytest.fixture
     def sample(self):
         return {
-                'label': 'Main attic',
-                'type_english': 'Attic/gable',
-                'type_french': 'Combles/pignon',
-                'nominal_rsi': 2.864,
-                'effective_rsi': 2.9463,
-                'area': 46.4515,
-                'length': 23.875,
+            'label': 'Main attic',
+            'type_english': 'Attic/gable',
+            'type_french': 'Combles/pignon',
+            'nominal_rsi': 2.864,
+            'effective_rsi': 2.9463,
+            'area': 46.4515,
+            'length': 23.875,
             }
 
     def test_from_data(self, sample):
