@@ -1,7 +1,9 @@
 import datetime
 import typing
 import pytest
-from energuide import dwelling, reader
+from energuide import dwelling
+from energuide import reader
+from energuide import extracted_datatypes
 
 
 # pylint: disable=no-self-use
@@ -112,39 +114,6 @@ class TestRegion:
     def test_from_unknown_code(self):
         assert dwelling.Region.from_data('CA') == dwelling.Region.UNKNOWN
 
-class TestCeiling:
-
-    @pytest.fixture
-    def sample(self, sample_input_d: reader.InputData):
-        ceiling = sample_input_d['ceilings'][0]
-        ceiling['nominalRsi'] = float(ceiling['nominalRsi'])
-        ceiling['effectiveRsi'] = float(ceiling['effectiveRsi'])
-        ceiling['area'] = float(ceiling['area'])
-        ceiling['length'] = float(ceiling['length'])
-        return ceiling
-
-    def test_from_data(self, sample):
-        output = dwelling.Ceiling.from_data(sample)
-        assert output.label == 'Main attic'
-        assert output.area_metres == 46.4515
-
-
-class TestFloor:
-
-    @pytest.fixture
-    def sample(self, sample_input_d: reader.InputData):
-        floor = sample_input_d['floors'][0]
-        floor['nominalRsi'] = float(floor['nominalRsi'])
-        floor['effectiveRsi'] = float(floor['effectiveRsi'])
-        floor['area'] = float(floor['area'])
-        floor['length'] = float(floor['length'])
-        return floor
-
-    def test_from_data(self, sample):
-        output = dwelling.Floor.from_data(sample)
-        assert output.label == 'Rm over garage'
-        assert output.area_metres == 9.2903
-
 
 class TestParsedDwellingDataRow:
 
@@ -161,7 +130,7 @@ class TestParsedDwellingDataRow:
             region=dwelling.Region.ONTARIO,
             forward_sortation_area='K1P',
             ceilings=[
-                dwelling.Ceiling(
+                extracted_datatypes.Ceiling(
                     label='Main attic',
                     type_english='Attic/gable',
                     type_french='Combles/pignon',
@@ -172,7 +141,7 @@ class TestParsedDwellingDataRow:
                 )
             ],
             floors=[
-                dwelling.Floor(
+                extracted_datatypes.Floor(
                     label='Rm over garage',
                     nominal_rsi=2.46,
                     effective_rsi=2.9181,
