@@ -1,19 +1,19 @@
 import request from 'supertest'
 import Server from '../src/server'
 
+let server = new Server({
+  client: jest.fn(),
+})
+
 describe('configuration', () => {
   it('has GraphQL middleware mounted at /graphql', async () => {
-    let server = new Server({
-      client: jest.fn(),
-    })
-
     let response = await request(server)
       .post('/graphql')
       .set('Content-Type', 'application/json; charset=utf-8')
       .send({
-        query: `{ 
+        query: `{
         __schema {
-          queryType { 
+          queryType {
             fields {
               name
             }
@@ -26,10 +26,6 @@ describe('configuration', () => {
   })
 
   it('serves the Graphiql IDE from the /graphiql endpoint', async () => {
-    let server = new Server({
-      client: jest.fn(),
-    })
-
     let response = await request(server)
       .get('/graphiql')
       .set('Accept', '*/*')
@@ -38,15 +34,13 @@ describe('configuration', () => {
   })
 
   it('has Cross Origin Resource Sharing enabled for all domains', async () => {
-    let server = Server()
-
     let response = await request(server)
       .post('/graphql')
       .set('Content-Type', 'application/json; charset=utf-8')
       .send({
-        query: `{ 
+        query: `{
         __schema {
-          queryType { 
+          queryType {
             fields {
               name
             }
@@ -63,7 +57,6 @@ describe('configuration', () => {
 describe('i18n', () => {
   it('returns french description when french language header sent', async () => {
     let lang = 'fr'
-    let server = Server()
 
     let response = await request(server)
       .post('/graphql')
@@ -84,7 +77,6 @@ describe('i18n', () => {
 
   it('returns english description when english language header sent', async () => {
     let lang = 'en'
-    let server = Server()
 
     let response = await request(server)
       .post('/graphql')
@@ -104,8 +96,6 @@ describe('i18n', () => {
   })
 
   it('defaults to english if no language header is set', async () => {
-    let server = Server()
-
     let response = await request(server)
       .post('/graphql')
       .set('Content-Type', 'application/json; charset=utf-8')
