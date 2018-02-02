@@ -54,6 +54,50 @@ def test_floor_snippet(house: etree.ElementTree) -> None:
     }
 
 
+def test_wall_snippet(house: etree.ElementTree) -> None:
+    output = snippets.snip_house(house)
+    assert 'walls' in output
+    assert len(output['walls']) == 3
+    assert sorted(output['walls'], key=lambda row: row['label'])[0] == {
+        'label': 'End Wall',
+        'constructionTypeCode': 'Code 1',
+        'constructionTypeValue': '1201101121',
+        'effectiveRsi': '1.7435',
+        'nominalRsi': '1.432',
+        'perimeter': '7.367',
+        'height': '1.2283',
+    }
+
+
+def test_user_specified_wall_snippet() -> None:
+    xml_text = """
+<House><Components>
+    <Wall>
+        <Label>Test Floor</Label>
+        <Construction>
+            <Type rValue="2.6892" nominalInsulation="3.3615">User specified</Type>
+        </Construction>
+    </Wall>
+</Components></House>
+    """
+
+    doc = etree.fromstring(xml_text)
+    output = snippets.snip_house(doc)
+    assert output == {
+        'ceilings': [],
+        'floors': [],
+        'walls': [{
+            'label': 'Test Floor',
+            'constructionTypeCode': None,
+            'constructionTypeValue': 'User specified',
+            'nominalRsi': '3.3615',
+            'effectiveRsi': '2.6892',
+            'perimeter': None,
+            'height': None,
+        }]
+    }
+
+
 def test_code_snippet(code: etree.ElementTree) -> None:
     output = snippets.snip_codes(code)
     assert output == {
