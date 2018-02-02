@@ -4,7 +4,8 @@ import typing
 from dateutil import parser
 import cerberus
 from energuide import reader
-from energuide.extracted_datatypes import Floor, Ceiling
+from energuide.extracted_datatypes import Floor
+from energuide.extracted_datatypes import Ceiling
 
 
 class NoInputDataException(Exception):
