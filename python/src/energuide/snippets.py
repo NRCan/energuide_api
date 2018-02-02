@@ -51,3 +51,31 @@ def snip_house(house: etree.ElementTree) -> typing.Dict[str, typing.Any]:
         'ceilings': [_ceiling_snippet(node) for node in ceilings],
         'floors': [_floor_snippet(node) for node in floors],
     }
+
+
+def _wall_code_snippet(wall_code: etree.ElementTree) -> typing.Dict[str, typing.Any]:
+    code_id = wall_code.attrib['id']
+    label = wall_code.findtext('Label')
+    structure_type_english = wall_code.findtext('Layers/StructureType/English')
+    structure_type_french = wall_code.findtext('Layers/StructureType/French')
+    component_type_size_english = wall_code.findtext('Layers/ComponentTypeSize/English')
+    component_type_size_french = wall_code.findtext('Layers/ComponentTypeSize/French')
+
+    return {
+        'id': code_id,
+        'label': label,
+        'structureTypeEnglish': structure_type_english,
+        'structureTypeFrench': structure_type_french,
+        'componentTypeSizeEnglish': component_type_size_english,
+        'componentTypeSizeFrench': component_type_size_french,
+    }
+
+
+def snip_codes(codes: etree.ElementTree) -> typing.Dict[str, typing.Any]:
+    wall_codes = codes.findall('Wall/*/Code')
+
+    return {
+        'codes': {
+            'wall': [_wall_code_snippet(node) for node in wall_codes]
+        }
+    }

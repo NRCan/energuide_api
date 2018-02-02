@@ -54,18 +54,27 @@ def _read_csv(filepath: str) -> typing.Iterator[reader.InputData]:
             yield row
 
 
+def _safe_merge(data: reader.InputData, extra: reader.InputData) -> reader.InputData:
+    for key, value in extra.items():
+        assert key not in data
+        data[key] = value
+    return data
+
+
 def _extract_snippets(data: typing.Iterable[reader.InputData]) -> typing.Iterator[reader.InputData]:
     for row in data:
         row['forwardSortationArea'] = row['CLIENTPCODE'][:3]
 
         doc = ElementTree.fromstring(row['RAW_XML'])
-        house = doc.find('House')
-        if house:
-            extra_data = snippets.snip_house(house)
+        house_node = doc.find('House')
+        if house_node:
+            house_snippets = snippets.snip_house(house_node)
+            row = _safe_merge(row, house_snippets)
 
-            for key, value in extra_data.items():
-                assert key not in row
-                row[key] = value
+        code_node = doc.find('Codes')
+        if code_node:
+            code_snippets = snippets.snip_codes(code_node)
+            row = _safe_merge(row, code_snippets)
 
         yield row
 
