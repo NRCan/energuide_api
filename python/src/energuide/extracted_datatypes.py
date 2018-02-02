@@ -18,10 +18,81 @@ class _Floor(typing.NamedTuple):
     length_metres: typing.Optional[float]
 
 
+class _Wall(typing.NamedTuple):
+    label: typing.Optional[str]
+    structure_type_english: typing.Optional[str]
+    structure_type_french: typing.Optional[str]
+    component_type_size_english: typing.Optional[str]
+    component_type_size_french: typing.Optional[str]
+    nominal_rsi: typing.Optional[float]
+    effective_rsi: typing.Optional[float]
+    perimeter: typing.Optional[float]
+    height: typing.Optional[float]
+
 _RSI_MULTIPLIER = 5.678263337
 _FEET_MULTIPLIER = 3.28084
 _FEET_SQUARED_MULTIPLIER = _FEET_MULTIPLIER**2
 
+
+class Wall(_Wall):
+
+    SCHEMA = {
+        'type': 'list',
+        'required': True,
+        'schema': {
+            'type': 'dict',
+            'schema': {
+                'label':  {'type': 'string', 'required': True},
+                'constructionTypeCode':  {'type': 'string', 'required': False},
+                'constructionTypeNode':  {'type': 'string', 'required': False},
+                'nominalRsi':  {'type': 'float', 'required': True, 'coerce': float},
+                'effectiveRsi':  {'type': 'float', 'required': True, 'coerce': float},
+                'perimeter':  {'type': 'float', 'required': True, 'coerce': float},
+                'height':  {'type': 'float', 'required': True, 'coerce': float},
+            }
+        }
+    }
+
+    @classmethod
+    def from_data(cls,
+                  wall: typing.Dict[str, typing.Any],
+                  wall_codes: typing.Dict[str, typing.Dict[str, typing.Optional[str]]]):
+        code = wall_codes.get(wall['constructionTypeCode'])
+
+        structure_type_english = code['structureTypeEnglish'] if code is not None else None
+        structure_type_french = code['structureTypeFrench'] if code is not None else None
+        component_type_size_english = code['componentTypeSizeEnglish'] if code is not None else None
+        component_type_size_french = code['componentTypeSizeFrench'] if code is not None else None
+
+        return Wall(
+            label=wall['label'],
+            structure_type_english=structure_type_english,
+            structure_type_french=structure_type_french,
+            component_type_size_english=component_type_size_english,
+            component_type_size_french=component_type_size_french,
+            nominal_rsi=wall['nominalRsi'],
+            effective_rsi=wall['effectiveRsi'],
+            perimeter=wall['perimeter'],
+            height=wall['height'],
+        )
+
+    def to_dict(self) -> typing.Dict[str, typing.Any]:
+        return {
+            'label': self.label,
+            'structure_type_english': self.structure_type_english,
+            'structure_type_french': self.structure_type_french,
+            'component_type_size_english': self.component_type_size_english,
+            'component_type_size_french': self.component_type_size_french,
+            'nominal_rsi': self.nominal_rsi,
+            'nominal_r': self.nominal_rsi*_RSI_MULTIPLIER if self.nominal_rsi is not None else None,
+            'effective_rsi': self.effective_rsi,
+            'effective_r': self.effective_rsi*_RSI_MULTIPLIER if self.effective_rsi is not None else None,
+            'area_metres': self.perimeter*self.height,
+            'area_feet': self.perimeter*self.height*_FEET_SQUARED_MULTIPLIER
+                         if (self.perimeter is not None and self.height is not None) else None,
+            'perimeter': self.perimeter,
+            'height': self.height,
+        }
 
 class Ceiling(_Ceiling):
     SCHEMA = {
@@ -54,7 +125,7 @@ class Ceiling(_Ceiling):
 
         )
 
-    def to_dict(self):
+    def to_dict(self) -> typing.Dict[str, typing.Any]:
         return {
             'label': self.label,
             'typeEnglish': self.type_english,
@@ -98,7 +169,7 @@ class Floor(_Floor):
 
         )
 
-    def to_dict(self):
+    def to_dict(self) -> typing.Dict[str, typing.Any]:
         return {
             'label': self.label,
             'nominalRsi': self.nominal_rsi,

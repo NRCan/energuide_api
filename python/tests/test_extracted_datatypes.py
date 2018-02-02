@@ -1,3 +1,4 @@
+import typing
 import pytest
 from energuide import reader
 from energuide import extracted_datatypes
@@ -7,7 +8,7 @@ from energuide import extracted_datatypes
 
 
 @pytest.fixture
-def ceiling_input() -> reader.InputData:
+def ceiling_input() -> typing.Dict[str, str]:
     return {
         'label': 'Main attic',
         'typeEnglish': 'Attic/gable',
@@ -20,7 +21,7 @@ def ceiling_input() -> reader.InputData:
 
 
 @pytest.fixture
-def floor_input() -> reader.InputData:
+def floor_input() -> typing.Dict[str, str]:
     return {
         'label': 'Rm over garage',
         'nominalRsi': '2.46',
@@ -31,8 +32,39 @@ def floor_input() -> reader.InputData:
 
 
 @pytest.fixture
+def wall_input() -> typing.Dict[str, str]:
+    return {
+        'label': 'Second level',
+        'constructionTypeCode': 'Code 1',
+        'constructionTypeValue': '1201101121',
+        'nominalRsi': '1.432',
+        'effectiveRsi': '1.8016',
+        'perimeter': '42.9768',
+        'height': '2.4384',
+    }
+
+
+@pytest.fixture
+def codes() -> typing.Dict[str, typing.List[typing.Dict[str, str]]]:
+    return {
+        'wall': [
+            {
+                'id': 'Code 1',
+                'label': '1201101121',
+                'structureTypeEnglish': 'Wood frame',
+                'structureTypeFrench': 'Ossature de bois',
+                'componentTypeSizeEnglish': '38x89 mm (2x4 in)',
+                'componentTypeSizeFrench': '38x89 (2x4)',
+            }
+        ]
+    }
+
+
+@pytest.fixture
 def sample_input_d(ceiling_input: reader.InputData,
-                   floor_input: reader.InputData) -> reader.InputData:
+                   floor_input: reader.InputData,
+                   wall_input,
+                   codes,) -> reader.InputData:
     return {
         'EVAL_ID': '123',
         'EVAL_TYPE': 'D',
@@ -48,7 +80,12 @@ def sample_input_d(ceiling_input: reader.InputData,
         ],
         'floors': [
             floor_input
-        ]
+        ],
+        'walls': [
+            wall_input
+        ],
+        'codes': codes
+
     }
 
 
@@ -84,3 +121,25 @@ class TestFloor:
         output = extracted_datatypes.Floor.from_data(sample)
         assert output.label == 'Rm over garage'
         assert output.area_metres == 9.2903
+
+def _dict_codes(codes: typing.Dict[str, typing.List[typing.Dict[str, str]]]
+               ) -> typing.Dict[str, typing.Dict[str, typing.Dict[str, str]]]:
+
+    return {key: {structure['id']: structure for structure in value} for key, value in codes.items()}
+
+
+class TestWall:
+
+    @pytest.fixture
+    def sample(self, sample_input_d: reader.InputData):
+        wall = sample_input_d['walls'][0]
+        wall['nominalRsi'] = float(wall['nominalRsi'])
+        wall['effectiveRsi'] = float(wall['effectiveRsi'])
+        wall['perimeter'] = float(wall['perimeter'])
+        wall['height'] = float(wall['height'])
+        return wall
+
+    def test_from_data(self, sample, codes: typing.Dict[str, typing.List[typing.Dict[str, str]]]):
+        output = extracted_datatypes.Wall.from_data(sample, _dict_codes(codes)['wall'])
+        assert output.label == 'Second level'
+        assert output.perimeter == 42.9768
