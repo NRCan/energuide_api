@@ -112,7 +112,6 @@ class ParsedDwellingDataRow(_ParsedDwellingDataRow):
     def from_row(cls, row: reader.InputData) -> 'ParsedDwellingDataRow':
         validator = cerberus.Validator(cls._SCHEMA, allow_unknown=True, ignore_none_values=True)
         if not validator.validate(row):
-            # import pdb; pdb.set_trace()
             error_keys = ', '.join(validator.errors.keys())
             raise reader.InvalidInputDataException(f'Validator failed on keys: {error_keys}')
 
