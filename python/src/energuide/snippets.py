@@ -44,12 +44,37 @@ def _floor_snippet(floor: etree.ElementTree) -> typing.Dict[str, typing.Any]:
     }
 
 
+def _wall_snippet(wall: etree.ElementTree) -> typing.Dict[str, typing.Any]:
+    label = wall.findtext('Label')
+
+    construction_type_node = wall.find('Construction/Type')
+    construction_type_code = construction_type_node.attrib.get('idref') if construction_type_node is not None else None
+    nominal_rsi = construction_type_node.attrib['nominalInsulation'] if construction_type_node is not None else None
+    effective_rsi = construction_type_node.attrib['rValue'] if construction_type_node is not None else None
+
+    measurements_node = wall.find('Measurements')
+    perimeter = measurements_node.attrib['perimeter'] if measurements_node is not None else None
+    height = measurements_node.attrib['height'] if measurements_node is not None else None
+
+    return {
+        'label': label,
+        'constructionTypeCode': construction_type_code,
+        'constructionTypeValue': construction_type_node.text,
+        'nominalRsi': nominal_rsi,
+        'effectiveRsi': effective_rsi,
+        'perimeter': perimeter,
+        'height': height,
+    }
+
+
 def snip_house(house: etree.ElementTree) -> typing.Dict[str, typing.Any]:
     ceilings = house.findall('Components/Ceiling')
     floors = house.findall('Components/Floor')
+    walls = house.findall('Components/Wall')
     return {
         'ceilings': [_ceiling_snippet(node) for node in ceilings],
         'floors': [_floor_snippet(node) for node in floors],
+        'walls': [_wall_snippet(node) for node in walls],
     }
 
 
