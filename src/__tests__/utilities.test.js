@@ -1,4 +1,4 @@
-import { comparators, hasMoreThanOneComparator } from '../src/utilities'
+import { comparators, hasMoreThanOneComparator } from '../utilities'
 
 describe('Utilities', () => {
   describe('comparators', () => {
