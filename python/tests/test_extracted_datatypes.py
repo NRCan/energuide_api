@@ -100,10 +100,14 @@ class TestCeiling:
         ceiling['length'] = float(ceiling['length'])
         return ceiling
 
-    def test_from_data(self, sample) -> None:
+    def test_from_data(self, sample: typing.Dict[str, str]) -> None:
         output = extracted_datatypes.Ceiling.from_data(sample)
         assert output.label == 'Main attic'
         assert output.area_metres == 46.4515
+
+    def test_to_dict(self, sample: typing.Dict[str, str]) -> None:
+        output = extracted_datatypes.Ceiling.from_data(sample).to_dict()
+        assert output['areaMetres'] == sample['area']
 
 
 class TestFloor:
@@ -117,10 +121,15 @@ class TestFloor:
         floor['length'] = float(floor['length'])
         return floor
 
-    def test_from_data(self, sample) -> None:
+    def test_from_data(self, sample: typing.Dict[str, str]) -> None:
         output = extracted_datatypes.Floor.from_data(sample)
         assert output.label == 'Rm over garage'
         assert output.area_metres == 9.2903
+
+    def test_to_dict(self, sample: typing.Dict[str, str]) -> None:
+        output = extracted_datatypes.Floor.from_data(sample).to_dict()
+        assert output['areaMetres'] == sample['area']
+
 
 def _dict_codes(codes: typing.Dict[str, typing.List[typing.Dict[str, str]]]
                ) -> typing.Dict[str, typing.Dict[str, typing.Dict[str, str]]]:
@@ -139,13 +148,15 @@ class TestWall:
         wall['height'] = float(wall['height'])
         return wall
 
-    def test_from_data(self, sample, codes: typing.Dict[str, typing.List[typing.Dict[str, str]]]) -> None:
+    def test_from_data(self, sample: typing.Dict[str, str], codes: typing.Dict[str, typing.List[typing.Dict[str, str]]]) -> None:
         output = extracted_datatypes.Wall.from_data(sample, _dict_codes(codes)['wall'])
         assert output.label == 'Second level'
         assert output.perimeter == 42.9768
         assert output.component_type_size_english == '38x89 mm (2x4 in)'
 
-    def test_missing_optional_fields(self, sample, codes: typing.Dict[str, typing.List[typing.Dict[str, str]]]) -> None:
+    def test_missing_optional_fields(self,
+                                     sample: typing.Dict[str, str],
+                                     codes: typing.Dict[str, typing.List[typing.Dict[str, str]]]) -> None:
         wall = sample.copy()
         wall.pop('constructionTypeCode')
         wall.pop('constructionTypeValue')
@@ -153,3 +164,11 @@ class TestWall:
         assert output.label == 'Second level'
         assert output.perimeter == 42.9768
         assert output.component_type_size_english is None
+
+    def test_to_dict(self,
+                     sample: typing.Dict[str, str],
+                     codes: typing.Dict[str, typing.List[typing.Dict[str, str]]]) -> None:
+        output = extracted_datatypes.Wall.from_data(sample, _dict_codes(codes)['wall']).to_dict()
+        assert output['areaMetres'] == sample['perimeter']*sample['height']
+
+

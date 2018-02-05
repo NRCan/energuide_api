@@ -81,16 +81,16 @@ class Wall(_Wall):
     def to_dict(self) -> typing.Dict[str, typing.Any]:
         return {
             'label': self.label,
-            'structure_type_english': self.structure_type_english,
-            'structure_type_french': self.structure_type_french,
-            'component_type_size_english': self.component_type_size_english,
-            'component_type_size_french': self.component_type_size_french,
-            'nominal_rsi': self.nominal_rsi,
-            'nominal_r': (self.nominal_rsi * _RSI_MULTIPLIER) if self.nominal_rsi is not None else None,
-            'effective_rsi': self.effective_rsi,
-            'effective_r': (self.effective_rsi * _RSI_MULTIPLIER) if self.effective_rsi is not None else None,
-            'area_metres': self.perimeter * self.height,
-            'area_feet': (self.perimeter * self.height * _FEET_SQUARED_MULTIPLIER)
+            'structureTypeEnglish': self.structure_type_english,
+            'structureTypeFrench': self.structure_type_french,
+            'componentTypeSizeEnglish': self.component_type_size_english,
+            'componentTypeSizeFrench': self.component_type_size_french,
+            'nominalRsi': self.nominal_rsi,
+            'nominalR': (self.nominal_rsi * _RSI_MULTIPLIER) if self.nominal_rsi is not None else None,
+            'effectiveRsi': self.effective_rsi,
+            'effectiveR': (self.effective_rsi * _RSI_MULTIPLIER) if self.effective_rsi is not None else None,
+            'areaMetres': self.perimeter * self.height,
+            'areaFeet': (self.perimeter * self.height * _FEET_SQUARED_MULTIPLIER)
                          if (self.perimeter is not None and self.height is not None) else None,
             'perimeter': self.perimeter,
             'height': self.height,
