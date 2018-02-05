@@ -95,12 +95,54 @@ def _wall_code_snippet(wall_code: etree.ElementTree) -> typing.Dict[str, typing.
         'componentTypeSizeFrench': component_type_size_french,
     }
 
+def _window_code_snipped(window_code: etree.ElementTree) -> typing.Dict[str, typing.Any]:
+    code_id = window_code.attrib['id']
+    label = window_code.findtext('Label')
+
+    glazing_types_english = window_code.findtext('Layers/GlazingTypes/English')
+    glazing_types_french = window_code.findtext('Layers/GlazingTypes/French')
+
+    coatings_tints_english = window_code.findtext('Layers/CoatingsTints/English')
+    coatings_tints_french = window_code.findtext('Layers/CoatingsTints/French')
+
+    fill_type_english = window_code.findtext('Layers/FillType/English')
+    fill_type_french = window_code.findtext('Layers/FillType/French')
+
+    spacer_type_english = window_code.findtext('Layers/SpacerType/English')
+    spacer_type_french = window_code.findtext('Layers/SpacerType/French')
+
+    type_english = window_code.findtext('Layers/Type/English')
+    type_french = window_code.findtext('Layers/Type/French')
+
+    frame_material_english = window_code.findtext('Layers/FrameMaterial/English')
+    frame_material_french = window_code.findtext('Layers/FrameMaterial/French')
+
+    return {
+        'id': code_id,
+        'label': label,
+        'glazingTypeEnglish': glazing_types_english,
+        'glazingTypeFrench': glazing_types_french,
+        'coatingsTintsEnglish': coatings_tints_english,
+        'coatingsTintsFrench': coatings_tints_french,
+        'fillTypeEnglish': fill_type_english,
+        'fillTypeFrench': fill_type_french,
+        'spacerTypeEnglish': spacer_type_english,
+        'spacerTypeFrench': spacer_type_french,
+        'typeEnglish': type_english,
+        'typeFrench': type_french,
+        'frameMaterialEnglish': frame_material_english,
+        'frameMaterialFrench': frame_material_french,
+    }
+
+
 
 def snip_codes(codes: etree.ElementTree) -> typing.Dict[str, typing.Any]:
     wall_codes = codes.findall('Wall/*/Code')
+    window_codes = codes.findall('Window/*/Code')
 
     return {
         'codes': {
-            'wall': [_wall_code_snippet(node) for node in wall_codes]
+            'wall': [_wall_code_snippet(node) for node in wall_codes],
+            'window': [_window_code_snipped(node) for node in window_codes],
         }
     }
