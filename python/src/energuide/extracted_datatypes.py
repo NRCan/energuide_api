@@ -42,13 +42,13 @@ class Wall(_Wall):
         'schema': {
             'type': 'dict',
             'schema': {
-                'label':  {'type': 'string', 'required': True},
-                'constructionTypeCode':  {'type': 'string', 'required': False},
-                'constructionTypeNode':  {'type': 'string', 'required': False},
-                'nominalRsi':  {'type': 'float', 'required': True, 'coerce': float},
-                'effectiveRsi':  {'type': 'float', 'required': True, 'coerce': float},
-                'perimeter':  {'type': 'float', 'required': True, 'coerce': float},
-                'height':  {'type': 'float', 'required': True, 'coerce': float},
+                'label':  {'type': 'string', 'required': True, 'nullable': True},
+                'constructionTypeCode':  {'type': 'string', 'required': False, 'nullable': True},
+                'constructionTypeNode':  {'type': 'string', 'required': False, 'nullable': True},
+                'nominalRsi':  {'type': 'float', 'required': True, 'coerce': float, 'nullable': True},
+                'effectiveRsi':  {'type': 'float', 'required': True, 'coerce': float, 'nullable': True},
+                'perimeter':  {'type': 'float', 'required': True, 'coerce': float, 'nullable': True},
+                'height':  {'type': 'float', 'required': True, 'coerce': float, 'nullable': True},
             }
         }
     }
@@ -103,13 +103,13 @@ class Ceiling(_Ceiling):
         'schema': {
             'type': 'dict',
             'schema': {
-                'label': {'type': 'string', 'required': True},
-                'typeEnglish': {'type': 'string', 'required': True},
-                'typeFrench': {'type': 'string', 'required': True},
-                'nominalRsi': {'type': 'float', 'required': True, 'coerce': float},
-                'effectiveRsi': {'type': 'float', 'required': True, 'coerce': float},
-                'area': {'type': 'float', 'required': True, 'coerce': float},
-                'length': {'type': 'float', 'required': True, 'coerce': float}
+                'label': {'type': 'string', 'required': True, 'nullable': True},
+                'typeEnglish': {'type': 'string', 'required': True, 'nullable': True},
+                'typeFrench': {'type': 'string', 'required': True, 'nullable': True},
+                'nominalRsi': {'type': 'float', 'required': True, 'coerce': float, 'nullable': True},
+                'effectiveRsi': {'type': 'float', 'required': True, 'coerce': float, 'nullable': True},
+                'area': {'type': 'float', 'required': True, 'coerce': float, 'nullable': True},
+                'length': {'type': 'float', 'required': True, 'coerce': float, 'nullable': True}
             }
         }
     }
@@ -151,11 +151,11 @@ class Floor(_Floor):
         'schema': {
             'type': 'dict',
             'schema': {
-                'label': {'type': 'string', 'required': True},
-                'nominalRsi': {'type': 'float', 'required': True, 'coerce': float},
-                'effectiveRsi': {'type': 'float', 'required': True, 'coerce': float},
-                'area': {'type': 'float', 'required': True, 'coerce': float},
-                'length': {'type': 'float', 'required': True, 'coerce': float}
+                'label': {'type': 'string', 'required': True, 'nullable': True},
+                'nominalRsi': {'type': 'float', 'required': True, 'coerce': float, 'nullable': True},
+                'effectiveRsi': {'type': 'float', 'required': True, 'coerce': float, 'nullable': True},
+                'area': {'type': 'float', 'required': True, 'coerce': float, 'nullable': True},
+                'length': {'type': 'float', 'required': True, 'coerce': float, 'nullable': True}
             }
         }
     }
