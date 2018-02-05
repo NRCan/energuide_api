@@ -6,3 +6,4 @@ dist
 **/*.pyc
 **/.cache/
 **/.mypy_cache/
+python/env
