@@ -1,4 +1,4 @@
-import Latitude from '../src/schema/types/Latitude'
+import Latitude from '../Latitude'
 import {
   graphql,
   GraphQLSchema,

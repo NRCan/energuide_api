@@ -1,4 +1,4 @@
-import Longitude from '../src/schema/types/Longitude'
+import Longitude from '../Longitude'
 import {
   graphql,
   GraphQLSchema,

@@ -6,7 +6,8 @@
   "author": "Mike Williamson <mike.williamson@tbs-sct.gc.ca>",
   "license": "MIT",
   "scripts": {
-    "test": "jest",
+    "test": "jest src",
+    "integration": "jest test/",
     "start": "node dist/index.js",
     "build": "babel src --copy-files --out-dir dist",
     "dockerize": "yarn build && docker build -t cdssnc/nrcan_api .",

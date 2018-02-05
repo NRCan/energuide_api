@@ -1,4 +1,4 @@
-import ForwardSortationArea from '../src/schema/types/ForwardSortationArea'
+import ForwardSortationArea from '../ForwardSortationArea'
 import {
   graphql,
   GraphQLSchema,

@@ -1,5 +1,5 @@
 import request from 'supertest'
-import Server from '../src/server'
+import Server from '../server'
 
 let server = new Server({
   client: jest.fn(),

@@ -1,4 +1,4 @@
-import PostalCode from '../src/schema/types/PostalCode'
+import PostalCode from '../PostalCode'
 import {
   graphql,
   GraphQLSchema,
