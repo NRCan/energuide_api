@@ -148,7 +148,9 @@ class TestWall:
         wall['height'] = float(wall['height'])
         return wall
 
-    def test_from_data(self, sample: typing.Dict[str, str], codes: typing.Dict[str, typing.List[typing.Dict[str, str]]]) -> None:
+    def test_from_data(self,
+                       sample: typing.Dict[str, str],
+                       codes: typing.Dict[str, typing.List[typing.Dict[str, str]]]) -> None:
         output = extracted_datatypes.Wall.from_data(sample, _dict_codes(codes)['wall'])
         assert output.label == 'Second level'
         assert output.perimeter == 42.9768
@@ -170,5 +172,3 @@ class TestWall:
                      codes: typing.Dict[str, typing.List[typing.Dict[str, str]]]) -> None:
         output = extracted_datatypes.Wall.from_data(sample, _dict_codes(codes)['wall']).to_dict()
         assert output['areaMetres'] == sample['perimeter']*sample['height']
-
-

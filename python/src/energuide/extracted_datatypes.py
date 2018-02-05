@@ -91,7 +91,7 @@ class Wall(_Wall):
             'effectiveR': (self.effective_rsi * _RSI_MULTIPLIER) if self.effective_rsi is not None else None,
             'areaMetres': self.perimeter * self.height,
             'areaFeet': (self.perimeter * self.height * _FEET_SQUARED_MULTIPLIER)
-                         if (self.perimeter is not None and self.height is not None) else None,
+                        if (self.perimeter is not None and self.height is not None) else None,
             'perimeter': self.perimeter,
             'height': self.height,
         }
