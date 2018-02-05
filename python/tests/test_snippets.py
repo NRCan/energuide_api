@@ -132,8 +132,7 @@ def test_code_snippet(code: etree.ElementTree) -> None:
                 'typeFrench': 'Fixe',
                 'frameMaterialEnglish': 'Wood',
                 'frameMaterialFrench': 'Bois',
-            },
-            {
+            }, {
                 'id': 'Code 12',
                 'label': '234002',
                 'glazingTypeEnglish': 'Double/double with 1 coat',
@@ -148,8 +147,7 @@ def test_code_snippet(code: etree.ElementTree) -> None:
                 'typeFrench': 'Fixe',
                 'frameMaterialEnglish': 'Wood',
                 'frameMaterialFrench': 'Bois',
-            },
-            {
+            }, {
                 'id': 'Code 13',
                 'label': '330204',
                 'glazingTypeEnglish': 'Triple/triple with 1 coat',
@@ -164,8 +162,7 @@ def test_code_snippet(code: etree.ElementTree) -> None:
                 'typeFrench': 'Fixe',
                 'frameMaterialEnglish': 'Vinyl',
                 'frameMaterialFrench': 'Vinyle',
-            },
-            {
+            }, {
                 'id': 'Code 14',
                 'label': '334006',
                 'glazingTypeEnglish': 'Triple/triple with 1 coat',
