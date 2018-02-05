@@ -57,7 +57,9 @@ class Wall(_Wall):
     def from_data(cls,
                   wall: typing.Dict[str, typing.Any],
                   wall_codes: typing.Dict[str, typing.Dict[str, typing.Optional[str]]]):
-        code = wall_codes.get(wall['constructionTypeCode'])
+
+        code_id = wall.get('constructionTypeCode')
+        code = wall_codes.get(code_id) if code_id is not None else None
 
         structure_type_english = code['structureTypeEnglish'] if code is not None else None
         structure_type_french = code['structureTypeFrench'] if code is not None else None
