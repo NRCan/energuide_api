@@ -100,7 +100,7 @@ class TestCeiling:
         ceiling['length'] = float(ceiling['length'])
         return ceiling
 
-    def test_from_data(self, sample) -> NOne:
+    def test_from_data(self, sample) -> None:
         output = extracted_datatypes.Ceiling.from_data(sample)
         assert output.label == 'Main attic'
         assert output.area_metres == 46.4515
@@ -153,5 +153,3 @@ class TestWall:
         assert output.label == 'Second level'
         assert output.perimeter == 42.9768
         assert output.component_type_size_english is None
-
-
