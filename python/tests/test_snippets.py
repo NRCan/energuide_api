@@ -98,11 +98,9 @@ def test_user_specified_wall_snippet() -> None:
     }
 
 
-def test_code_snippet(code: etree.ElementTree) -> None:
+def test_wall_snippet(code: etree.ElementTree) -> None:
     output = snippets.snip_codes(code)
-    assert output == {
-        'codes': {
-            'wall': [{
+    assert output['codes']['wall'] == [{
                 'id': 'Code 1',
                 'label': '1201101121',
                 'structureTypeEnglish': 'Wood frame',
@@ -116,8 +114,11 @@ def test_code_snippet(code: etree.ElementTree) -> None:
                 'structureTypeFrench': 'Ossature de bois',
                 'componentTypeSizeEnglish': '38x89 mm (2x4 in)',
                 'componentTypeSizeFrench': '38x89 (2x4)',
-            }],
-            'window': [{
+            }]
+
+def test_window_snippet(code: etree.ElementTree) -> None:
+    output = snippets.snip_codes(code)
+    assert sorted(output['codes']['window'], key=lambda row: row['label'])[0] == {
                 'id': 'Code 11',
                 'label': '202002',
                 'glazingTypeEnglish': 'Double/double with 1 coat',
@@ -125,58 +126,11 @@ def test_code_snippet(code: etree.ElementTree) -> None:
                 'coatingsTintsEnglish': 'Clear',
                 'coatingsTintsFrench': 'Transparent',
                 'fillTypeEnglish': '6 mm Air',
-                'fillTypeFrench': '6 mm d\'air',
+                'fillTypeFrench': "6 mm d'air",
                 'spacerTypeEnglish': 'Metal',
                 'spacerTypeFrench': 'Métal',
                 'typeEnglish': 'Picture',
                 'typeFrench': 'Fixe',
                 'frameMaterialEnglish': 'Wood',
                 'frameMaterialFrench': 'Bois',
-            }, {
-                'id': 'Code 12',
-                'label': '234002',
-                'glazingTypeEnglish': 'Double/double with 1 coat',
-                'glazingTypeFrench': 'Double/double, 1 couche',
-                'coatingsTintsEnglish': 'Low-E .20 (hard1)',
-                'coatingsTintsFrench': 'Faible E .20 (Dur 1)',
-                'fillTypeEnglish': '9 mm Argon',
-                'fillTypeFrench': '9 mm d\'argon',
-                'spacerTypeEnglish': 'Metal',
-                'spacerTypeFrench': 'Métal',
-                'typeEnglish': 'Picture',
-                'typeFrench': 'Fixe',
-                'frameMaterialEnglish': 'Wood',
-                'frameMaterialFrench': 'Bois',
-            }, {
-                'id': 'Code 13',
-                'label': '330204',
-                'glazingTypeEnglish': 'Triple/triple with 1 coat',
-                'glazingTypeFrench': 'Triple/triple, 1 couche',
-                'coatingsTintsEnglish': 'Low-E .20 (hard1)',
-                'coatingsTintsFrench': 'Faible E .20 (Dur 1)',
-                'fillTypeEnglish': '13 mm Air',
-                'fillTypeFrench': '13 mm d\'air',
-                'spacerTypeEnglish': 'Insulating',
-                'spacerTypeFrench': 'Isolant',
-                'typeEnglish': 'Picture',
-                'typeFrench': 'Fixe',
-                'frameMaterialEnglish': 'Vinyl',
-                'frameMaterialFrench': 'Vinyle',
-            }, {
-                'id': 'Code 14',
-                'label': '334006',
-                'glazingTypeEnglish': 'Triple/triple with 1 coat',
-                'glazingTypeFrench': 'Triple/triple, 1 couche',
-                'coatingsTintsEnglish': 'Low-E .20 (hard1)',
-                'coatingsTintsFrench': 'Faible E .20 (Dur 1)',
-                'fillTypeEnglish': '9 mm Argon',
-                'fillTypeFrench': '9 mm d\'argon',
-                'spacerTypeEnglish': 'Metal',
-                'spacerTypeFrench': 'Métal',
-                'typeEnglish': 'Picture',
-                'typeFrench': 'Fixe',
-                'frameMaterialEnglish': 'Fibreglass',
-                'frameMaterialFrench': 'Fibre de verre',
-            }],
-        }
-    }
+            }

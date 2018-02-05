@@ -95,7 +95,7 @@ def _wall_code_snippet(wall_code: etree.ElementTree) -> typing.Dict[str, typing.
         'componentTypeSizeFrench': component_type_size_french,
     }
 
-def _window_code_snipped(window_code: etree.ElementTree) -> typing.Dict[str, typing.Any]:
+def _window_code_snippet(window_code: etree.ElementTree) -> typing.Dict[str, typing.Any]:
     code_id = window_code.attrib['id']
     label = window_code.findtext('Label')
 
@@ -143,6 +143,6 @@ def snip_codes(codes: etree.ElementTree) -> typing.Dict[str, typing.Any]:
     return {
         'codes': {
             'wall': [_wall_code_snippet(node) for node in wall_codes],
-            'window': [_window_code_snipped(node) for node in window_codes],
+            'window': [_window_code_snippet(node) for node in window_codes],
         }
     }
