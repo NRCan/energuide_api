@@ -86,17 +86,50 @@ def _door_snippet(door: etree.ElementTree) -> typing.Dict[str, typing.Any]:
         'width': width,
     }
 
+def _window_snipped(window: etree.ElementTree) -> typing.Dict[str, typing.Any]:
+    label = window.findtext('Label')
+
+    construction_type_node = window.find('Construction/Type')
+    construction_type_code = construction_type_node.attrib.get('idref') if construction_type_node is not None else None
+    rsi = construction_type_node.attrib['rValue'] if construction_type_node is not None else None
+
+    measurements_node = window.find('Measurements')
+    width = measurements_node.attrib['width'] if measurements_node is not None else None
+    height = measurements_node.attrib['height'] if measurements_node is not None else None
+
+    return {
+        'label': label,
+        'constructionTypeCode': construction_type_code,
+        'constructionTypeValue': construction_type_node.text,
+        'rsi': rsi,
+        'width': width,
+        'height': height,
+    }
+
 
 def snip_house(house: etree.ElementTree) -> typing.Dict[str, typing.Any]:
     ceilings = house.findall('Components/Ceiling')
     floors = house.findall('Components/Floor')
     walls = house.findall('Components/Wall')
     doors = house.findall('Components/Wall/Components/Door')
+    basements = house.findall('Components/Basement')
+
+    windows = []
+    for ceiling in ceilings:
+        windows.extend(ceiling.findall('Components/Window'))
+    for wall in walls:
+        windows.extend(wall.findall('Components/Window'))
+    for door in doors:
+        windows.extend(door.findall('Components/Window'))
+    for basement in basements:
+        windows.extend(basement.findall('Components/Window'))
+
     return {
         'ceilings': [_ceiling_snippet(node) for node in ceilings],
         'floors': [_floor_snippet(node) for node in floors],
         'walls': [_wall_snippet(node) for node in walls],
         'doors': [_door_snippet(door) for door in doors],
+        'windows': [_window_snipped(node) for node in windows],
     }
 
 
