@@ -125,7 +125,7 @@ class TestCeiling:
 
     @pytest.fixture
     def sample(self, ceiling_input: reader.InputData) -> typing.Dict[str, typing.Any]:
-        ceiling = ceiling_input.copy()
+        ceiling: typing.Dict[str, typing.Any] = ceiling_input.copy()
         ceiling['nominalRsi'] = float(ceiling['nominalRsi'])
         ceiling['effectiveRsi'] = float(ceiling['effectiveRsi'])
         ceiling['area'] = float(ceiling['area'])
@@ -146,7 +146,7 @@ class TestFloor:
 
     @pytest.fixture
     def sample(self, floor_input: typing.Dict[str, str]) -> typing.Dict[str, typing.Any]:
-        floor = floor_input.copy()
+        floor: typing.Dict[str, typing.Any] = floor_input.copy()
         floor['nominalRsi'] = float(floor['nominalRsi'])
         floor['effectiveRsi'] = float(floor['effectiveRsi'])
         floor['area'] = float(floor['area'])
@@ -167,7 +167,7 @@ class TestWall:
 
     @pytest.fixture
     def sample(self, wall_input: typing.Dict[str, str]) -> typing.Dict[str, typing.Any]:
-        wall = wall_input.copy()
+        wall: typing.Dict[str, typing.Any] = wall_input.copy()
         wall['nominalRsi'] = float(wall['nominalRsi'])
         wall['effectiveRsi'] = float(wall['effectiveRsi'])
         wall['perimeter'] = float(wall['perimeter'])
