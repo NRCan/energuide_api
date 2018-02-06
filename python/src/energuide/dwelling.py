@@ -6,6 +6,7 @@ import cerberus
 from energuide import reader
 from energuide.extracted_datatypes import Floor
 from energuide.extracted_datatypes import Ceiling
+from energuide.extracted_datatypes import Door
 from energuide.extracted_datatypes import Wall
 from energuide.extracted_datatypes import Codes
 
@@ -82,6 +83,7 @@ class _ParsedDwellingDataRow(typing.NamedTuple):
     ceilings: typing.List[Ceiling]
     floors: typing.List[Floor]
     walls: typing.List[Wall]
+    doors: typing.List[Door]
 
 
 class ParsedDwellingDataRow(_ParsedDwellingDataRow):
@@ -100,6 +102,7 @@ class ParsedDwellingDataRow(_ParsedDwellingDataRow):
         'ceilings': Ceiling.SCHEMA,
         'floors': Floor.SCHEMA,
         'walls': Wall.SCHEMA,
+        'doors': Door.SCHEMA,
 
         'codes': Codes.SCHEMA,
     }
@@ -127,6 +130,7 @@ class ParsedDwellingDataRow(_ParsedDwellingDataRow):
             ceilings=[Ceiling.from_data(ceiling) for ceiling in parsed['ceilings']],
             floors=[Floor.from_data(floor) for floor in parsed['floors']],
             walls=[Wall.from_data(wall, codes.wall) for wall in parsed['walls']],
+            doors=[Door.from_data(door) for door in parsed['doors']],
         )
 
 
@@ -140,6 +144,7 @@ class Evaluation:
                  ceilings: typing.List[Ceiling],
                  floors: typing.List[Floor],
                  walls: typing.List[Wall],
+                 doors: typing.List[Door],
                 ) -> None:
         self._evaluation_type = evaluation_type
         self._entry_date = entry_date
@@ -148,6 +153,7 @@ class Evaluation:
         self._ceilings = ceilings
         self._floors = floors
         self._walls = walls
+        self._doors = doors
 
     @classmethod
     def from_data(cls, data: ParsedDwellingDataRow) -> 'Evaluation':
@@ -159,6 +165,7 @@ class Evaluation:
             ceilings=data.ceilings,
             floors=data.floors,
             walls=data.walls,
+            doors=data.doors,
         )
 
     @property
@@ -189,6 +196,10 @@ class Evaluation:
     def walls(self) -> typing.List[Wall]:
         return self._walls
 
+    @property
+    def doors(self) -> typing.List[Door]:
+        return self._doors
+
     def to_dict(self) -> typing.Dict[str, typing.Any]:
         return {
             'evaluationType': self.evaluation_type.value,
@@ -198,6 +209,7 @@ class Evaluation:
             'ceilings': [ceiling.to_dict() for ceiling in self.ceilings],
             'floors': [floor.to_dict() for floor in self.floors],
             'walls': [wall.to_dict() for wall in self.walls],
+            'doors': [door.to_dict() for door in self.doors],
         }
 
 

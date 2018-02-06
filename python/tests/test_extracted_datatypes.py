@@ -135,3 +135,34 @@ class TestFloor:
     def test_to_dict(self, sample: typing.Dict[str, typing.Any]) -> None:
         output = extracted_datatypes.Floor.from_data(sample).to_dict()
         assert output['areaMetres'] == sample['area']
+
+
+class TestDoor:
+
+    @pytest.fixture
+    def sample(self) -> typing.Dict[str, typing.Any]:
+        return {
+            'typeEnglish': 'Solid wood',
+            'typeFrench': 'Bois massif',
+            'rsi': 0.39,
+            'height': 1.9799,
+            'width': 0.8499,
+        }
+
+    def test_from_data(self, sample: typing.Dict[str, typing.Any]) -> None:
+        output = extracted_datatypes.Door.from_data(sample)
+        assert output.type_english == 'Solid wood'
+        assert output.rsi == 0.39
+
+    def test_to_dict(self, sample: typing.Dict[str, typing.Any]) -> None:
+        output = extracted_datatypes.Door.from_data(sample).to_dict()
+        assert output == {
+            'typeEnglish': 'Solid wood',
+            'typeFrench': 'Bois massif',
+            'rsi': 0.39,
+            'rValue': 2.21452270143,
+            'uFactor': 2.564102564102564,
+            'uFactorImperial': 0.45156457387149956,
+            'areaMetres': 1.68271701,
+            'areaFeet': 18.112616311521026,
+        }
