@@ -137,8 +137,8 @@ def test_window_code_snippet(code: etree.ElementTree) -> None:
     assert sorted(output['codes']['window'], key=lambda row: row['label'])[0] == {
         'id': 'Code 11',
         'label': '202002',
-        'glazingTypeEnglish': 'Double/double with 1 coat',
-        'glazingTypeFrench': 'Double/double, 1 couche',
+        'glazingTypesEnglish': 'Double/double with 1 coat',
+        'glazingTypesFrench': 'Double/double, 1 couche',
         'coatingsTintsEnglish': 'Clear',
         'coatingsTintsFrench': 'Transparent',
         'fillTypeEnglish': '6 mm Air',

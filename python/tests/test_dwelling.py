@@ -57,6 +57,17 @@ def door_input() -> typing.Dict[str, str]:
     }
 
 
+def window_input() -> typing.Dict[str, str]:
+    return {
+        'label': 'East0001',
+        'constructionTypeCode': 'Code 12',
+        'constructionTypeValue': '234002',
+        'rsi': '0.4779',
+        'width': '1967.738',
+        'height': '1322.0699',
+    }
+
+
 @pytest.fixture
 def raw_codes() -> typing.Dict[str, typing.List[typing.Dict[str, str]]]:
     return {
@@ -81,8 +92,8 @@ def raw_codes() -> typing.Dict[str, typing.List[typing.Dict[str, str]]]:
             {
                 'id': 'Code 11',
                 'label': '202002',
-                'glazingTypeEnglish': 'Double/double with 1 coat',
-                'glazingTypeFrench': 'Double/double, 1 couche',
+                'glazingTypesEnglish': 'Double/double with 1 coat',
+                'glazingTypesFrench': 'Double/double, 1 couche',
                 'coatingsTintsEnglish': 'Clear',
                 'coatingsTintsFrench': 'Transparent',
                 'fillTypeEnglish': '6 mm Air',
@@ -96,8 +107,8 @@ def raw_codes() -> typing.Dict[str, typing.List[typing.Dict[str, str]]]:
             }, {
                 'id': 'Code 12',
                 'label': '234002',
-                'glazingTypeEnglish': 'Double/double with 1 coat',
-                'glazingTypeFrench': 'Double/double, 1 couche',
+                'glazingTypesEnglish': 'Double/double with 1 coat',
+                'glazingTypesFrench': 'Double/double, 1 couche',
                 'coatingsTintsEnglish': 'Low-E .20 (hard1)',
                 'coatingsTintsFrench': 'Faible E .20 (Dur 1)',
                 'fillTypeEnglish': '9 mm Argon',
@@ -118,6 +129,7 @@ def sample_input_d(ceiling_input: reader.InputData,
                    floor_input: reader.InputData,
                    wall_input: typing.Dict[str, str],
                    door_input: typing.Dict[str, str],
+                   window_input: typing.Dict[str, str],
                    raw_codes: typing.Dict[str, typing.List[typing.Dict[str, str]]]) -> reader.InputData:
     return {
         'EVAL_ID': '123',
@@ -140,6 +152,9 @@ def sample_input_d(ceiling_input: reader.InputData,
         ],
         'doors': [
             door_input
+        ],
+        'windows': [
+            window_input
         ],
         'codes': raw_codes,
     }
@@ -262,7 +277,27 @@ class TestParsedDwellingDataRow:
                     height=1.9799,
                     width=0.8499,
                 )
-            ]
+            ],
+            windows=[
+                extracted_datatypes.Window(
+                    label='East0001',
+                    glazing_types_english='Double/double with 1 coat',
+                    glazing_types_french='Double/double, 1 couche',
+                    coatings_tints_english='Low-E .20 (hard1)',
+                    coatings_tints_french='Faible E .20 (Dur 1)',
+                    fill_type_english='9 mm Argon',
+                    fill_type_french="9 mm d'argon",
+                    spacer_type_english='Metal',
+                    spacer_type_french='Métal',
+                    type_english='Picture',
+                    type_french='Fixe',
+                    frame_material_english='Wood',
+                    frame_material_french='Bois',
+                    rsi=0.4779,
+                    width=1.967738,
+                    height=1.3220699,
+                )
+            ],
         )
 
     def test_bad_postal_code(self, sample_input_d: reader.InputData) -> None:
