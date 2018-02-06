@@ -112,17 +112,7 @@ def snip_house(house: etree.ElementTree) -> typing.Dict[str, typing.Any]:
     floors = house.findall('Components/Floor')
     walls = house.findall('Components/Wall')
     doors = house.findall('Components/Wall/Components/Door')
-    basements = house.findall('Components/Basement')
-
-    windows = []
-    for ceiling in ceilings:
-        windows.extend(ceiling.findall('Components/Window'))
-    for wall in walls:
-        windows.extend(wall.findall('Components/Window'))
-    for door in doors:
-        windows.extend(door.findall('Components/Window'))
-    for basement in basements:
-        windows.extend(basement.findall('Components/Window'))
+    windows = house.findall('Components/*/Components/Window')
 
     return {
         'ceilings': [_ceiling_snippet(node) for node in ceilings],
