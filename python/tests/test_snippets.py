@@ -68,6 +68,19 @@ def test_wall_snippet(house: etree.ElementTree) -> None:
         'height': '1.2283',
     }
 
+def test_window_snippet(house: etree.ElementTree) -> None:
+    output = snippets.snip_house(house)
+    assert 'windows' in output
+    assert len(output['windows']) == 10
+    assert sorted(output['windows'], key=lambda row: row['label'])[0] == {
+        'label': 'East0001',
+        'constructionTypeCode': 'Code 12',
+        'constructionTypeValue': '234002',
+        'rsi': '0.4779',
+        'height': '1967.738',
+        'width': '1322.0699',
+    }
+
 
 def test_user_specified_wall_snippet() -> None:
     xml_text = """
@@ -86,6 +99,7 @@ def test_user_specified_wall_snippet() -> None:
     assert output == {
         'ceilings': [],
         'floors': [],
+        'windows': [],
         'walls': [{
             'label': 'Test Floor',
             'constructionTypeCode': None,
