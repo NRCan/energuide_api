@@ -86,7 +86,7 @@ def _door_snippet(door: etree.ElementTree) -> typing.Dict[str, typing.Any]:
         'width': width,
     }
 
-def _window_snipped(window: etree.ElementTree) -> typing.Dict[str, typing.Any]:
+def _window_snippet(window: etree.ElementTree) -> typing.Dict[str, typing.Any]:
     label = window.findtext('Label')
 
     construction_type_node = window.find('Construction/Type')
@@ -119,7 +119,7 @@ def snip_house(house: etree.ElementTree) -> typing.Dict[str, typing.Any]:
         'floors': [_floor_snippet(node) for node in floors],
         'walls': [_wall_snippet(node) for node in walls],
         'doors': [_door_snippet(door) for door in doors],
-        'windows': [_window_snipped(node) for node in windows],
+        'windows': [_window_snippet(node) for node in windows],
     }
 
 
