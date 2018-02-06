@@ -48,7 +48,7 @@ class TestWallCode:
 
 class TestCodes:
 
-    def test_from_data(self, raw_codes: typing.Dict[str, typing.List[typing.Dict[str, str]]]):
+    def test_from_data(self, raw_codes: typing.Dict[str, typing.List[typing.Dict[str, str]]]) -> None:
         output = extracted_datatypes.Codes.from_data(raw_codes)
         assert len(output.wall) == 2
         assert output.wall['Code 1'].structure_type_english == 'Wood frame'
@@ -68,10 +68,27 @@ class TestWall:
             'height': 2.4384,
         }
 
-    def test_from_data(self, sample, codes):
+    def test_from_data(self, sample: typing.Dict[str, typing.Any], codes: extracted_datatypes.Codes) -> None:
         output = extracted_datatypes.Wall.from_data(sample, codes.wall)
         assert output.label == 'Second level'
         assert output.perimeter == 42.9768
+
+    def test_missing_optional_fields(self,
+                                     sample: typing.Dict[str, typing.Any],
+                                     codes: extracted_datatypes.Codes) -> None:
+        wall = sample.copy()
+        wall.pop('constructionTypeCode')
+        wall.pop('constructionTypeValue')
+        output = extracted_datatypes.Wall.from_data(wall, codes.wall)
+        assert output.label == 'Second level'
+        assert output.perimeter == 42.9768
+        assert output.component_type_size_english is None
+
+    def test_to_dict(self,
+                     sample: typing.Dict[str, typing.Any],
+                     codes: extracted_datatypes.Codes) -> None:
+        output = extracted_datatypes.Wall.from_data(sample, codes.wall).to_dict()
+        assert output['areaMetres'] == sample['perimeter'] * sample['height']
 
 
 class TestCeiling:
@@ -88,16 +105,20 @@ class TestCeiling:
             'length': 23.875,
         }
 
-    def test_from_data(self, sample):
+    def test_from_data(self, sample: typing.Dict[str, typing.Any]):
         output = extracted_datatypes.Ceiling.from_data(sample)
         assert output.label == 'Main attic'
         assert output.area_metres == 46.4515
+
+    def test_to_dict(self, sample: typing.Dict[str, typing.Any]) -> None:
+        output = extracted_datatypes.Ceiling.from_data(sample).to_dict()
+        assert output['areaMetres'] == sample['area']
 
 
 class TestFloor:
 
     @pytest.fixture
-    def sample(self):
+    def sample(self) -> typing.Dict[str, typing.Any]:
         return {
             'label': 'Rm over garage',
             'nominalRsi': 2.46,
@@ -106,7 +127,11 @@ class TestFloor:
             'length': 3.048,
         }
 
-    def test_from_data(self, sample):
+    def test_from_data(self, sample: typing.Dict[str, typing.Any]) -> None:
         output = extracted_datatypes.Floor.from_data(sample)
         assert output.label == 'Rm over garage'
         assert output.area_metres == 9.2903
+
+    def test_to_dict(self, sample: typing.Dict[str, typing.Any]) -> None:
+        output = extracted_datatypes.Floor.from_data(sample).to_dict()
+        assert output['areaMetres'] == sample['area']

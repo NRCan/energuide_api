@@ -167,13 +167,13 @@ class Ceiling(_Ceiling):
         'schema': {
             'type': 'dict',
             'schema': {
-                'label': {'type': 'string', 'required': True},
-                'typeEnglish': {'type': 'string', 'required': True},
-                'typeFrench': {'type': 'string', 'required': True},
-                'nominalRsi': {'type': 'float', 'required': True, 'coerce': float},
-                'effectiveRsi': {'type': 'float', 'required': True, 'coerce': float},
-                'area': {'type': 'float', 'required': True, 'coerce': float},
-                'length': {'type': 'float', 'required': True, 'coerce': float}
+                'label': {'type': 'string', 'required': True, 'nullable': True},
+                'typeEnglish': {'type': 'string', 'required': True, 'nullable': True},
+                'typeFrench': {'type': 'string', 'required': True, 'nullable': True},
+                'nominalRsi': {'type': 'float', 'required': True, 'coerce': float, 'nullable': True},
+                'effectiveRsi': {'type': 'float', 'required': True, 'coerce': float, 'nullable': True},
+                'area': {'type': 'float', 'required': True, 'coerce': float, 'nullable': True},
+                'length': {'type': 'float', 'required': True, 'coerce': float, 'nullable': True}
             }
         }
     }
@@ -215,11 +215,11 @@ class Floor(_Floor):
         'schema': {
             'type': 'dict',
             'schema': {
-                'label': {'type': 'string', 'required': True},
-                'nominalRsi': {'type': 'float', 'required': True, 'coerce': float},
-                'effectiveRsi': {'type': 'float', 'required': True, 'coerce': float},
-                'area': {'type': 'float', 'required': True, 'coerce': float},
-                'length': {'type': 'float', 'required': True, 'coerce': float}
+                'label': {'type': 'string', 'required': True, 'nullable': True},
+                'nominalRsi': {'type': 'float', 'required': True, 'coerce': float, 'nullable': True},
+                'effectiveRsi': {'type': 'float', 'required': True, 'coerce': float, 'nullable': True},
+                'area': {'type': 'float', 'required': True, 'coerce': float, 'nullable': True},
+                'length': {'type': 'float', 'required': True, 'coerce': float, 'nullable': True}
             }
         }
     }
