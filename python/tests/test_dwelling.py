@@ -33,8 +33,32 @@ def floor_input() -> reader.InputData:
 
 
 @pytest.fixture
+def raw_codes() -> typing.Dict[str, typing.List[typing.Dict[str, str]]]:
+    return {
+        'wall': [
+            {
+                'id': 'Code 1',
+                'label': '1201101121',
+                'structureTypeEnglish': 'Wood frame',
+                'structureTypeFrench': 'Ossature de bois',
+                'componentTypeSizeEnglish': '38x89 mm (2x4 in)',
+                'componentTypeSizeFrench': '38x89 (2x4)',
+            }, {
+                'id': 'Code 2',
+                'label': '1201101122',
+                'structureTypeEnglish': 'Metal frame',
+                'structureTypeFrench': 'Ossature de métal',
+                'componentTypeSizeEnglish': '38x89 mm (2x4 in)',
+                'componentTypeSizeFrench': '38x89 (2x4)',
+            }
+        ]
+    }
+
+
+@pytest.fixture
 def sample_input_d(ceiling_input: reader.InputData,
-                   floor_input: reader.InputData) -> reader.InputData:
+                   floor_input: reader.InputData,
+                   raw_codes: typing.Dict[str, typing.List[typing.Dict[str, str]]]) -> reader.InputData:
     return {
         'EVAL_ID': '123',
         'EVAL_TYPE': 'D',
@@ -50,7 +74,8 @@ def sample_input_d(ceiling_input: reader.InputData,
         ],
         'floors': [
             floor_input
-        ]
+        ],
+        'codes': raw_codes
     }
 
 

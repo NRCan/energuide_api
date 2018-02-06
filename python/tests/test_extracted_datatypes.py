@@ -1,3 +1,4 @@
+import typing
 import pytest
 from energuide import reader
 from energuide import extracted_datatypes
@@ -29,10 +30,38 @@ def floor_input() -> reader.InputData:
         'length': '3.048',
     }
 
+@pytest.fixture
+def raw_codes() -> typing.Dict[str, typing.List[typing.Dict[str, str]]]:
+    return {
+        'wall': [
+            {
+                'id': 'Code 1',
+                'label': '1201101121',
+                'structureTypeEnglish': 'Wood frame',
+                'structureTypeFrench': 'Ossature de bois',
+                'componentTypeSizeEnglish': '38x89 mm (2x4 in)',
+                'componentTypeSizeFrench': '38x89 (2x4)',
+            }, {
+                'id': 'Code 2',
+                'label': '1201101122',
+                'structureTypeEnglish': 'Metal frame',
+                'structureTypeFrench': 'Ossature de métal',
+                'componentTypeSizeEnglish': '38x89 mm (2x4 in)',
+                'componentTypeSizeFrench': '38x89 (2x4)',
+            }
+        ]
+    }
+
+
+@pytest.fixture
+def codes(raw_codes: typing.Dict[str, typing.List[typing.Dict[str, str]]]) -> extracted_datatypes.Codes:
+    return extracted_datatypes.Codes.from_data(raw_codes)
+
 
 @pytest.fixture
 def sample_input_d(ceiling_input: reader.InputData,
-                   floor_input: reader.InputData) -> reader.InputData:
+                   floor_input: reader.InputData,
+                   raw_codes: typing.Dict[str, typing.List[typing.Dict[str, str]]]) -> reader.InputData:
     return {
         'EVAL_ID': '123',
         'EVAL_TYPE': 'D',
@@ -48,8 +77,29 @@ def sample_input_d(ceiling_input: reader.InputData,
         ],
         'floors': [
             floor_input
-        ]
+        ],
+        'codes': raw_codes,
     }
+
+
+class TestWallCode:
+
+    @pytest.fixture
+    def sample(self, raw_codes: typing.Dict[str, typing.List[typing.Dict[str, str]]]) -> typing.Dict[str, str]:
+        return raw_codes['wall'][0]
+
+    def test_from_data(self, sample: typing.Dict[str, str]) -> None:
+        output = extracted_datatypes.WallCode.from_data(sample)
+        assert output.identifier == 'Code 1'
+        assert output.label == '1201101121'
+
+
+class TestCodes:
+
+    def test_from_data(self, raw_codes: typing.Dict[str, typing.List[typing.Dict[str, str]]]):
+        output = extracted_datatypes.Codes.from_data(raw_codes)
+        assert len(output.wall) == 2
+        assert output.wall['Code 1'].structure_type_english == 'Wood frame'
 
 
 class TestCeiling:

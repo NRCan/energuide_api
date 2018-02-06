@@ -6,6 +6,7 @@ import cerberus
 from energuide import reader
 from energuide.extracted_datatypes import Floor
 from energuide.extracted_datatypes import Ceiling
+from energuide.extracted_datatypes import Codes
 
 
 class NoInputDataException(Exception):
@@ -95,7 +96,8 @@ class ParsedDwellingDataRow(_ParsedDwellingDataRow):
         'HOUSEREGION': {'type': 'string', 'required': True},
 
         'ceilings': Ceiling.SCHEMA,
-        'floors': Floor.SCHEMA
+        'floors': Floor.SCHEMA,
+        'codes': Codes.SCHEMA,
     }
 
     @classmethod
