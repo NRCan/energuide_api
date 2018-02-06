@@ -1,120 +1,132 @@
 import { MongoClient } from 'mongodb'
 import request from 'supertest'
 import Server from '../src/server'
-import testData from './data'
 
 let client, db, collection
 const url = 'mongodb://localhost:27017'
-const dbName = 'test_' + Date.now()
+const dbName = 'energuide'
 
 describe('queries', () => {
-  beforeEach(async () => {
+  beforeAll(async () => {
     client = await MongoClient.connect(url)
     db = client.db(dbName)
-    collection = db.collection('buildings')
+    collection = db.collection('dwellings')
   })
 
-  afterEach(async () => {
-    await db.dropDatabase()
+  afterAll(async () => {
     client.close()
   })
 
-  it('retrieves evaluations given an account id and a postalcode', async () => {
-    await collection.insertMany(testData)
-
-    let server = new Server({
-      client: collection,
-    })
-
-    let response = await request(server)
-      .post('/graphql')
-      .set('Content-Type', 'application/json; charset=utf-8')
-      .send({
-        query: `{
-         evaluationsFor(account: 761266 postalCode: "M8H 1N1") {
-          yearBuilt
-          mailingAddressPostalCode
-        }
-      }`,
+  describe('evaluationsFor', () => {
+    it('retrieves evaluations given an account id and a postalcode', async () => {
+      let server = new Server({
+        client: collection,
       })
 
-    let { evaluationsFor } = response.body.data
-    expect(evaluationsFor.yearBuilt).toEqual('1980')
+      let response = await request(server)
+        .post('/graphql')
+        .set('Content-Type', 'application/json; charset=utf-8')
+        .send({
+          query: `{
+          evaluations:evaluationsFor(account: 189250 postalCode: "C1A 1N1") {
+            yearBuilt
+          }
+        }`,
+        })
+      let { evaluations } = response.body.data
+      expect(evaluations.yearBuilt).toEqual(1900)
+    })
   })
 
-  it('filters the results', async () => {
-    await collection.insertMany(testData)
-
-    let server = new Server({
-      client: collection,
-    })
-
-    let response = await request(server)
-      .post('/graphql')
-      .set('Content-Type', 'application/json; charset=utf-8')
-      .send({
-        query: `{
-         evaluationsInFSA(
-           forwardSortationArea: "M8H"
-           filter: {field: yearBuilt gt: "1979"}
-         ) {
-          yearBuilt
-          mailingAddressPostalCode
-        }
-      }`,
+  describe('dwellingsInFSA', () => {
+    it('returns the dwellings in the given Forward Sortation Area', async () => {
+      let server = new Server({
+        client: collection,
       })
 
-    let { evaluationsInFSA: [first] } = response.body.data
-    expect(first.yearBuilt).toEqual('1980')
+      let response = await request(server)
+        .post('/graphql')
+        .set('Content-Type', 'application/json; charset=utf-8')
+        .send({
+          query: `{
+          dwellings:dwellingsInFSA(
+           forwardSortationArea: "C1A"
+          ) {
+            yearBuilt
+          }
+        }`,
+        })
+
+      let { dwellings } = response.body.data
+      expect(dwellings.length).toEqual(1)
+    })
   })
 
-  it('complains about multiple comparators', async () => {
+  describe('dwellingsInFSA', () => {
+    it('has a greater than filter which filters out dwellings', async () => {
+      let server = new Server({
+        client: collection,
+      })
 
-    await collection.insertMany(testData)
+      let response = await request(server)
+        .post('/graphql')
+        .set('Content-Type', 'application/json; charset=utf-8')
+        .send({
+          query: `{
+          dwellings:dwellingsInFSA(
+           forwardSortationArea: "C1A"
+           filter: {field: yearBuilt gt: "1900"}
+          ) {
+            yearBuilt
+          }
+        }`,
+        })
 
-    let server = new Server({
-      client: collection,
+      let { dwellings } = response.body.data
+      expect(dwellings.length).toEqual(0)
     })
 
-    let response = await request(server)
-      .post('/graphql')
-      .set('Content-Type', 'application/json; charset=utf-8')
-      .send({
-        query: `{
-         evaluationsInFSA(
+    it('complains about multiple comparators', async () => {
+      let server = new Server({
+        client: collection,
+      })
+
+      let response = await request(server)
+        .post('/graphql')
+        .set('Content-Type', 'application/json; charset=utf-8')
+        .send({
+          query: `{
+          dwellingsInFSA(
            forwardSortationArea: "M8H"
            filter: {field: yearBuilt gt: "1979" lt: "1979"}
          ) {
           yearBuilt
-          mailingAddressPostalCode
         }
       }`,
-      })
-    expect(response.body).toHaveProperty('errors')
-  })
-
-  it('gets evalutations within a Forward Sortation Area', async () => {
-
-    await collection.insertMany(testData)
-
-    let server = new Server({
-      client: collection,
+        })
+      expect(response.body).toHaveProperty('errors')
     })
 
-    let response = await request(server)
-      .post('/graphql')
-      .set('Content-Type', 'application/json; charset=utf-8')
-      .send({
-        query: `{
-           evaluations:evaluationsInFSA(
-             forwardSortationArea: "M8H"
+    it('gets evalutations within a Forward Sortation Area', async () => {
+      let server = new Server({
+        client: collection,
+      })
+
+      let response = await request(server)
+        .post('/graphql')
+        .set('Content-Type', 'application/json; charset=utf-8')
+        .send({
+          query: `{
+           dwellings:dwellingsInFSA(
+             forwardSortationArea: "C1A"
            ) {
           yearBuilt
         }
       }`,
-      })
+        })
 
-    let { evaluations: [first] } = response.body.data
-    expect(first.yearBuilt).toEqual('1980')
+      let { dwellings: [first] } = response.body.data
+      expect(first.yearBuilt).toEqual(1900)
+    })
   })
 })
