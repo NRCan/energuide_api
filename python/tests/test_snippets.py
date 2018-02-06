@@ -94,7 +94,8 @@ def test_user_specified_wall_snippet() -> None:
             'effectiveRsi': '2.6892',
             'perimeter': None,
             'height': None,
-        }]
+        }],
+        'doors': [],
     }
 
 
@@ -116,6 +117,7 @@ def test_wall_code_snippet(code: etree.ElementTree) -> None:
         'componentTypeSizeFrench': '38x89 (2x4)',
     }]
 
+
 def test_window_code_snippet(code: etree.ElementTree) -> None:
     output = snippets.snip_codes(code)
     assert sorted(output['codes']['window'], key=lambda row: row['label'])[0] == {
@@ -134,3 +136,16 @@ def test_window_code_snippet(code: etree.ElementTree) -> None:
         'frameMaterialEnglish': 'Wood',
         'frameMaterialFrench': 'Bois',
     }
+
+
+def test_door_snippet(house: etree.ElementTree) -> None:
+    output = snippets.snip_house(house)
+    assert len(output['doors']) == 2
+    assert output['doors'][0] == {
+        'typeEnglish': 'Solid wood',
+        'typeFrench': 'Bois massif',
+        'rsi': '0.39',
+        'height': '1.9799',
+        'width': '0.8499',
+    }
+    assert output['doors'][0] == output['doors'][1]
