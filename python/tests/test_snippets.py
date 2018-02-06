@@ -98,24 +98,39 @@ def test_user_specified_wall_snippet() -> None:
     }
 
 
-def test_code_snippet(code: etree.ElementTree) -> None:
+def test_wall_code_snippet(code: etree.ElementTree) -> None:
     output = snippets.snip_codes(code)
-    assert output == {
-        'codes': {
-            'wall': [{
-                'id': 'Code 1',
-                'label': '1201101121',
-                'structureTypeEnglish': 'Wood frame',
-                'structureTypeFrench': 'Ossature de bois',
-                'componentTypeSizeEnglish': '38x89 mm (2x4 in)',
-                'componentTypeSizeFrench': '38x89 (2x4)',
-            }, {
-                'id': 'Code 2',
-                'label': '1201401121',
-                'structureTypeEnglish': 'Wood frame',
-                'structureTypeFrench': 'Ossature de bois',
-                'componentTypeSizeEnglish': '38x89 mm (2x4 in)',
-                'componentTypeSizeFrench': '38x89 (2x4)',
-            }]
-        }
+    assert output['codes']['wall'] == [{
+        'id': 'Code 1',
+        'label': '1201101121',
+        'structureTypeEnglish': 'Wood frame',
+        'structureTypeFrench': 'Ossature de bois',
+        'componentTypeSizeEnglish': '38x89 mm (2x4 in)',
+        'componentTypeSizeFrench': '38x89 (2x4)',
+    }, {
+        'id': 'Code 2',
+        'label': '1201401121',
+        'structureTypeEnglish': 'Wood frame',
+        'structureTypeFrench': 'Ossature de bois',
+        'componentTypeSizeEnglish': '38x89 mm (2x4 in)',
+        'componentTypeSizeFrench': '38x89 (2x4)',
+    }]
+
+def test_window_code_snippet(code: etree.ElementTree) -> None:
+    output = snippets.snip_codes(code)
+    assert sorted(output['codes']['window'], key=lambda row: row['label'])[0] == {
+        'id': 'Code 11',
+        'label': '202002',
+        'glazingTypeEnglish': 'Double/double with 1 coat',
+        'glazingTypeFrench': 'Double/double, 1 couche',
+        'coatingsTintsEnglish': 'Clear',
+        'coatingsTintsFrench': 'Transparent',
+        'fillTypeEnglish': '6 mm Air',
+        'fillTypeFrench': "6 mm d'air",
+        'spacerTypeEnglish': 'Metal',
+        'spacerTypeFrench': 'Métal',
+        'typeEnglish': 'Picture',
+        'typeFrench': 'Fixe',
+        'frameMaterialEnglish': 'Wood',
+        'frameMaterialFrench': 'Bois',
     }
