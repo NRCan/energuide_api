@@ -46,6 +46,17 @@ def wall_input() -> typing.Dict[str, str]:
 
 
 @pytest.fixture
+def door_input() -> typing.Dict[str, str]:
+    return {
+        'typeEnglish': 'Solid wood',
+        'typeFrench': 'Bois massif',
+        'rsi': '0.39',
+        'height': '1.9799',
+        'width': '0.8499',
+    }
+
+
+@pytest.fixture
 def raw_codes() -> typing.Dict[str, typing.List[typing.Dict[str, str]]]:
     return {
         'wall': [
@@ -72,6 +83,7 @@ def raw_codes() -> typing.Dict[str, typing.List[typing.Dict[str, str]]]:
 def sample_input_d(ceiling_input: reader.InputData,
                    floor_input: reader.InputData,
                    wall_input: typing.Dict[str, str],
+                   door_input: typing.Dict[str, str],
                    raw_codes: typing.Dict[str, typing.List[typing.Dict[str, str]]]) -> reader.InputData:
     return {
         'EVAL_ID': '123',
@@ -91,6 +103,9 @@ def sample_input_d(ceiling_input: reader.InputData,
         ],
         'walls': [
             wall_input
+        ],
+        'doors': [
+            door_input
         ],
         'codes': raw_codes,
     }
@@ -202,6 +217,15 @@ class TestParsedDwellingDataRow:
                     effective_rsi=1.8016,
                     perimeter=42.9768,
                     height=2.4384,
+                )
+            ],
+            doors=[
+                extracted_datatypes.Door(
+                    type_english='Solid wood',
+                    type_french='Bois massif',
+                    rsi=0.39,
+                    height=1.9799,
+                    width=0.8499,
                 )
             ]
         )
