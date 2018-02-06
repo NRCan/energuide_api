@@ -6,7 +6,7 @@ This is the API for NRCAN's Energuide data.
 
 ## Running the server
 
-Running the sever requires a SQL server running somewhere and the following environmental variables defined:
+Running the sever requires a MongoDB server running somewhere and the following environmental variables defined:
 
 * NRCAN_ENGINE_API_KEY
 * NRCAN_DB_CONNECTION_STRING
@@ -19,13 +19,13 @@ With those defined you can run the server like this:
 > yarn && yarn run build
 > NRCAN_DB_CONNECTION_STRING="mongodb://localhost:27017" \
 	NRCAN_DB_NAME="energuide" \
-	NRCAN_COLLECTION_NAME="buildings" \
+	NRCAN_COLLECTION_NAME="dwellings" \
 	NRCAN_ENGINE_API_KEY="your_apollo_engine_api_key" yarn start
 ```
 
 The API server is available as a Docker container and can be run with:
 ```
-docker run -it -e "NRCAN_ENGINE_API_KEY=your_apollo_engine_api_key" -e "NRCAN_DB_CONNECTION_STRING=mongodb://localhost:27017" -e "NRCAN_DB_NAME=energuide" -e "NRCAN_COLLECTION_NAME=buildings" --net="host" -p 3000:3000 cdssnc/nrcan_api
+docker run -it -e "NRCAN_ENGINE_API_KEY=your_apollo_engine_api_key" -e "NRCAN_DB_CONNECTION_STRING=mongodb://localhost:27017" -e "NRCAN_DB_NAME=energuide" -e "NRCAN_COLLECTION_NAME=dwellings" --net="host" -p 3000:3000 cdssnc/nrcan_api
 
 ```
 
@@ -39,14 +39,10 @@ Assuming the DB credentials/connectivity is correct, the command above will
 start a graphql endpoint that will respond to the following `curl` commands:
 
 ```
-curl -s -H "Content-Type: application/json" -d '{"query": "{evaluationsInFSA(forwardSortationArea: \"M8H\"){ yearBuilt }}"}'  "localhost:3000/graphql"
-
-# or
-
-curl -s -H "Content-Type: application/json" -d '{"query": "{ evaluations( filter: {field: eghrating gt: \"77\"} withinPolygon: [ {lng: -80.5572509765625, lat: 43.40903821777055} {lng: -78.7774658203125, lat: 43.40903821777055} {lng: -78.7774658203125, lat: 44.3670601700202} {lng: -80.5572509765625, lat: 44.3670601700202} {lng: -80.5572509765625, lat: 43.40903821777055} ]) { houseRegion yearBuilt eghrating } }"}'  "localhost:3000/graphql"
+curl -s -H "Content-Type: application/json" -d '{"query": "{dwellingsInFSA(forwardSortationArea: \"M8H\"){ yearBuilt }}"}'  "localhost:3000/graphql"
 ```
 
-It is also possible to access the API via `/graphiql` which will serve up a Graphical IDE to allow you to experiment with the API.
+It is also possible to access the API via `/graphiql` which will serve up a Graphical IDE to allow you to explore the functionality the API offers and run queries against it.
 
 ## Running the tests
 
