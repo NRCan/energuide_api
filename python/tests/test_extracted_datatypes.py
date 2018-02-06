@@ -68,7 +68,7 @@ class TestWall:
             'height': 2.4384,
         }
 
-    def test_from_data(self, sample, codes) -> None:
+    def test_from_data(self, sample: typing.Dict[str, typing.Any], codes: extracted_datatypes.Codes) -> None:
         output = extracted_datatypes.Wall.from_data(sample, codes.wall)
         assert output.label == 'Second level'
         assert output.perimeter == 42.9768
