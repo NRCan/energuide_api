@@ -68,6 +68,7 @@ def _wall_snippet(wall: etree.ElementTree) -> typing.Dict[str, typing.Any]:
 
 
 def _door_snippet(door: etree.ElementTree) -> typing.Dict[str, typing.Any]:
+    label = door.findtext('Label')
     type_english = door.findtext('Construction/Type/English')
     type_french = door.findtext('Construction/Type/French')
 
@@ -79,6 +80,7 @@ def _door_snippet(door: etree.ElementTree) -> typing.Dict[str, typing.Any]:
     width = measurements_node.attrib['width'] if measurements_node is not None else None
 
     return {
+        'label': label,
         'typeEnglish': type_english,
         'typeFrench': type_french,
         'rsi': rsi,

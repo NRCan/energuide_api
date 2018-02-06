@@ -32,6 +32,7 @@ class _Wall(typing.NamedTuple):
 
 
 class _Door(typing.NamedTuple):
+    label: typing.Optional[str]
     type_english: typing.Optional[str]
     type_french: typing.Optional[str]
     rsi: typing.Optional[float]
@@ -345,6 +346,7 @@ class Door(_Door):
     @classmethod
     def from_data(cls, door: typing.Dict[str, typing.Any]) -> 'Door':
         return Door(
+            label=door['label'],
             type_english=door['typeEnglish'],
             type_french=door['typeFrench'],
             rsi=door['rsi'],

@@ -189,6 +189,7 @@ class TestDoor:
     @pytest.fixture
     def sample(self) -> typing.Dict[str, typing.Any]:
         return {
+            'label': 'Front door',
             'typeEnglish': 'Solid wood',
             'typeFrench': 'Bois massif',
             'rsi': 0.39,
