@@ -415,6 +415,13 @@ EVAL_ID,IDNUMBER,PARTNER,EVALUATOR,PREVIOUSFILEID,STATUS,CREATIONDATE,MODIFICATI
                     </Slope>
                 </Measurements>
             </Ceiling>
+            <Wall>
+                <Label>Test wall</Label>
+                <Construction>
+                    <Type rValue=""2.6892"" nominalInsulation=""3.3615"" idref=""Code 1"">12345678</Type>
+                </Construction>
+                <Measurements height=""2.5999"" perimeter=""35.7616"" />
+            </Wall>
             <Wall adjacentEnclosedSpace=""false"" id=""2"">
                 <Label>Main floor</Label>
                 <Construction corners=""4"" intersections=""4"">
@@ -679,9 +686,55 @@ EVAL_ID,IDNUMBER,PARTNER,EVALUATOR,PREVIOUSFILEID,STATUS,CREATIONDATE,MODIFICATI
         </Components>
     </House>
     <Codes>
+        <Wall>
+            <Standard>
+                <Code id=""Code 1"" value=""1201101121"" nominalRValue=""1.432"">
+                    <Label>1201101121</Label>
+                    <Description>1201101121</Description>
+                    <Layers>
+                        <StructureType code=""2"">
+                            <English>Wood frame</English>
+                            <French>Ossature de bois</French>
+                        </StructureType>
+                        <ComponentTypeSize code=""0"">
+                            <English>38x89 mm (2x4 in)</English>
+                            <French>38x89 (2x4)</French>
+                        </ComponentTypeSize>
+                        <Spacing code=""1"">
+                            <English>400 mm (16 in)</English>
+                            <French>400 mm (16 po)</French>
+                        </Spacing>
+                        <InsulationLayer1 code=""1"">
+                            <English>RSI 1.41 @ 64 mm  (R  8 @ 2.5'') batt</English>
+                            <French>RSI 1.41 @ 64 mm  (R  8 @ 2.5'') natte</French>
+                        </InsulationLayer1>
+                        <InsulationLayer2 code=""0"">
+                            <English>None</English>
+                            <French>Aucun</French>
+                        </InsulationLayer2>
+                        <Interior code=""1"">
+                            <English>12 mm (0.5 in) gypsum board</English>
+                            <French>12 mm (0.5 po) Plaque de plâtre (P de p)</French>
+                        </Interior>
+                        <Sheathing code=""1"">
+                            <English>Waferboard/OSB  9.5 mm (3/8 in)</English>
+                            <French>Panneau copeaux/OSB  9.5 mm (3/8 po)</French>
+                        </Sheathing>
+                        <Exterior code=""2"">
+                            <English>Hollow metal/vinyl cladding</English>
+                            <French>Revêt. en métal creux/vinyle</French>
+                        </Exterior>
+                        <StudsCornerIntersection code=""1"">
+                            <English>3 studs</English>
+                            <French>3 poteaux</French>
+                        </StudsCornerIntersection>
+                    </Layers>
+                </Code>
+            </Standard>
+        </Wall>
         <Lintel>
             <Standard>
-                <Code id=""Code 1"" value=""100"" nominalRValue=""0"">
+                <Code id=""Code 2"" value=""100"" nominalRValue=""0"">
                     <Label>100</Label>
                     <Description>100</Description>
                     <Layers>

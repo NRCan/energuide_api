@@ -6,6 +6,7 @@ import cerberus
 from energuide import reader
 from energuide.extracted_datatypes import Floor
 from energuide.extracted_datatypes import Ceiling
+from energuide.extracted_datatypes import Wall
 from energuide.extracted_datatypes import Codes
 
 
@@ -80,6 +81,7 @@ class _ParsedDwellingDataRow(typing.NamedTuple):
     forward_sortation_area: str
     ceilings: typing.List[Ceiling]
     floors: typing.List[Floor]
+    walls: typing.List[Wall]
 
 
 class ParsedDwellingDataRow(_ParsedDwellingDataRow):
@@ -97,6 +99,8 @@ class ParsedDwellingDataRow(_ParsedDwellingDataRow):
 
         'ceilings': Ceiling.SCHEMA,
         'floors': Floor.SCHEMA,
+        'walls': Wall.SCHEMA,
+
         'codes': Codes.SCHEMA,
     }
 
@@ -108,6 +112,7 @@ class ParsedDwellingDataRow(_ParsedDwellingDataRow):
             raise reader.InvalidInputDataException(f'Validator failed on keys: {error_keys}')
 
         parsed = validator.document
+        codes = Codes.from_data(parsed['codes'])
 
         return ParsedDwellingDataRow(
             eval_id=parsed['EVAL_ID'],
@@ -121,6 +126,7 @@ class ParsedDwellingDataRow(_ParsedDwellingDataRow):
             forward_sortation_area=parsed['forwardSortationArea'],
             ceilings=[Ceiling.from_data(ceiling) for ceiling in parsed['ceilings']],
             floors=[Floor.from_data(floor) for floor in parsed['floors']],
+            walls=[Wall.from_data(wall, codes.wall) for wall in parsed['walls']],
         )
 
 
@@ -133,6 +139,7 @@ class Evaluation:
                  modification_date: datetime.datetime,
                  ceilings: typing.List[Ceiling],
                  floors: typing.List[Floor],
+                 walls: typing.List[Wall],
                 ) -> None:
         self._evaluation_type = evaluation_type
         self._entry_date = entry_date
@@ -140,6 +147,7 @@ class Evaluation:
         self._modification_date = modification_date
         self._ceilings = ceilings
         self._floors = floors
+        self._walls = walls
 
     @classmethod
     def from_data(cls, data: ParsedDwellingDataRow) -> 'Evaluation':
@@ -150,6 +158,7 @@ class Evaluation:
             modification_date=data.modification_date,
             ceilings=data.ceilings,
             floors=data.floors,
+            walls=data.walls,
         )
 
     @property
@@ -176,6 +185,10 @@ class Evaluation:
     def floors(self) -> typing.List[Floor]:
         return self._floors
 
+    @property
+    def walls(self) -> typing.List[Wall]:
+        return self._walls
+
     def to_dict(self) -> typing.Dict[str, typing.Any]:
         return {
             'evaluationType': self.evaluation_type.value,
@@ -184,6 +197,7 @@ class Evaluation:
             'modificationDate': self.modification_date.isoformat(),
             'ceilings': [ceiling.to_dict() for ceiling in self.ceilings],
             'floors': [floor.to_dict() for floor in self.floors],
+            'walls': [wall.to_dict() for wall in self.walls],
         }
 
 
