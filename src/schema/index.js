@@ -3,15 +3,8 @@ import { makeExecutableSchema } from 'graphql-tools'
 
 const Schema = i18n => {
   const typeDefs = `
-    scalar Longitude
-    scalar Latitude
     scalar PostalCode
     scalar ForwardSortationArea
-
-    input GeoPoint {
-      lat: Latitude!
-      lng: Longitude!
-    }
 
     input Filter {
       field: Field!
@@ -22,7 +15,6 @@ const Schema = i18n => {
 
     type Query {
       evaluationsFor(account: Int! postalCode: PostalCode!): Evaluation
-      evaluations(filter: Filter withinPolygon: [GeoPoint]!): [Evaluation]
       evaluationsInFSA(filter: Filter forwardSortationArea: ForwardSortationArea!): [Evaluation]
     }
 

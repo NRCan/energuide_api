@@ -15,7 +15,6 @@ describe('queries', () => {
     collection = db.collection('buildings')
     // CosmosDB apparently automatically indexes everything
     // but for Mongo we need to add an index
-    await collection.createIndex({ location: '2dsphere' })
   })
 
   afterEach(async () => {
@@ -23,77 +22,6 @@ describe('queries', () => {
     // for COSMOSDB you will want to use:
     // await collection.remove()
     client.close()
-  })
-
-  it('returns evaluations with nicely camel-cased names', async () => {
-    let geocoded = testData.slice()
-    geocoded[0].location = {
-      type: 'Point',
-      coordinates: [-79.348650200148, 43.8036022863624],
-    }
-
-    await collection.insertMany(geocoded)
-
-    let server = new Server({
-      client: collection,
-    })
-
-    let response = await request(server)
-      .post('/graphql')
-      .set('Content-Type', 'application/json; charset=utf-8')
-      .send({
-        query: `{
-           evaluations(withinPolygon: [
-            {lng: -150.82031249999997, lat: -0.3515602939922709}
-            {lng: -41.8359375, lat: -0.3515602939922709},
-            {lng: -41.8359375, lat: 73.62778879339942},
-            {lng: -150.82031249999997, lat: 73.62778879339942},
-            {lng: -150.82031249999997, lat: -0.3515602939922709},
-          ]) {
-          yearBuilt
-        }
-      }`,
-      })
-
-    let { evaluations: [first] } = response.body.data
-    expect(first.yearBuilt).toEqual('1980')
-  })
-
-  it('returns evaluations within the given bounds', async () => {
-    let geocoded = testData.slice()
-    geocoded[0].location = {
-      type: 'Point',
-      coordinates: [-79.348650200148, 43.8036022863624],
-    }
-
-    await collection.insertMany(geocoded)
-
-    // Ask for the one closest to Toronto
-
-    let server = new Server({
-      client: collection,
-    })
-
-    let response = await request(server)
-      .post('/graphql')
-      .set('Content-Type', 'application/json; charset=utf-8')
-      .send({
-        query: `{ 
-           evaluations(withinPolygon: [
-            {lng: -150.82031249999997, lat: -0.3515602939922709}
-            {lng: -41.8359375, lat: -0.3515602939922709},
-            {lng: -41.8359375, lat: 73.62778879339942},
-            {lng: -150.82031249999997, lat: 73.62778879339942},
-            {lng: -150.82031249999997, lat: -0.3515602939922709},
-          ]) {
-          yearBuilt
-        }
-      }`,
-      })
-
-    // We expect 1 result: Ottawa
-    let { evaluations: [first] } = response.body.data
-    expect(first.yearBuilt).toEqual('1980')
   })
 
   it('retrieves evaluations given an account id and a postalcode', async () => {
@@ -115,19 +43,12 @@ describe('queries', () => {
       }`,
       })
 
-    // We expect 1 result: Ottawa
     let { evaluationsFor } = response.body.data
     expect(evaluationsFor.yearBuilt).toEqual('1980')
   })
 
   it('filters the results', async () => {
-    let geocoded = testData.slice()
-    geocoded[0].location = {
-      type: 'Point',
-      coordinates: [-79.348650200148, 43.8036022863624],
-    }
-
-    await collection.insertMany(geocoded)
+    await collection.insertMany(testData)
 
     let server = new Server({
       client: collection,
@@ -138,30 +59,23 @@ describe('queries', () => {
       .set('Content-Type', 'application/json; charset=utf-8')
       .send({
         query: `{
-           evaluations(filter: {field: yearBuilt gt: "1979"} withinPolygon: [
-            {lng: -150.82031249999997, lat: -0.3515602939922709}
-            {lng: -41.8359375, lat: -0.3515602939922709},
-            {lng: -41.8359375, lat: 73.62778879339942},
-            {lng: -150.82031249999997, lat: 73.62778879339942},
-            {lng: -150.82031249999997, lat: -0.3515602939922709},
-          ]) {
+         evaluationsInFSA(
+           forwardSortationArea: "M8H"
+           filter: {field: yearBuilt gt: "1979"}
+         ) {
           yearBuilt
+          mailingAddressPostalCode
         }
       }`,
       })
 
-    let { evaluations: [first] } = response.body.data
+    let { evaluationsInFSA: [first] } = response.body.data
     expect(first.yearBuilt).toEqual('1980')
   })
 
   it('complains about multiple comparators', async () => {
-    let geocoded = testData.slice()
-    geocoded[0].location = {
-      type: 'Point',
-      coordinates: [-79.348650200148, 43.8036022863624],
-    }
 
-    await collection.insertMany(geocoded)
+    await collection.insertMany(testData)
 
     let server = new Server({
       client: collection,
@@ -172,14 +86,12 @@ describe('queries', () => {
       .set('Content-Type', 'application/json; charset=utf-8')
       .send({
         query: `{
-           evaluations(filter: {field: yearBuilt gt: "1979", eq: "1979"} withinPolygon: [
-            {lng: -150.82031249999997, lat: -0.3515602939922709}
-            {lng: -41.8359375, lat: -0.3515602939922709},
-            {lng: -41.8359375, lat: 73.62778879339942},
-            {lng: -150.82031249999997, lat: 73.62778879339942},
-            {lng: -150.82031249999997, lat: -0.3515602939922709},
-          ]) {
+         evaluationsInFSA(
+           forwardSortationArea: "M8H"
+           filter: {field: yearBuilt gt: "1979" lt: "1979"}
+         ) {
           yearBuilt
+          mailingAddressPostalCode
         }
       }`,
       })
@@ -187,13 +99,8 @@ describe('queries', () => {
   })
 
   it('gets evalutations within a Forward Sortation Area', async () => {
-    let geocoded = testData.slice()
-    geocoded[0].location = {
-      type: 'Point',
-      coordinates: [-79.348650200148, 43.8036022863624],
-    }
 
-    await collection.insertMany(geocoded)
+    await collection.insertMany(testData)
 
     let server = new Server({
       client: collection,

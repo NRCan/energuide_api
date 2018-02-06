@@ -1,13 +1,9 @@
-import Longitude from './types/Longitude'
-import Latitude from './types/Latitude'
 import PostalCode from './types/PostalCode'
 import ForwardSortationArea from './types/ForwardSortationArea'
 import { GraphQLError } from 'graphql'
 import { comparators, hasMoreThanOneComparator } from '../utilities'
 
 const resolvers = {
-  Longitude,
-  Latitude,
   PostalCode,
   ForwardSortationArea,
   Query: {
@@ -21,42 +17,6 @@ const resolvers = {
       // Merge the results into a single object
       // representing the sum of all evaluations
       return Object.assign({}, ...results)
-    },
-    evaluations: async (root, { filter, withinPolygon }, { client }) => {
-      if (hasMoreThanOneComparator(filter)) {
-        return new GraphQLError(
-          `You can only use ${Object.keys(comparators)} one at a time`,
-        )
-      }
-      let coordinates = withinPolygon.map(el => [el.lng, el.lat])
-      let query = {
-        $and: [
-          {
-            'location.coordinates': {
-              $geoWithin: {
-                $geometry: {
-                  type: 'Polygon',
-                  coordinates: [coordinates],
-                },
-              },
-            },
-          },
-        ],
-      }
-
-      // { field: 'yearBuilt', gt: '1990' }
-      if (filter) {
-        if (filter.gt) {
-          query['$and'].push({
-            [filter.field]: { [comparators.gt]: parseInt(filter.gt) },
-          })
-        }
-      }
-
-      let cursor = await client.find(query)
-
-      let results = await cursor.toArray()
-      return results
     },
     evaluationsInFSA: async (
       root,
