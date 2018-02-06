@@ -67,14 +67,36 @@ def _wall_snippet(wall: etree.ElementTree) -> typing.Dict[str, typing.Any]:
     }
 
 
+def _door_snippet(door: etree.ElementTree) -> typing.Dict[str, typing.Any]:
+    type_english = door.findtext('Construction/Type/English')
+    type_french = door.findtext('Construction/Type/French')
+
+    type_node = door.find('Construction/Type')
+    rsi = type_node.attrib['value'] if type_node is not None else None
+
+    measurements_node = door.find('Measurements')
+    height = measurements_node.attrib['height'] if measurements_node is not None else None
+    width = measurements_node.attrib['width'] if measurements_node is not None else None
+
+    return {
+        'typeEnglish': type_english,
+        'typeFrench': type_french,
+        'rsi': rsi,
+        'height': height,
+        'width': width,
+    }
+
+
 def snip_house(house: etree.ElementTree) -> typing.Dict[str, typing.Any]:
     ceilings = house.findall('Components/Ceiling')
     floors = house.findall('Components/Floor')
     walls = house.findall('Components/Wall')
+    doors = house.findall('Components/Wall/Components/Door')
     return {
         'ceilings': [_ceiling_snippet(node) for node in ceilings],
         'floors': [_floor_snippet(node) for node in floors],
         'walls': [_wall_snippet(node) for node in walls],
+        'doors': [_door_snippet(door) for door in doors],
     }
 
 
@@ -94,6 +116,7 @@ def _wall_code_snippet(wall_code: etree.ElementTree) -> typing.Dict[str, typing.
         'componentTypeSizeEnglish': component_type_size_english,
         'componentTypeSizeFrench': component_type_size_french,
     }
+
 
 def _window_code_snippet(window_code: etree.ElementTree) -> typing.Dict[str, typing.Any]:
     code_id = window_code.attrib['id']
@@ -133,7 +156,6 @@ def _window_code_snippet(window_code: etree.ElementTree) -> typing.Dict[str, typ
         'frameMaterialEnglish': frame_material_english,
         'frameMaterialFrench': frame_material_french,
     }
-
 
 
 def snip_codes(codes: etree.ElementTree) -> typing.Dict[str, typing.Any]:
