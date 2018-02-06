@@ -31,7 +31,6 @@ class _Wall(typing.NamedTuple):
     height: typing.Optional[float]
 
 
-
 class _Door(typing.NamedTuple):
     label: typing.Optional[str]
     type_english: typing.Optional[str]
@@ -58,6 +57,7 @@ class _Window(typing.NamedTuple):
     rsi: typing.Optional[float]
     width: typing.Optional[float]
     height: typing.Optional[float]
+
 
 
 class _WallCode(typing.NamedTuple):
