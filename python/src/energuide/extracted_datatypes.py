@@ -31,7 +31,7 @@ class _Wall(typing.NamedTuple):
 
 
 class _WallCode(typing.NamedTuple):
-    id: str
+    identifier: str
     label: typing.Optional[str]
     structure_type_english: typing.Optional[str]
     structure_type_french: typing.Optional[str]
@@ -65,7 +65,7 @@ class WallCode(_WallCode):
     @classmethod
     def from_data(cls, wall_code: typing.Dict[str, typing.Optional[str]]) -> 'WallCode':
         return WallCode(
-            id=wall_code['id'],
+            identifier=wall_code['id'],
             label=wall_code['label'],
             structure_type_english=wall_code['structureTypeEnglish'],
             structure_type_french=wall_code['structureTypeFrench'],
@@ -91,7 +91,7 @@ class Codes(_Codes):
     @classmethod
     def from_data(cls, codes: typing.Dict[str, typing.List[typing.Dict[str, str]]]):
         wall_code_list = (WallCode.from_data(wall_code) for wall_code in codes['wall'])
-        wall_codes = {wall_code.id: wall_code for wall_code in wall_code_list}
+        wall_codes = {wall_code.identifier: wall_code for wall_code in wall_code_list}
 
         return Codes(
             wall=wall_codes
