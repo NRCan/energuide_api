@@ -30,25 +30,6 @@ class _Wall(typing.NamedTuple):
     height: typing.Optional[float]
 
 
-class _Window(typing.NamedTuple):
-    label: typing.Optional[str]
-    glazing_type_english: typing.Optional[str]
-    glazing_type_french: typing.Optional[str]
-    coatings_tints_english: typing.Optional[str]
-    coatings_tints_french: typing.Optional[str]
-    fill_type_english: typing.Optional[str]
-    fill_type_french: typing.Optional[str]
-    spacer_type_english: typing.Optional[str]
-    spacer_type_french: typing.Optional[str]
-    type_english: typing.Optional[str]
-    type_french: typing.Optional[str]
-    frame_material_english: typing.Optional[str]
-    frame_material_french: typing.Optional[str]
-    rsi: typing.Optional[float]
-    width: typing.Optional[float]
-    height: typing.Optional[float]
-
-
 class _WallCode(typing.NamedTuple):
     identifier: str
     label: typing.Optional[str]
