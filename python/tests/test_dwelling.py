@@ -48,6 +48,7 @@ def wall_input() -> typing.Dict[str, str]:
 @pytest.fixture
 def door_input() -> typing.Dict[str, str]:
     return {
+        'label': 'Front door',
         'typeEnglish': 'Solid wood',
         'typeFrench': 'Bois massif',
         'rsi': '0.39',
@@ -221,6 +222,7 @@ class TestParsedDwellingDataRow:
             ],
             doors=[
                 extracted_datatypes.Door(
+                    label='Front door',
                     type_english='Solid wood',
                     type_french='Bois massif',
                     rsi=0.39,

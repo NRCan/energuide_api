@@ -154,12 +154,13 @@ def test_window_code_snippet(code: etree.ElementTree) -> None:
 
 def test_door_snippet(house: etree.ElementTree) -> None:
     output = snippets.snip_house(house)
-    assert len(output['doors']) == 2
-    assert output['doors'][0] == {
+    doors_output = sorted(output['doors'], key=lambda x: x['label'])
+    assert len(doors_output) == 2
+    assert doors_output[0] == {
+        'label': 'Back door',
         'typeEnglish': 'Solid wood',
         'typeFrench': 'Bois massif',
         'rsi': '0.39',
         'height': '1.9799',
         'width': '0.8499',
     }
-    assert output['doors'][0] == output['doors'][1]
