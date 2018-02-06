@@ -45,7 +45,7 @@ def wall_input() -> typing.Dict[str, str]:
 
 
 @pytest.fixture
-def codes() -> typing.Dict[str, typing.List[typing.Dict[str, str]]]:
+def raw_codes() -> typing.Dict[str, typing.List[typing.Dict[str, str]]]:
     return {
         'wall': [
             {
@@ -61,20 +61,16 @@ def codes() -> typing.Dict[str, typing.List[typing.Dict[str, str]]]:
 
 
 @pytest.fixture
-def dict_codes(codes: typing.Dict[str, typing.List[typing.Dict[str, str]]]
-              ) -> typing.Dict[str, typing.Dict[str, typing.Dict[str, str]]]:
-    return {
-        'wall': {
-            'Code 1': codes['wall'][0]
-        }
-    }
+def codes(raw_codes: typing.Dict[str, typing.List[typing.Dict[str, str]]]) -> extracted_datatypes.Codes:
+    return extracted_datatypes.Codes.from_data(raw_codes)
+
 
 
 @pytest.fixture
 def sample_input_d(ceiling_input: reader.InputData,
                    floor_input: reader.InputData,
                    wall_input,
-                   codes,) -> reader.InputData:
+                   raw_codes,) -> reader.InputData:
     return {
         'EVAL_ID': '123',
         'EVAL_TYPE': 'D',
@@ -94,16 +90,35 @@ def sample_input_d(ceiling_input: reader.InputData,
         'walls': [
             wall_input
         ],
-        'codes': codes
+        'codes': raw_codes
 
     }
+
+class TestWallCode:
+
+    @pytest.fixture
+    def sample(self, raw_codes: typing.Dict[str, typing.List[typing.Dict[str, str]]]) -> typing.Dict[str, str]:
+        return raw_codes['wall'][0]
+
+    def test_from_data(self, sample: typing.Dict[str, str]) -> None:
+        output = extracted_datatypes.WallCode.from_data(sample)
+        assert output.id == 'Code 1'
+        assert output.label == '1201101121'
+
+
+class TestCodes:
+
+    def test_from_data(self, raw_codes: typing.Dict[str, typing.List[typing.Dict[str, str]]]):
+        output = extracted_datatypes.Codes.from_data(raw_codes)
+        assert len(output.wall) == 1
+        assert output.wall['Code 1'].id == 'Code 1'
 
 
 class TestCeiling:
 
     @pytest.fixture
-    def sample(self, sample_input_d: reader.InputData) -> typing.Dict[str, str]:
-        ceiling = sample_input_d['ceilings'][0]
+    def sample(self, ceiling_input: reader.InputData) -> typing.Dict[str, typing.Any]:
+        ceiling = ceiling_input.copy()
         ceiling['nominalRsi'] = float(ceiling['nominalRsi'])
         ceiling['effectiveRsi'] = float(ceiling['effectiveRsi'])
         ceiling['area'] = float(ceiling['area'])
@@ -123,8 +138,8 @@ class TestCeiling:
 class TestFloor:
 
     @pytest.fixture
-    def sample(self, sample_input_d: reader.InputData) -> typing.Dict[str, typing.Any]:
-        floor = sample_input_d['floors'][0]
+    def sample(self, floor_input: typing.Dict[str, str]) -> typing.Dict[str, typing.Any]:
+        floor = floor_input.copy()
         floor['nominalRsi'] = float(floor['nominalRsi'])
         floor['effectiveRsi'] = float(floor['effectiveRsi'])
         floor['area'] = float(floor['area'])
@@ -144,8 +159,8 @@ class TestFloor:
 class TestWall:
 
     @pytest.fixture
-    def sample(self, sample_input_d: reader.InputData) -> typing.Dict[str, typing.Any]:
-        wall = sample_input_d['walls'][0]
+    def sample(self, wall_input: typing.Dict[str, str]) -> typing.Dict[str, typing.Any]:
+        wall = wall_input.copy()
         wall['nominalRsi'] = float(wall['nominalRsi'])
         wall['effectiveRsi'] = float(wall['effectiveRsi'])
         wall['perimeter'] = float(wall['perimeter'])
@@ -154,25 +169,25 @@ class TestWall:
 
     def test_from_data(self,
                        sample: typing.Dict[str, typing.Any],
-                       dict_codes: typing.Dict[str, typing.Dict[str, typing.Dict[str, str]]]) -> None:
-        output = extracted_datatypes.Wall.from_data(sample, dict_codes['wall'])
+                       codes: extracted_datatypes.Codes) -> None:
+        output = extracted_datatypes.Wall.from_data(sample, codes.wall)
         assert output.label == 'Second level'
         assert output.perimeter == 42.9768
         assert output.component_type_size_english == '38x89 mm (2x4 in)'
 
     def test_missing_optional_fields(self,
                                      sample: typing.Dict[str, typing.Any],
-                                     dict_codes: typing.Dict[str, typing.Dict[str, typing.Dict[str, str]]]) -> None:
+                                     codes: extracted_datatypes.Codes) -> None:
         wall = sample.copy()
         wall.pop('constructionTypeCode')
         wall.pop('constructionTypeValue')
-        output = extracted_datatypes.Wall.from_data(wall, dict_codes['wall'])
+        output = extracted_datatypes.Wall.from_data(wall, codes.wall)
         assert output.label == 'Second level'
         assert output.perimeter == 42.9768
         assert output.component_type_size_english is None
 
     def test_to_dict(self,
                      sample: typing.Dict[str, typing.Any],
-                     dict_codes: typing.Dict[str, typing.Dict[str, typing.Dict[str, str]]]) -> None:
-        output = extracted_datatypes.Wall.from_data(sample, dict_codes['wall']).to_dict()
+                     codes: extracted_datatypes.Codes) -> None:
+        output = extracted_datatypes.Wall.from_data(sample, codes.wall).to_dict()
         assert output['areaMetres'] == sample['perimeter'] * sample['height']

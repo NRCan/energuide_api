@@ -7,6 +7,7 @@ from energuide import reader
 from energuide.extracted_datatypes import Floor
 from energuide.extracted_datatypes import Ceiling
 from energuide.extracted_datatypes import Wall
+from energuide.extracted_datatypes import Codes
 
 
 class NoInputDataException(Exception):
@@ -83,12 +84,6 @@ class _ParsedDwellingDataRow(typing.NamedTuple):
     walls: typing.List[Wall]
 
 
-def _dict_codes(codes: typing.Dict[str, typing.List[typing.Dict[str, str]]]
-               ) -> typing.Dict[str, typing.Dict[str, typing.Dict[str, str]]]:
-
-    return {key: {structure['id']: structure for structure in value} for key, value in codes.items()}
-
-
 
 class ParsedDwellingDataRow(_ParsedDwellingDataRow):
 
@@ -106,6 +101,8 @@ class ParsedDwellingDataRow(_ParsedDwellingDataRow):
         'ceilings': Ceiling.SCHEMA,
         'floors': Floor.SCHEMA,
         'walls': Wall.SCHEMA,
+
+        'codes': Codes.SCHEMA,
     }
 
     @classmethod
@@ -116,7 +113,8 @@ class ParsedDwellingDataRow(_ParsedDwellingDataRow):
             raise reader.InvalidInputDataException(f'Validator failed on keys: {error_keys}')
 
         parsed = validator.document
-        parsed['codes'] = _dict_codes(parsed['codes'])
+
+        codes = Codes.from_data(parsed['codes'])
 
         return ParsedDwellingDataRow(
             eval_id=parsed['EVAL_ID'],
@@ -130,7 +128,7 @@ class ParsedDwellingDataRow(_ParsedDwellingDataRow):
             forward_sortation_area=parsed['forwardSortationArea'],
             ceilings=[Ceiling.from_data(ceiling) for ceiling in parsed['ceilings']],
             floors=[Floor.from_data(floor) for floor in parsed['floors']],
-            walls=[Wall.from_data(wall, parsed['codes']['wall']) for wall in parsed['walls']],
+            walls=[Wall.from_data(wall, codes.wall) for wall in parsed['walls']],
         )
 
 
