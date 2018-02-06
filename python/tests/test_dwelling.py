@@ -75,6 +75,39 @@ def raw_codes() -> typing.Dict[str, typing.List[typing.Dict[str, str]]]:
                 'componentTypeSizeEnglish': '38x89 mm (2x4 in)',
                 'componentTypeSizeFrench': '38x89 (2x4)',
             }
+        ],
+        'window': [
+            {
+                'id': 'Code 11',
+                'label': '202002',
+                'glazingTypeEnglish': 'Double/double with 1 coat',
+                'glazingTypeFrench': 'Double/double, 1 couche',
+                'coatingsTintsEnglish': 'Clear',
+                'coatingsTintsFrench': 'Transparent',
+                'fillTypeEnglish': '6 mm Air',
+                'fillTypeFrench': "6 mm d'air",
+                'spacerTypeEnglish': 'Metal',
+                'spacerTypeFrench': 'Métal',
+                'typeEnglish': 'Picture',
+                'typeFrench': 'Fixe',
+                'frameMaterialEnglish': 'Wood',
+                'frameMaterialFrench': 'Bois',
+            }, {
+                'id': 'Code 12',
+                'label': '234002',
+                'glazingTypeEnglish': 'Double/double with 1 coat',
+                'glazingTypeFrench': 'Double/double, 1 couche',
+                'coatingsTintsEnglish': 'Low-E .20 (hard1)',
+                'coatingsTintsFrench': 'Faible E .20 (Dur 1)',
+                'fillTypeEnglish': '9 mm Argon',
+                'fillTypeFrench': "9 mm d'argon",
+                'spacerTypeEnglish': 'Metal',
+                'spacerTypeFrench': 'Métal',
+                'typeEnglish': 'Picture',
+                'typeFrench': 'Fixe',
+                'frameMaterialEnglish': 'Wood',
+                'frameMaterialFrench': 'Bois',
+            }
         ]
     }
 
