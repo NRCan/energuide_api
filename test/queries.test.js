@@ -5,7 +5,6 @@ import testData from './data'
 
 let client, db, collection
 const url = 'mongodb://localhost:27017'
-// const url = process.env.COSMOSDB_URL
 const dbName = 'test_' + Date.now()
 
 describe('queries', () => {
@@ -13,14 +12,10 @@ describe('queries', () => {
     client = await MongoClient.connect(url)
     db = client.db(dbName)
     collection = db.collection('buildings')
-    // CosmosDB apparently automatically indexes everything
-    // but for Mongo we need to add an index
   })
 
   afterEach(async () => {
     await db.dropDatabase()
-    // for COSMOSDB you will want to use:
-    // await collection.remove()
     client.close()
   })
 
