@@ -18,6 +18,18 @@ class _Floor(typing.NamedTuple):
     length_metres: typing.Optional[float]
 
 
+class _Wall(typing.NamedTuple):
+    label: typing.Optional[str]
+    structure_type_english: typing.Optional[str]
+    structure_type_french: typing.Optional[str]
+    component_type_size_english: typing.Optional[str]
+    component_type_size_french: typing.Optional[str]
+    nominal_rsi: typing.Optional[float]
+    effective_rsi: typing.Optional[float]
+    perimeter: typing.Optional[float]
+    height: typing.Optional[float]
+
+
 class _WallCode(typing.NamedTuple):
     identifier: str
     label: typing.Optional[str]
@@ -84,6 +96,68 @@ class Codes(_Codes):
         return Codes(
             wall=wall_codes
         )
+
+class Wall(_Wall):
+
+    SCHEMA = {
+        'type': 'list',
+        'required': True,
+        'schema': {
+            'type': 'dict',
+            'schema': {
+                'label':  {'type': 'string', 'required': True, 'nullable': True},
+                'constructionTypeCode':  {'type': 'string', 'required': False, 'nullable': True},
+                'constructionTypeNode':  {'type': 'string', 'required': False, 'nullable': True},
+                'nominalRsi':  {'type': 'float', 'required': True, 'coerce': float, 'nullable': True},
+                'effectiveRsi':  {'type': 'float', 'required': True, 'coerce': float, 'nullable': True},
+                'perimeter':  {'type': 'float', 'required': True, 'coerce': float, 'nullable': True},
+                'height':  {'type': 'float', 'required': True, 'coerce': float, 'nullable': True},
+            }
+        }
+    }
+
+    @classmethod
+    def from_data(cls,
+                  wall: typing.Dict[str, typing.Any],
+                  wall_codes: typing.Dict[str, WallCode]):
+
+        code_id = wall.get('constructionTypeCode')
+        code = wall_codes.get(code_id)
+
+        structure_type_english = code.structure_type_english if code is not None else None
+        structure_type_french = code.structure_type_french if code is not None else None
+        component_type_size_english = code.component_type_size_english if code is not None else None
+        component_type_size_french = code.component_type_size_french if code is not None else None
+
+        return Wall(
+            label=wall['label'],
+            structure_type_english=structure_type_english,
+            structure_type_french=structure_type_french,
+            component_type_size_english=component_type_size_english,
+            component_type_size_french=component_type_size_french,
+            nominal_rsi=wall['nominalRsi'],
+            effective_rsi=wall['effectiveRsi'],
+            perimeter=wall['perimeter'],
+            height=wall['height'],
+        )
+
+    def to_dict(self) -> typing.Dict[str, typing.Any]:
+        return {
+            'label': self.label,
+            'structureTypeEnglish': self.structure_type_english,
+            'structureTypeFrench': self.structure_type_french,
+            'componentTypeSizeEnglish': self.component_type_size_english,
+            'componentTypeSizeFrench': self.component_type_size_french,
+            'nominalRsi': self.nominal_rsi,
+            'nominalR': (self.nominal_rsi * _RSI_MULTIPLIER) if self.nominal_rsi is not None else None,
+            'effectiveRsi': self.effective_rsi,
+            'effectiveR': (self.effective_rsi * _RSI_MULTIPLIER) if self.effective_rsi is not None else None,
+            'areaMetres': self.perimeter * self.height,
+            'areaFeet': (self.perimeter * self.height * _FEET_SQUARED_MULTIPLIER)
+                        if (self.perimeter is not None and self.height is not None) else None,
+            'perimeter': self.perimeter,
+            'height': self.height,
+        }
 
 
 class Ceiling(_Ceiling):

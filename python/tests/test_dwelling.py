@@ -33,6 +33,19 @@ def floor_input() -> reader.InputData:
 
 
 @pytest.fixture
+def wall_input() -> typing.Dict[str, str]:
+    return {
+        'label': 'Second level',
+        'constructionTypeCode': 'Code 1',
+        'constructionTypeValue': '1201101121',
+        'nominalRsi': '1.432',
+        'effectiveRsi': '1.8016',
+        'perimeter': '42.9768',
+        'height': '2.4384',
+    }
+
+
+@pytest.fixture
 def raw_codes() -> typing.Dict[str, typing.List[typing.Dict[str, str]]]:
     return {
         'wall': [
@@ -58,6 +71,7 @@ def raw_codes() -> typing.Dict[str, typing.List[typing.Dict[str, str]]]:
 @pytest.fixture
 def sample_input_d(ceiling_input: reader.InputData,
                    floor_input: reader.InputData,
+                   wall_input: typing.Dict[str, str],
                    raw_codes: typing.Dict[str, typing.List[typing.Dict[str, str]]]) -> reader.InputData:
     return {
         'EVAL_ID': '123',
@@ -75,7 +89,10 @@ def sample_input_d(ceiling_input: reader.InputData,
         'floors': [
             floor_input
         ],
-        'codes': raw_codes
+        'walls': [
+            wall_input
+        ],
+        'codes': raw_codes,
     }
 
 
@@ -172,6 +189,19 @@ class TestParsedDwellingDataRow:
                     effective_rsi=2.9181,
                     area_metres=9.2903,
                     length_metres=3.048,
+                )
+            ],
+            walls=[
+                extracted_datatypes.Wall(
+                    label='Second level',
+                    structure_type_english='Wood frame',
+                    structure_type_french='Ossature de bois',
+                    component_type_size_english='38x89 mm (2x4 in)',
+                    component_type_size_french='38x89 (2x4)',
+                    nominal_rsi=1.432,
+                    effective_rsi=1.8016,
+                    perimeter=42.9768,
+                    height=2.4384,
                 )
             ]
         )
