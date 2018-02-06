@@ -1,5 +1,6 @@
 SHELL := /usr/bin/bash
 run:
+	cd api
 	yarn build && yarn start
 setup:
 	mongo energuide --eval "db.dwellings.drop()"
@@ -12,6 +13,7 @@ setup:
 	energuide load --filename allthedata.zip
 	rm allthedata.zip
 test:
+	cd api
 	yarn test
 	yarn integration
 .ONESHELL:
