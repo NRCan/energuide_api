@@ -207,6 +207,7 @@ class Evaluation:
     def doors(self) -> typing.List[Door]:
         return self._doors
 
+    @property
     def windows(self) -> typing.List[Window]:
         return self._windows
 

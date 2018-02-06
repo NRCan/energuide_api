@@ -57,6 +57,7 @@ def door_input() -> typing.Dict[str, str]:
     }
 
 
+@pytest.fixture
 def window_input() -> typing.Dict[str, str]:
     return {
         'label': 'East0001',
