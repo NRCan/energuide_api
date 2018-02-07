@@ -65,10 +65,10 @@ def _window_snippet(window: etree._Element) -> typing.Dict[str, typing.Optional[
 
 
 def _heated_floor_area_snippet(heated_floor_area: etree.ElementTree) -> typing.Dict[str, typing.Any]:
-    return {
-        'aboveGrade': heated_floor_area.attrib.get('aboveGrade'),
-        'belowGrade': heated_floor_area.attrib.get('belowGrade'),
-    }
+    return _extract_values(heated_floor_area, {
+        'aboveGrade': '@aboveGrade',
+        'belowGrade': '@belowGrade',
+    })
 
 
 def snip_house(house: etree._Element) -> typing.Dict[str, typing.List[typing.Dict[str, typing.Optional[str]]]]:
@@ -77,7 +77,7 @@ def snip_house(house: etree._Element) -> typing.Dict[str, typing.List[typing.Dic
     walls = house.xpath('Components/Wall')
     doors = house.xpath('Components//Components/Door')
     windows = house.xpath('Components//Components/Window')
-    heated_floor_area = house.find('Specifications/HeatedFloorArea')
+    heated_floor_areas = house.xpath('Specifications/HeatedFloorArea')
 
     return {
         'ceilings': [_ceiling_snippet(node) for node in ceilings],
@@ -85,7 +85,7 @@ def snip_house(house: etree._Element) -> typing.Dict[str, typing.List[typing.Dic
         'walls': [_wall_snippet(node) for node in walls],
         'doors': [_door_snippet(door) for door in doors],
         'windows': [_window_snippet(node) for node in windows],
-        'heatedFloorArea': _heated_floor_area_snippet(heated_floor_area) if heated_floor_area is not None else None
+        'heatedFloorArea': [_heated_floor_area_snippet(heated_floor_area) for heated_floor_area in heated_floor_areas],
     }
 
 
