@@ -12,6 +12,9 @@ setup:
 	energuide extract --infile tests/randomized_energuide_data.csv --outfile allthedata.zip
 	energuide load --filename allthedata.zip
 	rm allthedata.zip
+build:
+	cd api
+	yarn dockerize
 test:
 	cd api
 	yarn test
