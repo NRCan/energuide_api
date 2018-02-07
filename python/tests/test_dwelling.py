@@ -68,6 +68,13 @@ def window_input() -> typing.Dict[str, str]:
         'height': '1322.0699',
     }
 
+@pytest.fixture
+def heated_floor_area_input() -> typing.Dict[str, str]:
+    return {
+        'aboveGrade': '185.8',
+        'belowGrade': '92.9',
+    }
+
 
 @pytest.fixture
 def raw_codes() -> typing.Dict[str, typing.List[typing.Dict[str, str]]]:
@@ -131,6 +138,7 @@ def sample_input_d(ceiling_input: reader.InputData,
                    wall_input: typing.Dict[str, str],
                    door_input: typing.Dict[str, str],
                    window_input: typing.Dict[str, str],
+                   heated_floor_area_input: typing.Dict[str, str],
                    raw_codes: typing.Dict[str, typing.List[typing.Dict[str, str]]]) -> reader.InputData:
     return {
         'EVAL_ID': '123',
@@ -157,6 +165,10 @@ def sample_input_d(ceiling_input: reader.InputData,
         'windows': [
             window_input
         ],
+        'heatedFloorArea': [
+            heated_floor_area_input
+        ],
+
         'codes': raw_codes,
     }
 
@@ -297,6 +309,12 @@ class TestParsedDwellingDataRow:
                     rsi=0.4779,
                     width=1.967738,
                     height=1.3220699,
+                )
+            ],
+            heated_floor_area=[
+                extracted_datatypes.HeatedFloorArea(
+                    area_above_grade=185.8,
+                    area_below_grade=92.9,
                 )
             ],
         )

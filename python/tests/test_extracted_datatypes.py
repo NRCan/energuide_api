@@ -101,6 +101,26 @@ class TestCodes:
         assert output.window['Code 11'].glazing_types_english == 'Double/double with 1 coat'
 
 
+class TestHeatedFloorArea:
+
+    @pytest.fixture
+    def sample(self) -> typing.Dict[str, float]:
+        return {
+            'belowGrade': 185.8,
+            'aboveGrade': 92.9,
+        }
+
+    def test_from_data(self, sample: typing.Dict[str, float]) -> None:
+        output = extracted_datatypes.HeatedFloorArea.from_data(sample)
+        assert output.area_above_grade == 92.9
+        assert output.area_below_grade_feet == 1999.93468342048
+
+    def test_to_dict(self, sample: typing.Dict[str, float]) -> None:
+        output = extracted_datatypes.HeatedFloorArea.from_data(sample).to_dict()
+        assert output['areaAboveGradeMetres'] == 92.9
+        assert output['areaBelowGradeMetres'] == 185.8
+
+
 class TestWindow:
 
     @pytest.fixture

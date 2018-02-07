@@ -59,6 +59,11 @@ class _Window(typing.NamedTuple):
     height: typing.Optional[float]
 
 
+class _HeatedFloorArea(typing.NamedTuple):
+    area_above_grade: typing.Optional[float]
+    area_below_grade: typing.Optional[float]
+
+
 class _WallCode(typing.NamedTuple):
     identifier: str
     label: typing.Optional[str]
@@ -192,6 +197,43 @@ class Codes(_Codes):
             wall=wall_codes,
             window=window_codes,
         )
+
+class HeatedFloorArea(_HeatedFloorArea):
+
+    SCHEMA = {
+        'type': 'list',
+        'required': True,
+        'schema': {
+            'type': 'dict',
+            'schema': {
+                'belowGrade': {'type': 'float', 'required': True, 'coerce': float, 'nullable': True},
+                'aboveGrade': {'type': 'float', 'required': True, 'coerce': float, 'nullable': True},
+            }
+        }
+    }
+
+    @classmethod
+    def from_data(cls, heated_floor_area: typing.Dict[str, typing.Optional[float]]) -> 'HeatedFloorArea':
+        return HeatedFloorArea(
+            area_above_grade=heated_floor_area['aboveGrade'],
+            area_below_grade=heated_floor_area['belowGrade'],
+        )
+
+    @property
+    def area_above_grade_feet(self):
+        return self.area_above_grade * _FEET_SQUARED_MULTIPLIER
+
+    @property
+    def area_below_grade_feet(self):
+        return self.area_below_grade * _FEET_SQUARED_MULTIPLIER
+
+    def to_dict(self) -> typing.Dict[str, typing.Optional[float]]:
+        return {
+            'areaAboveGradeMetres': self.area_above_grade,
+            'areaAboveGradeFeet': self.area_above_grade_feet,
+            'areaBelowGradeMetres': self.area_below_grade,
+            'areaBelowGradeFeet': self.area_below_grade_feet,
+        }
 
 
 class Window(_Window):
