@@ -2,7 +2,7 @@ import { MongoClient } from 'mongodb'
 import request from 'supertest'
 import Server from '../src/server'
 
-let client, db, collection
+let client, db, collection, server
 const url = 'mongodb://localhost:27017'
 const dbName = 'energuide'
 
@@ -11,6 +11,9 @@ describe('queries', () => {
     client = await MongoClient.connect(url)
     db = client.db(dbName)
     collection = db.collection('dwellings')
+    server = new Server({
+      client: collection,
+    })
   })
 
   afterAll(async () => {
@@ -19,10 +22,6 @@ describe('queries', () => {
 
   describe('evaluationsFor', () => {
     it('retrieves evaluations given an account id and a postalcode', async () => {
-      let server = new Server({
-        client: collection,
-      })
-
       let response = await request(server)
         .post('/graphql')
         .set('Content-Type', 'application/json; charset=utf-8')
@@ -40,10 +39,6 @@ describe('queries', () => {
 
   describe('dwellingsInFSA', () => {
     it('returns the dwellings in the given Forward Sortation Area', async () => {
-      let server = new Server({
-        client: collection,
-      })
-
       let response = await request(server)
         .post('/graphql')
         .set('Content-Type', 'application/json; charset=utf-8')
@@ -64,10 +59,6 @@ describe('queries', () => {
 
   describe('dwellingsInFSA', () => {
     it('has a greater than filter which filters out dwellings', async () => {
-      let server = new Server({
-        client: collection,
-      })
-
       let response = await request(server)
         .post('/graphql')
         .set('Content-Type', 'application/json; charset=utf-8')
@@ -87,10 +78,6 @@ describe('queries', () => {
     })
 
     it('complains about multiple comparators', async () => {
-      let server = new Server({
-        client: collection,
-      })
-
       let response = await request(server)
         .post('/graphql')
         .set('Content-Type', 'application/json; charset=utf-8')
@@ -108,10 +95,6 @@ describe('queries', () => {
     })
 
     it('gets evalutations within a Forward Sortation Area', async () => {
-      let server = new Server({
-        client: collection,
-      })
-
       let response = await request(server)
         .post('/graphql')
         .set('Content-Type', 'application/json; charset=utf-8')
