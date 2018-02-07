@@ -117,7 +117,11 @@ def test_user_specified_wall_snippet() -> None:
             'height': None,
         }],
         'doors': [],
+<<<<<<< HEAD
         'heatedFloorArea': [],
+=======
+        'heatedFloorArea': None,
+>>>>>>> extract heated floor area data
     }
 
 
