@@ -30,8 +30,8 @@ def raw_codes() -> typing.Dict[str, typing.List[typing.Dict[str, str]]]:
             {
                 'id': 'Code 11',
                 'label': '202002',
-                'glazingTypeEnglish': 'Double/double with 1 coat',
-                'glazingTypeFrench': 'Double/double, 1 couche',
+                'glazingTypesEnglish': 'Double/double with 1 coat',
+                'glazingTypesFrench': 'Double/double, 1 couche',
                 'coatingsTintsEnglish': 'Clear',
                 'coatingsTintsFrench': 'Transparent',
                 'fillTypeEnglish': '6 mm Air',
@@ -45,8 +45,8 @@ def raw_codes() -> typing.Dict[str, typing.List[typing.Dict[str, str]]]:
             }, {
                 'id': 'Code 12',
                 'label': '234002',
-                'glazingTypeEnglish': 'Double/double with 1 coat',
-                'glazingTypeFrench': 'Double/double, 1 couche',
+                'glazingTypesEnglish': 'Double/double with 1 coat',
+                'glazingTypesFrench': 'Double/double, 1 couche',
                 'coatingsTintsEnglish': 'Low-E .20 (hard1)',
                 'coatingsTintsFrench': 'Faible E .20 (Dur 1)',
                 'fillTypeEnglish': '9 mm Argon',
@@ -98,7 +98,44 @@ class TestCodes:
         assert len(output.wall) == 2
         assert len(output.window) == 2
         assert output.wall['Code 1'].structure_type_english == 'Wood frame'
-        assert output.window['Code 11'].glazing_type_english == 'Double/double with 1 coat'
+        assert output.window['Code 11'].glazing_types_english == 'Double/double with 1 coat'
+
+
+class TestWindow:
+
+    @pytest.fixture
+    def sample(self) -> typing.Dict[str, typing.Any]:
+        return {
+            'label': 'East0001',
+            'constructionTypeCode': 'Code 12',
+            'constructionTypeValue': '234002',
+            'rsi': 0.4779,
+            'width': 1967.738,
+            'height': 1322.0699,
+        }
+
+    def test_from_data(self, sample: typing.Dict[str, typing.Any], codes: extracted_datatypes.Codes) -> None:
+        output = extracted_datatypes.Window.from_data(sample, codes.window)
+        assert output.label == 'East0001'
+        assert output.width == 1.967738
+        assert output.glazing_types_english == 'Double/double with 1 coat'
+
+    def test_missing_optional_fields(self,
+                                     sample: typing.Dict[str, typing.Any],
+                                     codes: extracted_datatypes.Codes) -> None:
+        window = sample.copy()
+        window.pop('constructionTypeCode')
+        window.pop('constructionTypeValue')
+        output = extracted_datatypes.Window.from_data(window, codes.window)
+        assert output.label == 'East0001'
+        assert output.width == 1.967738
+        assert output.glazing_types_english is None
+
+    def test_to_dict(self,
+                     sample: typing.Dict[str, typing.Any],
+                     codes: extracted_datatypes.Codes) -> None:
+        output = extracted_datatypes.Window.from_data(sample, codes.window).to_dict()
+        assert output['areaMetres'] == (sample['width'] * 0.001) * (sample['height'] * 0.001)
 
 
 class TestWall:

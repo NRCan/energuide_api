@@ -168,8 +168,8 @@ def _window_code_snippet(window_code: etree.ElementTree) -> typing.Dict[str, typ
     return {
         'id': code_id,
         'label': label,
-        'glazingTypeEnglish': glazing_types_english,
-        'glazingTypeFrench': glazing_types_french,
+        'glazingTypesEnglish': glazing_types_english,
+        'glazingTypesFrench': glazing_types_french,
         'coatingsTintsEnglish': coatings_tints_english,
         'coatingsTintsFrench': coatings_tints_french,
         'fillTypeEnglish': fill_type_english,

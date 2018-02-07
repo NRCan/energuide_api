@@ -40,6 +40,25 @@ class _Door(typing.NamedTuple):
     width: typing.Optional[float]
 
 
+class _Window(typing.NamedTuple):
+    label: typing.Optional[str]
+    glazing_types_english: typing.Optional[str]
+    glazing_types_french: typing.Optional[str]
+    coatings_tints_english: typing.Optional[str]
+    coatings_tints_french: typing.Optional[str]
+    fill_type_english: typing.Optional[str]
+    fill_type_french: typing.Optional[str]
+    spacer_type_english: typing.Optional[str]
+    spacer_type_french: typing.Optional[str]
+    type_english: typing.Optional[str]
+    type_french: typing.Optional[str]
+    frame_material_english: typing.Optional[str]
+    frame_material_french: typing.Optional[str]
+    rsi: typing.Optional[float]
+    width: typing.Optional[float]
+    height: typing.Optional[float]
+
+
 class _WallCode(typing.NamedTuple):
     identifier: str
     label: typing.Optional[str]
@@ -52,8 +71,8 @@ class _WallCode(typing.NamedTuple):
 class _WindowCode(typing.NamedTuple):
     identifier: str
     label: typing.Optional[str]
-    glazing_type_english: typing.Optional[str]
-    glazing_type_french: typing.Optional[str]
+    glazing_types_english: typing.Optional[str]
+    glazing_types_french: typing.Optional[str]
     coatings_tints_english: typing.Optional[str]
     coatings_tints_french: typing.Optional[str]
     fill_type_english: typing.Optional[str]
@@ -110,8 +129,8 @@ class WindowCode(_WindowCode):
             'schema': {
                 'id':  {'type': 'string', 'required': True},
                 'label': {'type': 'string', 'required': True, 'nullable': True},
-                'glazingTypeEnglish': {'type': 'string', 'required': True, 'nullable': True},
-                'glazingTypeFrench': {'type': 'string', 'required': True, 'nullable': True},
+                'glazingTypesEnglish': {'type': 'string', 'required': True, 'nullable': True},
+                'glazingTypesFrench': {'type': 'string', 'required': True, 'nullable': True},
                 'coatingsTintsEnglish': {'type': 'string', 'required': True, 'nullable': True},
                 'coatingsTintsFrench': {'type': 'string', 'required': True, 'nullable': True},
                 'fillTypeEnglish': {'type': 'string', 'required': True, 'nullable': True},
@@ -131,8 +150,8 @@ class WindowCode(_WindowCode):
         return WindowCode(
             identifier=wall_code['id'],
             label=wall_code['label'],
-            glazing_type_english=wall_code['glazingTypeEnglish'],
-            glazing_type_french=wall_code['glazingTypeFrench'],
+            glazing_types_english=wall_code['glazingTypesEnglish'],
+            glazing_types_french=wall_code['glazingTypesFrench'],
             coatings_tints_english=wall_code['coatingsTintsEnglish'],
             coatings_tints_french=wall_code['coatingsTintsFrench'],
             fill_type_english=wall_code['fillTypeEnglish'],
@@ -175,6 +194,88 @@ class Codes(_Codes):
         )
 
 
+class Window(_Window):
+
+    SCHEMA = {
+        'type': 'list',
+        'required': True,
+        'schema': {
+            'type': 'dict',
+            'schema': {
+                'label': {'type': 'string', 'required': True, 'nullable': True},
+                'constructionTypeCode': {'type': 'string', 'required': False, 'nullable': True},
+                'constructionTypeValue': {'type': 'string', 'required': False, 'nullable': True},
+                'rsi': {'type': 'float', 'required': True, 'coerce': float, 'nullable': True},
+                'width': {'type': 'float', 'required': True, 'coerce': float, 'nullable': True},
+                'height': {'type': 'float', 'required': True, 'coerce': float, 'nullable': True},
+            }
+        }
+    }
+
+    @classmethod
+    def from_data(cls,
+                  window: typing.Dict[str, typing.Any],
+                  window_code: typing.Dict[str, WindowCode]) -> 'Window':
+        code_id = window.get('constructionTypeCode')
+        code = window_code.get(code_id)
+
+        glazing_types_english = code.glazing_types_english if code is not None else None
+        glazing_types_french = code.glazing_types_french if code is not None else None
+        coatings_tints_english = code.coatings_tints_english if code is not None else None
+        coatings_tints_french = code.coatings_tints_french if code is not None else None
+        fill_type_english = code.fill_type_english if code is not None else None
+        fill_type_french = code.fill_type_french if code is not None else None
+        spacer_type_english = code.spacer_type_english if code is not None else None
+        spacer_type_french = code.spacer_type_french if code is not None else None
+        type_english = code.type_english if code is not None else None
+        type_french = code.type_french if code is not None else None
+        frame_material_english = code.frame_material_english if code is not None else None
+        frame_material_french = code.frame_material_french if code is not None else None
+
+        return Window(
+            label=window['label'],
+            glazing_types_english=glazing_types_english,
+            glazing_types_french=glazing_types_french,
+            coatings_tints_english=coatings_tints_english,
+            coatings_tints_french=coatings_tints_french,
+            fill_type_english=fill_type_english,
+            fill_type_french=fill_type_french,
+            spacer_type_english=spacer_type_english,
+            spacer_type_french=spacer_type_french,
+            type_english=type_english,
+            type_french=type_french,
+            frame_material_english=frame_material_english,
+            frame_material_french=frame_material_french,
+            rsi=window['rsi'],
+            width=(window['width'] * 0.001) if (window['width'] is not None) else None,
+            height=(window['height']* 0.001) if (window['height'] is not None) else None,
+        )
+
+    def to_dict(self) -> typing.Dict[str, typing.Any]:
+        return {
+            'label': self.label,
+            'rsi': self.rsi,
+            'rvalue': (self.rsi * _RSI_MULTIPLIER) if (self.rsi is not None) else None,
+            'glazingTypesEnglish': self.glazing_types_english,
+            'glazingTypesFrench': self.glazing_types_french,
+            'coatingsTintsEnglish': self.coatings_tints_english,
+            'coatingsTintsFrench': self.coatings_tints_french,
+            'fillTypeEnglish': self.fill_type_english,
+            'fillTypeFrench': self.fill_type_french,
+            'spacerTypeEnglish': self.spacer_type_english,
+            'spacerTypeFrench': self.spacer_type_french,
+            'typeEnglish': self.type_english,
+            'typeFrench': self.type_french,
+            'frameMaterialEnglish': self.frame_material_english,
+            'frameMaterialFrench': self.frame_material_french,
+            'areaMetres': self.width * self.height,
+            'areaFeet': (self.width * self.height * _FEET_SQUARED_MULTIPLIER)
+                        if (self.width is not None and self.height is not None) else None,
+            'width': self.width,
+            'height': self.height,
+        }
+
+
 class Wall(_Wall):
 
     SCHEMA = {
@@ -197,7 +298,7 @@ class Wall(_Wall):
     @classmethod
     def from_data(cls,
                   wall: typing.Dict[str, typing.Any],
-                  wall_codes: typing.Dict[str, WallCode]):
+                  wall_codes: typing.Dict[str, WallCode]) -> 'Wall':
 
         code_id = wall.get('constructionTypeCode')
         code = wall_codes.get(code_id)
@@ -257,7 +358,7 @@ class Ceiling(_Ceiling):
     }
 
     @classmethod
-    def from_data(cls, ceiling: typing.Dict[str, typing.Any]):
+    def from_data(cls, ceiling: typing.Dict[str, typing.Any]) -> 'Ceiling':
         return Ceiling(
             label=ceiling['label'],
             type_english=ceiling['typeEnglish'],
@@ -302,7 +403,7 @@ class Floor(_Floor):
     }
 
     @classmethod
-    def from_data(cls, ceiling: typing.Dict[str, typing.Any]):
+    def from_data(cls, ceiling: typing.Dict[str, typing.Any]) -> 'Floor':
         return Floor(
             label=ceiling['label'],
             nominal_rsi=ceiling['nominalRsi'],
