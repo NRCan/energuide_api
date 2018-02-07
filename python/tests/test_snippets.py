@@ -82,7 +82,7 @@ def test_window_snippet(house: etree.ElementTree) -> None:
     }
 
 
-def test_heated_floor_area_snippet(house: etree.ElementTree) -> None:
+def test_heated_floor_area_snippet(house: etree._Element) -> None:
     output = snippets.snip_house(house)
     assert 'heatedFloorArea' in output
     assert output['heatedFloorArea'][0]['aboveGrade'] == '185.8'
