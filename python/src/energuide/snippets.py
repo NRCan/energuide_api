@@ -64,7 +64,7 @@ def _window_snippet(window: etree._Element) -> typing.Dict[str, typing.Optional[
     })
 
 
-def _heated_floor_area_snippet(heated_floor_area: etree.ElementTree) -> typing.Dict[str, typing.Any]:
+def _heated_floor_area_snippet(heated_floor_area: etree._Element) -> typing.Dict[str, typing.Any]:
     return _extract_values(heated_floor_area, {
         'aboveGrade': '@aboveGrade',
         'belowGrade': '@belowGrade',
