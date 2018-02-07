@@ -36,9 +36,7 @@ const resolvers = {
 
       let cursor = await client.find(query)
 
-      let results = await cursor.toArray()
-
-      return results
+      return cursor.toArray()
     },
   },
   Field: {
