@@ -82,6 +82,13 @@ def test_window_snippet(house: etree.ElementTree) -> None:
     }
 
 
+def test_heated_floor_area_snippet(house: etree.ElementTree) -> None:
+    output = snippets.snip_house(house)
+    assert 'heatedFloorArea' in output
+    assert output['heatedFloorArea']['aboveGrade'] == '185.8'
+    assert output['heatedFloorArea']['belowGrade'] == '92.9'
+
+
 def test_user_specified_wall_snippet() -> None:
     xml_text = """
 <House><Components>
@@ -110,6 +117,7 @@ def test_user_specified_wall_snippet() -> None:
             'height': None,
         }],
         'doors': [],
+        'heatedFloorArea': None,
     }
 
 
