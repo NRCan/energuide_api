@@ -5,7 +5,7 @@ from energuide import snippets
 
 
 @pytest.fixture
-def doc() -> etree.ElementTree:
+def doc() -> etree._ElementTree:
     sample_filename = os.path.join(os.path.dirname(__file__), 'sample.h2k')
     with open(sample_filename, 'r') as h2k:
         doc = etree.parse(h2k)
@@ -13,20 +13,20 @@ def doc() -> etree.ElementTree:
 
 
 @pytest.fixture
-def house(doc: etree.ElementTree) -> etree.ElementTree:
+def house(doc: etree._ElementTree) -> etree._Element:
     house_node = doc.find('House')
     assert house_node is not None
     return house_node
 
 
 @pytest.fixture
-def code(doc: etree.ElementTree) -> etree.ElementTree:
+def code(doc: etree._ElementTree) -> etree._Element:
     code_node = doc.find('Codes')
     assert code_node is not None
     return code_node
 
 
-def test_ceiling_snippet(house: etree.ElementTree) -> None:
+def test_ceiling_snippet(house: etree._Element) -> None:
     output = snippets.snip_house(house)
     assert 'ceilings' in output
     assert len(output['ceilings']) == 2
@@ -41,7 +41,7 @@ def test_ceiling_snippet(house: etree.ElementTree) -> None:
     }
 
 
-def test_floor_snippet(house: etree.ElementTree) -> None:
+def test_floor_snippet(house: etree._Element) -> None:
     output = snippets.snip_house(house)
     assert 'floors' in output
     assert len(output['floors']) == 1
@@ -54,7 +54,7 @@ def test_floor_snippet(house: etree.ElementTree) -> None:
     }
 
 
-def test_wall_snippet(house: etree.ElementTree) -> None:
+def test_wall_snippet(house: etree._Element) -> None:
     output = snippets.snip_house(house)
     assert 'walls' in output
     assert len(output['walls']) == 3
@@ -68,7 +68,8 @@ def test_wall_snippet(house: etree.ElementTree) -> None:
         'height': '1.2283',
     }
 
-def test_window_snippet(house: etree.ElementTree) -> None:
+
+def test_window_snippet(house: etree._Element) -> None:
     output = snippets.snip_house(house)
     assert 'windows' in output
     assert len(output['windows']) == 10
@@ -118,6 +119,7 @@ def test_user_specified_wall_snippet() -> None:
         }],
         'doors': [],
         'heatedFloorArea': [],
+        'heating_cooling': None,
     }
 
 
@@ -189,7 +191,7 @@ def test_deeply_embedded_components() -> None:
     assert len(output['doors']) == 2
 
 
-def test_wall_code_snippet(code: etree.ElementTree) -> None:
+def test_wall_code_snippet(code: etree._Element) -> None:
     output = snippets.snip_codes(code)
     assert output['codes']['wall'] == [{
         'id': 'Code 1',
@@ -208,7 +210,7 @@ def test_wall_code_snippet(code: etree.ElementTree) -> None:
     }]
 
 
-def test_window_code_snippet(code: etree.ElementTree) -> None:
+def test_window_code_snippet(code: etree._Element) -> None:
     output = snippets.snip_codes(code)
     assert sorted(output['codes']['window'], key=lambda row: row['label'])[0] == {
         'id': 'Code 11',
@@ -228,7 +230,7 @@ def test_window_code_snippet(code: etree.ElementTree) -> None:
     }
 
 
-def test_door_snippet(house: etree.ElementTree) -> None:
+def test_door_snippet(house: etree._Element) -> None:
     output = snippets.snip_house(house)
     doors_output = sorted(output['doors'], key=lambda x: x['label'])
     assert len(doors_output) == 2
@@ -240,3 +242,11 @@ def test_door_snippet(house: etree.ElementTree) -> None:
         'height': '1.9799',
         'width': '0.8499',
     }
+
+
+def test_heating_cooling_snippet(house: etree._Element) -> None:
+    output = snippets.snip_house(house)
+    doc = etree.fromstring(output['heating_cooling'])
+    child_tags = {node.tag for node in doc}
+    assert 'Label' in child_tags
+    assert len(child_tags) == 6
