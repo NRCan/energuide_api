@@ -16,3 +16,35 @@ export function hasMoreThanOneComparator(filter) {
     return false
   }
 }
+
+export function createQuery(fsa, filter) {
+  let query = {
+    $and: [
+      {
+        forwardSortationArea: fsa,
+      },
+    ],
+  }
+
+  // { field: 'yearBuilt', gt: '1990' }
+  // XXX: not all fields are integers.
+  if (filter) {
+    if (filter.gt) {
+      query['$and'].push({
+        [filter.field]: { [comparators.gt]: parseInt(filter.gt) },
+      })
+    }
+    if (filter.lt) {
+      query['$and'].push({
+        [filter.field]: { [comparators.lt]: parseInt(filter.lt) },
+      })
+    }
+    if (filter.eq) {
+      query['$and'].push({
+        [filter.field]: { [comparators.eq]: parseInt(filter.eq) },
+      })
+    }
+  }
+
+  return query
+}
