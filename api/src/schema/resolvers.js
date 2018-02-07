@@ -1,7 +1,11 @@
 import PostalCode from './types/PostalCode'
 import ForwardSortationArea from './types/ForwardSortationArea'
 import { GraphQLError } from 'graphql'
-import { comparators, hasMoreThanOneComparator } from '../utilities'
+import {
+  comparators,
+  createQuery,
+  hasMoreThanOneComparator,
+} from '../utilities'
 
 const resolvers = {
   PostalCode,
@@ -19,33 +23,16 @@ const resolvers = {
       let results = await cursor.toArray()
       return results[0] // XXX: clean this up too.
     },
-    dwellingsInFSA: async (
-      root,
-      { filter, forwardSortationArea },
-      { client },
-    ) => {
+    dwellingsInFSA: async (root, args, { client }) => {
+      const { filter, forwardSortationArea } = args
+
       if (hasMoreThanOneComparator(filter)) {
         return new GraphQLError(
           `You can only use ${Object.keys(comparators)} one at a time`,
         )
       }
 
-      let query = {
-        $and: [
-          {
-            forwardSortationArea,
-          },
-        ],
-      }
-
-      // { field: 'yearBuilt', gt: '1990' }
-      if (filter) {
-        if (filter.gt) {
-          query['$and'].push({
-            [filter.field]: { [comparators.gt]: parseInt(filter.gt) },
-          })
-        }
-      }
+      let query = createQuery(forwardSortationArea, filter)
 
       let cursor = await client.find(query)
 
