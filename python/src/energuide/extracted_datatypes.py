@@ -200,12 +200,16 @@ class Codes(_Codes):
 
 class HeatedFloorArea(_HeatedFloorArea):
 
+
     SCHEMA = {
-        'type': 'dict',
+        'type': 'list',
         'required': True,
         'schema': {
-            'belowGrade': {'type': 'float', 'required': True, 'coerce': float, 'nullable': True},
-            'aboveGrade': {'type': 'float', 'required': True, 'coerce': float, 'nullable': True},
+            'type': 'dict',
+            'schema': {
+                'belowGrade': {'type': 'float', 'required': True, 'coerce': float, 'nullable': True},
+                'aboveGrade': {'type': 'float', 'required': True, 'coerce': float, 'nullable': True},
+            }
         }
     }
 
