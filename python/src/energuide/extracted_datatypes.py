@@ -200,7 +200,6 @@ class Codes(_Codes):
 
 class HeatedFloorArea(_HeatedFloorArea):
 
-
     SCHEMA = {
         'type': 'list',
         'required': True,

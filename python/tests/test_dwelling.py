@@ -316,7 +316,7 @@ class TestParsedDwellingDataRow:
                     area_above_grade=185.8,
                     area_below_grade=92.9,
                 )
-            ]
+            ],
         )
 
     def test_bad_postal_code(self, sample_input_d: reader.InputData) -> None:

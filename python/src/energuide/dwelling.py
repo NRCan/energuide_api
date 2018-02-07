@@ -13,7 +13,6 @@ from energuide.extracted_datatypes import HeatedFloorArea
 from energuide.extracted_datatypes import Codes
 
 
-
 class NoInputDataException(Exception):
     pass
 
