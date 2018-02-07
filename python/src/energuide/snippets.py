@@ -78,6 +78,10 @@ def snip_house(house: etree._Element) -> typing.Dict[str, typing.List[typing.Dic
     doors = house.xpath('Components//Components/Door')
     windows = house.xpath('Components//Components/Window')
     heated_floor_areas = house.xpath('Specifications/HeatedFloorArea')
+    heating_cooling = house.xpath('HeatingCooling')
+    heating_cooling_string = (
+        etree.tostring(heating_cooling[0], encoding='unicode') if heating_cooling else None
+    )
 
     return {
         'ceilings': [_ceiling_snippet(node) for node in ceilings],
@@ -86,6 +90,7 @@ def snip_house(house: etree._Element) -> typing.Dict[str, typing.List[typing.Dic
         'doors': [_door_snippet(door) for door in doors],
         'windows': [_window_snippet(node) for node in windows],
         'heatedFloorArea': [_heated_floor_area_snippet(heated_floor_area) for heated_floor_area in heated_floor_areas],
+        'heating_cooling': heating_cooling_string,
     }
 
 
