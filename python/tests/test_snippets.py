@@ -181,8 +181,6 @@ def test_deeply_embeded_components() -> None:
     assert len(output['doors']) == 2
 
 
-
-
 def test_wall_code_snippet(code: etree.ElementTree) -> None:
     output = snippets.snip_codes(code)
     assert output['codes']['wall'] == [{
