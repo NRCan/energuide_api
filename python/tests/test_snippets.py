@@ -113,7 +113,7 @@ def test_user_specified_wall_snippet() -> None:
     }
 
 
-def test_deeply_embeded_components() -> None:
+def test_deeply_embedded_components() -> None:
     xml_text = """
 <House><Components>
     <Wall>

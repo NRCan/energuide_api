@@ -1,9 +1,9 @@
 import csv
 import json
 import typing
-from xml.etree import ElementTree
 import sys
 import zipfile
+from lxml import etree
 import cerberus
 from energuide import reader
 from energuide import snippets
@@ -62,18 +62,20 @@ def _safe_merge(data: reader.InputData, extra: reader.InputData) -> reader.Input
 
 
 def _extract_snippets(data: typing.Iterable[reader.InputData]) -> typing.Iterator[reader.InputData]:
+    parser = etree.XMLParser(ns_clean=True, recover=True, encoding='utf-8')
+
     for row in data:
         row['forwardSortationArea'] = row['CLIENTPCODE'][:3]
 
-        doc = ElementTree.fromstring(row['RAW_XML'])
-        house_node = doc.find('House')
+        doc = etree.fromstring(row['RAW_XML'].encode('utf-8'), parser=parser)
+        house_node = doc.xpath('House')
         if house_node:
-            house_snippets = snippets.snip_house(house_node)
+            house_snippets = snippets.snip_house(house_node[0])
             row = _safe_merge(row, house_snippets)
 
-        code_node = doc.find('Codes')
+        code_node = doc.xpath('Codes')
         if code_node:
-            code_snippets = snippets.snip_codes(code_node)
+            code_snippets = snippets.snip_codes(code_node[0])
             row = _safe_merge(row, code_snippets)
 
         yield row
