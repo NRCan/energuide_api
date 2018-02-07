@@ -1,4 +1,3 @@
-import PostalCode from './types/PostalCode'
 import ForwardSortationArea from './types/ForwardSortationArea'
 import { GraphQLError } from 'graphql'
 import {
@@ -8,20 +7,14 @@ import {
 } from '../utilities'
 
 const resolvers = {
-  PostalCode,
   ForwardSortationArea,
   Query: {
-    evaluationsFor: async (root, { account, postalCode }, { client }) => {
+    evaluationsFor: async (root, { account }, { client }) => {
       let query = {
         houseId: account,
-        // XXX This is a temporary hack to work around the lack of postal codes in the data.
-        forwardSortationArea: postalCode.split(' ')[0],
       }
 
-      let cursor = await client.find(query)
-
-      let results = await cursor.toArray()
-      return results[0] // XXX: clean this up too.
+      return client.findOne(query)
     },
     dwellingsInFSA: async (root, args, { client }) => {
       const { filter, forwardSortationArea } = args
