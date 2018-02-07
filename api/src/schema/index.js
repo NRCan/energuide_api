@@ -3,7 +3,6 @@ import { makeExecutableSchema } from 'graphql-tools'
 
 const Schema = i18n => {
   const typeDefs = `
-    scalar PostalCode
     scalar ForwardSortationArea
 
     input Filter {
@@ -51,7 +50,7 @@ const Schema = i18n => {
     # ${i18n.t`The root query type`}
     type Query {
       # ${i18n.t`Details for a specific dwelling`}
-      evaluationsFor(account: Int! postalCode: PostalCode!): Dwelling
+      evaluationsFor(account: Int!): Dwelling
       dwellingsInFSA(filter: Filter forwardSortationArea: ForwardSortationArea!): [Dwelling]
     }
 

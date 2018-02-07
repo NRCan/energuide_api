@@ -27,7 +27,7 @@ describe('queries', () => {
         .set('Content-Type', 'application/json; charset=utf-8')
         .send({
           query: `{
-          evaluations:evaluationsFor(account: 189250 postalCode: "C1A 1N1") {
+          evaluations:evaluationsFor(account: 189250) {
             yearBuilt
           }
         }`,
