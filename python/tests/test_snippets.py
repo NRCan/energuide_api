@@ -113,6 +113,74 @@ def test_user_specified_wall_snippet() -> None:
     }
 
 
+def test_deeply_embeded_components() -> None:
+    xml_text = """
+<House><Components>
+    <Wall>
+        <Label>Test Floor</Label>
+        <Construction>
+            <Type rValue="2.6892" nominalInsulation="3.3615">User specified</Type>
+        </Construction>
+        <Components>
+            <Door rValue="0.39" adjacentEnclosedSpace="false" id="9">
+                <Label>Front door</Label>
+                <Construction energyStar="false">
+                    <Type code="2" value="0.39">
+                        <English>Solid wood</English>
+                        <French>Bois massif</French>
+                    </Type>
+                </Construction>
+                <Measurements height="1.9799" width="0.8499" />
+                <Components>
+                    <Window number="1" er="26.0715" shgc="0.642" frameHeight="1041.4" frameAreaFraction="0.1011" edgeOfGlassFraction="0.1464" centreOfGlassFraction="0.7525" adjacentEnclosedSpace="false" id="14">
+                        <Label>East0001</Label>
+                        <Construction energyStar="false">
+                            <Type rValue="0.4779">User Specified</Type>
+                        </Construction>
+                        <Measurements height="1967.738" width="1322.0699" headerHeight="2.6396" overhangWidth="0.4115"/>
+                    </Window>
+                </Components>
+            </Door>
+        </Components>
+    </Wall>
+    <Basement>
+        <Wall>
+            <Label>Test Basement Floor</Label>
+            <Construction>
+                <Type rValue="2.6892" nominalInsulation="3.3615">User specified</Type>
+            </Construction>
+            <Components>
+                <Door rValue="0.39" adjacentEnclosedSpace="false" id="9">
+                    <Label>Back Basemeent door</Label>
+                    <Construction energyStar="false">
+                        <Type code="2" value="0.39">
+                            <English>Solid wood</English>
+                            <French>Bois massif</French>
+                        </Type>
+                    </Construction>
+                    <Measurements height="1.9799" width="0.8499" />
+                    <Components>
+                        <Window number="1" er="26.0715" shgc="0.642" frameHeight="1041.4" frameAreaFraction="0.1011" edgeOfGlassFraction="0.1464" centreOfGlassFraction="0.7525" adjacentEnclosedSpace="false" id="14">
+                            <Label>West0001</Label>
+                            <Construction energyStar="false">
+                                <Type rValue="0.4779">User Specified</Type>
+                            </Construction>
+                            <Measurements height="1967.738" width="1322.0699" headerHeight="2.6396" overhangWidth="0.4115"/>
+                        </Window>
+                    </Components>
+                </Door>
+            </Components>
+        </Wall>
+    </Basement>
+</Components></House>
+    """
+
+    doc = etree.fromstring(xml_text)
+    output = snippets.snip_house(doc)
+    assert len(output['windows']) == 2
+    assert len(output['doors']) == 2
+
+
 def test_wall_code_snippet(code: etree.ElementTree) -> None:
     output = snippets.snip_codes(code)
     assert output['codes']['wall'] == [{
