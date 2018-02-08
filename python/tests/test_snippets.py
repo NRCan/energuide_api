@@ -178,7 +178,7 @@ def test_user_specified_wall_snippet() -> None:
         doors=[],
         heated_floor_area=None,
         heating_cooling=None,
-        ventilation=None,
+        ventilation=[],
     )
 
 
@@ -338,7 +338,7 @@ def test_heating_cooling_snippet(house: etree._Element) -> None:
 
 def test_ventilation_snippet(house: etree._Element) -> None:
     output = snippets.snip_house(house)
-    doc = etree.fromstring(output.ventilation)
+    doc = etree.fromstring(output.ventilation[0])
     child_tags = {node.tag for node in doc}
-    assert 'Label' in child_tags
-    assert len(child_tags) == 6
+    assert 'VentilatorType' in child_tags
+    assert len(child_tags) == 3
