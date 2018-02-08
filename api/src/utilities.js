@@ -27,21 +27,32 @@ export function createQuery(fsa, filter) {
   }
 
   // { field: 'yearBuilt', gt: '1990' }
-  // XXX: not all fields are integers.
+  // TODO: DRY this up.
   if (filter) {
+    let value
+
     if (filter.gt) {
+      if (filter.gt.match(/^-?\d+\.?\d+$/)) {
+        value = parseFloat(filter.gt)
+      }
       query['$and'].push({
-        [filter.field]: { [comparators.gt]: parseInt(filter.gt) },
+        [filter.field]: { [comparators.gt]: value || filter.gt },
       })
     }
     if (filter.lt) {
+      if (filter.lt.match(/^-?\d+\.?\d+$/)) {
+        value = parseFloat(filter.lt)
+      }
       query['$and'].push({
-        [filter.field]: { [comparators.lt]: parseInt(filter.lt) },
+        [filter.field]: { [comparators.lt]: value || filter.lt },
       })
     }
     if (filter.eq) {
+      if (filter.eq.match(/^-?\d+\.?\d+$/)) {
+        value = parseFloat(filter.eq)
+      }
       query['$and'].push({
-        [filter.field]: { [comparators.eq]: parseInt(filter.eq) },
+        [filter.field]: { [comparators.eq]: value || filter.eq },
       })
     }
   }
