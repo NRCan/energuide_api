@@ -1,5 +1,6 @@
 import typing
 import pytest
+from energuide import element
 from energuide import extracted_datatypes
 
 
@@ -198,25 +199,37 @@ class TestWall:
 class TestCeiling:
 
     @pytest.fixture
-    def sample(self) -> typing.Dict[str, typing.Any]:
-        return {
-            'label': 'Main attic',
-            'typeEnglish': 'Attic/gable',
-            'typeFrench': 'Combles/pignon',
-            'nominalRsi': 2.864,
-            'effectiveRsi': 2.9463,
-            'area': 46.4515,
-            'length': 23.875,
-        }
+    def sample(self) -> element.Element:
+        data = """
+<Ceiling>
+    <Label>Main attic</Label>
+    <Construction>
+        <Type>
+            <English>Attic/gable</English>
+            <French>Combles/pignon</French>
+        </Type>
+        <CeilingType nominalInsulation='2.864' rValue='2.9463' />
+    </Construction>
+    <Measurements area='46.4515' length='23.875' />
+</Ceiling>
+        """
+        return element.Element.from_string(data)
 
-    def test_from_data(self, sample: typing.Dict[str, typing.Any]):
+    def test_from_data(self, sample: element.Element):
         output = extracted_datatypes.Ceiling.from_data(sample)
         assert output.label == 'Main attic'
         assert output.area_metres == 46.4515
 
-    def test_to_dict(self, sample: typing.Dict[str, typing.Any]) -> None:
+    def test_to_dict(self, sample: element.Element) -> None:
         output = extracted_datatypes.Ceiling.from_data(sample).to_dict()
-        assert output['areaMetres'] == sample['area']
+        assert output['areaMetres'] == 46.4515
+
+    def test_properties(self, sample: element.Element) -> None:
+        output = extracted_datatypes.Ceiling.from_data(sample)
+        assert output.nominal_r == 16.262546197168
+        assert output.effective_r == 16.729867269803098
+        assert output.area_feet == 499.9998167217784
+        assert output.length_feet == 78.330055
 
 
 class TestFloor:

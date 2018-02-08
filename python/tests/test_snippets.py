@@ -2,6 +2,7 @@ import os
 from lxml import etree
 import pytest
 from energuide import snippets
+from energuide import validator
 
 
 @pytest.fixture
@@ -34,28 +35,11 @@ def test_house_snippet_to_dict(house: etree._Element) -> None:
 def test_ceiling_snippet(house: etree._Element) -> None:
     output = snippets.snip_house(house)
     assert len(output.ceilings) == 2
-    assert output.ceilings[0] == snippets.CeilingSnippet(
-        label='Main attic',
-        type_english='Attic/gable',
-        type_french='Combles/pignon',
-        nominal_rsi='2.864',
-        effective_rsi='2.9463',
-        area='46.4515',
-        length='23.875',
-    )
-
-
-def test_ceiling_snippet_to_dict(house: etree._Element) -> None:
-    output = snippets.snip_house(house)
-    assert output.ceilings[0].to_dict() == {
-        'label': 'Main attic',
-        'typeEnglish': 'Attic/gable',
-        'typeFrench': 'Combles/pignon',
-        'nominalRsi': '2.864',
-        'effectiveRsi': '2.9463',
-        'area': '46.4515',
-        'length': '23.875',
-    }
+    checker = validator.DwellingValidator({
+        'ceilings': {'type': 'list', 'required': True, 'schema': {'type': 'xml', 'coerce': 'parse_xml'}}
+    }, allow_unknown=True)
+    doc = {'ceilings': output.ceilings}
+    assert checker.validate(doc)
 
 
 def test_floor_snippet(house: etree._Element) -> None:

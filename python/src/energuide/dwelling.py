@@ -103,7 +103,7 @@ class ParsedDwellingDataRow(_ParsedDwellingDataRow):
         'forwardSortationArea': {'type': 'string', 'required': True, 'regex': '[A-Z][0-9][A-Z]'},
         'HOUSEREGION': {'type': 'string', 'required': True},
 
-        'ceilings': Ceiling.SCHEMA,
+        'ceilings': {'type': 'list', 'required': True, 'schema': {'type': 'xml', 'coerce': 'parse_xml'}},
         'floors': Floor.SCHEMA,
         'walls': Wall.SCHEMA,
         'doors': Door.SCHEMA,

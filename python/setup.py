@@ -2,7 +2,7 @@ import setuptools
 
 
 setuptools.setup(
-    name='energuide-etl',
+    name='energuide',
     version='0.0.1',
     long_description='',
     author='CDS-SNC',

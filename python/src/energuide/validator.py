@@ -13,6 +13,5 @@ class DwellingValidator(cerberus.Validator):
         return isinstance(value, etree._Element)
 
     def _normalize_coerce_parse_xml(self, value: typing.Any) -> typing.Optional[etree._Element]:
-        if isinstance(value, str):
-            return etree.fromstring(value.encode('utf-8'), self._parser)
-        return None
+        assert isinstance(value, str), "Can't coerce non-strings to XML"
+        return etree.fromstring(value.encode('utf-8'), self._parser)
