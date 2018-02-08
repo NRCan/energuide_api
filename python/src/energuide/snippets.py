@@ -175,6 +175,7 @@ def snip_house(house: etree._Element) -> HouseSnippet:
     heating_cooling_string = (
         etree.tostring(heating_cooling[0], encoding='unicode') if heating_cooling else None
     )
+
     ventilation = house.xpath('Ventilation/WholeHouseVentilatorList/Hrv')
     ventilation_strings = [etree.tostring(hrv, encoding='unicode') for hrv in ventilation]
 
