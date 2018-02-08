@@ -2,8 +2,8 @@ import datetime
 import enum
 import typing
 from dateutil import parser
-import cerberus
 from energuide import reader
+from energuide import validator
 from energuide.extracted_datatypes import Floor
 from energuide.extracted_datatypes import Ceiling
 from energuide.extracted_datatypes import Door
@@ -109,18 +109,19 @@ class ParsedDwellingDataRow(_ParsedDwellingDataRow):
         'doors': Door.SCHEMA,
         'windows': Window.SCHEMA,
         'heatedFloorArea': HeatedFloorArea.SCHEMA,
+        'heating_cooling': {'type': 'xml', 'required': True, 'coerce': 'parse_xml'},
 
         'codes': Codes.SCHEMA,
     }
 
     @classmethod
     def from_row(cls, row: reader.InputData) -> 'ParsedDwellingDataRow':
-        validator = cerberus.Validator(cls._SCHEMA, allow_unknown=True, ignore_none_values=True)
-        if not validator.validate(row):
-            error_keys = ', '.join(validator.errors.keys())
+        checker = validator.DwellingValidator(cls._SCHEMA, allow_unknown=True, ignore_none_values=True)
+        if not checker.validate(row):
+            error_keys = ', '.join(checker.errors.keys())
             raise reader.InvalidInputDataException(f'Validator failed on keys: {error_keys}')
 
-        parsed = validator.document
+        parsed = checker.document
         codes = Codes.from_data(parsed['codes'])
 
         return ParsedDwellingDataRow(
