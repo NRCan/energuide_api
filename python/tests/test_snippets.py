@@ -26,6 +26,11 @@ def code(doc: etree._ElementTree) -> etree._Element:
     return code_node
 
 
+def test_house_snippet_to_dict(house: etree._Element) -> None:
+    output = snippets.snip_house(house).to_dict()
+    assert len(output) == 7
+
+
 def test_ceiling_snippet(house: etree._Element) -> None:
     output = snippets.snip_house(house)
     assert len(output.ceilings) == 2
