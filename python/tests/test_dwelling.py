@@ -1,3 +1,4 @@
+import copy
 import datetime
 import typing
 import pytest
@@ -9,16 +10,21 @@ from energuide import extracted_datatypes
 # pylint: disable=no-self-use
 
 @pytest.fixture
-def ceiling_input() -> reader.InputData:
-    return {
-        'label': 'Main attic',
-        'typeEnglish': 'Attic/gable',
-        'typeFrench': 'Combles/pignon',
-        'nominalRsi': '2.864',
-        'effectiveRsi': '2.9463',
-        'area': '46.4515',
-        'length': '23.875',
-    }
+def ceiling_input() -> typing.List[str]:
+    doc = """
+    <Ceiling>
+        <Label>Main attic</Label>
+        <Construction>
+            <Type>
+                <English>Attic/gable</English>
+                <French>Combles/pignon</French>
+            </Type>
+            <CeilingType nominalInsulation='2.864' rValue='2.9463' />
+        </Construction>
+        <Measurements area='46.4515' length='23.875' />
+    </Ceiling>
+    """
+    return [doc]
 
 
 @pytest.fixture
@@ -236,9 +242,7 @@ def sample_input_d(ceiling_input: reader.InputData,
         'forwardSortationArea': 'K1P',
         'HOUSEREGION': 'Ontario',
         'YEARBUILT': '2000',
-        'ceilings': [
-            ceiling_input
-        ],
+        'ceilings': ceiling_input,
         'floors': [
             floor_input
         ],
@@ -260,7 +264,7 @@ def sample_input_d(ceiling_input: reader.InputData,
 
 @pytest.fixture
 def sample_input_e(sample_input_d: reader.InputData) -> reader.InputData:
-    output = sample_input_d.copy()
+    output = copy.deepcopy(sample_input_d)
     output['EVAL_TYPE'] = 'E'
     return output
 
@@ -447,7 +451,7 @@ class TestDwelling:
                sample_input_d: reader.InputData,
                sample_input_e: reader.InputData,
               ) -> typing.List[reader.InputData]:
-        return [sample_input_d, sample_input_e]
+        return [sample_input_d, sample_input_e].copy()
 
     def test_house_id(self, sample: typing.List[reader.InputData]) -> None:
         output = dwelling.Dwelling.from_group(sample)

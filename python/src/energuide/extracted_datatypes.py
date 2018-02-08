@@ -1,14 +1,15 @@
 import typing
+from energuide import element
 
 
 class _Ceiling(typing.NamedTuple):
-    label: typing.Optional[str]
-    type_english: typing.Optional[str]
-    type_french: typing.Optional[str]
-    nominal_rsi: typing.Optional[float]
-    effective_rsi: typing.Optional[float]
-    area_metres: typing.Optional[float]
-    length_metres: typing.Optional[float]
+    label: str
+    type_english: str
+    type_french: str
+    nominal_rsi: float
+    effective_rsi: float
+    area_metres: float
+    length_metres: float
 
 
 class _Floor(typing.NamedTuple):
@@ -379,34 +380,34 @@ class Wall(_Wall):
 
 
 class Ceiling(_Ceiling):
-    SCHEMA = {
-        'type': 'list',
-        'required': True,
-        'schema': {
-            'type': 'dict',
-            'schema': {
-                'label': {'type': 'string', 'required': True, 'nullable': True},
-                'typeEnglish': {'type': 'string', 'required': True, 'nullable': True},
-                'typeFrench': {'type': 'string', 'required': True, 'nullable': True},
-                'nominalRsi': {'type': 'float', 'required': True, 'coerce': float, 'nullable': True},
-                'effectiveRsi': {'type': 'float', 'required': True, 'coerce': float, 'nullable': True},
-                'area': {'type': 'float', 'required': True, 'coerce': float, 'nullable': True},
-                'length': {'type': 'float', 'required': True, 'coerce': float, 'nullable': True}
-            }
-        }
-    }
 
     @classmethod
-    def from_data(cls, ceiling: typing.Dict[str, typing.Any]) -> 'Ceiling':
+    def from_data(cls, ceiling: element.Element) -> 'Ceiling':
         return Ceiling(
-            label=ceiling['label'],
-            type_english=ceiling['typeEnglish'],
-            type_french=ceiling['typeFrench'],
-            nominal_rsi=ceiling['nominalRsi'],
-            effective_rsi=ceiling['effectiveRsi'],
-            area_metres=ceiling['area'],
-            length_metres=ceiling['length'],
+            label=ceiling.findtext('Label'),
+            type_english=ceiling.findtext('Construction/Type/English'),
+            type_french=ceiling.findtext('Construction/Type/French'),
+            nominal_rsi=float(ceiling.xpath('Construction/CeilingType/@nominalInsulation')[0]),
+            effective_rsi=float(ceiling.xpath('Construction/CeilingType/@rValue')[0]),
+            area_metres=float(ceiling.xpath('Measurements/@area')[0]),
+            length_metres=float(ceiling.xpath('Measurements/@length')[0]),
         )
+
+    @property
+    def nominal_r(self) -> float:
+        return self.nominal_rsi * _RSI_MULTIPLIER
+
+    @property
+    def effective_r(self) -> float:
+        return self.effective_rsi * _RSI_MULTIPLIER
+
+    @property
+    def area_feet(self) -> float:
+        return self.area_metres * _FEET_SQUARED_MULTIPLIER
+
+    @property
+    def length_feet(self) -> float:
+        return self.length_metres * _FEET_MULTIPLIER
 
     def to_dict(self) -> typing.Dict[str, typing.Any]:
         return {
@@ -414,13 +415,13 @@ class Ceiling(_Ceiling):
             'typeEnglish': self.type_english,
             'typeFrench': self.type_french,
             'nominalRsi': self.nominal_rsi,
-            'nominalR': (self.nominal_rsi * _RSI_MULTIPLIER) if self.nominal_rsi is not None else None,
+            'nominalR': self.nominal_r,
             'effectiveRsi': self.effective_rsi,
-            'effectiveR': (self.effective_rsi * _RSI_MULTIPLIER) if self.effective_rsi is not None else None,
+            'effectiveR': self.effective_r,
             'areaMetres': self.area_metres,
-            'areaFeet': (self.area_metres * _FEET_SQUARED_MULTIPLIER) if self.area_metres is not None else None,
+            'areaFeet': self.area_feet,
             'lengthMetres': self.length_metres,
-            'lengthFeet': (self.length_metres * _FEET_MULTIPLIER) if self.length_metres is not None else None
+            'lengthFeet': self.length_feet,
         }
 
 

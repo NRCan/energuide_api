@@ -72,7 +72,7 @@ jobs:
           command: |
             . ~/.venv/bin/activate
             pylint src tests
-            mypy --ignore-missing-imports src tests
+            mypy src tests
             pytest tests
   python_integration:
     docker:

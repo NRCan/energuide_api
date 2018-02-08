@@ -2,16 +2,6 @@ import typing
 from lxml import etree
 
 
-class _CeilingSnippet(typing.NamedTuple):
-    label: typing.Optional[str]
-    type_english: typing.Optional[str]
-    type_french: typing.Optional[str]
-    nominal_rsi: typing.Optional[str]
-    effective_rsi: typing.Optional[str]
-    area: typing.Optional[str]
-    length: typing.Optional[str]
-
-
 class _FloorSnippet(typing.NamedTuple):
     label: typing.Optional[str]
     nominal_rsi: typing.Optional[str]
@@ -130,20 +120,6 @@ class Codes(_Codes):
         }
 
 
-class CeilingSnippet(_CeilingSnippet):
-
-    def to_dict(self) -> typing.Dict[str, typing.Optional[str]]:
-        return {
-            'label': self.label,
-            'typeEnglish': self.type_english,
-            'typeFrench': self.type_french,
-            'nominalRsi': self.nominal_rsi,
-            'effectiveRsi': self.effective_rsi,
-            'area': self.area,
-            'length': self.length,
-        }
-
-
 class FloorSnippet(_FloorSnippet):
 
     def to_dict(self) -> typing.Dict[str, typing.Optional[str]]:
@@ -206,7 +182,7 @@ class HeatedFloorSnippet(_HeatedFloorSnippet):
 
 
 class _HouseSnippet(typing.NamedTuple):
-    ceilings: typing.List[CeilingSnippet]
+    ceilings: typing.List[str]
     floors: typing.List[FloorSnippet]
     walls: typing.List[WallSnippet]
     doors: typing.List[DoorSnippet]
@@ -219,7 +195,7 @@ class HouseSnippet(_HouseSnippet):
 
     def to_dict(self) -> typing.Dict[str, typing.Any]:
         return {
-            'ceilings': [ceiling.to_dict() for ceiling in self.ceilings],
+            'ceilings': self.ceilings,
             'floors': [floor.to_dict() for floor in self.floors],
             'walls': [wall.to_dict() for wall in self.walls],
             'doors': [door.to_dict() for door in self.doors],
@@ -233,18 +209,6 @@ def _extract_values(node: etree._Element,
                     xpath_mapping: typing.Dict[str, str]) -> typing.Dict[str, typing.Optional[str]]:
     output = {key: node.xpath(value) for key, value in xpath_mapping.items()}
     return {key: value[0] if value else None for key, value in output.items()}
-
-
-def _ceiling_snippet(ceiling: etree._Element) -> CeilingSnippet:
-    return CeilingSnippet(**_extract_values(ceiling, {
-        'label': 'Label/text()',
-        'type_english': 'Construction/Type/English/text()',
-        'type_french': 'Construction/Type/French/text()',
-        'nominal_rsi': 'Construction/CeilingType/@nominalInsulation',
-        'effective_rsi': 'Construction/CeilingType/@rValue',
-        'area': 'Measurements/@area',
-        'length': 'Measurements/@length',
-    }))
 
 
 def _floor_snippet(floor: etree._Element) -> FloorSnippet:
@@ -311,7 +275,7 @@ def snip_house(house: etree._Element) -> HouseSnippet:
     )
 
     return HouseSnippet(
-        ceilings=[_ceiling_snippet(node) for node in ceilings],
+        ceilings=[etree.tostring(node, encoding='unicode') for node in ceilings],
         floors=[_floor_snippet(node) for node in floors],
         walls=[_wall_snippet(node) for node in walls],
         doors=[_door_snippet(door) for door in doors],
