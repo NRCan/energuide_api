@@ -136,7 +136,7 @@ class HouseSnippet(_HouseSnippet):
             'windows': [window.to_dict() for window in self.windows],
             'heatedFloorArea': self.heated_floor_area.to_dict() if self.heated_floor_area is not None else None,
             'heating_cooling': self.heating_cooling,
-            'ventilation': self.ventilation,
+            'ventilations': self.ventilation,
         }
 
 

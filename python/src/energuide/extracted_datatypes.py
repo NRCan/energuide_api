@@ -65,6 +65,13 @@ class _HeatedFloorArea(typing.NamedTuple):
     area_below_grade: typing.Optional[float]
 
 
+class _Ventilation(typing.NamedTuple):
+    type_english: str
+    type_french: str
+    air_flow_rate: float
+    efficiency: float
+
+
 class _WallCode(typing.NamedTuple):
     identifier: str
     label: typing.Optional[str]
@@ -92,6 +99,7 @@ class _WindowCode(typing.NamedTuple):
 
 
 _RSI_MULTIPLIER = 5.678263337
+_CFM_MULTIPLIER = 2.11888
 _FEET_MULTIPLIER = 3.28084
 _FEET_SQUARED_MULTIPLIER = _FEET_MULTIPLIER**2
 
@@ -508,4 +516,51 @@ class Door(_Door):
             'uFactorImperial': self.u_factor_imperial,
             'areaMetres': self.area_metres,
             'areaFeet': self.area_feet,
+        }
+
+
+class Ventilation(_Ventilation):
+    _TYPE_MAP = {
+        'false': {
+            'false': ('Heat recovery ventilator', 'Ventilateur-récupérateur de chaleur'),
+            'true': ('Heat recovery ventilator certified by the Home Ventilating Institute',
+                     'Ventilateur-récupérateur de chaleur certifié par le Home Ventilating Institute'),
+        },
+        'true': {
+            'false': ('ENERGY STAR certified heat recovery ventilator',
+                      'Ventilateur-récupérateur de chaleur certifié ENERGY STAR'),
+            'true': ('Home Ventilating Institute listed ENERGY STAR certified heat recovery ventilator',
+                     'Ventilateur-récupérateur de chaleur répertorié par le Home Ventilating Institute et certifié ENERGY STAR'),
+        }
+    }
+
+    @classmethod
+    def from_data(cls, ventilation: element.Element) -> 'Ventilation':
+        energyStar = ventilation.xpath('@isEnergyStar')[0]
+        institute_certified = ventilation.xpath('@isHomeVentilatingInstituteCertified')[0]
+        total_supply_flow = float(ventilation.xpath('@supplyFlowrate')[0])
+
+        if total_supply_flow == 0:
+            type_english, type_french = 'N/A', 'N/A'
+        else:
+            type_english, type_french = cls._TYPE_MAP[energyStar][institute_certified]
+
+        return Ventilation(
+            type_english=type_english,
+            type_french=type_french,
+            air_flow_rate=total_supply_flow,
+            efficiency=float(ventilation.xpath('@efficiency1')[0]),
+        )
+
+    @property
+    def air_flow_rate_cmf(self):
+        return self.air_flow_rate * _CFM_MULTIPLIER
+
+    def to_dict(self) -> typing.Dict[str, typing.Union[str, float]]:
+        return {
+            'typeEnglish': self.type_english,
+            'typeFrench': self.type_french,
+            'airFlowRateLps': self.air_flow_rate,
+            'airFlowRateCfm': self.air_flow_rate_cmf,
+            'efficiency': self.efficiency,
         }
