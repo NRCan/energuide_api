@@ -87,7 +87,7 @@ class _ParsedDwellingDataRow(typing.NamedTuple):
     walls: typing.List[Wall]
     doors: typing.List[Door]
     windows: typing.List[Window]
-    heated_floor_area: typing.List[HeatedFloorArea]
+    heated_floor_area: HeatedFloorArea
 
 
 class ParsedDwellingDataRow(_ParsedDwellingDataRow):
@@ -139,8 +139,7 @@ class ParsedDwellingDataRow(_ParsedDwellingDataRow):
             walls=[Wall.from_data(wall, codes.wall) for wall in parsed['walls']],
             doors=[Door.from_data(door) for door in parsed['doors']],
             windows=[Window.from_data(window, codes.window) for window in parsed['windows']],
-            heated_floor_area=[HeatedFloorArea.from_data(heated_floor_area)
-                               for heated_floor_area in parsed['heatedFloorArea']],
+            heated_floor_area=HeatedFloorArea.from_data(parsed['heatedFloorArea']),
         )
 
 
@@ -156,7 +155,7 @@ class Evaluation:
                  walls: typing.List[Wall],
                  doors: typing.List[Door],
                  windows: typing.List[Window],
-                 heated_floor_area: typing.List[HeatedFloorArea],
+                 heated_floor_area: HeatedFloorArea,
                 ) -> None:
         self._evaluation_type = evaluation_type
         self._entry_date = entry_date
@@ -221,7 +220,7 @@ class Evaluation:
         return self._windows
 
     @property
-    def heated_floor_area(self) -> typing.List[HeatedFloorArea]:
+    def heated_floor_area(self) -> HeatedFloorArea:
         return self._heated_floor_area
 
     def to_dict(self) -> typing.Dict[str, typing.Any]:
@@ -235,7 +234,7 @@ class Evaluation:
             'walls': [wall.to_dict() for wall in self.walls],
             'doors': [door.to_dict() for door in self.doors],
             'windows': [window.to_dict() for window in self.windows],
-            'heatedFloorArea': [heated_floor_area.to_dict() for heated_floor_area in self.heated_floor_area],
+            'heatedFloorArea': self.heated_floor_area.to_dict(),
         }
 
 
