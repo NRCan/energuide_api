@@ -12,6 +12,55 @@ const Schema = i18n => {
       eq: String
     }
 
+    type Wall {
+      label: String
+      structureTypeEnglish: String
+      structureTypeFrench: String
+      componentTypeSizeEnglish: String
+      componentTypeSizeFrench: String
+      nominalRsi: Float
+      nominalR: Float
+      effectiveRsi: Float
+      effectiveR: Float
+      areaMetres: Float
+      areaFeet: Float
+      perimeter: Float
+      height: Float
+    }
+
+    type Door {
+      typeEnglish: String
+      typeFrench: String
+      rsi: Float
+      rValue: Float
+      uFactor: Float
+      uFactorImperial: Float
+      areaMetres: Float
+      areaFeet: Float
+    }
+
+    type Window {
+      label: String
+      rsi: Float
+      rvalue: Float
+      glazingTypesEnglish: String
+      glazingTypesFrench: String
+      coatingsTintsEnglish: String
+      coatingsTintsFrench: String
+      fillTypeEnglish: String
+      fillTypeFrench: String
+      spacerTypeEnglish: String
+      spacerTypeFrench: String
+      typeEnglish: String
+      typeFrench: String
+      frameMaterialEnglish: String
+      frameMaterialFrench: String
+      areaMetres: Float
+      areaFeet: Float
+      width: Float
+      height: Float
+    }
+
     type Ceiling {
       label: String
       typeEnglish: String
@@ -26,13 +75,16 @@ const Schema = i18n => {
       lengthFeet: Float
     }
 
-   # ${i18n.t`This is a description of evaluations`}
+    # ${i18n.t`This is a description of evaluations`}
     type Evaluation {
       evaluationType: String
       entryDate: String
       creationDate: String
       modificationDate: String
       ceilings: [Ceiling]
+      walls: [Wall]
+      doors: [Door]
+      windows: [Window]
     }
 
 
