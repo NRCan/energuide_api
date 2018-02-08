@@ -2,8 +2,6 @@ import typing
 import pytest
 from energuide import element
 from energuide import extracted_datatypes
-from lxml import etree
-
 
 # pylint: disable=no-self-use
 

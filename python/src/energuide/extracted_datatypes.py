@@ -530,20 +530,21 @@ class Ventilation(_Ventilation):
             'false': ('ENERGY STAR certified heat recovery ventilator',
                       'Ventilateur-récupérateur de chaleur certifié ENERGY STAR'),
             'true': ('Home Ventilating Institute listed ENERGY STAR certified heat recovery ventilator',
-                     'Ventilateur-récupérateur de chaleur répertorié par le Home Ventilating Institute et certifié ENERGY STAR'),
+                     'Ventilateur-récupérateur de chaleur répertorié par le Home Ventilating Institute et certifié\
+ENERGY STAR'),
         }
     }
 
     @classmethod
     def from_data(cls, ventilation: element.Element) -> 'Ventilation':
-        energyStar = ventilation.xpath('@isEnergyStar')[0]
+        energy_star = ventilation.xpath('@isEnergyStar')[0]
         institute_certified = ventilation.xpath('@isHomeVentilatingInstituteCertified')[0]
         total_supply_flow = float(ventilation.xpath('@supplyFlowrate')[0])
 
         if total_supply_flow == 0:
             type_english, type_french = 'N/A', 'N/A'
         else:
-            type_english, type_french = cls._TYPE_MAP[energyStar][institute_certified]
+            type_english, type_french = cls._TYPE_MAP[energy_star][institute_certified]
 
         return Ventilation(
             type_english=type_english,
