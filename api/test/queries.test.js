@@ -76,6 +76,25 @@ describe('queries', () => {
           let { dwellings } = response.body.data
           expect(dwellings.length).toEqual(0)
         })
+
+        it('works on string fields', async () => {
+          let response = await request(server)
+            .post('/graphql')
+            .set('Content-Type', 'application/json; charset=utf-8')
+            .send({
+              query: `{
+                 dwellings:dwellingsInFSA(
+                  forwardSortationArea: "C1A"
+                  filter: {field: city eq: "Charlottetown"}
+                 ) {
+                   yearBuilt
+                 }
+               }`,
+            })
+
+          let { dwellings: [first] } = response.body.data
+          expect(first.yearBuilt).toEqual(1900)
+        })
       })
 
       describe('lt: less than', () => {
