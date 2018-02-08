@@ -71,12 +71,12 @@ def _extract_snippets(data: typing.Iterable[reader.InputData]) -> typing.Iterato
         house_node = doc.xpath('House')
         if house_node:
             house_snippets = snippets.snip_house(house_node[0])
-            row = _safe_merge(row, house_snippets)
+            row = _safe_merge(row, house_snippets.to_dict())
 
         code_node = doc.xpath('Codes')
         if code_node:
             code_snippets = snippets.snip_codes(code_node[0])
-            row = _safe_merge(row, code_snippets)
+            row = _safe_merge(row, code_snippets.to_dict())
 
         yield row
 

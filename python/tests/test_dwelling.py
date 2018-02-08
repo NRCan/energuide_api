@@ -251,10 +251,8 @@ def sample_input_d(ceiling_input: reader.InputData,
         'windows': [
             window_input
         ],
-        'heatedFloorArea': [
-            heated_floor_area_input
-        ],
         'heating_cooling': heating_cooling_input,
+        'heatedFloorArea': heated_floor_area_input,
 
         'codes': raw_codes,
     }
@@ -398,12 +396,10 @@ class TestParsedDwellingDataRow:
                     height=1.3220699,
                 )
             ],
-            heated_floor_area=[
-                extracted_datatypes.HeatedFloorArea(
-                    area_above_grade=185.8,
-                    area_below_grade=92.9,
-                )
-            ],
+            heated_floor_area=extracted_datatypes.HeatedFloorArea(
+                area_above_grade=185.8,
+                area_below_grade=92.9,
+            ),
         )
 
     def test_bad_postal_code(self, sample_input_d: reader.InputData) -> None:
