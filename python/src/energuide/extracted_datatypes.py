@@ -536,7 +536,7 @@ ENERGY STAR'),
     }
 
     @classmethod
-    def _derive_type_string(cls, energy_star: bool, institute_certified: bool) -> str:
+    def _derive_type_string(cls, energy_star: bool, institute_certified: bool) -> typing.Tuple[str, str]:
         if energy_star and institute_certified:
             return ('Home Ventilating Institute listed ENERGY STAR certified heat recovery ventilator',
                     'Ventilateur-récupérateur de chaleur répertorié par le Home Ventilating Institute \
@@ -547,8 +547,7 @@ et certifiéENERGY STAR')
         elif not energy_star and institute_certified:
             return ('Heat recovery ventilator certified by the Home Ventilating Institute',
                     'Ventilateur-récupérateur de chaleur certifié par le Home Ventilating Institute')
-        else:
-            return ('Heat recovery ventilator', 'Ventilateur-récupérateur de chaleur')
+        return ('Heat recovery ventilator', 'Ventilateur-récupérateur de chaleur')
 
 
     @classmethod
