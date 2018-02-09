@@ -538,9 +538,9 @@ class Ventilation(_Ventilation):
 
     @classmethod
     def from_data(cls, ventilation: element.Element) -> 'Ventilation':
-        energy_star = ventilation.xpath('@isEnergyStar')[0] == 'true'
-        institute_certified = ventilation.xpath('@isHomeVentilatingInstituteCertified')[0] == 'true'
-        total_supply_flow = float(ventilation.xpath('@supplyFlowrate')[0])
+        energy_star = ventilation.attrib['isEnergyStar'] == 'true'
+        institute_certified = ventilation.attrib['isHomeVentilatingInstituteCertified'] == 'true'
+        total_supply_flow = float(ventilation.attrib['supplyFlowrate'])
 
         if total_supply_flow == 0:
             type_english, type_french = 'N/A', 'N/A'
@@ -551,7 +551,7 @@ class Ventilation(_Ventilation):
             type_english=type_english,
             type_french=type_french,
             air_flow_rate=total_supply_flow,
-            efficiency=float(ventilation.xpath('@efficiency1')[0]),
+            efficiency=float(ventilation.attrib['efficiency1']),
         )
 
     @property
