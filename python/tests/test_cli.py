@@ -9,7 +9,7 @@ import pytest
 from energuide import cli
 
 
-def data1() -> typing.Dict[str, str]:
+def data1() -> typing.Dict[str, typing.Optional[str]]:
     return {
         'EVAL_ID': '123',
         'EVAL_TYPE': 'D',
@@ -36,7 +36,7 @@ def data1() -> typing.Dict[str, str]:
     }
 
 
-def data2() -> typing.Dict[str, str]:
+def data2() -> typing.Dict[str, typing.Optional[str]]:
     data = data1()
     data['other_1'] = 'foo'
     data['other_2'] = 'bar'

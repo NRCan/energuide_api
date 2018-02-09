@@ -111,11 +111,11 @@ class WallCode(_WallCode):
     def from_data(cls, wall_code: element.Element) -> 'WallCode':
         return WallCode(
             identifier=wall_code.attrib['id'],
-            label=wall_code.findtext('Label'),
-            structure_type_english=wall_code.findtext('Layers/StructureType/English'),
-            structure_type_french=wall_code.findtext('Layers/StructureType/French'),
-            component_type_size_english=wall_code.findtext('Layers/ComponentTypeSize/English'),
-            component_type_size_french=wall_code.findtext('Layers/ComponentTypeSize/French'),
+            label=wall_code.get_text('Label'),
+            structure_type_english=wall_code.get_text('Layers/StructureType/English'),
+            structure_type_french=wall_code.get_text('Layers/StructureType/French'),
+            component_type_size_english=wall_code.get_text('Layers/ComponentTypeSize/English'),
+            component_type_size_french=wall_code.get_text('Layers/ComponentTypeSize/French'),
         )
 
 
@@ -270,7 +270,7 @@ class Wall(_Wall):
             code = wall_codes[code_id[0]]
 
         return Wall(
-            label=wall.findtext('Label'),
+            label=wall.get_text('Label'),
             structure_type_english=code.structure_type_english if code else None,
             structure_type_french=code.structure_type_french if code else None,
             component_type_size_english=code.component_type_size_english if code else None,
@@ -320,9 +320,9 @@ class Ceiling(_Ceiling):
     @classmethod
     def from_data(cls, ceiling: element.Element) -> 'Ceiling':
         return Ceiling(
-            label=ceiling.findtext('Label'),
-            type_english=ceiling.findtext('Construction/Type/English'),
-            type_french=ceiling.findtext('Construction/Type/French'),
+            label=ceiling.get_text('Label'),
+            type_english=ceiling.get_text('Construction/Type/English'),
+            type_french=ceiling.get_text('Construction/Type/French'),
             nominal_rsi=float(ceiling.xpath('Construction/CeilingType/@nominalInsulation')[0]),
             effective_rsi=float(ceiling.xpath('Construction/CeilingType/@rValue')[0]),
             area_metres=float(ceiling.xpath('Measurements/@area')[0]),
@@ -366,7 +366,7 @@ class Floor(_Floor):
     @classmethod
     def from_data(cls, floor: element.Element) -> 'Floor':
         return Floor(
-            label=floor.findtext('Label'),
+            label=floor.get_text('Label'),
             nominal_rsi=float(floor.xpath('Construction/Type/@nominalInsulation')[0]),
             effective_rsi=float(floor.xpath('Construction/Type/@rValue')[0]),
             area_metres=float(floor.xpath('Measurements/@area')[0]),
@@ -408,9 +408,9 @@ class Door(_Door):
     @classmethod
     def from_data(cls, door: element.Element) -> 'Door':
         return Door(
-            label=door.findtext('Label'),
-            type_english=door.findtext('Construction/Type/English'),
-            type_french=door.findtext('Construction/Type/French'),
+            label=door.get_text('Label'),
+            type_english=door.get_text('Construction/Type/English'),
+            type_french=door.get_text('Construction/Type/French'),
             rsi=float(door.xpath('Construction/Type/@value')[0]),
             height=float(door.xpath('Measurements/@height')[0]),
             width=float(door.xpath('Measurements/@width')[0]),
