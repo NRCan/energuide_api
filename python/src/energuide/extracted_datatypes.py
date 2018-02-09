@@ -520,20 +520,6 @@ class Door(_Door):
 
 
 class Ventilation(_Ventilation):
-    _TYPE_MAP = {
-        'false': {
-            'false': ('Heat recovery ventilator', 'Ventilateur-récupérateur de chaleur'),
-            'true': ('Heat recovery ventilator certified by the Home Ventilating Institute',
-                     'Ventilateur-récupérateur de chaleur certifié par le Home Ventilating Institute'),
-        },
-        'true': {
-            'false': ('ENERGY STAR certified heat recovery ventilator',
-                      'Ventilateur-récupérateur de chaleur certifié ENERGY STAR'),
-            'true': ('Home Ventilating Institute listed ENERGY STAR certified heat recovery ventilator',
-                     'Ventilateur-récupérateur de chaleur répertorié par le Home Ventilating Institute et certifié\
-ENERGY STAR'),
-        }
-    }
 
     @classmethod
     def _derive_type_string(cls, energy_star: bool, institute_certified: bool) -> typing.Tuple[str, str]:
