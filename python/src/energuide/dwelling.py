@@ -110,7 +110,7 @@ class ParsedDwellingDataRow(_ParsedDwellingDataRow):
         'walls': {'type': 'list', 'required': True, 'schema': {'type': 'xml', 'coerce': 'parse_xml'}},
         'doors': {'type': 'list', 'required': True, 'schema': {'type': 'xml', 'coerce': 'parse_xml'}},
         'windows': {'type': 'list', 'required': True, 'schema': {'type': 'xml', 'coerce': 'parse_xml'}},
-        'heatedFloorArea': HeatedFloorArea.SCHEMA,
+        'heatedFloorArea': {'type': 'xml', 'coerce': 'parse_xml'},
         'heating_cooling': {'type': 'xml', 'required': True, 'coerce': 'parse_xml'},
         'ventilations': {'type': 'list', 'required': True, 'schema': {'type': 'xml', 'coerce': 'parse_xml'}},
 
