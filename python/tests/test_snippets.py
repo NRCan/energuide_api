@@ -213,6 +213,7 @@ def test_window_code_snippet_to_dict(code: etree._Element) -> None:
         'frameMaterialFrench': 'Bois',
     }
 
+
 def test_window_code_snippet(code: etree._Element) -> None:
     output = snippets.snip_codes(code)
     assert sorted(output.window, key=lambda row: row.label)[0] == snippets.WindowCodeSnippet(
@@ -235,16 +236,12 @@ def test_window_code_snippet(code: etree._Element) -> None:
 
 def test_door_snippet(house: etree._Element) -> None:
     output = snippets.snip_house(house)
-    doors_output = sorted(output.doors, key=lambda x: x.label)
-    assert len(doors_output) == 2
-    assert doors_output[0] == snippets.DoorSnippet(
-        label='Back door',
-        type_english='Solid wood',
-        type_french='Bois massif',
-        rsi='0.39',
-        height='1.9799',
-        width='0.8499',
-    )
+    assert len(output.doors) == 2
+    checker = validator.DwellingValidator({
+        'doors': {'type': 'list', 'required': True, 'schema': {'type': 'xml', 'coerce': 'parse_xml'}}
+    }, allow_unknown=True)
+    doc = {'doors': output.walls}
+    assert checker.validate(doc)
 
 
 def test_heating_cooling_snippet(house: etree._Element) -> None:
