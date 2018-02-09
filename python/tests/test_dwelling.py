@@ -42,16 +42,17 @@ def floor_input() -> typing.List[str]:
 
 
 @pytest.fixture
-def wall_input() -> typing.Dict[str, str]:
-    return {
-        'label': 'Second level',
-        'constructionTypeCode': 'Code 1',
-        'constructionTypeValue': '1201101121',
-        'nominalRsi': '1.432',
-        'effectiveRsi': '1.8016',
-        'perimeter': '42.9768',
-        'height': '2.4384',
-    }
+def wall_input() -> typing.List[str]:
+    doc = """
+    <Wall>
+            <Label>Second level</Label>
+            <Construction>
+                <Type idref='Code 1' nominalInsulation='1.432' rValue='1.8016' />
+            </Construction>
+            <Measurements perimeter='42.9768' height='2.4384' />
+        </Wall>
+    """
+    return [doc]
 
 
 @pytest.fixture
@@ -229,7 +230,7 @@ def raw_codes() -> typing.Dict[str, typing.List[typing.Dict[str, str]]]:
 @pytest.fixture
 def sample_input_d(ceiling_input: typing.List[str],
                    floor_input: typing.List[str],
-                   wall_input: typing.Dict[str, str],
+                   wall_input: typing.List[str],
                    door_input: typing.Dict[str, str],
                    window_input: typing.Dict[str, str],
                    heated_floor_area_input: typing.Dict[str, str],
@@ -247,9 +248,7 @@ def sample_input_d(ceiling_input: typing.List[str],
         'YEARBUILT': '2000',
         'ceilings': ceiling_input,
         'floors': floor_input,
-        'walls': [
-            wall_input
-        ],
+        'walls': wall_input,
         'doors': [
             door_input
         ],

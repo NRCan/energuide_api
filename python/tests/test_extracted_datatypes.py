@@ -162,38 +162,48 @@ class TestWindow:
 class TestWall:
 
     @pytest.fixture
-    def sample(self) -> typing.Dict[str, typing.Any]:
-        return {
-            'label': 'Second level',
-            'constructionTypeCode': 'Code 1',
-            'constructionTypeValue': '1201101121',
-            'nominalRsi': 1.432,
-            'effectiveRsi': 1.8016,
-            'perimeter': 42.9768,
-            'height': 2.4384,
-        }
+    def sample(self) -> element.Element:
+        doc = """
+        <Wall>
+            <Label>Second level</Label>
+            <Construction>
+                <Type idref='Code 1' nominalInsulation='1.432' rValue='1.8016' />
+            </Construction>
+            <Measurements perimeter='42.9768' height='2.4384' />
+        </Wall>
+        """
+        return element.Element.from_string(doc)
 
-    def test_from_data(self, sample: typing.Dict[str, typing.Any], codes: extracted_datatypes.Codes) -> None:
+    def test_from_data(self, sample: element.Element, codes: extracted_datatypes.Codes) -> None:
         output = extracted_datatypes.Wall.from_data(sample, codes.wall)
         assert output.label == 'Second level'
         assert output.perimeter == 42.9768
 
-    def test_missing_optional_fields(self,
-                                     sample: typing.Dict[str, typing.Any],
-                                     codes: extracted_datatypes.Codes) -> None:
-        wall = sample.copy()
-        wall.pop('constructionTypeCode')
-        wall.pop('constructionTypeValue')
-        output = extracted_datatypes.Wall.from_data(wall, codes.wall)
-        assert output.label == 'Second level'
-        assert output.perimeter == 42.9768
-        assert output.component_type_size_english is None
+    def test_from_data_missing_codes(self, codes: extracted_datatypes.Codes) -> None:
+        doc = """
+        <Wall>
+            <Label>Test Floor</Label>
+            <Construction>
+                <Type rValue="2.6892" nominalInsulation="3.3615">User specified</Type>
+            </Construction>
+            <Measurements perimeter='42.9768' height='2.4384' />
+        </Wall>
+        """
+        sample = element.Element.from_string(doc)
+        output = extracted_datatypes.Wall.from_data(sample, codes.wall)
+        assert output.label == 'Test Floor'
+        assert output.structure_type_english is None
 
-    def test_to_dict(self,
-                     sample: typing.Dict[str, typing.Any],
-                     codes: extracted_datatypes.Codes) -> None:
+    def test_to_dict(self, sample: element.Element, codes: extracted_datatypes.Codes) -> None:
         output = extracted_datatypes.Wall.from_data(sample, codes.wall).to_dict()
-        assert output['areaMetres'] == sample['perimeter'] * sample['height']
+        assert output['areaMetres'] == 42.9768 * 2.4384
+
+    def test_properties(self, sample: element.Element, codes: extracted_datatypes.Codes) -> None:
+        output = extracted_datatypes.Wall.from_data(sample, codes.wall)
+        assert output.nominal_r == 8.131273098584
+        assert output.effective_r == 10.2299592279392
+        assert output.area_metres == 104.79462912
+        assert output.area_feet == 1128.0000721920012
 
 
 class TestCeiling:
