@@ -195,9 +195,9 @@ def test_ventilation_snippet(house: element.Element) -> None:
     assert len(child_tags) == 3
 
 
-def test_water_heating(house: etree._Element) -> None:
+def test_water_heating(house: element.Element) -> None:
     output = snippets.snip_house(house)
-    doc = etree.fromstring(output.water_heating)
+    doc = element.Element.from_string(output.water_heating)
     nodes = doc.xpath('*[self::Primary or self::Secondary]')
     assert len(nodes) == 2
 

@@ -27,7 +27,7 @@ class _HouseSnippet(typing.NamedTuple):
     heated_floor_area: str
     heating_cooling: str
     ventilation: typing.List[str]
-    water_heating: typing.List[str]
+    water_heating: str
 
 
 class HouseSnippet(_HouseSnippet):
@@ -59,10 +59,7 @@ def snip_house(house: element.Element) -> HouseSnippet:
     ventilation_strings = [hrv.to_string() for hrv in ventilation]
 
     water_heating = house.xpath('Components/HotWater')
-    water_heating_string = (
-        etree.tostring(water_heating[0], encoding='unicode') if water_heating else None
-    )
-
+    water_heating_string = water_heating[0].to_string() if water_heating else None
 
     return HouseSnippet(
         ceilings=[node.to_string() for node in ceilings],
