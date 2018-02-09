@@ -222,7 +222,7 @@ def ventilation_input() -> typing.List[str]:
 
 
 @pytest.fixture
-def water_heating_input() -> typing.List[str]:
+def water_heating_input() -> str:
     doc = """
 <HotWater>
     <Primary hasDrainWaterHeatRecovery="false" insulatingBlanket="0" combinedFlue="false" flueDiameter="0" energyStar="false" ecoEnergy="false" userDefinedPilot="false" connectedUnitsDwhr="0">
