@@ -539,8 +539,8 @@ ENERGY STAR'),
     def _derive_type_string(cls, energy_star: bool, institute_certified: bool) -> typing.Tuple[str, str]:
         if energy_star and institute_certified:
             return ('Home Ventilating Institute listed ENERGY STAR certified heat recovery ventilator',
-                    'Ventilateur-récupérateur de chaleur répertorié par le Home Ventilating Institute \
-et certifiéENERGY STAR')
+                    'Ventilateur-récupérateur de chaleur répertorié par le Home Ventilating Institute ' + \
+                    'et certifiéENERGY STAR')
         elif energy_star and not institute_certified:
             return ('ENERGY STAR certified heat recovery ventilator',
                     'Ventilateur-récupérateur de chaleur certifié ENERGY STAR')
