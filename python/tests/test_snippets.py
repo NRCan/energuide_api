@@ -74,16 +74,11 @@ def test_window_snippet(house: etree._Element) -> None:
 
 def test_heated_floor_area_snippet(house: etree._Element) -> None:
     output = snippets.snip_house(house)
-    assert output.heated_floor_area.above_grade == '185.8'
-    assert output.heated_floor_area.below_grade == '92.9'
-
-
-def test_heated_floor_area_snippet_to_dict(house: etree._Element) -> None:
-    output = snippets.snip_house(house).heated_floor_area.to_dict()
-    assert output == {
-        'aboveGrade': '185.8',
-        'belowGrade': '92.9'
-    }
+    checker = validator.DwellingValidator({
+        'heated_floor': {'type': 'xml', 'coerce': 'parse_xml'}
+    }, allow_unknown=True)
+    doc = {'windows': output.heated_floor_area}
+    assert checker.validate(doc)
 
 
 def test_deeply_embedded_components() -> None:

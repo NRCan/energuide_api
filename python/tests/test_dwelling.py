@@ -87,11 +87,10 @@ def window_input() -> typing.List[str]:
 
 
 @pytest.fixture
-def heated_floor_area_input() -> typing.Dict[str, str]:
-    return {
-        'aboveGrade': '185.8',
-        'belowGrade': '92.9',
-    }
+def heated_floor_area_input() -> str:
+    return """
+    <HeatedFloorArea aboveGrade="92.9" belowGrade="185.8" />
+    """
 
 
 @pytest.fixture
@@ -283,7 +282,7 @@ def sample_input_d(ceiling_input: typing.List[str],
                    wall_input: typing.List[str],
                    door_input: typing.List[str],
                    window_input: typing.List[str],
-                   heated_floor_area_input: typing.Dict[str, str],
+                   heated_floor_area_input: str,
                    heating_cooling_input: str,
                    ventilation_input: typing.List[str],
                    raw_codes: typing.Dict[str, typing.List[typing.Dict[str, str]]]) -> reader.InputData:
@@ -449,8 +448,8 @@ class TestParsedDwellingDataRow:
                 )
             ],
             heated_floor_area=extracted_datatypes.HeatedFloorArea(
-                area_above_grade=185.8,
-                area_below_grade=92.9,
+                area_above_grade=92.9,
+                area_below_grade=185.8,
             ),
             ventilations=[
                 extracted_datatypes.Ventilation(

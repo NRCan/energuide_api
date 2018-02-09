@@ -213,20 +213,11 @@ class Codes(_Codes):
 
 class HeatedFloorArea(_HeatedFloorArea):
 
-    SCHEMA = {
-        'type': 'dict',
-        'required': True,
-        'schema': {
-            'belowGrade': {'type': 'float', 'required': True, 'coerce': float, 'nullable': True},
-            'aboveGrade': {'type': 'float', 'required': True, 'coerce': float, 'nullable': True},
-        }
-    }
-
     @classmethod
-    def from_data(cls, heated_floor_area: typing.Dict[str, typing.Optional[float]]) -> 'HeatedFloorArea':
+    def from_data(cls, heated_floor_area: element.Element) -> 'HeatedFloorArea':
         return HeatedFloorArea(
-            area_above_grade=heated_floor_area['aboveGrade'],
-            area_below_grade=heated_floor_area['belowGrade'],
+            area_above_grade=float(heated_floor_area.attrib['aboveGrade']),
+            area_below_grade=float(heated_floor_area.attrib['belowGrade']),
         )
 
     @property
