@@ -197,11 +197,9 @@ def test_ventilation_snippet(house: etree._Element) -> None:
 
 def test_water_heating(house: etree._Element) -> None:
     output = snippets.snip_house(house)
-    assert len(output.water_heating) == 2
-    checker = validator.DwellingValidator({
-        'water_heating': {'type': 'list', 'required': True, 'schema': {'type': 'xml', 'coerce': 'parse_xml'}}
-    }, allow_unknown=True)
-    doc = {'water_heating': output.water_heating}
-    assert checker.validate(doc)
+    doc = etree.fromstring(output.water_heating)
+    nodes = doc.xpath('*[self::Primary or self::Secondary]')
+    assert len(nodes) == 2
+
     assert all([water_heating.attrib['hasDrainWaterHeatRecovery'] == 'false'
-                for water_heating in checker.document['water_heating']])
+                for water_heating in nodes])
