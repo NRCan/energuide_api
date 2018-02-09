@@ -3,8 +3,8 @@ import json
 import typing
 import sys
 import zipfile
-from lxml import etree
 import cerberus
+from energuide import element
 from energuide import reader
 from energuide import snippets
 
@@ -63,12 +63,10 @@ def _safe_merge(data: reader.InputData, extra: reader.InputData) -> reader.Input
 
 
 def _extract_snippets(data: typing.Iterable[reader.InputData]) -> typing.Iterator[reader.InputData]:
-    parser = etree.XMLParser(ns_clean=True, recover=True, encoding='utf-8')
-
     for row in data:
         row['forwardSortationArea'] = row['CLIENTPCODE'][:3]
 
-        doc = etree.fromstring(row['RAW_XML'].encode('utf-8'), parser=parser)
+        doc = element.Element.from_string(row['RAW_XML'])
         house_node = doc.xpath('House')
         if house_node:
             house_snippets = snippets.snip_house(house_node[0])

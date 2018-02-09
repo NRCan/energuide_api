@@ -1,38 +1,38 @@
 import os
-from lxml import etree
 import pytest
+from energuide import element
 from energuide import snippets
 from energuide import validator
 
 
 @pytest.fixture
-def doc() -> etree._ElementTree:
+def doc() -> element.Element:
     sample_filename = os.path.join(os.path.dirname(__file__), 'sample.h2k')
     with open(sample_filename, 'r') as h2k:
-        doc = etree.parse(h2k)
+        doc = element.Element.parse(h2k)
     return doc
 
 
 @pytest.fixture
-def house(doc: etree._ElementTree) -> etree._Element:
+def house(doc: element.Element) -> element.Element:
     house_node = doc.find('House')
     assert house_node is not None
     return house_node
 
 
 @pytest.fixture
-def code(doc: etree._ElementTree) -> etree._Element:
+def code(doc: element.Element) -> element.Element:
     code_node = doc.find('Codes')
     assert code_node is not None
     return code_node
 
 
-def test_house_snippet_to_dict(house: etree._Element) -> None:
+def test_house_snippet_to_dict(house: element.Element) -> None:
     output = snippets.snip_house(house).to_dict()
     assert len(output) == 9
 
 
-def test_ceiling_snippet(house: etree._Element) -> None:
+def test_ceiling_snippet(house: element.Element) -> None:
     output = snippets.snip_house(house)
     assert len(output.ceilings) == 2
     checker = validator.DwellingValidator({
@@ -42,7 +42,7 @@ def test_ceiling_snippet(house: etree._Element) -> None:
     assert checker.validate(doc)
 
 
-def test_floor_snippet(house: etree._Element) -> None:
+def test_floor_snippet(house: element.Element) -> None:
     output = snippets.snip_house(house)
     assert len(output.floors) == 1
     checker = validator.DwellingValidator({
@@ -52,7 +52,7 @@ def test_floor_snippet(house: etree._Element) -> None:
     assert checker.validate(doc)
 
 
-def test_wall_snippet(house: etree._Element) -> None:
+def test_wall_snippet(house: element.Element) -> None:
     output = snippets.snip_house(house)
     assert len(output.walls) == 3
     checker = validator.DwellingValidator({
@@ -62,7 +62,7 @@ def test_wall_snippet(house: etree._Element) -> None:
     assert checker.validate(doc)
 
 
-def test_window_snippet(house: etree._Element) -> None:
+def test_window_snippet(house: element.Element) -> None:
     output = snippets.snip_house(house)
     assert len(output.windows) == 10
     checker = validator.DwellingValidator({
@@ -72,7 +72,7 @@ def test_window_snippet(house: etree._Element) -> None:
     assert checker.validate(doc)
 
 
-def test_heated_floor_area_snippet(house: etree._Element) -> None:
+def test_heated_floor_area_snippet(house: element.Element) -> None:
     output = snippets.snip_house(house)
     checker = validator.DwellingValidator({
         'heated_floor': {'type': 'xml', 'coerce': 'parse_xml'}
@@ -143,13 +143,13 @@ def test_deeply_embedded_components() -> None:
 </Components></House>
     """
 
-    doc = etree.fromstring(xml_text)
+    doc = element.Element.from_string(xml_text)
     output = snippets.snip_house(doc)
     assert len(output.windows) == 2
     assert len(output.doors) == 2
 
 
-def test_wall_code_snippet(code: etree._Element) -> None:
+def test_wall_code_snippet(code: element.Element) -> None:
     output = snippets.snip_codes(code)
     assert len(output.wall) == 2
     checker = validator.DwellingValidator({
@@ -159,7 +159,7 @@ def test_wall_code_snippet(code: etree._Element) -> None:
     assert checker.validate(doc)
 
 
-def test_window_code_snippet(code: etree._Element) -> None:
+def test_window_code_snippet(code: element.Element) -> None:
     output = snippets.snip_codes(code)
     assert len(output.wall) == 2
     checker = validator.DwellingValidator({
@@ -169,7 +169,7 @@ def test_window_code_snippet(code: etree._Element) -> None:
     assert checker.validate(doc)
 
 
-def test_door_snippet(house: etree._Element) -> None:
+def test_door_snippet(house: element.Element) -> None:
     output = snippets.snip_house(house)
     assert len(output.doors) == 2
     checker = validator.DwellingValidator({
@@ -179,17 +179,17 @@ def test_door_snippet(house: etree._Element) -> None:
     assert checker.validate(doc)
 
 
-def test_heating_cooling_snippet(house: etree._Element) -> None:
+def test_heating_cooling_snippet(house: element.Element) -> None:
     output = snippets.snip_house(house)
-    doc = etree.fromstring(output.heating_cooling)
+    doc = element.Element.from_string(output.heating_cooling)
     child_tags = {node.tag for node in doc}
     assert 'Label' in child_tags
     assert len(child_tags) == 6
 
 
-def test_ventilation_snippet(house: etree._Element) -> None:
+def test_ventilation_snippet(house: element.Element) -> None:
     output = snippets.snip_house(house)
-    doc = etree.fromstring(output.ventilation[0])
+    doc = element.Element.from_string(output.ventilation[0])
     child_tags = {node.tag for node in doc}
     assert 'VentilatorType' in child_tags
     assert len(child_tags) == 3
