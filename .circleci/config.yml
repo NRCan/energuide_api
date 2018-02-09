@@ -119,7 +119,7 @@ jobs:
             energuide load  --db_name energuide --collection dwellings --filename tests/randomized_energuide_data.zip
 
       - run: mkdir -p workspace
-      - run: 
+      - run:
           name: Exporting database
           command: |
             mongoexport --db energuide --collection dwellings --out workspace/mongo_dump
@@ -180,7 +180,7 @@ jobs:
       - run:
           name: Running integration tests
           command: |
-            echo Hello World!
+            yarn integration
 workflows:
   version: 2
   node_and_python:
