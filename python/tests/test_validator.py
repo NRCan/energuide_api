@@ -1,10 +1,10 @@
-from lxml import etree
+from energuide import element
 from energuide import validator
 
 
 def test_validates_xml() -> None:
     raw_xml = '<Foo />'
-    doc = etree.fromstring(raw_xml)
+    doc = element.Element.from_string(raw_xml)
     data = {'raw_xml': doc}
     checker = validator.DwellingValidator({'raw_xml': {'type': 'xml', 'required': True}})
     assert checker.validate(data)
@@ -22,7 +22,7 @@ def test_coerce_to_xml() -> None:
     data = {'raw_xml': raw_xml}
     checker = validator.DwellingValidator({'raw_xml': {'type': 'xml', 'required': True, 'coerce': 'parse_xml'}})
     assert checker.validate(data)
-    assert isinstance(checker.document['raw_xml'], etree._Element)
+    assert isinstance(checker.document['raw_xml'], element.Element)
 
 
 def test_embedded_xml() -> None:
@@ -33,4 +33,4 @@ def test_embedded_xml() -> None:
     assert checker.validate(data)
     assert isinstance(checker.document['raw_xml'], list)
     assert len(checker.document['raw_xml']) == 2
-    assert isinstance(checker.document['raw_xml'][0], etree._Element)
+    assert isinstance(checker.document['raw_xml'][0], element.Element)

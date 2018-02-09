@@ -15,6 +15,11 @@ class Element:
     def findtext(self, *args, **kwargs) -> typing.Optional[str]:
         return self.__node.findtext(*args, **kwargs)
 
+    def get_text(self, *args, **kwargs) -> str:
+        result: typing.Optional[str] = self.__node.findtext(*args, **kwargs)
+        assert result is not None
+        return result
+
     @property
     def attrib(self) -> typing.Dict[str, typing.Any]:
         return self.__node.attrib
