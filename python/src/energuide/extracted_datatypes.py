@@ -13,11 +13,11 @@ class _Ceiling(typing.NamedTuple):
 
 
 class _Floor(typing.NamedTuple):
-    label: typing.Optional[str]
-    nominal_rsi: typing.Optional[float]
-    effective_rsi: typing.Optional[float]
-    area_metres: typing.Optional[float]
-    length_metres: typing.Optional[float]
+    label: str
+    nominal_rsi: float
+    effective_rsi: float
+    area_metres: float
+    length_metres: float
 
 
 class _Wall(typing.NamedTuple):
@@ -125,6 +125,7 @@ class WallCode(_WallCode):
             component_type_size_french=wall_code['componentTypeSizeFrench'],
         )
 
+
 class WindowCode(_WindowCode):
 
     SCHEMA = {
@@ -170,6 +171,7 @@ class WindowCode(_WindowCode):
             frame_material_french=wall_code['frameMaterialFrench'],
         )
 
+
 class _Codes(typing.NamedTuple):
     wall: typing.Dict[str, WallCode]
     window: typing.Dict[str, WindowCode]
@@ -198,6 +200,7 @@ class Codes(_Codes):
             wall=wall_codes,
             window=window_codes,
         )
+
 
 class HeatedFloorArea(_HeatedFloorArea):
 
@@ -427,43 +430,43 @@ class Ceiling(_Ceiling):
 
 class Floor(_Floor):
 
-    SCHEMA = {
-        'type': 'list',
-        'required': True,
-        'schema': {
-            'type': 'dict',
-            'schema': {
-                'label': {'type': 'string', 'required': True, 'nullable': True},
-                'nominalRsi': {'type': 'float', 'required': True, 'coerce': float, 'nullable': True},
-                'effectiveRsi': {'type': 'float', 'required': True, 'coerce': float, 'nullable': True},
-                'area': {'type': 'float', 'required': True, 'coerce': float, 'nullable': True},
-                'length': {'type': 'float', 'required': True, 'coerce': float, 'nullable': True}
-            }
-        }
-    }
-
     @classmethod
-    def from_data(cls, ceiling: typing.Dict[str, typing.Any]) -> 'Floor':
+    def from_data(cls, floor: element.Element) -> 'Floor':
         return Floor(
-            label=ceiling['label'],
-            nominal_rsi=ceiling['nominalRsi'],
-            effective_rsi=ceiling['effectiveRsi'],
-            area_metres=ceiling['area'],
-            length_metres=ceiling['length']
-
+            label=floor.findtext('Label'),
+            nominal_rsi=float(floor.xpath('Construction/Type/@nominalInsulation')[0]),
+            effective_rsi=float(floor.xpath('Construction/Type/@rValue')[0]),
+            area_metres=float(floor.xpath('Measurements/@area')[0]),
+            length_metres=float(floor.xpath('Measurements/@length')[0]),
         )
+
+    @property
+    def nominal_r(self) -> float:
+        return self.nominal_rsi * _RSI_MULTIPLIER
+
+    @property
+    def effective_r(self) -> float:
+        return self.effective_rsi * _RSI_MULTIPLIER
+
+    @property
+    def area_feet(self) -> float:
+        return self.area_metres * _FEET_SQUARED_MULTIPLIER
+
+    @property
+    def length_feet(self) -> float:
+        return self.length_metres * _FEET_MULTIPLIER
 
     def to_dict(self) -> typing.Dict[str, typing.Any]:
         return {
             'label': self.label,
             'nominalRsi': self.nominal_rsi,
-            'nominalR': (self.nominal_rsi * _RSI_MULTIPLIER) if self.nominal_rsi is not None else None,
+            'nominalR': self.nominal_r,
             'effectiveRsi': self.effective_rsi,
-            'effectiveR': (self.effective_rsi * _RSI_MULTIPLIER) if self.effective_rsi is not None else None,
+            'effectiveR': self.effective_r,
             'areaMetres': self.area_metres,
-            'areaFeet': (self.area_metres * _FEET_SQUARED_MULTIPLIER) if self.area_metres is not None else None,
+            'areaFeet': self.area_feet,
             'lengthMetres': self.length_metres,
-            'lengthFeet': (self.length_metres * _FEET_MULTIPLIER) if self.length_metres is not None else None
+            'lengthFeet': self.length_feet,
         }
 
 

@@ -28,14 +28,17 @@ def ceiling_input() -> typing.List[str]:
 
 
 @pytest.fixture
-def floor_input() -> reader.InputData:
-    return {
-        'label': 'Rm over garage',
-        'nominalRsi': '2.46',
-        'effectiveRsi': '2.9181',
-        'area': '9.2903',
-        'length': '3.048',
-    }
+def floor_input() -> typing.List[str]:
+    doc = """
+    <Floor>
+        <Label>Rm over garage</Label>
+        <Construction>
+            <Type nominalInsulation='2.46' rValue='2.9181' />
+        </Construction>
+        <Measurements area='9.2903' length='3.048' />
+    </Floor>
+    """
+    return [doc]
 
 
 @pytest.fixture
@@ -224,8 +227,8 @@ def raw_codes() -> typing.Dict[str, typing.List[typing.Dict[str, str]]]:
 
 
 @pytest.fixture
-def sample_input_d(ceiling_input: reader.InputData,
-                   floor_input: reader.InputData,
+def sample_input_d(ceiling_input: typing.List[str],
+                   floor_input: typing.List[str],
                    wall_input: typing.Dict[str, str],
                    door_input: typing.Dict[str, str],
                    window_input: typing.Dict[str, str],
@@ -243,9 +246,7 @@ def sample_input_d(ceiling_input: reader.InputData,
         'HOUSEREGION': 'Ontario',
         'YEARBUILT': '2000',
         'ceilings': ceiling_input,
-        'floors': [
-            floor_input
-        ],
+        'floors': floor_input,
         'walls': [
             wall_input
         ],
