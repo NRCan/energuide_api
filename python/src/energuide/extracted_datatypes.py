@@ -74,11 +74,11 @@ class _Ventilation(typing.NamedTuple):
 
 class _WallCode(typing.NamedTuple):
     identifier: str
-    label: typing.Optional[str]
-    structure_type_english: typing.Optional[str]
-    structure_type_french: typing.Optional[str]
-    component_type_size_english: typing.Optional[str]
-    component_type_size_french: typing.Optional[str]
+    label: str
+    structure_type_english: str
+    structure_type_french: str
+    component_type_size_english: str
+    component_type_size_french: str
 
 
 class _WindowCode(typing.NamedTuple):
@@ -107,77 +107,37 @@ _MILLIMETRES_TO_METRES = 1000
 
 class WallCode(_WallCode):
 
-    SCHEMA = {
-        'type': 'list',
-        'required': True,
-        'schema': {
-            'type': 'dict',
-            'schema': {
-                'id': {'type': 'string', 'required': True},
-                'label': {'type': 'string', 'required': True, 'nullable': True},
-                'structureTypeEnglish': {'type': 'string', 'required': True, 'nullable': True},
-                'structureTypeFrench': {'type': 'string', 'required': True, 'nullable': True},
-                'componentTypeSizeEnglish': {'type': 'string', 'required': True, 'nullable': True},
-                'componentTypeSizeFrench': {'type': 'string', 'required': True, 'nullable': True},
-            }
-        }
-    }
-
     @classmethod
-    def from_data(cls, wall_code: typing.Dict[str, typing.Optional[str]]) -> 'WallCode':
+    def from_data(cls, wall_code: element.Element) -> 'WallCode':
         return WallCode(
-            identifier=wall_code['id'],
-            label=wall_code['label'],
-            structure_type_english=wall_code['structureTypeEnglish'],
-            structure_type_french=wall_code['structureTypeFrench'],
-            component_type_size_english=wall_code['componentTypeSizeEnglish'],
-            component_type_size_french=wall_code['componentTypeSizeFrench'],
+            identifier=wall_code.attrib['id'],
+            label=wall_code.findtext('Label'),
+            structure_type_english=wall_code.findtext('Layers/StructureType/English'),
+            structure_type_french=wall_code.findtext('Layers/StructureType/French'),
+            component_type_size_english=wall_code.findtext('Layers/ComponentTypeSize/English'),
+            component_type_size_french=wall_code.findtext('Layers/ComponentTypeSize/French'),
         )
 
 
 class WindowCode(_WindowCode):
 
-    SCHEMA = {
-        'type': 'list',
-        'required': True,
-        'schema': {
-            'type': 'dict',
-            'schema': {
-                'id':  {'type': 'string', 'required': True},
-                'label': {'type': 'string', 'required': True, 'nullable': True},
-                'glazingTypesEnglish': {'type': 'string', 'required': True, 'nullable': True},
-                'glazingTypesFrench': {'type': 'string', 'required': True, 'nullable': True},
-                'coatingsTintsEnglish': {'type': 'string', 'required': True, 'nullable': True},
-                'coatingsTintsFrench': {'type': 'string', 'required': True, 'nullable': True},
-                'fillTypeEnglish': {'type': 'string', 'required': True, 'nullable': True},
-                'fillTypeFrench': {'type': 'string', 'required': True, 'nullable': True},
-                'spacerTypeEnglish': {'type': 'string', 'required': True, 'nullable': True},
-                'spacerTypeFrench': {'type': 'string', 'required': True, 'nullable': True},
-                'typeEnglish': {'type': 'string', 'required': True, 'nullable': True},
-                'typeFrench': {'type': 'string', 'required': True, 'nullable': True},
-                'frameMaterialEnglish': {'type': 'string', 'required': True, 'nullable': True},
-                'frameMaterialFrench': {'type': 'string', 'required': True, 'nullable': True},
-            }
-        }
-    }
-
     @classmethod
-    def from_data(cls, wall_code: typing.Dict[str, typing.Optional[str]]) -> 'WindowCode':
+    def from_data(cls, window_code: element.Element) -> 'WindowCode':
         return WindowCode(
-            identifier=wall_code['id'],
-            label=wall_code['label'],
-            glazing_types_english=wall_code['glazingTypesEnglish'],
-            glazing_types_french=wall_code['glazingTypesFrench'],
-            coatings_tints_english=wall_code['coatingsTintsEnglish'],
-            coatings_tints_french=wall_code['coatingsTintsFrench'],
-            fill_type_english=wall_code['fillTypeEnglish'],
-            fill_type_french=wall_code['fillTypeFrench'],
-            spacer_type_english=wall_code['spacerTypeEnglish'],
-            spacer_type_french=wall_code['spacerTypeFrench'],
-            type_english=wall_code['typeEnglish'],
-            type_french=wall_code['typeFrench'],
-            frame_material_english=wall_code['frameMaterialEnglish'],
-            frame_material_french=wall_code['frameMaterialFrench'],
+            identifier=window_code.attrib['id'],
+            label=window_code.findtext('Label'),
+            glazing_types_english=window_code.findtext('Layers/GlazingTypes/English'),
+            glazing_types_french=window_code.findtext('Layers/GlazingTypes/French'),
+            coatings_tints_english=window_code.findtext('Layers/CoatingsTints/English'),
+            coatings_tints_french=window_code.findtext('Layers/CoatingsTints/French'),
+            fill_type_english=window_code.findtext('Layers/FillType/English'),
+            fill_type_french=window_code.findtext('Layers/FillType/French'),
+            spacer_type_english=window_code.findtext('Layers/SpacerType/English'),
+            spacer_type_french=window_code.findtext('Layers/SpacerType/French'),
+            type_english=window_code.findtext('Layers/Type/English'),
+            type_french=window_code.findtext('Layers/Type/French'),
+            frame_material_english=window_code.findtext('Layers/FrameMaterial/English'),
+            frame_material_french=window_code.findtext('Layers/FrameMaterial/French'),
         )
 
 
@@ -188,19 +148,10 @@ class _Codes(typing.NamedTuple):
 
 class Codes(_Codes):
 
-    SCHEMA = {
-        'type': 'dict',
-        'required': True,
-        'schema': {
-            'wall': WallCode.SCHEMA,
-            'window': WindowCode.SCHEMA,
-        }
-    }
-
     @classmethod
-    def from_data(cls, codes: typing.Dict[str, typing.List[typing.Dict[str, str]]]):
-        wall_code_list = (WallCode.from_data(wall_code) for wall_code in codes['wall'])
-        window_code_list = (WindowCode.from_data(window_code) for window_code in codes['window'])
+    def from_data(cls, codes: typing.Dict[str, typing.List[element.Element]]) -> 'Codes':
+        wall_code_list = [WallCode.from_data(wall_code) for wall_code in codes['wall']]
+        window_code_list = [WindowCode.from_data(window_code) for window_code in codes['window']]
 
         wall_codes = {wall_code.identifier: wall_code for wall_code in wall_code_list}
         window_codes = {window_code.identifier: window_code for window_code in window_code_list}

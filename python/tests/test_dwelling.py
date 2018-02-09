@@ -220,58 +220,105 @@ def ventilation_input() -> typing.List[str]:
     """
     return [doc]
 
+
 @pytest.fixture
-def raw_codes() -> typing.Dict[str, typing.List[typing.Dict[str, str]]]:
+def raw_codes() -> typing.Dict[str, typing.List[str]]:
     return {
         'wall': [
-            {
-                'id': 'Code 1',
-                'label': '1201101121',
-                'structureTypeEnglish': 'Wood frame',
-                'structureTypeFrench': 'Ossature de bois',
-                'componentTypeSizeEnglish': '38x89 mm (2x4 in)',
-                'componentTypeSizeFrench': '38x89 (2x4)',
-            }, {
-                'id': 'Code 2',
-                'label': '1201101122',
-                'structureTypeEnglish': 'Metal frame',
-                'structureTypeFrench': 'Ossature de métal',
-                'componentTypeSizeEnglish': '38x89 mm (2x4 in)',
-                'componentTypeSizeFrench': '38x89 (2x4)',
-            }
+            """
+            <Code id='Code 1'>
+                <Label>1201101121</Label>
+                <Layers>
+                    <StructureType>
+                        <English>Wood frame</English>
+                        <French>Ossature de bois</French>
+                    </StructureType>
+                    <ComponentTypeSize>
+                        <English>38x89 mm (2x4 in)</English>
+                        <French>38x89 (2x4)</French>
+                    </ComponentTypeSize>
+                </Layers>
+            </Code>
+            """,
+            """
+            <Code id='Code 2'>
+                <Label>1201101121</Label>
+                <Layers>
+                    <StructureType>
+                        <English>Metal frame</English>
+                        <French>Ossature de métal</French>
+                    </StructureType>
+                    <ComponentTypeSize>
+                        <English>38x89 mm (2x4 in)</English>
+                        <French>38x89 (2x4)</French>
+                    </ComponentTypeSize>
+                </Layers>
+            </Code>
+            """,
         ],
         'window': [
-            {
-                'id': 'Code 11',
-                'label': '202002',
-                'glazingTypesEnglish': 'Double/double with 1 coat',
-                'glazingTypesFrench': 'Double/double, 1 couche',
-                'coatingsTintsEnglish': 'Clear',
-                'coatingsTintsFrench': 'Transparent',
-                'fillTypeEnglish': '6 mm Air',
-                'fillTypeFrench': "6 mm d'air",
-                'spacerTypeEnglish': 'Metal',
-                'spacerTypeFrench': 'Métal',
-                'typeEnglish': 'Picture',
-                'typeFrench': 'Fixe',
-                'frameMaterialEnglish': 'Wood',
-                'frameMaterialFrench': 'Bois',
-            }, {
-                'id': 'Code 12',
-                'label': '234002',
-                'glazingTypesEnglish': 'Double/double with 1 coat',
-                'glazingTypesFrench': 'Double/double, 1 couche',
-                'coatingsTintsEnglish': 'Low-E .20 (hard1)',
-                'coatingsTintsFrench': 'Faible E .20 (Dur 1)',
-                'fillTypeEnglish': '9 mm Argon',
-                'fillTypeFrench': "9 mm d'argon",
-                'spacerTypeEnglish': 'Metal',
-                'spacerTypeFrench': 'Métal',
-                'typeEnglish': 'Picture',
-                'typeFrench': 'Fixe',
-                'frameMaterialEnglish': 'Wood',
-                'frameMaterialFrench': 'Bois',
-            }
+            """
+            <Code id='Code 11'>
+                <Label>202002</Label>
+                <Layers>
+                    <GlazingTypes>
+                        <English>Double/double with 1 coat</English>
+                        <French>Double/double, 1 couche</French>
+                    </GlazingTypes>
+                    <CoatingsTints>
+                        <English>Clear</English>
+                        <French>Transparent</French>
+                    </CoatingsTints>
+                    <FillType>
+                        <English>6 mm Air</English>
+                        <French>6 mm d'air</French>
+                    </FillType>
+                    <SpacerType>
+                        <English>Metal</English>
+                        <French>Métal</French>
+                    </SpacerType>
+                    <Type>
+                        <English>Picture</English>
+                        <French>Fixe</French>
+                    </Type>
+                    <FrameMaterial>
+                        <English>Wood</English>
+                        <French>Bois</French>
+                    </FrameMaterial>
+                </Layers>
+            </Code>
+            """,
+            """
+            <Code id='Code 12'>
+                <Label>234002</Label>
+                <Layers>
+                    <GlazingTypes>
+                        <English>Double/double with 1 coat</English>
+                        <French>Double/double, 1 couche</French>
+                    </GlazingTypes>
+                    <CoatingsTints>
+                        <English>Low-E .20 (hard1)</English>
+                        <French>Faible E .20 (Dur 1)</French>
+                    </CoatingsTints>
+                    <FillType>
+                        <English>9 mm Argon</English>
+                        <French>9 mm d'argon</French>
+                    </FillType>
+                    <SpacerType>
+                        <English>Metal</English>
+                        <French>Métal</French>
+                    </SpacerType>
+                    <Type>
+                        <English>Picture</English>
+                        <French>Fixe</French>
+                    </Type>
+                    <FrameMaterial>
+                        <English>Wood</English>
+                        <French>Bois</French>
+                    </FrameMaterial>
+                </Layers>
+            </Code>
+            """,
         ]
     }
 
@@ -285,7 +332,7 @@ def sample_input_d(ceiling_input: typing.List[str],
                    heated_floor_area_input: str,
                    heating_cooling_input: str,
                    ventilation_input: typing.List[str],
-                   raw_codes: typing.Dict[str, typing.List[typing.Dict[str, str]]]) -> reader.InputData:
+                   raw_codes: typing.Dict[str, typing.List[str]]) -> reader.InputData:
     return {
         'EVAL_ID': '123',
         'EVAL_TYPE': 'D',
@@ -304,7 +351,6 @@ def sample_input_d(ceiling_input: typing.List[str],
         'heating_cooling': heating_cooling_input,
         'heatedFloorArea': heated_floor_area_input,
         'ventilations': ventilation_input,
-
         'codes': raw_codes,
     }
 

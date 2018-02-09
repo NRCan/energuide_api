@@ -7,93 +7,144 @@ from energuide import extracted_datatypes
 
 
 @pytest.fixture
-def raw_codes() -> typing.Dict[str, typing.List[typing.Dict[str, str]]]:
+def raw_wall_codes() -> typing.List[element.Element]:
+    data = [
+        """
+        <Code id='Code 1'>
+            <Label>1201101121</Label>
+            <Layers>
+                <StructureType>
+                    <English>Wood frame</English>
+                    <French>Ossature de bois</French>
+                </StructureType>
+                <ComponentType>
+                    <English>38x89 mm (2x4 in)</English>
+                    <French>38x89 (2x4)</French>
+                </ComponentType>
+            </Layers>
+        </Code>
+        """,
+        """
+        <Code id='Code 2'>
+            <Label>1201101121</Label>
+            <Layers>
+                <StructureType>
+                    <English>Metal frame</English>
+                    <French>Ossature de métal</French>
+                </StructureType>
+                <ComponentType>
+                    <English>38x89 mm (2x4 in)</English>
+                    <French>38x89 (2x4)</French>
+                </ComponentType>
+            </Layers>
+        </Code>
+        """,
+    ]
+    return [element.Element.from_string(code) for code in data]
+
+
+@pytest.fixture
+def raw_window_codes() -> typing.List[element.Element]:
+    data = [
+        """
+        <Code id='Code 11'>
+            <Label>202002</Label>
+            <Layers>
+                <GlazingTypes>
+                    <English>Double/double with 1 coat</English>
+                    <French>Double/double, 1 couche</French>
+                </GlazingTypes>
+                <CoatingsTints>
+                    <English>Clear</English>
+                    <French>Transparent</French>
+                </CoatingsTints>
+                <FillType>
+                    <English>6 mm Air</English>
+                    <French>6 mm d'air</French>
+                </FillType>
+                <SpacerType>
+                    <English>Metal</English>
+                    <French>Métal</French>
+                </SpacerType>
+                <Type>
+                    <English>Picture</English>
+                    <French>Fixe</French>
+                </Type>
+                <FrameMaterial>
+                    <English>Wood</English>
+                    <French>Bois</French>
+                </FrameMaterial>
+            </Layers>
+        </Code>
+        """,
+        """
+        <Code id='Code 12'>
+            <Label>234002</Label>
+            <Layers>
+                <GlazingTypes>
+                    <English>Double/double with 1 coat</English>
+                    <French>Double/double, 1 couche</French>
+                </GlazingTypes>
+                <CoatingsTints>
+                    <English>Low-E .20 (hard1)</English>
+                    <French>Faible E .20 (Dur 1)</French>
+                </CoatingsTints>
+                <FillType>
+                    <English>9 mm Argon</English>
+                    <French>9 mm d'argon</French>
+                </FillType>
+                <SpacerType>
+                    <English>Metal</English>
+                    <French>Métal</French>
+                </SpacerType>
+                <Type>
+                    <English>Picture</English>
+                    <French>Fixe</French>
+                </Type>
+                <FrameMaterial>
+                    <English>Wood</English>
+                    <French>Bois</French>
+                </FrameMaterial>
+            </Layers>
+        </Code>
+        """,
+    ]
+    return [element.Element.from_string(code) for code in data]
+
+
+@pytest.fixture
+def raw_codes(raw_wall_codes: typing.List[element.Element],
+              raw_window_codes: typing.List[element.Element]) -> typing.Dict[str, typing.List[element.Element]]:
     return {
-        'wall': [
-            {
-                'id': 'Code 1',
-                'label': '1201101121',
-                'structureTypeEnglish': 'Wood frame',
-                'structureTypeFrench': 'Ossature de bois',
-                'componentTypeSizeEnglish': '38x89 mm (2x4 in)',
-                'componentTypeSizeFrench': '38x89 (2x4)',
-            }, {
-                'id': 'Code 2',
-                'label': '1201101122',
-                'structureTypeEnglish': 'Metal frame',
-                'structureTypeFrench': 'Ossature de métal',
-                'componentTypeSizeEnglish': '38x89 mm (2x4 in)',
-                'componentTypeSizeFrench': '38x89 (2x4)',
-            }
-        ],
-        'window': [
-            {
-                'id': 'Code 11',
-                'label': '202002',
-                'glazingTypesEnglish': 'Double/double with 1 coat',
-                'glazingTypesFrench': 'Double/double, 1 couche',
-                'coatingsTintsEnglish': 'Clear',
-                'coatingsTintsFrench': 'Transparent',
-                'fillTypeEnglish': '6 mm Air',
-                'fillTypeFrench': "6 mm d'air",
-                'spacerTypeEnglish': 'Metal',
-                'spacerTypeFrench': 'Métal',
-                'typeEnglish': 'Picture',
-                'typeFrench': 'Fixe',
-                'frameMaterialEnglish': 'Wood',
-                'frameMaterialFrench': 'Bois',
-            }, {
-                'id': 'Code 12',
-                'label': '234002',
-                'glazingTypesEnglish': 'Double/double with 1 coat',
-                'glazingTypesFrench': 'Double/double, 1 couche',
-                'coatingsTintsEnglish': 'Low-E .20 (hard1)',
-                'coatingsTintsFrench': 'Faible E .20 (Dur 1)',
-                'fillTypeEnglish': '9 mm Argon',
-                'fillTypeFrench': "9 mm d'argon",
-                'spacerTypeEnglish': 'Metal',
-                'spacerTypeFrench': 'Métal',
-                'typeEnglish': 'Picture',
-                'typeFrench': 'Fixe',
-                'frameMaterialEnglish': 'Wood',
-                'frameMaterialFrench': 'Bois',
-            }
-        ]
+        'wall': raw_wall_codes,
+        'window': raw_window_codes,
     }
 
 
 @pytest.fixture
-def codes(raw_codes: typing.Dict[str, typing.List[typing.Dict[str, str]]]) -> extracted_datatypes.Codes:
+def codes(raw_codes: typing.Dict[str, typing.List[element.Element]]) -> extracted_datatypes.Codes:
     return extracted_datatypes.Codes.from_data(raw_codes)
 
 
 class TestWallCode:
 
-    @pytest.fixture
-    def sample(self, raw_codes: typing.Dict[str, typing.List[typing.Dict[str, str]]]) -> typing.Dict[str, str]:
-        return raw_codes['wall'][0]
-
-    def test_from_data(self, sample: typing.Dict[str, str]) -> None:
-        output = extracted_datatypes.WallCode.from_data(sample)
-        assert output.identifier == 'Code 1'
-        assert output.label == '1201101121'
+    def test_from_data(self, raw_wall_codes: typing.List[element.Element]) -> None:
+        output = [extracted_datatypes.WallCode.from_data(raw_code) for raw_code in raw_wall_codes]
+        assert output[0].identifier == 'Code 1'
+        assert output[0].label == '1201101121'
 
 
 class TestWindowCode:
 
-    @pytest.fixture
-    def sample(self, raw_codes: typing.Dict[str, typing.List[typing.Dict[str, str]]]) -> typing.Dict[str, str]:
-        return raw_codes['window'][0]
-
-    def test_from_data(self, sample: typing.Dict[str, str]) -> None:
-        output = extracted_datatypes.WindowCode.from_data(sample)
-        assert output.identifier == 'Code 11'
-        assert output.label == '202002'
+    def test_from_data(self, raw_window_codes: typing.List[element.Element]) -> None:
+        output = [extracted_datatypes.WindowCode.from_data(raw_code) for raw_code in raw_window_codes]
+        assert output[0].identifier == 'Code 11'
+        assert output[0].label == '202002'
 
 
 class TestCodes:
 
-    def test_from_data(self, raw_codes: typing.Dict[str, typing.List[typing.Dict[str, str]]]) -> None:
+    def test_from_data(self, raw_codes: typing.Dict[str, typing.List[element.Element]]) -> None:
         output = extracted_datatypes.Codes.from_data(raw_codes)
         assert len(output.wall) == 2
         assert len(output.window) == 2

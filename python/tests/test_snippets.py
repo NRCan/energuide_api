@@ -149,69 +149,24 @@ def test_deeply_embedded_components() -> None:
     assert len(output.doors) == 2
 
 
-def test_wall_code_snippet_to_dict(code: etree._Element) -> None:
-    output = snippets.snip_codes(code)
-    assert sorted(output.wall, key=lambda row: row.label)[0].to_dict() == {
-        'id': 'Code 1',
-        'label': '1201101121',
-        'structureTypeEnglish': 'Wood frame',
-        'structureTypeFrench': 'Ossature de bois',
-        'componentTypeSizeEnglish': '38x89 mm (2x4 in)',
-        'componentTypeSizeFrench': '38x89 (2x4)',
-    }
-
-
 def test_wall_code_snippet(code: etree._Element) -> None:
     output = snippets.snip_codes(code)
     assert len(output.wall) == 2
-    assert sorted(output.wall, key=lambda row: row.label)[0] == snippets.WallCodeSnippet(
-        identifier='Code 1',
-        label='1201101121',
-        structure_type_english='Wood frame',
-        structure_type_french='Ossature de bois',
-        component_type_size_english='38x89 mm (2x4 in)',
-        component_type_size_french='38x89 (2x4)',
-    )
-
-
-def test_window_code_snippet_to_dict(code: etree._Element) -> None:
-    output = snippets.snip_codes(code)
-    assert sorted(output.window, key=lambda row: row.label)[0].to_dict() == {
-        'id': 'Code 11',
-        'label': '202002',
-        'glazingTypesEnglish': 'Double/double with 1 coat',
-        'glazingTypesFrench': 'Double/double, 1 couche',
-        'coatingsTintsEnglish': 'Clear',
-        'coatingsTintsFrench': 'Transparent',
-        'fillTypeEnglish': '6 mm Air',
-        'fillTypeFrench': "6 mm d'air",
-        'spacerTypeEnglish': 'Metal',
-        'spacerTypeFrench': 'Métal',
-        'typeEnglish': 'Picture',
-        'typeFrench': 'Fixe',
-        'frameMaterialEnglish': 'Wood',
-        'frameMaterialFrench': 'Bois',
-    }
+    checker = validator.DwellingValidator({
+        'codes': {'type': 'list', 'required': True, 'schema': {'type': 'xml', 'coerce': 'parse_xml'}}
+    }, allow_unknown=True)
+    doc = {'codes': output.wall}
+    assert checker.validate(doc)
 
 
 def test_window_code_snippet(code: etree._Element) -> None:
     output = snippets.snip_codes(code)
-    assert sorted(output.window, key=lambda row: row.label)[0] == snippets.WindowCodeSnippet(
-        identifier='Code 11',
-        label='202002',
-        glazing_types_english='Double/double with 1 coat',
-        glazing_types_french='Double/double, 1 couche',
-        coatings_tints_english='Clear',
-        coatings_tints_french='Transparent',
-        fill_type_english='6 mm Air',
-        fill_type_french="6 mm d'air",
-        spacer_type_english='Metal',
-        spacer_type_french='Métal',
-        type_english='Picture',
-        type_french='Fixe',
-        frame_material_english='Wood',
-        frame_material_french='Bois',
-    )
+    assert len(output.wall) == 2
+    checker = validator.DwellingValidator({
+        'codes': {'type': 'list', 'required': True, 'schema': {'type': 'xml', 'coerce': 'parse_xml'}}
+    }, allow_unknown=True)
+    doc = {'codes': output.window}
+    assert checker.validate(doc)
 
 
 def test_door_snippet(house: etree._Element) -> None:

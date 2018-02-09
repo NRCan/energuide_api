@@ -94,6 +94,9 @@ class _ParsedDwellingDataRow(typing.NamedTuple):
 
 class ParsedDwellingDataRow(_ParsedDwellingDataRow):
 
+    _XML_SCHEMA = {'type': 'xml', 'coerce': 'parse_xml'}
+    _XML_LIST_SCHEMA = {'type': 'list', 'required': True, 'schema': _XML_SCHEMA}
+
     _SCHEMA = {
         'EVAL_ID': {'type': 'integer', 'required': True, 'coerce': int},
         'EVAL_TYPE': {'type': 'string', 'required': True, 'allowed': [eval_type.value for eval_type in EvaluationType]},
@@ -105,16 +108,16 @@ class ParsedDwellingDataRow(_ParsedDwellingDataRow):
         'forwardSortationArea': {'type': 'string', 'required': True, 'regex': '[A-Z][0-9][A-Z]'},
         'HOUSEREGION': {'type': 'string', 'required': True},
 
-        'ceilings': {'type': 'list', 'required': True, 'schema': {'type': 'xml', 'coerce': 'parse_xml'}},
-        'floors': {'type': 'list', 'required': True, 'schema': {'type': 'xml', 'coerce': 'parse_xml'}},
-        'walls': {'type': 'list', 'required': True, 'schema': {'type': 'xml', 'coerce': 'parse_xml'}},
-        'doors': {'type': 'list', 'required': True, 'schema': {'type': 'xml', 'coerce': 'parse_xml'}},
-        'windows': {'type': 'list', 'required': True, 'schema': {'type': 'xml', 'coerce': 'parse_xml'}},
-        'heatedFloorArea': {'type': 'xml', 'coerce': 'parse_xml'},
+        'ceilings': _XML_LIST_SCHEMA,
+        'floors': _XML_LIST_SCHEMA,
+        'walls': _XML_LIST_SCHEMA,
+        'doors': _XML_LIST_SCHEMA,
+        'windows': _XML_LIST_SCHEMA,
+        'heatedFloorArea': _XML_SCHEMA,
         'heating_cooling': {'type': 'xml', 'required': True, 'coerce': 'parse_xml'},
-        'ventilations': {'type': 'list', 'required': True, 'schema': {'type': 'xml', 'coerce': 'parse_xml'}},
+        'ventilations': _XML_LIST_SCHEMA,
 
-        'codes': Codes.SCHEMA,
+        'codes': {'type': 'dict', 'required': True, 'schema': {'wall': _XML_LIST_SCHEMA, 'window': _XML_LIST_SCHEMA}},
     }
 
     @classmethod
