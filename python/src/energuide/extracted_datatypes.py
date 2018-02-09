@@ -33,12 +33,12 @@ class _Wall(typing.NamedTuple):
 
 
 class _Door(typing.NamedTuple):
-    label: typing.Optional[str]
-    type_english: typing.Optional[str]
-    type_french: typing.Optional[str]
-    rsi: typing.Optional[float]
-    height: typing.Optional[float]
-    width: typing.Optional[float]
+    label: str
+    type_english: str
+    type_french: str
+    rsi: float
+    height: float
+    width: float
 
 
 class _Window(typing.NamedTuple):
@@ -467,40 +467,45 @@ class Floor(_Floor):
 
 class Door(_Door):
 
-    SCHEMA = {
-        'type': 'list',
-        'required': True,
-        'schema': {
-            'type': 'dict',
-            'schema': {
-                'typeEnglish': {'type': 'string', 'required': True},
-                'typeFrench': {'type': 'string', 'required': True},
-                'rsi': {'type': 'float', 'required': True, 'coerce': float},
-                'height': {'type': 'float', 'required': True, 'coerce': float},
-                'width': {'type': 'float', 'required': True, 'coerce': float},
-            }
-        }
-    }
-
     @classmethod
-    def from_data(cls, door: typing.Dict[str, typing.Any]) -> 'Door':
+    def from_data(cls, door: element.Element) -> 'Door':
         return Door(
-            label=door['label'],
-            type_english=door['typeEnglish'],
-            type_french=door['typeFrench'],
-            rsi=door['rsi'],
-            height=door['height'],
-            width=door['width'],
+            label=door.findtext('Label'),
+            type_english=door.findtext('Construction/Type/English'),
+            type_french=door.findtext('Construction/Type/French'),
+            rsi=float(door.xpath('Construction/Type/@value')[0]),
+            height=float(door.xpath('Measurements/@height')[0]),
+            width=float(door.xpath('Measurements/@width')[0]),
         )
+
+    @property
+    def r_value(self) -> float:
+        return self.rsi * _RSI_MULTIPLIER
+
+    @property
+    def u_factor(self) -> float:
+        return 1 / self.rsi
+
+    @property
+    def u_factor_imperial(self) -> float:
+        return self.u_factor / _RSI_MULTIPLIER
+
+    @property
+    def area_metres(self) -> float:
+        return self.height * self.width
+
+    @property
+    def area_feet(self) -> float:
+        return self.area_metres * _FEET_SQUARED_MULTIPLIER
 
     def to_dict(self) -> typing.Dict[str, typing.Any]:
         return {
             'typeEnglish': self.type_english,
             'typeFrench': self.type_french,
             'rsi': self.rsi,
-            'rValue': self.rsi * _RSI_MULTIPLIER,
-            'uFactor': 1 / self.rsi if self.rsi else None,
-            'uFactorImperial': 1 / (self.rsi * _RSI_MULTIPLIER) if self.rsi else None,
-            'areaMetres': self.height * self.width,
-            'areaFeet': self.height * self.width * _FEET_SQUARED_MULTIPLIER
+            'rValue': self.r_value,
+            'uFactor': self.u_factor,
+            'uFactorImperial': self.u_factor_imperial,
+            'areaMetres': self.area_metres,
+            'areaFeet': self.area_feet,
         }
