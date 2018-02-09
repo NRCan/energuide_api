@@ -2,15 +2,6 @@ import typing
 from lxml import etree
 
 
-class _WindowSnippet(typing.NamedTuple):
-    label: typing.Optional[str]
-    construction_type_code: typing.Optional[str]
-    construction_type_value: typing.Optional[str]
-    rsi: typing.Optional[str]
-    width: typing.Optional[str]
-    height: typing.Optional[str]
-
-
 class _HeatedFloorSnippet(typing.NamedTuple):
     above_grade: typing.Optional[str]
     below_grade: typing.Optional[str]
@@ -92,19 +83,6 @@ class Codes(_Codes):
         }
 
 
-class WindowSnippet(_WindowSnippet):
-
-    def to_dict(self) -> typing.Dict[str, typing.Optional[str]]:
-        return {
-            'label': self.label,
-            'constructionTypeCode': self.construction_type_code,
-            'constructionTypeValue': self.construction_type_value,
-            'rsi': self.rsi,
-            'width': self.width,
-            'height': self.height,
-        }
-
-
 class HeatedFloorSnippet(_HeatedFloorSnippet):
 
     def to_dict(self) -> typing.Dict[str, typing.Optional[str]]:
@@ -119,7 +97,7 @@ class _HouseSnippet(typing.NamedTuple):
     floors: typing.List[str]
     walls: typing.List[str]
     doors: typing.List[str]
-    windows: typing.List[WindowSnippet]
+    windows: typing.List[str]
     heated_floor_area: HeatedFloorSnippet
     heating_cooling: str
     ventilation: typing.List[str]
@@ -133,7 +111,7 @@ class HouseSnippet(_HouseSnippet):
             'floors': self.floors,
             'walls': self.walls,
             'doors': self.doors,
-            'windows': [window.to_dict() for window in self.windows],
+            'windows': self.windows,
             'heatedFloorArea': self.heated_floor_area.to_dict() if self.heated_floor_area is not None else None,
             'heating_cooling': self.heating_cooling,
             'ventilation': self.ventilation,
@@ -144,17 +122,6 @@ def _extract_values(node: etree._Element,
                     xpath_mapping: typing.Dict[str, str]) -> typing.Dict[str, typing.Optional[str]]:
     output = {key: node.xpath(value) for key, value in xpath_mapping.items()}
     return {key: value[0] if value else None for key, value in output.items()}
-
-
-def _window_snippet(window: etree._Element) -> WindowSnippet:
-    return WindowSnippet(**_extract_values(window, {
-        'label': 'Label/text()',
-        'construction_type_code': 'Construction/Type/@idref',
-        'construction_type_value': 'Construction/Type/text()',
-        'rsi': 'Construction/Type/@rValue',
-        'width': 'Measurements/@width',
-        'height': 'Measurements/@height',
-    }))
 
 
 def _heated_floor_area_snippet(heated_floor_area: etree._Element) -> HeatedFloorSnippet:
@@ -183,7 +150,7 @@ def snip_house(house: etree._Element) -> HouseSnippet:
         floors=[etree.tostring(node, encoding='unicode') for node in floors],
         walls=[etree.tostring(node, encoding='unicode') for node in walls],
         doors=[etree.tostring(node, encoding='unicode') for node in doors],
-        windows=[_window_snippet(node) for node in windows],
+        windows=[etree.tostring(node, encoding='unicode') for node in windows],
         heated_floor_area=_heated_floor_area_snippet(heated_floor_area[0]) if heated_floor_area else None,
         heating_cooling=heating_cooling_string,
         ventilation=ventilation_strings,

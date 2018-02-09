@@ -73,15 +73,17 @@ def door_input() -> typing.List[str]:
 
 
 @pytest.fixture
-def window_input() -> typing.Dict[str, str]:
-    return {
-        'label': 'East0001',
-        'constructionTypeCode': 'Code 12',
-        'constructionTypeValue': '234002',
-        'rsi': '0.4779',
-        'width': '1967.738',
-        'height': '1322.0699',
-    }
+def window_input() -> typing.List[str]:
+    doc = """
+    <Window>
+        <Label>East0001</Label>
+        <Construction>
+            <Type idref='Code 12' rValue='0.4779'>234002</Type>
+        </Construction>
+        <Measurements width='1967.738' height='1322.0699' />
+    </Window>
+    """
+    return [doc]
 
 
 @pytest.fixture
@@ -237,7 +239,7 @@ def sample_input_d(ceiling_input: typing.List[str],
                    floor_input: typing.List[str],
                    wall_input: typing.List[str],
                    door_input: typing.List[str],
-                   window_input: typing.Dict[str, str],
+                   window_input: typing.List[str],
                    heated_floor_area_input: typing.Dict[str, str],
                    heating_cooling_input: str,
                    raw_codes: typing.Dict[str, typing.List[typing.Dict[str, str]]]) -> reader.InputData:
@@ -255,9 +257,7 @@ def sample_input_d(ceiling_input: typing.List[str],
         'floors': floor_input,
         'walls': wall_input,
         'doors': door_input,
-        'windows': [
-            window_input
-        ],
+        'windows': window_input,
         'heating_cooling': heating_cooling_input,
         'heatedFloorArea': heated_floor_area_input,
 

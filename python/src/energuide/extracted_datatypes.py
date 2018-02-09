@@ -42,7 +42,7 @@ class _Door(typing.NamedTuple):
 
 
 class _Window(typing.NamedTuple):
-    label: typing.Optional[str]
+    label: str
     glazing_types_english: typing.Optional[str]
     glazing_types_french: typing.Optional[str]
     coatings_tints_english: typing.Optional[str]
@@ -55,9 +55,9 @@ class _Window(typing.NamedTuple):
     type_french: typing.Optional[str]
     frame_material_english: typing.Optional[str]
     frame_material_french: typing.Optional[str]
-    rsi: typing.Optional[float]
-    width: typing.Optional[float]
-    height: typing.Optional[float]
+    rsi: float
+    width: float
+    height: float
 
 
 class _HeatedFloorArea(typing.NamedTuple):
@@ -239,66 +239,54 @@ class HeatedFloorArea(_HeatedFloorArea):
 
 class Window(_Window):
 
-    SCHEMA = {
-        'type': 'list',
-        'required': True,
-        'schema': {
-            'type': 'dict',
-            'schema': {
-                'label': {'type': 'string', 'required': True, 'nullable': True},
-                'constructionTypeCode': {'type': 'string', 'required': False, 'nullable': True},
-                'constructionTypeValue': {'type': 'string', 'required': False, 'nullable': True},
-                'rsi': {'type': 'float', 'required': True, 'coerce': float, 'nullable': True},
-                'width': {'type': 'float', 'required': True, 'coerce': float, 'nullable': True},
-                'height': {'type': 'float', 'required': True, 'coerce': float, 'nullable': True},
-            }
-        }
-    }
+    _CODE_FIELDS = [
+        'glazing_types_english',
+        'glazing_types_english',
+        'glazing_types_french',
+        'coatings_tints_english',
+        'coatings_tints_french',
+        'fill_type_english',
+        'fill_type_french',
+        'spacer_type_english',
+        'spacer_type_french',
+        'type_english',
+        'type_french',
+        'frame_material_english',
+        'frame_material_french',
+    ]
 
     @classmethod
     def from_data(cls,
-                  window: typing.Dict[str, typing.Any],
+                  window: element.Element,
                   window_code: typing.Dict[str, WindowCode]) -> 'Window':
-        code_id = window.get('constructionTypeCode')
-        code = window_code.get(code_id)
+        code_id = window.xpath('Construction/Type/@idref')
+        code = window_code[code_id[0]] if code_id else None
 
-        glazing_types_english = code.glazing_types_english if code is not None else None
-        glazing_types_french = code.glazing_types_french if code is not None else None
-        coatings_tints_english = code.coatings_tints_english if code is not None else None
-        coatings_tints_french = code.coatings_tints_french if code is not None else None
-        fill_type_english = code.fill_type_english if code is not None else None
-        fill_type_french = code.fill_type_french if code is not None else None
-        spacer_type_english = code.spacer_type_english if code is not None else None
-        spacer_type_french = code.spacer_type_french if code is not None else None
-        type_english = code.type_english if code is not None else None
-        type_french = code.type_french if code is not None else None
-        frame_material_english = code.frame_material_english if code is not None else None
-        frame_material_french = code.frame_material_french if code is not None else None
+        code_data = {field: getattr(code, field) if code else None for field in cls._CODE_FIELDS}
+        code_data['label'] = window.findtext('Label')
+        code_data['rsi'] = float(window.xpath('Construction/Type/@rValue')[0])
+        code_data['width'] = float(window.xpath('Measurements/@width')[0]) * 0.001
+        code_data['height'] = float(window.xpath('Measurements/@height')[0]) * 0.001
 
-        return Window(
-            label=window['label'],
-            glazing_types_english=glazing_types_english,
-            glazing_types_french=glazing_types_french,
-            coatings_tints_english=coatings_tints_english,
-            coatings_tints_french=coatings_tints_french,
-            fill_type_english=fill_type_english,
-            fill_type_french=fill_type_french,
-            spacer_type_english=spacer_type_english,
-            spacer_type_french=spacer_type_french,
-            type_english=type_english,
-            type_french=type_french,
-            frame_material_english=frame_material_english,
-            frame_material_french=frame_material_french,
-            rsi=window['rsi'],
-            width=(window['width'] * 0.001) if (window['width'] is not None) else None,
-            height=(window['height']* 0.001) if (window['height'] is not None) else None,
-        )
+        return Window(**code_data)
+
+    @property
+    def r_value(self) -> float:
+        return self.rsi * _RSI_MULTIPLIER
+
+    @property
+    def area_metres(self) -> float:
+        return self.width * self.height
+
+    @property
+    def area_feet(self) -> float:
+        return self.area_metres * _FEET_SQUARED_MULTIPLIER
 
     def to_dict(self) -> typing.Dict[str, typing.Any]:
         return {
             'label': self.label,
             'rsi': self.rsi,
-            'rvalue': (self.rsi * _RSI_MULTIPLIER) if (self.rsi is not None) else None,
+            'rvalue': self.r_value,
             'glazingTypesEnglish': self.glazing_types_english,
             'glazingTypesFrench': self.glazing_types_french,
             'coatingsTintsEnglish': self.coatings_tints_english,
@@ -311,9 +299,8 @@ class Window(_Window):
             'typeFrench': self.type_french,
             'frameMaterialEnglish': self.frame_material_english,
             'frameMaterialFrench': self.frame_material_french,
-            'areaMetres': self.width * self.height,
-            'areaFeet': (self.width * self.height * _FEET_SQUARED_MULTIPLIER)
-                        if (self.width is not None and self.height is not None) else None,
+            'areaMetres': self.area_metres,
+            'areaFeet': self.area_feet,
             'width': self.width,
             'height': self.height,
         }

@@ -65,26 +65,11 @@ def test_wall_snippet(house: etree._Element) -> None:
 def test_window_snippet(house: etree._Element) -> None:
     output = snippets.snip_house(house)
     assert len(output.windows) == 10
-    assert sorted(output.windows, key=lambda row: row.label)[0] == snippets.WindowSnippet(
-        label='East0001',
-        construction_type_code='Code 12',
-        construction_type_value='234002',
-        rsi='0.4779',
-        height='1967.738',
-        width='1322.0699',
-    )
-
-
-def test_window_snippet_to_dict(house: etree._Element) -> None:
-    output = snippets.snip_house(house)
-    assert sorted(output.windows, key=lambda row: row.label)[0].to_dict() == {
-        'label': 'East0001',
-        'constructionTypeCode': 'Code 12',
-        'constructionTypeValue': '234002',
-        'rsi': '0.4779',
-        'height': '1967.738',
-        'width': '1322.0699',
-    }
+    checker = validator.DwellingValidator({
+        'windows': {'type': 'list', 'required': True, 'schema': {'type': 'xml', 'coerce': 'parse_xml'}}
+    }, allow_unknown=True)
+    doc = {'windows': output.windows}
+    assert checker.validate(doc)
 
 
 def test_heated_floor_area_snippet(house: etree._Element) -> None:
