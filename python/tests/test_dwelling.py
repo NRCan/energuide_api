@@ -177,6 +177,49 @@ def heating_cooling_input() -> str:
 
 
 @pytest.fixture
+def ventilation_input() -> typing.List[str]:
+    doc = """
+<Hrv supplyFlowrate="220" exhaustFlowrate="220" fanPower1="509.14" isDefaultFanpower="true" isEnergyStar="false" isHomeVentilatingInstituteCertified="false" isSupplemental="false" temperatureCondition1="0" temperatureCondition2="-25" fanPower2="624.08" efficiency1="55" efficiency2="45" preheaterCapacity="0" lowTempVentReduction="0" coolingEfficiency="25">
+    <EquipmentInformation />
+    <VentilatorType code="1">
+        <English>HRV</English>
+        <French>VRC</French>
+    </VentilatorType>
+    <ColdAirDucts>
+        <Supply length="1.5" diameter="152.4" insulation="0.7">
+            <Location code="4">
+                <English>Main floor</English>
+                <French>Rez-de-chaussée</French>
+            </Location>
+            <Type code="1">
+                <English>Flexible</English>
+                <French>Flexible</French>
+            </Type>
+            <Sealing code="2">
+                <English>Sealed</English>
+                <French>Scellé</French>
+            </Sealing>
+        </Supply>
+        <Exhaust length="1.5" diameter="152.4" insulation="0.7">
+            <Location code="4">
+                <English>Main floor</English>
+                <French>Rez-de-chaussée</French>
+            </Location>
+            <Type code="1">
+                <English>Flexible</English>
+                <French>Flexible</French>
+            </Type>
+            <Sealing code="2">
+                <English>Sealed</English>
+                <French>Scellé</French>
+            </Sealing>
+        </Exhaust>
+    </ColdAirDucts>
+</Hrv>
+    """
+    return [doc]
+
+@pytest.fixture
 def raw_codes() -> typing.Dict[str, typing.List[typing.Dict[str, str]]]:
     return {
         'wall': [
@@ -240,6 +283,7 @@ def sample_input_d(ceiling_input: typing.List[str],
                    window_input: typing.Dict[str, str],
                    heated_floor_area_input: typing.Dict[str, str],
                    heating_cooling_input: str,
+                   ventilation_input: typing.List[str],
                    raw_codes: typing.Dict[str, typing.List[typing.Dict[str, str]]]) -> reader.InputData:
     return {
         'EVAL_ID': '123',
@@ -260,6 +304,7 @@ def sample_input_d(ceiling_input: typing.List[str],
         ],
         'heating_cooling': heating_cooling_input,
         'heatedFloorArea': heated_floor_area_input,
+        'ventilations': ventilation_input,
 
         'codes': raw_codes,
     }
@@ -407,6 +452,14 @@ class TestParsedDwellingDataRow:
                 area_above_grade=185.8,
                 area_below_grade=92.9,
             ),
+            ventilations=[
+                extracted_datatypes.Ventilation(
+                    type_english='Heat recovery ventilator',
+                    type_french='Ventilateur-récupérateur de chaleur',
+                    air_flow_rate=220,
+                    efficiency=55,
+                )
+            ]
         )
 
     def test_bad_postal_code(self, sample_input_d: reader.InputData) -> None:
