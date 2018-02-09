@@ -45,24 +45,11 @@ def test_ceiling_snippet(house: etree._Element) -> None:
 def test_floor_snippet(house: etree._Element) -> None:
     output = snippets.snip_house(house)
     assert len(output.floors) == 1
-    assert output.floors[0] == snippets.FloorSnippet(
-        label='Rm over garage',
-        nominal_rsi='2.11',
-        effective_rsi='2.61',
-        area='9.2903',
-        length='3.048',
-    )
-
-
-def test_floor_snippet_to_dict(house: etree._Element) -> None:
-    output = snippets.snip_house(house)
-    assert output.floors[0].to_dict() == {
-        'label': 'Rm over garage',
-        'nominalRsi': '2.11',
-        'effectiveRsi': '2.61',
-        'area': '9.2903',
-        'length': '3.048',
-    }
+    checker = validator.DwellingValidator({
+        'floors': {'type': 'list', 'required': True, 'schema': {'type': 'xml', 'coerce': 'parse_xml'}}
+    }, allow_unknown=True)
+    doc = {'floors': output.floors}
+    assert checker.validate(doc)
 
 
 def test_wall_snippet(house: etree._Element) -> None:

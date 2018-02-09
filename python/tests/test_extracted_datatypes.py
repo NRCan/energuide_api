@@ -235,23 +235,33 @@ class TestCeiling:
 class TestFloor:
 
     @pytest.fixture
-    def sample(self) -> typing.Dict[str, typing.Any]:
-        return {
-            'label': 'Rm over garage',
-            'nominalRsi': 2.46,
-            'effectiveRsi': 2.9181,
-            'area': 9.2903,
-            'length': 3.048,
-        }
+    def sample(self) -> element.Element:
+        doc = """
+        <Floor>
+            <Label>Rm over garage</Label>
+            <Construction>
+                <Type nominalInsulation='2.46' rValue='2.9181' />
+            </Construction>
+            <Measurements area='9.2903' length='3.048' />
+        </Floor>
+        """
+        return element.Element.from_string(doc)
 
-    def test_from_data(self, sample: typing.Dict[str, typing.Any]) -> None:
+    def test_from_data(self, sample: element.Element) -> None:
         output = extracted_datatypes.Floor.from_data(sample)
         assert output.label == 'Rm over garage'
         assert output.area_metres == 9.2903
 
-    def test_to_dict(self, sample: typing.Dict[str, typing.Any]) -> None:
+    def test_to_dict(self, sample: element.Element) -> None:
         output = extracted_datatypes.Floor.from_data(sample).to_dict()
-        assert output['areaMetres'] == sample['area']
+        assert output['areaMetres'] == 9.2903
+
+    def test_properties(self, sample: element.Element) -> None:
+        output = extracted_datatypes.Floor.from_data(sample)
+        assert output.nominal_r == 13.96852780902
+        assert output.effective_r == 16.569740243699698
+        assert output.area_feet == 99.99996334435568
+        assert output.length_feet == 10.00000032
 
 
 class TestDoor:
