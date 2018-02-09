@@ -29,7 +29,7 @@ def code(doc: etree._ElementTree) -> etree._Element:
 
 def test_house_snippet_to_dict(house: etree._Element) -> None:
     output = snippets.snip_house(house).to_dict()
-    assert len(output) == 8
+    assert len(output) == 9
 
 
 def test_ceiling_snippet(house: etree._Element) -> None:
@@ -193,3 +193,15 @@ def test_ventilation_snippet(house: etree._Element) -> None:
     child_tags = {node.tag for node in doc}
     assert 'VentilatorType' in child_tags
     assert len(child_tags) == 3
+
+
+def test_water_heating(house: etree._Element) -> None:
+    output = snippets.snip_house(house)
+    assert len(output.water_heating) == 2
+    checker = validator.DwellingValidator({
+        'water_heating': {'type': 'list', 'required': True, 'schema': {'type': 'xml', 'coerce': 'parse_xml'}}
+    }, allow_unknown=True)
+    doc = {'water_heating': output.water_heating}
+    assert checker.validate(doc)
+    for water_heating in checker.document['water_heating']:
+        assert water_heating.attrib['hasDrainWaterHeatRecovery'] == 'false'

@@ -27,6 +27,7 @@ class _HouseSnippet(typing.NamedTuple):
     heated_floor_area: str
     heating_cooling: str
     ventilation: typing.List[str]
+    water_heating: typing.List[str]
 
 
 class HouseSnippet(_HouseSnippet):
@@ -41,6 +42,7 @@ class HouseSnippet(_HouseSnippet):
             'heatedFloorArea': self.heated_floor_area,
             'heating_cooling': self.heating_cooling,
             'ventilations': self.ventilation,
+            'waterHeating': self.water_heating,
         }
 
 
@@ -64,6 +66,10 @@ def snip_house(house: etree._Element) -> HouseSnippet:
     ventilation = house.xpath('Ventilation/WholeHouseVentilatorList/Hrv')
     ventilation_strings = [etree.tostring(hrv, encoding='unicode') for hrv in ventilation]
 
+    water_heating = house.xpath('Components/HotWater/*[self::Primary or self::Secondary]')
+    water_heating_strings = [etree.tostring(hot_water, encoding='unicode') for hot_water in water_heating]
+
+
     return HouseSnippet(
         ceilings=[etree.tostring(node, encoding='unicode') for node in ceilings],
         floors=[etree.tostring(node, encoding='unicode') for node in floors],
@@ -73,6 +79,7 @@ def snip_house(house: etree._Element) -> HouseSnippet:
         heated_floor_area=etree.tostring(heated_floor_area[0], encoding='unicode') if heated_floor_area else None,
         heating_cooling=heating_cooling_string,
         ventilation=ventilation_strings,
+        water_heating=water_heating_strings,
     )
 
 
