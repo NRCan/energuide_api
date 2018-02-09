@@ -32,7 +32,8 @@ DROP_FIELDS = ['ENTRYBY',
 REQUIRED_FIELDS = DROP_FIELDS + [
     'EVAL_ID',
     'EVAL_TYPE',
-    'BUILDER'
+    'BUILDER',
+    'DHWHPCOP',
 ]
 
 _SCHEMA = {field: {'type': 'string', 'required': True} for field in REQUIRED_FIELDS}
