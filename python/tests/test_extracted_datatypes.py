@@ -124,38 +124,45 @@ class TestHeatedFloorArea:
 class TestWindow:
 
     @pytest.fixture
-    def sample(self) -> typing.Dict[str, typing.Any]:
-        return {
-            'label': 'East0001',
-            'constructionTypeCode': 'Code 12',
-            'constructionTypeValue': '234002',
-            'rsi': 0.4779,
-            'width': 1967.738,
-            'height': 1322.0699,
-        }
+    def sample(self) -> element.Element:
+        doc = """
+        <Window>
+            <Label>East0001</Label>
+            <Construction>
+                <Type idref='Code 12' rValue='0.4779'>234002</Type>
+            </Construction>
+            <Measurements width='1967.738' height='1322.0699' />
+        </Window>
+        """
+        return element.Element.from_string(doc)
 
-    def test_from_data(self, sample: typing.Dict[str, typing.Any], codes: extracted_datatypes.Codes) -> None:
+    def test_from_data(self, sample: element.Element, codes: extracted_datatypes.Codes) -> None:
         output = extracted_datatypes.Window.from_data(sample, codes.window)
         assert output.label == 'East0001'
         assert output.width == 1.967738
         assert output.glazing_types_english == 'Double/double with 1 coat'
 
-    def test_missing_optional_fields(self,
-                                     sample: typing.Dict[str, typing.Any],
-                                     codes: extracted_datatypes.Codes) -> None:
-        window = sample.copy()
-        window.pop('constructionTypeCode')
-        window.pop('constructionTypeValue')
+    def test_missing_optional_fields(self, codes: extracted_datatypes.Codes) -> None:
+        doc = """
+        <Window>
+            <Label>East0001</Label>
+            <Construction>
+                <Type rValue='0.4779' />
+            </Construction>
+            <Measurements width='1967.738' height='1322.0699' />
+        </Window>
+        """
+        window = element.Element.from_string(doc)
         output = extracted_datatypes.Window.from_data(window, codes.window)
         assert output.label == 'East0001'
         assert output.width == 1.967738
         assert output.glazing_types_english is None
 
     def test_to_dict(self,
-                     sample: typing.Dict[str, typing.Any],
+                     sample: element.Element,
                      codes: extracted_datatypes.Codes) -> None:
         output = extracted_datatypes.Window.from_data(sample, codes.window).to_dict()
-        assert output['areaMetres'] == (sample['width'] * 0.001) * (sample['height'] * 0.001)
+        assert output['areaMetres'] == 2.6014871808862
 
 
 class TestWall:
