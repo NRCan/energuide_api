@@ -340,7 +340,13 @@ class TestVentilation:
 
     def test_to_dict(self, sample: element.Element) -> None:
         output = extracted_datatypes.Ventilation.from_data(sample).to_dict()
-        assert output['typeFrench'] == 'Ventilateur-récupérateur de chaleur'
+        assert output == {
+            'typeEnglish': 'Heat recovery ventilator',
+            'typeFrench': 'Ventilateur-récupérateur de chaleur',
+            'airFlowRateLps': 220,
+            'airFlowRateCfm': 466.1536,
+            'efficiency': 55,
+        }
 
     def test_properties(self, sample: element.Element) -> None:
         output = extracted_datatypes.Ventilation.from_data(sample)
