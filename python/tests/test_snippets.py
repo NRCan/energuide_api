@@ -203,5 +203,5 @@ def test_water_heating(house: etree._Element) -> None:
     }, allow_unknown=True)
     doc = {'water_heating': output.water_heating}
     assert checker.validate(doc)
-    for water_heating in checker.document['water_heating']:
-        assert water_heating.attrib['hasDrainWaterHeatRecovery'] == 'false'
+    assert all([water_heating.attrib['hasDrainWaterHeatRecovery'] == 'false'
+                for water_heating in checker.document['water_heating']])
