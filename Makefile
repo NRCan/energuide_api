@@ -1,22 +1,14 @@
 SHELL ?= /usr/bin/bash
 run:
-	cd api
-	yarn build && yarn start
+	$(MAKE) -C api run
+setup_python:
+	$(MAKE) -C python setup_python
+import_data:
+	$(MAKE) -C python import_data
 setup:
-	mongo energuide --eval "db.dwellings.drop()"
-	cd python
-	python3 -m venv env
-	source env/bin/activate
-	pip install -q -r requirements.txt
-	pip install -q -e .
-	energuide extract --infile tests/randomized_energuide_data.csv --outfile allthedata.zip
-	energuide load --filename allthedata.zip
-	rm allthedata.zip
+	$(MAKE) -C python setup_python import_data
 build:
-	cd api
-	yarn dockerize
+	$(MAKE) -C api build
 test:
-	cd api
-	yarn test
-	yarn integration
+	$(MAKE) -C api test
 .ONESHELL:
