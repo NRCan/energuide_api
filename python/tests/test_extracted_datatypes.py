@@ -17,10 +17,10 @@ def raw_wall_codes() -> typing.List[element.Element]:
                     <English>Wood frame</English>
                     <French>Ossature de bois</French>
                 </StructureType>
-                <ComponentType>
+                <ComponentTypeSize>
                     <English>38x89 mm (2x4 in)</English>
                     <French>38x89 (2x4)</French>
-                </ComponentType>
+                </ComponentTypeSize>
             </Layers>
         </Code>
         """,
@@ -32,10 +32,10 @@ def raw_wall_codes() -> typing.List[element.Element]:
                     <English>Metal frame</English>
                     <French>Ossature de métal</French>
                 </StructureType>
-                <ComponentType>
+                <ComponentTypeSize>
                     <English>38x89 mm (2x4 in)</English>
                     <French>38x89 (2x4)</French>
-                </ComponentType>
+                </ComponentTypeSize>
             </Layers>
         </Code>
         """,
