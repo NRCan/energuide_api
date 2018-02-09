@@ -42,7 +42,7 @@ class HouseSnippet(_HouseSnippet):
             'heatedFloorArea': self.heated_floor_area,
             'heating_cooling': self.heating_cooling,
             'ventilations': self.ventilation,
-            'waterHeating': self.water_heating,
+            'waterHeatings': self.water_heating,
         }
 
 

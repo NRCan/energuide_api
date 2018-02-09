@@ -1,5 +1,84 @@
+import enum
 import typing
 from energuide import element
+
+
+class WaterHeaterType(enum.Enum):
+    NOT_APPLICABLE = ""
+    ELECTRICITY_CONVENTIONAL_TANK_ENGLISH = "Electric storage tank"
+    ELECTRICITY_CONVENTIONAL_TANK_FRENCH = "Réservoir électrique"
+    ELECTRICITY_CONSERVER_TANK_ENGLISH = "Electric storage tank"
+    ELECTRICITY_CONSERVER_TANK_FRENCH = "Réservoir électrique"
+    ELECTRICITY_INSTANTANEOUS_ENGLISH = "Electric tankless water heater"
+    ELECTRICITY_INSTANTANEOUS_FRENCH = "Chauffe-eau électrique sans réservoir"
+    ELECTRICITY_TANKLESS_HEAT_PUMP_ENGLISH = "Electric tankless heat pump"
+    ELECTRICITY_TANKLESS_HEAT_PUMP_FRENCH = "Thermopompe électrique sans réservoir"
+    ELECTRICITY_HEAT_PUMP_ENGLISH = "Electric heat pump"
+    ELECTRICITY_HEAT_PUMP_FRENCH = "Thermopompe électrique"
+    ELECTRICITY_ADDON_HEAT_PUMP_ENGLISH = "Integrated heat pump"
+    ELECTRICITY_ADDON_HEAT_PUMP_FRENCH = "Thermopompe intégrée"
+    NATURAL_GAS_CONVENTIONAL_TANK_ENGLISH = "Natural gas storage tank"
+    NATURAL_GAS_CONVENTIONAL_TANK_FRENCH = "Réservoir au gaz naturel"
+    NATURAL_GAS_CONVENTIONAL_TANK_PILOT_ENGLISH = "Natural gas storage tank with pilot"
+    NATURAL_GAS_CONVENTIONAL_TANK_PILOT_FRENCH = "Réservoir au gaz naturel avec veilleuse"
+    NATURAL_GAS_TANKLESS_COIL_ENGLISH = "Natural gas tankless coil"
+    NATURAL_GAS_TANKLESS_COIL_FRENCH = "Serpentin sans réservoir au gaz naturel"
+    NATURAL_GAS_INSTANTANEOUS_ENGLISH = "Natural gas tankless"
+    NATURAL_GAS_INSTANTANEOUS_FRENCH = "Chauffe-eau instantané au gaz naturel"
+    NATURAL_GAS_INSTANTANEOUS_CONDENSING_ENGLISH = "Natural gas tankless"
+    NATURAL_GAS_INSTANTANEOUS_CONDENSING_FRENCH = "Chauffe-eau instantané au gaz naturel"
+    NATURAL_GAS_INSTANTANEOUS_PILOT_ENGLISH = "Natural gas tankless with pilot"
+    NATURAL_GAS_INSTANTANEOUS_PILOT_FRENCH = "Chauffe-eau instantané au gaz naturel avec veilleuse"
+    NATURAL_GAS_INDUCED_DRAFT_FAN_ENGLISH = "Natural gas power vented storage tank"
+    NATURAL_GAS_INDUCED_DRAFT_FAN_FRENCH = "Réservoir au gaz naturel à évacuation forcée"
+    NATURAL_GAS_INDUCED_DRAFT_FAN_PILOT_ENGLISH = "Natural gas power vented storage tank with pilot"
+    NATURAL_GAS_INDUCED_DRAFT_FAN_PILOT_FRENCH = "Réservoir au gaz naturel à évacuation forcée avec veilleuse"
+    NATURAL_GAS_DIRECT_VENT_SEALED_ENGLISH = "Natural gas direct vented storage tank"
+    NATURAL_GAS_DIRECT_VENT_SEALED_FRENCH = "Réservoir au gaz naturel à évacuation directe"
+    NATURAL_GAS_DIRECT_VENT_SEALED_PILOT_ENGLISH = "Natural gas direct vented storage tank with pilot"
+    NATURAL_GAS_DIRECT_VENT_SEALED_PILOT_FRENCH = "Réservoir au gaz naturel à évacuation directe avec veilleuse"
+    NATURAL_GAS_CONDENSING_ENGLISH = "Natural gas condensing storage tank"
+    NATURAL_GAS_CONDENSING_FRENCH = "Réservoir au gaz naturel à condensation"
+    OIL_CONVENTIONAL_TANK_ENGLISH = "Oil-fired storage tank"
+    OIL_CONVENTIONAL_TANK_FRENCH = "Réservoir au mazout"
+    OIL_TANKLESS_COIL_ENGLISH = "Oil-type tankless coil"
+    OIL_TANKLESS_COIL_FRENCH = "Serpentin sans réservoir au mazout"
+    PROPANE_CONVENTIONAL_TANK_ENGLISH = "Propane storage tank"
+    PROPANE_CONVENTIONAL_TANK_FRENCH = "Réservoir au propane"
+    PROPANE_CONVENTIONAL_TANK_PILOT_ENGLISH = "Propane storage tank with pilot"
+    PROPANE_CONVENTIONAL_TANK_PILOT_FRENCH = "Réservoir au propane avec veilleuse"
+    PROPANE_TANKLESS_COIL_ENGLISH = "Propane tankless coil"
+    PROPANE_TANKLESS_COIL_FRENCH = "Serpentin sans réservoir au propane"
+    PROPANE_INSTANTANEOUS_ENGLISH = "Propane tankless"
+    PROPANE_INSTANTANEOUS_FRENCH = "Chauffe-eau instantané au propane"
+    PROPANE_INSTANTANEOUS_CONDENSING_ENGLISH = "Propane condensing tankless"
+    PROPANE_INSTANTANEOUS_CONDENSING_FRENCH = "Chauffe-eau instantané au propane à condensation"
+    PROPANE_INSTANTANEOUS_PILOT_ENGLISH = "Propane tankless with pilot"
+    PROPANE_INSTANTANEOUS_PILOT_FRENCH = "Chauffe-eau instantané au propane avec veilleuse"
+    PROPANE_INDUCED_DRAFT_FAN_ENGLISH = "Propane power vented storage tank"
+    PROPANE_INDUCED_DRAFT_FAN_FRENCH = "Réservoir au propane à évacuation forcée"
+    PROPANE_INDUCED_DRAFT_FAN_PILOT_ENGLISH = "Propane power vented storage tank with pilot"
+    PROPANE_INDUCED_DRAFT_FAN_PILOT_FRENCH = "Réservoir au propane à évacuation forcée avec veilleuse"
+    PROPANE_DIRECT_VENT_SEALED_ENGLISH = "Propane power vented storage tank"
+    PROPANE_DIRECT_VENT_SEALED_FRENCH = "Réservoir au propane à évacuation directe"
+    PROPANE_DIRECT_VENT_SEALED_PILOT_ENGLISH = "Propane power vented storage tank with pilot"
+    PROPANE_DIRECT_VENT_SEALED_PILOT_FRENCH = "Réservoir au propane à évacuation directe avec veilleuse"
+    PROPANE_CONDENSING_ENGLISH = "Propane condensing storage tank"
+    PROPANE_CONDENSING_FRENCH = "Réservoir au propane à condensation"
+    WOOD_SPACE_HEATING_FIREPLACE_ENGLISH = "Fireplace"
+    WOOD_SPACE_HEATING_FIREPLACE_FRENCH = "Foyer"
+    WOOD_SPACE_HEATING_WOOD_STOVE_WATER_COIL_ENGLISH = "Wood stove water coil"
+    WOOD_SPACE_HEATING_WOOD_STOVE_WATER_COIL_FRENCH = "Poêle à bois avec serpentin à l'eau"
+    WOOD_SPACE_HEATING_INDOOR_WOOD_BOILER_ENGLISH = "Indoor wood boiler"
+    WOOD_SPACE_HEATING_INDOOR_WOOD_BOILER_FRENCH = "Chaudière intérieure au bois"
+    WOOD_SPACE_HEATING_OUTDOOR_WOOD_BOILER_ENGLISH = "Outdoor wood boiler"
+    WOOD_SPACE_HEATING_OUTDOOR_WOOD_BOILER_FRENCH = "Chaudière extérieure au bois"
+    WOOD_SPACE_HEATING_WOOD_HOT_WATER_TANK_ENGLISH = "Wood-fired water storage tank"
+    WOOD_SPACE_HEATING_WOOD_HOT_WATER_TANK_FRENCH = "Réservoir à eau chaude au bois"
+    SOLAR_COLLECTOR_SYSTEM_ENGLISH = "Solar domestic water heater"
+    SOLAR_COLLECTOR_SYSTEM_FRENCH = "Chauffe-eau solaire domestique"
+    CSA_DHW_ENGLISH = "Certified combo system, space and domestic water heating"
+    CSA_DHW_FRENCH = "Système combiné certifié pour le chauffage des locaux et de l’eau"
 
 
 class _Ceiling(typing.NamedTuple):
@@ -98,11 +177,19 @@ class _WindowCode(typing.NamedTuple):
     frame_material_french: typing.Optional[str]
 
 
+class _WaterHeating(typing.NamedTuple):
+    type_english: str
+    type_french: str
+    tank_volume: float
+    efficiency: float
+
+
 _RSI_MULTIPLIER = 5.678263337
 _CFM_MULTIPLIER = 2.11888
 _FEET_MULTIPLIER = 3.28084
 _FEET_SQUARED_MULTIPLIER = _FEET_MULTIPLIER**2
 _MILLIMETRES_TO_METRES = 1000
+_LITRE_TO_USG = 0.264172
 
 
 class WallCode(_WallCode):
@@ -494,5 +581,211 @@ class Ventilation(_Ventilation):
             'typeFrench': self.type_french,
             'airFlowRateLps': self.air_flow_rate,
             'airFlowRateCfm': self.air_flow_rate_cmf,
+            'efficiency': self.efficiency,
+        }
+
+
+class WaterHeating(_WaterHeating):
+
+    _TYPE_MAP = {
+        ("Electricity", "Not applicable"): (
+            WaterHeaterType.NOT_APPLICABLE.value,
+            WaterHeaterType.NOT_APPLICABLE.value,
+        ),
+        ("Electricity", "Conventional tank"): (
+            WaterHeaterType.ELECTRICITY_CONVENTIONAL_TANK_ENGLISH.value,
+            WaterHeaterType.ELECTRICITY_CONVENTIONAL_TANK_FRENCH.value,
+        ),
+        ("Electricity", "Conserver tank"): (
+            WaterHeaterType.ELECTRICITY_CONSERVER_TANK_ENGLISH.value,
+            WaterHeaterType.ELECTRICITY_CONSERVER_TANK_FRENCH.value,
+        ),
+        ("Electricity", "Instantaneous"): (
+            WaterHeaterType.ELECTRICITY_INSTANTANEOUS_ENGLISH.value,
+            WaterHeaterType.ELECTRICITY_INSTANTANEOUS_FRENCH.value,
+        ),
+        ("Electricity", "Tankless heat pump"): (
+            WaterHeaterType.ELECTRICITY_TANKLESS_HEAT_PUMP_ENGLISH.value,
+            WaterHeaterType.ELECTRICITY_TANKLESS_HEAT_PUMP_FRENCH.value,
+        ),
+        ("Electricity", "Heat pump"): (
+            WaterHeaterType.ELECTRICITY_HEAT_PUMP_ENGLISH.value,
+            WaterHeaterType.ELECTRICITY_HEAT_PUMP_FRENCH.value,
+        ),
+        ("Electricity", "Add-on heat pump"): (
+            WaterHeaterType.ELECTRICITY_ADDON_HEAT_PUMP_ENGLISH.value,
+            WaterHeaterType.ELECTRICITY_ADDON_HEAT_PUMP_FRENCH.value,
+        ),
+        ("Natural gas", "Not applicable"): (
+            WaterHeaterType.NOT_APPLICABLE.value,
+            WaterHeaterType.NOT_APPLICABLE.value,
+        ),
+        ("Natural gas", "Conventional tank"): (
+            WaterHeaterType.NATURAL_GAS_CONVENTIONAL_TANK_ENGLISH.value,
+            WaterHeaterType.NATURAL_GAS_CONVENTIONAL_TANK_FRENCH.value,
+        ),
+        ("Natural gas", "Conventional tank (pilot)"): (
+            WaterHeaterType.NATURAL_GAS_CONVENTIONAL_TANK_PILOT_ENGLISH.value,
+            WaterHeaterType.NATURAL_GAS_CONVENTIONAL_TANK_PILOT_FRENCH.value,
+        ),
+        ("Natural gas", "Tankless coil"): (
+            WaterHeaterType.NATURAL_GAS_TANKLESS_COIL_ENGLISH.value,
+            WaterHeaterType.NATURAL_GAS_TANKLESS_COIL_FRENCH.value,
+        ),
+        ("Natural gas", "Instantaneous"): (
+            WaterHeaterType.NATURAL_GAS_INSTANTANEOUS_ENGLISH.value,
+            WaterHeaterType.NATURAL_GAS_INSTANTANEOUS_FRENCH.value,
+        ),
+        ("Natural gas", "Instantaneous (condensing)"): (
+            WaterHeaterType.NATURAL_GAS_INSTANTANEOUS_CONDENSING_ENGLISH.value,
+            WaterHeaterType.NATURAL_GAS_INSTANTANEOUS_CONDENSING_FRENCH.value,
+        ),
+        ("Natural gas", "Instantaneous (pilot)"): (
+            WaterHeaterType.NATURAL_GAS_INSTANTANEOUS_PILOT_ENGLISH.value,
+            WaterHeaterType.NATURAL_GAS_INSTANTANEOUS_PILOT_FRENCH.value,
+        ),
+        ("Natural gas", "Induced draft fan"): (
+            WaterHeaterType.NATURAL_GAS_INDUCED_DRAFT_FAN_ENGLISH.value,
+            WaterHeaterType.NATURAL_GAS_INDUCED_DRAFT_FAN_FRENCH.value,
+        ),
+        ("Natural gas", "Induced draft fan (pilot)"): (
+            WaterHeaterType.NATURAL_GAS_INDUCED_DRAFT_FAN_PILOT_ENGLISH.value,
+            WaterHeaterType.NATURAL_GAS_INDUCED_DRAFT_FAN_PILOT_FRENCH.value,
+        ),
+        ("Natural gas", "Direct vent (sealed)"): (
+            WaterHeaterType.NATURAL_GAS_DIRECT_VENT_SEALED_ENGLISH.value,
+            WaterHeaterType.NATURAL_GAS_DIRECT_VENT_SEALED_FRENCH.value,
+        ),
+        ("Natural gas", "Direct vent (sealed, pilot)"): (
+            WaterHeaterType.NATURAL_GAS_DIRECT_VENT_SEALED_PILOT_ENGLISH.value,
+            WaterHeaterType.NATURAL_GAS_DIRECT_VENT_SEALED_PILOT_FRENCH.value,
+        ),
+        ("Natural gas", "Condensing"): (
+            WaterHeaterType.NATURAL_GAS_CONDENSING_ENGLISH.value,
+            WaterHeaterType.NATURAL_GAS_CONDENSING_FRENCH.value,
+        ),
+        ("Oil", "Not applicable"): (
+            WaterHeaterType.NOT_APPLICABLE.value,
+            WaterHeaterType.NOT_APPLICABLE.value,
+        ),
+        ("Oil", "Conventional tank"): (
+            WaterHeaterType.OIL_CONVENTIONAL_TANK_ENGLISH.value,
+            WaterHeaterType.OIL_CONVENTIONAL_TANK_FRENCH.value,
+        ),
+        ("Oil", "Tankless coil"): (
+            WaterHeaterType.OIL_TANKLESS_COIL_ENGLISH.value,
+            WaterHeaterType.OIL_TANKLESS_COIL_FRENCH.value,
+        ),
+        ("Propane", "Not applicable"): (
+            WaterHeaterType.NOT_APPLICABLE.value,
+            WaterHeaterType.NOT_APPLICABLE.value,
+        ),
+        ("Propane", "Conventional tank"): (
+            WaterHeaterType.PROPANE_CONVENTIONAL_TANK_ENGLISH.value,
+            WaterHeaterType.PROPANE_CONVENTIONAL_TANK_FRENCH.value,
+        ),
+        ("Propane", "Conventional tank (pilot)"): (
+            WaterHeaterType.PROPANE_CONVENTIONAL_TANK_PILOT_ENGLISH.value,
+            WaterHeaterType.PROPANE_CONVENTIONAL_TANK_PILOT_FRENCH.value,
+        ),
+        ("Propane", "Tankless coil"): (
+            WaterHeaterType.PROPANE_TANKLESS_COIL_ENGLISH.value,
+            WaterHeaterType.PROPANE_TANKLESS_COIL_FRENCH.value,
+        ),
+        ("Propane", "Instantaneous"): (
+            WaterHeaterType.PROPANE_INSTANTANEOUS_ENGLISH.value,
+            WaterHeaterType.PROPANE_INSTANTANEOUS_FRENCH.value,
+        ),
+        ("Propane", "Instantaneous (condensing)"): (
+            WaterHeaterType.PROPANE_INSTANTANEOUS_CONDENSING_ENGLISH.value,
+            WaterHeaterType.PROPANE_INSTANTANEOUS_CONDENSING_FRENCH.value,
+        ),
+        ("Propane", "Instantaneous (pilot)"): (
+            WaterHeaterType.PROPANE_INSTANTANEOUS_PILOT_ENGLISH.value,
+            WaterHeaterType.PROPANE_INSTANTANEOUS_PILOT_FRENCH.value,
+        ),
+        ("Propane", "Induced draft fan"): (
+            WaterHeaterType.PROPANE_INDUCED_DRAFT_FAN_ENGLISH.value,
+            WaterHeaterType.PROPANE_INDUCED_DRAFT_FAN_FRENCH.value,
+        ),
+        ("Propane", "Induced draft fan (pilot)"): (
+            WaterHeaterType.PROPANE_INDUCED_DRAFT_FAN_PILOT_ENGLISH.value,
+            WaterHeaterType.PROPANE_INDUCED_DRAFT_FAN_PILOT_FRENCH.value,
+        ),
+        ("Propane", "Direct vent (sealed)"): (
+            WaterHeaterType.PROPANE_DIRECT_VENT_SEALED_ENGLISH.value,
+            WaterHeaterType.PROPANE_DIRECT_VENT_SEALED_FRENCH.value,
+        ),
+        ("Propane", "Direct vent (sealed, pilot)"): (
+            WaterHeaterType.PROPANE_DIRECT_VENT_SEALED_PILOT_ENGLISH.value,
+            WaterHeaterType.PROPANE_DIRECT_VENT_SEALED_PILOT_FRENCH.value,
+        ),
+        ("Propane", "Condensing"): (
+            WaterHeaterType.PROPANE_CONDENSING_ENGLISH.value,
+            WaterHeaterType.PROPANE_CONDENSING_FRENCH.value,
+        ),
+        ("Wood Space Heating (Mixed Wood, Hardwood, Soft Wood or Wood Pellets)", "Not applicable"): (
+            WaterHeaterType.NOT_APPLICABLE.value,
+            WaterHeaterType.NOT_APPLICABLE.value,
+        ),
+        ("Wood Space Heating (Mixed Wood, Hardwood, Soft Wood or Wood Pellets)", "Fireplace"): (
+            WaterHeaterType.WOOD_SPACE_HEATING_FIREPLACE_ENGLISH.value,
+            WaterHeaterType.WOOD_SPACE_HEATING_FIREPLACE_FRENCH.value,
+        ),
+        ("Wood Space Heating (Mixed Wood, Hardwood, Soft Wood or Wood Pellets)", "Wood stove water coil"): (
+            WaterHeaterType.WOOD_SPACE_HEATING_WOOD_STOVE_WATER_COIL_ENGLISH.value,
+            WaterHeaterType.WOOD_SPACE_HEATING_WOOD_STOVE_WATER_COIL_FRENCH.value,
+        ),
+        ("Wood Space Heating (Mixed Wood, Hardwood, Soft Wood or Wood Pellets)", "Indoor wood boiler"): (
+            WaterHeaterType.WOOD_SPACE_HEATING_INDOOR_WOOD_BOILER_ENGLISH.value,
+            WaterHeaterType.WOOD_SPACE_HEATING_INDOOR_WOOD_BOILER_FRENCH.value,
+        ),
+        ("Wood Space Heating (Mixed Wood, Hardwood, Soft Wood or Wood Pellets)", "Outdoor wood boiler"): (
+            WaterHeaterType.WOOD_SPACE_HEATING_OUTDOOR_WOOD_BOILER_ENGLISH.value,
+            WaterHeaterType.WOOD_SPACE_HEATING_OUTDOOR_WOOD_BOILER_FRENCH.value,
+        ),
+        ("Wood Space Heating (Mixed Wood, Hardwood, Soft Wood or Wood Pellets)", "Wood hot water tank"): (
+            WaterHeaterType.WOOD_SPACE_HEATING_WOOD_HOT_WATER_TANK_ENGLISH.value,
+            WaterHeaterType.WOOD_SPACE_HEATING_WOOD_HOT_WATER_TANK_FRENCH.value,
+        ),
+        ("Solar", "Solar Collector System"): (
+            WaterHeaterType.SOLAR_COLLECTOR_SYSTEM_ENGLISH.value,
+            WaterHeaterType.SOLAR_COLLECTOR_SYSTEM_FRENCH.value,
+        ),
+        ("CSA P9-11 tested Combo Heat/DHW", "CSA P9-11 tested Combo Heat/DHW"): (
+            WaterHeaterType.CSA_DHW_ENGLISH.value,
+            WaterHeaterType.CSA_DHW_FRENCH.value,
+        ),
+    }
+
+    @classmethod
+    def from_data(cls, water_heating: element.Element) -> 'WaterHeating':
+        assert water_heating.attrib['hasDrainWaterHeatRecovery'] == 'false'
+
+        energy_type = water_heating.xpath('EnergySource/English/text()')[0]
+        tank_type = water_heating.xpath('TankType/English/text()')[0]
+
+        type_english, type_french = cls._TYPE_MAP[(energy_type, tank_type)]
+        volume = float(water_heating.xpath('TankVolume/@value')[0])
+        efficiency = float(water_heating.xpath('EnergyFactor/@value')[0])
+
+        return WaterHeating(
+            type_english=type_english,
+            type_french=type_french,
+            tank_volume=volume,
+            efficiency=efficiency,
+        )
+
+    @property
+    def tank_volume_usg(self):
+        return self.tank_volume * _LITRE_TO_USG
+
+
+    def to_dict(self) -> typing.Dict[str, typing.Union[str, float]]:
+        return {
+            'typeEnglish': self.type_english,
+            'typeFrench': self.type_french,
+            'tankVolumeLitres': self.tank_volume,
+            'TankVolumeUsg': self.tank_volume_usg,
             'efficiency': self.efficiency,
         }
