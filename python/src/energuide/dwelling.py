@@ -105,7 +105,7 @@ class ParsedDwellingDataRow(_ParsedDwellingDataRow):
 
         'ceilings': {'type': 'list', 'required': True, 'schema': {'type': 'xml', 'coerce': 'parse_xml'}},
         'floors': {'type': 'list', 'required': True, 'schema': {'type': 'xml', 'coerce': 'parse_xml'}},
-        'walls': Wall.SCHEMA,
+        'walls': {'type': 'list', 'required': True, 'schema': {'type': 'xml', 'coerce': 'parse_xml'}},
         'doors': Door.SCHEMA,
         'windows': Window.SCHEMA,
         'heatedFloorArea': HeatedFloorArea.SCHEMA,

@@ -55,28 +55,11 @@ def test_floor_snippet(house: etree._Element) -> None:
 def test_wall_snippet(house: etree._Element) -> None:
     output = snippets.snip_house(house)
     assert len(output.walls) == 3
-    assert sorted(output.walls, key=lambda row: row.label)[0] == snippets.WallSnippet(
-        label='End Wall',
-        construction_type_code='Code 1',
-        construction_type_value='1201101121',
-        effective_rsi='1.7435',
-        nominal_rsi='1.432',
-        perimeter='7.367',
-        height='1.2283',
-    )
-
-
-def test_wall_snippet_to_dict(house: etree._Element) -> None:
-    output = snippets.snip_house(house)
-    assert sorted(output.walls, key=lambda row: row.label)[0].to_dict() == {
-        'label': 'End Wall',
-        'constructionTypeCode': 'Code 1',
-        'constructionTypeValue': '1201101121',
-        'effectiveRsi': '1.7435',
-        'nominalRsi': '1.432',
-        'perimeter': '7.367',
-        'height': '1.2283',
-    }
+    checker = validator.DwellingValidator({
+        'walls': {'type': 'list', 'required': True, 'schema': {'type': 'xml', 'coerce': 'parse_xml'}}
+    }, allow_unknown=True)
+    doc = {'walls': output.walls}
+    assert checker.validate(doc)
 
 
 def test_window_snippet(house: etree._Element) -> None:
@@ -116,41 +99,6 @@ def test_heated_floor_area_snippet_to_dict(house: etree._Element) -> None:
         'aboveGrade': '185.8',
         'belowGrade': '92.9'
     }
-
-
-def test_user_specified_wall_snippet() -> None:
-    xml_text = """
-<House><Components>
-    <Wall>
-        <Label>Test Floor</Label>
-        <Construction>
-            <Type rValue="2.6892" nominalInsulation="3.3615">User specified</Type>
-        </Construction>
-    </Wall>
-</Components></House>
-    """
-
-    doc = etree.fromstring(xml_text)
-    output = snippets.snip_house(doc)
-
-    assert output == snippets.HouseSnippet(
-        ceilings=[],
-        floors=[],
-        windows=[],
-        walls=[snippets.WallSnippet(
-            label='Test Floor',
-            construction_type_code=None,
-            construction_type_value='User specified',
-            nominal_rsi='3.3615',
-            effective_rsi='2.6892',
-            perimeter=None,
-            height=None,
-        )],
-        doors=[],
-        heated_floor_area=None,
-        heating_cooling=None,
-        ventilation=[],
-    )
 
 
 def test_deeply_embedded_components() -> None:

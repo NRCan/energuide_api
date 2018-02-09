@@ -21,15 +21,15 @@ class _Floor(typing.NamedTuple):
 
 
 class _Wall(typing.NamedTuple):
-    label: typing.Optional[str]
+    label: str
     structure_type_english: typing.Optional[str]
     structure_type_french: typing.Optional[str]
     component_type_size_english: typing.Optional[str]
     component_type_size_french: typing.Optional[str]
-    nominal_rsi: typing.Optional[float]
-    effective_rsi: typing.Optional[float]
-    perimeter: typing.Optional[float]
-    height: typing.Optional[float]
+    nominal_rsi: float
+    effective_rsi: float
+    perimeter: float
+    height: float
 
 
 class _Door(typing.NamedTuple):
@@ -321,47 +321,43 @@ class Window(_Window):
 
 class Wall(_Wall):
 
-    SCHEMA = {
-        'type': 'list',
-        'required': True,
-        'schema': {
-            'type': 'dict',
-            'schema': {
-                'label':  {'type': 'string', 'required': True, 'nullable': True},
-                'constructionTypeCode':  {'type': 'string', 'required': False, 'nullable': True},
-                'constructionTypeNode':  {'type': 'string', 'required': False, 'nullable': True},
-                'nominalRsi':  {'type': 'float', 'required': True, 'coerce': float, 'nullable': True},
-                'effectiveRsi':  {'type': 'float', 'required': True, 'coerce': float, 'nullable': True},
-                'perimeter':  {'type': 'float', 'required': True, 'coerce': float, 'nullable': True},
-                'height':  {'type': 'float', 'required': True, 'coerce': float, 'nullable': True},
-            }
-        }
-    }
-
     @classmethod
     def from_data(cls,
-                  wall: typing.Dict[str, typing.Any],
+                  wall: element.Element,
                   wall_codes: typing.Dict[str, WallCode]) -> 'Wall':
 
-        code_id = wall.get('constructionTypeCode')
-        code = wall_codes.get(code_id)
-
-        structure_type_english = code.structure_type_english if code is not None else None
-        structure_type_french = code.structure_type_french if code is not None else None
-        component_type_size_english = code.component_type_size_english if code is not None else None
-        component_type_size_french = code.component_type_size_french if code is not None else None
+        code_id = wall.xpath('Construction/Type/@idref')
+        code: typing.Optional[WallCode] = None
+        if code_id:
+            code = wall_codes[code_id[0]]
 
         return Wall(
-            label=wall['label'],
-            structure_type_english=structure_type_english,
-            structure_type_french=structure_type_french,
-            component_type_size_english=component_type_size_english,
-            component_type_size_french=component_type_size_french,
-            nominal_rsi=wall['nominalRsi'],
-            effective_rsi=wall['effectiveRsi'],
-            perimeter=wall['perimeter'],
-            height=wall['height'],
+            label=wall.findtext('Label'),
+            structure_type_english=code.structure_type_english if code else None,
+            structure_type_french=code.structure_type_french if code else None,
+            component_type_size_english=code.component_type_size_english if code else None,
+            component_type_size_french=code.component_type_size_french if code else None,
+            nominal_rsi=float(wall.xpath('Construction/Type/@nominalInsulation')[0]),
+            effective_rsi=float(wall.xpath('Construction/Type/@rValue')[0]),
+            perimeter=float(wall.xpath('Measurements/@perimeter')[0]),
+            height=float(wall.xpath('Measurements/@height')[0]),
         )
+
+    @property
+    def nominal_r(self) -> float:
+        return self.nominal_rsi * _RSI_MULTIPLIER
+
+    @property
+    def effective_r(self) -> float:
+        return self.effective_rsi * _RSI_MULTIPLIER
+
+    @property
+    def area_metres(self) -> float:
+        return self.perimeter * self.height
+
+    @property
+    def area_feet(self) -> float:
+        return self.area_metres * _FEET_SQUARED_MULTIPLIER
 
     def to_dict(self) -> typing.Dict[str, typing.Any]:
         return {
@@ -371,12 +367,11 @@ class Wall(_Wall):
             'componentTypeSizeEnglish': self.component_type_size_english,
             'componentTypeSizeFrench': self.component_type_size_french,
             'nominalRsi': self.nominal_rsi,
-            'nominalR': (self.nominal_rsi * _RSI_MULTIPLIER) if self.nominal_rsi is not None else None,
+            'nominalR': self.nominal_r,
             'effectiveRsi': self.effective_rsi,
-            'effectiveR': (self.effective_rsi * _RSI_MULTIPLIER) if self.effective_rsi is not None else None,
-            'areaMetres': self.perimeter * self.height,
-            'areaFeet': (self.perimeter * self.height * _FEET_SQUARED_MULTIPLIER)
-                        if (self.perimeter is not None and self.height is not None) else None,
+            'effectiveR': self.effective_r,
+            'areaMetres': self.area_metres,
+            'areaFeet': self.area_feet,
             'perimeter': self.perimeter,
             'height': self.height,
         }
