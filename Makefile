@@ -1,4 +1,4 @@
-SHELL := /usr/bin/bash
+SHELL ?= /usr/bin/bash
 run:
 	cd api
 	yarn build && yarn start
