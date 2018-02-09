@@ -536,15 +536,31 @@ ENERGY STAR'),
     }
 
     @classmethod
+    def _derive_type_string(cls, energy_star: bool, institute_certified: bool) -> str:
+        if energy_star and institute_certified:
+            return ('Home Ventilating Institute listed ENERGY STAR certified heat recovery ventilator',
+                    'Ventilateur-récupérateur de chaleur répertorié par le Home Ventilating Institute \
+et certifiéENERGY STAR')
+        elif energy_star and not institute_certified:
+            return ('ENERGY STAR certified heat recovery ventilator',
+                    'Ventilateur-récupérateur de chaleur certifié ENERGY STAR')
+        elif not energy_star and institute_certified:
+            return ('Heat recovery ventilator certified by the Home Ventilating Institute',
+                    'Ventilateur-récupérateur de chaleur certifié par le Home Ventilating Institute')
+        else:
+            return ('Heat recovery ventilator', 'Ventilateur-récupérateur de chaleur')
+
+
+    @classmethod
     def from_data(cls, ventilation: element.Element) -> 'Ventilation':
-        energy_star = ventilation.xpath('@isEnergyStar')[0]
-        institute_certified = ventilation.xpath('@isHomeVentilatingInstituteCertified')[0]
+        energy_star = ventilation.xpath('@isEnergyStar')[0] == 'true'
+        institute_certified = ventilation.xpath('@isHomeVentilatingInstituteCertified')[0] == 'true'
         total_supply_flow = float(ventilation.xpath('@supplyFlowrate')[0])
 
         if total_supply_flow == 0:
             type_english, type_french = 'N/A', 'N/A'
         else:
-            type_english, type_french = cls._TYPE_MAP[energy_star][institute_certified]
+            type_english, type_french = cls._derive_type_string(energy_star, institute_certified)
 
         return Ventilation(
             type_english=type_english,
