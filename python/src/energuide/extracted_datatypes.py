@@ -94,6 +94,7 @@ class _WindowCode(typing.NamedTuple):
 _RSI_MULTIPLIER = 5.678263337
 _FEET_MULTIPLIER = 3.28084
 _FEET_SQUARED_MULTIPLIER = _FEET_MULTIPLIER**2
+_MILLIMETRES_TO_METRES = 1000
 
 
 class WallCode(_WallCode):
@@ -265,8 +266,8 @@ class Window(_Window):
         code_data = {field: getattr(code, field) if code else None for field in cls._CODE_FIELDS}
         code_data['label'] = window.findtext('Label')
         code_data['rsi'] = float(window.xpath('Construction/Type/@rValue')[0])
-        code_data['width'] = float(window.xpath('Measurements/@width')[0]) * 0.001
-        code_data['height'] = float(window.xpath('Measurements/@height')[0]) * 0.001
+        code_data['width'] = float(window.xpath('Measurements/@width')[0]) / _MILLIMETRES_TO_METRES
+        code_data['height'] = float(window.xpath('Measurements/@height')[0]) / _MILLIMETRES_TO_METRES
 
         return Window(**code_data)
 
