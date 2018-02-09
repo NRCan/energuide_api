@@ -127,6 +127,7 @@ class ParsedDwellingDataRow(_ParsedDwellingDataRow):
     def from_row(cls, row: reader.InputData) -> 'ParsedDwellingDataRow':
         checker = validator.DwellingValidator(cls._SCHEMA, allow_unknown=True, ignore_none_values=True)
         if not checker.validate(row):
+            # import pdb; pdb.set_trace()
             error_keys = ', '.join(checker.errors.keys())
             raise reader.InvalidInputDataException(f'Validator failed on keys: {error_keys}')
 
@@ -150,7 +151,7 @@ class ParsedDwellingDataRow(_ParsedDwellingDataRow):
             windows=[Window.from_data(window, codes.window) for window in parsed['windows']],
             heated_floor_area=HeatedFloorArea.from_data(parsed['heatedFloorArea']),
             ventilations=[Ventilation.from_data(ventilation) for ventilation in parsed['ventilations']],
-            water_heatings=[WaterHeating.from_data(water_heating) for water_heating in parsed['waterHeatings']],
+            water_heatings=WaterHeating.from_data(parsed['waterHeatings']),
         )
 
 

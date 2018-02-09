@@ -759,7 +759,7 @@ class WaterHeating(_WaterHeating):
     }
 
     @classmethod
-    def from_data(cls, water_heating: element.Element) -> 'WaterHeating':
+    def _from_data(cls, water_heating: element.Element) -> 'WaterHeating':
         assert water_heating.attrib['hasDrainWaterHeatRecovery'] == 'false'
 
         energy_type = water_heating.xpath('EnergySource/English/text()')[0]
@@ -775,6 +775,12 @@ class WaterHeating(_WaterHeating):
             tank_volume=volume,
             efficiency=efficiency,
         )
+
+    @classmethod
+    def from_data(cls, water_heating: element.Element) -> typing.List['WaterHeating']:
+        water_heatings = water_heating.xpath("*[self::Primary or self::Secondary]")
+        return [cls._from_data(water_heating) for water_heating in water_heatings]
+
 
     @property
     def tank_volume_usg(self):

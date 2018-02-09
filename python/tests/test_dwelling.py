@@ -224,34 +224,36 @@ def ventilation_input() -> typing.List[str]:
 @pytest.fixture
 def water_heating_input() -> typing.List[str]:
     doc = """
-<Primary hasDrainWaterHeatRecovery="false" insulatingBlanket="0" combinedFlue="false" flueDiameter="0" energyStar="false" ecoEnergy="false" userDefinedPilot="false" connectedUnitsDwhr="0">
-    <EquipmentInformation>
-        <Manufacturer>Wizard DHW man</Manufacturer>
-        <Model>Wizard DHW mod</Model>
-    </EquipmentInformation>
-    <EnergySource code="1">
-        <English>Electricity</English>
-        <French>Électricité</French>
-    </EnergySource>
-    <TankType code="2">
-        <English>Conventional tank</English>
-        <French>Réservoir classique</French>
-    </TankType>
-    <TankVolume code="4" value="189.3001">
-        <English>189.3 L, 41.6 Imp, 50 US gal</English>
-        <French>189.3 L, 41.6 imp, 50 gal ÉU</French>
-    </TankVolume>
-    <EnergyFactor code="1" value="0.8217" inputCapacity="0">
-        <English>Use defaults</English>
-        <French>Valeurs par défaut</French>
-    </EnergyFactor>
-    <TankLocation code="2">
-        <English>Basement</English>
-        <French>Sous-sol</French>
-    </TankLocation>
-</Primary>
+<HotWater>
+    <Primary hasDrainWaterHeatRecovery="false" insulatingBlanket="0" combinedFlue="false" flueDiameter="0" energyStar="false" ecoEnergy="false" userDefinedPilot="false" connectedUnitsDwhr="0">
+        <EquipmentInformation>
+            <Manufacturer>Wizard DHW man</Manufacturer>
+            <Model>Wizard DHW mod</Model>
+        </EquipmentInformation>
+        <EnergySource code="1">
+            <English>Electricity</English>
+            <French>Électricité</French>
+        </EnergySource>
+        <TankType code="2">
+            <English>Conventional tank</English>
+            <French>Réservoir classique</French>
+        </TankType>
+        <TankVolume code="4" value="189.3001">
+            <English>189.3 L, 41.6 Imp, 50 US gal</English>
+            <French>189.3 L, 41.6 imp, 50 gal ÉU</French>
+        </TankVolume>
+        <EnergyFactor code="1" value="0.8217" inputCapacity="0">
+            <English>Use defaults</English>
+            <French>Valeurs par défaut</French>
+        </EnergyFactor>
+        <TankLocation code="2">
+            <English>Basement</English>
+            <French>Sous-sol</French>
+        </TankLocation>
+    </Primary>
+</HotWater>
     """
-    return [doc]
+    return doc
 
 
 @pytest.fixture
@@ -365,7 +367,7 @@ def sample_input_d(ceiling_input: typing.List[str],
                    heated_floor_area_input: str,
                    heating_cooling_input: str,
                    ventilation_input: typing.List[str],
-                   water_heating_input: typing.List[str],
+                   water_heating_input: str,
                    raw_codes: typing.Dict[str, typing.List[str]]) -> reader.InputData:
 
     return {
