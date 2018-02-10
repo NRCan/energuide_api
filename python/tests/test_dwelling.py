@@ -545,8 +545,8 @@ class TestParsedDwellingDataRow:
             ],
             water_heatings=[
                 extracted_datatypes.WaterHeating(
-                    type_english='Electric storage tank',
-                    type_french='Réservoir électrique',
+                    type_english=extracted_datatypes.WaterHeaterType.ELECTRICITY_CONVENTIONAL_TANK_ENGLISH,
+                    type_french=extracted_datatypes.WaterHeaterType.ELECTRICITY_CONVENTIONAL_TANK_FRENCH,
                     tank_volume=189.3001,
                     efficiency=0.8217,
                 )

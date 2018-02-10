@@ -454,7 +454,7 @@ class TestWaterHeating:
 
     def test_from_data(self, sample: element.Element) -> None:
         output = extracted_datatypes.WaterHeating.from_data(sample)[0]
-        assert output.type_english == 'Electric storage tank'
+        assert output.type_english == extracted_datatypes.WaterHeaterType.ELECTRICITY_CONVENTIONAL_TANK_ENGLISH
         assert output.efficiency == 0.8217
 
     def test_to_dict(self, sample: element.Element) -> None:
@@ -463,10 +463,10 @@ class TestWaterHeating:
             'typeEnglish': 'Electric storage tank',
             'typeFrench': 'Réservoir électrique',
             'tankVolumeLitres': 189.3001,
-            'TankVolumeUsg': 50.0077860172,
+            'TankVolumeGallon': 50.0077860172,
             'efficiency': 0.8217,
         }
 
     def test_properties(self, sample: element.Element) -> None:
         output = extracted_datatypes.WaterHeating.from_data(sample)[0]
-        assert output.tank_volume_usg == 50.0077860172
+        assert output.tank_volume_gallon == 50.0077860172
