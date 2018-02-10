@@ -181,6 +181,7 @@ def test_door_snippet(house: element.Element) -> None:
 
 def test_heating_cooling_snippet(house: element.Element) -> None:
     output = snippets.snip_house(house)
+    assert output.heating_cooling
     doc = element.Element.from_string(output.heating_cooling)
     child_tags = {node.tag for node in doc}
     assert 'Label' in child_tags
@@ -197,6 +198,7 @@ def test_ventilation_snippet(house: element.Element) -> None:
 
 def test_water_heating(house: element.Element) -> None:
     output = snippets.snip_house(house)
+    assert output.water_heating
     doc = element.Element.from_string(output.water_heating)
     nodes = doc.xpath('*[self::Primary or self::Secondary]')
     assert len(nodes) == 2

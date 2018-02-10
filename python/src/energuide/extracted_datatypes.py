@@ -1,5 +1,14 @@
+import enum
 import typing
 from energuide import element
+
+
+_RSI_MULTIPLIER = 5.678263337
+_CFM_MULTIPLIER = 2.11888
+_FEET_MULTIPLIER = 3.28084
+_FEET_SQUARED_MULTIPLIER = _FEET_MULTIPLIER**2
+_MILLIMETRES_TO_METRES = 1000
+_KWH_TO_BTU = 3412.142
 
 
 class _Ceiling(typing.NamedTuple):
@@ -60,6 +69,97 @@ class _Window(typing.NamedTuple):
     height: float
 
 
+@enum.unique
+class HeatingType(enum.Enum):
+    FURNACE = 'Furnace'
+
+
+@enum.unique
+class Language(enum.Enum):
+    ENGLISH = enum.auto()
+    FRENCH = enum.auto()
+
+
+class Translations:
+
+    def __init__(self, versions: typing.Dict[Language, str]) -> None:
+        self._versions = versions
+
+    def to_string(self, language: Language) -> str:
+        return self._versions[language]
+
+
+@enum.unique
+class EnergySource(enum.Enum):
+    NATURAL_GAS = Translations({
+        Language.ENGLISH: 'Natural Gas',
+        Language.FRENCH: 'Chauffage au gaz naturel',
+    })
+
+
+class HeatingFullType(enum.Enum):
+    FURNACE_NG_CONTINUOUS_PILOT = Translations({
+        Language.ENGLISH: 'Natural gas furnace with pilot',
+        Language.FRENCH: 'Générateur d’air chaud au gaz naturel avec veilleuse',
+    })
+
+
+class _Heating(typing.NamedTuple):
+    label: str
+    energy_source: EnergySource
+    heating_type: HeatingType
+    equipment_type: HeatingFullType
+    output_size: float
+    efficiency: float
+    steady_state: str
+
+
+class Heating(_Heating):
+
+    _ENERGY_SOURCES = {
+        2: EnergySource.NATURAL_GAS
+    }
+
+    _EQUIPMENT_TYPES = {
+        (HeatingType.FURNACE, EnergySource.NATURAL_GAS, 1): HeatingFullType.FURNACE_NG_CONTINUOUS_PILOT,
+    }
+
+    @staticmethod
+    def calculate_output_size(heating_type_node: element.Element) -> float:
+        measurement = float(heating_type_node.xpath('Specifications/OutputCapacity/@value')[0])
+        units = heating_type_node.xpath('Specifications/OutputCapacity/@uiUnits')[0]
+        return measurement / _KWH_TO_BTU if units == 'btu/hr' else measurement
+
+    @classmethod
+    def from_data(cls, heating_node: element.Element) -> 'Heating':
+        label = heating_node.get_text('Label')
+
+        heating_type_node = heating_node.xpath('Type1/*[self::Baseboards or self::Furnace or self::Boiler]')[0]
+        heating_type = HeatingType(heating_type_node.tag)
+
+        energy_source_code = int(heating_type_node.xpath('Equipment/EnergySource/@code')[0])
+        energy_source = cls._ENERGY_SOURCES[energy_source_code]
+
+        equipment_type_code = int(heating_type_node.xpath('Equipment/EquipmentType/@code')[0])
+        equipment_type = cls._EQUIPMENT_TYPES[heating_type, energy_source, equipment_type_code]
+
+        efficiency = float(heating_type_node.xpath('Specifications/@efficiency')[0])
+        output_size = cls.calculate_output_size(heating_type_node)
+
+        steady_state_flag = heating_type_node.xpath('Specifications/@isSteadyState')[0]
+        steady_state = 'Steady State' if steady_state_flag == 'true' else 'AFUE'
+
+        return Heating(
+            label=label,
+            energy_source=energy_source,
+            heating_type=heating_type,
+            equipment_type=equipment_type,
+            output_size=output_size,
+            efficiency=efficiency,
+            steady_state=steady_state,
+        )
+
+
 class _HeatedFloorArea(typing.NamedTuple):
     area_above_grade: typing.Optional[float]
     area_below_grade: typing.Optional[float]
@@ -96,13 +196,6 @@ class _WindowCode(typing.NamedTuple):
     type_french: typing.Optional[str]
     frame_material_english: typing.Optional[str]
     frame_material_french: typing.Optional[str]
-
-
-_RSI_MULTIPLIER = 5.678263337
-_CFM_MULTIPLIER = 2.11888
-_FEET_MULTIPLIER = 3.28084
-_FEET_SQUARED_MULTIPLIER = _FEET_MULTIPLIER**2
-_MILLIMETRES_TO_METRES = 1000
 
 
 class WallCode(_WallCode):
