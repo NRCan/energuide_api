@@ -499,8 +499,7 @@ class TestParsedDwellingDataRow:
             ),
             ventilations=[
                 extracted_datatypes.Ventilation(
-                    type_english='Heat recovery ventilator',
-                    type_french='Ventilateur-récupérateur de chaleur',
+                    ventilation_type=extracted_datatypes.VentilationType.NOT_ENERGY_STAR_NOT_INSTITUTE_CERTIFIED,
                     air_flow_rate=220,
                     efficiency=55,
                 )
