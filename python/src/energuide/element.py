@@ -17,7 +17,7 @@ class Element:
     @classmethod
     def parse(cls, *args, **kwargs):
         output = etree.parse(*args, **kwargs)
-        return cls(output)
+        return cls(output.find('.'))
 
     def findtext(self, *args, **kwargs) -> typing.Optional[str]:
         return self.__node.findtext(*args, **kwargs)
