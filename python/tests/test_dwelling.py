@@ -222,6 +222,41 @@ def ventilation_input() -> typing.List[str]:
 
 
 @pytest.fixture
+def water_heating_input() -> str:
+    doc = """
+<HotWater>
+    <Primary hasDrainWaterHeatRecovery="false" insulatingBlanket="0" combinedFlue="false" flueDiameter="0" energyStar="false" ecoEnergy="false" userDefinedPilot="false" connectedUnitsDwhr="0">
+        <EquipmentInformation>
+            <Manufacturer>Wizard DHW man</Manufacturer>
+            <Model>Wizard DHW mod</Model>
+        </EquipmentInformation>
+        <EnergySource code="1">
+            <English>Electricity</English>
+            <French>Électricité</French>
+        </EnergySource>
+        <TankType code="2">
+            <English>Conventional tank</English>
+            <French>Réservoir classique</French>
+        </TankType>
+        <TankVolume code="4" value="189.3001">
+            <English>189.3 L, 41.6 Imp, 50 US gal</English>
+            <French>189.3 L, 41.6 imp, 50 gal ÉU</French>
+        </TankVolume>
+        <EnergyFactor code="1" value="0.8217" inputCapacity="0">
+            <English>Use defaults</English>
+            <French>Valeurs par défaut</French>
+        </EnergyFactor>
+        <TankLocation code="2">
+            <English>Basement</English>
+            <French>Sous-sol</French>
+        </TankLocation>
+    </Primary>
+</HotWater>
+    """
+    return doc
+
+
+@pytest.fixture
 def raw_codes() -> typing.Dict[str, typing.List[str]]:
     return {
         'wall': [
@@ -332,7 +367,9 @@ def sample_input_d(ceiling_input: typing.List[str],
                    heated_floor_area_input: str,
                    heating_cooling_input: str,
                    ventilation_input: typing.List[str],
+                   water_heating_input: str,
                    raw_codes: typing.Dict[str, typing.List[str]]) -> reader.InputData:
+
     return {
         'EVAL_ID': '123',
         'EVAL_TYPE': 'D',
@@ -351,6 +388,7 @@ def sample_input_d(ceiling_input: typing.List[str],
         'heating_cooling': heating_cooling_input,
         'heatedFloorArea': heated_floor_area_input,
         'ventilations': ventilation_input,
+        'waterHeatings': water_heating_input,
         'codes': raw_codes,
     }
 
@@ -503,6 +541,14 @@ class TestParsedDwellingDataRow:
                     type_french='Ventilateur-récupérateur de chaleur',
                     air_flow_rate=220,
                     efficiency=55,
+                )
+            ],
+            water_heatings=[
+                extracted_datatypes.WaterHeating(
+                    type_english=extracted_datatypes.WaterHeaterType.ELECTRICITY_CONVENTIONAL_TANK_ENGLISH,
+                    type_french=extracted_datatypes.WaterHeaterType.ELECTRICITY_CONVENTIONAL_TANK_FRENCH,
+                    tank_volume=189.3001,
+                    efficiency=0.8217,
                 )
             ]
         )

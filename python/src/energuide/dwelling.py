@@ -11,6 +11,7 @@ from energuide.extracted_datatypes import Wall
 from energuide.extracted_datatypes import Window
 from energuide.extracted_datatypes import HeatedFloorArea
 from energuide.extracted_datatypes import Ventilation
+from energuide.extracted_datatypes import WaterHeating
 from energuide.extracted_datatypes import Codes
 
 
@@ -90,6 +91,7 @@ class _ParsedDwellingDataRow(typing.NamedTuple):
     windows: typing.List[Window]
     heated_floor_area: HeatedFloorArea
     ventilations: typing.List[Ventilation]
+    water_heatings: typing.List[WaterHeating]
 
 
 class ParsedDwellingDataRow(_ParsedDwellingDataRow):
@@ -116,6 +118,7 @@ class ParsedDwellingDataRow(_ParsedDwellingDataRow):
         'heatedFloorArea': _XML_SCHEMA,
         'heating_cooling': {'type': 'xml', 'required': True, 'coerce': 'parse_xml'},
         'ventilations': _XML_LIST_SCHEMA,
+        'waterHeatings': _XML_SCHEMA,
 
         'codes': {'type': 'dict', 'required': True, 'schema': {'wall': _XML_LIST_SCHEMA, 'window': _XML_LIST_SCHEMA}},
     }
@@ -147,6 +150,7 @@ class ParsedDwellingDataRow(_ParsedDwellingDataRow):
             windows=[Window.from_data(window, codes.window) for window in parsed['windows']],
             heated_floor_area=HeatedFloorArea.from_data(parsed['heatedFloorArea']),
             ventilations=[Ventilation.from_data(ventilation) for ventilation in parsed['ventilations']],
+            water_heatings=WaterHeating.from_data(parsed['waterHeatings']),
         )
 
 
@@ -164,6 +168,7 @@ class Evaluation:
                  windows: typing.List[Window],
                  heated_floor_area: HeatedFloorArea,
                  ventilations: typing.List[Ventilation],
+                 water_heatings: typing.List[WaterHeating],
                 ) -> None:
         self._evaluation_type = evaluation_type
         self._entry_date = entry_date
@@ -176,6 +181,7 @@ class Evaluation:
         self._windows = windows
         self._heated_floor_area = heated_floor_area
         self._ventilations = ventilations
+        self._water_heatings = water_heatings
 
     @classmethod
     def from_data(cls, data: ParsedDwellingDataRow) -> 'Evaluation':
@@ -190,7 +196,8 @@ class Evaluation:
             doors=data.doors,
             windows=data.windows,
             heated_floor_area=data.heated_floor_area,
-            ventilations=data.ventilations
+            ventilations=data.ventilations,
+            water_heatings=data.water_heatings
         )
 
     @property
@@ -237,6 +244,10 @@ class Evaluation:
     def ventilations(self) -> typing.List[Ventilation]:
         return self._ventilations
 
+    @property
+    def water_heatings(self) -> typing.List[WaterHeating]:
+        return self._water_heatings
+
     def to_dict(self) -> typing.Dict[str, typing.Any]:
         return {
             'evaluationType': self.evaluation_type.value,
@@ -250,6 +261,7 @@ class Evaluation:
             'windows': [window.to_dict() for window in self.windows],
             'heatedFloorArea': self.heated_floor_area.to_dict(),
             'ventilations': [ventilation.to_dict() for ventilation in self.ventilations],
+            'waterHeatings': [water_heating.to_dict() for water_heating in self.water_heatings]
         }
 
 
