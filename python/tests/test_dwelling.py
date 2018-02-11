@@ -2,9 +2,13 @@ import copy
 import datetime
 import typing
 import pytest
+from energuide import bilingual
 from energuide import dwelling
 from energuide import reader
 from energuide import extracted_datatypes
+from energuide.embedded import area
+from energuide.embedded import distance
+from energuide.embedded import insulation
 
 
 # pylint: disable=no-self-use
@@ -433,12 +437,11 @@ class TestParsedDwellingDataRow:
             ceilings=[
                 extracted_datatypes.Ceiling(
                     label='Main attic',
-                    type_english='Attic/gable',
-                    type_french='Combles/pignon',
-                    nominal_rsi=2.864,
-                    effective_rsi=2.9463,
-                    area_metres=46.4515,
-                    length_metres=23.875
+                    ceiling_type=bilingual.Bilingual(english='Attic/gable', french='Combles/pignon'),
+                    nominal_insulation=insulation.Insulation(2.864),
+                    effective_insulation=insulation.Insulation(2.9463),
+                    ceiling_area=area.Area(46.4515),
+                    ceiling_length=distance.Distance(23.875),
                 )
             ],
             floors=[

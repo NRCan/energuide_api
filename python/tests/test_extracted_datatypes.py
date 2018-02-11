@@ -290,18 +290,15 @@ class TestCeiling:
     def test_from_data(self, sample: element.Element):
         output = extracted_datatypes.Ceiling.from_data(sample)
         assert output.label == 'Main attic'
-        assert output.area_metres == 46.4515
+        assert output.ceiling_area.square_metres == 46.4515
 
     def test_to_dict(self, sample: element.Element) -> None:
         output = extracted_datatypes.Ceiling.from_data(sample).to_dict()
         assert output['areaMetres'] == 46.4515
-
-    def test_properties(self, sample: element.Element) -> None:
-        output = extracted_datatypes.Ceiling.from_data(sample)
-        assert output.nominal_r == 16.262546197168
-        assert output.effective_r == 16.729867269803098
-        assert output.area_feet == 499.9998167217784
-        assert output.length_feet == 78.330055
+        assert output['nominalR'] == 16.262546197168
+        assert output['effectiveR'] == 16.729867269803098
+        assert output['areaFeet'] == 499.9998167217784
+        assert output['lengthFeet'] == 78.330055
 
 
 class TestFloor:
