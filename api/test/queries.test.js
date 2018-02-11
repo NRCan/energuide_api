@@ -38,35 +38,71 @@ describe('queries', () => {
   })
 
   describe('dwellingsInFSA', () => {
-    it('has pagination', async () => {
-      await collection.save({
-        houseId: 1000000,
-        yearBuilt: 3000,
-        city: 'Charlottetown',
-        region: 'PE',
-        forwardSortationArea: 'C1A',
+    describe('pagination', () => {
+      beforeEach(async () => {
+        await collection.save({
+          houseId: 1000000,
+          yearBuilt: 3000,
+          city: 'Charlottetown',
+          region: 'PE',
+          forwardSortationArea: 'C1A',
+        })
       })
 
-      let response = await request(server)
-        .post('/graphql')
-        .set('Content-Type', 'application/json; charset=utf-8')
-        .send({
-          query: `{
-          dwellings:dwellingsInFSA(
-           forwardSortationArea: "C1A"
-					 limit: 1
-          ) {
-            hasNext
-            next
-            results {
-							yearBuilt
-						}
-          }
-        }`,
+      afterEach(async () => {
+        await collection.deleteOne({
+          houseId: 1000000,
+          yearBuilt: 3000,
+          city: 'Charlottetown',
+          region: 'PE',
+          forwardSortationArea: 'C1A',
         })
+      })
 
-      let { dwellings } = response.body.data
-      expect(dwellings.results.length).toEqual(1)
+      it('uses limit and next to paginate results', async () => {
+        let response = await request(server)
+          .post('/graphql')
+          .set('Content-Type', 'application/json; charset=utf-8')
+          .send({
+            query: `{
+              dwellings:dwellingsInFSA(
+               forwardSortationArea: "C1A"
+               limit: 1
+              ) {
+                hasNext
+                next
+                results {
+                  yearBuilt
+                }
+              }
+            }`,
+          })
+
+        // use the value of "next" to fetch the next result
+        let response2 = await request(server)
+          .post('/graphql')
+          .set('Content-Type', 'application/json; charset=utf-8')
+          .send({
+            query: `{
+              dwellings:dwellingsInFSA(
+               forwardSortationArea: "C1A"
+               limit: 1
+               next: "${response.body.data.dwellings.next}"
+              ) {
+                hasNext
+                next
+                results {
+                  yearBuilt
+                }
+              }
+            }`,
+          })
+
+        let { dwellings: first } = response.body.data
+        let { dwellings: second } = response2.body.data
+        expect(first.results[0].yearBuilt).toEqual(3000)
+        expect(second.results[0].yearBuilt).toEqual(1900)
+      })
     })
 
     it('returns the dwellings in the given Forward Sortation Area', async () => {
