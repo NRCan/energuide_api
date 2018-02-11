@@ -38,6 +38,37 @@ describe('queries', () => {
   })
 
   describe('dwellingsInFSA', () => {
+    it('has pagination', async () => {
+      await collection.save({
+        houseId: 1000000,
+        yearBuilt: 3000,
+        city: 'Charlottetown',
+        region: 'PE',
+        forwardSortationArea: 'C1A',
+      })
+
+      let response = await request(server)
+        .post('/graphql')
+        .set('Content-Type', 'application/json; charset=utf-8')
+        .send({
+          query: `{
+          dwellings:dwellingsInFSA(
+           forwardSortationArea: "C1A"
+					 limit: 1
+          ) {
+            hasNext
+            next
+            results {
+							yearBuilt
+						}
+          }
+        }`,
+        })
+
+      let { dwellings } = response.body.data
+      expect(dwellings.results.length).toEqual(1)
+    })
+
     it('returns the dwellings in the given Forward Sortation Area', async () => {
       let response = await request(server)
         .post('/graphql')
@@ -47,13 +78,15 @@ describe('queries', () => {
           dwellings:dwellingsInFSA(
            forwardSortationArea: "C1A"
           ) {
-            yearBuilt
+            results {
+							yearBuilt
+						}
           }
         }`,
         })
 
       let { dwellings } = response.body.data
-      expect(dwellings.length).toEqual(1)
+      expect(dwellings.results.length).toEqual(1)
     })
 
     describe('filter', () => {
@@ -68,13 +101,15 @@ describe('queries', () => {
                   forwardSortationArea: "C1A"
                   filter: {field: yearBuilt gt: "1900"}
                  ) {
-                   yearBuilt
+										results {
+											yearBuilt
+										}
                  }
                }`,
             })
 
           let { dwellings } = response.body.data
-          expect(dwellings.length).toEqual(0)
+          expect(dwellings.results.length).toEqual(0)
         })
 
         it('works on string fields', async () => {
@@ -87,12 +122,13 @@ describe('queries', () => {
                   forwardSortationArea: "C1A"
                   filter: {field: city eq: "Charlottetown"}
                  ) {
-                   yearBuilt
+									 results {
+										 yearBuilt
+									 }
                  }
                }`,
             })
-
-          let { dwellings: [first] } = response.body.data
+          let { dwellings: { results: [first] } } = response.body.data
           expect(first.yearBuilt).toEqual(1900)
         })
       })
@@ -108,11 +144,13 @@ describe('queries', () => {
                   forwardSortationArea: "C1A"
                   filter: {field: yearBuilt lt: "2000"}
                  ) {
-                   yearBuilt
+									 results {
+                     yearBuilt
+									 }
                  }
                }`,
             })
-          let { dwellings: [first] } = response.body.data
+          let { dwellings: { results: [first] } } = response.body.data
           expect(first.yearBuilt).toEqual(1900)
         })
       })
@@ -128,12 +166,14 @@ describe('queries', () => {
                   forwardSortationArea: "C1A"
                   filter: {field: yearBuilt eq: "1900"}
                  ) {
-                   yearBuilt
+                   results {
+										 yearBuilt
+								   }
                  }
                }`,
             })
 
-          let { dwellings: [first] } = response.body.data
+          let { dwellings: { results: [first] } } = response.body.data
           expect(first.yearBuilt).toEqual(1900)
         })
       })
@@ -148,7 +188,9 @@ describe('queries', () => {
                 forwardSortationArea: "M8H"
                 filter: {field: yearBuilt gt: "1979" lt: "1979"}
               ) {
-               yearBuilt
+								results {
+								 yearBuilt
+							 }
              }
            }`,
           })
@@ -165,12 +207,14 @@ describe('queries', () => {
            dwellings:dwellingsInFSA(
              forwardSortationArea: "C1A"
            ) {
-          yearBuilt
+					results {
+						yearBuilt
+					}
         }
       }`,
         })
 
-      let { dwellings: [first] } = response.body.data
+      let { dwellings: { results: [first] } } = response.body.data
       expect(first.yearBuilt).toEqual(1900)
     })
   })

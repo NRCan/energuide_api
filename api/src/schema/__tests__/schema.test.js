@@ -150,4 +150,22 @@ describe('Schema', () => {
       ])
     })
   })
+
+  describe('PaginatedResultSet', () => {
+    it('is defined', () => {
+      expect(typeMap).toHaveProperty('PaginatedResultSet')
+    })
+
+    it('has the expected fields', () => {
+      const { PaginatedResultSet } = typeMap
+      const fields = Object.keys(PaginatedResultSet.getFields())
+      expect(fields).toEqual([
+        'hasNext',
+        'hasPrevious',
+        'next',
+        'previous',
+        'results',
+      ])
+    })
+  })
 })
