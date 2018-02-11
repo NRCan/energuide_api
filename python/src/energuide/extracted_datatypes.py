@@ -1,7 +1,7 @@
 import enum
 import typing
 from energuide import element
-from energuide import translation
+from energuide import bilingual
 
 
 class _Ceiling(typing.NamedTuple):
@@ -460,29 +460,24 @@ class Door(_Door):
 
 class Ventilation(_Ventilation):
     _VENTILATION_TRANSLATIONS = {
-        VentilationType.NOT_APPLICABLE: translation.Translation({
-            translation.Language.ENGLISH: 'N/A',
-            translation.Language.FRENCH: 'N/A',
-        }),
-        VentilationType.ENERGY_STAR_INSTITUTE_CERTIFIED: translation.Translation({
-            translation.Language.ENGLISH: 'Home Ventilating Institute listed ENERGY STAR '
-                                          'certified heat recovery ventilator',
-            translation.Language.FRENCH: 'Ventilateur-récupérateur de chaleur répertorié par le '
-                                         'Home Ventilating Institute et certifié ENERGY STAR',
-        }),
-        VentilationType.ENERGY_STAR_NOT_INSTITUTE_CERTIFIED: translation.Translation({
-            translation.Language.ENGLISH: 'ENERGY STAR certified heat recovery ventilator',
-            translation.Language.FRENCH: 'Ventilateur-récupérateur de chaleur certifié ENERGY STAR',
-        }),
-        VentilationType.NOT_ENERGY_STAR_INSTITUTE_CERTIFIED: translation.Translation({
-            translation.Language.ENGLISH: 'Heat recovery ventilator certified by the Home Ventilating Institute',
-            translation.Language.FRENCH: 'Ventilateur-récupérateur de chaleur certifié par le '
-                                         'Home Ventilating Institute',
-        }),
-        VentilationType.NOT_ENERGY_STAR_NOT_INSTITUTE_CERTIFIED: translation.Translation({
-            translation.Language.ENGLISH: 'Heat recovery ventilator',
-            translation.Language.FRENCH: 'Ventilateur-récupérateur de chaleur',
-        }),
+        VentilationType.NOT_APPLICABLE: bilingual.Bilingual(english='N/A', french='N/A'),
+        VentilationType.ENERGY_STAR_INSTITUTE_CERTIFIED: bilingual.Bilingual(
+            english='Home Ventilating Institute listed ENERGY STAR certified heat recovery ventilator',
+            french='Ventilateur-récupérateur de chaleur répertorié par le '
+                   'Home Ventilating Institute et certifié ENERGY STAR',
+        ),
+        VentilationType.ENERGY_STAR_NOT_INSTITUTE_CERTIFIED: bilingual.Bilingual(
+            english='ENERGY STAR certified heat recovery ventilator',
+            french='Ventilateur-récupérateur de chaleur certifié ENERGY STAR',
+        ),
+        VentilationType.NOT_ENERGY_STAR_INSTITUTE_CERTIFIED: bilingual.Bilingual(
+            english='Heat recovery ventilator certified by the Home Ventilating Institute',
+            french='Ventilateur-récupérateur de chaleur certifié par le Home Ventilating Institute',
+        ),
+        VentilationType.NOT_ENERGY_STAR_NOT_INSTITUTE_CERTIFIED: bilingual.Bilingual(
+            english='Heat recovery ventilator',
+            french='Ventilateur-récupérateur de chaleur',
+        ),
     }
 
     @staticmethod
@@ -520,8 +515,8 @@ class Ventilation(_Ventilation):
     def to_dict(self) -> typing.Dict[str, typing.Union[str, float]]:
         ventilation_translation = self._VENTILATION_TRANSLATIONS[self.ventilation_type]
         return {
-            'typeEnglish': ventilation_translation.to_string(translation.Language.ENGLISH),
-            'typeFrench': ventilation_translation.to_string(translation.Language.FRENCH),
+            'typeEnglish': ventilation_translation.english,
+            'typeFrench': ventilation_translation.french,
             'airFlowRateLps': self.air_flow_rate,
             'airFlowRateCfm': self.air_flow_rate_cmf,
             'efficiency': self.efficiency,
