@@ -9,6 +9,7 @@ from energuide import extracted_datatypes
 from energuide.embedded import area
 from energuide.embedded import ceiling
 from energuide.embedded import distance
+from energuide.embedded import floor
 from energuide.embedded import insulation
 
 
@@ -484,12 +485,12 @@ class TestParsedDwellingDataRow:
                 )
             ],
             floors=[
-                extracted_datatypes.Floor(
+                floor.Floor(
                     label='Rm over garage',
-                    nominal_rsi=2.46,
-                    effective_rsi=2.9181,
-                    area_metres=9.2903,
-                    length_metres=3.048,
+                    nominal_insulation=insulation.Insulation(2.46),
+                    effective_insulation=insulation.Insulation(2.9181),
+                    floor_area=area.Area(9.2903),
+                    floor_length=distance.Distance(3.048),
                 )
             ],
             walls=[
