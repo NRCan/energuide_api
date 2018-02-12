@@ -29,7 +29,11 @@ def code(doc: element.Element) -> element.Element:
 
 def test_house_snippet_to_dict(house: element.Element) -> None:
     output = snippets.snip_house(house).to_dict()
+<<<<<<< HEAD
     assert len(output) == 11
+=======
+    assert len(output) == 10
+>>>>>>> extract basement nodes
 
 
 def test_ceiling_snippet(house: element.Element) -> None:
@@ -215,6 +219,7 @@ def test_basement_snippet(house: element.Element) -> None:
     }, allow_unknown=True)
     doc = {'basements': output.basements}
     assert checker.validate(doc)
+<<<<<<< HEAD
 
 
 def test_crawlspace_snippet(house: element.Element) -> None:
@@ -225,3 +230,5 @@ def test_crawlspace_snippet(house: element.Element) -> None:
     }, allow_unknown=True)
     doc = {'crawlspaces': output.crawlspaces}
     assert checker.validate(doc)
+=======
+>>>>>>> extract basement nodes
