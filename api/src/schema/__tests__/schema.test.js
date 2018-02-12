@@ -117,6 +117,7 @@ describe('Schema', () => {
         'windows',
         'heatedFloorArea',
         'ventilations',
+        'waterHeatings',
       ])
     })
   })
@@ -201,6 +202,23 @@ describe('Schema', () => {
         'typeFrench',
         'airFlowRateLps',
         'airFlowRateCfm',
+      ])
+    })
+    })
+
+  describe('WaterHeater', () => {
+    it('is defined', () => {
+      expect(typeMap).toHaveProperty('WaterHeater')
+    })
+
+    it('has the expected fields', () => {
+      const { WaterHeater } = typeMap
+      const fields = Object.keys(WaterHeater.getFields())
+      expect(fields).toEqual([
+        'typeEnglish',
+        'typeFrench',
+        'tankVolumeLitres',
+        'TankVolumeGallon',
         'efficiency',
       ])
     })

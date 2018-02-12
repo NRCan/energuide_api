@@ -17,6 +17,13 @@ const Schema = i18n => {
       typeFrench: String
       airFlowRateLps: Float
       airFlowRateCfm: Float
+    }
+
+    type WaterHeater {
+      typeEnglish: String
+      typeFrench: String
+      tankVolumeLitres: Float
+      TankVolumeGallon: Float
       efficiency: Float
     }
 
@@ -110,6 +117,7 @@ const Schema = i18n => {
       windows: [Window]
       heatedFloorArea: HeatedFloorArea
       ventilations: [Ventilation]
+      waterHeatings: [WaterHeater]
     }
 
 
