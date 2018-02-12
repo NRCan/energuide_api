@@ -115,6 +115,7 @@ describe('Schema', () => {
         'walls',
         'doors',
         'windows',
+        'heatedFloorArea',
       ])
     })
   })
@@ -165,6 +166,23 @@ describe('Schema', () => {
         'next',
         'previous',
         'results',
+      ])
+    })
+  })
+
+  describe('HeatedFloorArea', () => {
+    it('is defined', () => {
+      expect(typeMap).toHaveProperty('HeatedFloorArea')
+    })
+
+    it('has the expected fields', () => {
+      const { HeatedFloorArea } = typeMap
+      const fields = Object.keys(HeatedFloorArea.getFields())
+      expect(fields).toEqual([
+        'areaAboveGradeMetres',
+        'areaAboveGradeFeet',
+        'areaBelowGradeMetres',
+        'areaBelowGradeFeet',
       ])
     })
   })
