@@ -1,4 +1,5 @@
 import ForwardSortationArea from './types/ForwardSortationArea'
+import MongoPaging from 'mongo-cursor-pagination'
 import { GraphQLError } from 'graphql'
 import {
   comparators,
@@ -17,7 +18,12 @@ const resolvers = {
       return client.findOne(query)
     },
     dwellingsInFSA: async (root, args, { client }) => {
-      const { filter, forwardSortationArea } = args
+      // TODO: look into the creation & handling of this next param
+      // This is an opaque string that passes through the GraphQL type system
+      // and is passed directly into library code to be decoded and used while
+      // talking to the database.
+      // ಠ_ಠ
+      const { filter, forwardSortationArea, limit, next } = args
 
       if (hasMoreThanOneComparator(filter)) {
         return new GraphQLError(
@@ -27,9 +33,13 @@ const resolvers = {
 
       let query = createQuery(forwardSortationArea, filter)
 
-      let cursor = await client.find(query)
+      let result = await MongoPaging.find(client, {
+        query,
+        next,
+        limit,
+      })
 
-      return cursor.toArray()
+      return result
     },
   },
   Field: {

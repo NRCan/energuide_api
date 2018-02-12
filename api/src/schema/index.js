@@ -12,6 +12,14 @@ const Schema = i18n => {
       eq: String
     }
 
+    type PaginatedResultSet {
+      hasNext: Boolean
+      hasPrevious: Boolean
+      next: String
+      previous: String
+      results: [Dwelling]
+    }
+
     type Wall {
       label: String
       structureTypeEnglish: String
@@ -103,7 +111,7 @@ const Schema = i18n => {
     type Query {
       # ${i18n.t`Details for a specific dwelling`}
       evaluationsFor(account: Int!): Dwelling
-      dwellingsInFSA(filter: Filter forwardSortationArea: ForwardSortationArea!): [Dwelling]
+      dwellingsInFSA(filter: Filter forwardSortationArea: ForwardSortationArea! limit: Int, next: String): PaginatedResultSet
     }
 
     enum Field {

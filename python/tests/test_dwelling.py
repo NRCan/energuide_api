@@ -7,8 +7,12 @@ from energuide import dwelling
 from energuide import reader
 from energuide import extracted_datatypes
 from energuide.embedded import area
+from energuide.embedded import ceiling
+from energuide.embedded import code
 from energuide.embedded import distance
+from energuide.embedded import floor
 from energuide.embedded import insulation
+from energuide.embedded import wall
 
 
 # pylint: disable=no-self-use
@@ -462,6 +466,20 @@ class TestParsedDwellingDataRow:
 
     def test_from_row(self, sample_input_d: reader.InputData) -> None:
         output = dwelling.ParsedDwellingDataRow.from_row(sample_input_d)
+
+        wall_code = code.WallCode(
+            identifier='Code 1',
+            label='1201101121',
+            structure_type=bilingual.Bilingual(
+                english='Wood frame',
+                french='Ossature de bois',
+            ),
+            component_type_size=bilingual.Bilingual(
+                english='38x89 mm (2x4 in)',
+                french='38x89 (2x4)',
+            )
+        )
+
         assert output == dwelling.ParsedDwellingDataRow(
             eval_id=123,
             eval_type=dwelling.EvaluationType.PRE_RETROFIT,
@@ -473,7 +491,7 @@ class TestParsedDwellingDataRow:
             region=dwelling.Region.ONTARIO,
             forward_sortation_area='K1P',
             ceilings=[
-                extracted_datatypes.Ceiling(
+                ceiling.Ceiling(
                     label='Main attic',
                     ceiling_type=bilingual.Bilingual(english='Attic/gable', french='Combles/pignon'),
                     nominal_insulation=insulation.Insulation(2.864),
@@ -483,25 +501,22 @@ class TestParsedDwellingDataRow:
                 )
             ],
             floors=[
-                extracted_datatypes.Floor(
+                floor.Floor(
                     label='Rm over garage',
-                    nominal_rsi=2.46,
-                    effective_rsi=2.9181,
-                    area_metres=9.2903,
-                    length_metres=3.048,
+                    nominal_insulation=insulation.Insulation(2.46),
+                    effective_insulation=insulation.Insulation(2.9181),
+                    floor_area=area.Area(9.2903),
+                    floor_length=distance.Distance(3.048),
                 )
             ],
             walls=[
-                extracted_datatypes.Wall(
+                wall.Wall(
                     label='Second level',
-                    structure_type_english='Wood frame',
-                    structure_type_french='Ossature de bois',
-                    component_type_size_english='38x89 mm (2x4 in)',
-                    component_type_size_french='38x89 (2x4)',
-                    nominal_rsi=1.432,
-                    effective_rsi=1.8016,
-                    perimeter=42.9768,
-                    height=2.4384,
+                    wall_code=wall_code,
+                    nominal_insulation=insulation.Insulation(1.432),
+                    effective_insulation=insulation.Insulation(1.8016),
+                    perimeter=distance.Distance(42.9768),
+                    height=distance.Distance(2.4384),
                 )
             ],
             doors=[
@@ -517,16 +532,16 @@ class TestParsedDwellingDataRow:
             windows=[
                 extracted_datatypes.Window(
                     label='East0001',
-                    glazing_types_english='Double/double with 1 coat',
-                    glazing_types_french='Double/double, 1 couche',
-                    coatings_tints_english='Low-E .20 (hard1)',
-                    coatings_tints_french='Faible E .20 (Dur 1)',
+                    glazing_type_english='Double/double with 1 coat',
+                    glazing_type_french='Double/double, 1 couche',
+                    coating_tint_english='Low-E .20 (hard1)',
+                    coating_tint_french='Faible E .20 (Dur 1)',
                     fill_type_english='9 mm Argon',
                     fill_type_french="9 mm d'argon",
                     spacer_type_english='Metal',
                     spacer_type_french='Métal',
-                    type_english='Picture',
-                    type_french='Fixe',
+                    window_code_type_english='Picture',
+                    window_code_type_french='Fixe',
                     frame_material_english='Wood',
                     frame_material_french='Bois',
                     rsi=0.4779,

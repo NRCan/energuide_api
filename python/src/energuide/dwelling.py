@@ -4,15 +4,15 @@ import typing
 from dateutil import parser
 from energuide import reader
 from energuide import validator
-from energuide.extracted_datatypes import Floor
-from energuide.extracted_datatypes import Ceiling
+from energuide.embedded import ceiling
+from energuide.embedded import code
+from energuide.embedded import floor
+from energuide.embedded import wall
 from energuide.extracted_datatypes import Door
-from energuide.extracted_datatypes import Wall
 from energuide.extracted_datatypes import Window
 from energuide.extracted_datatypes import HeatedFloorArea
 from energuide.extracted_datatypes import Ventilation
 from energuide.extracted_datatypes import WaterHeating
-from energuide.extracted_datatypes import Codes
 
 
 class NoInputDataException(Exception):
@@ -84,9 +84,9 @@ class _ParsedDwellingDataRow(typing.NamedTuple):
     city: str
     region: Region
     forward_sortation_area: str
-    ceilings: typing.List[Ceiling]
-    floors: typing.List[Floor]
-    walls: typing.List[Wall]
+    ceilings: typing.List[ceiling.Ceiling]
+    floors: typing.List[floor.Floor]
+    walls: typing.List[wall.Wall]
     doors: typing.List[Door]
     windows: typing.List[Window]
     heated_floor_area: HeatedFloorArea
@@ -131,7 +131,7 @@ class ParsedDwellingDataRow(_ParsedDwellingDataRow):
             raise reader.InvalidInputDataException(f'Validator failed on keys: {error_keys}')
 
         parsed = checker.document
-        codes = Codes.from_data(parsed['codes'])
+        codes = code.Codes.from_data(parsed['codes'])
 
         return ParsedDwellingDataRow(
             eval_id=parsed['EVAL_ID'],
@@ -143,9 +143,9 @@ class ParsedDwellingDataRow(_ParsedDwellingDataRow):
             city=parsed['CLIENTCITY'],
             region=Region.from_data(parsed['HOUSEREGION']),
             forward_sortation_area=parsed['forwardSortationArea'],
-            ceilings=[Ceiling.from_data(ceiling) for ceiling in parsed['ceilings']],
-            floors=[Floor.from_data(floor) for floor in parsed['floors']],
-            walls=[Wall.from_data(wall, codes.wall) for wall in parsed['walls']],
+            ceilings=[ceiling.Ceiling.from_data(ceiling_node) for ceiling_node in parsed['ceilings']],
+            floors=[floor.Floor.from_data(floor_node) for floor_node in parsed['floors']],
+            walls=[wall.Wall.from_data(wall_node, codes.wall) for wall_node in parsed['walls']],
             doors=[Door.from_data(door) for door in parsed['doors']],
             windows=[Window.from_data(window, codes.window) for window in parsed['windows']],
             heated_floor_area=HeatedFloorArea.from_data(parsed['heatedFloorArea']),
@@ -161,9 +161,9 @@ class Evaluation:
                  entry_date: datetime.date,
                  creation_date: datetime.datetime,
                  modification_date: datetime.datetime,
-                 ceilings: typing.List[Ceiling],
-                 floors: typing.List[Floor],
-                 walls: typing.List[Wall],
+                 ceilings: typing.List[ceiling.Ceiling],
+                 floors: typing.List[floor.Floor],
+                 walls: typing.List[wall.Wall],
                  doors: typing.List[Door],
                  windows: typing.List[Window],
                  heated_floor_area: HeatedFloorArea,
@@ -217,15 +217,15 @@ class Evaluation:
         return self._modification_date
 
     @property
-    def ceilings(self) -> typing.List[Ceiling]:
+    def ceilings(self) -> typing.List[ceiling.Ceiling]:
         return self._ceilings
 
     @property
-    def floors(self) -> typing.List[Floor]:
+    def floors(self) -> typing.List[floor.Floor]:
         return self._floors
 
     @property
-    def walls(self) -> typing.List[Wall]:
+    def walls(self) -> typing.List[wall.Wall]:
         return self._walls
 
     @property
