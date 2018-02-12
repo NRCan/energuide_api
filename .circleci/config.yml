@@ -211,3 +211,7 @@ workflows:
       - deploy:
           requires:
             - node_integration
+          filters:
+            branches:
+              only: 
+                - master
