@@ -69,7 +69,6 @@ def snip_house(house: element.Element) -> HouseSnippet:
 
     basements = _extract_nodes(house, 'Components/Basement')
 
-
     return HouseSnippet(
         ceilings=[node.to_string() for node in ceilings],
         floors=[node.to_string() for node in floors],
