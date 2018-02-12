@@ -20,6 +20,13 @@ const Schema = i18n => {
       results: [Dwelling]
     }
 
+    type HeatedFloorArea {
+      areaAboveGradeMetres: Float
+      areaAboveGradeFeet: Float
+      areaBelowGradeMetres: Float
+      areaBelowGradeFeet: Float
+    }
+
     type Wall {
       label: String
       structureTypeEnglish: String
@@ -93,6 +100,7 @@ const Schema = i18n => {
       walls: [Wall]
       doors: [Door]
       windows: [Window]
+      heatedFloorArea: HeatedFloorArea
     }
 
 
