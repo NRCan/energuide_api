@@ -8,7 +8,7 @@ jobs:
     docker:
       # specify the version you desire here
       - image: circleci/node:7.10
-      - image: mongo:3.6.2
+        image: mongo:3.6.2
 
       # Specify service dependencies here if necessary
       # CircleCI maintains a library of pre-built images
@@ -181,6 +181,19 @@ jobs:
           name: Running integration tests
           command: |
             yarn integration
+  deploy:
+    docker: 
+      - image: golang:1.6.4
+    steps:
+      - checkout 
+      - setup_remote_docker
+      - run:
+          name: "Build and Deploy Docker Image" 
+          command: | 
+            docker login -u $DOCKER_USERNAME2 -p $DOCKER_PASSWORD2
+            docker build -t ${DOCKER_REGISTRY}/${NAME_SPACE}/${CIRCLE_PROJECT_REPONAME}:latest .
+            docker push -u ${DOCKER_REGISTRY}/${NAME_SPACE}/${CIRCLE_PROJECT_REPONAME}:latest -u $DOCKER_USERNAME2 -p $DOCKER_PASSWORD2
+
 workflows:
   version: 2
   node_and_python:
@@ -191,3 +204,6 @@ workflows:
       - node_integration:
           requires:
             - python_integration
+      - deploy:
+          requires:
+            - node_integration
