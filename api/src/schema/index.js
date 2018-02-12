@@ -12,6 +12,14 @@ const Schema = i18n => {
       eq: String
     }
 
+    type Ventilation {
+      typeEnglish: String
+      typeFrench: String
+      airFlowRateLps: Float
+      airFlowRateCfm: Float
+      efficiency: Float
+    }
+
     type PaginatedResultSet {
       hasNext: Boolean
       hasPrevious: Boolean
@@ -98,9 +106,10 @@ const Schema = i18n => {
       modificationDate: String
       ceilings: [Ceiling]
       walls: [Wall]
-      doors: [Door]
+      doors: [Door
       windows: [Window]
       heatedFloorArea: HeatedFloorArea
+      ventilations: [Ventilation]
     }
 
 

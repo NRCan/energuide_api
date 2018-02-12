@@ -116,6 +116,7 @@ describe('Schema', () => {
         'doors',
         'windows',
         'heatedFloorArea',
+        'ventilations',
       ])
     })
   })
@@ -183,6 +184,24 @@ describe('Schema', () => {
         'areaAboveGradeFeet',
         'areaBelowGradeMetres',
         'areaBelowGradeFeet',
+      ])
+    })
+  })
+
+  describe('Ventilation', () => {
+    it('is defined', () => {
+      expect(typeMap).toHaveProperty('Ventilation')
+    })
+
+    it('has the expected fields', () => {
+      const { Ventilation } = typeMap
+      const fields = Object.keys(Ventilation.getFields())
+      expect(fields).toEqual([
+        'typeEnglish',
+        'typeFrench',
+        'airFlowRateLps',
+        'airFlowRateCfm',
+        'efficiency',
       ])
     })
   })
