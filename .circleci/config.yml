@@ -182,10 +182,11 @@ jobs:
           command: |
             yarn integration
   deploy:
+    working_directory: ~/repo/api
     docker: 
       - image: docker
     steps:
-      - checkout 
+      - checkout: ~/repo
       - setup_remote_docker
       - run:
           name: "Build and Deploy Docker Image" 
