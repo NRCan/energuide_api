@@ -268,39 +268,6 @@ class TestWall:
         assert output.area_feet == 1128.0000721920012
 
 
-class TestCeiling:
-
-    @pytest.fixture
-    def sample(self) -> element.Element:
-        data = """
-<Ceiling>
-    <Label>Main attic</Label>
-    <Construction>
-        <Type>
-            <English>Attic/gable</English>
-            <French>Combles/pignon</French>
-        </Type>
-        <CeilingType nominalInsulation='2.864' rValue='2.9463' />
-    </Construction>
-    <Measurements area='46.4515' length='23.875' />
-</Ceiling>
-        """
-        return element.Element.from_string(data)
-
-    def test_from_data(self, sample: element.Element):
-        output = extracted_datatypes.Ceiling.from_data(sample)
-        assert output.label == 'Main attic'
-        assert output.ceiling_area.square_metres == 46.4515
-
-    def test_to_dict(self, sample: element.Element) -> None:
-        output = extracted_datatypes.Ceiling.from_data(sample).to_dict()
-        assert output['areaMetres'] == 46.4515
-        assert output['nominalR'] == 16.262546197168
-        assert output['effectiveR'] == 16.729867269803098
-        assert output['areaFeet'] == 499.9998167217784
-        assert output['lengthFeet'] == 78.330055
-
-
 class TestFloor:
 
     @pytest.fixture

@@ -7,6 +7,7 @@ from energuide import dwelling
 from energuide import reader
 from energuide import extracted_datatypes
 from energuide.embedded import area
+from energuide.embedded import ceiling
 from energuide.embedded import distance
 from energuide.embedded import insulation
 
@@ -473,7 +474,7 @@ class TestParsedDwellingDataRow:
             region=dwelling.Region.ONTARIO,
             forward_sortation_area='K1P',
             ceilings=[
-                extracted_datatypes.Ceiling(
+                ceiling.Ceiling(
                     label='Main attic',
                     ceiling_type=bilingual.Bilingual(english='Attic/gable', french='Combles/pignon'),
                     nominal_insulation=insulation.Insulation(2.864),

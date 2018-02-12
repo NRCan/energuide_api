@@ -4,8 +4,8 @@ import typing
 from dateutil import parser
 from energuide import reader
 from energuide import validator
+from energuide.embedded import ceiling
 from energuide.extracted_datatypes import Floor
-from energuide.extracted_datatypes import Ceiling
 from energuide.extracted_datatypes import Door
 from energuide.extracted_datatypes import Wall
 from energuide.extracted_datatypes import Window
@@ -84,7 +84,7 @@ class _ParsedDwellingDataRow(typing.NamedTuple):
     city: str
     region: Region
     forward_sortation_area: str
-    ceilings: typing.List[Ceiling]
+    ceilings: typing.List[ceiling.Ceiling]
     floors: typing.List[Floor]
     walls: typing.List[Wall]
     doors: typing.List[Door]
@@ -143,7 +143,7 @@ class ParsedDwellingDataRow(_ParsedDwellingDataRow):
             city=parsed['CLIENTCITY'],
             region=Region.from_data(parsed['HOUSEREGION']),
             forward_sortation_area=parsed['forwardSortationArea'],
-            ceilings=[Ceiling.from_data(ceiling) for ceiling in parsed['ceilings']],
+            ceilings=[ceiling.Ceiling.from_data(ceiling_node) for ceiling_node in parsed['ceilings']],
             floors=[Floor.from_data(floor) for floor in parsed['floors']],
             walls=[Wall.from_data(wall, codes.wall) for wall in parsed['walls']],
             doors=[Door.from_data(door) for door in parsed['doors']],
@@ -161,7 +161,7 @@ class Evaluation:
                  entry_date: datetime.date,
                  creation_date: datetime.datetime,
                  modification_date: datetime.datetime,
-                 ceilings: typing.List[Ceiling],
+                 ceilings: typing.List[ceiling.Ceiling],
                  floors: typing.List[Floor],
                  walls: typing.List[Wall],
                  doors: typing.List[Door],
@@ -217,7 +217,7 @@ class Evaluation:
         return self._modification_date
 
     @property
-    def ceilings(self) -> typing.List[Ceiling]:
+    def ceilings(self) -> typing.List[ceiling.Ceiling]:
         return self._ceilings
 
     @property
