@@ -29,7 +29,7 @@ def code(doc: element.Element) -> element.Element:
 
 def test_house_snippet_to_dict(house: element.Element) -> None:
     output = snippets.snip_house(house).to_dict()
-    assert len(output) == 9
+    assert len(output) == 10
 
 
 def test_ceiling_snippet(house: element.Element) -> None:
@@ -196,7 +196,7 @@ def test_ventilation_snippet(house: element.Element) -> None:
     assert len(child_tags) == 3
 
 
-def test_water_heating(house: element.Element) -> None:
+def test_water_heating_snippet(house: element.Element) -> None:
     output = snippets.snip_house(house)
     assert output.water_heating
     doc = element.Element.from_string(output.water_heating)
@@ -205,3 +205,13 @@ def test_water_heating(house: element.Element) -> None:
 
     assert all([water_heating.attrib['hasDrainWaterHeatRecovery'] == 'false'
                 for water_heating in nodes])
+
+
+def test_basement_snippet(house: element.Element) -> None:
+    output = snippets.snip_house(house)
+    assert len(output.basements) == 1
+    checker = validator.DwellingValidator({
+        'basements': {'type': 'list', 'required': True, 'schema': {'type': 'xml', 'coerce': 'parse_xml'}}
+    }, allow_unknown=True)
+    doc = {'basements': output.basements}
+    assert checker.validate(doc)
