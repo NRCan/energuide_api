@@ -106,7 +106,7 @@ const Schema = i18n => {
       modificationDate: String
       ceilings: [Ceiling]
       walls: [Wall]
-      doors: [Door
+      doors: [Door]
       windows: [Window]
       heatedFloorArea: HeatedFloorArea
       ventilations: [Ventilation]
