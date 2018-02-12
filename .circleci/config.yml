@@ -183,7 +183,7 @@ jobs:
             yarn integration
   deploy:
     docker: 
-      - image: golang:1.6.4
+      - image: docker
     steps:
       - checkout 
       - setup_remote_docker
