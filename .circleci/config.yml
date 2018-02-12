@@ -194,7 +194,7 @@ jobs:
       - run:
           name: "Build and Deploy Docker Image" 
           command: | 
-            docker login -u $DOCKER_USERNAME2 -p $DOCKER_PASSWORD2
+            docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
             docker build --build-arg VERSION=${VERSION} -t ${DOCKER_REGISTRY}/${NAMESPACE}/${CIRCLE_PROJECT_REPONAME}:${VERSION} .
             docker push ${DOCKER_REGISTRY}/${NAMESPACE}/${CIRCLE_PROJECT_REPONAME}:${VERSION} 
 
