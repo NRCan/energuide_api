@@ -82,14 +82,6 @@ class WaterHeaterType(enum.Enum):
     CSA_DHW_FRENCH = "Système combiné certifié pour le chauffage des locaux et de l’eau"
 
 
-class _Floor(typing.NamedTuple):
-    label: str
-    nominal_rsi: float
-    effective_rsi: float
-    area_metres: float
-    length_metres: float
-
-
 class _Wall(typing.NamedTuple):
     label: str
     structure_type_english: typing.Optional[str]
@@ -397,48 +389,6 @@ class Wall(_Wall):
             'areaFeet': self.area_feet,
             'perimeter': self.perimeter,
             'height': self.height,
-        }
-
-
-class Floor(_Floor):
-
-    @classmethod
-    def from_data(cls, floor: element.Element) -> 'Floor':
-        return Floor(
-            label=floor.get_text('Label'),
-            nominal_rsi=float(floor.xpath('Construction/Type/@nominalInsulation')[0]),
-            effective_rsi=float(floor.xpath('Construction/Type/@rValue')[0]),
-            area_metres=float(floor.xpath('Measurements/@area')[0]),
-            length_metres=float(floor.xpath('Measurements/@length')[0]),
-        )
-
-    @property
-    def nominal_r(self) -> float:
-        return self.nominal_rsi * _RSI_MULTIPLIER
-
-    @property
-    def effective_r(self) -> float:
-        return self.effective_rsi * _RSI_MULTIPLIER
-
-    @property
-    def area_feet(self) -> float:
-        return self.area_metres * _FEET_SQUARED_MULTIPLIER
-
-    @property
-    def length_feet(self) -> float:
-        return self.length_metres * _FEET_MULTIPLIER
-
-    def to_dict(self) -> typing.Dict[str, typing.Any]:
-        return {
-            'label': self.label,
-            'nominalRsi': self.nominal_rsi,
-            'nominalR': self.nominal_r,
-            'effectiveRsi': self.effective_rsi,
-            'effectiveR': self.effective_r,
-            'areaMetres': self.area_metres,
-            'areaFeet': self.area_feet,
-            'lengthMetres': self.length_metres,
-            'lengthFeet': self.length_feet,
         }
 
 

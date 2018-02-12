@@ -5,7 +5,7 @@ from dateutil import parser
 from energuide import reader
 from energuide import validator
 from energuide.embedded import ceiling
-from energuide.extracted_datatypes import Floor
+from energuide.embedded import floor
 from energuide.extracted_datatypes import Door
 from energuide.extracted_datatypes import Wall
 from energuide.extracted_datatypes import Window
@@ -85,7 +85,7 @@ class _ParsedDwellingDataRow(typing.NamedTuple):
     region: Region
     forward_sortation_area: str
     ceilings: typing.List[ceiling.Ceiling]
-    floors: typing.List[Floor]
+    floors: typing.List[floor.Floor]
     walls: typing.List[Wall]
     doors: typing.List[Door]
     windows: typing.List[Window]
@@ -144,7 +144,7 @@ class ParsedDwellingDataRow(_ParsedDwellingDataRow):
             region=Region.from_data(parsed['HOUSEREGION']),
             forward_sortation_area=parsed['forwardSortationArea'],
             ceilings=[ceiling.Ceiling.from_data(ceiling_node) for ceiling_node in parsed['ceilings']],
-            floors=[Floor.from_data(floor) for floor in parsed['floors']],
+            floors=[floor.Floor.from_data(floor_node) for floor_node in parsed['floors']],
             walls=[Wall.from_data(wall, codes.wall) for wall in parsed['walls']],
             doors=[Door.from_data(door) for door in parsed['doors']],
             windows=[Window.from_data(window, codes.window) for window in parsed['windows']],
@@ -162,7 +162,7 @@ class Evaluation:
                  creation_date: datetime.datetime,
                  modification_date: datetime.datetime,
                  ceilings: typing.List[ceiling.Ceiling],
-                 floors: typing.List[Floor],
+                 floors: typing.List[floor.Floor],
                  walls: typing.List[Wall],
                  doors: typing.List[Door],
                  windows: typing.List[Window],
@@ -221,7 +221,7 @@ class Evaluation:
         return self._ceilings
 
     @property
-    def floors(self) -> typing.List[Floor]:
+    def floors(self) -> typing.List[floor.Floor]:
         return self._floors
 
     @property
