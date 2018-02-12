@@ -2,6 +2,9 @@ import enum
 import typing
 from energuide import element
 from energuide import bilingual
+from energuide.embedded import area
+from energuide.embedded import distance
+from energuide.embedded import insulation
 
 
 class WaterHeaterType(enum.Enum):
@@ -84,12 +87,11 @@ class WaterHeaterType(enum.Enum):
 
 class _Ceiling(typing.NamedTuple):
     label: str
-    type_english: str
-    type_french: str
-    nominal_rsi: float
-    effective_rsi: float
-    area_metres: float
-    length_metres: float
+    ceiling_type: bilingual.Bilingual
+    nominal_insulation: insulation.Insulation
+    effective_insulation: insulation.Insulation
+    ceiling_area: area.Area
+    ceiling_length: distance.Distance
 
 
 class _Floor(typing.NamedTuple):
@@ -416,43 +418,31 @@ class Ceiling(_Ceiling):
     def from_data(cls, ceiling: element.Element) -> 'Ceiling':
         return Ceiling(
             label=ceiling.get_text('Label'),
-            type_english=ceiling.get_text('Construction/Type/English'),
-            type_french=ceiling.get_text('Construction/Type/French'),
-            nominal_rsi=float(ceiling.xpath('Construction/CeilingType/@nominalInsulation')[0]),
-            effective_rsi=float(ceiling.xpath('Construction/CeilingType/@rValue')[0]),
-            area_metres=float(ceiling.xpath('Measurements/@area')[0]),
-            length_metres=float(ceiling.xpath('Measurements/@length')[0]),
+            ceiling_type=bilingual.Bilingual(
+                english=ceiling.get_text('Construction/Type/English'),
+                french=ceiling.get_text('Construction/Type/French'),
+            ),
+            nominal_insulation=insulation.Insulation(
+                float(ceiling.xpath('Construction/CeilingType/@nominalInsulation')[0])),
+            effective_insulation=insulation.Insulation(
+                float(ceiling.xpath('Construction/CeilingType/@rValue')[0])),
+            ceiling_area=area.Area(float(ceiling.xpath('Measurements/@area')[0])),
+            ceiling_length=distance.Distance(float(ceiling.xpath('Measurements/@length')[0])),
         )
-
-    @property
-    def nominal_r(self) -> float:
-        return self.nominal_rsi * _RSI_MULTIPLIER
-
-    @property
-    def effective_r(self) -> float:
-        return self.effective_rsi * _RSI_MULTIPLIER
-
-    @property
-    def area_feet(self) -> float:
-        return self.area_metres * _FEET_SQUARED_MULTIPLIER
-
-    @property
-    def length_feet(self) -> float:
-        return self.length_metres * _FEET_MULTIPLIER
 
     def to_dict(self) -> typing.Dict[str, typing.Any]:
         return {
             'label': self.label,
-            'typeEnglish': self.type_english,
-            'typeFrench': self.type_french,
-            'nominalRsi': self.nominal_rsi,
-            'nominalR': self.nominal_r,
-            'effectiveRsi': self.effective_rsi,
-            'effectiveR': self.effective_r,
-            'areaMetres': self.area_metres,
-            'areaFeet': self.area_feet,
-            'lengthMetres': self.length_metres,
-            'lengthFeet': self.length_feet,
+            'typeEnglish': self.ceiling_type.english,
+            'typeFrench': self.ceiling_type.french,
+            'nominalRsi': self.nominal_insulation.rsi,
+            'nominalR': self.nominal_insulation.r_value,
+            'effectiveRsi': self.effective_insulation.rsi,
+            'effectiveR': self.effective_insulation.r_value,
+            'areaMetres': self.ceiling_area.square_metres,
+            'areaFeet': self.ceiling_area.square_feet,
+            'lengthMetres': self.ceiling_length.metres,
+            'lengthFeet': self.ceiling_length.feet,
         }
 
 
