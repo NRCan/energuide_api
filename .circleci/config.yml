@@ -195,7 +195,6 @@ jobs:
           name: "Build and Deploy Docker Image"
           command: |
             docker login -u "$DOCKER_USERNAME" -p "$DOCKER_PASSWORD"
-            yarn build
             docker build --build-arg VERSION="${VERSION}" -t "${DOCKER_REGISTRY}"/"${NAMESPACE}"/"${CIRCLE_PROJECT_REPONAME}":"${VERSION}" .
             docker push "${DOCKER_REGISTRY}"/"${NAMESPACE}"/"${CIRCLE_PROJECT_REPONAME}":"${VERSION}"
 
