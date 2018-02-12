@@ -83,18 +83,6 @@ class WaterHeaterType(enum.Enum):
     CSA_DHW_FRENCH = "Système combiné certifié pour le chauffage des locaux et de l’eau"
 
 
-class _Wall(typing.NamedTuple):
-    label: str
-    structure_type_english: typing.Optional[str]
-    structure_type_french: typing.Optional[str]
-    component_type_size_english: typing.Optional[str]
-    component_type_size_french: typing.Optional[str]
-    nominal_rsi: float
-    effective_rsi: float
-    perimeter: float
-    height: float
-
-
 class _Door(typing.NamedTuple):
     label: str
     type_english: str
@@ -249,64 +237,6 @@ class Window(_Window):
             'areaMetres': self.area_metres,
             'areaFeet': self.area_feet,
             'width': self.width,
-            'height': self.height,
-        }
-
-
-class Wall(_Wall):
-
-    @classmethod
-    def from_data(cls,
-                  wall: element.Element,
-                  wall_codes: typing.Dict[str, code.WallCode]) -> 'Wall':
-
-        code_id = wall.xpath('Construction/Type/@idref')
-        w_code: typing.Optional[code.WallCode] = None
-        if code_id:
-            w_code = wall_codes[code_id[0]]
-
-        return Wall(
-            label=wall.get_text('Label'),
-            structure_type_english=w_code.structure_type.english if w_code else None,
-            structure_type_french=w_code.structure_type.french if w_code else None,
-            component_type_size_english=w_code.component_type_size.english if w_code else None,
-            component_type_size_french=w_code.component_type_size.french if w_code else None,
-            nominal_rsi=float(wall.xpath('Construction/Type/@nominalInsulation')[0]),
-            effective_rsi=float(wall.xpath('Construction/Type/@rValue')[0]),
-            perimeter=float(wall.xpath('Measurements/@perimeter')[0]),
-            height=float(wall.xpath('Measurements/@height')[0]),
-        )
-
-    @property
-    def nominal_r(self) -> float:
-        return self.nominal_rsi * _RSI_MULTIPLIER
-
-    @property
-    def effective_r(self) -> float:
-        return self.effective_rsi * _RSI_MULTIPLIER
-
-    @property
-    def area_metres(self) -> float:
-        return self.perimeter * self.height
-
-    @property
-    def area_feet(self) -> float:
-        return self.area_metres * _FEET_SQUARED_MULTIPLIER
-
-    def to_dict(self) -> typing.Dict[str, typing.Any]:
-        return {
-            'label': self.label,
-            'structureTypeEnglish': self.structure_type_english,
-            'structureTypeFrench': self.structure_type_french,
-            'componentTypeSizeEnglish': self.component_type_size_english,
-            'componentTypeSizeFrench': self.component_type_size_french,
-            'nominalRsi': self.nominal_rsi,
-            'nominalR': self.nominal_r,
-            'effectiveRsi': self.effective_rsi,
-            'effectiveR': self.effective_r,
-            'areaMetres': self.area_metres,
-            'areaFeet': self.area_feet,
-            'perimeter': self.perimeter,
             'height': self.height,
         }
 
