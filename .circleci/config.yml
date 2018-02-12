@@ -186,7 +186,8 @@ jobs:
     docker: 
       - image: docker
     steps:
-      - checkout: ~/repo
+      - checkout: 
+          path:  ~/repo
       - setup_remote_docker
       - run:
           name: "Build and Deploy Docker Image" 
