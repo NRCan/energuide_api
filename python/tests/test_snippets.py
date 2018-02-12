@@ -29,7 +29,7 @@ def code(doc: element.Element) -> element.Element:
 
 def test_house_snippet_to_dict(house: element.Element) -> None:
     output = snippets.snip_house(house).to_dict()
-    assert len(output) == 10
+    assert len(output) == 11
 
 
 def test_ceiling_snippet(house: element.Element) -> None:
@@ -214,4 +214,14 @@ def test_basement_snippet(house: element.Element) -> None:
         'basements': {'type': 'list', 'required': True, 'schema': {'type': 'xml', 'coerce': 'parse_xml'}}
     }, allow_unknown=True)
     doc = {'basements': output.basements}
+    assert checker.validate(doc)
+
+
+def test_crawlspace_snippet(house: element.Element) -> None:
+    output = snippets.snip_house(house)
+    assert len(output.crawlspaces) == 1
+    checker = validator.DwellingValidator({
+        'crawlspaces': {'type': 'list', 'required': True, 'schema': {'type': 'xml', 'coerce': 'parse_xml'}}
+    }, allow_unknown=True)
+    doc = {'crawlspaces': output.crawlspaces}
     assert checker.validate(doc)

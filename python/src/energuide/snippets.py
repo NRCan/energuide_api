@@ -29,6 +29,7 @@ class _HouseSnippet(typing.NamedTuple):
     ventilation: typing.List[str]
     water_heating: typing.Optional[str]
     basements: typing.List[str]
+    crawlspaces: typing.List[str]
 
 
 class HouseSnippet(_HouseSnippet):
@@ -44,7 +45,8 @@ class HouseSnippet(_HouseSnippet):
             'heating_cooling': self.heating_cooling,
             'ventilations': self.ventilation,
             'waterHeatings': self.water_heating,
-            'basements': self.basements
+            'basements': self.basements,
+            'crawlspaces': self.crawlspaces,
         }
 
 
@@ -68,6 +70,7 @@ def snip_house(house: element.Element) -> HouseSnippet:
     water_heating_string = water_heating[0].to_string() if water_heating else None
 
     basements = _extract_nodes(house, 'Components/Basement')
+    crawlspaces = _extract_nodes(house, 'Components/Crawlspace')
 
     return HouseSnippet(
         ceilings=[node.to_string() for node in ceilings],
@@ -80,6 +83,7 @@ def snip_house(house: element.Element) -> HouseSnippet:
         ventilation=ventilation_strings,
         water_heating=water_heating_string,
         basements=[node.to_string() for node in basements],
+        crawlspaces=[node.to_string() for node in crawlspaces],
     )
 
 
