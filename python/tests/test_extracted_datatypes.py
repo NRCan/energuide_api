@@ -398,7 +398,7 @@ class TestVentilation:
 
     def test_from_data(self, sample: element.Element):
         output = extracted_datatypes.Ventilation.from_data(sample)
-        assert output.type_english == 'Heat recovery ventilator'
+        assert output.ventilation_type == extracted_datatypes.VentilationType.NOT_ENERGY_STAR_NOT_INSTITUTE_CERTIFIED
         assert output.air_flow_rate == 220
 
     def test_to_dict(self, sample: element.Element) -> None:
