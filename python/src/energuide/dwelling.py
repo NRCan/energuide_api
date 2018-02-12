@@ -5,6 +5,7 @@ from dateutil import parser
 from energuide import reader
 from energuide import validator
 from energuide.embedded import ceiling
+from energuide.embedded import code
 from energuide.embedded import floor
 from energuide.extracted_datatypes import Door
 from energuide.extracted_datatypes import Wall
@@ -12,7 +13,6 @@ from energuide.extracted_datatypes import Window
 from energuide.extracted_datatypes import HeatedFloorArea
 from energuide.extracted_datatypes import Ventilation
 from energuide.extracted_datatypes import WaterHeating
-from energuide.extracted_datatypes import Codes
 
 
 class NoInputDataException(Exception):
@@ -131,7 +131,7 @@ class ParsedDwellingDataRow(_ParsedDwellingDataRow):
             raise reader.InvalidInputDataException(f'Validator failed on keys: {error_keys}')
 
         parsed = checker.document
-        codes = Codes.from_data(parsed['codes'])
+        codes = code.Codes.from_data(parsed['codes'])
 
         return ParsedDwellingDataRow(
             eval_id=parsed['EVAL_ID'],
