@@ -191,8 +191,8 @@ jobs:
           name: "Build and Deploy Docker Image" 
           command: | 
             docker login -u $DOCKER_USERNAME2 -p $DOCKER_PASSWORD2
-            docker build -t ${DOCKER_REGISTRY}/${NAME_SPACE}/${CIRCLE_PROJECT_REPONAME}:latest .
-            docker push ${DOCKER_REGISTRY}/${NAME_SPACE}/${CIRCLE_PROJECT_REPONAME}:latest 
+            docker build -t ${DOCKER_REGISTRY}/${NAMESPACE}/${CIRCLE_PROJECT_REPONAME}:latest .
+            docker push ${DOCKER_REGISTRY}/${NAMESPACE}/${CIRCLE_PROJECT_REPONAME}:latest 
 
 workflows:
   version: 2
