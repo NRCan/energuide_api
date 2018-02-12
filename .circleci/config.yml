@@ -7,7 +7,7 @@ jobs:
   node:
     docker:
       # specify the version you desire here
-      - image: circleci/node:7.10
+      - image: circleci/node:8.9.4
       - image: mongo:3.6.2
 
       # Specify service dependencies here if necessary
@@ -132,7 +132,7 @@ jobs:
   node_integration:
     docker:
       # specify the version you desire here
-      - image: circleci/node:7.10
+      - image: circleci/node:8.9.4
       - image: mongo:3.6.2
 
       # Specify service dependencies here if necessary
