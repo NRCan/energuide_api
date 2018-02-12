@@ -182,6 +182,8 @@ jobs:
           command: |
             yarn integration
   deploy:
+    environment:
+      - VERSION: "0.1"
     working_directory: ~/repo/api
     docker: 
       - image: docker
@@ -193,8 +195,8 @@ jobs:
           name: "Build and Deploy Docker Image" 
           command: | 
             docker login -u $DOCKER_USERNAME2 -p $DOCKER_PASSWORD2
-            docker build -t ${DOCKER_REGISTRY}/${NAMESPACE}/${CIRCLE_PROJECT_REPONAME}:latest .
-            docker push ${DOCKER_REGISTRY}/${NAMESPACE}/${CIRCLE_PROJECT_REPONAME}:latest 
+            docker build --build-arg VERSION=%{VERSION} -t ${DOCKER_REGISTRY}/${NAMESPACE}/${CIRCLE_PROJECT_REPONAME}:${VERSION} .
+            docker push ${DOCKER_REGISTRY}/${NAMESPACE}/${CIRCLE_PROJECT_REPONAME}:${VERSION} 
 
 workflows:
   version: 2
