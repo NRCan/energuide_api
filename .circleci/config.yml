@@ -185,18 +185,19 @@ jobs:
     environment:
       - VERSION: "0.1"
     working_directory: ~/repo/api
-    docker: 
+    docker:
       - image: docker
     steps:
-      - checkout: 
+      - checkout:
           path:  ~/repo
       - setup_remote_docker
       - run:
-          name: "Build and Deploy Docker Image" 
-          command: | 
+          name: "Build and Deploy Docker Image"
+          command: |
             docker login -u "$DOCKER_USERNAME" -p "$DOCKER_PASSWORD"
+            yarn build
             docker build --build-arg VERSION="${VERSION}" -t "${DOCKER_REGISTRY}"/"${NAMESPACE}"/"${CIRCLE_PROJECT_REPONAME}":"${VERSION}" .
-            docker push "${DOCKER_REGISTRY}"/"${NAMESPACE}"/"${CIRCLE_PROJECT_REPONAME}":"${VERSION}" 
+            docker push "${DOCKER_REGISTRY}"/"${NAMESPACE}"/"${CIRCLE_PROJECT_REPONAME}":"${VERSION}"
 
 workflows:
   version: 2
@@ -213,5 +214,5 @@ workflows:
             - node_integration
           filters:
             branches:
-              only: 
+              only:
                 - master
