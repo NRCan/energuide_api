@@ -7,8 +7,8 @@ from energuide import validator
 from energuide.embedded import ceiling
 from energuide.embedded import code
 from energuide.embedded import floor
+from energuide.embedded import wall
 from energuide.extracted_datatypes import Door
-from energuide.extracted_datatypes import Wall
 from energuide.extracted_datatypes import Window
 from energuide.extracted_datatypes import HeatedFloorArea
 from energuide.extracted_datatypes import Ventilation
@@ -86,7 +86,7 @@ class _ParsedDwellingDataRow(typing.NamedTuple):
     forward_sortation_area: str
     ceilings: typing.List[ceiling.Ceiling]
     floors: typing.List[floor.Floor]
-    walls: typing.List[Wall]
+    walls: typing.List[wall.Wall]
     doors: typing.List[Door]
     windows: typing.List[Window]
     heated_floor_area: HeatedFloorArea
@@ -145,7 +145,7 @@ class ParsedDwellingDataRow(_ParsedDwellingDataRow):
             forward_sortation_area=parsed['forwardSortationArea'],
             ceilings=[ceiling.Ceiling.from_data(ceiling_node) for ceiling_node in parsed['ceilings']],
             floors=[floor.Floor.from_data(floor_node) for floor_node in parsed['floors']],
-            walls=[Wall.from_data(wall, codes.wall) for wall in parsed['walls']],
+            walls=[wall.Wall.from_data(wall_node, codes.wall) for wall_node in parsed['walls']],
             doors=[Door.from_data(door) for door in parsed['doors']],
             windows=[Window.from_data(window, codes.window) for window in parsed['windows']],
             heated_floor_area=HeatedFloorArea.from_data(parsed['heatedFloorArea']),
@@ -163,7 +163,7 @@ class Evaluation:
                  modification_date: datetime.datetime,
                  ceilings: typing.List[ceiling.Ceiling],
                  floors: typing.List[floor.Floor],
-                 walls: typing.List[Wall],
+                 walls: typing.List[wall.Wall],
                  doors: typing.List[Door],
                  windows: typing.List[Window],
                  heated_floor_area: HeatedFloorArea,
@@ -225,7 +225,7 @@ class Evaluation:
         return self._floors
 
     @property
-    def walls(self) -> typing.List[Wall]:
+    def walls(self) -> typing.List[wall.Wall]:
         return self._walls
 
     @property

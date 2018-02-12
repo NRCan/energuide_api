@@ -8,9 +8,11 @@ from energuide import reader
 from energuide import extracted_datatypes
 from energuide.embedded import area
 from energuide.embedded import ceiling
+from energuide.embedded import code
 from energuide.embedded import distance
 from energuide.embedded import floor
 from energuide.embedded import insulation
+from energuide.embedded import wall
 
 
 # pylint: disable=no-self-use
@@ -464,6 +466,20 @@ class TestParsedDwellingDataRow:
 
     def test_from_row(self, sample_input_d: reader.InputData) -> None:
         output = dwelling.ParsedDwellingDataRow.from_row(sample_input_d)
+
+        wall_code = code.WallCode(
+            identifier='Code 1',
+            label='1201101121',
+            structure_type=bilingual.Bilingual(
+                english='Wood frame',
+                french='Ossature de bois',
+            ),
+            component_type_size=bilingual.Bilingual(
+                english='38x89 mm (2x4 in)',
+                french='38x89 (2x4)',
+            )
+        )
+
         assert output == dwelling.ParsedDwellingDataRow(
             eval_id=123,
             eval_type=dwelling.EvaluationType.PRE_RETROFIT,
@@ -494,16 +510,13 @@ class TestParsedDwellingDataRow:
                 )
             ],
             walls=[
-                extracted_datatypes.Wall(
+                wall.Wall(
                     label='Second level',
-                    structure_type_english='Wood frame',
-                    structure_type_french='Ossature de bois',
-                    component_type_size_english='38x89 mm (2x4 in)',
-                    component_type_size_french='38x89 (2x4)',
-                    nominal_rsi=1.432,
-                    effective_rsi=1.8016,
-                    perimeter=42.9768,
-                    height=2.4384,
+                    wall_code=wall_code,
+                    nominal_insulation=insulation.Insulation(1.432),
+                    effective_insulation=insulation.Insulation(1.8016),
+                    perimeter=distance.Distance(42.9768),
+                    height=distance.Distance(2.4384),
                 )
             ],
             doors=[
