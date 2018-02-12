@@ -2,6 +2,7 @@ import enum
 import typing
 from energuide import element
 from energuide import bilingual
+from energuide.embedded import code
 
 
 class WaterHeaterType(enum.Enum):
@@ -105,16 +106,16 @@ class _Door(typing.NamedTuple):
 
 class _Window(typing.NamedTuple):
     label: str
-    glazing_types_english: typing.Optional[str]
-    glazing_types_french: typing.Optional[str]
-    coatings_tints_english: typing.Optional[str]
-    coatings_tints_french: typing.Optional[str]
+    glazing_type_english: typing.Optional[str]
+    glazing_type_french: typing.Optional[str]
+    coating_tint_english: typing.Optional[str]
+    coating_tint_french: typing.Optional[str]
     fill_type_english: typing.Optional[str]
     fill_type_french: typing.Optional[str]
     spacer_type_english: typing.Optional[str]
     spacer_type_french: typing.Optional[str]
-    type_english: typing.Optional[str]
-    type_french: typing.Optional[str]
+    window_code_type_english: typing.Optional[str]
+    window_code_type_french: typing.Optional[str]
     frame_material_english: typing.Optional[str]
     frame_material_french: typing.Optional[str]
     rsi: float
@@ -141,32 +142,6 @@ class _Ventilation(typing.NamedTuple):
     efficiency: float
 
 
-class _WallCode(typing.NamedTuple):
-    identifier: str
-    label: str
-    structure_type_english: str
-    structure_type_french: str
-    component_type_size_english: str
-    component_type_size_french: str
-
-
-class _WindowCode(typing.NamedTuple):
-    identifier: str
-    label: typing.Optional[str]
-    glazing_types_english: typing.Optional[str]
-    glazing_types_french: typing.Optional[str]
-    coatings_tints_english: typing.Optional[str]
-    coatings_tints_french: typing.Optional[str]
-    fill_type_english: typing.Optional[str]
-    fill_type_french: typing.Optional[str]
-    spacer_type_english: typing.Optional[str]
-    spacer_type_french: typing.Optional[str]
-    type_english: typing.Optional[str]
-    type_french: typing.Optional[str]
-    frame_material_english: typing.Optional[str]
-    frame_material_french: typing.Optional[str]
-
-
 class _WaterHeating(typing.NamedTuple):
     type_english: WaterHeaterType
     type_french: WaterHeaterType
@@ -180,63 +155,6 @@ _FEET_MULTIPLIER = 3.28084
 _FEET_SQUARED_MULTIPLIER = _FEET_MULTIPLIER**2
 _MILLIMETRES_TO_METRES = 1000
 _LITRE_TO_GALLON = 0.264172
-
-
-class WallCode(_WallCode):
-
-    @classmethod
-    def from_data(cls, wall_code: element.Element) -> 'WallCode':
-        return WallCode(
-            identifier=wall_code.attrib['id'],
-            label=wall_code.get_text('Label'),
-            structure_type_english=wall_code.get_text('Layers/StructureType/English'),
-            structure_type_french=wall_code.get_text('Layers/StructureType/French'),
-            component_type_size_english=wall_code.get_text('Layers/ComponentTypeSize/English'),
-            component_type_size_french=wall_code.get_text('Layers/ComponentTypeSize/French'),
-        )
-
-
-class WindowCode(_WindowCode):
-
-    @classmethod
-    def from_data(cls, window_code: element.Element) -> 'WindowCode':
-        return WindowCode(
-            identifier=window_code.attrib['id'],
-            label=window_code.findtext('Label'),
-            glazing_types_english=window_code.findtext('Layers/GlazingTypes/English'),
-            glazing_types_french=window_code.findtext('Layers/GlazingTypes/French'),
-            coatings_tints_english=window_code.findtext('Layers/CoatingsTints/English'),
-            coatings_tints_french=window_code.findtext('Layers/CoatingsTints/French'),
-            fill_type_english=window_code.findtext('Layers/FillType/English'),
-            fill_type_french=window_code.findtext('Layers/FillType/French'),
-            spacer_type_english=window_code.findtext('Layers/SpacerType/English'),
-            spacer_type_french=window_code.findtext('Layers/SpacerType/French'),
-            type_english=window_code.findtext('Layers/Type/English'),
-            type_french=window_code.findtext('Layers/Type/French'),
-            frame_material_english=window_code.findtext('Layers/FrameMaterial/English'),
-            frame_material_french=window_code.findtext('Layers/FrameMaterial/French'),
-        )
-
-
-class _Codes(typing.NamedTuple):
-    wall: typing.Dict[str, WallCode]
-    window: typing.Dict[str, WindowCode]
-
-
-class Codes(_Codes):
-
-    @classmethod
-    def from_data(cls, codes: typing.Dict[str, typing.List[element.Element]]) -> 'Codes':
-        wall_code_list = [WallCode.from_data(wall_code) for wall_code in codes['wall']]
-        window_code_list = [WindowCode.from_data(window_code) for window_code in codes['window']]
-
-        wall_codes = {wall_code.identifier: wall_code for wall_code in wall_code_list}
-        window_codes = {window_code.identifier: window_code for window_code in window_code_list}
-
-        return Codes(
-            wall=wall_codes,
-            window=window_codes,
-        )
 
 
 class HeatedFloorArea(_HeatedFloorArea):
@@ -268,33 +186,34 @@ class HeatedFloorArea(_HeatedFloorArea):
 class Window(_Window):
 
     _CODE_FIELDS = [
-        'glazing_types_english',
-        'glazing_types_english',
-        'glazing_types_french',
-        'coatings_tints_english',
-        'coatings_tints_french',
-        'fill_type_english',
-        'fill_type_french',
-        'spacer_type_english',
-        'spacer_type_french',
-        'type_english',
-        'type_french',
-        'frame_material_english',
-        'frame_material_french',
+        'glazing_type',
+        'coating_tint',
+        'fill_type',
+        'spacer_type',
+        'window_code_type',
+        'frame_material',
     ]
 
     @classmethod
     def from_data(cls,
                   window: element.Element,
-                  window_code: typing.Dict[str, WindowCode]) -> 'Window':
+                  window_code: typing.Dict[str, code.WindowCode]) -> 'Window':
         code_id = window.xpath('Construction/Type/@idref')
-        code = window_code[code_id[0]] if code_id else None
+        w_code = window_code[code_id[0]] if code_id else None
 
-        code_data = {field: getattr(code, field) if code else None for field in cls._CODE_FIELDS}
+        english_fields = {
+            f'{field}_english': getattr(w_code, field).english if w_code else None for field in cls._CODE_FIELDS
+        }
+        french_fields = {
+            f'{field}_french': getattr(w_code, field).french if w_code else None for field in cls._CODE_FIELDS
+        }
+        code_data: typing.Dict[str, typing.Any] = {}
         code_data['label'] = window.findtext('Label')
         code_data['rsi'] = float(window.xpath('Construction/Type/@rValue')[0])
         code_data['width'] = float(window.xpath('Measurements/@width')[0]) / _MILLIMETRES_TO_METRES
         code_data['height'] = float(window.xpath('Measurements/@height')[0]) / _MILLIMETRES_TO_METRES
+        code_data.update(english_fields)
+        code_data.update(french_fields)
 
         return Window(**code_data)
 
@@ -315,16 +234,16 @@ class Window(_Window):
             'label': self.label,
             'rsi': self.rsi,
             'rvalue': self.r_value,
-            'glazingTypesEnglish': self.glazing_types_english,
-            'glazingTypesFrench': self.glazing_types_french,
-            'coatingsTintsEnglish': self.coatings_tints_english,
-            'coatingsTintsFrench': self.coatings_tints_french,
+            'glazingTypesEnglish': self.glazing_type_english,
+            'glazingTypesFrench': self.glazing_type_french,
+            'coatingsTintsEnglish': self.coating_tint_english,
+            'coatingsTintsFrench': self.coating_tint_french,
             'fillTypeEnglish': self.fill_type_english,
             'fillTypeFrench': self.fill_type_french,
             'spacerTypeEnglish': self.spacer_type_english,
             'spacerTypeFrench': self.spacer_type_french,
-            'typeEnglish': self.type_english,
-            'typeFrench': self.type_french,
+            'typeEnglish': self.window_code_type_english,
+            'typeFrench': self.window_code_type_french,
             'frameMaterialEnglish': self.frame_material_english,
             'frameMaterialFrench': self.frame_material_french,
             'areaMetres': self.area_metres,
@@ -339,19 +258,19 @@ class Wall(_Wall):
     @classmethod
     def from_data(cls,
                   wall: element.Element,
-                  wall_codes: typing.Dict[str, WallCode]) -> 'Wall':
+                  wall_codes: typing.Dict[str, code.WallCode]) -> 'Wall':
 
         code_id = wall.xpath('Construction/Type/@idref')
-        code: typing.Optional[WallCode] = None
+        w_code: typing.Optional[code.WallCode] = None
         if code_id:
-            code = wall_codes[code_id[0]]
+            w_code = wall_codes[code_id[0]]
 
         return Wall(
             label=wall.get_text('Label'),
-            structure_type_english=code.structure_type_english if code else None,
-            structure_type_french=code.structure_type_french if code else None,
-            component_type_size_english=code.component_type_size_english if code else None,
-            component_type_size_french=code.component_type_size_french if code else None,
+            structure_type_english=w_code.structure_type.english if w_code else None,
+            structure_type_french=w_code.structure_type.french if w_code else None,
+            component_type_size_english=w_code.component_type_size.english if w_code else None,
+            component_type_size_french=w_code.component_type_size.french if w_code else None,
             nominal_rsi=float(wall.xpath('Construction/Type/@nominalInsulation')[0]),
             effective_rsi=float(wall.xpath('Construction/Type/@rValue')[0]),
             perimeter=float(wall.xpath('Measurements/@perimeter')[0]),
