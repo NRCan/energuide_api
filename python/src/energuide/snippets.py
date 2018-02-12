@@ -24,10 +24,10 @@ class _HouseSnippet(typing.NamedTuple):
     walls: typing.List[str]
     doors: typing.List[str]
     windows: typing.List[str]
-    heated_floor_area: str
-    heating_cooling: str
+    heated_floor_area: typing.Optional[str]
+    heating_cooling: typing.Optional[str]
     ventilation: typing.List[str]
-    water_heating: str
+    water_heating: typing.Optional[str]
 
 
 class HouseSnippet(_HouseSnippet):
@@ -46,19 +46,23 @@ class HouseSnippet(_HouseSnippet):
         }
 
 
+def _extract_nodes(node: element.Element, path: str) -> typing.List[element.Element]:
+    return node.xpath(path)
+
+
 def snip_house(house: element.Element) -> HouseSnippet:
-    ceilings = house.xpath('Components/Ceiling')
-    floors = house.xpath('Components/Floor')
-    walls = house.xpath('Components/Wall')
-    doors = house.xpath('Components//Components/Door')
-    windows = house.xpath('Components//Components/Window')
-    heated_floor_area = house.xpath('Specifications/HeatedFloorArea')
-    heating_cooling = house.xpath('HeatingCooling')
+    ceilings = _extract_nodes(house, 'Components/Ceiling')
+    floors = _extract_nodes(house, 'Components/Floor')
+    walls = _extract_nodes(house, 'Components/Wall')
+    doors = _extract_nodes(house, 'Components//Components/Door')
+    windows = _extract_nodes(house, 'Components//Components/Window')
+    heated_floor_area = _extract_nodes(house, 'Specifications/HeatedFloorArea')
+    heating_cooling = _extract_nodes(house, 'HeatingCooling')
     heating_cooling_string = heating_cooling[0].to_string() if heating_cooling else None
-    ventilation = house.xpath('Ventilation/WholeHouseVentilatorList/Hrv')
+    ventilation = _extract_nodes(house, 'Ventilation/WholeHouseVentilatorList/Hrv')
     ventilation_strings = [hrv.to_string() for hrv in ventilation]
 
-    water_heating = house.xpath('Components/HotWater')
+    water_heating = _extract_nodes(house, 'Components/HotWater')
     water_heating_string = water_heating[0].to_string() if water_heating else None
 
     return HouseSnippet(
