@@ -1,24 +1,23 @@
 import enum
 import typing
 from energuide import element
+from energuide import bilingual
 from energuide.embedded import area
 from energuide.embedded import distance
 from energuide.embedded import insulation
 
 
-@enum.unique
 class WallType(enum.Enum):
-    INTERIOR = 'interior'
-    EXTERIOR = 'exterior'
-    PONY = 'pony'
+    INTERIOR = enum.auto()
+    EXTERIOR = enum.auto()
+    PONY = enum.auto()
 
 
 class MaterialType(enum.Enum):
-    NOT_APPLICABLE = ""
-    ELECTRICITY_CONVENTIONAL_TANK_ENGLISH = "Electric storage tank"
-    ELECTRICITY_CONVENTIONAL_TANK_FRENCH = "Réservoir électrique"
-    ELECTRICITY_CONSERVER_TANK_ENGLISH = "Electric storage tank"
-    ELECTRICITY_CONSERVER_TANK_FRENCH = "Réservoir électrique"
+    WOOD = enum.auto()
+    CONCRETE = enum.auto()
+    CONCRETE_AND_WOOD = enum.auto()
+    UNKNOWN = enum.auto()
 
 
 class _BasementWall(typing.NamedTuple):
@@ -141,6 +140,21 @@ class BasementFloor(_BasementFloor):
 
 class BasementWall(_BasementWall):
 
+    _WALL_TYPE_TRANSLATION = {
+        WallType.INTERIOR: bilingual.Bilingual(
+            english='Interior',
+            french='Intérieur',
+        ),
+        WallType.EXTERIOR: bilingual.Bilingual(
+            english='Exterior',
+            french='Extérieur',
+        ),
+        WallType.PONY: bilingual.Bilingual(
+            english='Pony Wall',
+            french='Murs bas',
+        ),
+    }
+
     @classmethod
     def _from_data(cls, wall: element.Element, wall_perimiter: float, wall_height: float, tag: WallType):
         percentage = float(wall.attrib['percentage'])
@@ -174,8 +188,10 @@ class BasementWall(_BasementWall):
         return walls
 
     def to_dict(self) -> typing.Dict[str, typing.Any]:
+        wall_type = self._WALL_TYPE_TRANSLATION[self.wall_type]
         return {
-            'wallType': self.wall_type.value,
+            'wallTypeEnglish': wall_type.english,
+            'wallTypeFrench': wall_type.french,
             'nominalRsi': self.nominal_insulation.rsi,
             'nominalR': self.nominal_insulation.r_value,
             'effectiveRsi': self.effective_insulation.rsi,
@@ -196,6 +212,22 @@ class _Basement(typing.NamedTuple):
 
 
 class Basement(_Basement):
+
+    _MATERIAL_TRANSLATIONS = {
+        MaterialType.UNKNOWN: bilingual.Bilingual(english='', french=''),
+        MaterialType.WOOD: bilingual.Bilingual(
+            english='wood',
+            french='bois',
+        ),
+        MaterialType.CONCRETE: bilingual.Bilingual(
+            english='concrete',
+            french='béton',
+        ),
+        MaterialType.CONCRETE_AND_WOOD: bilingual.Bilingual(
+            english='concrete and wood',
+            french='béton et bois',
+        ),
+    }
 
     @classmethod
     def from_data(cls, basement: element.Element) -> 'Basement':
@@ -219,18 +251,27 @@ class Basement(_Basement):
         )
 
     @staticmethod
-    def _derive_material(configuration_type: str) -> str:
-        return configuration_type
+    def _derive_material(configuration_type: str) -> MaterialType:
+        material = configuration_type[1]
+        if material == 'W':
+            return MaterialType.WOOD
+        elif material == 'C':
+            return MaterialType.CONCRETE
+        elif material == 'B':
+            return MaterialType.CONCRETE_AND_WOOD
+        return MaterialType.UNKNOWN
 
     @property
-    def material(self) -> str:
+    def material(self) -> MaterialType:
         return Basement._derive_material(self.configuration_type)
 
     def to_dict(self) -> typing.Dict[str, typing.Any]:
+        material = self._MATERIAL_TRANSLATIONS[self.material]
         return {
             'label': self.label,
             'configurationType': self.configuration_type,
-            'material': self.material,
+            'materialEnglish': material.english,
+            'materialFrench': material.french,
             'wall': [wall.to_dict() for wall in self.walls],
             'floor': self.floor.to_dict(),
             'header': self.header.to_dict(),

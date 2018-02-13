@@ -104,7 +104,6 @@ def sample_basement_element(sample_basement_raw: str) -> element.Element:
     return element.Element.from_string(sample_basement_raw)
 
 
-
 @pytest.fixture
 def sample_basement_walls() -> typing.List[basement.BasementWall]:
     return [
@@ -181,6 +180,21 @@ def test_basement_walls_from_data(
     assert output == sample_basement_walls
 
 
+def test_basement_walls_to_dict(sample_basement_wall_element: element.Element) -> None:
+    output = [wall.to_dict() for wall in basement.BasementWall.from_data(sample_basement_wall_element, 8)]
+    assert sorted(output, key=lambda wall: wall['percentage'])[0] == {
+        'wallTypeEnglish': 'Interior',
+        'wallTypeFrench': 'Intérieur',
+        'nominalRsi': 1.3,
+        'nominalR': 7.3817423381,
+        'effectiveRsi': 1.2,
+        'effectiveR': 6.813916004399999,
+        'areaMetres': 9.7536,
+        'areaFeet': 104.98688335958016,
+        'percentage': 50.0,
+    }
+
+
 def test_basement_floor_from_data(
         sample_basement_floor: basement.BasementFloor,
         sample_basement_floor_element: element.Element) -> None:
@@ -189,12 +203,46 @@ def test_basement_floor_from_data(
     assert output == sample_basement_floor
 
 
+def test_basement_floor_to_dict(sample_basement_floor_element: element.Element) -> None:
+    output = basement.BasementFloor.from_data(sample_basement_floor_element).to_dict()
+    assert output == {
+        'nominalRsi': 0.2,
+        'nominalR': 1.1356526674,
+        'effectiveRsi': 0.1,
+        'effectiveR': 0.5678263337,
+        'areaMetres': 4.0,
+        'areaFeet': 43.0556444224,
+        'perimeterMetres': None,
+        'perimeterFeet': None,
+        'widthMetres': 2.0,
+        'widthFeet': 6.56168,
+        'lengthMetres': 2.0,
+        'lengthFeet': 6.56168,
+    }
+
+
 def test_basement_header_from_data(
         sample_basement_header: basement.BasementHeader,
         sample_basement_header_element) -> None:
 
     output = basement.BasementHeader.from_data(sample_basement_header_element)
     assert output == sample_basement_header
+
+
+def test_basement_header_to_dict(sample_basement_header_element: element.Element) -> None:
+    output = basement.BasementHeader.from_data(sample_basement_header_element).to_dict()
+    assert output == {
+        'nominalRsi': 3.3615,
+        'nominalR': 19.0874822073255,
+        'effectiveRsi': 2.6892,
+        'effectiveR': 15.2699857658604,
+        'areaMetres': 7.991488000000001,
+        'areaFeet': 86.01966643346914,
+        'perimeterMetres': 34.7456,
+        'perimeterFeet': 113.99475430400001,
+        'heightMetres': 0.23,
+        'heightFeet': 0.7545932000000001,
+    }
 
 
 def test_basement_from_data(
@@ -209,9 +257,11 @@ def test_basement_to_dict(sample_basement_element: element.Element) -> None:
     assert output == {
         'label': 'Foundation - 2',
         'configurationType': 'BBEN',
-        'material': 'BBEN',
+        'materialEnglish': 'concrete and wood',
+        'materialFrench': 'béton et bois',
         'wall': [{
-            'wallType': 'interior',
+            'wallTypeEnglish': 'Interior',
+            'wallTypeFrench': 'Intérieur',
             'nominalRsi': 1.3,
             'nominalR': 7.3817423381,
             'effectiveRsi': 1.2,
@@ -220,7 +270,8 @@ def test_basement_to_dict(sample_basement_element: element.Element) -> None:
             'areaFeet': 104.98688335958016,
             'percentage': 50.0,
         }, {
-            'wallType': 'interior',
+            'wallTypeEnglish': 'Interior',
+            'wallTypeFrench': 'Intérieur',
             'nominalRsi': 1.7,
             'nominalR': 9.6530476729,
             'effectiveRsi': 1.5,
@@ -229,7 +280,8 @@ def test_basement_to_dict(sample_basement_element: element.Element) -> None:
             'areaFeet': 104.98688335958016,
             'percentage': 50.0,
         }, {
-            'wallType': 'exterior',
+            'wallTypeEnglish': 'Exterior',
+            'wallTypeFrench': 'Extérieur',
             'nominalRsi': 0.0,
             'nominalR': 0.0,
             'effectiveRsi': 0.0,
@@ -238,7 +290,8 @@ def test_basement_to_dict(sample_basement_element: element.Element) -> None:
             'areaFeet': 209.97376671916032,
             'percentage': 100.0,
         }, {
-            'wallType': 'pony',
+            'wallTypeEnglish': 'Pony Wall',
+            'wallTypeFrench': 'Murs bas',
             'nominalRsi': 0.0,
             'nominalR': 0.0,
             'effectiveRsi': 0.0,
