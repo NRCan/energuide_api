@@ -2,44 +2,8 @@ import pytest
 from energuide import bilingual
 from energuide import element
 from energuide import extracted_datatypes
-from energuide.embedded import code
 
 # pylint: disable=no-self-use
-
-
-@pytest.fixture
-def codes() -> code.Codes:
-    wall_code = code.WallCode(
-        identifier='Code 1',
-        label='1201101121',
-        structure_type=bilingual.Bilingual(
-            english='Wood frame',
-            french='Ossature de bois',
-        ),
-        component_type_size=bilingual.Bilingual(
-            english='38x89 mm (2x4 in)',
-            french='38x89 (2x4)',
-        )
-    )
-
-    window_code = code.WindowCode(
-        identifier='Code 11',
-        label='202002',
-        glazing_type=bilingual.Bilingual(
-            english='Double/double with 1 coat',
-            french='Double/double, 1 couche',
-        ),
-        coating_tint=bilingual.Bilingual(english='Clear', french='Transparent'),
-        fill_type=bilingual.Bilingual(english='6 mm Air', french="6 mm d'air"),
-        spacer_type=bilingual.Bilingual(english='Metal', french='Métal'),
-        window_code_type=bilingual.Bilingual(english='Picture', french='Fixe'),
-        frame_material=bilingual.Bilingual(english='Wood', french='Bois'),
-    )
-
-    return code.Codes(
-        wall={wall_code.identifier: wall_code},
-        window={window_code.identifier: window_code}
-    )
 
 
 class TestHeatedFloorArea:
