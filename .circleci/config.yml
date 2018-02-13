@@ -203,17 +203,17 @@ jobs:
     environment:
       - VERSION: "0.1.2"
     working_directory: ~/repo/api
-    docker: 
+    docker:
       - image: docker
     steps:
-      - checkout: 
+      - checkout:
           path:  ~/repo
       - attach_workspace:
           at: /tmp/workspace
       - setup_remote_docker
       - run:
-          name: "Build and Deploy Docker Image" 
-          command: | 
+          name: "Build and Deploy Docker Image"
+          command: |
             mkdir ~/repo/api/dist
             cp -pr /tmp/workspace/dist/* ~/repo/api/dist
             cp -pr /tmp/workspace/node_modules ~/repo/api/node_modules
@@ -221,8 +221,8 @@ jobs:
             chmod 755 ~/repo/api/dist
             docker login -u "$DOCKER_USERNAME" -p "$DOCKER_PASSWORD"
             docker build --build-arg VERSION="${VERSION}" -t "${DOCKER_REGISTRY}"/"${NAMESPACE}"/"${CIRCLE_PROJECT_REPONAME}":"${VERSION}" -t "${DOCKER_REGISTRY}"/"${NAMESPACE}"/"${CIRCLE_PROJECT_REPONAME}":"latest" .
-            docker push "${DOCKER_REGISTRY}"/"${NAMESPACE}"/"${CIRCLE_PROJECT_REPONAME}":"${VERSION}" 
-            docker push "${DOCKER_REGISTRY}"/"${NAMESPACE}"/"${CIRCLE_PROJECT_REPONAME}":"latest" 
+            docker push "${DOCKER_REGISTRY}"/"${NAMESPACE}"/"${CIRCLE_PROJECT_REPONAME}":"${VERSION}"
+            docker push "${DOCKER_REGISTRY}"/"${NAMESPACE}"/"${CIRCLE_PROJECT_REPONAME}":"latest"
 
 workflows:
   version: 2
@@ -237,10 +237,10 @@ workflows:
       - yarn_build:
           requires:
             - node_integration
-      - deploy:
-          requires:
-            - yarn_build
           filters:
             branches:
               only:
                 - master
+      - deploy:
+          requires:
+            - yarn_build
