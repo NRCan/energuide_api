@@ -46,8 +46,8 @@ class Door(_Door):
         return {
             'typeEnglish': self.door_type.english,
             'typeFrench': self.door_type.french,
-            'rsi': self.door_insulation.rsi,
-            'rValue': self.door_insulation.r_value,
+            'insulationRsi': self.door_insulation.rsi,
+            'insulationR': self.door_insulation.r_value,
             'uFactor': self.u_factor,
             'uFactorImperial': self.u_factor_imperial,
             'areaMetres': self._door_area.square_metres,

@@ -44,8 +44,8 @@ def test_to_dict(sample: door.Door) -> None:
     assert output == {
         'typeEnglish': 'Solid wood',
         'typeFrench': 'Bois massif',
-        'rsi': 0.39,
-        'rValue': 2.21452270143,
+        'insulationRsi': 0.39,
+        'insulationR': 2.21452270143,
         'uFactor': 2.564102564102564,
         'uFactorImperial': 0.45156457387149956,
         'areaMetres': 1.68271701,
