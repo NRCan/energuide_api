@@ -24,4 +24,7 @@ test_python: virtualenv
 	${VIRTUALENV_ROOT}/bin/pytest tests
 	${VIRTUALENV_ROOT}/bin/pylint src tests
 	${VIRTUALENV_ROOT}/bin/mypy src tests --ignore-missing-imports
+
+lint: src/**/*.py tests/**/*.py
+	@${VIRTUALENV_ROOT}/bin/pylint $? | tee lint
 .ONESHELL:
