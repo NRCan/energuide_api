@@ -13,6 +13,7 @@ from energuide.embedded import distance
 from energuide.embedded import floor
 from energuide.embedded import insulation
 from energuide.embedded import wall
+from energuide.embedded import window
 
 
 # pylint: disable=no-self-use
@@ -480,6 +481,20 @@ class TestParsedDwellingDataRow:
             )
         )
 
+        window_code = code.WindowCode(
+            identifier='Code 12',
+            label='234002',
+            glazing_type=bilingual.Bilingual(
+                english='Double/double with 1 coat',
+                french='Double/double, 1 couche',
+            ),
+            coating_tint=bilingual.Bilingual(english='Low-E .20 (hard1)', french='Faible E .20 (Dur 1)'),
+            fill_type=bilingual.Bilingual(english='9 mm Argon', french="9 mm d'argon"),
+            spacer_type=bilingual.Bilingual(english='Metal', french='Métal'),
+            window_code_type=bilingual.Bilingual(english='Picture', french='Fixe'),
+            frame_material=bilingual.Bilingual(english='Wood', french='Bois'),
+        )
+
         assert output == dwelling.ParsedDwellingDataRow(
             eval_id=123,
             eval_type=dwelling.EvaluationType.PRE_RETROFIT,
@@ -530,23 +545,12 @@ class TestParsedDwellingDataRow:
                 )
             ],
             windows=[
-                extracted_datatypes.Window(
+                window.Window(
                     label='East0001',
-                    glazing_type_english='Double/double with 1 coat',
-                    glazing_type_french='Double/double, 1 couche',
-                    coating_tint_english='Low-E .20 (hard1)',
-                    coating_tint_french='Faible E .20 (Dur 1)',
-                    fill_type_english='9 mm Argon',
-                    fill_type_french="9 mm d'argon",
-                    spacer_type_english='Metal',
-                    spacer_type_french='Métal',
-                    window_code_type_english='Picture',
-                    window_code_type_french='Fixe',
-                    frame_material_english='Wood',
-                    frame_material_french='Bois',
-                    rsi=0.4779,
-                    width=1.967738,
-                    height=1.3220699,
+                    window_code=window_code,
+                    window_insulation=insulation.Insulation(0.4779),
+                    width=distance.Distance(1.967738),
+                    height=distance.Distance(1.3220699),
                 )
             ],
             heated_floor_area=extracted_datatypes.HeatedFloorArea(

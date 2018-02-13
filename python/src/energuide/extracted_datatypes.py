@@ -2,7 +2,6 @@ import enum
 import typing
 from energuide import element
 from energuide import bilingual
-from energuide.embedded import code
 
 
 class WaterHeaterType(enum.Enum):
@@ -92,25 +91,6 @@ class _Door(typing.NamedTuple):
     width: float
 
 
-class _Window(typing.NamedTuple):
-    label: str
-    glazing_type_english: typing.Optional[str]
-    glazing_type_french: typing.Optional[str]
-    coating_tint_english: typing.Optional[str]
-    coating_tint_french: typing.Optional[str]
-    fill_type_english: typing.Optional[str]
-    fill_type_french: typing.Optional[str]
-    spacer_type_english: typing.Optional[str]
-    spacer_type_french: typing.Optional[str]
-    window_code_type_english: typing.Optional[str]
-    window_code_type_french: typing.Optional[str]
-    frame_material_english: typing.Optional[str]
-    frame_material_french: typing.Optional[str]
-    rsi: float
-    width: float
-    height: float
-
-
 class _HeatedFloorArea(typing.NamedTuple):
     area_above_grade: typing.Optional[float]
     area_below_grade: typing.Optional[float]
@@ -168,76 +148,6 @@ class HeatedFloorArea(_HeatedFloorArea):
             'areaAboveGradeFeet': self.area_above_grade_feet,
             'areaBelowGradeMetres': self.area_below_grade,
             'areaBelowGradeFeet': self.area_below_grade_feet,
-        }
-
-
-class Window(_Window):
-
-    _CODE_FIELDS = [
-        'glazing_type',
-        'coating_tint',
-        'fill_type',
-        'spacer_type',
-        'window_code_type',
-        'frame_material',
-    ]
-
-    @classmethod
-    def from_data(cls,
-                  window: element.Element,
-                  window_code: typing.Dict[str, code.WindowCode]) -> 'Window':
-        code_id = window.xpath('Construction/Type/@idref')
-        w_code = window_code[code_id[0]] if code_id else None
-
-        english_fields = {
-            f'{field}_english': getattr(w_code, field).english if w_code else None for field in cls._CODE_FIELDS
-        }
-        french_fields = {
-            f'{field}_french': getattr(w_code, field).french if w_code else None for field in cls._CODE_FIELDS
-        }
-        code_data: typing.Dict[str, typing.Any] = {}
-        code_data['label'] = window.findtext('Label')
-        code_data['rsi'] = float(window.xpath('Construction/Type/@rValue')[0])
-        code_data['width'] = float(window.xpath('Measurements/@width')[0]) / _MILLIMETRES_TO_METRES
-        code_data['height'] = float(window.xpath('Measurements/@height')[0]) / _MILLIMETRES_TO_METRES
-        code_data.update(english_fields)
-        code_data.update(french_fields)
-
-        return Window(**code_data)
-
-    @property
-    def r_value(self) -> float:
-        return self.rsi * _RSI_MULTIPLIER
-
-    @property
-    def area_metres(self) -> float:
-        return self.width * self.height
-
-    @property
-    def area_feet(self) -> float:
-        return self.area_metres * _FEET_SQUARED_MULTIPLIER
-
-    def to_dict(self) -> typing.Dict[str, typing.Any]:
-        return {
-            'label': self.label,
-            'rsi': self.rsi,
-            'rvalue': self.r_value,
-            'glazingTypesEnglish': self.glazing_type_english,
-            'glazingTypesFrench': self.glazing_type_french,
-            'coatingsTintsEnglish': self.coating_tint_english,
-            'coatingsTintsFrench': self.coating_tint_french,
-            'fillTypeEnglish': self.fill_type_english,
-            'fillTypeFrench': self.fill_type_french,
-            'spacerTypeEnglish': self.spacer_type_english,
-            'spacerTypeFrench': self.spacer_type_french,
-            'typeEnglish': self.window_code_type_english,
-            'typeFrench': self.window_code_type_french,
-            'frameMaterialEnglish': self.frame_material_english,
-            'frameMaterialFrench': self.frame_material_french,
-            'areaMetres': self.area_metres,
-            'areaFeet': self.area_feet,
-            'width': self.width,
-            'height': self.height,
         }
 
 
