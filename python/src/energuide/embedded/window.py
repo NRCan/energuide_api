@@ -41,8 +41,8 @@ class Window(_Window):
     def to_dict(self) -> typing.Dict[str, typing.Any]:
         return {
             'label': self.label,
-            'rsi': self.window_insulation.rsi,
-            'rvalue': self.window_insulation.r_value,
+            'insulationRsi': self.window_insulation.rsi,
+            'insulationR': self.window_insulation.r_value,
             'glazingTypesEnglish': self.window_code.glazing_type.english if self.window_code else None,
             'glazingTypesFrench': self.window_code.glazing_type.french if self.window_code else None,
             'coatingsTintsEnglish': self.window_code.coating_tint.english if self.window_code else None,
