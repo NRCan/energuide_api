@@ -7,3 +7,4 @@ dist
 **/.cache/
 **/.mypy_cache/
 python/env
+.python-version
