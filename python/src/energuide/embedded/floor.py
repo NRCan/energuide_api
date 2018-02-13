@@ -28,10 +28,10 @@ class Floor(_Floor):
     def to_dict(self) -> typing.Dict[str, typing.Any]:
         return {
             'label': self.label,
-            'nominalRsi': self.nominal_insulation.rsi,
-            'nominalR': self.nominal_insulation.r_value,
-            'effectiveRsi': self.effective_insulation.rsi,
-            'effectiveR': self.effective_insulation.r_value,
+            'insulationNominalRsi': self.nominal_insulation.rsi,
+            'insulationNominalR': self.nominal_insulation.r_value,
+            'insulationEffectiveRsi': self.effective_insulation.rsi,
+            'insulationEffectiveR': self.effective_insulation.r_value,
             'areaMetres': self.floor_area.square_metres,
             'areaFeet': self.floor_area.square_feet,
             'lengthMetres': self.floor_length.metres,

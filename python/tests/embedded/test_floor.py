@@ -40,10 +40,10 @@ def test_to_dict(sample: floor.Floor) -> None:
     output = sample.to_dict()
     assert output == {
         'label': 'Rm over garage',
-        'nominalRsi': 2.46,
-        'nominalR': 13.96852780902,
-        'effectiveRsi': 2.9181,
-        'effectiveR': 16.569740243699698,
+        'insulationNominalRsi': 2.46,
+        'insulationNominalR': 13.96852780902,
+        'insulationEffectiveRsi': 2.9181,
+        'insulationEffectiveR': 16.569740243699698,
         'areaMetres': 9.2903,
         'areaFeet': 99.99996334435568,
         'lengthMetres': 3.048,

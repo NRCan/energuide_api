@@ -78,8 +78,8 @@ def test_to_dict(sample: window.Window) -> None:
     output = sample.to_dict()
     assert output == {
         'label': 'East0001',
-        'rsi': 0.4779,
-        'rvalue': pytest.approx(2.713642),
+        'insulationRsi': 0.4779,
+        'insulationR': pytest.approx(2.713642),
         'glazingTypesEnglish': 'Double/double with 1 coat',
         'glazingTypesFrench': 'Double/double, 1 couche',
         'coatingsTintsEnglish': 'Clear',
