@@ -1,14 +1,15 @@
 import typing
 from energuide import bilingual
 from energuide import element
-
+from energuide.embedded import distance
+from energuide.embedded import area
 
 class _Door(typing.NamedTuple):
     label: str
     door_type: bilingual.Bilingual
     rsi: float
-    height: float
-    width: float
+    height: distance.Distance
+    width: distance.Distance
 
 
 class Door(_Door):
@@ -25,8 +26,8 @@ class Door(_Door):
                 french=door.get_text('Construction/Type/French'),
             ),
             rsi=float(door.xpath('Construction/Type/@value')[0]),
-            height=float(door.xpath('Measurements/@height')[0]),
-            width=float(door.xpath('Measurements/@width')[0]),
+            height=distance.Distance(float(door.xpath('Measurements/@height')[0])),
+            width=distance.Distance(float(door.xpath('Measurements/@width')[0])),
         )
 
     @property
@@ -42,12 +43,12 @@ class Door(_Door):
         return self.u_factor / self._RSI_MULTIPLIER
 
     @property
-    def area_metres(self) -> float:
-        return self.height * self.width
+    def _door_area(self) -> area.Area:
+        return area.Area(self.height.metres * self.width.metres)
 
-    @property
-    def area_feet(self) -> float:
-        return self.area_metres * self._FEET_SQUARED_MULTIPLIER
+    #@property
+    #def area_feet(self) -> float:
+    #    return self.area_metres * self._FEET_SQUARED_MULTIPLIER
 
     def to_dict(self) -> typing.Dict[str, typing.Any]:
         return {
@@ -57,6 +58,6 @@ class Door(_Door):
             'rValue': self.r_value,
             'uFactor': self.u_factor,
             'uFactorImperial': self.u_factor_imperial,
-            'areaMetres': self.area_metres,
-            'areaFeet': self.area_feet,
+            'areaMetres': self._door_area.square_metres,
+            'areaFeet': self._door_area.square_feet,
         }

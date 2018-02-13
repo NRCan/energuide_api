@@ -525,8 +525,8 @@ class TestParsedDwellingDataRow:
                     label='Front door',
                     door_type=bilingual.Bilingual(english='Solid wood', french='Bois massif'),
                     rsi=0.39,
-                    height=1.9799,
-                    width=0.8499,
+                    height=distance.Distance(1.9799),
+                    width=distance.Distance(0.8499),
                 )
             ],
             windows=[
