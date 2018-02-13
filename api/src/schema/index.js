@@ -12,12 +12,34 @@ const Schema = i18n => {
       eq: String
     }
 
+    type Ventilation {
+      typeEnglish: String
+      typeFrench: String
+      airFlowRateLps: Float
+      airFlowRateCfm: Float
+    }
+
+    type WaterHeater {
+      typeEnglish: String
+      typeFrench: String
+      tankVolumeLitres: Float
+      TankVolumeGallon: Float
+      efficiency: Float
+    }
+
     type PaginatedResultSet {
       hasNext: Boolean
       hasPrevious: Boolean
       next: String
       previous: String
       results: [Dwelling]
+    }
+
+    type HeatedFloorArea {
+      areaAboveGradeMetres: Float
+      areaAboveGradeFeet: Float
+      areaBelowGradeMetres: Float
+      areaBelowGradeFeet: Float
     }
 
     type Wall {
@@ -93,6 +115,9 @@ const Schema = i18n => {
       walls: [Wall]
       doors: [Door]
       windows: [Window]
+      heatedFloorArea: HeatedFloorArea
+      ventilations: [Ventilation]
+      waterHeatings: [WaterHeater]
     }
 
 

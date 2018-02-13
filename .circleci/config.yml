@@ -181,22 +181,48 @@ jobs:
           name: Running integration tests
           command: |
             yarn integration
+  yarn_build:
+    working_directory: ~/repo/api
+    docker:
+      - image: circleci/node:8.9.4
+    steps:
+      - checkout:
+          path: ~/repo
+      - run:
+          name: "Yarn Build"
+          command: |
+            echo 'export PATH=/home/circleci/repo/api/node_modules/.bin:$PATH' >> $BASH_ENV
+            yarn install
+            yarn build
+      - persist_to_workspace:
+          root: /home/circleci/repo/api
+          paths:
+            - dist
+            - node_modules
   deploy:
     environment:
-      - VERSION: "0.1"
+      - VERSION: "0.1.2"
     working_directory: ~/repo/api
     docker: 
       - image: docker
     steps:
       - checkout: 
           path:  ~/repo
+      - attach_workspace:
+          at: /tmp/workspace
       - setup_remote_docker
       - run:
           name: "Build and Deploy Docker Image" 
           command: | 
+            mkdir ~/repo/api/dist
+            cp -pr /tmp/workspace/dist/* ~/repo/api/dist
+            cp -pr /tmp/workspace/node_modules ~/repo/api/node_modules
+            chmod 755 ~/repo/api/node_modules
+            chmod 755 ~/repo/api/dist
             docker login -u "$DOCKER_USERNAME" -p "$DOCKER_PASSWORD"
-            docker build --build-arg VERSION="${VERSION}" -t "${DOCKER_REGISTRY}"/"${NAMESPACE}"/"${CIRCLE_PROJECT_REPONAME}":"${VERSION}" .
+            docker build --build-arg VERSION="${VERSION}" -t "${DOCKER_REGISTRY}"/"${NAMESPACE}"/"${CIRCLE_PROJECT_REPONAME}":"${VERSION}" -t "${DOCKER_REGISTRY}"/"${NAMESPACE}"/"${CIRCLE_PROJECT_REPONAME}":"latest" .
             docker push "${DOCKER_REGISTRY}"/"${NAMESPACE}"/"${CIRCLE_PROJECT_REPONAME}":"${VERSION}" 
+            docker push "${DOCKER_REGISTRY}"/"${NAMESPACE}"/"${CIRCLE_PROJECT_REPONAME}":"latest" 
 
 workflows:
   version: 2
@@ -208,10 +234,13 @@ workflows:
       - node_integration:
           requires:
             - python_integration
-      - deploy:
+      - yarn_build:
           requires:
             - node_integration
+      - deploy:
+          requires:
+            - yarn_build
           filters:
             branches:
-              only: 
+              only:
                 - master

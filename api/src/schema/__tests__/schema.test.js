@@ -115,6 +115,9 @@ describe('Schema', () => {
         'walls',
         'doors',
         'windows',
+        'heatedFloorArea',
+        'ventilations',
+        'waterHeatings',
       ])
     })
   })
@@ -165,6 +168,58 @@ describe('Schema', () => {
         'next',
         'previous',
         'results',
+      ])
+    })
+  })
+
+  describe('HeatedFloorArea', () => {
+    it('is defined', () => {
+      expect(typeMap).toHaveProperty('HeatedFloorArea')
+    })
+
+    it('has the expected fields', () => {
+      const { HeatedFloorArea } = typeMap
+      const fields = Object.keys(HeatedFloorArea.getFields())
+      expect(fields).toEqual([
+        'areaAboveGradeMetres',
+        'areaAboveGradeFeet',
+        'areaBelowGradeMetres',
+        'areaBelowGradeFeet',
+      ])
+    })
+  })
+
+  describe('Ventilation', () => {
+    it('is defined', () => {
+      expect(typeMap).toHaveProperty('Ventilation')
+    })
+
+    it('has the expected fields', () => {
+      const { Ventilation } = typeMap
+      const fields = Object.keys(Ventilation.getFields())
+      expect(fields).toEqual([
+        'typeEnglish',
+        'typeFrench',
+        'airFlowRateLps',
+        'airFlowRateCfm',
+      ])
+    })
+    })
+
+  describe('WaterHeater', () => {
+    it('is defined', () => {
+      expect(typeMap).toHaveProperty('WaterHeater')
+    })
+
+    it('has the expected fields', () => {
+      const { WaterHeater } = typeMap
+      const fields = Object.keys(WaterHeater.getFields())
+      expect(fields).toEqual([
+        'typeEnglish',
+        'typeFrench',
+        'tankVolumeLitres',
+        'TankVolumeGallon',
+        'efficiency',
       ])
     })
   })

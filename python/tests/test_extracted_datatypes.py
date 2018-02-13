@@ -67,50 +67,6 @@ class TestHeatedFloorArea:
         assert output.area_below_grade_feet == 1999.93468342048
 
 
-class TestWindow:
-
-    @pytest.fixture
-    def sample(self) -> element.Element:
-        doc = """
-        <Window>
-            <Label>East0001</Label>
-            <Construction>
-                <Type idref='Code 11' rValue='0.4779'>234002</Type>
-            </Construction>
-            <Measurements width='1967.738' height='1322.0699' />
-        </Window>
-        """
-        return element.Element.from_string(doc)
-
-    def test_from_data(self, sample: element.Element, codes: code.Codes) -> None:
-        output = extracted_datatypes.Window.from_data(sample, codes.window)
-        assert output.label == 'East0001'
-        assert output.width == 1.967738
-        assert output.glazing_type_english == 'Double/double with 1 coat'
-
-    def test_missing_optional_fields(self, codes: code.Codes) -> None:
-        doc = """
-        <Window>
-            <Label>East0001</Label>
-            <Construction>
-                <Type rValue='0.4779' />
-            </Construction>
-            <Measurements width='1967.738' height='1322.0699' />
-        </Window>
-        """
-        window = element.Element.from_string(doc)
-        output = extracted_datatypes.Window.from_data(window, codes.window)
-        assert output.label == 'East0001'
-        assert output.width == 1.967738
-        assert output.glazing_type_english is None
-
-    def test_to_dict(self,
-                     sample: element.Element,
-                     codes: code.Codes) -> None:
-        output = extracted_datatypes.Window.from_data(sample, codes.window).to_dict()
-        assert output['areaMetres'] == 2.6014871808862
-
-
 class TestVentilation:
 
     @pytest.fixture
