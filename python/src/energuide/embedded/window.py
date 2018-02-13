@@ -11,7 +11,7 @@ _MILLIMETRES_TO_METRES = 1000
 class _Window(typing.NamedTuple):
     label: str
     window_code: typing.Optional[code.WindowCode]
-    insulation: insulation.Insulation
+    window_insulation: insulation.Insulation
     width: distance.Distance
     height: distance.Distance
 
@@ -29,7 +29,7 @@ class Window(_Window):
         return Window(
             label=window.get_text('Label'),
             window_code=window_code,
-            insulation=insulation.Insulation(float(window.xpath('Construction/Type/@rValue')[0])),
+            window_insulation=insulation.Insulation(float(window.xpath('Construction/Type/@rValue')[0])),
             width=distance.Distance(float(window.xpath('Measurements/@width')[0]) / _MILLIMETRES_TO_METRES),
             height=distance.Distance(float(window.xpath('Measurements/@height')[0]) / _MILLIMETRES_TO_METRES),
         )
@@ -41,8 +41,8 @@ class Window(_Window):
     def to_dict(self) -> typing.Dict[str, typing.Any]:
         return {
             'label': self.label,
-            'rsi': self.insulation.rsi,
-            'rvalue': self.insulation.r_value,
+            'rsi': self.window_insulation.rsi,
+            'rvalue': self.window_insulation.r_value,
             'glazingTypesEnglish': self.window_code.glazing_type.english if self.window_code else None,
             'glazingTypesFrench': self.window_code.glazing_type.french if self.window_code else None,
             'coatingsTintsEnglish': self.window_code.coating_tint.english if self.window_code else None,

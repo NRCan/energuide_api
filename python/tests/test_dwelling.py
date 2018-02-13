@@ -548,7 +548,7 @@ class TestParsedDwellingDataRow:
                 window.Window(
                     label='East0001',
                     window_code=window_code,
-                    insulation=insulation.Insulation(0.4779),
+                    window_insulation=insulation.Insulation(0.4779),
                     width=distance.Distance(1.967738),
                     height=distance.Distance(1.3220699),
                 )

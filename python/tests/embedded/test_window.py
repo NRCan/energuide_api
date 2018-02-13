@@ -44,7 +44,7 @@ def sample(sample_window_code: typing.Dict[str, code.WindowCode]) -> window.Wind
     return window.Window(
         label='East0001',
         window_code=sample_window_code['Code 11'],
-        insulation=insulation.Insulation(0.4779),
+        window_insulation=insulation.Insulation(0.4779),
         width=distance.Distance(1.967738),
         height=distance.Distance(1.3220699),
     )
