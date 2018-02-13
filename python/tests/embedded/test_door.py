@@ -3,6 +3,7 @@ from energuide import bilingual
 from energuide import element
 from energuide.embedded import door
 from energuide.embedded import distance
+from energuide.embedded import insulation
 
 
 @pytest.fixture
@@ -27,7 +28,7 @@ def sample() -> door.Door:
     return door.Door(
         label='Front door',
         door_type=bilingual.Bilingual(english='Solid wood', french='Bois massif'),
-        rsi=0.39,
+        door_insulation=insulation.Insulation(0.39),
         height=distance.Distance(1.9799),
         width=distance.Distance(0.8499),
     )
@@ -52,10 +53,7 @@ def test_to_dict(sample: door.Door) -> None:
     }
 
 
-#def test_properties(sample_raw: element.Element) -> None:
-#    output = door.Door.from_data(sample_raw)
-#    assert output.r_value == 2.21452270143
-#    assert output.u_factor == 2.564102564102564
-#    assert output.u_factor_imperial == 0.45156457387149956
-#    assert output.area_metres == 1.68271701
-#    assert output.area_feet == 18.112616311521027
+def test_properties(sample_raw: element.Element) -> None:
+    output = door.Door.from_data(sample_raw)
+    assert output.u_factor == 2.564102564102564
+    assert output.u_factor_imperial == 0.45156457387149956
