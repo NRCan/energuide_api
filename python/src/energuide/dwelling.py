@@ -8,8 +8,8 @@ from energuide.embedded import ceiling
 from energuide.embedded import code
 from energuide.embedded import floor
 from energuide.embedded import wall
+from energuide.embedded import door
 from energuide.embedded import window
-from energuide.extracted_datatypes import Door
 from energuide.extracted_datatypes import HeatedFloorArea
 from energuide.extracted_datatypes import Ventilation
 from energuide.extracted_datatypes import WaterHeating
@@ -87,7 +87,7 @@ class _ParsedDwellingDataRow(typing.NamedTuple):
     ceilings: typing.List[ceiling.Ceiling]
     floors: typing.List[floor.Floor]
     walls: typing.List[wall.Wall]
-    doors: typing.List[Door]
+    doors: typing.List[door.Door]
     windows: typing.List[window.Window]
     heated_floor_area: HeatedFloorArea
     ventilations: typing.List[Ventilation]
@@ -146,7 +146,7 @@ class ParsedDwellingDataRow(_ParsedDwellingDataRow):
             ceilings=[ceiling.Ceiling.from_data(ceiling_node) for ceiling_node in parsed['ceilings']],
             floors=[floor.Floor.from_data(floor_node) for floor_node in parsed['floors']],
             walls=[wall.Wall.from_data(wall_node, codes.wall) for wall_node in parsed['walls']],
-            doors=[Door.from_data(door) for door in parsed['doors']],
+            doors=[door.Door.from_data(door_node) for door_node in parsed['doors']],
             windows=[window.Window.from_data(window_node, codes.window) for window_node in parsed['windows']],
             heated_floor_area=HeatedFloorArea.from_data(parsed['heatedFloorArea']),
             ventilations=[Ventilation.from_data(ventilation) for ventilation in parsed['ventilations']],
@@ -164,7 +164,7 @@ class Evaluation:
                  ceilings: typing.List[ceiling.Ceiling],
                  floors: typing.List[floor.Floor],
                  walls: typing.List[wall.Wall],
-                 doors: typing.List[Door],
+                 doors: typing.List[door.Door],
                  windows: typing.List[window.Window],
                  heated_floor_area: HeatedFloorArea,
                  ventilations: typing.List[Ventilation],
@@ -229,7 +229,7 @@ class Evaluation:
         return self._walls
 
     @property
-    def doors(self) -> typing.List[Door]:
+    def doors(self) -> typing.List[door.Door]:
         return self._doors
 
     @property

@@ -82,15 +82,6 @@ class WaterHeaterType(enum.Enum):
     CSA_DHW_FRENCH = "Système combiné certifié pour le chauffage des locaux et de l’eau"
 
 
-class _Door(typing.NamedTuple):
-    label: str
-    type_english: str
-    type_french: str
-    rsi: float
-    height: float
-    width: float
-
-
 class _HeatedFloorArea(typing.NamedTuple):
     area_above_grade: typing.Optional[float]
     area_below_grade: typing.Optional[float]
@@ -148,52 +139,6 @@ class HeatedFloorArea(_HeatedFloorArea):
             'areaAboveGradeFeet': self.area_above_grade_feet,
             'areaBelowGradeMetres': self.area_below_grade,
             'areaBelowGradeFeet': self.area_below_grade_feet,
-        }
-
-
-class Door(_Door):
-
-    @classmethod
-    def from_data(cls, door: element.Element) -> 'Door':
-        return Door(
-            label=door.get_text('Label'),
-            type_english=door.get_text('Construction/Type/English'),
-            type_french=door.get_text('Construction/Type/French'),
-            rsi=float(door.xpath('Construction/Type/@value')[0]),
-            height=float(door.xpath('Measurements/@height')[0]),
-            width=float(door.xpath('Measurements/@width')[0]),
-        )
-
-    @property
-    def r_value(self) -> float:
-        return self.rsi * _RSI_MULTIPLIER
-
-    @property
-    def u_factor(self) -> float:
-        return 1 / self.rsi
-
-    @property
-    def u_factor_imperial(self) -> float:
-        return self.u_factor / _RSI_MULTIPLIER
-
-    @property
-    def area_metres(self) -> float:
-        return self.height * self.width
-
-    @property
-    def area_feet(self) -> float:
-        return self.area_metres * _FEET_SQUARED_MULTIPLIER
-
-    def to_dict(self) -> typing.Dict[str, typing.Any]:
-        return {
-            'typeEnglish': self.type_english,
-            'typeFrench': self.type_french,
-            'rsi': self.rsi,
-            'rValue': self.r_value,
-            'uFactor': self.u_factor,
-            'uFactorImperial': self.u_factor_imperial,
-            'areaMetres': self.area_metres,
-            'areaFeet': self.area_feet,
         }
 
 

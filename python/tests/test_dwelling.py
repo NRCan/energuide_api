@@ -13,6 +13,7 @@ from energuide.embedded import distance
 from energuide.embedded import floor
 from energuide.embedded import insulation
 from energuide.embedded import wall
+from energuide.embedded import door
 from energuide.embedded import window
 
 
@@ -535,13 +536,12 @@ class TestParsedDwellingDataRow:
                 )
             ],
             doors=[
-                extracted_datatypes.Door(
+                door.Door(
                     label='Front door',
-                    type_english='Solid wood',
-                    type_french='Bois massif',
-                    rsi=0.39,
-                    height=1.9799,
-                    width=0.8499,
+                    door_type=bilingual.Bilingual(english='Solid wood', french='Bois massif'),
+                    door_insulation=insulation.Insulation(0.39),
+                    height=distance.Distance(1.9799),
+                    width=distance.Distance(0.8499),
                 )
             ],
             windows=[
