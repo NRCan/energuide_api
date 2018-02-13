@@ -1,5 +1,4 @@
 import pytest
-from energuide import bilingual
 from energuide import element
 from energuide import extracted_datatypes
 
