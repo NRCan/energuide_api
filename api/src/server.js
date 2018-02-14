@@ -39,7 +39,7 @@ function Server(context = {}, ...middlewares) {
   // TODO: Remove after demo is over (which is easy because we are super agile)
   server.get('/welcome', function(req, res) {
     res.send(
-      '<h1 style="font-size:2.5em;">Welcome to the super agile <strong style="color:inherited;">ENER-CAN API</strong>!</h1>',
+      '<h1 style="font-size:3em;">🍁 Welcome to the super agile <strong style="color:red;">NRCAN API</strong>! 🍁</h1>',
     )
   })
 
