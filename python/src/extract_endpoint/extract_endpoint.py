@@ -1,3 +1,7 @@
+"""
+Flask microservice demo. When a file is posted to it, save the file locally.
+"""
+
 import os
 
 from flask import Flask, request, render_template
@@ -6,13 +10,13 @@ from werkzeug.utils import secure_filename
 UPLOAD_FOLDER = 'Uploads'
 ALLOWED_EXTENSIONS = ['txt', 'pdf', 'png', 'jpg', 'jpeg', 'gif']
 
-app = Flask(__name__)
+App = Flask(__name__)
 
-app.config.update(dict(
+App.config.update(dict(
     SECRET_KEY='development key',
     UPLOAD_FOLDER=UPLOAD_FOLDER,
 ))
-app.config.from_envvar('EXTRACT_ENDPOINT', silent=True)
+App.config.from_envvar('EXTRACT_ENDPOINT', silent=True)
 
 
 def allowed_file(filename):
@@ -20,14 +24,14 @@ def allowed_file(filename):
 
 
 # this is a just a helper page that can also post to the service
-@app.route('/', methods=['GET'])
+@App.route('/frontend', methods=['GET'])
 def frontend():
     print(request)
     return render_template('frontend.html')
 
 
 # this is the upload service view
-@app.route('/upload_file', methods=['POST'])
+@App.route('/upload_file', methods=['POST'])
 def upload_file():
     print(request)
 
@@ -47,5 +51,9 @@ def upload_file():
 
     # success!
     filename = secure_filename(file.filename)
-    file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+    file.save(os.path.join(App.config['UPLOAD_FOLDER'], filename))
     return f'{filename} uploaded successfully'
+
+
+if __name__ == "__main__":
+    App.run()
