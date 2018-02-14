@@ -123,7 +123,6 @@ class ParsedDwellingDataRow(_ParsedDwellingDataRow):
         'codes': {'type': 'dict', 'required': True, 'schema': {'wall': _XML_LIST_SCHEMA, 'window': _XML_LIST_SCHEMA}},
     }
 
-
     @classmethod
     def from_row(cls, row: reader.InputData) -> 'ParsedDwellingDataRow':
         checker = validator.DwellingValidator(cls._SCHEMA, allow_unknown=True, ignore_none_values=True)
