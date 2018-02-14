@@ -64,8 +64,8 @@ class BasementHeader(_BasementHeader):
         return {
             'insulationNominalRsi': self.nominal_insulation.rsi,
             'insulationNominalR': self.nominal_insulation.r_value,
-            'effectiveRsi': self.effective_insulation.rsi,
-            'effectiveR': self.effective_insulation.r_value,
+            'insulationEffectiveRsi': self.effective_insulation.rsi,
+            'insulationEffectiveR': self.effective_insulation.r_value,
             'areaMetres': self._header_area.square_metres,
             'areaFeet': self._header_area.square_feet,
             'perimeterMetres': self.perimeter.metres,
@@ -123,10 +123,11 @@ class BasementFloor(_BasementFloor):
 
     def to_dict(self) -> typing.Dict[str, typing.Any]:
         return {
-            'nominalRsi': self.nominal_insulation.rsi if self.nominal_insulation is not None else None,
-            'nominalR': self.nominal_insulation.r_value if self.nominal_insulation is not None else None,
-            'effectiveRsi': self.effective_insulation.rsi if self.effective_insulation is not None else None,
-            'effectiveR': self.effective_insulation.r_value if self.effective_insulation is not None else None,
+            'insulationNominalRsi': self.nominal_insulation.rsi if self.nominal_insulation is not None else None,
+            'insulationNominalR': self.nominal_insulation.r_value if self.nominal_insulation is not None else None,
+            'insulationEffectiveRsi': self.effective_insulation.rsi if self.effective_insulation is not None else None,
+            'insulationEffectiveR': self.effective_insulation.r_value
+                                    if self.effective_insulation is not None else None,
             'areaMetres': self.area.square_metres,
             'areaFeet': self.area.square_feet,
             'perimeterMetres': self.perimeter.metres if self.perimeter is not None else None,
@@ -192,10 +193,10 @@ class BasementWall(_BasementWall):
         return {
             'wallTypeEnglish': wall_type.english,
             'wallTypeFrench': wall_type.french,
-            'nominalRsi': self.nominal_insulation.rsi,
-            'nominalR': self.nominal_insulation.r_value,
-            'effectiveRsi': self.effective_insulation.rsi,
-            'effectiveR': self.effective_insulation.r_value,
+            'insulationNominalRsi': self.nominal_insulation.rsi,
+            'insulationNominalR': self.nominal_insulation.r_value,
+            'insulationEffectiveRsi': self.effective_insulation.rsi,
+            'insulationEffectiveR': self.effective_insulation.r_value,
             'percentage': self.composite_percentage,
             'areaMetres': self.wall_area.square_metres,
             'areaFeet': self.wall_area.square_feet,
