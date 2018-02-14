@@ -4,7 +4,7 @@ Flask microservice demo. When a file is posted to it, save the file locally.
 
 import os
 
-from flask import Flask, request, render_template
+from flask import Flask, request, render_template, abort
 from werkzeug.utils import secure_filename
 
 UPLOAD_FOLDER = 'Uploads'
@@ -34,16 +34,18 @@ def frontend():
 @App.route('/upload_file', methods=['POST'])
 def upload_file():
     print(request)
+    if 'key' not in request.form or request.form['key'] != App.config['SECRET_KEY']:
+        abort(404)
 
     # check if the post request has the file part
     if 'file' not in request.files:
-        return render_template('error.html', error='No file part')
+        return render_template('error.html', error='No file')
 
     file = request.files['file']
 
-    # if user does not select file, browser will submit a empty part without filename
+    # make sure the file has a filename
     if file.filename == '':
-        return render_template('error.html', error='No selected file')
+        return render_template('error.html', error='File does not have a filename')
 
     if not allowed_file(file.filename):
         return render_template('error.html',
@@ -51,7 +53,7 @@ def upload_file():
 
     # success!
     filename = secure_filename(file.filename)
-    file.save(os.path.join(App.config['UPLOAD_FOLDER'], filename))
+    file.save(os.path.join(App.config['UPLOAD_FOLDER'], filename)) # TODO replace with Azure!!
     return f'{filename} uploaded successfully'
 
 
