@@ -3,8 +3,8 @@ import os
 from flask import Flask, request, render_template
 from werkzeug.utils import secure_filename
 
-UPLOAD_FOLDER = '/Users/stephen/Uploads'
-ALLOWED_EXTENSIONS = set(['txt', 'pdf', 'png', 'jpg', 'jpeg', 'gif'])
+UPLOAD_FOLDER = 'Uploads'
+ALLOWED_EXTENSIONS = ['txt', 'pdf', 'png', 'jpg', 'jpeg', 'gif']
 
 app = Flask(__name__)
 
@@ -12,15 +12,11 @@ app.config.update(dict(
     SECRET_KEY='development key',
     UPLOAD_FOLDER=UPLOAD_FOLDER,
 ))
-
 app.config.from_envvar('EXTRACT_ENDPOINT', silent=True)
 
 
-
 def allowed_file(filename):
-    return '.' in filename and \
-           filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
-
+    return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
 
 # this is a just a helper page that can also post to the service
@@ -52,4 +48,4 @@ def upload_file():
     # success!
     filename = secure_filename(file.filename)
     file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
-    return render_template('file_uploaded.html', filename=filename)
+    return f'{filename} uploaded successfully'
