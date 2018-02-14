@@ -35,6 +35,14 @@ function Server(context = {}, ...middlewares) {
       }),
     )
   server.get('/graphiql', graphiqlExpress({ endpointURL: '/graphql' }))
+
+  // TODO: Remove after demo is over (which is easy because we are super agile)
+  server.get('/welcome', function(req, res) {
+    res.send(
+      '<h1 style="font-size:2.5em;">Welcome to the super agile <strong style="color:inherited;">ENER-CAN API</strong>!</h1>',
+    )
+  })
+
   return server
 }
 
