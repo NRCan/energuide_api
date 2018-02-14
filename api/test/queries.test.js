@@ -92,17 +92,17 @@ describe('queries', () => {
           evaluationsFor(account: 189250) {
             evaluations {
               ceilings {
-								label
-								typeEnglish
-								typeFrench
-								insulationNominalRsi
-								insulationNominalR
-								insulationEffectiveRsi
-								insulationEffectiveR
-								areaMetres
-								areaFeet
-								lengthMetres
-								lengthFeet
+                label
+                typeEnglish
+                typeFrench
+                insulationNominalRsi
+                insulationNominalR
+                insulationEffectiveRsi
+                insulationEffectiveR
+                areaMetres
+                areaFeet
+                lengthMetres
+                lengthFeet
               }
             }
           }
@@ -136,21 +136,21 @@ describe('queries', () => {
           evaluationsFor(account: 189250) {
             evaluations {
               walls {
-								label
-								structureTypeEnglish
-								structureTypeFrench
-								componentTypeSizeEnglish
-								componentTypeSizeFrench
-								insulationNominalRsi
-								insulationNominalR
-								insulationEffectiveRsi
-								insulationEffectiveR
-								areaMetres
-								areaFeet
-								perimeterMetres
-								perimeterFeet
-								heightMetres
-								heightFeet
+                label
+                structureTypeEnglish
+                structureTypeFrench
+                componentTypeSizeEnglish
+                componentTypeSizeFrench
+                insulationNominalRsi
+                insulationNominalR
+                insulationEffectiveRsi
+                insulationEffectiveR
+                areaMetres
+                areaFeet
+                perimeterMetres
+                perimeterFeet
+                heightMetres
+                heightFeet
               }
             }
           }
@@ -188,14 +188,14 @@ describe('queries', () => {
           evaluationsFor(account: 189250) {
             evaluations {
               doors {
-								typeEnglish
-								typeFrench
-								insulationRsi
-								insulationR
-								uFactor
-								uFactorImperial
-								areaMetres
-								areaFeet
+                typeEnglish
+                typeFrench
+                insulationRsi
+                insulationR
+                uFactor
+                uFactorImperial
+                areaMetres
+                areaFeet
               }
             }
           }
@@ -226,27 +226,27 @@ describe('queries', () => {
           evaluations:evaluationsFor(account: 189250) {
             evaluations {
               windows {
-								label
-								insulationRsi
-								insulationR
-								glazingTypesEnglish
-								glazingTypesFrench
-								coatingsTintsEnglish
-								coatingsTintsFrench
-								fillTypeEnglish
-								fillTypeFrench
-								spacerTypeEnglish
-								spacerTypeFrench
-								typeEnglish
-								typeFrench
-								frameMaterialEnglish
-								frameMaterialFrench
-								areaMetres
-								areaFeet
-								widthMetres
-								widthFeet
-								heightMetres
-								heightFeet
+                label
+                insulationRsi
+                insulationR
+                glazingTypesEnglish
+                glazingTypesFrench
+                coatingsTintsEnglish
+                coatingsTintsFrench
+                fillTypeEnglish
+                fillTypeFrench
+                spacerTypeEnglish
+                spacerTypeFrench
+                typeEnglish
+                typeFrench
+                frameMaterialEnglish
+                frameMaterialFrench
+                areaMetres
+                areaFeet
+                widthMetres
+                widthFeet
+                heightMetres
+                heightFeet
               }
             }
           }
@@ -376,8 +376,8 @@ describe('queries', () => {
            forwardSortationArea: "C1A"
           ) {
             results {
-							yearBuilt
-						}
+              yearBuilt
+            }
           }
         }`,
         })
@@ -398,9 +398,9 @@ describe('queries', () => {
                   forwardSortationArea: "C1A"
                   filter: {field: yearBuilt gt: "1900"}
                  ) {
-										results {
-											yearBuilt
-										}
+                    results {
+                      yearBuilt
+                    }
                  }
                }`,
             })
@@ -419,9 +419,9 @@ describe('queries', () => {
                   forwardSortationArea: "C1A"
                   filter: {field: city eq: "Charlottetown"}
                  ) {
-									 results {
-										 yearBuilt
-									 }
+                   results {
+                     yearBuilt
+                   }
                  }
                }`,
             })
@@ -441,9 +441,9 @@ describe('queries', () => {
                   forwardSortationArea: "C1A"
                   filter: {field: yearBuilt lt: "2000"}
                  ) {
-									 results {
-                     yearBuilt
-									 }
+                     results {
+                       yearBuilt
+                    }
                  }
                }`,
             })
@@ -464,8 +464,8 @@ describe('queries', () => {
                   filter: {field: yearBuilt eq: "1900"}
                  ) {
                    results {
-										 yearBuilt
-								   }
+                     yearBuilt
+                   }
                  }
                }`,
             })
@@ -485,9 +485,9 @@ describe('queries', () => {
                 forwardSortationArea: "M8H"
                 filter: {field: yearBuilt gt: "1979" lt: "1979"}
               ) {
-								results {
-								 yearBuilt
-							 }
+                results {
+                 yearBuilt
+               }
              }
            }`,
           })
@@ -504,9 +504,9 @@ describe('queries', () => {
            dwellings:dwellingsInFSA(
              forwardSortationArea: "C1A"
            ) {
-					results {
-						yearBuilt
-					}
+          results {
+            yearBuilt
+          }
         }
       }`,
         })
