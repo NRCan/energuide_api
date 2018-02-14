@@ -43,36 +43,38 @@ const Schema = i18n => {
     }
 
     type Wall {
-      label: String
-      structureTypeEnglish: String
-      structureTypeFrench: String
-      componentTypeSizeEnglish: String
-      componentTypeSizeFrench: String
-      nominalRsi: Float
-      nominalR: Float
-      effectiveRsi: Float
-      effectiveR: Float
-      areaMetres: Float
-      areaFeet: Float
-      perimeter: Float
-      height: Float
+			label: String
+			structureTypeEnglish: String
+			structureTypeFrench: String
+			componentTypeSizeEnglish: String
+			componentTypeSizeFrench: String
+			insulationNominalRsi: Float
+			insulationNominalR: Float
+			insulationEffectiveRsi: Float
+			insulationEffectiveR: Float
+			areaMetres: Float
+			areaFeet: Float
+			perimeterMetres: Float
+			perimeterFeet: Float
+			heightMetres: Float
+			heightFeet: Float
     }
 
     type Door {
-      typeEnglish: String
-      typeFrench: String
-      rsi: Float
-      rValue: Float
-      uFactor: Float
-      uFactorImperial: Float
-      areaMetres: Float
-      areaFeet: Float
+			typeEnglish: String
+			typeFrench: String
+			insulationRsi: Float
+			insulationR: Float
+			uFactor: Float
+			uFactorImperial: Float
+			areaMetres: Float
+			areaFeet: Float
     }
 
     type Window {
       label: String
-      rsi: Float
-      rvalue: Float
+      insulationRsi: Float
+      insulationR: Float
       glazingTypesEnglish: String
       glazingTypesFrench: String
       coatingsTintsEnglish: String
@@ -87,18 +89,20 @@ const Schema = i18n => {
       frameMaterialFrench: String
       areaMetres: Float
       areaFeet: Float
-      width: Float
-      height: Float
+      widthMetres: Float
+      widthFeet: Float
+      heightMetres: Float
+      heightFeet: Float
     }
 
     type Ceiling {
       label: String
       typeEnglish: String
       typeFrench: String
-      nominalRsi: Float
-      nominalR: Float
-      effectiveRsi: Float
-      effectiveR: Float
+      insulationNominalRsi: Float
+      insulationNominalR: Float
+      insulationEffectiveRsi: Float
+      insulationEffectiveR: Float
       areaMetres: Float
       areaFeet: Float
       lengthMetres: Float

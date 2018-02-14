@@ -89,64 +89,41 @@ describe('queries', () => {
         .set('Content-Type', 'application/json; charset=utf-8')
         .send({
           query: `{
-          evaluations:evaluationsFor(account: 189250) {
+          evaluationsFor(account: 189250) {
             evaluations {
               ceilings {
-                label
-                typeEnglish
-                typeFrench
-                nominalRsi
-                nominalR
-                effectiveRsi
-                effectiveR
-                areaMetres
-                areaFeet
-                lengthMetres
-                lengthFeet
+								label
+								typeEnglish
+								typeFrench
+								insulationNominalRsi
+								insulationNominalR
+								insulationEffectiveRsi
+								insulationEffectiveR
+								areaMetres
+								areaFeet
+								lengthMetres
+								lengthFeet
               }
             }
           }
         }`,
         })
 
-      let { evaluations } = response.body.data
-      expect(evaluations).toEqual({
-        evaluations: [
-          {
-            ceilings: [
-              {
-                areaFeet: 830.1171300283143,
-                areaMetres: 77.1204,
-                effectiveR: 36.3397497041326,
-                effectiveRsi: 6.3998,
-                label: 'Ceiling01',
-                lengthFeet: 47.66404352,
-                lengthMetres: 14.528,
-                nominalR: 36.3397497041326,
-                nominalRsi: 6.3998,
-                typeEnglish: 'Attic/gable',
-                typeFrench: 'Combles/pignon',
-              },
-            ],
-          },
-          {
-            ceilings: [
-              {
-                areaFeet: 830.1171300283143,
-                areaMetres: 77.1204,
-                effectiveR: 36.3397497041326,
-                effectiveRsi: 6.3998,
-                label: 'Ceiling01',
-                lengthFeet: 47.66404352,
-                lengthMetres: 14.528,
-                nominalR: 36.3397497041326,
-                nominalRsi: 6.3998,
-                typeEnglish: 'Attic/gable',
-                typeFrench: 'Combles/pignon',
-              },
-            ],
-          },
-        ],
+      let { evaluationsFor: { evaluations } } = response.body.data
+      let [first] = evaluations
+      let [ceiling] = first.ceilings
+      expect(ceiling).toEqual({
+        areaFeet: 830.1171300283143,
+        areaMetres: 77.1204,
+        insulationEffectiveR: 36.3397497041326,
+        insulationEffectiveRsi: 6.3998,
+        insulationNominalR: 36.3397497041326,
+        insulationNominalRsi: 6.3998,
+        label: 'Ceiling01',
+        lengthFeet: 47.66404352,
+        lengthMetres: 14.528,
+        typeEnglish: 'Attic/gable',
+        typeFrench: 'Combles/pignon',
       })
     })
 
@@ -156,70 +133,49 @@ describe('queries', () => {
         .set('Content-Type', 'application/json; charset=utf-8')
         .send({
           query: `{
-          evaluations:evaluationsFor(account: 189250) {
+          evaluationsFor(account: 189250) {
             evaluations {
               walls {
-                label
-                structureTypeEnglish
-                structureTypeFrench
-                componentTypeSizeEnglish
-                componentTypeSizeFrench
-                nominalRsi
-                nominalR
-                effectiveRsi
-                effectiveR
-                areaMetres
-                areaFeet
-                perimeter
-                height
+								label
+								structureTypeEnglish
+								structureTypeFrench
+								componentTypeSizeEnglish
+								componentTypeSizeFrench
+								insulationNominalRsi
+								insulationNominalR
+								insulationEffectiveRsi
+								insulationEffectiveR
+								areaMetres
+								areaFeet
+								perimeterMetres
+								perimeterFeet
+								heightMetres
+								heightFeet
               }
             }
           }
         }`,
         })
 
-      let { evaluations } = response.body.data
-      expect(evaluations).toEqual({
-        evaluations: [
-          {
-            walls: [
-              {
-                areaFeet: 1000.7916833561255,
-                areaMetres: 92.97658384,
-                componentTypeSizeEnglish: null,
-                componentTypeSizeFrench: null,
-                effectiveR: 15.2699857658604,
-                effectiveRsi: 2.6892,
-                height: 2.5999,
-                label: 'Main floor',
-                nominalR: 19.0874822073255,
-                nominalRsi: 3.3615,
-                perimeter: 35.7616,
-                structureTypeEnglish: null,
-                structureTypeFrench: null,
-              },
-            ],
-          },
-          {
-            walls: [
-              {
-                areaFeet: 1000.7916833561255,
-                areaMetres: 92.97658384,
-                componentTypeSizeEnglish: null,
-                componentTypeSizeFrench: null,
-                effectiveR: 15.2699857658604,
-                effectiveRsi: 2.6892,
-                height: 2.5999,
-                label: 'Main floor',
-                nominalR: 19.0874822073255,
-                nominalRsi: 3.3615,
-                perimeter: 35.7616,
-                structureTypeEnglish: null,
-                structureTypeFrench: null,
-              },
-            ],
-          },
-        ],
+      let { evaluationsFor: { evaluations } } = response.body.data
+      let [first] = evaluations
+      let [wall] = first.walls
+      expect(wall).toEqual({
+        areaFeet: 1000.7916833561255,
+        areaMetres: 92.97658384,
+        componentTypeSizeEnglish: null,
+        componentTypeSizeFrench: null,
+        heightFeet: 8.529855915999999,
+        heightMetres: 2.5999,
+        insulationEffectiveR: 15.2699857658604,
+        insulationEffectiveRsi: 2.6892,
+        insulationNominalR: 19.0874822073255,
+        insulationNominalRsi: 3.3615,
+        label: 'Main floor',
+        perimeterFeet: 117.328087744,
+        perimeterMetres: 35.7616,
+        structureTypeEnglish: null,
+        structureTypeFrench: null,
       })
     })
 
@@ -229,79 +185,35 @@ describe('queries', () => {
         .set('Content-Type', 'application/json; charset=utf-8')
         .send({
           query: `{
-          evaluations:evaluationsFor(account: 189250) {
+          evaluationsFor(account: 189250) {
             evaluations {
               doors {
-                typeEnglish
-                typeFrench
-                rsi
-                rValue
-                uFactor
-                uFactorImperial
-                areaMetres
-                areaFeet
+								typeEnglish
+								typeFrench
+								insulationRsi
+								insulationR
+								uFactor
+								uFactorImperial
+								areaMetres
+								areaFeet
               }
             }
           }
         }`,
         })
 
-      let { evaluations } = response.body.data
-      expect(evaluations).toEqual({
-        evaluations: [
-          {
-            doors: [
-              {
-                areaFeet: 18.9875391902784,
-                areaMetres: 1.764,
-                rValue: 6.4732202041799995,
-                rsi: 1.14,
-                typeEnglish: 'Steel Medium density spray foam core',
-                typeFrench:
-                  'Acier / âme en mousse à vaporiser de densité moyenne',
-                uFactor: 0.8771929824561404,
-                uFactorImperial: 0.15448261737709199,
-              },
-              {
-                areaFeet: 18.9875391902784,
-                areaMetres: 1.764,
-                rValue: 6.4732202041799995,
-                rsi: 1.14,
-                typeEnglish: 'Steel Medium density spray foam core',
-                typeFrench:
-                  'Acier / âme en mousse à vaporiser de densité moyenne',
-                uFactor: 0.8771929824561404,
-                uFactorImperial: 0.15448261737709199,
-              },
-            ],
-          },
-          {
-            doors: [
-              {
-                areaFeet: 18.9875391902784,
-                areaMetres: 1.764,
-                rValue: 6.4732202041799995,
-                rsi: 1.14,
-                typeEnglish: 'Steel Medium density spray foam core',
-                typeFrench:
-                  'Acier / âme en mousse à vaporiser de densité moyenne',
-                uFactor: 0.8771929824561404,
-                uFactorImperial: 0.15448261737709199,
-              },
-              {
-                areaFeet: 18.9875391902784,
-                areaMetres: 1.764,
-                rValue: 6.4732202041799995,
-                rsi: 1.14,
-                typeEnglish: 'Steel Medium density spray foam core',
-                typeFrench:
-                  'Acier / âme en mousse à vaporiser de densité moyenne',
-                uFactor: 0.8771929824561404,
-                uFactorImperial: 0.15448261737709199,
-              },
-            ],
-          },
-        ],
+      let { evaluationsFor: { evaluations } } = response.body.data
+      let [first] = evaluations
+      let [door] = first.doors
+      expect(door).toEqual({
+        areaFeet: 18.9875391902784,
+        areaMetres: 1.764,
+        insulationR: 6.4732202041799995,
+        insulationRsi: 1.14,
+        typeEnglish: 'Steel Medium density spray foam core',
+        typeFrench: 'Acier / âme en mousse à vaporiser de densité moyenne',
+        uFactor: 0.8771929824561404,
+        uFactorImperial: 0.15448261737709199,
       })
     })
 
@@ -314,25 +226,27 @@ describe('queries', () => {
           evaluations:evaluationsFor(account: 189250) {
             evaluations {
               windows {
-                label
-                rsi
-                rvalue
-                glazingTypesEnglish
-                glazingTypesFrench
-                coatingsTintsEnglish
-                coatingsTintsFrench
-                fillTypeEnglish
-                fillTypeFrench
-                spacerTypeEnglish
-                spacerTypeFrench
-                typeEnglish
-                typeFrench
-                frameMaterialEnglish
-                frameMaterialFrench
-                areaMetres
-                areaFeet
-                width
-                height
+								label
+								insulationRsi
+								insulationR
+								glazingTypesEnglish
+								glazingTypesFrench
+								coatingsTintsEnglish
+								coatingsTintsFrench
+								fillTypeEnglish
+								fillTypeFrench
+								spacerTypeEnglish
+								spacerTypeFrench
+								typeEnglish
+								typeFrench
+								frameMaterialEnglish
+								frameMaterialFrench
+								areaMetres
+								areaFeet
+								widthMetres
+								widthFeet
+								heightMetres
+								heightFeet
               }
             }
           }
@@ -342,25 +256,27 @@ describe('queries', () => {
       let { evaluations: { evaluations: [first] } } = response.body.data
       let [eastWindow] = first.windows
       expect(eastWindow).toEqual({
-        label: 'East0001',
-        rsi: 0.2685,
-        rvalue: 1.5246137059845,
-        glazingTypesEnglish: 'Double/double with 1 coat',
-        glazingTypesFrench: 'Double/double, 1 couche',
+        areaFeet: 14.111997194858986,
+        areaMetres: 1.31104735596684,
         coatingsTintsEnglish: 'Clear',
         coatingsTintsFrench: 'Transparent',
         fillTypeEnglish: '13 mm Air',
         fillTypeFrench: "13 mm d'air",
+        frameMaterialEnglish: 'Aluminum',
+        frameMaterialFrench: 'Aluminium',
+        glazingTypesEnglish: 'Double/double with 1 coat',
+        glazingTypesFrench: 'Double/double, 1 couche',
+        heightFeet: 4.002377424664,
+        heightMetres: 1.2199246000000001,
+        insulationR: 1.5246137059845,
+        insulationRsi: 0.2685,
+        label: 'East0001',
         spacerTypeEnglish: 'Metal',
         spacerTypeFrench: 'Métal',
         typeEnglish: 'Picture',
         typeFrench: 'Fixe',
-        frameMaterialEnglish: 'Aluminum',
-        frameMaterialFrench: 'Aluminium',
-        areaMetres: 1.31104735596684,
-        areaFeet: 14.111997194858986,
-        width: 1.0746954,
-        height: 1.2199246000000001,
+        widthFeet: 3.5259036561359998,
+        widthMetres: 1.0746954,
       })
     })
   })
