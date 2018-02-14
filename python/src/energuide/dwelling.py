@@ -31,7 +31,7 @@ class EvaluationType(enum.Enum):
         elif code == cls.POST_RETROFIT.value:
             return EvaluationType.POST_RETROFIT
         else:
-            raise reader.InvalidInputDataException()
+            raise reader.InvalidInputDataException(f'Invalid EvaluationType: {code}')
 
 
 @enum.unique
@@ -122,6 +122,7 @@ class ParsedDwellingDataRow(_ParsedDwellingDataRow):
 
         'codes': {'type': 'dict', 'required': True, 'schema': {'wall': _XML_LIST_SCHEMA, 'window': _XML_LIST_SCHEMA}},
     }
+
 
     @classmethod
     def from_row(cls, row: reader.InputData) -> 'ParsedDwellingDataRow':
@@ -296,7 +297,7 @@ class Dwelling:
                 evaluations=evaluations,
             )
         else:
-            raise NoInputDataException()
+            raise NoInputDataException('Empty group cannot be parsed')
 
     @classmethod
     def from_group(cls, data: typing.List[reader.InputData]) -> 'Dwelling':

@@ -27,7 +27,8 @@ def load(username: str, password: str, host: str, port: int, db_name: str, colle
         port=port
     )
 
-    transform.run(coords, db_name, collection, filename)
+    stats = transform.run(coords, db_name, collection, filename)
+    print(stats)
 
 
 @main.command()

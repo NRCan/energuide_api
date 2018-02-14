@@ -87,6 +87,29 @@ def test_load(energuide_zip_fixture: str,
 
     coll = mongo_client.get_database(database_name).get_collection(collection)
     assert coll.count() == 7
+    assert result.output == 'Total: 7\n' + \
+                            'Success: 7\n' + \
+                            'Failure: 0\n'
+
+
+def test_load_bad(energuide_bad_zip_fixture: str,
+                  database_name: str,
+                  collection: str,
+                  mongo_client: pymongo.MongoClient) -> None:
+    runner = testing.CliRunner()
+    result = runner.invoke(cli.main, args=[
+        'load',
+        '--db_name', database_name,
+        '--filename', energuide_bad_zip_fixture,
+    ])
+
+    assert result.exit_code == 0
+
+    coll = mongo_client.get_database(database_name).get_collection(collection)
+    assert coll.count() == 6
+    assert result.output == 'Total: 8\n' + \
+                            'Success: 6\n' + \
+                            'Failure: 2\n'
 
 
 def test_extract_valid(valid_filepath: str, tmpdir: py._path.local.LocalPath) -> None:
