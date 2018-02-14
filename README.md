@@ -86,7 +86,7 @@ This will
 
 The API should be running now! Yes!! 🎉🎉🎉
 
-Check it out at [http://localhost:3000/graphiql]()
+Check it out at [http://localhost:3000/graphiql](http://localhost:3000/graphiql)
 
 Try out this query to get you going.
 
