@@ -42,7 +42,6 @@ def sample_basement_wall_raw() -> str:
               <Section rank="1" percentage="100" rsi="0" nominalRsi="0" />
           </Composite>
         </PonyWallType>
-
         <Lintels idref="Code 10">Bsmnt Lintel</Lintels>
     </Construction>
     <Measurements height="2.4384" depth="1.8288" ponyWallHeight="0.9144" />

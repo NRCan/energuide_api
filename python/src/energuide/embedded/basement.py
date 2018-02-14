@@ -62,8 +62,8 @@ class BasementHeader(_BasementHeader):
 
     def to_dict(self) -> typing.Dict[str, typing.Any]:
         return {
-            'nominalRsi': self.nominal_insulation.rsi,
-            'nominalR': self.nominal_insulation.r_value,
+            'insulationNominalRsi': self.nominal_insulation.rsi,
+            'insulationNominalR': self.nominal_insulation.r_value,
             'effectiveRsi': self.effective_insulation.rsi,
             'effectiveR': self.effective_insulation.r_value,
             'areaMetres': self._header_area.square_metres,
@@ -244,7 +244,6 @@ class Basement(_Basement):
         return Basement(
             label=basement.get_text('Label'),
             configuration_type=basement.xpath('Configuration/@type')[0],
-
             walls=BasementWall.from_data(basement.xpath('Wall')[0], floor_perimeter),
             floor=floor,
             header=BasementHeader.from_data(basement.xpath('Components/FloorHeader')[0]),
