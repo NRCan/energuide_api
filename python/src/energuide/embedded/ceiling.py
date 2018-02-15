@@ -4,6 +4,7 @@ from energuide import element
 from energuide.embedded import area
 from energuide.embedded import distance
 from energuide.embedded import insulation
+from energuide.exceptions import InvalidEmbeddedDataTypeException
 
 
 class _Ceiling(typing.NamedTuple):
@@ -19,19 +20,22 @@ class Ceiling(_Ceiling):
 
     @classmethod
     def from_data(cls, ceiling: element.Element) -> 'Ceiling':
-        return Ceiling(
-            label=ceiling.get_text('Label'),
-            ceiling_type=bilingual.Bilingual(
-                english=ceiling.get_text('Construction/Type/English'),
-                french=ceiling.get_text('Construction/Type/French'),
-            ),
-            nominal_insulation=insulation.Insulation(
-                float(ceiling.xpath('Construction/CeilingType/@nominalInsulation')[0])),
-            effective_insulation=insulation.Insulation(
-                float(ceiling.xpath('Construction/CeilingType/@rValue')[0])),
-            ceiling_area=area.Area(float(ceiling.xpath('Measurements/@area')[0])),
-            ceiling_length=distance.Distance(float(ceiling.xpath('Measurements/@length')[0])),
-        )
+        try:
+            return Ceiling(
+                label=ceiling.get_text('Label'),
+                ceiling_type=bilingual.Bilingual(
+                    english=ceiling.get_text('Construction/Type/English'),
+                    french=ceiling.get_text('Construction/Type/French'),
+                ),
+                nominal_insulation=insulation.Insulation(
+                    float(ceiling.xpath('Construction/CeilingType/@nominalInsulation')[0])),
+                effective_insulation=insulation.Insulation(
+                    float(ceiling.xpath('Construction/CeilingType/@rValue')[0])),
+                ceiling_area=area.Area(float(ceiling.xpath('Measurements/@area')[0])),
+                ceiling_length=distance.Distance(float(ceiling.xpath('Measurements/@length')[0])),
+            )
+        except (IndexError, ValueError, AssertionError) as exc:
+            raise InvalidEmbeddedDataTypeException(Ceiling) from exc
 
     def to_dict(self) -> typing.Dict[str, typing.Any]:
         return {
