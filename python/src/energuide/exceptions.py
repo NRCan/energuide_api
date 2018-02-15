@@ -1,12 +1,16 @@
-class InvalidGroupSizeException(Exception):
+class EnerguideException(Exception):
     pass
 
 
-class InvalidInputDataException(Exception):
+class InvalidGroupSizeException(EnerguideException):
     pass
 
 
-class InvalidEmbeddedDataTypeException(Exception):
+class InvalidInputDataException(EnerguideException):
+    pass
+
+
+class InvalidEmbeddedDataTypeException(EnerguideException):
 
     def __init__(self, data_class, *args, parent=None, **kwargs):
         super().__init__(*args, **kwargs)
