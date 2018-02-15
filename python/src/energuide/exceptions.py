@@ -1,3 +1,5 @@
+import typing
+
 class EnerguideException(Exception):
     pass
 
@@ -12,7 +14,6 @@ class InvalidInputDataException(EnerguideException):
 
 class InvalidEmbeddedDataTypeException(EnerguideException):
 
-    def __init__(self, data_class, *args, parent=None, **kwargs):
+    def __init__(self, data_class: type, *args: typing.Tuple, **kwargs: typing.Dict) -> None:
         super().__init__(*args, **kwargs)
         self.data_class = data_class
-        self.parent = parent
