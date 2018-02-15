@@ -7,7 +7,8 @@ This is the API for NRCAN's Energuide data.
 This project is composed of two parts: the API itself and the ETL process that produces the data the API will serve.
 There are further details in the readme for each of the respective portions of the project.
 
-[Windows Installation](#windows-installation)
+- [Windows Installation Instructions](#windows-installation)
+- [MacOS Installation Instructions](#tldr)
 
 ## Quickstart
 
@@ -93,9 +94,9 @@ Version 3.6.4 or higher is required.
 
 2. Download current version of mongoDB community server from [here](https://www.mongodb.com/download-center#community).
 
-3. Download Node.js from [here](https://nodejs.org/en/download/).
+3. Download Node.js from [here](https://nodejs.org/en/download/). Version >=8.x of Node is required.
 
-Check if the library are accessible run following command in terminal window
+Check if the libraries are accessible by running the following commands in a terminal window
 ```
 python --version
 
@@ -103,7 +104,7 @@ mongo --version
 
 node --version
 ```
-If version is not shown the path to the library has to be added to environment variable in system property
+If version is not shown, the path to the library has to be added to the 'PATH' environment variable in system properties
 
 ### Run python extractor
 
@@ -121,12 +122,12 @@ pip install -e .
 ```
 "." is the part of command
 
-`Mongodb` must be started before go to the next step. Open new terminal window and type
+`Mongodb` must be started before going to the next step. Open new terminal window and type
 ```
 md \data\db    #required run just first time
 mongo
 ```
-Keep this window open to continue to finish installation and work after.
+Keep this window open to continue running the database and open a new one to finish extracting the data.
 
 Finish python part of installation.
 
@@ -141,7 +142,7 @@ energuide extract --infile tests/randomized_energuide_data.csv --outfile allthed
 energuide load --filename allthedata.zip	#load data into mongodb
 del allthedata.zip							#delete zip file
 ```
-Test if process done correctly
+Unit tests for the python code.
 ```
 pytest tests
 mypy src tests --ignore-missing-imports
@@ -167,7 +168,7 @@ quit()												#disconnect for db
 ### Run `GraphQL API`  
 
 Move to `nrcan_api\api` folder
-`API` utilize Apollo Engine to monitor activities on host with `GraphQL` website.
+`API` utilizes Apollo Engine to monitor activities on host with `GraphQL` website.
 Apollo Engine is a monitoring/logging layer that gives us out-of-the-box diagnostic information about our graphql instance. You'll need your own API key to get the API running, so [sign up for one here](https://engine.apollographql.com/login).
 Key looks similar to: `service:yname-8241:lQ3g_8Yojs4stdIWqwwj-bQ`
 
@@ -179,12 +180,10 @@ set NRCAN_COLLECTION_NAME=dwellings
 set NRCAN_ENGINE_API_KEY=service:yname-8241:lQ3g_8Yojs4stdIWqwwj-bQ
 ```
 
-Next command start `GraphQL` 
+Next command start `GraphQL`
 ```
 npm run start
 ```
-
-
 
 ### Using the API locally
 
