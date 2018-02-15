@@ -15,13 +15,30 @@ def test_frontend() -> None:
     assert b'Upload new File' in actual.data
 
 
+def test_upload_no_key() -> None:
+    app = extract_endpoint.App.test_client()
+
+    actual = app.post('/upload_file',
+                      data=dict(file=(BytesIO(CONTENTS), 'hello world.txt')))
+
+    assert actual.status_code == 404
+
+
+def test_upload_wrong_key() -> None:
+    app = extract_endpoint.App.test_client()
+
+    actual = app.post('/upload_file',
+                      data=dict(key='bad key',
+                                file=(BytesIO(CONTENTS), 'hello world.txt')))
+
+    assert actual.status_code == 404
+
+
 def test_upload() -> None:
-    os.mkdir('Uploads')
     app = extract_endpoint.App.test_client()
 
     actual = app.post('/upload_file',
                       data=dict(key='development_key',
                                 file=(BytesIO(CONTENTS), 'hello world.txt')))
 
-    shutil.rmtree('Uploads')
     assert actual.data == b'hello_world.txt uploaded successfully'
