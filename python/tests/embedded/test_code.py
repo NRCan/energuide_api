@@ -3,6 +3,7 @@ import pytest
 from energuide import bilingual
 from energuide import element
 from energuide.embedded import code
+from energuide.exceptions import InvalidEmbeddedDataTypeException
 
 
 @pytest.fixture
@@ -20,6 +21,15 @@ def raw_wall_code() -> element.Element:
             <French>38x89 (2x4)</French>
         </ComponentTypeSize>
     </Layers>
+</Code>
+"""
+    return element.Element.from_string(data)
+
+
+@pytest.fixture
+def bad_raw_code() -> element.Element:
+    data = """
+<Code id='Code 1'>
 </Code>
 """
     return element.Element.from_string(data)
@@ -108,9 +118,23 @@ def test_wall_code_from_data(raw_wall_code: element.Element, wall_code: code.Wal
     assert output == wall_code
 
 
+def test_bad_wall_code_from_data(bad_raw_code: element.Element) -> None:
+    with pytest.raises(InvalidEmbeddedDataTypeException) as exc:
+        code.WallCode.from_data(bad_raw_code)
+
+    assert exc.value.data_class == code.WallCode
+
+
 def test_window_code_from_data(raw_window_code: element.Element, window_code: code.WindowCode) -> None:
     output = code.WindowCode.from_data(raw_window_code)
     assert output == window_code
+
+
+def test_bad_window_code_from_data(bad_raw_code: element.Element) -> None:
+    with pytest.raises(InvalidEmbeddedDataTypeException) as exc:
+        code.WindowCode.from_data(bad_raw_code)
+
+    assert exc.value.data_class == code.WindowCode
 
 
 def test_code_from_data(raw_wall_code: element.Element,

@@ -6,6 +6,7 @@ from energuide.embedded import code
 from energuide.embedded import distance
 from energuide.embedded import insulation
 from energuide.embedded import window
+from energuide.exceptions import InvalidEmbeddedDataTypeException
 
 
 @pytest.fixture
@@ -17,6 +18,20 @@ def raw_sample() -> element.Element:
             <Type idref='Code 11' rValue='0.4779'>234002</Type>
         </Construction>
         <Measurements width='1967.738' height='1322.0699' />
+    </Window>
+    """
+    return element.Element.from_string(doc)
+
+
+@pytest.fixture
+def bad_raw_sample() -> element.Element:
+    doc = """
+    <Window>
+        <Label>East0001</Label>
+        <Construction>
+            <Type>234002</Type>
+        </Construction>
+        <Measurements width='bad' height='data' />
     </Window>
     """
     return element.Element.from_string(doc)
@@ -72,6 +87,13 @@ def test_from_data_missing_codes() -> None:
     assert output.label == 'East0001'
     assert output.window_code is None
     assert output.to_dict()['glazingTypesEnglish'] is None
+
+
+def test_bad_from_data(bad_raw_sample: element.Element, sample_window_code: typing.Dict[str, code.WindowCode]) -> None:
+    with pytest.raises(InvalidEmbeddedDataTypeException) as exc:
+        window.Window.from_data(bad_raw_sample, sample_window_code)
+
+    assert exc.value.data_class == window.Window
 
 
 def test_to_dict(sample: window.Window) -> None:

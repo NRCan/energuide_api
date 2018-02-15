@@ -4,6 +4,7 @@ from energuide.embedded import area
 from energuide.embedded import distance
 from energuide.embedded import floor
 from energuide.embedded import insulation
+from energuide.exceptions import InvalidEmbeddedDataTypeException
 
 
 @pytest.fixture
@@ -11,6 +12,19 @@ def sample_raw() -> element.Element:
     doc = """
     <Floor>
         <Label>Rm over garage</Label>
+        <Construction>
+            <Type nominalInsulation='2.46' rValue='2.9181' />
+        </Construction>
+        <Measurements area='9.2903' length='3.048' />
+    </Floor>
+    """
+    return element.Element.from_string(doc)
+
+
+@pytest.fixture
+def bad_sample_raw() -> element.Element:
+    doc = """
+    <Floor>
         <Construction>
             <Type nominalInsulation='2.46' rValue='2.9181' />
         </Construction>
@@ -34,6 +48,13 @@ def sample() -> floor.Floor:
 def test_from_data(sample_raw: element.Element, sample: floor.Floor) -> None:
     output = floor.Floor.from_data(sample_raw)
     assert output == sample
+
+
+def test_bad_from_data(bad_sample_raw: element.Element) -> None:
+    with pytest.raises(InvalidEmbeddedDataTypeException) as exc:
+        floor.Floor.from_data(bad_sample_raw)
+
+    assert exc.value.data_class == floor.Floor
 
 
 def test_to_dict(sample: floor.Floor) -> None:

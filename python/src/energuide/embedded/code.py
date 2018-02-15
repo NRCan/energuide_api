@@ -1,6 +1,7 @@
 import typing
 from energuide import bilingual
 from energuide import element
+from energuide.exceptions import InvalidEmbeddedDataTypeException
 
 
 class _WallCode(typing.NamedTuple):
@@ -14,18 +15,21 @@ class WallCode(_WallCode):
 
     @classmethod
     def from_data(cls, wall_code: element.Element) -> 'WallCode':
-        return WallCode(
-            identifier=wall_code.attrib['id'],
-            label=wall_code.get_text('Label'),
-            structure_type=bilingual.Bilingual(
-                english=wall_code.get_text('Layers/StructureType/English'),
-                french=wall_code.get_text('Layers/StructureType/French'),
-            ),
-            component_type_size=bilingual.Bilingual(
-                english=wall_code.get_text('Layers/ComponentTypeSize/English'),
-                french=wall_code.get_text('Layers/ComponentTypeSize/French'),
+        try:
+            return WallCode(
+                identifier=wall_code.attrib['id'],
+                label=wall_code.get_text('Label'),
+                structure_type=bilingual.Bilingual(
+                    english=wall_code.get_text('Layers/StructureType/English'),
+                    french=wall_code.get_text('Layers/StructureType/French'),
+                ),
+                component_type_size=bilingual.Bilingual(
+                    english=wall_code.get_text('Layers/ComponentTypeSize/English'),
+                    french=wall_code.get_text('Layers/ComponentTypeSize/French'),
+                )
             )
-        )
+        except (IndexError, ValueError, AssertionError, KeyError) as exc:
+            raise InvalidEmbeddedDataTypeException(WallCode, parent=exc)
 
 
 class _WindowCode(typing.NamedTuple):
@@ -43,34 +47,37 @@ class WindowCode(_WindowCode):
 
     @classmethod
     def from_data(cls, window_code: element.Element) -> 'WindowCode':
-        return WindowCode(
-            identifier=window_code.attrib['id'],
-            label=window_code.get_text('Label'),
-            glazing_type=bilingual.Bilingual(
-                english=window_code.get_text('Layers/GlazingTypes/English'),
-                french=window_code.get_text('Layers/GlazingTypes/French'),
-            ),
-            coating_tint=bilingual.Bilingual(
-                english=window_code.get_text('Layers/CoatingsTints/English'),
-                french=window_code.get_text('Layers/CoatingsTints/French'),
-            ),
-            fill_type=bilingual.Bilingual(
-                english=window_code.get_text('Layers/FillType/English'),
-                french=window_code.get_text('Layers/FillType/French'),
-            ),
-            spacer_type=bilingual.Bilingual(
-                english=window_code.get_text('Layers/SpacerType/English'),
-                french=window_code.get_text('Layers/SpacerType/French'),
-            ),
-            window_code_type=bilingual.Bilingual(
-                english=window_code.get_text('Layers/Type/English'),
-                french=window_code.get_text('Layers/Type/French'),
-            ),
-            frame_material=bilingual.Bilingual(
-                english=window_code.get_text('Layers/FrameMaterial/English'),
-                french=window_code.get_text('Layers/FrameMaterial/French'),
+        try:
+            return WindowCode(
+                identifier=window_code.attrib['id'],
+                label=window_code.get_text('Label'),
+                glazing_type=bilingual.Bilingual(
+                    english=window_code.get_text('Layers/GlazingTypes/English'),
+                    french=window_code.get_text('Layers/GlazingTypes/French'),
+                ),
+                coating_tint=bilingual.Bilingual(
+                    english=window_code.get_text('Layers/CoatingsTints/English'),
+                    french=window_code.get_text('Layers/CoatingsTints/French'),
+                ),
+                fill_type=bilingual.Bilingual(
+                    english=window_code.get_text('Layers/FillType/English'),
+                    french=window_code.get_text('Layers/FillType/French'),
+                ),
+                spacer_type=bilingual.Bilingual(
+                    english=window_code.get_text('Layers/SpacerType/English'),
+                    french=window_code.get_text('Layers/SpacerType/French'),
+                ),
+                window_code_type=bilingual.Bilingual(
+                    english=window_code.get_text('Layers/Type/English'),
+                    french=window_code.get_text('Layers/Type/French'),
+                ),
+                frame_material=bilingual.Bilingual(
+                    english=window_code.get_text('Layers/FrameMaterial/English'),
+                    french=window_code.get_text('Layers/FrameMaterial/French'),
+                )
             )
-        )
+        except (IndexError, ValueError, AssertionError, KeyError) as exc:
+            raise InvalidEmbeddedDataTypeException(WindowCode, parent=exc)
 
 
 class _Codes(typing.NamedTuple):

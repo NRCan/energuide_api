@@ -5,7 +5,10 @@ import zipfile
 import _pytest.fixtures
 import py._path.local
 import pytest
-from energuide import extractor, reader
+from energuide import extractor
+from energuide import reader
+from energuide.exceptions import InvalidInputDataException
+
 
 
 def data1() -> typing.Dict[str, typing.Optional[str]]:
@@ -81,7 +84,7 @@ def test_extract_valid(valid_filepath: str) -> None:
 
 
 def test_extract_missing(invalid_filepath: str) -> None:
-    with pytest.raises(reader.InvalidInputDataException) as ex:
+    with pytest.raises(InvalidInputDataException) as ex:
         output = extractor.extract_data(invalid_filepath)
         _ = dict(next(output))
 

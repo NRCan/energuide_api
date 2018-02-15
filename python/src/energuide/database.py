@@ -71,6 +71,7 @@ def _chunk_data(data: typing.Iterable[dwelling.Dwelling],
             yield chunked_list
             chunked_list = []
             load_size = 0
+
         chunked_list.append(row.to_dict())
         load_size += 1
 

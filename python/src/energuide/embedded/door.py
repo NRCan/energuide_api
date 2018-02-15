@@ -4,6 +4,7 @@ from energuide import element
 from energuide.embedded import distance
 from energuide.embedded import area
 from energuide.embedded import insulation
+from energuide.exceptions import InvalidEmbeddedDataTypeException
 
 
 class _Door(typing.NamedTuple):
@@ -19,16 +20,19 @@ class Door(_Door):
 
     @classmethod
     def from_data(cls, door: element.Element) -> 'Door':
-        return Door(
-            label=door.get_text('Label'),
-            door_type=bilingual.Bilingual(
-                english=door.get_text('Construction/Type/English'),
-                french=door.get_text('Construction/Type/French'),
-            ),
-            door_insulation=insulation.Insulation(float(door.xpath('Construction/Type/@value')[0])),
-            height=distance.Distance(float(door.xpath('Measurements/@height')[0])),
-            width=distance.Distance(float(door.xpath('Measurements/@width')[0])),
-        )
+        try:
+            return Door(
+                label=door.get_text('Label'),
+                door_type=bilingual.Bilingual(
+                    english=door.get_text('Construction/Type/English'),
+                    french=door.get_text('Construction/Type/French'),
+                ),
+                door_insulation=insulation.Insulation(float(door.xpath('Construction/Type/@value')[0])),
+                height=distance.Distance(float(door.xpath('Measurements/@height')[0])),
+                width=distance.Distance(float(door.xpath('Measurements/@width')[0])),
+            )
+        except (IndexError, ValueError, AssertionError) as exc:
+            raise InvalidEmbeddedDataTypeException(Door, parent=exc)
 
     @property
     def u_factor(self) -> float:
