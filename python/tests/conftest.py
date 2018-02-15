@@ -72,24 +72,10 @@ def energuide_fixture() -> str:
 
 
 @pytest.fixture
-def energuide_bad_data_fixture() -> str:
-    return os.path.join(os.path.dirname(__file__), 'bad_randomized_energuide_data.csv')
-
-
-@pytest.fixture
 def energuide_zip_fixture(tmpdir: py._path.local.LocalPath, energuide_fixture: str) -> str:
     outfile = f'{tmpdir}/randomized_energuide_data.zip'
 
     data = extractor.extract_data(energuide_fixture)
-    extractor.write_data(data, outfile)
-    return outfile
-
-
-@pytest.fixture
-def energuide_bad_zip_fixture(tmpdir: py._path.local.LocalPath, energuide_bad_data_fixture: str) -> str:
-    outfile = f'{tmpdir}/randomized_energuide_data.zip'
-
-    data = extractor.extract_data(energuide_bad_data_fixture)
     extractor.write_data(data, outfile)
     return outfile
 

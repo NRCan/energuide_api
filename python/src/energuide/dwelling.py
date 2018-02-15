@@ -13,10 +13,10 @@ from energuide.embedded import window
 from energuide.extracted_datatypes import HeatedFloorArea
 from energuide.extracted_datatypes import Ventilation
 from energuide.extracted_datatypes import WaterHeating
+from energuide.exceptions import InvalidGroupSizeException
+from energuide.exceptions import InvalidInputDataException
+from energuide.exceptions import InvalidEmbeddedDataTypeException
 
-
-class NoInputDataException(Exception):
-    pass
 
 
 @enum.unique
@@ -31,7 +31,7 @@ class EvaluationType(enum.Enum):
         elif code == cls.POST_RETROFIT.value:
             return EvaluationType.POST_RETROFIT
         else:
-            raise reader.InvalidInputDataException(f'Invalid EvaluationType: {code}')
+            raise InvalidInputDataException(f'Invalid EvaluationType: {code}')
 
 
 @enum.unique
@@ -128,7 +128,7 @@ class ParsedDwellingDataRow(_ParsedDwellingDataRow):
         checker = validator.DwellingValidator(cls._SCHEMA, allow_unknown=True, ignore_none_values=True)
         if not checker.validate(row):
             error_keys = ', '.join(checker.errors.keys())
-            raise reader.InvalidInputDataException(f'Validator failed on keys: {error_keys}')
+            raise InvalidInputDataException(f'Validator failed on keys: {error_keys}')
 
         parsed = checker.document
         codes = code.Codes.from_data(parsed['codes'])
@@ -285,7 +285,7 @@ class Dwelling:
 
     @classmethod
     def _from_parsed_group(cls, data: typing.List[ParsedDwellingDataRow]) -> 'Dwelling':
-        if data:
+        if len(data) == 2:
             evaluations = [Evaluation.from_data(row) for row in data]
             return Dwelling(
                 house_id=data[0].eval_id,
@@ -296,12 +296,17 @@ class Dwelling:
                 evaluations=evaluations,
             )
         else:
-            raise NoInputDataException('Empty group cannot be parsed')
+            raise InvalidGroupSizeException(f'Group size must be 2, not {len(data)}')
 
     @classmethod
     def from_group(cls, data: typing.List[reader.InputData]) -> 'Dwelling':
-        parsed_data = [ParsedDwellingDataRow.from_row(row) for row in data]
-        return cls._from_parsed_group(parsed_data)
+        try:
+            parsed_data = [ParsedDwellingDataRow.from_row(row) for row in data]
+            return cls._from_parsed_group(parsed_data)
+        except InvalidEmbeddedDataTypeException as data_exception:
+            raise
+        except AssertionError as assertion:
+            raise
 
     @property
     def house_id(self) -> int:

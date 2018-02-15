@@ -5,6 +5,7 @@ from energuide.embedded import area
 from energuide.embedded import ceiling
 from energuide.embedded import distance
 from energuide.embedded import insulation
+from energuide.exceptions import InvalidEmbeddedDataTypeException
 
 
 @pytest.fixture
@@ -26,6 +27,22 @@ def sample_raw() -> element.Element:
 
 
 @pytest.fixture
+def bad_sample_raw() -> element.Element:
+    data = """
+<Ceiling>
+    <Construction>
+        <Type>
+            <French>Combles/pignon</French>
+        </Type>
+        <CeilingType nominalInsulation='2.864' />
+    </Construction>
+    <Measurements />
+</Ceiling>
+    """
+    return element.Element.from_string(data)
+
+
+@pytest.fixture
 def sample() -> ceiling.Ceiling:
     return ceiling.Ceiling(
         label='Main attic',
@@ -40,6 +57,13 @@ def sample() -> ceiling.Ceiling:
 def test_from_data(sample_raw: element.Element, sample: ceiling.Ceiling) -> None:
     output = ceiling.Ceiling.from_data(sample_raw)
     assert output == sample
+
+
+def test_from_bad_data(bad_sample_raw: element.Element):
+    with pytest.raises(InvalidEmbeddedDataTypeException) as exc:
+        output = ceiling.Ceiling.from_data(bad_sample_raw)
+
+    assert exc.value.data_class == ceiling.Ceiling
 
 
 def test_to_dict(sample: ceiling.Ceiling) -> None:

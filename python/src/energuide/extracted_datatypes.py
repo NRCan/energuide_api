@@ -2,6 +2,7 @@ import enum
 import typing
 from energuide import element
 from energuide import bilingual
+from energuide.exceptions import InvalidEmbeddedDataTypeException
 
 
 class WaterHeaterType(enum.Enum):
@@ -120,10 +121,13 @@ class HeatedFloorArea(_HeatedFloorArea):
 
     @classmethod
     def from_data(cls, heated_floor_area: element.Element) -> 'HeatedFloorArea':
-        return HeatedFloorArea(
-            area_above_grade=float(heated_floor_area.attrib['aboveGrade']),
-            area_below_grade=float(heated_floor_area.attrib['belowGrade']),
-        )
+        try:
+            return HeatedFloorArea(
+                area_above_grade=float(heated_floor_area.attrib['aboveGrade']),
+                area_below_grade=float(heated_floor_area.attrib['belowGrade']),
+            )
+        except (IndexError, ValueError, AssertionError) as exc:
+            raise InvalidEmbeddedDataTypeException(HeatedFloorArea, parent=e)
 
     @property
     def area_above_grade_feet(self):
@@ -180,17 +184,20 @@ class Ventilation(_Ventilation):
 
     @classmethod
     def from_data(cls, ventilation: element.Element) -> 'Ventilation':
-        energy_star = ventilation.attrib['isEnergyStar'] == 'true'
-        institute_certified = ventilation.attrib['isHomeVentilatingInstituteCertified'] == 'true'
-        total_supply_flow = float(ventilation.attrib['supplyFlowrate'])
+        try:
+            energy_star = ventilation.attrib['isEnergyStar'] == 'true'
+            institute_certified = ventilation.attrib['isHomeVentilatingInstituteCertified'] == 'true'
+            total_supply_flow = float(ventilation.attrib['supplyFlowrate'])
 
-        ventilation_type = cls._derive_ventilation_type(total_supply_flow, energy_star, institute_certified)
+            ventilation_type = cls._derive_ventilation_type(total_supply_flow, energy_star, institute_certified)
 
-        return Ventilation(
-            ventilation_type=ventilation_type,
-            air_flow_rate=total_supply_flow,
-            efficiency=float(ventilation.attrib['efficiency1']),
-        )
+            return Ventilation(
+                ventilation_type=ventilation_type,
+                air_flow_rate=total_supply_flow,
+                efficiency=float(ventilation.attrib['efficiency1']),
+            )
+        except (IndexError, ValueError, AssertionError, KeyError) as exc:
+            raise InvalidEmbeddedDataTypeException(Ventilation, parent=exc)
 
     @property
     def air_flow_rate_cmf(self):
@@ -382,27 +389,29 @@ class WaterHeating(_WaterHeating):
 
     @classmethod
     def _from_data(cls, water_heating: element.Element) -> 'WaterHeating':
-        assert water_heating.attrib['hasDrainWaterHeatRecovery'] == 'false'
+        try:
+            assert water_heating.attrib['hasDrainWaterHeatRecovery'] == 'false'
 
-        energy_type = water_heating.get_text('EnergySource/English')
-        tank_type = water_heating.get_text('TankType/English')
+            energy_type = water_heating.get_text('EnergySource/English')
+            tank_type = water_heating.get_text('TankType/English')
 
-        type_english, type_french = cls._TYPE_MAP[(energy_type, tank_type)]
-        volume = float(water_heating.xpath('TankVolume/@value')[0])
-        efficiency = float(water_heating.xpath('EnergyFactor/@value')[0])
+            type_english, type_french = cls._TYPE_MAP[(energy_type, tank_type)]
+            volume = float(water_heating.xpath('TankVolume/@value')[0])
+            efficiency = float(water_heating.xpath('EnergyFactor/@value')[0])
 
-        return WaterHeating(
-            type_english=type_english,
-            type_french=type_french,
-            tank_volume=volume,
-            efficiency=efficiency,
-        )
+            return WaterHeating(
+                type_english=type_english,
+                type_french=type_french,
+                tank_volume=volume,
+                efficiency=efficiency,
+            )
+        except (IndexError, ValueError, AssertionError, KeyError) as exc:
+            raise InvalidEmbeddedDataTypeException(WaterHeating, parent=exc)
 
     @classmethod
     def from_data(cls, water_heating: element.Element) -> typing.List['WaterHeating']:
         water_heatings = water_heating.xpath("*[self::Primary or self::Secondary]")
         return [cls._from_data(water_heating) for water_heating in water_heatings]
-
 
     @property
     def tank_volume_gallon(self):

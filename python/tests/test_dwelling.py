@@ -1,10 +1,12 @@
 import copy
 import datetime
 import typing
+import _pytest
 import pytest
 from energuide import bilingual
 from energuide import dwelling
 from energuide import reader
+from energuide import element
 from energuide import extracted_datatypes
 from energuide.embedded import area
 from energuide.embedded import ceiling
@@ -15,6 +17,10 @@ from energuide.embedded import insulation
 from energuide.embedded import wall
 from energuide.embedded import door
 from energuide.embedded import window
+from energuide.exceptions import InvalidInputDataException
+from energuide.exceptions import InvalidGroupSizeException
+from energuide.exceptions import InvalidEmbeddedDataTypeException
+
 
 
 # pylint: disable=no-self-use
@@ -576,14 +582,14 @@ class TestParsedDwellingDataRow:
 
     def test_bad_postal_code(self, sample_input_d: reader.InputData) -> None:
         sample_input_d['forwardSortationArea'] = 'K16'
-        with pytest.raises(reader.InvalidInputDataException):
+        with pytest.raises(InvalidInputDataException):
             dwelling.ParsedDwellingDataRow.from_row(sample_input_d)
 
     def test_from_bad_row(self) -> None:
         input_data = {
             'EVAL_ID': 123
         }
-        with pytest.raises(reader.InvalidInputDataException) as ex:
+        with pytest.raises(InvalidInputDataException) as ex:
             dwelling.ParsedDwellingDataRow.from_row(input_data)
         assert 'EVAL_TYPE' in ex.exconly()
         assert 'EVAL_ID' not in ex.exconly()
@@ -641,8 +647,22 @@ class TestDwelling:
 
     def test_no_data(self) -> None:
         data: typing.List[typing.Any] = []
-        with pytest.raises(dwelling.NoInputDataException):
+        with pytest.raises(InvalidGroupSizeException):
             dwelling.Dwelling.from_group(data)
+
+    def test_bad_data(self,
+                      sample: typing.List[reader.InputData],
+                      monkeypatch: _pytest.monkeypatch.MonkeyPatch) -> None:
+
+        def mock_from_data(_: element.Element) -> ceiling.Ceiling:
+            raise InvalidEmbeddedDataTypeException(ceiling.Ceiling, None)
+
+        monkeypatch.setattr(ceiling.Ceiling, 'from_data', mock_from_data)
+        with pytest.raises(InvalidEmbeddedDataTypeException) as excinfo:
+            dwelling.Dwelling.from_group(sample)
+
+        assert excinfo.value.data_class == ceiling.Ceiling
+
 
     def test_to_dict(self, sample: typing.List[reader.InputData]) -> None:
         output = dwelling.Dwelling.from_group(sample).to_dict()

@@ -24,6 +24,22 @@ def sample_raw() -> element.Element:
 
 
 @pytest.fixture
+def bad_sample_raw() -> element.Element:
+    doc = """
+    <Door>
+        <Label>Front door</Label>
+        <Construction>
+            <Type value='0.39'>
+                <English>Solid wood</English>
+                <French>Bois massif</French>
+            </Type>
+        </Construction>
+        <Measurements height='test' width='string' />
+    </Door>
+    """
+
+
+@pytest.fixture
 def sample() -> door.Door:
     return door.Door(
         label='Front door',

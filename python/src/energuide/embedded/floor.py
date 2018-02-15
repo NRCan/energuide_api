@@ -3,6 +3,7 @@ from energuide import element
 from energuide.embedded import area
 from energuide.embedded import distance
 from energuide.embedded import insulation
+from energuide.exceptions import InvalidEmbeddedDataTypeException
 
 
 class _Floor(typing.NamedTuple):
@@ -17,13 +18,16 @@ class Floor(_Floor):
 
     @classmethod
     def from_data(cls, floor: element.Element) -> 'Floor':
-        return Floor(
-            label=floor.get_text('Label'),
-            nominal_insulation=insulation.Insulation(float(floor.xpath('Construction/Type/@nominalInsulation')[0])),
-            effective_insulation=insulation.Insulation(float(floor.xpath('Construction/Type/@rValue')[0])),
-            floor_area=area.Area(float(floor.xpath('Measurements/@area')[0])),
-            floor_length=distance.Distance(float(floor.xpath('Measurements/@length')[0])),
-        )
+        try:
+            return Floor(
+                label=floor.get_text('Label'),
+                nominal_insulation=insulation.Insulation(float(floor.xpath('Construction/Type/@nominalInsulation')[0])),
+                effective_insulation=insulation.Insulation(float(floor.xpath('Construction/Type/@rValue')[0])),
+                floor_area=area.Area(float(floor.xpath('Measurements/@area')[0])),
+                floor_length=distance.Distance(float(floor.xpath('Measurements/@length')[0])),
+            )
+        except (IndexError, ValueError, AssertionError) as e:
+            raise InvalidEmbeddedDataTypeException(Floor, parent=e)
 
     def to_dict(self) -> typing.Dict[str, typing.Any]:
         return {

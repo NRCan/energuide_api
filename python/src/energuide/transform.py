@@ -2,8 +2,12 @@ import typing
 from energuide import database
 from energuide import reader
 from energuide import dwelling
-from energuide.logging import logger
+from energuide import logging
+from energuide.exceptions import InvalidGroupSizeException
+from energuide.exceptions import InvalidInputDataException
+from energuide.exceptions import InvalidEmbeddedDataTypeException
 
+LOGGER = logging.get_logger(__name__)
 
 class Stats:
 
@@ -29,7 +33,7 @@ class Stats:
     def failure(self) -> int:
         return self._failure
 
-    def __str__(self):
+    def __str__(self) -> str:
         return f'Total: {self.total}\n' + \
                f'Success: {self.success}\n' + \
                f'Failure: {self.failure}'
@@ -47,9 +51,14 @@ def run(coords: database.DatabaseCoordinates,
                 dwell = dwelling.Dwelling.from_group(group)
                 stats.register_success()
                 yield dwell
-            except Exception as exc: # pylint: disable=broad-except
+            except InvalidEmbeddedDataTypeException as exc:
                 files = [str(file.get('localFileName')) for file in group]
-                logger.error(f'{", ".join(files)}: {exc}')
+                failing_type = exc.data_class
+                LOGGER.error(f'{", ".join(files)}: {failing_type}')
+                stats.register_failure()
+            except (InvalidInputDataException, InvalidGroupSizeException) as exc:
+                files = [str(file.get('localFileName')) for file in group]
+                LOGGER.error(f'{", ".join(files)}: {exc}')
                 stats.register_failure()
 
     raw_data = reader.read(filename)

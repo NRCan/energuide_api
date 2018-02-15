@@ -2,6 +2,10 @@ import click
 from energuide import database
 from energuide import transform
 from energuide import extractor
+from energuide import logging
+
+
+LOGGER = logging.get_logger(__name__)
 
 
 @click.group()
@@ -27,8 +31,9 @@ def load(username: str, password: str, host: str, port: int, db_name: str, colle
         port=port
     )
 
+    LOGGER.info(f'Loading data from {filename} into database.')
     stats = transform.run(coords, db_name, collection, filename)
-    print(stats)
+    LOGGER.info(f'Total: {stats.total}, Success: {stats.success}, Failures: {stats.failure}')
 
 
 @main.command()
