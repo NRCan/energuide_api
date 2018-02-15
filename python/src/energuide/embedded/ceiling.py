@@ -35,7 +35,7 @@ class Ceiling(_Ceiling):
                 ceiling_length=distance.Distance(float(ceiling.xpath('Measurements/@length')[0])),
             )
         except (IndexError, ValueError, AssertionError, KeyError) as exc:
-            raise InvalidEmbeddedDataTypeException(Ceiling, parent=e)
+            raise InvalidEmbeddedDataTypeException(Ceiling, parent=exc)
 
     def to_dict(self) -> typing.Dict[str, typing.Any]:
         return {

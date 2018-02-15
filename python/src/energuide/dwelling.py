@@ -303,9 +303,9 @@ class Dwelling:
         try:
             parsed_data = [ParsedDwellingDataRow.from_row(row) for row in data]
             return cls._from_parsed_group(parsed_data)
-        except InvalidEmbeddedDataTypeException as data_exception:
+        except InvalidEmbeddedDataTypeException:
             raise
-        except AssertionError as assertion:
+        except InvalidGroupSizeException:
             raise
 
     @property

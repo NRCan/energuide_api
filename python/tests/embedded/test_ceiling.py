@@ -59,9 +59,9 @@ def test_from_data(sample_raw: element.Element, sample: ceiling.Ceiling) -> None
     assert output == sample
 
 
-def test_from_bad_data(bad_sample_raw: element.Element):
+def test_bad_from_data(bad_sample_raw: element.Element):
     with pytest.raises(InvalidEmbeddedDataTypeException) as exc:
-        output = ceiling.Ceiling.from_data(bad_sample_raw)
+        ceiling.Ceiling.from_data(bad_sample_raw)
 
     assert exc.value.data_class == ceiling.Ceiling
 

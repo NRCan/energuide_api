@@ -36,8 +36,8 @@ class Wall(_Wall):
                 perimeter=distance.Distance(float(wall.xpath('Measurements/@perimeter')[0])),
                 height=distance.Distance(float(wall.xpath('Measurements/@height')[0])),
             )
-        except (IndexError, ValueError, AssertionError) as e:
-            raise InvalidEmbeddedDataTypeException(Wall, parent=e)
+        except (IndexError, ValueError, AssertionError) as exc:
+            raise InvalidEmbeddedDataTypeException(Wall, parent=exc)
 
 
     @property

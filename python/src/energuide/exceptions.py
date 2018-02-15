@@ -8,7 +8,7 @@ class InvalidInputDataException(Exception):
 
 class InvalidEmbeddedDataTypeException(Exception):
 
-    def __init__(self, data_class, parent=None, *args, **kwargs):
+    def __init__(self, data_class, *args, parent=None, **kwargs):
         super().__init__(*args, **kwargs)
         self.data_class = data_class
         self.parent = parent

@@ -26,8 +26,8 @@ class Floor(_Floor):
                 floor_area=area.Area(float(floor.xpath('Measurements/@area')[0])),
                 floor_length=distance.Distance(float(floor.xpath('Measurements/@length')[0])),
             )
-        except (IndexError, ValueError, AssertionError) as e:
-            raise InvalidEmbeddedDataTypeException(Floor, parent=e)
+        except (IndexError, ValueError, AssertionError) as exc:
+            raise InvalidEmbeddedDataTypeException(Floor, parent=exc)
 
     def to_dict(self) -> typing.Dict[str, typing.Any]:
         return {

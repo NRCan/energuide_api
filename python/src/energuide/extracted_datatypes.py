@@ -127,7 +127,7 @@ class HeatedFloorArea(_HeatedFloorArea):
                 area_below_grade=float(heated_floor_area.attrib['belowGrade']),
             )
         except (IndexError, ValueError, AssertionError) as exc:
-            raise InvalidEmbeddedDataTypeException(HeatedFloorArea, parent=e)
+            raise InvalidEmbeddedDataTypeException(HeatedFloorArea, parent=exc)
 
     @property
     def area_above_grade_feet(self):

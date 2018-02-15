@@ -31,8 +31,8 @@ class Door(_Door):
                 height=distance.Distance(float(door.xpath('Measurements/@height')[0])),
                 width=distance.Distance(float(door.xpath('Measurements/@width')[0])),
             )
-        except (IndexError, ValueError, AssertionError) as e:
-            raise InvalidEmbeddedDataTypeException(Door, parent=e)
+        except (IndexError, ValueError, AssertionError) as exc:
+            raise InvalidEmbeddedDataTypeException(Door, parent=exc)
 
     @property
     def u_factor(self) -> float:

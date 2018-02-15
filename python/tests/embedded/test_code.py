@@ -3,6 +3,7 @@ import pytest
 from energuide import bilingual
 from energuide import element
 from energuide.embedded import code
+from energuide.exceptions import InvalidEmbeddedDataTypeException
 
 
 @pytest.fixture
@@ -119,7 +120,7 @@ def test_wall_code_from_data(raw_wall_code: element.Element, wall_code: code.Wal
 
 def test_bad_wall_code_from_data(bad_raw_code: element.Element) -> None:
     with pytest.raises(InvalidEmbeddedDataTypeException) as exc:
-        output = code.WallCode.from_data(bad_raw_code)
+        code.WallCode.from_data(bad_raw_code)
 
     assert exc.value.data_class == code.WallCode
 
@@ -131,7 +132,7 @@ def test_window_code_from_data(raw_window_code: element.Element, window_code: co
 
 def test_bad_window_code_from_data(bad_raw_code: element.Element) -> None:
     with pytest.raises(InvalidEmbeddedDataTypeException) as exc:
-        output = code.WindowCode.from_data(bad_raw_code)
+        code.WindowCode.from_data(bad_raw_code)
 
     assert exc.value.data_class == code.WindowCode
 

@@ -6,6 +6,7 @@ from energuide.embedded import code
 from energuide.embedded import distance
 from energuide.embedded import insulation
 from energuide.embedded import wall
+from energuide.exceptions import InvalidEmbeddedDataTypeException
 
 
 @pytest.fixture
@@ -16,6 +17,17 @@ def raw_sample() -> element.Element:
         <Construction>
             <Type idref='Code 1' nominalInsulation='1.432' rValue='1.8016' />
         </Construction>
+        <Measurements perimeter='42.9768' height='2.4384' />
+    </Wall>
+    """
+    return element.Element.from_string(doc)
+
+
+@pytest.fixture
+def bad_raw_sample() -> element.Element:
+    doc = """
+    <Wall>
+        <Label>Second level</Label>
         <Measurements perimeter='42.9768' height='2.4384' />
     </Wall>
     """
@@ -55,6 +67,13 @@ def test_from_data(raw_sample: element.Element,
                    sample: wall.Wall) -> None:
     output = wall.Wall.from_data(raw_sample, sample_wall_code)
     assert output == sample
+
+
+def test_bad_from_data(bad_raw_sample: element.Element, sample_wall_code: typing.Dict[str, code.WallCode]) -> None:
+    with pytest.raises(InvalidEmbeddedDataTypeException) as exc:
+        wall.Wall.from_data(bad_raw_sample, sample_wall_code)
+
+    assert exc.value.data_class == wall.Wall
 
 
 def test_from_data_missing_codes() -> None:

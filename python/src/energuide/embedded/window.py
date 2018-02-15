@@ -36,8 +36,8 @@ class Window(_Window):
                 width=distance.Distance(float(window.xpath('Measurements/@width')[0]) / _MILLIMETRES_TO_METRES),
                 height=distance.Distance(float(window.xpath('Measurements/@height')[0]) / _MILLIMETRES_TO_METRES),
             )
-        except (IndexError, ValueError, AssertionError) as e:
-            raise InvalidEmbeddedDataTypeException(Window, parent=e)
+        except (IndexError, ValueError, AssertionError) as exc:
+            raise InvalidEmbeddedDataTypeException(Window, parent=exc)
 
     @property
     def _window_area(self) -> area.Area:
