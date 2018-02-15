@@ -7,6 +7,7 @@ import cerberus
 from energuide import element
 from energuide import reader
 from energuide import snippets
+from energuide.exceptions import InvalidInputDataException
 
 
 DROP_FIELDS = ['ENTRYBY',
@@ -43,7 +44,7 @@ def _validated(data: typing.Iterable[reader.InputData], validator) -> typing.Ite
     for row in data:
         if not validator.validate(row):
             error_keys = ', '.join(validator.errors.keys())
-            raise reader.InvalidInputDataException(f'Validator failed on keys: {error_keys}')
+            raise InvalidInputDataException(f'Validator failed on keys: {error_keys}')
         yield row
 
 

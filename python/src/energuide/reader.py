@@ -7,10 +7,6 @@ import zipfile
 InputData = typing.Dict[str, typing.Any]
 
 
-class InvalidInputDataException(Exception):
-    pass
-
-
 def read(filename: str) -> typing.Iterator[InputData]:
     with zipfile.ZipFile(filename) as zip_input:
         files = zip_input.namelist()
