@@ -2,6 +2,11 @@ import click
 from energuide import database
 from energuide import transform
 from energuide import extractor
+from energuide import logging
+
+
+
+LOGGER = logging.get_logger(__name__)
 
 
 @click.group()
@@ -27,12 +32,16 @@ def load(username: str, password: str, host: str, port: int, db_name: str, colle
         port=port
     )
 
+    LOGGER.info(f'Loading data from {filename} into {db_name}.{collection}')
     transform.run(coords, db_name, collection, filename)
+    LOGGER.info(f'Finished loading data')
 
 
 @main.command()
 @click.option('--infile', required=True)
 @click.option('--outfile', required=True)
 def extract(infile: str, outfile: str) -> None:
+    LOGGER.info(f'Extracting data from {infile} into {outfile}')
     extracted = extractor.extract_data(infile)
     extractor.write_data(extracted, outfile)
+    LOGGER.info(f'Finished extracting data into {outfile}')
