@@ -24,7 +24,7 @@ def test_bad_run(database_coordinates: database.DatabaseCoordinates,
                  energuide_zip_fixture: str,
                  monkeypatch: _pytest.monkeypatch.MonkeyPatch) -> None:
 
-    def raise_exception(*args):
+    def raise_exception(*args): # pylint: disable=unused-argument
         raise InvalidEmbeddedDataTypeException(ceiling.Ceiling)
 
     monkeypatch.setattr(ceiling.Ceiling, 'from_data', raise_exception)
