@@ -16,7 +16,7 @@ def post_file(filename: str, url: str) -> str:
 @click.argument('filename')
 def main(filename: str):
     Post_return_value = post_file(filename, url=ENDPOINT_URL)
-    if 'success' in Post_return_value:
+    if 'success' in Post_return_value.lower():
         print(f"Success: {Post_return_value}")
     else:
         print(f"Error: {Post_return_value}")

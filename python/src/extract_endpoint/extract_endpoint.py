@@ -74,9 +74,7 @@ def upload_file() -> str:
 
     azure_sc = StorageCoordinates(account, key, container, domain)
 
-    upload_stream_to_azure(azure_sc, file, filename)
-
-    return f'{filename} uploaded successfully'
+    return upload_stream_to_azure(azure_sc, file, filename)
 
 
 if __name__ == "__main__":

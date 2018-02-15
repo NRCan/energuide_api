@@ -37,12 +37,18 @@ def upload_file_to_azure(coords: StorageCoordinates, data: str) -> str:
     return azure_path
 
 
-def upload_stream_to_azure(coords: StorageCoordinates, stream: BytesIO, filename: str) -> str:
+def upload_stream_to_azure(coords: StorageCoordinates, stream: BytesIO, filename: str, replace_file=True) -> str:
     account, key, container, domain = coords
     azure_path = filename
-    print(azure_path)
 
     block_blob_service = BlockBlobService(account_name=account, account_key=key, custom_domain=domain)
+
+    if not replace_file and azure_path in [blob.name for blob in block_blob_service.list_blobs(container)]:
+        return f'{azure_path} already exists in Azure'
+
     block_blob_service.create_blob_from_stream(container, azure_path, stream)
 
-    return azure_path
+    if azure_path in [blob.name for blob in block_blob_service.list_blobs(container)]:
+        return f'{azure_path} upload success'
+    else:
+        return f'{azure_path} did not upload'
