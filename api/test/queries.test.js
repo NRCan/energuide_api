@@ -227,10 +227,10 @@ describe('queries', () => {
             evaluations {
               floors {
                 label
-                nominalRsi
-                nominalR
-                effectiveRsi
-                effectiveR
+                insulationNominalRsi
+                insulationNominalR
+                insulationEffectiveRsi
+                insulationEffectiveR
                 areaMetres
                 areaFeet
                 lengthMetres
@@ -247,13 +247,13 @@ describe('queries', () => {
       expect(floor).toEqual({
         areaFeet: 99.99996334435568,
         areaMetres: 9.2903,
-        effectiveR: null,
-        effectiveRsi: null,
+        insulationEffectiveR: 14.82026730957,
+        insulationEffectiveRsi: 2.61,
+        insulationNominalR: 11.981135641069999,
+        insulationNominalRsi: 2.11,
         label: 'Rm over garage',
         lengthFeet: 10.00000032,
         lengthMetres: 3.048,
-        nominalR: null,
-        nominalRsi: null,
       })
     })
 

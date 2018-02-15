@@ -21,10 +21,10 @@ const Schema = i18n => {
 
     type Floor {
       label: String
-      nominalRsi: Float
-      nominalR: Float
-      effectiveRsi: Float
-      effectiveR: Float
+      insulationNominalRsi: Float
+      insulationNominalR: Float
+      insulationEffectiveRsi: Float
+      insulationEffectiveR: Float
       areaMetres: Float
       areaFeet: Float
       lengthMetres: Float

@@ -239,10 +239,10 @@ describe('Schema', () => {
       const fields = Object.keys(Floor.getFields())
       expect(fields).toEqual([
         'label',
-        'nominalRsi',
-        'nominalR',
-        'effectiveRsi',
-        'effectiveR',
+        'insulationNominalRsi',
+        'insulationNominalR',
+        'insulationEffectiveRsi',
+        'insulationEffectiveR',
         'areaMetres',
         'areaFeet',
         'lengthMetres',
