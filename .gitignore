@@ -8,3 +8,4 @@ dist
 **/.mypy_cache/
 python/env
 .python-version
+.env
