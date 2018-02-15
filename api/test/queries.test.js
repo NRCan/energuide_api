@@ -217,6 +217,46 @@ describe('queries', () => {
       })
     })
 
+    it('retrieves all top level keys of the floor data', async () => {
+      let response = await request(server)
+        .post('/graphql')
+        .set('Content-Type', 'application/json; charset=utf-8')
+        .send({
+          query: `{
+          evaluationsFor(account: 189250) {
+            evaluations {
+              floors {
+                label
+                nominalRsi
+                nominalR
+                effectiveRsi
+                effectiveR
+                areaMetres
+                areaFeet
+                lengthMetres
+                lengthFeet
+              }
+            }
+          }
+        }`,
+        })
+
+      let { evaluationsFor: { evaluations } } = response.body.data
+      let [first] = evaluations
+      let [floor] = first.floors
+      expect(floor).toEqual({
+        areaFeet: 99.99996334435568,
+        areaMetres: 9.2903,
+        effectiveR: null,
+        effectiveRsi: null,
+        label: 'Rm over garage',
+        lengthFeet: 10.00000032,
+        lengthMetres: 3.048,
+        nominalR: null,
+        nominalRsi: null,
+      })
+    })
+
     it('retrieves all top level keys of the window data', async () => {
       let response = await request(server)
         .post('/graphql')
