@@ -558,6 +558,13 @@ EVAL_ID,IDNUMBER,PARTNER,EVALUATOR,PREVIOUSFILEID,STATUS,CREATIONDATE,MODIFICATI
                     </Window>
                 </Components>
             </Wall>
+            <Floor adjacentEnclosedSpace=""false"" id=""21"">
+                <Label>Rm over garage</Label>
+                <Construction>
+                    <Type idref=""Code 7"" rValue=""2.61"" nominalInsulation=""2.11"">3231204700</Type>
+                </Construction>
+                <Measurements area=""9.2903"" length=""3.048"" />
+            </Floor>
             <Basement isExposedSurface=""true"" exposedSurfacePerimeter=""34.7466"" id=""1"">
                 <Label>Foundation - 1</Label>
                 <Configuration type=""BCIN"" subtype=""1"" overlap=""0"">BCIN_1</Configuration>
@@ -3146,6 +3153,13 @@ EVAL_ID,IDNUMBER,PARTNER,EVALUATOR,PREVIOUSFILEID,STATUS,CREATIONDATE,MODIFICATI
                     </Window>
                 </Components>
             </Wall>
+            <Floor adjacentEnclosedSpace=""false"" id=""21"">
+                <Label>Rm over garage</Label>
+                <Construction>
+                    <Type idref=""Code 7"" rValue=""2.61"" nominalInsulation=""2.11"">3231204700</Type>
+                </Construction>
+                <Measurements area=""9.2903"" length=""3.048"" />
+            </Floor>
             <Basement isExposedSurface=""true"" exposedSurfacePerimeter=""34.7466"" id=""1"">
                 <Label>Foundation - 1</Label>
                 <Configuration type=""BCIN"" subtype=""1"" overlap=""0"">BCIN_1</Configuration>
@@ -5688,6 +5702,13 @@ EVAL_ID,IDNUMBER,PARTNER,EVALUATOR,PREVIOUSFILEID,STATUS,CREATIONDATE,MODIFICATI
                     </Window>
                 </Components>
             </Wall>
+            <Floor adjacentEnclosedSpace=""false"" id=""21"">
+                <Label>Rm over garage</Label>
+                <Construction>
+                    <Type idref=""Code 7"" rValue=""2.61"" nominalInsulation=""2.11"">3231204700</Type>
+                </Construction>
+                <Measurements area=""9.2903"" length=""3.048"" />
+            </Floor>
             <Basement isExposedSurface=""true"" exposedSurfacePerimeter=""34.7466"" id=""1"">
                 <Label>Foundation - 1</Label>
                 <Configuration type=""BCIN"" subtype=""1"" overlap=""0"">BCIN_1</Configuration>
@@ -8230,6 +8251,13 @@ EVAL_ID,IDNUMBER,PARTNER,EVALUATOR,PREVIOUSFILEID,STATUS,CREATIONDATE,MODIFICATI
                     </Window>
                 </Components>
             </Wall>
+            <Floor adjacentEnclosedSpace=""false"" id=""21"">
+                <Label>Rm over garage</Label>
+                <Construction>
+                    <Type idref=""Code 7"" rValue=""2.61"" nominalInsulation=""2.11"">3231204700</Type>
+                </Construction>
+                <Measurements area=""9.2903"" length=""3.048"" />
+            </Floor>
             <Basement isExposedSurface=""true"" exposedSurfacePerimeter=""34.7466"" id=""1"">
                 <Label>Foundation - 1</Label>
                 <Configuration type=""BCIN"" subtype=""1"" overlap=""0"">BCIN_1</Configuration>
@@ -10772,6 +10800,13 @@ EVAL_ID,IDNUMBER,PARTNER,EVALUATOR,PREVIOUSFILEID,STATUS,CREATIONDATE,MODIFICATI
                     </Window>
                 </Components>
             </Wall>
+            <Floor adjacentEnclosedSpace=""false"" id=""21"">
+                <Label>Rm over garage</Label>
+                <Construction>
+                    <Type idref=""Code 7"" rValue=""2.61"" nominalInsulation=""2.11"">3231204700</Type>
+                </Construction>
+                <Measurements area=""9.2903"" length=""3.048"" />
+            </Floor>
             <Basement isExposedSurface=""true"" exposedSurfacePerimeter=""34.7466"" id=""1"">
                 <Label>Foundation - 1</Label>
                 <Configuration type=""BCIN"" subtype=""1"" overlap=""0"">BCIN_1</Configuration>
@@ -13314,6 +13349,13 @@ EVAL_ID,IDNUMBER,PARTNER,EVALUATOR,PREVIOUSFILEID,STATUS,CREATIONDATE,MODIFICATI
                     </Window>
                 </Components>
             </Wall>
+            <Floor adjacentEnclosedSpace=""false"" id=""21"">
+                <Label>Rm over garage</Label>
+                <Construction>
+                    <Type idref=""Code 7"" rValue=""2.61"" nominalInsulation=""2.11"">3231204700</Type>
+                </Construction>
+                <Measurements area=""9.2903"" length=""3.048"" />
+            </Floor>
             <Basement isExposedSurface=""true"" exposedSurfacePerimeter=""34.7466"" id=""1"">
                 <Label>Foundation - 1</Label>
                 <Configuration type=""BCIN"" subtype=""1"" overlap=""0"">BCIN_1</Configuration>
@@ -15856,6 +15898,13 @@ EVAL_ID,IDNUMBER,PARTNER,EVALUATOR,PREVIOUSFILEID,STATUS,CREATIONDATE,MODIFICATI
                     </Window>
                 </Components>
             </Wall>
+            <Floor adjacentEnclosedSpace=""false"" id=""21"">
+                <Label>Rm over garage</Label>
+                <Construction>
+                    <Type idref=""Code 7"" rValue=""2.61"" nominalInsulation=""2.11"">3231204700</Type>
+                </Construction>
+                <Measurements area=""9.2903"" length=""3.048"" />
+            </Floor>
             <Basement isExposedSurface=""true"" exposedSurfacePerimeter=""34.7466"" id=""1"">
                 <Label>Foundation - 1</Label>
                 <Configuration type=""BCIN"" subtype=""1"" overlap=""0"">BCIN_1</Configuration>
@@ -18398,6 +18447,13 @@ EVAL_ID,IDNUMBER,PARTNER,EVALUATOR,PREVIOUSFILEID,STATUS,CREATIONDATE,MODIFICATI
                     </Window>
                 </Components>
             </Wall>
+            <Floor adjacentEnclosedSpace=""false"" id=""21"">
+                <Label>Rm over garage</Label>
+                <Construction>
+                    <Type idref=""Code 7"" rValue=""2.61"" nominalInsulation=""2.11"">3231204700</Type>
+                </Construction>
+                <Measurements area=""9.2903"" length=""3.048"" />
+            </Floor>
             <Basement isExposedSurface=""true"" exposedSurfacePerimeter=""34.7466"" id=""1"">
                 <Label>Foundation - 1</Label>
                 <Configuration type=""BCIN"" subtype=""1"" overlap=""0"">BCIN_1</Configuration>
@@ -20940,6 +20996,13 @@ EVAL_ID,IDNUMBER,PARTNER,EVALUATOR,PREVIOUSFILEID,STATUS,CREATIONDATE,MODIFICATI
                     </Window>
                 </Components>
             </Wall>
+            <Floor adjacentEnclosedSpace=""false"" id=""21"">
+                <Label>Rm over garage</Label>
+                <Construction>
+                    <Type idref=""Code 7"" rValue=""2.61"" nominalInsulation=""2.11"">3231204700</Type>
+                </Construction>
+                <Measurements area=""9.2903"" length=""3.048"" />
+            </Floor>
             <Basement isExposedSurface=""true"" exposedSurfacePerimeter=""34.7466"" id=""1"">
                 <Label>Foundation - 1</Label>
                 <Configuration type=""BCIN"" subtype=""1"" overlap=""0"">BCIN_1</Configuration>
@@ -23482,6 +23545,13 @@ EVAL_ID,IDNUMBER,PARTNER,EVALUATOR,PREVIOUSFILEID,STATUS,CREATIONDATE,MODIFICATI
                     </Window>
                 </Components>
             </Wall>
+            <Floor adjacentEnclosedSpace=""false"" id=""21"">
+                <Label>Rm over garage</Label>
+                <Construction>
+                    <Type idref=""Code 7"" rValue=""2.61"" nominalInsulation=""2.11"">3231204700</Type>
+                </Construction>
+                <Measurements area=""9.2903"" length=""3.048"" />
+            </Floor>
             <Basement isExposedSurface=""true"" exposedSurfacePerimeter=""34.7466"" id=""1"">
                 <Label>Foundation - 1</Label>
                 <Configuration type=""BCIN"" subtype=""1"" overlap=""0"">BCIN_1</Configuration>
@@ -26024,6 +26094,13 @@ EVAL_ID,IDNUMBER,PARTNER,EVALUATOR,PREVIOUSFILEID,STATUS,CREATIONDATE,MODIFICATI
                     </Window>
                 </Components>
             </Wall>
+            <Floor adjacentEnclosedSpace=""false"" id=""21"">
+                <Label>Rm over garage</Label>
+                <Construction>
+                    <Type idref=""Code 7"" rValue=""2.61"" nominalInsulation=""2.11"">3231204700</Type>
+                </Construction>
+                <Measurements area=""9.2903"" length=""3.048"" />
+            </Floor>
             <Basement isExposedSurface=""true"" exposedSurfacePerimeter=""34.7466"" id=""1"">
                 <Label>Foundation - 1</Label>
                 <Configuration type=""BCIN"" subtype=""1"" overlap=""0"">BCIN_1</Configuration>
@@ -28566,6 +28643,13 @@ EVAL_ID,IDNUMBER,PARTNER,EVALUATOR,PREVIOUSFILEID,STATUS,CREATIONDATE,MODIFICATI
                     </Window>
                 </Components>
             </Wall>
+            <Floor adjacentEnclosedSpace=""false"" id=""21"">
+                <Label>Rm over garage</Label>
+                <Construction>
+                    <Type idref=""Code 7"" rValue=""2.61"" nominalInsulation=""2.11"">3231204700</Type>
+                </Construction>
+                <Measurements area=""9.2903"" length=""3.048"" />
+            </Floor>
             <Basement isExposedSurface=""true"" exposedSurfacePerimeter=""34.7466"" id=""1"">
                 <Label>Foundation - 1</Label>
                 <Configuration type=""BCIN"" subtype=""1"" overlap=""0"">BCIN_1</Configuration>
@@ -31108,6 +31192,13 @@ EVAL_ID,IDNUMBER,PARTNER,EVALUATOR,PREVIOUSFILEID,STATUS,CREATIONDATE,MODIFICATI
                     </Window>
                 </Components>
             </Wall>
+            <Floor adjacentEnclosedSpace=""false"" id=""21"">
+                <Label>Rm over garage</Label>
+                <Construction>
+                    <Type idref=""Code 7"" rValue=""2.61"" nominalInsulation=""2.11"">3231204700</Type>
+                </Construction>
+                <Measurements area=""9.2903"" length=""3.048"" />
+            </Floor>
             <Basement isExposedSurface=""true"" exposedSurfacePerimeter=""34.7466"" id=""1"">
                 <Label>Foundation - 1</Label>
                 <Configuration type=""BCIN"" subtype=""1"" overlap=""0"">BCIN_1</Configuration>
@@ -33650,6 +33741,13 @@ EVAL_ID,IDNUMBER,PARTNER,EVALUATOR,PREVIOUSFILEID,STATUS,CREATIONDATE,MODIFICATI
                     </Window>
                 </Components>
             </Wall>
+            <Floor adjacentEnclosedSpace=""false"" id=""21"">
+                <Label>Rm over garage</Label>
+                <Construction>
+                    <Type idref=""Code 7"" rValue=""2.61"" nominalInsulation=""2.11"">3231204700</Type>
+                </Construction>
+                <Measurements area=""9.2903"" length=""3.048"" />
+            </Floor>
             <Basement isExposedSurface=""true"" exposedSurfacePerimeter=""34.7466"" id=""1"">
                 <Label>Foundation - 1</Label>
                 <Configuration type=""BCIN"" subtype=""1"" overlap=""0"">BCIN_1</Configuration>
