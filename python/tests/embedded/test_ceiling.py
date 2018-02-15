@@ -68,7 +68,7 @@ def bad_insulation() -> element.Element:
             <English>Attic/gable</English>
             <French>Combles/pignon</French>
         </Type>
-        <CeilingType nominalInsulation='bad' rValue='data' />
+        <CeilingType/>
     </Construction>
     <Measurements area='46.4515' length='23.875' />
 </Ceiling>
@@ -97,7 +97,21 @@ def test_bad_measurements(bad_measurements: element.Element) -> None:
     with pytest.raises(InvalidEmbeddedDataTypeException) as excinfo:
         ceiling.Ceiling.from_data(bad_measurements)
 
-    import pdb; pdb.set_trace()
+    assert isinstance(excinfo.value.__context__, ValueError)
+
+
+def test_missing_type(missing_type: element.Element) -> None:
+    with pytest.raises(InvalidEmbeddedDataTypeException) as excinfo:
+        ceiling.Ceiling.from_data(missing_type)
+
+    assert isinstance(excinfo.value.__context__, AssertionError)
+
+
+def test_bad_insulation(bad_insulation: element.Element) -> None:
+    with pytest.raises(InvalidEmbeddedDataTypeException) as excinfo:
+        ceiling.Ceiling.from_data(bad_insulation)
+
+    assert isinstance(excinfo.value.__context__, IndexError)
 
 
 def test_to_dict(sample: ceiling.Ceiling) -> None:
