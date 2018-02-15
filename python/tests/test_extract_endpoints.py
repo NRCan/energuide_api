@@ -1,8 +1,6 @@
 import os
 import shutil
-import tempfile
 from io import BytesIO
-import pytest
 from extract_endpoint import extract_endpoint
 
 CONTENTS = 'my file contents'.encode('utf-8')

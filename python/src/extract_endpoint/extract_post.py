@@ -15,6 +15,6 @@ def post_file(filename: str, url: str) -> str:
 if __name__ == "__main__":
     Post_return_value = post_file('test.txt', url=ENDPOINT_URL)
     if 'success' in Post_return_value:
-        print("Success")
+        print(f"Success: {Post_return_value}")
     else:
         print(f"Error: {Post_return_value}")

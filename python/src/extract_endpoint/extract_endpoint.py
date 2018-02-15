@@ -6,6 +6,8 @@ import os
 
 from flask import Flask, request, abort
 from werkzeug.utils import secure_filename
+from azure_storage import EnvDefaults, EnvVariables, StorageCoordinates, \
+    upload_stream_to_azure
 
 ALLOWED_EXTENSIONS = ['txt', 'pdf', 'png', 'jpg', 'jpeg', 'gif']
 
@@ -62,9 +64,18 @@ def upload_file() -> str:
     if not allowed_file(file.filename):
         return f"Error: file extension of '{file.filename}' not allowed"
 
-    # success!
+    # a valid file was posted
     filename = secure_filename(file.filename)
-    file.save(os.path.join(App.config['UPLOAD_FOLDER'], filename))  # TODO replace with Azure!!
+
+    account = os.environ.get(EnvVariables.account.value, EnvDefaults.account.value)
+    key = os.environ.get(EnvVariables.key.value, EnvDefaults.key.value)
+    container = os.environ.get(EnvVariables.container.value, EnvDefaults.container.value)
+    domain = os.environ.get(EnvVariables.domain.value, EnvDefaults.domain.value)
+
+    azure_sc = StorageCoordinates(account, key, container, domain)
+
+    upload_stream_to_azure(azure_sc, file, filename)
+
     return f'{filename} uploaded successfully'
 
 
