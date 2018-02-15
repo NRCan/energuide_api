@@ -115,6 +115,7 @@ describe('Schema', () => {
         'modificationDate',
         'ceilings',
         'walls',
+        'floors',
         'doors',
         'windows',
         'heatedFloorArea',
@@ -224,6 +225,28 @@ describe('Schema', () => {
         'tankVolumeLitres',
         'TankVolumeGallon',
         'efficiency',
+      ])
+    })
+  })
+
+  describe('Floor', () => {
+    it('is defined', () => {
+      expect(typeMap).toHaveProperty('Floor')
+    })
+
+    it('has the expected fields', () => {
+      const { Floor } = typeMap
+      const fields = Object.keys(Floor.getFields())
+      expect(fields).toEqual([
+        'label',
+        'insulationNominalRsi',
+        'insulationNominalR',
+        'insulationEffectiveRsi',
+        'insulationEffectiveR',
+        'areaMetres',
+        'areaFeet',
+        'lengthMetres',
+        'lengthFeet',
       ])
     })
   })

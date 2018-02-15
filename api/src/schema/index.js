@@ -19,6 +19,18 @@ const Schema = i18n => {
       airFlowRateCfm: Float
     }
 
+    type Floor {
+      label: String
+      insulationNominalRsi: Float
+      insulationNominalR: Float
+      insulationEffectiveRsi: Float
+      insulationEffectiveR: Float
+      areaMetres: Float
+      areaFeet: Float
+      lengthMetres: Float
+      lengthFeet: Float
+    }
+
     type WaterHeater {
       typeEnglish: String
       typeFrench: String
@@ -117,6 +129,7 @@ const Schema = i18n => {
       modificationDate: String
       ceilings: [Ceiling]
       walls: [Wall]
+      floors: [Floor]
       doors: [Door]
       windows: [Window]
       heatedFloorArea: HeatedFloorArea
