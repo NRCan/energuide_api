@@ -289,6 +289,37 @@ describe('queries', () => {
       })
     })
 
+    it('retrieves all top level keys of the heated floor area data', async () => {
+      let response = await request(server)
+        .post('/graphql')
+        .set('Content-Type', 'application/json; charset=utf-8')
+        .send({
+          query: `{
+          evaluationsFor(account: 189250) {
+            evaluations {
+              heatedFloorArea {
+                areaAboveGradeMetres
+                areaBelowGradeMetres
+                areaAboveGradeFeet
+                areaBelowGradeFeet
+              }
+            }
+          }
+        }`,
+        })
+
+      let { evaluationsFor: { evaluations } } = response.body.data
+      let [first] = evaluations
+      // there is only one heatedFloorArea object, unlike most other evaluation types
+      let heatedFloorArea = first.heatedFloorArea
+      expect(heatedFloorArea).toEqual({
+        areaAboveGradeMetres: 600,
+        areaBelowGradeMetres: 600,
+        areaAboveGradeFeet: 6458.34666336,
+        areaBelowGradeFeet: 6458.34666336,
+      })
+    })
+
     it('retrieves all top level keys of the ventilations data', async () => {
       let response = await request(server)
         .post('/graphql')
