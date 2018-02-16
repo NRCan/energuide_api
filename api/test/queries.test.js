@@ -217,6 +217,38 @@ describe('queries', () => {
       })
     })
 
+    it('retrieves all top level keys of the waterheater data', async () => {
+      let response = await request(server)
+        .post('/graphql')
+        .set('Content-Type', 'application/json; charset=utf-8')
+        .send({
+          query: `{
+          evaluationsFor(account: 189250) {
+            evaluations {
+               waterHeatings {
+                  typeEnglish
+                  typeFrench
+                  tankVolumeLitres
+                  TankVolumeGallon
+                  efficiency
+                }
+            }
+          }
+        }`,
+        })
+
+      let { evaluationsFor: { evaluations } } = response.body.data
+      let [first] = evaluations
+      let [waterHeatings] = first.waterHeatings
+      expect(waterHeatings).toEqual({
+        TankVolumeGallon: 39.995640800000004,
+        efficiency: 0.554,
+        tankVolumeLitres: 151.4,
+        typeEnglish: "Natural gas storage tank",
+        typeFrench: "Réservoir au gaz naturel",
+      })  
+    })
+
     it('retrieves all top level keys of the floor data', async () => {
       let response = await request(server)
         .post('/graphql')
