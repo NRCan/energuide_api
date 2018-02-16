@@ -21,6 +21,7 @@ def sample_raw() -> element.Element:
     return element.Element.from_string(doc)
 
 BAD_XML_DATA = [
+    # This XML block is missing the <Label> tag
     """
     <Floor>
         <Construction>
@@ -29,6 +30,8 @@ BAD_XML_DATA = [
         <Measurements area='9.2903' length='3.048' />
     </Floor>
     """,
+
+    # This XML has non-numeric strings as attribute values
     """
     <Floor>
         <Label>Rm over garage</Label>
@@ -38,6 +41,8 @@ BAD_XML_DATA = [
         <Measurements area='goes' length='here' />
     </Floor>
     """,
+
+    # This XML block is missing all attributes for <Type> and <Measurements> tags
     """
     <Floor>
         <Label>Rm over garage</Label>
