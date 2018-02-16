@@ -4,6 +4,8 @@ from energuide.embedded import code
 from energuide.embedded import insulation
 from energuide.embedded import distance
 from energuide import element
+from energuide.exceptions import InvalidEmbeddedDataTypeException
+
 
 _MILLIMETRES_TO_METRES = 1000
 
@@ -26,13 +28,16 @@ class Window(_Window):
         code_id = window.xpath('Construction/Type/@idref')
         window_code = window_codes[code_id[0]] if code_id else None
 
-        return Window(
-            label=window.get_text('Label'),
-            window_code=window_code,
-            window_insulation=insulation.Insulation(float(window.xpath('Construction/Type/@rValue')[0])),
-            width=distance.Distance(float(window.xpath('Measurements/@width')[0]) / _MILLIMETRES_TO_METRES),
-            height=distance.Distance(float(window.xpath('Measurements/@height')[0]) / _MILLIMETRES_TO_METRES),
-        )
+        try:
+            return Window(
+                label=window.get_text('Label'),
+                window_code=window_code,
+                window_insulation=insulation.Insulation(float(window.xpath('Construction/Type/@rValue')[0])),
+                width=distance.Distance(float(window.xpath('Measurements/@width')[0]) / _MILLIMETRES_TO_METRES),
+                height=distance.Distance(float(window.xpath('Measurements/@height')[0]) / _MILLIMETRES_TO_METRES),
+            )
+        except (AssertionError, ValueError, IndexError) as exc:
+            raise InvalidEmbeddedDataTypeException(Window) from exc
 
     @property
     def _window_area(self) -> area.Area:
