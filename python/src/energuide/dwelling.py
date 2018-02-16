@@ -12,7 +12,7 @@ from energuide.embedded import door
 from energuide.embedded import window
 from energuide.embedded import ventilation
 from energuide.embedded import water_heating
-from energuide.embedded import heated_floor_area as heated_floor_area
+from energuide.embedded import heated_floor_area
 from energuide.exceptions import InvalidGroupSizeException
 from energuide.exceptions import InvalidInputDataException
 
