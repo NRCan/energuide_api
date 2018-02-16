@@ -2,9 +2,7 @@ import enum
 import typing
 from energuide import bilingual
 from energuide import element
-
-
-_LITRE_TO_GALLON = 0.264172
+from energuide.exceptions import InvalidEmbeddedDataTypeException
 
 
 class WaterHeaterType(enum.Enum):
@@ -55,6 +53,8 @@ class _WaterHeating(typing.NamedTuple):
 
 
 class WaterHeating(_WaterHeating):
+
+    _LITRE_TO_GALLON = 0.264172
 
     _TYPE_MAP = {
         ("Electricity", "Not applicable"): WaterHeaterType.NOT_APPLICABLE,
@@ -283,20 +283,23 @@ class WaterHeating(_WaterHeating):
 
     @classmethod
     def _from_data(cls, water_heating: element.Element) -> 'WaterHeating':
-        assert water_heating.attrib['hasDrainWaterHeatRecovery'] == 'false'
+        try:
+            assert water_heating.attrib['hasDrainWaterHeatRecovery'] == 'false'
 
-        energy_type = water_heating.get_text('EnergySource/English')
-        tank_type = water_heating.get_text('TankType/English')
+            energy_type = water_heating.get_text('EnergySource/English')
+            tank_type = water_heating.get_text('TankType/English')
 
-        water_heater_type = cls._TYPE_MAP[(energy_type, tank_type)]
-        volume = float(water_heating.xpath('TankVolume/@value')[0])
-        efficiency = float(water_heating.xpath('EnergyFactor/@value')[0])
+            water_heater_type = cls._TYPE_MAP[(energy_type, tank_type)]
+            volume = float(water_heating.xpath('TankVolume/@value')[0])
+            efficiency = float(water_heating.xpath('EnergyFactor/@value')[0])
 
-        return WaterHeating(
-            water_heater_type=water_heater_type,
-            tank_volume=volume,
-            efficiency=efficiency,
-        )
+            return WaterHeating(
+                water_heater_type=water_heater_type,
+                tank_volume=volume,
+                efficiency=efficiency,
+            )
+        except (AssertionError, KeyError, ValueError, IndexError) as exc:
+            raise InvalidEmbeddedDataTypeException(WaterHeating) from exc
 
     @classmethod
     def from_data(cls, water_heating: element.Element) -> typing.List['WaterHeating']:
@@ -306,7 +309,7 @@ class WaterHeating(_WaterHeating):
 
     @property
     def tank_volume_gallon(self) -> float:
-        return self.tank_volume * _LITRE_TO_GALLON
+        return self.tank_volume * self._LITRE_TO_GALLON
 
 
     def to_dict(self) -> typing.Dict[str, typing.Union[str, float]]:
