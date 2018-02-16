@@ -10,9 +10,9 @@ from energuide.embedded import floor
 from energuide.embedded import wall
 from energuide.embedded import door
 from energuide.embedded import window
+from energuide.embedded import water_heating
 from energuide.extracted_datatypes import HeatedFloorArea
 from energuide.extracted_datatypes import Ventilation
-from energuide.extracted_datatypes import WaterHeating
 from energuide.exceptions import InvalidGroupSizeException
 from energuide.exceptions import InvalidInputDataException
 
@@ -89,7 +89,7 @@ class _ParsedDwellingDataRow(typing.NamedTuple):
     windows: typing.List[window.Window]
     heated_floor_area: HeatedFloorArea
     ventilations: typing.List[Ventilation]
-    water_heatings: typing.List[WaterHeating]
+    water_heatings: typing.List[water_heating.WaterHeating]
 
 
 class ParsedDwellingDataRow(_ParsedDwellingDataRow):
@@ -148,7 +148,7 @@ class ParsedDwellingDataRow(_ParsedDwellingDataRow):
             windows=[window.Window.from_data(window_node, codes.window) for window_node in parsed['windows']],
             heated_floor_area=HeatedFloorArea.from_data(parsed['heatedFloorArea']),
             ventilations=[Ventilation.from_data(ventilation) for ventilation in parsed['ventilations']],
-            water_heatings=WaterHeating.from_data(parsed['waterHeatings']),
+            water_heatings=water_heating.WaterHeating.from_data(parsed['waterHeatings']),
         )
 
 
@@ -166,7 +166,7 @@ class Evaluation:
                  windows: typing.List[window.Window],
                  heated_floor_area: HeatedFloorArea,
                  ventilations: typing.List[Ventilation],
-                 water_heatings: typing.List[WaterHeating],
+                 water_heatings: typing.List[water_heating.WaterHeating],
                 ) -> None:
         self._evaluation_type = evaluation_type
         self._entry_date = entry_date
@@ -243,7 +243,7 @@ class Evaluation:
         return self._ventilations
 
     @property
-    def water_heatings(self) -> typing.List[WaterHeating]:
+    def water_heatings(self) -> typing.List[water_heating.WaterHeating]:
         return self._water_heatings
 
     def to_dict(self) -> typing.Dict[str, typing.Any]:

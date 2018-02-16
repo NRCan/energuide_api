@@ -15,6 +15,7 @@ from energuide.embedded import insulation
 from energuide.embedded import wall
 from energuide.embedded import door
 from energuide.embedded import window
+from energuide.embedded import water_heating
 from energuide.exceptions import InvalidInputDataException
 from energuide.exceptions import InvalidGroupSizeException
 
@@ -567,9 +568,8 @@ class TestParsedDwellingDataRow:
                 )
             ],
             water_heatings=[
-                extracted_datatypes.WaterHeating(
-                    type_english=extracted_datatypes.WaterHeaterType.ELECTRICITY_CONVENTIONAL_TANK_ENGLISH,
-                    type_french=extracted_datatypes.WaterHeaterType.ELECTRICITY_CONVENTIONAL_TANK_FRENCH,
+                water_heating.WaterHeating(
+                    water_heater_type=water_heating.WaterHeaterType.ELECTRICITY_CONVENTIONAL_TANK,
                     tank_volume=189.3001,
                     efficiency=0.8217,
                 )
