@@ -5,7 +5,6 @@ import pytest
 from energuide import bilingual
 from energuide import dwelling
 from energuide import reader
-from energuide import extracted_datatypes
 from energuide.embedded import area
 from energuide.embedded import ceiling
 from energuide.embedded import code
