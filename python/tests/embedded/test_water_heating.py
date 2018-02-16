@@ -49,7 +49,7 @@ def test_to_dict(sample: element.Element) -> None:
         'typeEnglish': 'Electric storage tank',
         'typeFrench': 'Réservoir électrique',
         'tankVolumeLitres': 189.3001,
-        'TankVolumeGallon': 50.0077860172,
+        'tankVolumeGallon': 50.0077860172,
         'efficiency': 0.8217,
     }
 

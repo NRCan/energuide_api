@@ -35,7 +35,7 @@ const Schema = i18n => {
       typeEnglish: String
       typeFrench: String
       tankVolumeLitres: Float
-      TankVolumeGallon: Float
+      tankVolumeGallon: Float
       efficiency: Float
     }
 
