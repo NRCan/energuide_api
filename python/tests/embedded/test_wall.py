@@ -6,6 +6,7 @@ from energuide.embedded import code
 from energuide.embedded import distance
 from energuide.embedded import insulation
 from energuide.embedded import wall
+from energuide.exceptions import InvalidEmbeddedDataTypeException
 
 
 @pytest.fixture
@@ -21,6 +22,39 @@ def raw_sample() -> element.Element:
     """
     return element.Element.from_string(doc)
 
+BAD_XML_DATA = [
+    # This XML block is missing the <Label> tag
+    """
+    <Wall>
+        <Construction>
+            <Type nominalInsulation='1.432' rValue='1.8016'><User specified/Type>
+        </Construction>
+        <Measurements perimeter='42.9768' height='2.4384' />
+    </Wall>
+    """,
+
+    # This XML block has non-numeric strings as attribute values
+    """
+    <Wall>
+        <Label>Second level</Label>
+        <Construction>
+            <Type nominalInsulation='bad' rValue='data'><User specified/Type>
+        </Construction>
+        <Measurements perimeter='is' height='here' />
+    </Wall>
+    """,
+
+    #This XML block is missing the attributes for the <Type> tag
+    """
+    <Wall>
+        <Label>Second level</Label>
+        <Construction>
+            <Type><User specified/Type>
+        </Construction>
+        <Measurements />
+    </Wall>
+    """
+]
 
 @pytest.fixture
 def sample_wall_code() -> typing.Dict[str, code.WallCode]:
@@ -72,6 +106,15 @@ def test_from_data_missing_codes() -> None:
     assert output.label == 'Test Floor'
     assert output.wall_code is None
     assert output.to_dict()['structureTypeEnglish'] is None
+
+
+@pytest.mark.parametrize("bad_xml", BAD_XML_DATA)
+def test_bad_data(bad_xml: str) -> None:
+    wall_node = element.Element.from_string(bad_xml)
+    with pytest.raises(InvalidEmbeddedDataTypeException) as excinfo:
+        wall.Wall.from_data(wall_node, {})
+
+    assert excinfo.value.data_class == wall.Wall
 
 
 def test_to_dict(sample: wall.Wall) -> None:
