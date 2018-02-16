@@ -21,6 +21,7 @@ def sample() -> element.Element:
     return element.Element.from_string(data)
 
 BAD_XML_DATA = [
+    # This XML block has non-numberic strings for all attribute values
     """
 <Hrv supplyFlowrate="words" exhaustFlowrate="words" fanPower1="words" isDefaultFanpower="words" """ + \
 """isEnergyStar="words" isHomeVentilatingInstituteCertified="words" isSupplemental="words" """ + \
@@ -33,6 +34,8 @@ BAD_XML_DATA = [
     </VentilatorType>
 </Hrv>
     """,
+
+    # This XML block is missing all attribute values of the <Hrv> tag
     """
 <Hrv>
     <EquipmentInformation />
