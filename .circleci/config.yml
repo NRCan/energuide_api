@@ -74,38 +74,6 @@ jobs:
             pylint src tests
             mypy src tests
             pytest tests
-  extract_endpoint:
-    docker:
-      - image: circleci/python:3.6.1
-
-    working_directory: ~/repo/extract_endpoint
-
-    steps:
-      - checkout:
-          path: ~/repo
-
-      # Download and cache dependencies
-      - restore_cache:
-          key: deps2-{{ .Branch }}-{{ checksum "requirements.txt" }}
-
-      - run:
-          name: Installing dependencies
-          command: |
-            python3 -m venv ~/.venv
-            . ~/.venv/bin/activate
-            pip install -r requirements.txt
-
-      - save_cache:
-          key: deps2-{{ .Branch }}-{{ checksum "requirements.txt" }}
-          paths:
-            - "~/.venv"
-      - run:
-          name: Running tests
-          command: |
-            . ~/.venv/bin/activate
-            pylint src tests
-            mypy src tests
-            pytest tests
   python_integration:
     docker:
       - image: circleci/python:3.6.1
@@ -262,7 +230,6 @@ workflows:
     jobs:
       - node
       - python
-      - extract_endpoint
       - python_integration
       - node_integration:
           requires:
