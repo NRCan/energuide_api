@@ -6,18 +6,17 @@ import os
 
 from flask import Flask, request, abort
 from werkzeug.utils import secure_filename
-from azure_storage import EnvDefaults, EnvVariables, StorageCoordinates, \
+from azure_utils import EnvDefaults, EnvVariables, StorageCoordinates, \
     upload_stream_to_azure
 
 ALLOWED_EXTENSIONS = ['txt', 'pdf', 'png', 'jpg', 'jpeg', 'gif']
+DEFAULT_ENDPOINT_SECRET_KEY = 'no key'
 
 App = Flask(__name__)
 
 App.config.update(dict(
-    SECRET_KEY='development_key',
-    UPLOAD_FOLDER='Uploads',
+    SECRET_KEY=os.environ.get('ENDPOINT_SECRET_KEY', DEFAULT_ENDPOINT_SECRET_KEY),
 ))
-App.config.from_envvar('EXTRACT_ENDPOINT', silent=True)
 
 
 def allowed_file(filename: str) -> bool:
@@ -42,6 +41,8 @@ def frontend() -> str:
 # this is the upload service view
 @App.route('/upload_file', methods=['POST'])
 def upload_file() -> str:
+    if App.config['SECRET_KEY'] == DEFAULT_ENDPOINT_SECRET_KEY:
+        raise ValueError("Need to define environment variable ENDPOINT_SECRET_KEY")
     if App.debug:
         if 'key' not in request.form:
             return "Error: no key sent"

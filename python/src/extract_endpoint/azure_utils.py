@@ -48,7 +48,7 @@ def upload_stream_to_azure(coords: StorageCoordinates, stream: BytesIO, filename
 
     block_blob_service.create_blob_from_stream(container, azure_path, stream)
 
-    if azure_path in [blob.name for blob in block_blob_service.list_blobs(container)]:
-        return f'{azure_path} upload success'
-    else:
+    if azure_path not in [blob.name for blob in block_blob_service.list_blobs(container)]:
         return f'{azure_path} did not upload'
+
+    return f'{azure_path} upload success'

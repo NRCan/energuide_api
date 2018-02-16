@@ -2,11 +2,14 @@ import os
 from io import BytesIO
 import pytest
 from azure.storage.blob import BlockBlobService
-from azure_storage import EnvVariables, EnvDefaults, StorageCoordinates
+from azure_utils import EnvVariables, EnvDefaults, StorageCoordinates
 from extract_endpoint import extract_endpoint
 
 extract_endpoint.App.testing = True
 
+@pytest.fixture
+def test_secret_key() -> str:
+    return 'test secret key'
 
 @pytest.fixture
 def test_file_contents() -> str:
@@ -55,25 +58,36 @@ def test_frontend() -> None:
     assert b'Upload new File' in actual.data
 
 
-def test_upload_no_key(test_file_contents: str, test_file_name: str) -> None:
+def test_upload_no_key_in_env(test_file_contents: str, test_file_name: str) -> None:
+    extract_endpoint.App.config['SECRET_KEY'] = extract_endpoint.DEFAULT_ENDPOINT_SECRET_KEY
+    app = extract_endpoint.App.test_client()
+    stream = BytesIO(test_file_contents.encode('utf-8'))
+    with pytest.raises(ValueError):
+        app.post('/upload_file', data=dict(file=(stream, test_file_name)))
+
+
+def test_upload_no_key(test_secret_key: str, test_file_contents: str, test_file_name: str) -> None:
+    extract_endpoint.App.config['SECRET_KEY'] = test_secret_key
     app = extract_endpoint.App.test_client()
     stream = BytesIO(test_file_contents.encode('utf-8'))
     actual = app.post('/upload_file', data=dict(file=(stream, test_file_name)))
     assert actual.status_code == 404
 
 
-def test_upload_wrong_key(test_file_contents: str, test_file_name: str) -> None:
+def test_upload_wrong_key(test_secret_key: str, test_file_contents: str, test_file_name: str) -> None:
+    extract_endpoint.App.config['SECRET_KEY'] = test_secret_key
     app = extract_endpoint.App.test_client()
     stream = BytesIO(test_file_contents.encode('utf-8'))
     actual = app.post('/upload_file', data=dict(key='bad key', file=(stream, test_file_name)))
     assert actual.status_code == 404
 
 
-def test_upload(block_blob_service: BlockBlobService, container: str,
+def test_upload(test_secret_key: str, block_blob_service: BlockBlobService, container: str,
                 test_file_contents: str, test_file_name: str) -> None:
+    extract_endpoint.App.config['SECRET_KEY'] = test_secret_key
     app = extract_endpoint.App.test_client()
     stream = BytesIO(test_file_contents.encode('utf-8'))
-    app.post('/upload_file', data=dict(key='development_key', file=(stream, test_file_name)))
+    app.post('/upload_file', data=dict(key=test_secret_key, file=(stream, test_file_name)))
 
     assert test_file_name in [blob.name for blob in block_blob_service.list_blobs(container)]
     actual = block_blob_service.get_blob_to_text(container, test_file_name)
