@@ -3,24 +3,20 @@ Flask microservice demo. When a file is posted to it, save the file locally.
 """
 
 import os
-
+import base64
 from flask import Flask, request, abort
 from werkzeug.utils import secure_filename
-from azure_utils import EnvDefaults, EnvVariables, StorageCoordinates, \
-    upload_stream_to_azure
+from azure_utils import EnvDefaults, EnvVariables, StorageCoordinates, upload_stream_to_azure
+from crypt_utils import sign_data
 
-ALLOWED_EXTENSIONS = ['txt', 'pdf', 'png', 'jpg', 'jpeg', 'gif']
+
 DEFAULT_ENDPOINT_SECRET_KEY = 'no key'
 
 App = Flask(__name__)
-
+App.debug = False
 App.config.update(dict(
     SECRET_KEY=os.environ.get('ENDPOINT_SECRET_KEY', DEFAULT_ENDPOINT_SECRET_KEY),
 ))
-
-
-def allowed_file(filename: str) -> bool:
-    return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
 
 # this is a just a helper page that can also post to the service
@@ -43,38 +39,41 @@ def frontend() -> str:
 def upload_file() -> str:
     if App.config['SECRET_KEY'] == DEFAULT_ENDPOINT_SECRET_KEY:
         raise ValueError("Need to define environment variable ENDPOINT_SECRET_KEY")
+
     if App.debug:
-        if 'key' not in request.form:
-            return "Error: no key sent"
-        elif request.form['key'] != App.config['SECRET_KEY']:
-            return "Error: bad key sent"
+        if 'signature' not in request.form:
+            return "Error: no signature sent"
+        elif 'salt' not in request.form:
+            return "Error: no salt sent"
+    else:
+        if 'signature' not in request.form or 'salt' not in request.form:
+            abort(404)
 
-    if 'key' not in request.form or request.form['key'] != App.config['SECRET_KEY']:
-        abort(404)
-
-    # check if the post request has the file part
-    if 'file' not in request.files:
-        return "Error: no file"
+    # check if the post request has a file and filename
+    if 'file' not in request.files or getattr(request.files['file'], 'filename', '') == '':
+        if App.debug:
+            return "Error: bad file"
+        else:
+            abort(404)
 
     file = request.files['file']
 
-    # make sure the file has a filename
-    if file.filename == '':
-        return "Error: file does not have a filename"
+    # check that the signature is valid
+    file_as_string = base64.b64encode(file.read()).decode('utf-8')
+    signed_file = sign_data(salt=request.form['salt'], key=App.config['SECRET_KEY'], data=file_as_string)
+    if request.form['signature'] != signed_file:
+        if App.debug:
+            return f"Sig sent: {request.form['signature']} != {signed_file}"
+        else:
+            abort(404)
 
-    if not allowed_file(file.filename):
-        return f"Error: file extension of '{file.filename}' not allowed"
-
-    # a valid file was posted
+    file.seek(0)
     filename = secure_filename(file.filename)
-
     account = os.environ.get(EnvVariables.account.value, EnvDefaults.account.value)
     key = os.environ.get(EnvVariables.key.value, EnvDefaults.key.value)
     container = os.environ.get(EnvVariables.container.value, EnvDefaults.container.value)
     domain = os.environ.get(EnvVariables.domain.value, EnvDefaults.domain.value)
-
     azure_sc = StorageCoordinates(account, key, container, domain)
-
     return upload_stream_to_azure(azure_sc, file, filename)
 
 
