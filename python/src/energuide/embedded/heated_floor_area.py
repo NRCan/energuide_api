@@ -1,6 +1,7 @@
 import typing
 from energuide import element
 from energuide.embedded import area
+from energuide.exceptions import InvalidEmbeddedDataTypeException
 
 
 class _HeatedFloorArea(typing.NamedTuple):
@@ -12,10 +13,13 @@ class HeatedFloorArea(_HeatedFloorArea):
 
     @classmethod
     def from_data(cls, heated_floor_area: element.Element) -> 'HeatedFloorArea':
-        return HeatedFloorArea(
-            area_above_grade=area.Area(float(heated_floor_area.attrib['aboveGrade'])),
-            area_below_grade=area.Area(float(heated_floor_area.attrib['belowGrade'])),
-        )
+        try:
+            return HeatedFloorArea(
+                area_above_grade=area.Area(float(heated_floor_area.attrib['aboveGrade'])),
+                area_below_grade=area.Area(float(heated_floor_area.attrib['belowGrade'])),
+            )
+        except (KeyError, ValueError) as exc:
+            raise InvalidEmbeddedDataTypeException(HeatedFloorArea) from exc
 
     def to_dict(self) -> typing.Dict[str, typing.Optional[float]]:
         return {
