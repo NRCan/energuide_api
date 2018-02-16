@@ -16,6 +16,7 @@ from energuide.embedded import wall
 from energuide.embedded import door
 from energuide.embedded import window
 from energuide.embedded import water_heating
+from energuide.embedded import ventilation
 from energuide.exceptions import InvalidInputDataException
 from energuide.exceptions import InvalidGroupSizeException
 
@@ -561,8 +562,8 @@ class TestParsedDwellingDataRow:
                 area_below_grade=185.8,
             ),
             ventilations=[
-                extracted_datatypes.Ventilation(
-                    ventilation_type=extracted_datatypes.VentilationType.NOT_ENERGY_STAR_NOT_INSTITUTE_CERTIFIED,
+                ventilation.Ventilation(
+                    ventilation_type=ventilation.VentilationType.NOT_ENERGY_STAR_NOT_INSTITUTE_CERTIFIED,
                     air_flow_rate=220,
                     efficiency=55,
                 )
