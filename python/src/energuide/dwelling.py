@@ -10,9 +10,9 @@ from energuide.embedded import floor
 from energuide.embedded import wall
 from energuide.embedded import door
 from energuide.embedded import window
+from energuide.embedded import ventilation
 from energuide.embedded import water_heating
 from energuide.extracted_datatypes import HeatedFloorArea
-from energuide.extracted_datatypes import Ventilation
 from energuide.exceptions import InvalidGroupSizeException
 from energuide.exceptions import InvalidInputDataException
 
@@ -88,8 +88,8 @@ class _ParsedDwellingDataRow(typing.NamedTuple):
     doors: typing.List[door.Door]
     windows: typing.List[window.Window]
     heated_floor_area: HeatedFloorArea
-    ventilations: typing.List[Ventilation]
     water_heatings: typing.List[water_heating.WaterHeating]
+    ventilations: typing.List[ventilation.Ventilation]
 
 
 class ParsedDwellingDataRow(_ParsedDwellingDataRow):
@@ -147,8 +147,9 @@ class ParsedDwellingDataRow(_ParsedDwellingDataRow):
             doors=[door.Door.from_data(door_node) for door_node in parsed['doors']],
             windows=[window.Window.from_data(window_node, codes.window) for window_node in parsed['windows']],
             heated_floor_area=HeatedFloorArea.from_data(parsed['heatedFloorArea']),
-            ventilations=[Ventilation.from_data(ventilation) for ventilation in parsed['ventilations']],
             water_heatings=water_heating.WaterHeating.from_data(parsed['waterHeatings']),
+            ventilations=[ventilation.Ventilation.from_data(ventilation_node)
+                          for ventilation_node in parsed['ventilations']],
         )
 
 
@@ -165,8 +166,8 @@ class Evaluation:
                  doors: typing.List[door.Door],
                  windows: typing.List[window.Window],
                  heated_floor_area: HeatedFloorArea,
-                 ventilations: typing.List[Ventilation],
                  water_heatings: typing.List[water_heating.WaterHeating],
+                 ventilations: typing.List[ventilation.Ventilation],
                 ) -> None:
         self._evaluation_type = evaluation_type
         self._entry_date = entry_date
@@ -239,7 +240,7 @@ class Evaluation:
         return self._heated_floor_area
 
     @property
-    def ventilations(self) -> typing.List[Ventilation]:
+    def ventilations(self) -> typing.List[ventilation.Ventilation]:
         return self._ventilations
 
     @property
