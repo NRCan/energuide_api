@@ -229,7 +229,7 @@ describe('queries', () => {
                   typeEnglish
                   typeFrench
                   tankVolumeLitres
-                  TankVolumeGallon
+                  tankVolumeGallon
                   efficiency
                 }
             }
@@ -241,7 +241,7 @@ describe('queries', () => {
       let [first] = evaluations
       let [waterHeatings] = first.waterHeatings
       expect(waterHeatings).toEqual({
-        TankVolumeGallon: 39.995640800000004,
+        tankVolumeGallon: 39.995640800000004,
         efficiency: 0.554,
         tankVolumeLitres: 151.4,
         typeEnglish: "Natural gas storage tank",

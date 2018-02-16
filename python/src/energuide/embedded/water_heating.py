@@ -315,6 +315,6 @@ class WaterHeating(_WaterHeating):
             'typeEnglish': translation.english,
             'typeFrench': translation.french,
             'tankVolumeLitres': self.tank_volume,
-            'TankVolumeGallon': self.tank_volume_gallon,
+            'tankVolumeGallon': self.tank_volume_gallon,
             'efficiency': self.efficiency,
         }

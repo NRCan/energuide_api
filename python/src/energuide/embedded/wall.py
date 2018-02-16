@@ -4,6 +4,7 @@ from energuide.embedded import code
 from energuide.embedded import insulation
 from energuide.embedded import distance
 from energuide import element
+from energuide.exceptions import InvalidEmbeddedDataTypeException
 
 
 class _Wall(typing.NamedTuple):
@@ -25,14 +26,17 @@ class Wall(_Wall):
         code_id = wall.xpath('Construction/Type/@idref')
         wall_code = wall_codes[code_id[0]] if code_id else None
 
-        return Wall(
-            label=wall.get_text('Label'),
-            wall_code=wall_code,
-            nominal_insulation=insulation.Insulation(float(wall.xpath('Construction/Type/@nominalInsulation')[0])),
-            effective_insulation=insulation.Insulation(float(wall.xpath('Construction/Type/@rValue')[0])),
-            perimeter=distance.Distance(float(wall.xpath('Measurements/@perimeter')[0])),
-            height=distance.Distance(float(wall.xpath('Measurements/@height')[0])),
-        )
+        try:
+            return Wall(
+                label=wall.get_text('Label'),
+                wall_code=wall_code,
+                nominal_insulation=insulation.Insulation(float(wall.xpath('Construction/Type/@nominalInsulation')[0])),
+                effective_insulation=insulation.Insulation(float(wall.xpath('Construction/Type/@rValue')[0])),
+                perimeter=distance.Distance(float(wall.xpath('Measurements/@perimeter')[0])),
+                height=distance.Distance(float(wall.xpath('Measurements/@height')[0])),
+            )
+        except (AssertionError, ValueError, IndexError) as exc:
+            raise InvalidEmbeddedDataTypeException(Wall) from exc
 
     @property
     def _wall_area(self) -> area.Area:
