@@ -63,5 +63,3 @@ class TestVentilation:
     def test_properties(self, sample: element.Element) -> None:
         output = extracted_datatypes.Ventilation.from_data(sample)
         assert output.air_flow_rate_cmf == 466.1536
-
-

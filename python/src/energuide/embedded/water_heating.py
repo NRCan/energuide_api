@@ -91,169 +91,194 @@ class WaterHeating(_WaterHeating):
         ("Propane", "Direct vent (sealed)"): WaterHeaterType.PROPANE_DIRECT_VENT_SEALED,
         ("Propane", "Direct vent (sealed, pilot)"): WaterHeaterType.PROPANE_DIRECT_VENT_SEALED_PILOT,
         ("Propane", "Condensing"): WaterHeaterType.PROPANE_CONDENSING,
-        ("Wood Space Heating (Mixed Wood, Hardwood, Soft Wood or Wood Pellets)", "Not applicable"): WaterHeaterType.NOT_APPLICABLE,
-        ("Wood Space Heating (Mixed Wood, Hardwood, Soft Wood or Wood Pellets)", "Fireplace"): WaterHeaterType.WOOD_SPACE_HEATING_FIREPLACE,
-        ("Wood Space Heating (Mixed Wood, Hardwood, Soft Wood or Wood Pellets)", "Wood stove water coil"): WaterHeaterType.WOOD_SPACE_HEATING_WOOD_STOVE_WATER_COIL,
-        ("Wood Space Heating (Mixed Wood, Hardwood, Soft Wood or Wood Pellets)", "Indoor wood boiler"): WaterHeaterType.WOOD_SPACE_HEATING_INDOOR_WOOD_BOILER,
-        ("Wood Space Heating (Mixed Wood, Hardwood, Soft Wood or Wood Pellets)", "Outdoor wood boiler"): WaterHeaterType.WOOD_SPACE_HEATING_OUTDOOR_WOOD_BOILER,
-        ("Wood Space Heating (Mixed Wood, Hardwood, Soft Wood or Wood Pellets)", "Wood hot water tank"): WaterHeaterType.WOOD_SPACE_HEATING_WOOD_HOT_WATER_TANK,
+
+        (
+            "Wood Space Heating (Mixed Wood, Hardwood, Soft Wood or Wood Pellets)",
+            "Not applicable"
+        ): WaterHeaterType.NOT_APPLICABLE,
+
+        (
+            "Wood Space Heating (Mixed Wood, Hardwood, Soft Wood or Wood Pellets)",
+            "Fireplace"
+        ): WaterHeaterType.WOOD_SPACE_HEATING_FIREPLACE,
+
+        (
+            "Wood Space Heating (Mixed Wood, Hardwood, Soft Wood or Wood Pellets)",
+            "Wood stove water coil"
+        ): WaterHeaterType.WOOD_SPACE_HEATING_WOOD_STOVE_WATER_COIL,
+
+        (
+            "Wood Space Heating (Mixed Wood, Hardwood, Soft Wood or Wood Pellets)",
+            "Indoor wood boiler"
+        ): WaterHeaterType.WOOD_SPACE_HEATING_INDOOR_WOOD_BOILER,
+
+        (
+            "Wood Space Heating (Mixed Wood, Hardwood, Soft Wood or Wood Pellets)",
+            "Outdoor wood boiler"
+        ): WaterHeaterType.WOOD_SPACE_HEATING_OUTDOOR_WOOD_BOILER,
+
+        (
+            "Wood Space Heating (Mixed Wood, Hardwood, Soft Wood or Wood Pellets)",
+            "Wood hot water tank"
+        ): WaterHeaterType.WOOD_SPACE_HEATING_WOOD_HOT_WATER_TANK,
+
         ("Solar", "Solar Collector System"): WaterHeaterType.SOLAR_COLLECTOR_SYSTEM,
         ("CSA P9-11 tested Combo Heat/DHW", "CSA P9-11 tested Combo Heat/DHW"): WaterHeaterType.CSA_DHW,
     }
 
     _WATER_HEATER_TYPE_TRANSLATION = {
         WaterHeaterType.NOT_APPLICABLE: bilingual.Bilingual(
-             english="",
-             french="",
-         ),
+            english="",
+            french="",
+        ),
         WaterHeaterType.ELECTRICITY_CONVENTIONAL_TANK: bilingual.Bilingual(
-             english="Electric storage tank",
-             french="Réservoir électrique",
-         ),
+            english="Electric storage tank",
+            french="Réservoir électrique",
+        ),
         WaterHeaterType.ELECTRICITY_CONSERVER_TANK: bilingual.Bilingual(
-             english="Electric storage tank",
-             french="Réservoir électrique",
-         ),
+            english="Electric storage tank",
+            french="Réservoir électrique",
+        ),
         WaterHeaterType.ELECTRICITY_INSTANTANEOUS: bilingual.Bilingual(
-             english="Electric tankless water heater",
-             french="Chauffe-eau électrique sans réservoir",
-         ),
+            english="Electric tankless water heater",
+            french="Chauffe-eau électrique sans réservoir",
+        ),
         WaterHeaterType.ELECTRICITY_TANKLESS_HEAT_PUMP: bilingual.Bilingual(
-             english="Electric tankless heat pump",
-             french="Thermopompe électrique sans réservoir",
-         ),
+            english="Electric tankless heat pump",
+            french="Thermopompe électrique sans réservoir",
+        ),
         WaterHeaterType.ELECTRICITY_HEAT_PUMP: bilingual.Bilingual(
-             english="Electric heat pump",
-             french="Thermopompe électrique",
-         ),
+            english="Electric heat pump",
+            french="Thermopompe électrique",
+        ),
         WaterHeaterType.ELECTRICITY_ADDON_HEAT_PUMP: bilingual.Bilingual(
-             english="Integrated heat pump",
-             french="Thermopompe intégrée",
-         ),
+            english="Integrated heat pump",
+            french="Thermopompe intégrée",
+        ),
         WaterHeaterType.NATURAL_GAS_CONVENTIONAL_TANK: bilingual.Bilingual(
-             english="Natural gas storage tank",
-             french="Réservoir au gaz naturel",
-         ),
+            english="Natural gas storage tank",
+            french="Réservoir au gaz naturel",
+        ),
         WaterHeaterType.NATURAL_GAS_CONVENTIONAL_TANK_PILOT: bilingual.Bilingual(
-             english="Natural gas storage tank with pilot",
-             french="Réservoir au gaz naturel avec veilleuse",
-         ),
+            english="Natural gas storage tank with pilot",
+            french="Réservoir au gaz naturel avec veilleuse",
+        ),
         WaterHeaterType.NATURAL_GAS_TANKLESS_COIL: bilingual.Bilingual(
-             english="Natural gas tankless coil",
-             french="Serpentin sans réservoir au gaz naturel",
-         ),
+            english="Natural gas tankless coil",
+            french="Serpentin sans réservoir au gaz naturel",
+        ),
         WaterHeaterType.NATURAL_GAS_INSTANTANEOUS: bilingual.Bilingual(
-             english="Natural gas tankless",
-             french="Chauffe-eau instantané au gaz naturel",
-         ),
+            english="Natural gas tankless",
+            french="Chauffe-eau instantané au gaz naturel",
+        ),
         WaterHeaterType.NATURAL_GAS_INSTANTANEOUS_CONDENSING: bilingual.Bilingual(
-             english="Natural gas tankless",
-             french="Chauffe-eau instantané au gaz naturel",
-         ),
+            english="Natural gas tankless",
+            french="Chauffe-eau instantané au gaz naturel",
+        ),
         WaterHeaterType.NATURAL_GAS_INSTANTANEOUS_PILOT: bilingual.Bilingual(
-             english="Natural gas tankless with pilot",
-             french="Chauffe-eau instantané au gaz naturel avec veilleuse",
-         ),
+            english="Natural gas tankless with pilot",
+            french="Chauffe-eau instantané au gaz naturel avec veilleuse",
+        ),
         WaterHeaterType.NATURAL_GAS_INDUCED_DRAFT_FAN: bilingual.Bilingual(
-             english="Natural gas power vented storage tank",
-             french="Réservoir au gaz naturel à évacuation forcée",
-         ),
+            english="Natural gas power vented storage tank",
+            french="Réservoir au gaz naturel à évacuation forcée",
+        ),
         WaterHeaterType.NATURAL_GAS_INDUCED_DRAFT_FAN_PILOT: bilingual.Bilingual(
-             english="Natural gas power vented storage tank with pilot",
-             french="Réservoir au gaz naturel à évacuation forcée avec veilleuse",
-         ),
+            english="Natural gas power vented storage tank with pilot",
+            french="Réservoir au gaz naturel à évacuation forcée avec veilleuse",
+        ),
         WaterHeaterType.NATURAL_GAS_DIRECT_VENT_SEALED: bilingual.Bilingual(
-             english="Natural gas direct vented storage tank",
-             french="Réservoir au gaz naturel à évacuation directe",
-         ),
+            english="Natural gas direct vented storage tank",
+            french="Réservoir au gaz naturel à évacuation directe",
+        ),
         WaterHeaterType.NATURAL_GAS_DIRECT_VENT_SEALED_PILOT: bilingual.Bilingual(
-             english="Natural gas direct vented storage tank with pilot",
-             french="Réservoir au gaz naturel à évacuation directe avec veilleuse",
-         ),
+            english="Natural gas direct vented storage tank with pilot",
+            french="Réservoir au gaz naturel à évacuation directe avec veilleuse",
+        ),
         WaterHeaterType.NATURAL_GAS_CONDENSING: bilingual.Bilingual(
-             english="Natural gas condensing storage tank",
-             french="Réservoir au gaz naturel à condensation",
-         ),
+            english="Natural gas condensing storage tank",
+            french="Réservoir au gaz naturel à condensation",
+        ),
         WaterHeaterType.OIL_CONVENTIONAL_TANK: bilingual.Bilingual(
-             english="Oil-fired storage tank",
-             french="Réservoir au mazout",
-         ),
+            english="Oil-fired storage tank",
+            french="Réservoir au mazout",
+        ),
         WaterHeaterType.OIL_TANKLESS_COIL: bilingual.Bilingual(
-             english="Oil-type tankless coil",
-             french="Serpentin sans réservoir au mazout",
-         ),
+            english="Oil-type tankless coil",
+            french="Serpentin sans réservoir au mazout",
+        ),
         WaterHeaterType.PROPANE_CONVENTIONAL_TANK: bilingual.Bilingual(
-             english="Propane storage tank",
-             french="Réservoir au propane",
-         ),
+            english="Propane storage tank",
+            french="Réservoir au propane",
+        ),
         WaterHeaterType.PROPANE_CONVENTIONAL_TANK_PILOT: bilingual.Bilingual(
-             english="Propane storage tank with pilot",
-             french="Réservoir au propane avec veilleuse",
-         ),
+            english="Propane storage tank with pilot",
+            french="Réservoir au propane avec veilleuse",
+        ),
         WaterHeaterType.PROPANE_TANKLESS_COIL: bilingual.Bilingual(
-             english="Propane tankless coil",
-             french="Serpentin sans réservoir au propane",
-         ),
+            english="Propane tankless coil",
+            french="Serpentin sans réservoir au propane",
+        ),
         WaterHeaterType.PROPANE_INSTANTANEOUS: bilingual.Bilingual(
-             english="Propane tankless",
-             french="Chauffe-eau instantané au propane",
-         ),
+            english="Propane tankless",
+            french="Chauffe-eau instantané au propane",
+        ),
         WaterHeaterType.PROPANE_INSTANTANEOUS_CONDENSING: bilingual.Bilingual(
-             english="Propane condensing tankless",
-             french="Chauffe-eau instantané au propane à condensation",
-         ),
+            english="Propane condensing tankless",
+            french="Chauffe-eau instantané au propane à condensation",
+        ),
         WaterHeaterType.PROPANE_INSTANTANEOUS_PILOT: bilingual.Bilingual(
-             english="Propane tankless with pilot",
-             french="Chauffe-eau instantané au propane avec veilleuse",
-         ),
+            english="Propane tankless with pilot",
+            french="Chauffe-eau instantané au propane avec veilleuse",
+        ),
         WaterHeaterType.PROPANE_INDUCED_DRAFT_FAN: bilingual.Bilingual(
-             english="Propane power vented storage tank",
-             french="Réservoir au propane à évacuation forcée",
-         ),
+            english="Propane power vented storage tank",
+            french="Réservoir au propane à évacuation forcée",
+        ),
         WaterHeaterType.PROPANE_INDUCED_DRAFT_FAN_PILOT: bilingual.Bilingual(
-             english="Propane power vented storage tank with pilot",
-             french="Réservoir au propane à évacuation forcée avec veilleuse",
-         ),
+            english="Propane power vented storage tank with pilot",
+            french="Réservoir au propane à évacuation forcée avec veilleuse",
+        ),
         WaterHeaterType.PROPANE_DIRECT_VENT_SEALED: bilingual.Bilingual(
-             english="Propane power vented storage tank",
-             french="Réservoir au propane à évacuation directe",
-         ),
+            english="Propane power vented storage tank",
+            french="Réservoir au propane à évacuation directe",
+        ),
         WaterHeaterType.PROPANE_DIRECT_VENT_SEALED_PILOT: bilingual.Bilingual(
-             english="Propane power vented storage tank with pilot",
-             french="Réservoir au propane à évacuation directe avec veilleuse",
-         ),
+            english="Propane power vented storage tank with pilot",
+            french="Réservoir au propane à évacuation directe avec veilleuse",
+        ),
         WaterHeaterType.PROPANE_CONDENSING: bilingual.Bilingual(
-             english="Propane condensing storage tank",
-             french="Réservoir au propane à condensation",
-         ),
+            english="Propane condensing storage tank",
+            french="Réservoir au propane à condensation",
+        ),
         WaterHeaterType.WOOD_SPACE_HEATING_FIREPLACE: bilingual.Bilingual(
-             english="Fireplace",
-             french="Foyer",
-         ),
+            english="Fireplace",
+            french="Foyer",
+        ),
         WaterHeaterType.WOOD_SPACE_HEATING_WOOD_STOVE_WATER_COIL: bilingual.Bilingual(
-             english="Wood stove water coil",
-             french="Poêle à bois avec serpentin à l'eau",
-         ),
+            english="Wood stove water coil",
+            french="Poêle à bois avec serpentin à l'eau",
+        ),
         WaterHeaterType.WOOD_SPACE_HEATING_INDOOR_WOOD_BOILER: bilingual.Bilingual(
-             english="Indoor wood boiler",
-             french="Chaudière intérieure au bois",
-         ),
+            english="Indoor wood boiler",
+            french="Chaudière intérieure au bois",
+        ),
         WaterHeaterType.WOOD_SPACE_HEATING_OUTDOOR_WOOD_BOILER: bilingual.Bilingual(
-             english="Outdoor wood boiler",
-             french="Chaudière extérieure au bois",
-         ),
+            english="Outdoor wood boiler",
+            french="Chaudière extérieure au bois",
+        ),
         WaterHeaterType.WOOD_SPACE_HEATING_WOOD_HOT_WATER_TANK: bilingual.Bilingual(
-             english="Wood-fired water storage tank",
-             french="Réservoir à eau chaude au bois",
-         ),
+            english="Wood-fired water storage tank",
+            french="Réservoir à eau chaude au bois",
+        ),
         WaterHeaterType.SOLAR_COLLECTOR_SYSTEM: bilingual.Bilingual(
-             english="Solar domestic water heater",
-             french="Chauffe-eau solaire domestique",
-         ),
+            english="Solar domestic water heater",
+            french="Chauffe-eau solaire domestique",
+        ),
         WaterHeaterType.CSA_DHW: bilingual.Bilingual(
-             english="Certified combo system, space and domestic water heating",
-             french="Système combiné certifié pour le chauffage des locaux et de l’eau",
-         ),
+            english="Certified combo system, space and domestic water heating",
+            french="Système combiné certifié pour le chauffage des locaux et de l’eau",
+        ),
     }
 
     @classmethod
@@ -280,7 +305,7 @@ class WaterHeating(_WaterHeating):
 
 
     @property
-    def tank_volume_gallon(self):
+    def tank_volume_gallon(self) -> float:
         return self.tank_volume * _LITRE_TO_GALLON
 
 
