@@ -25,6 +25,7 @@ def sample_raw() -> element.Element:
 
 
 BAD_DATA_XML = [
+    # This XML block has non-numeric strings for Measurements/@height and Measurements/@width
     """
     <Door>
         <Label>Front door</Label>
@@ -37,6 +38,8 @@ BAD_DATA_XML = [
         <Measurements height='bad' width='data' />
     </Door>
     """,
+
+    # This XML block is missing the <Type> tag
     """
     <Door>
         <Label>Front door</Label>
@@ -45,6 +48,8 @@ BAD_DATA_XML = [
         <Measurements height='1.9799' width='0.8499' />
     </Door>
     """,
+
+    #This XML block is missing the Measurements/@height and Measurements/@width attributes
     """
     <Door>
         <Label>Front door</Label>
