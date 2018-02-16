@@ -24,9 +24,8 @@ def sample_raw() -> element.Element:
     return element.Element.from_string(doc)
 
 
-@pytest.fixture
-def bad_measurements() -> element.Element:
-    doc = """
+BAD_DATA_XML = [
+    """
     <Door>
         <Label>Front door</Label>
         <Construction>
@@ -37,26 +36,16 @@ def bad_measurements() -> element.Element:
         </Construction>
         <Measurements height='bad' width='data' />
     </Door>
+    """,
     """
-    return element.Element.from_string(doc)
-
-
-@pytest.fixture
-def missing_type() -> element.Element:
-    doc = """
     <Door>
         <Label>Front door</Label>
         <Construction>
         </Construction>
         <Measurements height='1.9799' width='0.8499' />
     </Door>
+    """,
     """
-    return element.Element.from_string(doc)
-
-
-@pytest.fixture
-def bad_insulation() -> element.Element:
-    doc = """
     <Door>
         <Label>Front door</Label>
         <Construction>
@@ -68,7 +57,7 @@ def bad_insulation() -> element.Element:
         <Measurements />
     </Door>
     """
-    return element.Element.from_string(doc)
+]
 
 
 @pytest.fixture
@@ -87,25 +76,13 @@ def test_from_data(sample_raw: element.Element, sample: door.Door) -> None:
     assert output == sample
 
 
-def test_bad_measurements(bad_measurements: element.Element) -> None:
+@pytest.mark.parametrize("bad_xml", BAD_DATA_XML)
+def test_bad_data(bad_xml: str) -> None:
+    door_node = element.Element.from_string(bad_xml)
     with pytest.raises(InvalidEmbeddedDataTypeException) as excinfo:
-        door.Door.from_data(bad_measurements)
+        door.Door.from_data(door_node)
 
-    assert isinstance(excinfo.value.__context__, ValueError)
-
-
-def test_missing_type(missing_type: element.Element) -> None:
-    with pytest.raises(InvalidEmbeddedDataTypeException) as excinfo:
-        door.Door.from_data(missing_type)
-
-    assert isinstance(excinfo.value.__context__, AssertionError)
-
-
-def test_bad_insulation(bad_insulation: element.Element) -> None:
-    with pytest.raises(InvalidEmbeddedDataTypeException) as excinfo:
-        door.Door.from_data(bad_insulation)
-
-    assert isinstance(excinfo.value.__context__, IndexError)
+    assert excinfo.value.data_class == door.Door
 
 
 def test_to_dict(sample: door.Door) -> None:
