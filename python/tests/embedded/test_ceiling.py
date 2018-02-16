@@ -26,9 +26,9 @@ def sample_raw() -> element.Element:
     return element.Element.from_string(data)
 
 
-@pytest.fixture
-def bad_measurements() -> element.Element:
-    data = """
+BAD_DATA_XML = [
+    # This XML Block has non-numeric strings as attribute values in the <Measurements> tag
+    """
 <Ceiling>
     <Label>Main attic</Label>
     <Construction>
@@ -40,27 +40,21 @@ def bad_measurements() -> element.Element:
     </Construction>
     <Measurements area='bad' length='data' />
 </Ceiling>
+    """,
+
+    # This XML block is missing the <Type> tag
     """
-    return element.Element.from_string(data)
-
-
-@pytest.fixture
-def missing_type() -> element.Element:
-    data = """
 <Ceiling>
     <Label>Main attic</Label>
     <Construction>
         <CeilingType nominalInsulation='2.864' rValue='2.9463' />
     </Construction>
-    <Measurements area='bad' length='data' />
+    <Measurements area='46.4515' length='23.875' />
 </Ceiling>
+    """,
+
+    # This XML block is missing the attributes on the <Measurements> tag
     """
-    return element.Element.from_string(data)
-
-
-@pytest.fixture
-def bad_insulation() -> element.Element:
-    data = """
 <Ceiling>
     <Label>Main attic</Label>
     <Construction>
@@ -70,10 +64,10 @@ def bad_insulation() -> element.Element:
         </Type>
         <CeilingType/>
     </Construction>
-    <Measurements area='46.4515' length='23.875' />
+    <Measurements />
 </Ceiling>
-    """
-    return element.Element.from_string(data)
+    """,
+]
 
 
 @pytest.fixture
@@ -93,25 +87,13 @@ def test_from_data(sample_raw: element.Element, sample: ceiling.Ceiling) -> None
     assert output == sample
 
 
-def test_bad_measurements(bad_measurements: element.Element) -> None:
+@pytest.mark.parametrize("bad_xml", BAD_DATA_XML)
+def test_bad_data(bad_xml: str) -> None:
+    ceiling_node = element.Element.from_string(bad_xml)
     with pytest.raises(InvalidEmbeddedDataTypeException) as excinfo:
-        ceiling.Ceiling.from_data(bad_measurements)
+        ceiling.Ceiling.from_data(ceiling_node)
 
-    assert isinstance(excinfo.value.__context__, ValueError)
-
-
-def test_missing_type(missing_type: element.Element) -> None:
-    with pytest.raises(InvalidEmbeddedDataTypeException) as excinfo:
-        ceiling.Ceiling.from_data(missing_type)
-
-    assert isinstance(excinfo.value.__context__, AssertionError)
-
-
-def test_bad_insulation(bad_insulation: element.Element) -> None:
-    with pytest.raises(InvalidEmbeddedDataTypeException) as excinfo:
-        ceiling.Ceiling.from_data(bad_insulation)
-
-    assert isinstance(excinfo.value.__context__, IndexError)
+    assert excinfo.value.data_class == ceiling.Ceiling
 
 
 def test_to_dict(sample: ceiling.Ceiling) -> None:
