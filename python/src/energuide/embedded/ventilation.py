@@ -2,6 +2,7 @@ import enum
 import typing
 from energuide import element
 from energuide import bilingual
+from energuide.exceptions import InvalidEmbeddedDataTypeException
 
 
 class VentilationType(enum.Enum):
@@ -59,17 +60,20 @@ class Ventilation(_Ventilation):
 
     @classmethod
     def from_data(cls, ventilation: element.Element) -> 'Ventilation':
-        energy_star = ventilation.attrib['isEnergyStar'] == 'true'
-        institute_certified = ventilation.attrib['isHomeVentilatingInstituteCertified'] == 'true'
-        total_supply_flow = float(ventilation.attrib['supplyFlowrate'])
+        try:
+            energy_star = ventilation.attrib['isEnergyStar'] == 'true'
+            institute_certified = ventilation.attrib['isHomeVentilatingInstituteCertified'] == 'true'
+            total_supply_flow = float(ventilation.attrib['supplyFlowrate'])
 
-        ventilation_type = cls._derive_ventilation_type(total_supply_flow, energy_star, institute_certified)
+            ventilation_type = cls._derive_ventilation_type(total_supply_flow, energy_star, institute_certified)
 
-        return Ventilation(
-            ventilation_type=ventilation_type,
-            air_flow_rate=total_supply_flow,
-            efficiency=float(ventilation.attrib['efficiency1']),
-        )
+            return Ventilation(
+                ventilation_type=ventilation_type,
+                air_flow_rate=total_supply_flow,
+                efficiency=float(ventilation.attrib['efficiency1']),
+            )
+        except (KeyError, ValueError) as exc:
+            raise InvalidEmbeddedDataTypeException(Ventilation) from exc
 
     @property
     def air_flow_rate_cmf(self):
