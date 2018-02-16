@@ -75,12 +75,9 @@ jobs:
             mypy src tests
             pytest --cov=energuide tests
             percent=$(coverage report | tail -n 1 | sed "s/TOTAL[[:blank:]]*[0-9]*[[:blank:]]*[0-9]*[[:blank:]]*//" | rev | cut -c 2- | rev)
-            echo $percent
             if (( $percent < 80 ));
             then
-                echo 1
-            else
-                echo 0
+                exit 1
             fi
 
   extract_endpoint:
