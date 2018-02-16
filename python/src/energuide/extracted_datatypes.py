@@ -1,4 +1,3 @@
-import enum
 import typing
 from energuide import element
 
