@@ -5,7 +5,6 @@ from energuide import extractor
 from energuide import logging
 
 
-
 LOGGER = logging.get_logger(__name__)
 
 
