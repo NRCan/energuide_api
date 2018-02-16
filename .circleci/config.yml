@@ -73,7 +73,16 @@ jobs:
             . ~/.venv/bin/activate
             pylint src tests
             mypy src tests
-            pytest tests
+            pytest --cov=energuide tests
+            percent=$(coverage report | tail -n 1 | sed "s/TOTAL[[:blank:]]*[0-9]*[[:blank:]]*[0-9]*[[:blank:]]*//" | rev | cut -c 2- | rev)
+            echo $percent
+            if (( $percent < 80 ));
+            then
+                echo 1
+            else
+                echo 0
+            fi
+
   extract_endpoint:
     docker:
       - image: circleci/python:3.6.1
