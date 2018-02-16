@@ -9,3 +9,7 @@ dist
 python/env
 .python-version
 .env
+/api/src/.vs
+/.vs
+/python/.idea
+/api/package-lock.json
