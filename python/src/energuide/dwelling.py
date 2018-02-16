@@ -12,7 +12,7 @@ from energuide.embedded import door
 from energuide.embedded import window
 from energuide.embedded import ventilation
 from energuide.embedded import water_heating
-from energuide.extracted_datatypes import HeatedFloorArea
+from energuide.embedded import heated_floor_area
 from energuide.exceptions import InvalidGroupSizeException
 from energuide.exceptions import InvalidInputDataException
 
@@ -87,9 +87,10 @@ class _ParsedDwellingDataRow(typing.NamedTuple):
     walls: typing.List[wall.Wall]
     doors: typing.List[door.Door]
     windows: typing.List[window.Window]
-    heated_floor_area: HeatedFloorArea
+    heated_floor: heated_floor_area.HeatedFloorArea
     water_heatings: typing.List[water_heating.WaterHeating]
     ventilations: typing.List[ventilation.Ventilation]
+
 
 
 class ParsedDwellingDataRow(_ParsedDwellingDataRow):
@@ -146,7 +147,7 @@ class ParsedDwellingDataRow(_ParsedDwellingDataRow):
             walls=[wall.Wall.from_data(wall_node, codes.wall) for wall_node in parsed['walls']],
             doors=[door.Door.from_data(door_node) for door_node in parsed['doors']],
             windows=[window.Window.from_data(window_node, codes.window) for window_node in parsed['windows']],
-            heated_floor_area=HeatedFloorArea.from_data(parsed['heatedFloorArea']),
+            heated_floor=heated_floor_area.HeatedFloorArea.from_data(parsed['heatedFloorArea']),
             water_heatings=water_heating.WaterHeating.from_data(parsed['waterHeatings']),
             ventilations=[ventilation.Ventilation.from_data(ventilation_node)
                           for ventilation_node in parsed['ventilations']],
@@ -165,7 +166,7 @@ class Evaluation:
                  walls: typing.List[wall.Wall],
                  doors: typing.List[door.Door],
                  windows: typing.List[window.Window],
-                 heated_floor_area: HeatedFloorArea,
+                 heated_floor_area: heated_floor_area.HeatedFloorArea,
                  water_heatings: typing.List[water_heating.WaterHeating],
                  ventilations: typing.List[ventilation.Ventilation],
                 ) -> None:
@@ -194,7 +195,7 @@ class Evaluation:
             walls=data.walls,
             doors=data.doors,
             windows=data.windows,
-            heated_floor_area=data.heated_floor_area,
+            heated_floor_area=data.heated_floor,
             ventilations=data.ventilations,
             water_heatings=data.water_heatings
         )
@@ -236,7 +237,7 @@ class Evaluation:
         return self._windows
 
     @property
-    def heated_floor_area(self) -> HeatedFloorArea:
+    def heated_floor(self) -> heated_floor_area.HeatedFloorArea:
         return self._heated_floor_area
 
     @property
@@ -258,7 +259,7 @@ class Evaluation:
             'walls': [wall.to_dict() for wall in self.walls],
             'doors': [door.to_dict() for door in self.doors],
             'windows': [window.to_dict() for window in self.windows],
-            'heatedFloorArea': self.heated_floor_area.to_dict(),
+            'heatedFloorArea': self.heated_floor.to_dict(),
             'ventilations': [ventilation.to_dict() for ventilation in self.ventilations],
             'waterHeatings': [water_heating.to_dict() for water_heating in self.water_heatings]
         }

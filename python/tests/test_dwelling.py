@@ -5,7 +5,6 @@ import pytest
 from energuide import bilingual
 from energuide import dwelling
 from energuide import reader
-from energuide import extracted_datatypes
 from energuide.embedded import area
 from energuide.embedded import ceiling
 from energuide.embedded import code
@@ -17,6 +16,7 @@ from energuide.embedded import door
 from energuide.embedded import window
 from energuide.embedded import water_heating
 from energuide.embedded import ventilation
+from energuide.embedded import heated_floor_area
 from energuide.exceptions import InvalidInputDataException
 from energuide.exceptions import InvalidGroupSizeException
 
@@ -557,9 +557,9 @@ class TestParsedDwellingDataRow:
                     height=distance.Distance(1.3220699),
                 )
             ],
-            heated_floor_area=extracted_datatypes.HeatedFloorArea(
-                area_above_grade=92.9,
-                area_below_grade=185.8,
+            heated_floor=heated_floor_area.HeatedFloorArea(
+                area_above_grade=area.Area(92.9),
+                area_below_grade=area.Area(185.8),
             ),
             ventilations=[
                 ventilation.Ventilation(
