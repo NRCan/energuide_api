@@ -2,10 +2,13 @@
 
 CircleCI Status: [![CircleCI](https://circleci.com/gh/cds-snc/nrcan_api.svg?style=svg)](https://circleci.com/gh/cds-snc/nrcan_api)
 
-This is the API for NRCAN's Energuide data.
+This is the API for NRCAN's Energuide data. See it running at [http://energuide.cds-snc.ca/graphiql][api_link]. (Or try [an example query][api_link_with_query] to get started).
 
 This project is composed of two parts: the API itself and the ETL process that produces the data the API will serve.
 There are further details in the readme for each of the respective portions of the project.
+
+[api_link]: http://energuide.cds-snc.ca/graphiql
+[api_link_with_query]: http://energuide.cds-snc.ca/graphiql?query=%7B%0A%20%20dwellingsInFSA(%0A%20%20%20%20forwardSortationArea%3A%20%22C1A%22%0A%20%20)%20%7B%0A%20%20%20%20results%20%7B%0A%20%20%20%20yearBuilt%0A%20%20%20%20city%0A%20%20%20%20%7D%0A%20%20%7D%0A%7D
 
 - [Windows Installation Instructions](#windows-installation)
 - [MacOS Installation Instructions](#tldr)
