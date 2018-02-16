@@ -27,6 +27,7 @@ def raw_wall_code() -> element.Element:
 
 
 BAD_WALL_CODE_XML = [
+    # This XML block is missing the id attribute on the <Code> tag
     """
 <Code>
     <Label>1201101121</Label>
@@ -42,6 +43,8 @@ BAD_WALL_CODE_XML = [
     </Layers>
 </Code>
     """,
+
+    # This XML block is missing the <StructureType> tag
     """
 <Code id='Code 1'>
     <Label>1201101121</Label>
@@ -57,6 +60,7 @@ BAD_WALL_CODE_XML = [
 
 
 BAD_WINDOW_CODE_XML = [
+    # This XML block is missing the id attribute on the <Code> tag
     """
 <Code>
     <Label>202002</Label>
@@ -88,6 +92,8 @@ BAD_WINDOW_CODE_XML = [
     </Layers>
 </Code>
     """,
+
+    # This XML block is missing all the tags under <Layers>
     """
 <Code id='Code 11'>
     <Label>202002</Label>
