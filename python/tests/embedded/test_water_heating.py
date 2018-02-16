@@ -41,6 +41,7 @@ def sample() -> element.Element:
 
 
 BAD_XML_DATA = [
+    # This XML block has attribute hasDrainWaterHeatRecovery equals "true"
     """
 <HotWater>
     <Primary hasDrainWaterHeatRecovery="true" insulatingBlanket="0" combinedFlue="false" flueDiameter="0" """ + \
@@ -72,6 +73,8 @@ BAD_XML_DATA = [
     </Primary>
 </HotWater>
     """,
+
+    # This XML block is missing all subtags of the <Primary> tag
     """
 <HotWater>
     <Primary hasDrainWaterHeatRecovery="false" insulatingBlanket="0" combinedFlue="false" flueDiameter="0" """ + \
@@ -79,6 +82,8 @@ BAD_XML_DATA = [
     </Primary>
 </HotWater>
     """,
+
+    # This XML block has EnergySource and TankType <English> tag text that does not map to an existing tank type
     """
 <HotWater>
     <Primary hasDrainWaterHeatRecovery="false" insulatingBlanket="0" combinedFlue="false" flueDiameter="0" """ + \
@@ -110,6 +115,8 @@ BAD_XML_DATA = [
     </Primary>
 </HotWater>
     """,
+
+    # This XML block is missing the value attribute on <TankVolume> and <EnergyFactor> tags
     """
 <HotWater>
     <Primary hasDrainWaterHeatRecovery="false" insulatingBlanket="0" combinedFlue="false" flueDiameter="0" """ + \
@@ -141,6 +148,8 @@ BAD_XML_DATA = [
     </Primary>
 </HotWater>
     """,
+
+    # This XML block has non-numeric string for the value attribute of the <TankVolume> and <EnergyFactor>
     """
 <HotWater>
     <Primary hasDrainWaterHeatRecovery="false" insulatingBlanket="0" combinedFlue="false" flueDiameter="0" """ + \
