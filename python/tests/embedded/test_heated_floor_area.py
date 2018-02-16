@@ -13,9 +13,12 @@ def sample() -> element.Element:
 
 
 BAD_XML_DATA = [
+    # This XML block has non-numeric strings as attribute values
     """
     <HeatedFloorArea aboveGrade="bad" belowGrade="data" />
     """,
+
+    # This XML block is missing the belowGrade attribute
     """
     <HeatedFloorArea aboveGrade="92.9" />
     """
