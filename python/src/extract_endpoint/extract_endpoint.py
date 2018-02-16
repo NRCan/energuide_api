@@ -6,8 +6,8 @@ import os
 import base64
 from flask import Flask, request, abort
 from werkzeug.utils import secure_filename
-from azure_utils import EnvDefaults, EnvVariables, StorageCoordinates, upload_stream_to_azure
-from crypt_utils import sign_data
+from azure_utils import StorageCoordinates, upload_stream_to_azure, EnvVariables, DefaultVariables
+from crypt_utils import sign_string
 
 
 DEFAULT_ENDPOINT_SECRET_KEY = 'no key'
@@ -60,7 +60,7 @@ def upload_file() -> str:
 
     # check that the signature is valid
     file_as_string = base64.b64encode(file.read()).decode('utf-8')
-    signed_file = sign_data(salt=request.form['salt'], key=App.config['SECRET_KEY'], data=file_as_string)
+    signed_file = sign_string(salt=request.form['salt'], key=App.config['SECRET_KEY'], data=file_as_string)
     if request.form['signature'] != signed_file:
         if App.debug:
             return f"Sig sent: {request.form['signature']} != {signed_file}"
@@ -69,10 +69,10 @@ def upload_file() -> str:
 
     file.seek(0)
     filename = secure_filename(file.filename)
-    account = os.environ.get(EnvVariables.account.value, EnvDefaults.account.value)
-    key = os.environ.get(EnvVariables.key.value, EnvDefaults.key.value)
-    container = os.environ.get(EnvVariables.container.value, EnvDefaults.container.value)
-    domain = os.environ.get(EnvVariables.domain.value, EnvDefaults.domain.value)
+    account = os.environ.get(EnvVariables.account.value, DefaultVariables.account.value)
+    key = os.environ.get(EnvVariables.key.value, DefaultVariables.key.value)
+    container = os.environ.get(EnvVariables.container.value, DefaultVariables.container.value)
+    domain = os.environ.get(EnvVariables.domain.value, DefaultVariables.domain.value)
     azure_sc = StorageCoordinates(account, key, container, domain)
     return upload_stream_to_azure(azure_sc, file, filename)
 

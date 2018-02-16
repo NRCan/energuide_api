@@ -1,21 +1,7 @@
 import enum
 from io import BytesIO
 import typing
-
 from azure.storage.blob import BlockBlobService
-
-class EnvVariables(enum.Enum):
-    account = 'EXTRACTOR_STORAGE_ACCOUNT'
-    key = 'EXTRACTOR_STORAGE_KEY'
-    container = 'EXTRACTOR_CONTAINER'
-    domain = 'EXTRACTOR_STORAGE_DOMAIN'
-
-
-class EnvDefaults(enum.Enum):
-    account = 'account'
-    key = 'key'
-    container = 'container'
-    domain = None
 
 
 class StorageCoordinates(typing.NamedTuple):
@@ -23,6 +9,20 @@ class StorageCoordinates(typing.NamedTuple):
     key: str
     container: str
     domain: typing.Optional[str]
+
+
+class EnvVariables(enum.Enum):
+    account = 'AZURE_STORAGE_ACCOUNT'
+    key = 'AZURE_STORAGE_KEY'
+    container = 'AZURE_CONTAINER'
+    domain = 'AZURE_STORAGE_DOMAIN'
+
+
+class DefaultVariables(enum.Enum):
+    account = 'account'
+    key = 'key'
+    container = 'container'
+    domain = None
 
 
 def upload_stream_to_azure(coords: StorageCoordinates, stream: BytesIO, filename: str) -> str:
