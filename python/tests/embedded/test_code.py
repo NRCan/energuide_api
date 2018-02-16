@@ -3,6 +3,7 @@ import pytest
 from energuide import bilingual
 from energuide import element
 from energuide.embedded import code
+from energuide.exceptions import InvalidEmbeddedDataTypeException
 
 
 @pytest.fixture
@@ -23,6 +24,84 @@ def raw_wall_code() -> element.Element:
 </Code>
 """
     return element.Element.from_string(data)
+
+
+BAD_WALL_CODE_XML = [
+    # This XML block is missing the id attribute on the <Code> tag
+    """
+<Code>
+    <Label>1201101121</Label>
+    <Layers>
+        <StructureType>
+            <English>Wood frame</English>
+            <French>Ossature de bois</French>
+        </StructureType>
+        <ComponentTypeSize>
+            <English>38x89 mm (2x4 in)</English>
+            <French>38x89 (2x4)</French>
+        </ComponentTypeSize>
+    </Layers>
+</Code>
+    """,
+
+    # This XML block is missing the <StructureType> tag
+    """
+<Code id='Code 1'>
+    <Label>1201101121</Label>
+    <Layers>
+        <ComponentTypeSize>
+            <English>38x89 mm (2x4 in)</English>
+            <French>38x89 (2x4)</French>
+        </ComponentTypeSize>
+    </Layers>
+</Code>
+    """,
+]
+
+
+BAD_WINDOW_CODE_XML = [
+    # This XML block is missing the id attribute on the <Code> tag
+    """
+<Code>
+    <Label>202002</Label>
+    <Layers>
+        <GlazingTypes>
+            <English>Double/double with 1 coat</English>
+            <French>Double/double, 1 couche</French>
+        </GlazingTypes>
+        <CoatingsTints>
+            <English>Clear</English>
+            <French>Transparent</French>
+        </CoatingsTints>
+        <FillType>
+            <English>6 mm Air</English>
+            <French>6 mm d'air</French>
+        </FillType>
+        <SpacerType>
+            <English>Metal</English>
+            <French>Métal</French>
+        </SpacerType>
+        <Type>
+            <English>Picture</English>
+            <French>Fixe</French>
+        </Type>
+        <FrameMaterial>
+            <English>Wood</English>
+            <French>Bois</French>
+        </FrameMaterial>
+    </Layers>
+</Code>
+    """,
+
+    # This XML block is missing all the tags under <Layers>
+    """
+<Code id='Code 11'>
+    <Label>202002</Label>
+    <Layers>
+    </Layers>
+</Code>
+    """,
+]
 
 
 @pytest.fixture
@@ -111,6 +190,24 @@ def test_wall_code_from_data(raw_wall_code: element.Element, wall_code: code.Wal
 def test_window_code_from_data(raw_window_code: element.Element, window_code: code.WindowCode) -> None:
     output = code.WindowCode.from_data(raw_window_code)
     assert output == window_code
+
+
+@pytest.mark.parametrize("bad_xml", BAD_WALL_CODE_XML)
+def test_bad_wall_code(bad_xml: str) -> None:
+    code_node = element.Element.from_string(bad_xml)
+    with pytest.raises(InvalidEmbeddedDataTypeException) as excinfo:
+        code.WallCode.from_data(code_node)
+
+    assert excinfo.value.data_class == code.WallCode
+
+
+@pytest.mark.parametrize("bad_xml", BAD_WINDOW_CODE_XML)
+def test_bad_window_code(bad_xml: str) -> None:
+    code_node = element.Element.from_string(bad_xml)
+    with pytest.raises(InvalidEmbeddedDataTypeException) as excinfo:
+        code.WindowCode.from_data(code_node)
+
+    assert excinfo.value.data_class == code.WindowCode
 
 
 def test_code_from_data(raw_wall_code: element.Element,
