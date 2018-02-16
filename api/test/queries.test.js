@@ -289,6 +289,36 @@ describe('queries', () => {
       })
     })
 
+    it('retrieves all top level keys of the ventilations data', async () => {
+      let response = await request(server)
+        .post('/graphql')
+        .set('Content-Type', 'application/json; charset=utf-8')
+        .send({
+          query: `{
+          evaluationsFor(account: 189250) {
+            evaluations {
+              ventilations {
+                typeEnglish
+                typeFrench
+                airFlowRateLps
+                airFlowRateCfm
+              }
+            }
+          }
+        }`,
+        })
+
+      let { evaluationsFor: { evaluations } } = response.body.data
+      let [first] = evaluations
+      let [ventilations] = first.ventilations
+      expect(ventilations).toEqual({
+        airFlowRateCfm: 466.1536,
+        airFlowRateLps: 220,
+        typeEnglish: 'Heat recovery ventilator',
+        typeFrench: 'Ventilateur-récupérateur de chaleur',
+      })
+    })
+
     it('retrieves all top level keys of the window data', async () => {
       let response = await request(server)
         .post('/graphql')
