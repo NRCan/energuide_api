@@ -27,6 +27,7 @@ def sample_raw() -> element.Element:
 
 
 BAD_DATA_XML = [
+    # This XML Block has non-numeric strings as attribute values in the <Measurements> tag
     """
 <Ceiling>
     <Label>Main attic</Label>
@@ -40,15 +41,19 @@ BAD_DATA_XML = [
     <Measurements area='bad' length='data' />
 </Ceiling>
     """,
+
+    # This XML block is missing the <Type> tag
     """
 <Ceiling>
     <Label>Main attic</Label>
     <Construction>
         <CeilingType nominalInsulation='2.864' rValue='2.9463' />
     </Construction>
-    <Measurements area='bad' length='data' />
+    <Measurements area='46.4515' length='23.875' />
 </Ceiling>
     """,
+
+    # This XML block is missing the attributes on the <Measurements> tag
     """
 <Ceiling>
     <Label>Main attic</Label>
@@ -59,7 +64,7 @@ BAD_DATA_XML = [
         </Type>
         <CeilingType/>
     </Construction>
-    <Measurements area='46.4515' length='23.875' />
+    <Measurements />
 </Ceiling>
     """,
 ]
