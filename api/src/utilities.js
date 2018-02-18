@@ -27,33 +27,22 @@ export function createQuery(fsa, filter) {
   }
 
   // { field: 'yearBuilt', gt: '1990' }
-  // TODO: DRY this up.
   if (filter) {
-    let value
+    for (let key in filter) {
+      // make sure the key exists in the comparators' keys
+      if (Object.keys(comparators).includes(key)) {
+        // if the value is a number
+        // - optionally starting with a minus sign
+        // - containing zero or one decimal places
+        // convert it to a float instead of a string
+        if (filter[key].match(/^-?\d+\.?\d+$/)) {
+          filter[key] = parseFloat(filter[key])
+        }
 
-    if (filter.gt) {
-      if (filter.gt.match(/^-?\d+\.?\d+$/)) {
-        value = parseFloat(filter.gt)
+        query['$and'].push({
+          [filter.field]: { [comparators[key]]: filter[key] },
+        })
       }
-      query['$and'].push({
-        [filter.field]: { [comparators.gt]: value || filter.gt },
-      })
-    }
-    if (filter.lt) {
-      if (filter.lt.match(/^-?\d+\.?\d+$/)) {
-        value = parseFloat(filter.lt)
-      }
-      query['$and'].push({
-        [filter.field]: { [comparators.lt]: value || filter.lt },
-      })
-    }
-    if (filter.eq) {
-      if (filter.eq.match(/^-?\d+\.?\d+$/)) {
-        value = parseFloat(filter.eq)
-      }
-      query['$and'].push({
-        [filter.field]: { [comparators.eq]: value || filter.eq },
-      })
     }
   }
 
