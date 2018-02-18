@@ -246,7 +246,7 @@ describe('queries', () => {
         tankVolumeLitres: 151.4,
         typeEnglish: "Natural gas storage tank",
         typeFrench: "Réservoir au gaz naturel",
-      })  
+      })
     })
 
     it('retrieves all top level keys of the floor data', async () => {
@@ -468,7 +468,7 @@ describe('queries', () => {
               query: `{
                  dwellings:dwellingsInFSA(
                   forwardSortationArea: "C1A"
-                  filter: {field: yearBuilt gt: "1900"}
+                  filter: {field: dwellingYearBuilt gt: "1900"}
                  ) {
                     results {
                       yearBuilt
@@ -489,16 +489,16 @@ describe('queries', () => {
               query: `{
                  dwellings:dwellingsInFSA(
                   forwardSortationArea: "C1A"
-                  filter: {field: city eq: "Charlottetown"}
+                  filter: {field: dwellingCity eq: "Charlottetown"}
                  ) {
                    results {
-                     yearBuilt
+                     city
                    }
                  }
                }`,
             })
           let { dwellings: { results: [first] } } = response.body.data
-          expect(first.yearBuilt).toEqual(1900)
+          expect(first.city).toEqual('Charlottetown')
         })
       })
 
@@ -511,7 +511,7 @@ describe('queries', () => {
               query: `{
                  dwellings:dwellingsInFSA(
                   forwardSortationArea: "C1A"
-                  filter: {field: yearBuilt lt: "2000"}
+                  filter: {field: dwellingYearBuilt lt: "2000"}
                  ) {
                      results {
                        yearBuilt
@@ -533,7 +533,7 @@ describe('queries', () => {
               query: `{
                  dwellings:dwellingsInFSA(
                   forwardSortationArea: "C1A"
-                  filter: {field: yearBuilt eq: "1900"}
+                  filter: {field: dwellingYearBuilt eq: "1900"}
                  ) {
                    results {
                      yearBuilt
