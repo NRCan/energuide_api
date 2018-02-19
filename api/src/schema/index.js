@@ -5,11 +5,16 @@ const Schema = i18n => {
   const typeDefs = `
     scalar ForwardSortationArea
 
+    enum Comparator {
+      gt
+      lt
+      eq
+    }
+
     input Filter {
       field: Field!
-      gt: String
-      lt: String
-      eq: String
+      comparator: Comparator!
+      value: String!
     }
 
     type Ventilation {

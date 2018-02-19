@@ -468,7 +468,7 @@ describe('queries', () => {
               query: `{
                  dwellings:dwellingsInFSA(
                   forwardSortationArea: "C1A"
-                  filter: {field: dwellingYearBuilt gt: "1900"}
+                  filter: {field: dwellingYearBuilt comparator: gt value: "1900"}
                  ) {
                     results {
                       yearBuilt
@@ -489,7 +489,7 @@ describe('queries', () => {
               query: `{
                  dwellings:dwellingsInFSA(
                   forwardSortationArea: "C1A"
-                  filter: {field: dwellingCity eq: "Charlottetown"}
+                  filter: {field: dwellingCity comparator: eq value: "Charlottetown"}
                  ) {
                    results {
                      city
@@ -503,7 +503,7 @@ describe('queries', () => {
       })
 
       describe('lt: less than', () => {
-        it('filters out results where the selected field has a value less than the selected value', async () => {
+        it('returns dwellings where the field is less than the given value', async () => {
           let response = await request(server)
             .post('/graphql')
             .set('Content-Type', 'application/json; charset=utf-8')
@@ -511,7 +511,7 @@ describe('queries', () => {
               query: `{
                  dwellings:dwellingsInFSA(
                   forwardSortationArea: "C1A"
-                  filter: {field: dwellingYearBuilt lt: "2000"}
+                  filter: {field: dwellingYearBuilt comparator: lt value: "2000"}
                  ) {
                      results {
                        yearBuilt
@@ -533,7 +533,7 @@ describe('queries', () => {
               query: `{
                  dwellings:dwellingsInFSA(
                   forwardSortationArea: "C1A"
-                  filter: {field: dwellingYearBuilt eq: "1900"}
+                  filter: {field: dwellingYearBuilt comparator: eq value: "1900"}
                  ) {
                    results {
                      yearBuilt
@@ -545,25 +545,6 @@ describe('queries', () => {
           let { dwellings: { results: [first] } } = response.body.data
           expect(first.yearBuilt).toEqual(1900)
         })
-      })
-
-      it('complains about multiple comparators', async () => {
-        let response = await request(server)
-          .post('/graphql')
-          .set('Content-Type', 'application/json; charset=utf-8')
-          .send({
-            query: `{
-               dwellingsInFSA(
-                forwardSortationArea: "M8H"
-                filter: {field: yearBuilt gt: "1979" lt: "1979"}
-              ) {
-                results {
-                 yearBuilt
-               }
-             }
-           }`,
-          })
-        expect(response.body).toHaveProperty('errors')
       })
     })
 
@@ -579,7 +560,8 @@ describe('queries', () => {
                   forwardSortationArea: "C1A"
                   filter: {
                     field: ventilationTypeEnglish
-                    eq: "220"
+                    comparator: eq
+                    value: "220"
                   }
                 ) {
                   results {
@@ -600,7 +582,7 @@ describe('queries', () => {
               query: `{
                  dwellings:dwellingsInFSA(
                   forwardSortationArea: "C1A"
-                  filter: {field: dwellingCity eq: "Charlottetown"}
+                  filter: {field: dwellingCity comparator: eq value: "Charlottetown"}
                  ) {
                    results {
                      city
@@ -622,7 +604,7 @@ describe('queries', () => {
               query: `{
                  dwellings:dwellingsInFSA(
                   forwardSortationArea: "C1A"
-                  filter: {field: dwellingYearBuilt lt: "2000"}
+                  filter: {field: dwellingYearBuilt comparator: lt value: "2000"}
                  ) {
                      results {
                        yearBuilt
@@ -644,7 +626,7 @@ describe('queries', () => {
               query: `{
                  dwellings:dwellingsInFSA(
                   forwardSortationArea: "C1A"
-                  filter: {field: dwellingYearBuilt eq: "1900"}
+                  filter: {field: dwellingYearBuilt comparator: eq value: "1900"}
                  ) {
                    results {
                      yearBuilt
