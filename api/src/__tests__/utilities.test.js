@@ -1,6 +1,5 @@
 import {
   comparators,
-  createQuery,
   hasMoreThanOneComparator,
 } from '../utilities'
 
