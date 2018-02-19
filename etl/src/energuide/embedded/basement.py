@@ -15,6 +15,13 @@ class FoundationType(enum.Enum):
     UNKNOWN = enum.auto()
 
 
+class FoundationType(enum.Enum):
+    BASEMENT = enum.auto()
+    CRAWLSPACE = enum.auto()
+    SLAB = enum.auto()
+    UNKNOWN = enum.auto()
+
+
 class WallType(enum.Enum):
     INTERIOR = enum.auto()
     EXTERIOR = enum.auto()
@@ -261,6 +268,8 @@ class Basement(_Basement):
             raise InvalidInputDataError(f'Invalid foundation type: {basement.tag}')
 
         floor = BasementFloor.from_data(basement.xpath('Floor')[0])
+
+        foundation_type = cls._derive_foundation_type(basement.tag)
 
         if floor.rectangular:
             length = typing.cast(distance.Distance, floor.length)
