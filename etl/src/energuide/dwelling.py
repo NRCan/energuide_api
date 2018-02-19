@@ -29,7 +29,7 @@ class EvaluationType(enum.Enum):
         elif code == cls.POST_RETROFIT.value:
             return EvaluationType.POST_RETROFIT
         else:
-            raise InvalidInputDataException(f'Inval code: {code}')
+            raise InvalidInputDataException(f'Invalid code: {code}')
 
 
 @enum.unique
