@@ -40,12 +40,12 @@ jobs:
           command: |
             yarn test
             yarn lint
-  python:
+  etl:
     docker:
       - image: circleci/python:3.6.1
       - image: mongo:3.6.2
 
-    working_directory: ~/repo/python
+    working_directory: ~/repo/etl
 
     steps:
       - checkout:
@@ -111,7 +111,7 @@ jobs:
       - image: circleci/python:3.6.1
       - image: mongo:3.6.2
 
-    working_directory: ~/repo/python
+    working_directory: ~/repo/etl
 
     steps:
       - checkout:
@@ -261,7 +261,7 @@ workflows:
   node_and_python:
     jobs:
       - node
-      - python
+      - etl
       - extract_endpoint
       - python_integration
       - node_integration:
