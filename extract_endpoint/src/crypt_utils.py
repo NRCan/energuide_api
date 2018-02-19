@@ -1,10 +1,10 @@
-import os
+import secrets
 import hmac
 import base64
 
 
 def get_salt(num_bytes=64) -> str:
-    return base64.b64encode(os.urandom(num_bytes)).decode('utf-8')
+    return base64.b64encode(secrets.token_bytes(num_bytes)).decode('utf-8')
 
 
 def sign_string(salt: str, key: str, data: str) -> str:
