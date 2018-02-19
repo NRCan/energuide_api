@@ -1,3 +1,4 @@
+import _pytest
 import pymongo
 from energuide import database
 from energuide import transform
@@ -20,8 +21,8 @@ def test_bad_data(database_coordinates: database.DatabaseCoordinates,
                   database_name: str,
                   collection: str,
                   energuide_zip_fixture: str,
-                  monkeypatch,
-                  capsys) -> None:
+                  monkeypatch: _pytest.monkeypatch.MonkeyPatch,
+                  capsys: _pytest.capture.CaptureFixture) -> None:
 
     def raise_error(*args) -> None: #pylint: disable=unused-argument
         raise InvalidEmbeddedDataTypeException(ceiling.Ceiling)
