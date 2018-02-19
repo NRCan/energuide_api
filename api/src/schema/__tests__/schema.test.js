@@ -223,7 +223,7 @@ describe('Schema', () => {
         'typeEnglish',
         'typeFrench',
         'tankVolumeLitres',
-        'TankVolumeGallon',
+        'tankVolumeGallon',
         'efficiency',
       ])
     })

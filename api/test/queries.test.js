@@ -217,6 +217,38 @@ describe('queries', () => {
       })
     })
 
+    it('retrieves all top level keys of the waterheater data', async () => {
+      let response = await request(server)
+        .post('/graphql')
+        .set('Content-Type', 'application/json; charset=utf-8')
+        .send({
+          query: `{
+          evaluationsFor(account: 189250) {
+            evaluations {
+               waterHeatings {
+                  typeEnglish
+                  typeFrench
+                  tankVolumeLitres
+                  tankVolumeGallon
+                  efficiency
+                }
+            }
+          }
+        }`,
+        })
+
+      let { evaluationsFor: { evaluations } } = response.body.data
+      let [first] = evaluations
+      let [waterHeatings] = first.waterHeatings
+      expect(waterHeatings).toEqual({
+        tankVolumeGallon: 39.995640800000004,
+        efficiency: 0.554,
+        tankVolumeLitres: 151.4,
+        typeEnglish: 'Natural gas storage tank',
+        typeFrench: 'Réservoir au gaz naturel',
+      })
+    })
+
     it('retrieves all top level keys of the floor data', async () => {
       let response = await request(server)
         .post('/graphql')
@@ -436,7 +468,7 @@ describe('queries', () => {
               query: `{
                  dwellings:dwellingsInFSA(
                   forwardSortationArea: "C1A"
-                  filter: {field: yearBuilt gt: "1900"}
+                  filter: {field: dwellingYearBuilt gt: "1900"}
                  ) {
                     results {
                       yearBuilt
@@ -457,16 +489,16 @@ describe('queries', () => {
               query: `{
                  dwellings:dwellingsInFSA(
                   forwardSortationArea: "C1A"
-                  filter: {field: city eq: "Charlottetown"}
+                  filter: {field: dwellingCity eq: "Charlottetown"}
                  ) {
                    results {
-                     yearBuilt
+                     city
                    }
                  }
                }`,
             })
           let { dwellings: { results: [first] } } = response.body.data
-          expect(first.yearBuilt).toEqual(1900)
+          expect(first.city).toEqual('Charlottetown')
         })
       })
 
@@ -479,7 +511,7 @@ describe('queries', () => {
               query: `{
                  dwellings:dwellingsInFSA(
                   forwardSortationArea: "C1A"
-                  filter: {field: yearBuilt lt: "2000"}
+                  filter: {field: dwellingYearBuilt lt: "2000"}
                  ) {
                      results {
                        yearBuilt
@@ -501,7 +533,118 @@ describe('queries', () => {
               query: `{
                  dwellings:dwellingsInFSA(
                   forwardSortationArea: "C1A"
-                  filter: {field: yearBuilt eq: "1900"}
+                  filter: {field: dwellingYearBuilt eq: "1900"}
+                 ) {
+                   results {
+                     yearBuilt
+                   }
+                 }
+               }`,
+            })
+
+          let { dwellings: { results: [first] } } = response.body.data
+          expect(first.yearBuilt).toEqual(1900)
+        })
+      })
+
+      it('complains about multiple comparators', async () => {
+        let response = await request(server)
+          .post('/graphql')
+          .set('Content-Type', 'application/json; charset=utf-8')
+          .send({
+            query: `{
+               dwellingsInFSA(
+                forwardSortationArea: "M8H"
+                filter: {field: yearBuilt gt: "1979" lt: "1979"}
+              ) {
+                results {
+                 yearBuilt
+               }
+             }
+           }`,
+          })
+        expect(response.body).toHaveProperty('errors')
+      })
+    })
+
+    describe('filter', () => {
+      describe('eq: equal to', () => {
+        it('fails like the real server', async () => {
+          let response = await request(server)
+            .post('/graphql')
+            .set('Content-Type', 'application/json; charset=utf-8')
+            .send({
+              query: `{
+                dwellingsInFSA(
+                  forwardSortationArea: "C1A"
+                  filter: {
+                    field: ventilationTypeEnglish
+                    eq: "220"
+                  }
+                ) {
+                  results {
+                    houseId
+                  }
+                }
+               }`,
+            })
+
+          expect(response.body).not.toHaveProperty('errors')
+        })
+
+        it('works on string fields', async () => {
+          let response = await request(server)
+            .post('/graphql')
+            .set('Content-Type', 'application/json; charset=utf-8')
+            .send({
+              query: `{
+                 dwellings:dwellingsInFSA(
+                  forwardSortationArea: "C1A"
+                  filter: {field: dwellingCity eq: "Charlottetown"}
+                 ) {
+                   results {
+                     city
+                   }
+                 }
+               }`,
+            })
+          let { dwellings: { results: [first] } } = response.body.data
+          expect(first.city).toEqual('Charlottetown')
+        })
+      })
+
+      describe('lt: less than', () => {
+        it('filters out results where the selected field has a value less than the selected value', async () => {
+          let response = await request(server)
+            .post('/graphql')
+            .set('Content-Type', 'application/json; charset=utf-8')
+            .send({
+              query: `{
+                 dwellings:dwellingsInFSA(
+                  forwardSortationArea: "C1A"
+                  filter: {field: dwellingYearBuilt lt: "2000"}
+                 ) {
+                     results {
+                       yearBuilt
+                    }
+                 }
+               }`,
+            })
+          let { dwellings: { results: [first] } } = response.body.data
+          expect(first.yearBuilt).toEqual(1900)
+        })
+      })
+
+      describe('eq: equal to', () => {
+        it('filters out results where the selected field has a value equal to the selected value', async () => {
+          let response = await request(server)
+            .post('/graphql')
+            .set('Content-Type', 'application/json; charset=utf-8')
+            .send({
+              query: `{
+                 dwellings:dwellingsInFSA(
+                  forwardSortationArea: "C1A"
+                  filter: {field: dwellingYearBuilt eq: "1900"}
                  ) {
                    results {
                      yearBuilt

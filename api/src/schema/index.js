@@ -35,7 +35,7 @@ const Schema = i18n => {
       typeEnglish: String
       typeFrench: String
       tankVolumeLitres: Float
-      TankVolumeGallon: Float
+      tankVolumeGallon: Float
       efficiency: Float
     }
 
@@ -157,11 +157,16 @@ const Schema = i18n => {
     }
 
     enum Field {
-      houseId
-      yearBuilt
-      city
-      region
-      forwardSortationArea
+      dwellingHouseId
+      dwellingYearBuilt
+      dwellingCity
+      dwellingRegion
+      dwellingForwardSortationArea
+      ventilationTypeEnglish
+      ventilationTypeFrench
+      ventilationAirFlowRateLps
+      ventilationAirFlowRateCfm
+      ventilationEfficiency
     }
   `
 

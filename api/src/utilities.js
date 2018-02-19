@@ -17,45 +17,11 @@ export function hasMoreThanOneComparator(filter) {
   }
 }
 
-export function createQuery(fsa, filter) {
-  let query = {
-    $and: [
-      {
-        forwardSortationArea: fsa,
-      },
-    ],
-  }
+function capitalizeFirstLetter(string) {
+  return string.charAt(0).toUpperCase() + string.slice(1)
+}
 
-  // { field: 'yearBuilt', gt: '1990' }
-  // TODO: DRY this up.
-  if (filter) {
-    let value
-
-    if (filter.gt) {
-      if (filter.gt.match(/^-?\d+\.?\d+$/)) {
-        value = parseFloat(filter.gt)
-      }
-      query['$and'].push({
-        [filter.field]: { [comparators.gt]: value || filter.gt },
-      })
-    }
-    if (filter.lt) {
-      if (filter.lt.match(/^-?\d+\.?\d+$/)) {
-        value = parseFloat(filter.lt)
-      }
-      query['$and'].push({
-        [filter.field]: { [comparators.lt]: value || filter.lt },
-      })
-    }
-    if (filter.eq) {
-      if (filter.eq.match(/^-?\d+\.?\d+$/)) {
-        value = parseFloat(filter.eq)
-      }
-      query['$and'].push({
-        [filter.field]: { [comparators.eq]: value || filter.eq },
-      })
-    }
-  }
-
-  return query
+export function generateName(type, attr) {
+  let capitalized = capitalizeFirstLetter(attr)
+  return `${type}${capitalized}`
 }
