@@ -63,7 +63,7 @@ def test_upload_stream_to_azure(sample_storage_coordinates: StorageCoordinates,
                                 sample_stream_content: str,
                                 sample_filename: str) -> None:
     actual = upload_stream_to_azure(sample_storage_coordinates, sample_stream, sample_filename)
-    assert 'success' in actual.lower()
+    assert 'succeeded' in actual.lower()
     assert sample_filename in [blob.name for blob in sample_block_blob_service.list_blobs(sample_container)]
     actual = sample_block_blob_service.get_blob_to_text(sample_container, sample_filename)
     sample_block_blob_service.delete_blob(sample_container, sample_filename)
