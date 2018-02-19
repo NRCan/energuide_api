@@ -6,6 +6,7 @@ from energuide.embedded import code
 from energuide.embedded import distance
 from energuide.embedded import insulation
 from energuide.embedded import window
+from energuide.exceptions import InvalidEmbeddedDataTypeException
 
 
 @pytest.fixture
@@ -20,6 +21,41 @@ def raw_sample() -> element.Element:
     </Window>
     """
     return element.Element.from_string(doc)
+
+
+BAD_XML_DATA = [
+    # This XML block is missing the <Label> tag
+    """
+    <Window>
+        <Construction>
+            <Type rValue='0.4779'>User specified</Type>
+        </Construction>
+        <Measurements width='1967.738' height='1322.0699' />
+    </Window>
+    """,
+
+    # This XML block has non-numeric strings as attribute values
+    """
+    <Window>
+        <Label>East0001</Label>
+        <Construction>
+            <Type rValue='bad'>User specified</Type>
+        </Construction>
+        <Measurements width='data' height='here' />
+    </Window>
+    """,
+
+    # This XML block is missing the attributes of the <Measurements> tag
+    """
+    <Window>
+        <Label>East0001</Label>
+        <Construction>
+            <Type>User specified</Type>
+        </Construction>
+        <Measurements />
+    </Window>
+    """
+]
 
 
 @pytest.fixture
@@ -55,6 +91,15 @@ def test_from_data(raw_sample: element.Element,
                    sample: window.Window) -> None:
     output = window.Window.from_data(raw_sample, sample_window_code)
     assert output == sample
+
+
+@pytest.mark.parametrize("bad_xml", BAD_XML_DATA)
+def test_bad_data(bad_xml: str) -> None:
+    window_node = element.Element.from_string(bad_xml)
+    with pytest.raises(InvalidEmbeddedDataTypeException) as excinfo:
+        window.Window.from_data(window_node, {})
+
+    assert excinfo.value.data_class == window.Window
 
 
 def test_from_data_missing_codes() -> None:
