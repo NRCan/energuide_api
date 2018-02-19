@@ -73,7 +73,15 @@ jobs:
             . ~/.venv/bin/activate
             pylint src tests
             mypy src tests
-            pytest tests
+            pytest --cov=energuide tests
+            percent=$(coverage report | tail -n 1 | sed "s/TOTAL[[:blank:]]*[0-9]*[[:blank:]]*[0-9]*[[:blank:]]*//" | rev | cut -c 2- | rev)
+            echo Test coverage is $percent%
+            if (( $percent < 80 ));
+            then
+              echo Failing build due to less than 80% test coverage
+              exit 1
+            fi
+
   extract_endpoint:
     docker:
       - image: circleci/python:3.6.1
