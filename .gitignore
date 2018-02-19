@@ -7,4 +7,10 @@ dist
 **/.cache/
 **/.mypy_cache/
 python/env
+extract_endpoint/env
 .python-version
+.env
+/python/.idea
+/.vs
+/api/src/.vs
+/api/package-lock.json

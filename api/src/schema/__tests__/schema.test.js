@@ -38,8 +38,8 @@ describe('Schema', () => {
       expect(fields).toEqual([
         'typeEnglish',
         'typeFrench',
-        'rsi',
-        'rValue',
+        'insulationRsi',
+        'insulationR',
         'uFactor',
         'uFactorImperial',
         'areaMetres',
@@ -62,14 +62,16 @@ describe('Schema', () => {
         'structureTypeFrench',
         'componentTypeSizeEnglish',
         'componentTypeSizeFrench',
-        'nominalRsi',
-        'nominalR',
-        'effectiveRsi',
-        'effectiveR',
+        'insulationNominalRsi',
+        'insulationNominalR',
+        'insulationEffectiveRsi',
+        'insulationEffectiveR',
         'areaMetres',
         'areaFeet',
-        'perimeter',
-        'height',
+        'perimeterMetres',
+        'perimeterFeet',
+        'heightMetres',
+        'heightFeet',
       ])
     })
   })
@@ -86,10 +88,10 @@ describe('Schema', () => {
         'label',
         'typeEnglish',
         'typeFrench',
-        'nominalRsi',
-        'nominalR',
-        'effectiveRsi',
-        'effectiveR',
+        'insulationNominalRsi',
+        'insulationNominalR',
+        'insulationEffectiveRsi',
+        'insulationEffectiveR',
         'areaMetres',
         'areaFeet',
         'lengthMetres',
@@ -113,6 +115,7 @@ describe('Schema', () => {
         'modificationDate',
         'ceilings',
         'walls',
+        'floors',
         'doors',
         'windows',
         'heatedFloorArea',
@@ -132,8 +135,8 @@ describe('Schema', () => {
       const fields = Object.keys(Window.getFields())
       expect(fields).toEqual([
         'label',
-        'rsi',
-        'rvalue',
+        'insulationRsi',
+        'insulationR',
         'glazingTypesEnglish',
         'glazingTypesFrench',
         'coatingsTintsEnglish',
@@ -148,8 +151,10 @@ describe('Schema', () => {
         'frameMaterialFrench',
         'areaMetres',
         'areaFeet',
-        'width',
-        'height',
+        'widthMetres',
+        'widthFeet',
+        'heightMetres',
+        'heightFeet',
       ])
     })
   })
@@ -204,7 +209,7 @@ describe('Schema', () => {
         'airFlowRateCfm',
       ])
     })
-    })
+  })
 
   describe('WaterHeater', () => {
     it('is defined', () => {
@@ -218,8 +223,30 @@ describe('Schema', () => {
         'typeEnglish',
         'typeFrench',
         'tankVolumeLitres',
-        'TankVolumeGallon',
+        'tankVolumeGallon',
         'efficiency',
+      ])
+    })
+  })
+
+  describe('Floor', () => {
+    it('is defined', () => {
+      expect(typeMap).toHaveProperty('Floor')
+    })
+
+    it('has the expected fields', () => {
+      const { Floor } = typeMap
+      const fields = Object.keys(Floor.getFields())
+      expect(fields).toEqual([
+        'label',
+        'insulationNominalRsi',
+        'insulationNominalR',
+        'insulationEffectiveRsi',
+        'insulationEffectiveR',
+        'areaMetres',
+        'areaFeet',
+        'lengthMetres',
+        'lengthFeet',
       ])
     })
   })
