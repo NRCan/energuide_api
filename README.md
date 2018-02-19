@@ -46,7 +46,7 @@ Once the script runs through, you'll need to import the data into your database,
 
 #### importing data
 
-The Python code in `/python` transforms the data from the default formatting set by NRCAN, and then inserts it into our Mongo database. More details can be found in the [README](https://github.com/cds-snc/nrcan_api/blob/master/python/README.md).
+The Python code in `/etl` transforms the data from the default formatting set by NRCAN, and then inserts it into our Mongo database. More details can be found in the [README](https://github.com/cds-snc/nrcan_api/blob/master/etl/README.md).
 
 For local development, run
 ```
@@ -90,7 +90,7 @@ This will
 
 ### Install required software
 
-1. Download and install python from [here](https://www.python.org/downloads/release/python-364/).
+1. Download and install Python from [here](https://www.python.org/downloads/release/python-364/).
 Version 3.6.4 or higher is required.
 
 2. Download current version of mongoDB community server from [here](https://www.mongodb.com/download-center#community).
@@ -111,11 +111,11 @@ If version is not shown, the path to the library has to be added to the 'PATH' e
 
 Installing Python applications in a `virtualenv` is considered best practice. To do so, run:
 ```sh
-cd \python
+cd \etl
 python -m venv env
 env\Scripts\activate.bat
 ```
-Inside an activated `virtualenv`, and from the python folder of the project, run:
+Inside an activated `virtualenv`, and from the etl folder of the project, run:
 
 ```sh
 pip install -r requirements.txt
