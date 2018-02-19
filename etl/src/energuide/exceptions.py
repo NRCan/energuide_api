@@ -1,5 +1,6 @@
 import typing
 
+
 class EnerguideException(Exception):
     pass
 
