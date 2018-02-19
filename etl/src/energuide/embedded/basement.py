@@ -15,6 +15,13 @@ class FoundationType(enum.Enum):
     UNKNOWN = enum.auto()
 
 
+class FoundationType(enum.Enum):
+    BASEMENT = enum.auto()
+    CRAWLSPACE = enum.auto()
+    SLAB = enum.auto()
+    UNKNOWN = enum.auto()
+
+
 class WallType(enum.Enum):
     INTERIOR = enum.auto()
     EXTERIOR = enum.auto()
