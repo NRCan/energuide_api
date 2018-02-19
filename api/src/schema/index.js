@@ -157,11 +157,16 @@ const Schema = i18n => {
     }
 
     enum Field {
-      houseId
-      yearBuilt
-      city
-      region
-      forwardSortationArea
+      dwellingHouseId
+      dwellingYearBuilt
+      dwellingCity
+      dwellingRegion
+      dwellingForwardSortationArea
+      ventilationTypeEnglish
+      ventilationTypeFrench
+      ventilationAirFlowRateLps
+      ventilationAirFlowRateCfm
+      ventilationEfficiency
     }
   `
 

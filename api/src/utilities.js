@@ -17,34 +17,11 @@ export function hasMoreThanOneComparator(filter) {
   }
 }
 
-export function createQuery(fsa, filter) {
-  let query = {
-    $and: [
-      {
-        forwardSortationArea: fsa,
-      },
-    ],
-  }
+function capitalizeFirstLetter(string) {
+  return string.charAt(0).toUpperCase() + string.slice(1)
+}
 
-  // { field: 'yearBuilt', gt: '1990' }
-  if (filter) {
-    for (let key in filter) {
-      // make sure the key exists in the comparators' keys
-      if (Object.keys(comparators).includes(key)) {
-        // if the value is a number
-        // - optionally starting with a minus sign
-        // - containing zero or one decimal places
-        // convert it to a float instead of a string
-        if (filter[key].match(/^-?\d+\.?\d+$/)) {
-          filter[key] = parseFloat(filter[key])
-        }
-
-        query['$and'].push({
-          [filter.field]: { [comparators[key]]: filter[key] },
-        })
-      }
-    }
-  }
-
-  return query
+export function generateName(type, attr) {
+  let capitalized = capitalizeFirstLetter(attr)
+  return `${type}${capitalized}`
 }
