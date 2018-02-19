@@ -87,8 +87,6 @@ jobs:
         environment:
           executable=blob
 
-      - image: microsoft/azure-cli
-
     working_directory: ~/repo/extract_endpoint
 
     steps:
@@ -98,6 +96,15 @@ jobs:
       # Download and cache dependencies
       - restore_cache:
           key: deps2-{{ .Branch }}-{{ checksum "requirements.txt" }}
+
+      - run:
+          name: Install packages
+          command: |
+            sudo apt-get update
+            echo "deb [arch=amd64] https://packages.microsoft.com/repos/azure-cli/ wheezy main" | sudo tee /etc/apt/sources.list.d/azure-cli.list
+            sudo apt-key adv --keyserver packages.microsoft.com --recv-keys 52E16F86FEE04B979B07E28DB02C46DF417A0893
+            sudo apt-get install apt-transport-https
+            sudo apt-get update && sudo apt-get install azure-cli
 
       - run:
           name: Installing dependencies
