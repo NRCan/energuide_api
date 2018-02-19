@@ -17,59 +17,6 @@ describe('Utilities', () => {
     })
   })
 
-  describe('createQuery', () => {
-    describe('with a greater than filter', () => {
-      it('returns a MongoDB $gt query object', () => {
-        let fsa = 'C1A'
-        let filter = { field: 'yearBuilt', gt: '2000' }
-
-        let query = createQuery(fsa, filter)
-
-        expect(query).toEqual({
-          $and: [{ forwardSortationArea: 'C1A' }, { yearBuilt: { $gt: 2000 } }],
-        })
-      })
-    })
-
-    describe('with a less than filter', () => {
-      it('returns a MongoDB $lt query object', () => {
-        let fsa = 'C1A'
-        let filter = { field: 'yearBuilt', lt: '2000' }
-
-        let query = createQuery(fsa, filter)
-
-        expect(query).toEqual({
-          $and: [{ forwardSortationArea: 'C1A' }, { yearBuilt: { $lt: 2000 } }],
-        })
-      })
-    })
-
-    describe('with an equal to filter', () => {
-      it('returns a MongoDB $eq query object', () => {
-        let fsa = 'C1A'
-        let filter = { field: 'yearBuilt', eq: '2000' }
-
-        let query = createQuery(fsa, filter)
-
-        expect(query).toEqual({
-          $and: [{ forwardSortationArea: 'C1A' }, { yearBuilt: { $eq: 2000 } }],
-        })
-      })
-    })
-
-    describe('with no filter', () => {
-      it('returns a MongoDB $eq query object', () => {
-        let fsa = 'C1A'
-
-        let query = createQuery(fsa, undefined)
-
-        expect(query).toEqual({
-          $and: [{ forwardSortationArea: 'C1A' }],
-        })
-      })
-    })
-  })
-
   describe('hasMoreThanOneComparator()', () => {
     it('returns true if more than one comparator appears in a filter object', () => {
       let filter = { field: 'yearBuilt', gt: '1990', lt: '1990' }

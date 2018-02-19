@@ -1,10 +1,7 @@
 import ForwardSortationArea from './types/ForwardSortationArea'
 import MongoPaging from 'mongo-cursor-pagination'
 import { GraphQLError } from 'graphql'
-import {
-  comparators,
-  hasMoreThanOneComparator,
-} from '../utilities'
+import { comparators, hasMoreThanOneComparator } from '../utilities'
 /* eslint-disable import/named */
 import {
   dwellingHouseId,
@@ -52,7 +49,6 @@ const resolvers = {
         ],
       }
 
-      // { field: 'yearBuilt', gt: '1990' }
       if (filter) {
         for (let key in filter) {
           // make sure the key exists in the comparators' keys
@@ -71,7 +67,7 @@ const resolvers = {
             // back to a function which accepts a matcher and generates the
             // query we need to find that field.
             // eslint-disable-next-line no-eval
-            let queryGenerator =  eval(filter.field)
+            let queryGenerator = eval(filter.field)
             let attrQuery = queryGenerator({
               [comparators[key]]: filter[key],
             })
@@ -79,8 +75,6 @@ const resolvers = {
           }
         }
       }
-
-      // let query = createQuery(forwardSortationArea, filter)
 
       let result = await MongoPaging.find(client, {
         query,
