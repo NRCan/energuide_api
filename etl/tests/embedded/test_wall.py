@@ -6,7 +6,7 @@ from energuide.embedded import code
 from energuide.embedded import distance
 from energuide.embedded import insulation
 from energuide.embedded import wall
-from energuide.exceptions import InvalidEmbeddedDataTypeException
+from energuide.exceptions import InvalidEmbeddedDataTypeError
 
 
 @pytest.fixture
@@ -111,7 +111,7 @@ def test_from_data_missing_codes() -> None:
 @pytest.mark.parametrize("bad_xml", BAD_XML_DATA)
 def test_bad_data(bad_xml: str) -> None:
     wall_node = element.Element.from_string(bad_xml)
-    with pytest.raises(InvalidEmbeddedDataTypeException) as excinfo:
+    with pytest.raises(InvalidEmbeddedDataTypeError) as excinfo:
         wall.Wall.from_data(wall_node, {})
 
     assert excinfo.value.data_class == wall.Wall

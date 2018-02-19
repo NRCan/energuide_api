@@ -1,9 +1,9 @@
 import typing
 from lxml import etree
-from energuide.exceptions import EnerguideException
+from energuide.exceptions import EnerguideError
 
 
-class MalformedXmlError(EnerguideException):
+class MalformedXmlError(EnerguideError):
     pass
 
 

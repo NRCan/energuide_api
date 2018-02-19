@@ -4,7 +4,7 @@ from energuide.embedded import code
 from energuide.embedded import insulation
 from energuide.embedded import distance
 from energuide import element
-from energuide.exceptions import InvalidEmbeddedDataTypeException
+from energuide.exceptions import InvalidEmbeddedDataTypeError
 
 
 class _Wall(typing.NamedTuple):
@@ -36,7 +36,7 @@ class Wall(_Wall):
                 height=distance.Distance(float(wall.xpath('Measurements/@height')[0])),
             )
         except (AssertionError, ValueError, IndexError) as exc:
-            raise InvalidEmbeddedDataTypeException(Wall) from exc
+            raise InvalidEmbeddedDataTypeError(Wall) from exc
 
     @property
     def _wall_area(self) -> area.Area:

@@ -1,19 +1,19 @@
 import typing
 
 
-class EnerguideException(Exception):
+class EnerguideError(Exception):
     pass
 
 
-class InvalidGroupSizeException(EnerguideException):
+class InvalidGroupSizeError(EnerguideError):
     pass
 
 
-class InvalidInputDataException(EnerguideException):
+class InvalidInputDataError(EnerguideError):
     pass
 
 
-class InvalidEmbeddedDataTypeException(EnerguideException):
+class InvalidEmbeddedDataTypeError(EnerguideError):
 
     def __init__(self, data_class: type, *args: typing.Tuple, **kwargs: typing.Dict) -> None:
         super().__init__(*args, **kwargs)

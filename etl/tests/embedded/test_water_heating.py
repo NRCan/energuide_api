@@ -1,7 +1,7 @@
 import pytest
 from energuide import element
 from energuide.embedded import water_heating
-from energuide.exceptions import InvalidEmbeddedDataTypeException
+from energuide.exceptions import InvalidEmbeddedDataTypeError
 
 
 @pytest.fixture
@@ -193,7 +193,7 @@ def test_from_data(sample: element.Element) -> None:
 @pytest.mark.parametrize("bad_xml", BAD_XML_DATA)
 def test_bad_data(bad_xml: str) -> None:
     water_heating_node = element.Element.from_string(bad_xml)
-    with pytest.raises(InvalidEmbeddedDataTypeException) as excinfo:
+    with pytest.raises(InvalidEmbeddedDataTypeError) as excinfo:
         water_heating.WaterHeating.from_data(water_heating_node)
 
     assert excinfo.value.data_class == water_heating.WaterHeating
