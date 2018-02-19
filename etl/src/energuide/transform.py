@@ -1,4 +1,27 @@
-from energuide import database, reader, dwelling
+import typing
+from energuide import database
+from energuide import reader
+from energuide import dwelling
+from energuide import logging
+from energuide.exceptions import InvalidEmbeddedDataTypeException
+from energuide.exceptions import EnerguideException
+
+
+LOGGER = logging.get_logger(__name__)
+
+
+def _generate_dwellings(grouped: typing.Iterable[typing.List[reader.InputData]]) -> typing.Iterator[dwelling.Dwelling]:
+    for group in grouped:
+        try:
+            dwell = dwelling.Dwelling.from_group(group)
+            yield dwell
+        except InvalidEmbeddedDataTypeException as exc:
+            files = [str(file.get('jsonFileName')) for file in group]
+            failing_type = exc.data_class
+            LOGGER.error(f'Files: "{", ".join(files)}": {failing_type.__name__}')
+        except EnerguideException as exc:
+            files = [str(file.get('jsonFileName')) for file in group]
+            LOGGER.error(f'Files: "{", ".join(files)}" - {exc}')
 
 
 def run(coords: database.DatabaseCoordinates,
@@ -8,5 +31,5 @@ def run(coords: database.DatabaseCoordinates,
 
     raw_data = reader.read(filename)
     grouped = reader.grouper(raw_data, dwelling.Dwelling.GROUPING_FIELD)
-    dwellings = (dwelling.Dwelling.from_group(group) for group in grouped)
+    dwellings = _generate_dwellings(grouped)
     database.load(coords, database_name, collection, dwellings)

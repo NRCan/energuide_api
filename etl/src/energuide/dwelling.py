@@ -29,7 +29,7 @@ class EvaluationType(enum.Enum):
         elif code == cls.POST_RETROFIT.value:
             return EvaluationType.POST_RETROFIT
         else:
-            raise InvalidInputDataException()
+            raise InvalidInputDataException(f'Inval code: {code}')
 
 
 @enum.unique
@@ -296,7 +296,7 @@ class Dwelling:
                 evaluations=evaluations,
             )
         else:
-            raise InvalidGroupSizeException()
+            raise InvalidGroupSizeException(f'Invalid group size "{len(data)}". Groups must be size 2')
 
     @classmethod
     def from_group(cls, data: typing.List[reader.InputData]) -> 'Dwelling':
