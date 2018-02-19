@@ -5,6 +5,7 @@ from energuide import bilingual
 from energuide.embedded import area
 from energuide.embedded import distance
 from energuide.embedded import insulation
+from energuide.exceptions import InvalidInputDataError
 
 
 class FoundationType(enum.Enum):
@@ -239,7 +240,6 @@ class Basement(_Basement):
     }
 
     _FOUNDATION_TRANSLATIONS = {
-        FoundationType.UNKNOWN: bilingual.Bilingual(english='', french=''),
         FoundationType.BASEMENT: bilingual.Bilingual(
             english='Basement',
             french='Sous-sol',
@@ -256,9 +256,11 @@ class Basement(_Basement):
 
     @classmethod
     def from_data(cls, basement: element.Element) -> 'Basement':
-        floor = BasementFloor.from_data(basement.xpath('Floor')[0])
-
         foundation_type = cls._derive_foundation_type(basement.tag)
+        if foundation_type is FoundationType.UNKNOWN:
+            raise InvalidInputDataError(f'Invalid foundation type: {basement.tag}')
+
+        floor = BasementFloor.from_data(basement.xpath('Floor')[0])
 
         if floor.rectangular:
             length = typing.cast(distance.Distance, floor.length)
@@ -303,15 +305,15 @@ class Basement(_Basement):
         return Basement._derive_material(self.configuration_type)
 
     def to_dict(self) -> typing.Dict[str, typing.Any]:
-        material = self._MATERIAL_TRANSLATIONS[self.material]
-        foundation = self._FOUNDATION_TRANSLATIONS[self.foundation_type]
+        material = self._MATERIAL_TRANSLATIONS.get(self.material)
+        foundation = self._FOUNDATION_TRANSLATIONS.get(self.foundation_type)
         return {
-            'foundationTypeEnglish': foundation.english,
-            'foundationTypeFrench': foundation.french,
+            'foundationTypeEnglish': foundation.english if foundation else None,
+            'foundationTypeFrench': foundation.french if foundation else None,
             'label': self.label,
             'configurationType': self.configuration_type,
-            'materialEnglish': material.english,
-            'materialFrench': material.french,
+            'materialEnglish': material.english if material else None,
+            'materialFrench': material.french if material else None,
             'wall': [wall.to_dict() for wall in self.walls],
             'floor': self.floor.to_dict(),
             'header': self.header.to_dict(),
