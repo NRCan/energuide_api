@@ -7,17 +7,17 @@ from azure_utils import StorageCoordinates, upload_stream_to_azure, EnvVariables
 
 
 @pytest.fixture
-def sample_account() -> typing.Optional[str]:
+def sample_account() -> str:
     return os.environ.get(EnvVariables.account.value, DefaultVariables.account.value)
 
 
 @pytest.fixture
-def sample_key() -> typing.Optional[str]:
+def sample_key() -> str:
     return os.environ.get(EnvVariables.key.value, DefaultVariables.key.value)
 
 
 @pytest.fixture
-def sample_container() -> typing.Optional[str]:
+def sample_container() -> str:
     return os.environ.get(EnvVariables.container.value, DefaultVariables.container.value)
 
 
@@ -27,9 +27,9 @@ def sample_domain() -> typing.Optional[str]:
 
 
 @pytest.fixture
-def sample_storage_coordinates(sample_account: typing.Optional[str],
-                               sample_key: typing.Optional[str],
-                               sample_container: typing.Optional[str],
+def sample_storage_coordinates(sample_account: str,
+                               sample_key: str,
+                               sample_container: str,
                                sample_domain: typing.Optional[str]) -> StorageCoordinates:
     return StorageCoordinates(account=sample_account, key=sample_key,
                               container=sample_container, domain=sample_domain)
@@ -67,4 +67,4 @@ def test_upload_stream_to_azure(sample_storage_coordinates: StorageCoordinates,
     assert sample_filename in [blob.name for blob in sample_block_blob_service.list_blobs(sample_container)]
     actual = sample_block_blob_service.get_blob_to_text(sample_container, sample_filename)
     sample_block_blob_service.delete_blob(sample_container, sample_filename)
-    assert actual.content == sample_stream_content
+    assert actual == sample_stream_content
