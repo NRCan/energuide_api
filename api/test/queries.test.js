@@ -546,25 +546,6 @@ describe('queries', () => {
           expect(first.yearBuilt).toEqual(1900)
         })
       })
-
-      it('complains about multiple comparators', async () => {
-        let response = await request(server)
-          .post('/graphql')
-          .set('Content-Type', 'application/json; charset=utf-8')
-          .send({
-            query: `{
-               dwellingsInFSA(
-                forwardSortationArea: "M8H"
-                filter: {field: yearBuilt gt: "1979" lt: "1979"}
-              ) {
-                results {
-                 yearBuilt
-               }
-             }
-           }`,
-          })
-        expect(response.body).toHaveProperty('errors')
-      })
     })
 
     describe('filter', () => {
@@ -658,24 +639,6 @@ describe('queries', () => {
         })
       })
 
-      it('complains about multiple comparators', async () => {
-        let response = await request(server)
-          .post('/graphql')
-          .set('Content-Type', 'application/json; charset=utf-8')
-          .send({
-            query: `{
-               dwellingsInFSA(
-                forwardSortationArea: "M8H"
-                filter: {field: yearBuilt gt: "1979" lt: "1979"}
-              ) {
-                results {
-                 yearBuilt
-               }
-             }
-           }`,
-          })
-        expect(response.body).toHaveProperty('errors')
-      })
     })
 
     it('gets evalutations within a Forward Sortation Area', async () => {
