@@ -17,8 +17,8 @@ from energuide.embedded import window
 from energuide.embedded import water_heating
 from energuide.embedded import ventilation
 from energuide.embedded import heated_floor_area
-from energuide.exceptions import InvalidInputDataException
-from energuide.exceptions import InvalidGroupSizeException
+from energuide.exceptions import InvalidInputDataError
+from energuide.exceptions import InvalidGroupSizeError
 
 
 # pylint: disable=no-self-use
@@ -579,14 +579,14 @@ class TestParsedDwellingDataRow:
 
     def test_bad_postal_code(self, sample_input_d: reader.InputData) -> None:
         sample_input_d['forwardSortationArea'] = 'K16'
-        with pytest.raises(InvalidInputDataException):
+        with pytest.raises(InvalidInputDataError):
             dwelling.ParsedDwellingDataRow.from_row(sample_input_d)
 
     def test_from_bad_row(self) -> None:
         input_data = {
             'EVAL_ID': 123
         }
-        with pytest.raises(InvalidInputDataException) as ex:
+        with pytest.raises(InvalidInputDataError) as ex:
             dwelling.ParsedDwellingDataRow.from_row(input_data)
         assert 'EVAL_TYPE' in ex.exconly()
         assert 'EVAL_ID' not in ex.exconly()
@@ -644,7 +644,7 @@ class TestDwelling:
 
     def test_no_data(self) -> None:
         data: typing.List[typing.Any] = []
-        with pytest.raises(InvalidGroupSizeException):
+        with pytest.raises(InvalidGroupSizeError):
             dwelling.Dwelling.from_group(data)
 
     def test_to_dict(self, sample: typing.List[reader.InputData]) -> None:

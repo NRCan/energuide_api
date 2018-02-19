@@ -13,8 +13,8 @@ from energuide.embedded import window
 from energuide.embedded import ventilation
 from energuide.embedded import water_heating
 from energuide.embedded import heated_floor_area
-from energuide.exceptions import InvalidGroupSizeException
-from energuide.exceptions import InvalidInputDataException
+from energuide.exceptions import InvalidGroupSizeError
+from energuide.exceptions import InvalidInputDataError
 
 
 @enum.unique
@@ -29,7 +29,7 @@ class EvaluationType(enum.Enum):
         elif code == cls.POST_RETROFIT.value:
             return EvaluationType.POST_RETROFIT
         else:
-            raise InvalidInputDataException(f'Invalid code: {code}')
+            raise InvalidInputDataError(f'Invalid code: {code}')
 
 
 @enum.unique
@@ -127,7 +127,7 @@ class ParsedDwellingDataRow(_ParsedDwellingDataRow):
         checker = validator.DwellingValidator(cls._SCHEMA, allow_unknown=True, ignore_none_values=True)
         if not checker.validate(row):
             error_keys = ', '.join(checker.errors.keys())
-            raise InvalidInputDataException(f'Validator failed on keys: {error_keys}')
+            raise InvalidInputDataError(f'Validator failed on keys: {error_keys}')
 
         parsed = checker.document
         codes = code.Codes.from_data(parsed['codes'])
@@ -296,7 +296,7 @@ class Dwelling:
                 evaluations=evaluations,
             )
         else:
-            raise InvalidGroupSizeException(f'Invalid group size "{len(data)}". Groups must be size 2')
+            raise InvalidGroupSizeError(f'Invalid group size "{len(data)}". Groups must be size 2')
 
     @classmethod
     def from_group(cls, data: typing.List[reader.InputData]) -> 'Dwelling':

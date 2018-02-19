@@ -2,7 +2,7 @@ import enum
 import typing
 from energuide import element
 from energuide import bilingual
-from energuide.exceptions import InvalidEmbeddedDataTypeException
+from energuide.exceptions import InvalidEmbeddedDataTypeError
 
 
 class VentilationType(enum.Enum):
@@ -73,7 +73,7 @@ class Ventilation(_Ventilation):
                 efficiency=float(ventilation.attrib['efficiency1']),
             )
         except (KeyError, ValueError) as exc:
-            raise InvalidEmbeddedDataTypeException(Ventilation) from exc
+            raise InvalidEmbeddedDataTypeError(Ventilation) from exc
 
     @property
     def air_flow_rate_cmf(self):

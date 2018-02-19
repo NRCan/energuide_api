@@ -4,7 +4,7 @@ from energuide import element
 from energuide.embedded import door
 from energuide.embedded import distance
 from energuide.embedded import insulation
-from energuide.exceptions import InvalidEmbeddedDataTypeException
+from energuide.exceptions import InvalidEmbeddedDataTypeError
 
 
 @pytest.fixture
@@ -84,7 +84,7 @@ def test_from_data(sample_raw: element.Element, sample: door.Door) -> None:
 @pytest.mark.parametrize("bad_xml", BAD_DATA_XML)
 def test_bad_data(bad_xml: str) -> None:
     door_node = element.Element.from_string(bad_xml)
-    with pytest.raises(InvalidEmbeddedDataTypeException) as excinfo:
+    with pytest.raises(InvalidEmbeddedDataTypeError) as excinfo:
         door.Door.from_data(door_node)
 
     assert excinfo.value.data_class == door.Door

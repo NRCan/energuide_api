@@ -3,7 +3,7 @@ import pytest
 from energuide import bilingual
 from energuide import element
 from energuide.embedded import code
-from energuide.exceptions import InvalidEmbeddedDataTypeException
+from energuide.exceptions import InvalidEmbeddedDataTypeError
 
 
 @pytest.fixture
@@ -195,7 +195,7 @@ def test_window_code_from_data(raw_window_code: element.Element, window_code: co
 @pytest.mark.parametrize("bad_xml", BAD_WALL_CODE_XML)
 def test_bad_wall_code(bad_xml: str) -> None:
     code_node = element.Element.from_string(bad_xml)
-    with pytest.raises(InvalidEmbeddedDataTypeException) as excinfo:
+    with pytest.raises(InvalidEmbeddedDataTypeError) as excinfo:
         code.WallCode.from_data(code_node)
 
     assert excinfo.value.data_class == code.WallCode
@@ -204,7 +204,7 @@ def test_bad_wall_code(bad_xml: str) -> None:
 @pytest.mark.parametrize("bad_xml", BAD_WINDOW_CODE_XML)
 def test_bad_window_code(bad_xml: str) -> None:
     code_node = element.Element.from_string(bad_xml)
-    with pytest.raises(InvalidEmbeddedDataTypeException) as excinfo:
+    with pytest.raises(InvalidEmbeddedDataTypeError) as excinfo:
         code.WindowCode.from_data(code_node)
 
     assert excinfo.value.data_class == code.WindowCode
