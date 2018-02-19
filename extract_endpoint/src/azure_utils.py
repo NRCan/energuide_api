@@ -12,10 +12,10 @@ class StorageCoordinates(typing.NamedTuple):
 
 
 class EnvVariables(enum.Enum):
-    account = 'AZURE_STORAGE_ACCOUNT'
-    key = 'AZURE_STORAGE_KEY'
-    container = 'AZURE_CONTAINER'
-    domain = 'AZURE_STORAGE_DOMAIN'
+    account = 'EXTRACT_ENDPOINT_STORAGE_ACCOUNT'
+    key = 'EXTRACT_ENDPOINT_STORAGE_KEY'
+    container = 'EXTRACT_ENDPOINT_CONTAINER'
+    domain = 'EXTRACT_ENDPOINT_STORAGE_DOMAIN'
 
 
 class DefaultVariables(enum.Enum):
