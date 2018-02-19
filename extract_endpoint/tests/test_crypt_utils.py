@@ -17,11 +17,23 @@ def sample_data() -> str:
     return 'sample data'
 
 
-def test_sign_string(sample_salt: str, sample_key: str, sample_data: str) -> None:
-    actual = sign_string(salt=sample_salt, key=sample_key, data=sample_data)
-    assert actual == '8a2dbe236ead75dd242d3ee015b3d8b6'
+def test_sign_string(sample_data: str, sample_key: str, sample_salt: str) -> None:
+    actual = sign_string(data=sample_data, key=sample_key, salt=sample_salt)
+    assert isinstance(actual, str) and len(actual) == 32
 
 
-def test_sign_string_no_salt(sample_key: str, sample_data: str) -> None:
-    actual = sign_string(salt=None, key=sample_key, data=sample_data)
-    assert actual == '188119f4319b02e76b50d297acc5b9cd'
+def test_sign_string_no_salt(sample_data: str, sample_key: str) -> None:
+    actual = sign_string(data=sample_data, key=sample_key)
+    assert isinstance(actual, str) and len(actual) == 32
+
+
+def test_sign_string_different_salts(sample_data: str, sample_key: str) -> None:
+    sig1 = sign_string(data=sample_data, key=sample_key, salt='salt1')
+    sig2 = sign_string(data=sample_data, key=sample_key, salt='salt2')
+    assert sig1 != sig2
+
+
+def test_sign_string_different_keys(sample_data: str, sample_salt: str) -> None:
+    sig1 = sign_string(data=sample_data, key='key1', salt=sample_salt)
+    sig2 = sign_string(data=sample_data, key='key2', salt=sample_salt)
+    assert sig1 != sig2
