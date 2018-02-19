@@ -87,3 +87,22 @@ def test_to_string(fragment_node: element.Element) -> None:
 
 def test_tag(fragment_node: element.Element) -> None:
     assert fragment_node.tag == 'Foo'
+
+
+def test_new() -> None:
+    output = element.Element.new('Foo')
+    assert output.tag == 'Foo'
+
+
+def test_from_malformed_string() -> None:
+    with pytest.raises(element.MalformedXmlError):
+        element.Element.from_string('</Foo></Foo>')
+
+
+def test_insert_node() -> None:
+    root = element.Element.new('Root')
+    child1 = element.Element.new('Child1')
+    child2 = element.Element.new('Child2')
+    root.insert(0, child1)
+    root.insert(0, child2)
+    assert len(root.xpath('*')) == 2
