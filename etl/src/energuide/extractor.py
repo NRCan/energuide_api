@@ -49,7 +49,12 @@ def _validated(data: typing.Iterable[reader.InputData], validator) -> typing.Ite
 
 
 def _read_csv(filepath: str) -> typing.Iterator[reader.InputData]:
-    csv.field_size_limit(sys.maxsize)
+    if sys.platform == 'win32':
+        # Windows C long is 32 bits, so using sys.maxsize may throw an error on windows
+        csv.field_size_limit(2**31-1)
+    else:
+        csv.field_size_limit(sys.maxsize)
+
     with open(filepath, 'r') as file:
         csv_reader = csv.DictReader(file)
         for row in csv_reader:
