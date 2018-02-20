@@ -4,7 +4,7 @@ from energuide import element
 from energuide.embedded import distance
 from energuide.embedded import area
 from energuide.embedded import insulation
-from energuide.exceptions import InvalidEmbeddedDataTypeException
+from energuide.exceptions import InvalidEmbeddedDataTypeError
 
 
 class _Door(typing.NamedTuple):
@@ -32,7 +32,7 @@ class Door(_Door):
                 width=distance.Distance(float(door.xpath('Measurements/@width')[0])),
             )
         except (IndexError, ValueError, AssertionError) as exc:
-            raise InvalidEmbeddedDataTypeException(Door) from exc
+            raise InvalidEmbeddedDataTypeError(Door) from exc
 
     @property
     def u_factor(self) -> float:

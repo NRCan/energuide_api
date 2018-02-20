@@ -1,7 +1,7 @@
 import typing
 from energuide import bilingual
 from energuide import element
-from energuide.exceptions import InvalidEmbeddedDataTypeException
+from energuide.exceptions import InvalidEmbeddedDataTypeError
 
 
 class _WallCode(typing.NamedTuple):
@@ -29,7 +29,7 @@ class WallCode(_WallCode):
                 )
             )
         except (KeyError, AssertionError) as exc:
-            raise InvalidEmbeddedDataTypeException(WallCode) from exc
+            raise InvalidEmbeddedDataTypeError(WallCode) from exc
 
 
 class _WindowCode(typing.NamedTuple):
@@ -77,7 +77,7 @@ class WindowCode(_WindowCode):
                 )
             )
         except (KeyError, AssertionError) as exc:
-            raise InvalidEmbeddedDataTypeException(WindowCode) from exc
+            raise InvalidEmbeddedDataTypeError(WindowCode) from exc
 
 
 class _Codes(typing.NamedTuple):

@@ -5,6 +5,14 @@ from energuide import bilingual
 from energuide.embedded import area
 from energuide.embedded import distance
 from energuide.embedded import insulation
+from energuide.exceptions import InvalidInputDataError
+
+
+class FoundationType(enum.Enum):
+    BASEMENT = enum.auto()
+    CRAWLSPACE = enum.auto()
+    SLAB = enum.auto()
+    UNKNOWN = enum.auto()
 
 
 class WallType(enum.Enum):
@@ -204,6 +212,7 @@ class BasementWall(_BasementWall):
 
 
 class _Basement(typing.NamedTuple):
+    foundation_type: FoundationType
     label: str
     configuration_type: str
 
@@ -230,8 +239,27 @@ class Basement(_Basement):
         ),
     }
 
+    _FOUNDATION_TRANSLATIONS = {
+        FoundationType.BASEMENT: bilingual.Bilingual(
+            english='Basement',
+            french='Sous-sol',
+        ),
+        FoundationType.CRAWLSPACE: bilingual.Bilingual(
+            english='Crawlspace',
+            french='Vide Sanitaire',
+        ),
+        FoundationType.SLAB: bilingual.Bilingual(
+            english='Slab',
+            french='Dalle',
+        ),
+    }
+
     @classmethod
     def from_data(cls, basement: element.Element) -> 'Basement':
+        foundation_type = cls._derive_foundation_type(basement.tag)
+        if foundation_type is FoundationType.UNKNOWN:
+            raise InvalidInputDataError(f'Invalid foundation type: {basement.tag}')
+
         floor = BasementFloor.from_data(basement.xpath('Floor')[0])
 
         if floor.rectangular:
@@ -243,12 +271,23 @@ class Basement(_Basement):
             floor_perimeter = typing.cast(float, perimeter.metres)
 
         return Basement(
+            foundation_type=foundation_type,
             label=basement.get_text('Label'),
             configuration_type=basement.xpath('Configuration/@type')[0],
             walls=BasementWall.from_data(basement.xpath('Wall')[0], floor_perimeter),
             floor=floor,
             header=BasementHeader.from_data(basement.xpath('Components/FloorHeader')[0]),
         )
+
+    @staticmethod
+    def _derive_foundation_type(tag: str) -> FoundationType:
+        if tag == 'Basement':
+            return FoundationType.BASEMENT
+        elif tag == 'Crawlspace':
+            return FoundationType.CRAWLSPACE
+        elif tag == 'Slab':
+            return FoundationType.SLAB
+        return FoundationType.UNKNOWN
 
     @staticmethod
     def _derive_material(configuration_type: str) -> MaterialType:
@@ -266,12 +305,15 @@ class Basement(_Basement):
         return Basement._derive_material(self.configuration_type)
 
     def to_dict(self) -> typing.Dict[str, typing.Any]:
-        material = self._MATERIAL_TRANSLATIONS[self.material]
+        material = self._MATERIAL_TRANSLATIONS.get(self.material)
+        foundation = self._FOUNDATION_TRANSLATIONS.get(self.foundation_type)
         return {
+            'foundationTypeEnglish': foundation.english if foundation else None,
+            'foundationTypeFrench': foundation.french if foundation else None,
             'label': self.label,
             'configurationType': self.configuration_type,
-            'materialEnglish': material.english,
-            'materialFrench': material.french,
+            'materialEnglish': material.english if material else None,
+            'materialFrench': material.french if material else None,
             'wall': [wall.to_dict() for wall in self.walls],
             'floor': self.floor.to_dict(),
             'header': self.header.to_dict(),

@@ -164,6 +164,7 @@ def sample_basement(
     ) -> basement.Basement:
 
     return basement.Basement(
+        foundation_type=basement.FoundationType.BASEMENT,
         label='Foundation - 2',
         configuration_type='BBEN',
         walls=sample_basement_walls,
@@ -254,6 +255,8 @@ def test_basement_from_data(
 def test_basement_to_dict(sample_basement_element: element.Element) -> None:
     output = basement.Basement.from_data(sample_basement_element).to_dict()
     assert output == {
+        'foundationTypeEnglish': 'Basement',
+        'foundationTypeFrench': 'Sous-sol',
         'label': 'Foundation - 2',
         'configurationType': 'BBEN',
         'materialEnglish': 'concrete and wood',
