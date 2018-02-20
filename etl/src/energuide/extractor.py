@@ -55,7 +55,7 @@ def _read_csv(filepath: str) -> typing.Iterator[reader.InputData]:
     except OverflowError:
         csv.field_size_limit(_WINDOWS_LONG_SIZE)
 
-    with open(filepath, 'r') as file:
+    with open(filepath, 'r', encoding='utf-8', newline='') as file:
         csv_reader = csv.DictReader(file)
         for row in csv_reader:
             yield row
