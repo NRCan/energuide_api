@@ -14,7 +14,7 @@ def post_file(filename: str, url: str) -> str:
     with open(filename, 'rb') as file:
         file_as_string = base64.b64encode(file.read()).decode('utf-8')
         file.seek(0)
-        signature = sign_string(salt=salt, key=os.environ.get('ENDPOINT_SECRET_KEY'), data=file_as_string)
+        signature = sign_string(salt=salt, key=os.environ.get('ENDPOINT_SECRET_KEY', ''), data=file_as_string)
 
         retval = requests.post(url=url, files={'file': file},
                                data={'salt': salt, 'signature': signature})
@@ -24,13 +24,7 @@ def post_file(filename: str, url: str) -> str:
 @click.command()
 @click.option('--filename', type=click.Path(exists=True), required=True)
 def main(filename='test.txt') -> None:
-
-    print()
-    post_return_value = post_file(filename, url=ENDPOINT_URL)
-    if 'success' in post_return_value.lower():
-        print(f"Success: {post_return_value}")
-    else:
-        print(f"Error: {post_return_value}")
+    print(f'POST returned: {post_file(filename, url=ENDPOINT_URL)}')
 
 
 if __name__ == "__main__":

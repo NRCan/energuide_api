@@ -5,7 +5,7 @@ import pytest
 from azure.storage.blob import BlockBlobService
 from azure_utils import StorageCoordinates, EnvVariables, DefaultVariables
 from crypt_utils import sign_string
-from extract_endpoint import extract_endpoint
+import extract_endpoint
 
 extract_endpoint.App.testing = True
 extract_endpoint.App.testing = True
@@ -77,6 +77,7 @@ def test_upload(sample_salt: str, sample_secret_key: str, sample_block_blob_serv
     file_as_string = base64.b64encode(file.read()).decode('utf-8')
     file.seek(0)
     signature = sign_string(salt=sample_salt, key=sample_secret_key, data=file_as_string)
+
     app.post('/upload_file', data=dict(salt=sample_salt, signature=signature, file=(file, sample_file_name)))
 
     assert sample_file_name in [blob.name for blob in sample_block_blob_service.list_blobs(sample_azure_container)]
