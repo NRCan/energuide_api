@@ -218,7 +218,7 @@ If `yarn` is not installed, run `npm install --global yarn` to install.
 
 Next command start `GraphQL`
 ```sh
-yarn start
+yarm build && yarn start
 ```
 
 ### Using the API locally
