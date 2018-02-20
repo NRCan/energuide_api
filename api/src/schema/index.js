@@ -172,6 +172,15 @@ const Schema = i18n => {
       ventilationAirFlowRateLps
       ventilationAirFlowRateCfm
       ventilationEfficiency
+      floorLabel
+      floorInsulationNominalRsi
+      floorInsulationNominalR
+      floorInsulationEffectiveRsi
+      floorInsulationEffectiveR
+      floorAreaMetres
+      floorAreaFeet
+      floorLengthMetres
+      floorLengthFeet
     }
   `
 

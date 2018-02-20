@@ -35,7 +35,9 @@ const ventilationFields = [
 
 ventilationFields.forEach(attr => {
   // eslint-disable-next-line no-new-func
-  let fn = new Function('matcher', `
+  let fn = new Function(
+    'matcher',
+    `
   return {
     evaluations: {
       $elemMatch: {
@@ -45,6 +47,39 @@ ventilationFields.forEach(attr => {
       },
     },
   }
-  `)
+  `,
+  )
   module.exports[generateName('ventilation', attr)] = attachToString(fn)
+})
+
+// The fields on the ventilation type
+const floorFields = [
+  'label',
+  'insulationNominalRsi',
+  'insulationNominalR',
+  'insulationEffectiveRsi',
+  'insulationEffectiveR',
+  'areaMetres',
+  'areaFeet',
+  'lengthMetres',
+  'lengthFeet',
+]
+
+floorFields.forEach(attr => {
+  // eslint-disable-next-line no-new-func
+  let fn = new Function(
+    'matcher',
+    `
+  return {
+    evaluations: {
+      $elemMatch: {
+        floors: {
+          $elemMatch:{ ${attr}: matcher },
+        },
+      },
+    },
+  }
+  `,
+  )
+  module.exports[generateName('floor', attr)] = attachToString(fn)
 })

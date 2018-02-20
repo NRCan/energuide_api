@@ -12,6 +12,15 @@ import {
   ventilationAirFlowRateLps,
   ventilationAirFlowRateCfm,
   ventilationEfficiency,
+  floorLabel,
+  floorInsulationNominalRsi,
+  floorInsulationNominalR,
+  floorInsulationEffectiveRsi,
+  floorInsulationEffectiveR,
+  floorAreaMetres,
+  floorAreaFeet,
+  floorLengthMetres,
+  floorLengthFeet,
 } from './enums'
 /* eslint-enable import/named */
 
@@ -83,6 +92,15 @@ const resolvers = {
     ventilationAirFlowRateLps: ventilationAirFlowRateLps.toString(),
     ventilationAirFlowRateCfm: ventilationAirFlowRateCfm.toString(),
     ventilationEfficiency: ventilationEfficiency.toString(),
+    floorLabel: floorLabel.toString(),
+    floorInsulationNominalRsi: floorInsulationNominalRsi.toString(),
+    floorInsulationNominalR: floorInsulationNominalR.toString(),
+    floorInsulationEffectiveRsi: floorInsulationEffectiveRsi.toString(),
+    floorInsulationEffectiveR: floorInsulationEffectiveR.toString(),
+    floorAreaMetres: floorAreaMetres.toString(),
+    floorAreaFeet: floorAreaFeet.toString(),
+    floorLengthMetres: floorLengthMetres.toString(),
+    floorLengthFeet: floorLengthFeet.toString(),
   },
   Comparator: {
     gt: '$gt',
