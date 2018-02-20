@@ -1,14 +1,14 @@
 import enum
 import io
-from typing import Optional, NamedTuple
-from azure.storage.blob import BlockBlobService
+import typing
+from azure.storage import blob
 
 
-class StorageCoordinates(NamedTuple):
+class StorageCoordinates(typing.NamedTuple):
     account: str
     key: str
     container: str
-    domain: Optional[str]
+    domain: typing.Optional[str]
 
 
 class EnvVariables(enum.Enum):
@@ -29,7 +29,7 @@ def upload_stream_to_azure(coords: StorageCoordinates, stream: io.BytesIO, filen
     account, key, container, domain = coords
     azure_path = filename
 
-    block_blob_service = BlockBlobService(account_name=account, account_key=key, custom_domain=domain)
+    block_blob_service = blob.BlockBlobService(account_name=account, account_key=key, custom_domain=domain)
     block_blob_service.create_blob_from_stream(container, azure_path, stream)
 
     return azure_path in [blob.name for blob in block_blob_service.list_blobs(container)]
