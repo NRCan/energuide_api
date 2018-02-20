@@ -7,6 +7,7 @@ from energuide import validator
 from energuide.embedded import ceiling
 from energuide.embedded import code
 from energuide.embedded import floor
+from energuide.embedded import heating
 from energuide.embedded import wall
 from energuide.embedded import door
 from energuide.embedded import window
@@ -90,12 +91,12 @@ class _ParsedDwellingDataRow(typing.NamedTuple):
     heated_floor: heated_floor_area.HeatedFloorArea
     water_heatings: typing.List[water_heating.WaterHeating]
     ventilations: typing.List[ventilation.Ventilation]
-
+    heating_system: heating.Heating
 
 
 class ParsedDwellingDataRow(_ParsedDwellingDataRow):
 
-    _XML_SCHEMA = {'type': 'xml', 'coerce': 'parse_xml'}
+    _XML_SCHEMA = {'type': 'xml', 'required': True, 'coerce': 'parse_xml'}
     _XML_LIST_SCHEMA = {'type': 'list', 'required': True, 'schema': _XML_SCHEMA}
 
     _SCHEMA = {
@@ -115,7 +116,7 @@ class ParsedDwellingDataRow(_ParsedDwellingDataRow):
         'doors': _XML_LIST_SCHEMA,
         'windows': _XML_LIST_SCHEMA,
         'heatedFloorArea': _XML_SCHEMA,
-        'heating_cooling': {'type': 'xml', 'required': True, 'coerce': 'parse_xml'},
+        'heating_cooling': _XML_SCHEMA,
         'ventilations': _XML_LIST_SCHEMA,
         'waterHeatings': _XML_SCHEMA,
 
@@ -151,6 +152,7 @@ class ParsedDwellingDataRow(_ParsedDwellingDataRow):
             water_heatings=water_heating.WaterHeating.from_data(parsed['waterHeatings']),
             ventilations=[ventilation.Ventilation.from_data(ventilation_node)
                           for ventilation_node in parsed['ventilations']],
+            heating_system=heating.Heating.from_data(parsed['heating_cooling']),
         )
 
 

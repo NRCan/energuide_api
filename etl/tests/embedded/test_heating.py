@@ -106,7 +106,7 @@ def test_from_data(sample_raw: element.Element, sample: heating.Heating) -> None
 
 
 def test_converts_btu() -> None:
-    specification_node = sample_specifications(capacity=1000.0, capacity_units='btu/h')
+    specification_node = sample_specifications(capacity=1000.0, capacity_units='btu/hr')
     node = sample_node(specification_node=specification_node)
     output = heating.Heating.from_data(node)
     assert output.output_size == 0.2930710386613453
