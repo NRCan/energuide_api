@@ -542,8 +542,34 @@ describe('queries', () => {
                  }
                }`,
             })
+
           let { dwellings: { results: [first] } } = response.body.data
           expect(first.city).toEqual('Charlottetown')
+        })
+
+        it('correctly handles integer values', async () => {
+          let response = await request(server)
+            .post('/graphql')
+            .set('Content-Type', 'application/json; charset=utf-8')
+            .send({
+              query: `{
+                dwellingsInFSA(
+                  forwardSortationArea: "C1A"
+                  filter: {
+                    field: dwellingYearBuilt
+                    comparator: gt
+                    value: "1"
+                  }) {
+                  results {
+                    yearBuilt
+                  }
+                }
+               }`,
+            })
+
+          let { data } = response.body
+          let { dwellingsInFSA } = data
+          expect(dwellingsInFSA.results.length).toBeGreaterThan(0)
         })
       })
 
