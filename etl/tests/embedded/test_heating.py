@@ -11,6 +11,7 @@ def sample_node(heating_type: str = 'Furnace',
                 specification_node: typing.Optional[element.Element] = None) -> element.Element:
     specification_node = sample_specifications() if not specification_node else specification_node
     equipment_node = sample_equipment() if not equipment_node else equipment_node
+    heating_node = sample_heating_node(heating_type)
 
     data = """
 <HeatingCooling id="18">
@@ -34,7 +35,6 @@ def sample_node(heating_type: str = 'Furnace',
     """
     node = element.Element.from_string(data)
     type1_node: element.Element = node.xpath('Type1')[0]
-    heating_node = sample_heating_node(heating_type)
     type1_node.insert(1, heating_node)
 
     heating_node.insert(1, specification_node)
