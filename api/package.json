@@ -16,7 +16,7 @@
     "compile": "lingui compile",
     "precommit": "lint-staged",
     "lint": "eslint src/** test/** --ignore-pattern src/locale",
-    "watch": "nodemon -x 'yarn build && node' -w 'src' -i 'src/__tests__' dist/index.js"
+    "watch": "nodemon --watch \"src\" --ignore \"src/__tests__\" --exec \"yarn build && yarn start\""
   },
   "repository": {
     "type": "git",

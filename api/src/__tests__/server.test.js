@@ -25,6 +25,13 @@ describe('configuration', () => {
     expect(response.status).toEqual(200)
   })
 
+  it('redirect to  graphiql from the / endpoint', async () => {
+    let response = await request(server)
+      .get('/')
+    expect(response.headers.location).toEqual('/graphiql')
+    expect(response.status).toEqual(302)
+  })
+
   it('serves the Graphiql IDE from the /graphiql endpoint', async () => {
     let response = await request(server)
       .get('/graphiql')

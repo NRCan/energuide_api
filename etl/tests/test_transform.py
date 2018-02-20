@@ -3,7 +3,7 @@ import pymongo
 from energuide import database
 from energuide import transform
 from energuide.embedded import ceiling
-from energuide.exceptions import InvalidEmbeddedDataTypeException
+from energuide.exceptions import InvalidEmbeddedDataTypeError
 
 
 def test_run(database_coordinates: database.DatabaseCoordinates,
@@ -25,7 +25,7 @@ def test_bad_data(database_coordinates: database.DatabaseCoordinates,
                   capsys: _pytest.capture.CaptureFixture) -> None:
 
     def raise_error(*args) -> None: #pylint: disable=unused-argument
-        raise InvalidEmbeddedDataTypeException(ceiling.Ceiling)
+        raise InvalidEmbeddedDataTypeError(ceiling.Ceiling)
 
     monkeypatch.setattr(ceiling.Ceiling, 'from_data', raise_error)
 

@@ -7,7 +7,7 @@ import py._path.local
 import pytest
 from energuide import extractor
 from energuide import reader
-from energuide.exceptions import InvalidInputDataException
+from energuide.exceptions import InvalidInputDataError
 
 
 def data1() -> typing.Dict[str, typing.Optional[str]]:
@@ -83,7 +83,7 @@ def test_extract_valid(valid_filepath: str) -> None:
 
 
 def test_extract_missing(invalid_filepath: str) -> None:
-    with pytest.raises(InvalidInputDataException) as ex:
+    with pytest.raises(InvalidInputDataError) as ex:
         output = extractor.extract_data(invalid_filepath)
         _ = dict(next(output))
 

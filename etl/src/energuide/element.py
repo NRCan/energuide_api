@@ -1,5 +1,10 @@
 import typing
 from lxml import etree
+from energuide.exceptions import EnerguideError
+
+
+class MalformedXmlError(EnerguideError):
+    pass
 
 
 class Element:
@@ -10,8 +15,14 @@ class Element:
         self.__node = node
 
     @classmethod
+    def new(cls, tag: str) -> 'Element':
+        return cls(etree.Element(tag))
+
+    @classmethod
     def from_string(cls, data: str) -> 'Element':
-        output = etree.fromstring(data.encode('utf-8'), parser=cls._PARSER)
+        output: typing.Optional[etree._Element] = etree.fromstring(data.encode('utf-8'), parser=cls._PARSER)
+        if output is None:
+            raise MalformedXmlError(f'Invalid XML fragment: {data}')
         return cls(output)
 
     @classmethod
@@ -47,5 +58,8 @@ class Element:
             yield Element(child)
 
     @property
-    def tag(self):
+    def tag(self) -> str:
         return self.__node.tag
+
+    def insert(self, index: int, element: 'Element') -> None:
+        self.__node.insert(index, element.__node)
