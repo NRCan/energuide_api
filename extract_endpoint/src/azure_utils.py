@@ -32,6 +32,7 @@ def upload_stream_to_azure(coords: StorageCoordinates, stream: BytesIO, filename
     block_blob_service = BlockBlobService(account_name=account, account_key=key, custom_domain=domain)
     block_blob_service.create_blob_from_stream(container, azure_path, stream)
 
+    # check Azure to make sure the file is there
     if azure_path not in [blob.name for blob in block_blob_service.list_blobs(container)]:
         return "upload failed"
     return "upload succeeded"

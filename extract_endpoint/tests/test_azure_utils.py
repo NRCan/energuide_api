@@ -66,7 +66,10 @@ def test_upload_stream_to_azure(sample_storage_coordinates: StorageCoordinates,
     actual = sample_block_blob_service.get_blob_to_text(sample_container, sample_filename)
     sample_block_blob_service.delete_blob(sample_container, sample_filename)
 
-    if isinstance(actual, str):
-        assert actual == sample_stream_content
-    else:
-        assert actual.content == sample_stream_content
+    print(f'type of actual is {type(actual)}')
+    print(f'type of sample_stream_content is {type(sample_stream_content)}')
+    assert False
+    # if isinstance(actual, str):
+    #     assert actual == sample_stream_content
+    # else:
+    #     assert actual.content == sample_stream_content
