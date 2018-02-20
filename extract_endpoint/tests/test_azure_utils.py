@@ -1,5 +1,4 @@
 import io
-import typing
 import pytest
 from azure.storage import blob
 import azure_utils
@@ -29,7 +28,7 @@ def sample_domain() -> str:
 def sample_storage_coordinates(sample_account: str,
                                sample_key: str,
                                sample_container: str,
-                               sample_domain: typing.Optional[str]) -> azure_utils.StorageCoordinates:
+                               sample_domain: str) -> azure_utils.StorageCoordinates:
     return azure_utils.StorageCoordinates(account=sample_account, key=sample_key,
                                           container=sample_container, domain=sample_domain)
 
