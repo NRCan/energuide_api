@@ -109,7 +109,7 @@ If version is not shown, the path to the library has to be added to the 'PATH' e
 
 NOTE: If you're having problems, make sure that you are not adding the library to a different user's 'PATH' (such as the user path of the local admin). The library can be added to the System 'PATH' variable so that it is visible to all users on the machine.
 <br>
-<img src="resource/system_path.png" width="300">
+<img src="resource/system_path.png" width="500">
 
 ### Run python extractor
 
