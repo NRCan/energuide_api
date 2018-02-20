@@ -3,12 +3,12 @@ from io import BytesIO
 import base64
 import pytest
 from azure.storage.blob import BlockBlobService
-from azure_utils import StorageCoordinates, EnvVariables, DefaultVariables
-from crypt_utils import sign_string
+import azure_utils
+import crypt_utils
 import extract_endpoint
 
 extract_endpoint.App.testing = True
-extract_endpoint.App.testing = True
+
 
 @pytest.fixture
 def sample_secret_key() -> str:
@@ -32,33 +32,33 @@ def sample_file_name() -> str:
 
 @pytest.fixture
 def sample_azure_account() -> str:
-    return os.environ.get(EnvVariables.account.value, DefaultVariables.account.value)
+    return os.environ.get(azure_utils.EnvVariables.account.value, azure_utils.DefaultVariables.account.value)
 
 
 @pytest.fixture
 def sample_azure_key() -> str:
-    return os.environ.get(EnvVariables.key.value, DefaultVariables.key.value)
+    return os.environ.get(azure_utils.EnvVariables.key.value, azure_utils.DefaultVariables.key.value)
 
 
 @pytest.fixture
 def sample_azure_container() -> str:
-    return os.environ.get(EnvVariables.container.value, DefaultVariables.container.value)
+    return os.environ.get(azure_utils.EnvVariables.container.value, azure_utils.DefaultVariables.container.value)
 
 
 @pytest.fixture
 def sample_azure_domain() -> str:
-    return os.environ.get(EnvVariables.domain.value, DefaultVariables.domain.value)
+    return os.environ.get(azure_utils.EnvVariables.domain.value, azure_utils.DefaultVariables.domain.value)
 
 
 @pytest.fixture
 def sample_storage_coordinates(sample_azure_account: str, sample_azure_key: str,
-                               sample_azure_container: str, sample_azure_domain: str) -> StorageCoordinates:
-    return StorageCoordinates(account=sample_azure_account, key=sample_azure_key,
-                              container=sample_azure_container, domain=sample_azure_domain)
+                               sample_azure_container: str, sample_azure_domain: str) -> azure_utils.StorageCoordinates:
+    return azure_utils.StorageCoordinates(account=sample_azure_account, key=sample_azure_key,
+                                          container=sample_azure_container, domain=sample_azure_domain)
 
 
 @pytest.fixture
-def sample_block_blob_service(sample_storage_coordinates: StorageCoordinates) -> BlockBlobService:
+def sample_block_blob_service(sample_storage_coordinates: azure_utils.StorageCoordinates) -> BlockBlobService:
     account, key, _, domain = sample_storage_coordinates
     return BlockBlobService(account_name=account, account_key=key, custom_domain=domain)
 
@@ -76,7 +76,7 @@ def test_upload(sample_salt: str, sample_secret_key: str, sample_block_blob_serv
     file = BytesIO(sample_file_contents.encode('utf-8'))
     file_as_string = base64.b64encode(file.read()).decode('utf-8')
     file.seek(0)
-    signature = sign_string(salt=sample_salt, key=sample_secret_key, data=file_as_string)
+    signature = crypt_utils.sign_string(salt=sample_salt, key=sample_secret_key, data=file_as_string)
     if sample_file_name in [blob.name for blob in sample_block_blob_service.list_blobs(sample_azure_container)]:
         sample_block_blob_service.delete_blob(sample_azure_container, sample_file_name)
     assert sample_file_name not in [blob.name for blob in sample_block_blob_service.list_blobs(sample_azure_container)]
@@ -104,7 +104,7 @@ def test_upload_no_salt(sample_salt: str, sample_secret_key: str,
     file = BytesIO(sample_file_contents.encode('utf-8'))
     file_as_string = base64.b64encode(file.read()).decode('utf-8')
     file.seek(0)
-    signature = sign_string(salt=sample_salt, key=sample_secret_key, data=file_as_string)
+    signature = crypt_utils.sign_string(salt=sample_salt, key=sample_secret_key, data=file_as_string)
     actual = app.post('/upload_file', data=dict(signature=signature, file=(file, sample_file_name)))
     assert actual.status_code == 404
 
@@ -116,7 +116,7 @@ def test_upload_wrong_salt(sample_salt: str, sample_secret_key: str,
     file = BytesIO(sample_file_contents.encode('utf-8'))
     file_as_string = base64.b64encode(file.read()).decode('utf-8')
     file.seek(0)
-    signature = sign_string(salt=sample_salt, key=sample_secret_key, data=file_as_string)
+    signature = crypt_utils.sign_string(salt=sample_salt, key=sample_secret_key, data=file_as_string)
     actual = app.post('/upload_file', data=dict(salt='wrong salt', signature=signature, file=(file, sample_file_name)))
     assert actual.status_code == 404
 
@@ -145,7 +145,7 @@ def test_upload_no_file(sample_salt: str, sample_secret_key: str, sample_file_co
     app = extract_endpoint.App.test_client()
     file = BytesIO(sample_file_contents.encode('utf-8'))
     file_as_string = base64.b64encode(file.read()).decode('utf-8')
-    signature = sign_string(salt=sample_salt, key=sample_secret_key, data=file_as_string)
+    signature = crypt_utils.sign_string(salt=sample_salt, key=sample_secret_key, data=file_as_string)
     actual = app.post('/upload_file', data=dict(salt=sample_salt, signature=signature))
     assert actual.status_code == 404
 
@@ -156,6 +156,6 @@ def test_upload_no_filename(sample_salt: str, sample_secret_key: str, sample_fil
     file = BytesIO(sample_file_contents.encode('utf-8'))
     file_as_string = base64.b64encode(file.read()).decode('utf-8')
     file.seek(0)
-    signature = sign_string(salt=sample_salt, key=sample_secret_key, data=file_as_string)
+    signature = crypt_utils.sign_string(salt=sample_salt, key=sample_secret_key, data=file_as_string)
     actual = app.post('/upload_file', data=dict(salt=sample_salt, signature=signature, file=(file, '')))
     assert actual.status_code == 404
