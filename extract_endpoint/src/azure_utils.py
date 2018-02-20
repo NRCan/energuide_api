@@ -1,5 +1,4 @@
 import enum
-import io
 import typing
 from azure.storage import blob
 
@@ -25,11 +24,8 @@ class DefaultVariables(enum.Enum):
     domain = None
 
 
-def upload_stream_to_azure(coords: StorageCoordinates, stream: io.BytesIO, filename: str) -> bool:
-    account, key, container, domain = coords
-    azure_path = filename
-
-    block_blob_service = blob.BlockBlobService(account_name=account, account_key=key, custom_domain=domain)
-    block_blob_service.create_blob_from_stream(container, azure_path, stream)
-
-    return azure_path in [blob.name for blob in block_blob_service.list_blobs(container)]
+def upload_stream_to_azure(coords: StorageCoordinates, stream: typing.IO[bytes], filename: str) -> bool:
+    block_blob_service = blob.BlockBlobService(account_name=coords.account, account_key=coords.key,
+                                               custom_domain=coords.domain)
+    block_blob_service.create_blob_from_stream(coords.container, filename, stream)
+    return filename in [blob.name for blob in block_blob_service.list_blobs(coords.container)]
