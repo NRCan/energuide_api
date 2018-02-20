@@ -1,5 +1,5 @@
 import enum
-from io import BytesIO
+import io
 from typing import Optional, NamedTuple
 from azure.storage.blob import BlockBlobService
 
@@ -25,14 +25,11 @@ class DefaultVariables(enum.Enum):
     domain = None
 
 
-def upload_stream_to_azure(coords: StorageCoordinates, stream: BytesIO, filename: str) -> str:
+def upload_stream_to_azure(coords: StorageCoordinates, stream: io.BytesIO, filename: str) -> bool:
     account, key, container, domain = coords
     azure_path = filename
 
     block_blob_service = BlockBlobService(account_name=account, account_key=key, custom_domain=domain)
     block_blob_service.create_blob_from_stream(container, azure_path, stream)
 
-    # check Azure to make sure the file is there
-    if azure_path not in [blob.name for blob in block_blob_service.list_blobs(container)]:
-        return "upload failed"
-    return "upload succeeded"
+    return azure_path in [blob.name for blob in block_blob_service.list_blobs(container)]

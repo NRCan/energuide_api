@@ -1,7 +1,7 @@
-from io import BytesIO
+import io
 from typing import Optional
 import pytest
-from azure.storage.blob import BlockBlobService
+from azure.storage import blob
 from azure_utils import StorageCoordinates, upload_stream_to_azure
 
 
@@ -21,7 +21,7 @@ def sample_container() -> str:
 
 
 @pytest.fixture
-def sample_domain() -> Optional[str]:
+def sample_domain() -> str:
     return 'http://127.0.0.1:10000/devstoreaccount1'
 
 
@@ -34,19 +34,20 @@ def sample_storage_coordinates(sample_account: str,
 
 
 @pytest.fixture
-def sample_block_blob_service(sample_storage_coordinates: StorageCoordinates) -> BlockBlobService:
-    account, key, _, domain = sample_storage_coordinates
-    return BlockBlobService(account_name=account, account_key=key, custom_domain=domain)
+def sample_block_blob_service(sample_storage_coordinates: StorageCoordinates) -> blob.BlockBlobService:
+    return blob.BlockBlobService(account_name=sample_storage_coordinates.account,
+                                 account_key=sample_storage_coordinates.key,
+                                 custom_domain=sample_storage_coordinates.domain)
 
 
 @pytest.fixture
-def sample_stream_content()->str:
+def sample_stream_content() -> str:
     return "Sample stream content"
 
 
 @pytest.fixture
-def sample_stream(sample_stream_content: str) -> BytesIO:
-    return BytesIO(sample_stream_content.encode())
+def sample_stream(sample_stream_content: str) -> io.BytesIO:
+    return io.BytesIO(sample_stream_content.encode())
 
 
 @pytest.fixture
@@ -55,16 +56,16 @@ def sample_filename() -> str:
 
 
 def test_upload_stream_to_azure(sample_storage_coordinates: StorageCoordinates,
-                                sample_block_blob_service: BlockBlobService,
+                                sample_block_blob_service: blob.BlockBlobService,
                                 sample_container: str,
-                                sample_stream: BytesIO,
+                                sample_stream: io.BytesIO,
                                 sample_stream_content: str,
                                 sample_filename: str) -> None:
     if sample_filename in [blob.name for blob in sample_block_blob_service.list_blobs(sample_container)]:
         sample_block_blob_service.delete_blob(sample_container, sample_filename)
     assert sample_filename not in [blob.name for blob in sample_block_blob_service.list_blobs(sample_container)]
 
-    upload_stream_to_azure(sample_storage_coordinates, sample_stream, sample_filename)
+    assert upload_stream_to_azure(sample_storage_coordinates, sample_stream, sample_filename)
 
     assert sample_filename in [blob.name for blob in sample_block_blob_service.list_blobs(sample_container)]
     actual_file_blob = sample_block_blob_service.get_blob_to_text(sample_container, sample_filename)
