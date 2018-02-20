@@ -79,6 +79,7 @@
     "localeDir": "<rootDir>/src/locale",
     "srcPathDirs": [
       "<rootDir>/src"
-    ]
+    ],
+    "sourceLocale": "en"
   }
 }
