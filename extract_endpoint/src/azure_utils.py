@@ -1,14 +1,14 @@
 import enum
 from io import BytesIO
-import typing
+from typing import Optional, NamedTuple
 from azure.storage.blob import BlockBlobService
 
 
-class StorageCoordinates(typing.NamedTuple):
+class StorageCoordinates(NamedTuple):
     account: str
     key: str
     container: str
-    domain: typing.Optional[str]
+    domain: Optional[str]
 
 
 class EnvVariables(enum.Enum):
