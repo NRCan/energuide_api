@@ -53,10 +53,8 @@ def upload_file() -> str:
     key = os.environ.get(azure_utils.EnvVariables.key.value, azure_utils.DefaultVariables.key.value)
     container = os.environ.get(azure_utils.EnvVariables.container.value, azure_utils.DefaultVariables.container.value)
     domain = os.environ.get(azure_utils.EnvVariables.domain.value, azure_utils.DefaultVariables.domain.value)
-    # azure_sc = azure_utils.StorageCoordinates(account=account, key=key, container=container, domain=domain)
-    # if azure_utils.upload_stream_to_azure(azure_sc, file, filename):
-    if azure_utils.upload_stream_to_azure(account=account, key=key, container=container, domain=domain,
-                                          stream=file, filename=filename):
+    azure_sc = azure_utils.StorageCoordinates(account=account, key=key, container=container, domain=domain)
+    if azure_utils.upload_stream_to_azure(azure_sc, file, filename):
         App.logger.info(f"File {filename} uploaded to Azure")
         return 'success'
     App.logger.error(f"File {filename} failed upload to Azure")

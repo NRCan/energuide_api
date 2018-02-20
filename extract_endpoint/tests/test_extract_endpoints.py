@@ -50,22 +50,17 @@ def sample_azure_domain() -> str:
     return os.environ.get(azure_utils.EnvVariables.domain.value, azure_utils.DefaultVariables.domain.value)
 
 
-# @pytest.fixture
-# def sample_storage_coordinates(sample_azure_account: str, sample_azure_key: str,
-#                            sample_azure_container: str, sample_azure_domain: str) -> azure_utils.StorageCoordinates:
-#     return azure_utils.StorageCoordinates(account=sample_azure_account, key=sample_azure_key,
-#                                           container=sample_azure_container, domain=sample_azure_domain)
+@pytest.fixture
+def sample_storage_coordinates(sample_azure_account: str, sample_azure_key: str,
+                               sample_azure_container: str, sample_azure_domain: str) -> azure_utils.StorageCoordinates:
+    return azure_utils.StorageCoordinates(account=sample_azure_account, key=sample_azure_key,
+                                          container=sample_azure_container, domain=sample_azure_domain)
 
 
 @pytest.fixture
-# def sample_block_blob_service(sample_storage_coordinates: azure_utils.StorageCoordinates) -> BlockBlobService:
-def sample_block_blob_service(sample_azure_account: str, sample_azure_key: str,
-                              sample_azure_domain: str) -> BlockBlobService:
-
-        # account, key, _, domain = sample_storage_coordinates
-    # return BlockBlobService(account_name=account, account_key=key, custom_domain=domain)
-    return BlockBlobService(account_name=sample_azure_account, account_key=sample_azure_key,
-                            custom_domain=sample_azure_domain)
+def sample_block_blob_service(sample_storage_coordinates: azure_utils.StorageCoordinates) -> BlockBlobService:
+    account, key, _, domain = sample_storage_coordinates
+    return BlockBlobService(account_name=account, account_key=key, custom_domain=domain)
 
 
 def test_test_alive() -> None:
