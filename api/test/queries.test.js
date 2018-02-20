@@ -371,6 +371,26 @@ describe('queries', () => {
   })
 
   describe('dwellingsInFSA', () => {
+    it('gets evalutations within a Forward Sortation Area', async () => {
+      let response = await request(server)
+        .post('/graphql')
+        .set('Content-Type', 'application/json; charset=utf-8')
+        .send({
+          query: `{
+           dwellings:dwellingsInFSA(
+             forwardSortationArea: "C1A"
+           ) {
+          results {
+            yearBuilt
+          }
+        }
+      }`,
+        })
+
+      let { dwellings: { results: [first] } } = response.body.data
+      expect(first.yearBuilt).toEqual(1900)
+    })
+
     describe('pagination', () => {
       beforeEach(async () => {
         await collection.save({
@@ -460,7 +480,7 @@ describe('queries', () => {
 
     describe('filter', () => {
       describe('gt: greater than', () => {
-        it('filters out results where the selected field has a value greater than the selected value', async () => {
+        it('returns dwellings where the field is greater than the given value', async () => {
           let response = await request(server)
             .post('/graphql')
             .set('Content-Type', 'application/json; charset=utf-8')
@@ -468,7 +488,7 @@ describe('queries', () => {
               query: `{
                  dwellings:dwellingsInFSA(
                   forwardSortationArea: "C1A"
-                  filter: {field: dwellingYearBuilt gt: "1900"}
+                  filter: {field: dwellingYearBuilt comparator: gt value: "1900"}
                  ) {
                     results {
                       yearBuilt
@@ -489,7 +509,7 @@ describe('queries', () => {
               query: `{
                  dwellings:dwellingsInFSA(
                   forwardSortationArea: "C1A"
-                  filter: {field: dwellingCity eq: "Charlottetown"}
+                  filter: {field: dwellingCity comparator: eq value: "Charlottetown"}
                  ) {
                    results {
                      city
@@ -503,7 +523,7 @@ describe('queries', () => {
       })
 
       describe('lt: less than', () => {
-        it('filters out results where the selected field has a value less than the selected value', async () => {
+        it('returns dwellings where the field is less than the given value', async () => {
           let response = await request(server)
             .post('/graphql')
             .set('Content-Type', 'application/json; charset=utf-8')
@@ -511,7 +531,7 @@ describe('queries', () => {
               query: `{
                  dwellings:dwellingsInFSA(
                   forwardSortationArea: "C1A"
-                  filter: {field: dwellingYearBuilt lt: "2000"}
+                  filter: {field: dwellingYearBuilt comparator: lt value: "2000"}
                  ) {
                      results {
                        yearBuilt
@@ -525,7 +545,7 @@ describe('queries', () => {
       })
 
       describe('eq: equal to', () => {
-        it('filters out results where the selected field has a value equal to the selected value', async () => {
+        it('returns dwellings where the field is equal to the given value', async () => {
           let response = await request(server)
             .post('/graphql')
             .set('Content-Type', 'application/json; charset=utf-8')
@@ -533,7 +553,7 @@ describe('queries', () => {
               query: `{
                  dwellings:dwellingsInFSA(
                   forwardSortationArea: "C1A"
-                  filter: {field: dwellingYearBuilt eq: "1900"}
+                  filter: {field: dwellingYearBuilt comparator: eq value: "1900"}
                  ) {
                    results {
                      yearBuilt
@@ -544,33 +564,6 @@ describe('queries', () => {
 
           let { dwellings: { results: [first] } } = response.body.data
           expect(first.yearBuilt).toEqual(1900)
-        })
-      })
-    })
-
-    describe('filter', () => {
-      describe('eq: equal to', () => {
-        it('fails like the real server', async () => {
-          let response = await request(server)
-            .post('/graphql')
-            .set('Content-Type', 'application/json; charset=utf-8')
-            .send({
-              query: `{
-                dwellingsInFSA(
-                  forwardSortationArea: "C1A"
-                  filter: {
-                    field: ventilationTypeEnglish
-                    eq: "220"
-                  }
-                ) {
-                  results {
-                    houseId
-                  }
-                }
-               }`,
-            })
-
-          expect(response.body).not.toHaveProperty('errors')
         })
 
         it('works on string fields', async () => {
@@ -581,7 +574,7 @@ describe('queries', () => {
               query: `{
                  dwellings:dwellingsInFSA(
                   forwardSortationArea: "C1A"
-                  filter: {field: dwellingCity eq: "Charlottetown"}
+                  filter: {field: dwellingCity comparator: eq value: "Charlottetown"}
                  ) {
                    results {
                      city
@@ -593,72 +586,6 @@ describe('queries', () => {
           expect(first.city).toEqual('Charlottetown')
         })
       })
-
-      describe('lt: less than', () => {
-        it('filters out results where the selected field has a value less than the selected value', async () => {
-          let response = await request(server)
-            .post('/graphql')
-            .set('Content-Type', 'application/json; charset=utf-8')
-            .send({
-              query: `{
-                 dwellings:dwellingsInFSA(
-                  forwardSortationArea: "C1A"
-                  filter: {field: dwellingYearBuilt lt: "2000"}
-                 ) {
-                     results {
-                       yearBuilt
-                    }
-                 }
-               }`,
-            })
-          let { dwellings: { results: [first] } } = response.body.data
-          expect(first.yearBuilt).toEqual(1900)
-        })
-      })
-
-      describe('eq: equal to', () => {
-        it('filters out results where the selected field has a value equal to the selected value', async () => {
-          let response = await request(server)
-            .post('/graphql')
-            .set('Content-Type', 'application/json; charset=utf-8')
-            .send({
-              query: `{
-                 dwellings:dwellingsInFSA(
-                  forwardSortationArea: "C1A"
-                  filter: {field: dwellingYearBuilt eq: "1900"}
-                 ) {
-                   results {
-                     yearBuilt
-                   }
-                 }
-               }`,
-            })
-
-          let { dwellings: { results: [first] } } = response.body.data
-          expect(first.yearBuilt).toEqual(1900)
-        })
-      })
-
-    })
-
-    it('gets evalutations within a Forward Sortation Area', async () => {
-      let response = await request(server)
-        .post('/graphql')
-        .set('Content-Type', 'application/json; charset=utf-8')
-        .send({
-          query: `{
-           dwellings:dwellingsInFSA(
-             forwardSortationArea: "C1A"
-           ) {
-          results {
-            yearBuilt
-          }
-        }
-      }`,
-        })
-
-      let { dwellings: { results: [first] } } = response.body.data
-      expect(first.yearBuilt).toEqual(1900)
     })
   })
 })

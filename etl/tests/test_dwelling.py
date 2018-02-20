@@ -10,6 +10,7 @@ from energuide.embedded import ceiling
 from energuide.embedded import code
 from energuide.embedded import distance
 from energuide.embedded import floor
+from energuide.embedded import heating
 from energuide.embedded import insulation
 from energuide.embedded import wall
 from energuide.embedded import door
@@ -564,8 +565,8 @@ class TestParsedDwellingDataRow:
             ventilations=[
                 ventilation.Ventilation(
                     ventilation_type=ventilation.VentilationType.NOT_ENERGY_STAR_NOT_INSTITUTE_CERTIFIED,
-                    air_flow_rate=220,
-                    efficiency=55,
+                    air_flow_rate=220.0,
+                    efficiency=55.0,
                 )
             ],
             water_heatings=[
@@ -574,7 +575,17 @@ class TestParsedDwellingDataRow:
                     tank_volume=189.3001,
                     efficiency=0.8217,
                 )
-            ]
+            ],
+            heating_system=heating.Heating(
+                heating_type=heating.HeatingType.FURNACE,
+                energy_source=heating.EnergySource.NATURAL_GAS,
+                equipment_type=bilingual.Bilingual(english='Furnace w/ continuous pilot',
+                                                   french='Fournaise avec veilleuse permanente'),
+                label='Heating/Cooling System',
+                output_size=0.009671344275824395,
+                efficiency=78.0,
+                steady_state='Steady State',
+            )
         )
 
     def test_bad_postal_code(self, sample_input_d: reader.InputData) -> None:
