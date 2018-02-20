@@ -1,7 +1,3 @@
-"""
-Flask microservice demo. When a file is posted to it, save the file locally.
-"""
-
 import os
 import base64
 from flask import Flask, request, abort
@@ -19,19 +15,10 @@ App.config.update(dict(
 ))
 
 
-# this is a just a helper page that can also post to the service
-@App.route('/frontend', methods=['GET'])
+# this is a just a test page to see if the app is up
+@App.route('/test_alive', methods=['GET'])
 def frontend() -> str:
-    return f"""
-    <!doctype html>
-    <title>Upload new File</title>
-    <h1>Upload new File</h1>
-    <form action="upload_file" method=post enctype=multipart/form-data>
-      <p><input type=text name=key value="{App.config['SECRET_KEY']}"><br>
-         <input type=file name=file>
-         <input type=submit value=Upload>
-    </form>
-    """
+    return 'Alive!'
 
 
 # this is the upload service view
@@ -73,7 +60,7 @@ def upload_file() -> str:
     key = os.environ.get(EnvVariables.key.value, DefaultVariables.key.value)
     container = os.environ.get(EnvVariables.container.value, DefaultVariables.container.value)
     domain = os.environ.get(EnvVariables.domain.value, DefaultVariables.domain.value)
-    azure_sc = StorageCoordinates(account, key, container, domain)
+    azure_sc = StorageCoordinates(account=account, key=key, container=container, domain=domain)
     return upload_stream_to_azure(azure_sc, file, filename)
 
 

@@ -63,10 +63,10 @@ def sample_block_blob_service(sample_storage_coordinates: StorageCoordinates) ->
     return BlockBlobService(account_name=account, account_key=key, custom_domain=domain)
 
 
-def test_frontend() -> None:
+def test_test_alive() -> None:
     app = extract_endpoint.App.test_client()
-    actual = app.get('/frontend')
-    assert b'Upload new File' in actual.data
+    actual = app.get('/test_alive')
+    assert b'Alive' in actual.data
 
 
 def test_upload(sample_salt: str, sample_secret_key: str, sample_block_blob_service: BlockBlobService,
@@ -77,13 +77,16 @@ def test_upload(sample_salt: str, sample_secret_key: str, sample_block_blob_serv
     file_as_string = base64.b64encode(file.read()).decode('utf-8')
     file.seek(0)
     signature = sign_string(salt=sample_salt, key=sample_secret_key, data=file_as_string)
+    if sample_file_name in [blob.name for blob in sample_block_blob_service.list_blobs(sample_azure_container)]:
+        sample_block_blob_service.delete_blob(sample_azure_container, sample_file_name)
+    assert sample_file_name not in [blob.name for blob in sample_block_blob_service.list_blobs(sample_azure_container)]
 
     app.post('/upload_file', data=dict(salt=sample_salt, signature=signature, file=(file, sample_file_name)))
 
     assert sample_file_name in [blob.name for blob in sample_block_blob_service.list_blobs(sample_azure_container)]
-    actual = sample_block_blob_service.get_blob_to_text(sample_azure_container, sample_file_name)
+    actual_blob = sample_block_blob_service.get_blob_to_text(sample_azure_container, sample_file_name)
     sample_block_blob_service.delete_blob(sample_azure_container, sample_file_name)
-    assert actual.content == sample_file_contents
+    assert actual_blob.content == sample_file_contents
 
 
 def test_upload_no_key_in_env(sample_file_contents: str, sample_file_name: str) -> None:
