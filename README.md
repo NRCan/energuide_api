@@ -107,7 +107,9 @@ node --version
 ```
 If version is not shown, the path to the library has to be added to the 'PATH' environment variable in System Properties.
 
-NOTE: If you're having problems, make sure that you are not adding the library to a different users 'PATH' (such as the user path of the local admin). The library can be added to the System 'PATH' variable so that it is visible to all users on the machine.
+NOTE: If you're having problems, make sure that you are not adding the library to a different user's 'PATH' (such as the user path of the local admin). The library can be added to the System 'PATH' variable so that it is visible to all users on the machine.
+![System 'PATH' is highlighted](https://raw.githubusercontent.com/cds-snc/nrcan_api/master/resources/system_path.png)
+
 
 ### Run python extractor
 
