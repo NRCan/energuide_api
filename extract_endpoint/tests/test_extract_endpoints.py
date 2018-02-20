@@ -2,7 +2,7 @@ import os
 from io import BytesIO
 import base64
 import pytest
-from azure.storage.blob import BlockBlobService
+from azure.storage import blob
 import azure_utils
 import crypt_utils
 import extract_endpoint
@@ -58,9 +58,9 @@ def sample_storage_coordinates(sample_azure_account: str, sample_azure_key: str,
 
 
 @pytest.fixture
-def sample_block_blob_service(sample_storage_coordinates: azure_utils.StorageCoordinates) -> BlockBlobService:
+def sample_block_blob_service(sample_storage_coordinates: azure_utils.StorageCoordinates) -> blob.BlockBlobService:
     account, key, _, domain = sample_storage_coordinates
-    return BlockBlobService(account_name=account, account_key=key, custom_domain=domain)
+    return blob.BlockBlobService(account_name=account, account_key=key, custom_domain=domain)
 
 
 def test_test_alive() -> None:
@@ -69,7 +69,7 @@ def test_test_alive() -> None:
     assert b'Alive' in actual.data
 
 
-def test_upload(sample_salt: str, sample_secret_key: str, sample_block_blob_service: BlockBlobService,
+def test_upload(sample_salt: str, sample_secret_key: str, sample_block_blob_service: blob.BlockBlobService,
                 sample_azure_container: str, sample_file_contents: str, sample_file_name: str) -> None:
     extract_endpoint.App.config['SECRET_KEY'] = sample_secret_key
     app = extract_endpoint.App.test_client()
