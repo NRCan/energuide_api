@@ -1,7 +1,5 @@
 import ForwardSortationArea from './types/ForwardSortationArea'
 import MongoPaging from 'mongo-cursor-pagination'
-import { GraphQLError } from 'graphql'
-import { comparators, hasMoreThanOneComparator } from '../utilities'
 /* eslint-disable import/named */
 import {
   dwellingHouseId,
@@ -35,12 +33,6 @@ const resolvers = {
       // ಠ_ಠ
       const { filter, forwardSortationArea, limit, next } = args
 
-      if (hasMoreThanOneComparator(filter)) {
-        return new GraphQLError(
-          `You can only use ${Object.keys(comparators)} one at a time`,
-        )
-      }
-
       let query = {
         $and: [
           {
@@ -50,30 +42,25 @@ const resolvers = {
       }
 
       if (filter) {
-        for (let key in filter) {
-          // make sure the key exists in the comparators' keys
-          if (Object.keys(comparators).includes(key)) {
-            // if the value is a number
-            // - optionally starting with a minus sign
-            // - containing zero or one decimal places
-            // convert it to a float instead of a string
-            if (filter[key].match(/^-?\d+\.?\d+$/)) {
-              filter[key] = parseFloat(filter[key])
-            }
-
-            // We are evaling our own code here, not user input.
-            // Filter.field is our code, stringified and stored in an enum.
-            // The user choses one of the enum values and we convert the string
-            // back to a function which accepts a matcher and generates the
-            // query we need to find that field.
-            // eslint-disable-next-line no-eval
-            let queryGenerator = eval(filter.field)
-            let attrQuery = queryGenerator({
-              [comparators[key]]: filter[key],
-            })
-            query['$and'].push(attrQuery)
-          }
+        let value = filter.value
+        // if the value is a number
+        // - optionally starting with a minus sign
+        // - containing zero or one decimal places
+        // convert it to a float instead of a string
+        if (filter.value.match(/^-?\d+\.?\d+$/)) {
+          value = parseFloat(filter.value)
         }
+        // We are evaling our own code here, not user input.
+        // Filter.field is our code, stringified and stored in an enum.
+        // The user choses one of the enum values and we convert the string
+        // back to a function which accepts a matcher and generates the
+        // query we need to find that field.
+        // eslint-disable-next-line security/detect-eval-with-expression
+        let queryGenerator = eval(filter.field) // eslint-disable-line no-eval
+        let attrQuery = queryGenerator({
+          [filter.comparator]: value,
+        })
+        query['$and'].push(attrQuery)
       }
 
       let result = await MongoPaging.find(client, {
@@ -96,6 +83,11 @@ const resolvers = {
     ventilationAirFlowRateLps: ventilationAirFlowRateLps.toString(),
     ventilationAirFlowRateCfm: ventilationAirFlowRateCfm.toString(),
     ventilationEfficiency: ventilationEfficiency.toString(),
+  },
+  Comparator: {
+    gt: '$gt',
+    lt: '$lt',
+    eq: '$eq',
   },
 }
 
