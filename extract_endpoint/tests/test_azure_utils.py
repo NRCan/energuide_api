@@ -60,9 +60,12 @@ def test_upload_stream_to_azure(sample_storage_coordinates: StorageCoordinates,
                                 sample_stream: BytesIO,
                                 sample_stream_content: str,
                                 sample_filename: str) -> None:
-    actual = upload_stream_to_azure(sample_storage_coordinates, sample_stream, sample_filename)
-    assert 'succeeded' in actual.lower()
+    if sample_filename in [blob.name for blob in sample_block_blob_service.list_blobs(sample_container)]:
+        sample_block_blob_service.delete_blob(sample_container, sample_filename)
+    assert sample_filename not in [blob.name for blob in sample_block_blob_service.list_blobs(sample_container)]
+
+    upload_stream_to_azure(sample_storage_coordinates, sample_stream, sample_filename)
+
     assert sample_filename in [blob.name for blob in sample_block_blob_service.list_blobs(sample_container)]
     actual_file_blob = sample_block_blob_service.get_blob_to_text(sample_container, sample_filename)
-    sample_block_blob_service.delete_blob(sample_container, sample_filename)
     assert actual_file_blob.content == sample_stream_content
