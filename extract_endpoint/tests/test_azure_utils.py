@@ -1,7 +1,7 @@
 import io
 import pytest
 from azure.storage import blob
-from extract_endpoint import azure_utils
+import azure_utils
 
 
 @pytest.fixture
