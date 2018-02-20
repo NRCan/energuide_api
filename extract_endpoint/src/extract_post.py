@@ -1,15 +1,16 @@
 import os
 import base64
+import secrets
 import requests
 import click
-from crypt_utils import get_salt, sign_string
+from crypt_utils import sign_string
 
 
 ENDPOINT_URL = 'http://127.0.0.1:5000/upload_file'
 
 
 def post_file(filename: str, url: str) -> str:
-    salt = get_salt()
+    salt = secrets.token_hex(16)
     with open(filename, 'rb') as file:
         file_as_string = base64.b64encode(file.read()).decode('utf-8')
         file.seek(0)
