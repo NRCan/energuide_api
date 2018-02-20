@@ -18,9 +18,9 @@ import {
 const resolvers = {
   ForwardSortationArea,
   Query: {
-    evaluationsFor: async (root, { account }, { client }) => {
+    dwelling: async (root, { houseId }, { client }) => {
       let query = {
-        houseId: account,
+        houseId,
       }
 
       return client.findOne(query)

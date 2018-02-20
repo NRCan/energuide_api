@@ -157,7 +157,7 @@ const Schema = i18n => {
     # ${i18n.t`The root query type`}
     type Query {
       # ${i18n.t`Details for a specific dwelling`}
-      evaluationsFor(account: Int!): Dwelling
+      dwelling(houseId: Int!): Dwelling
       dwellingsInFSA(filter: Filter forwardSortationArea: ForwardSortationArea! limit: Int, next: String): PaginatedResultSet
     }
 
