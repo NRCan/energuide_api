@@ -17,7 +17,7 @@ def sample_key() -> str:
 
 @pytest.fixture
 def sample_container() -> str:
-    return 'endpoint'
+    return 'energuide-extracted-data'
 
 
 @pytest.fixture
