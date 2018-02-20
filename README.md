@@ -107,6 +107,10 @@ node --version
 ```
 If version is not shown, the path to the library has to be added to the 'PATH' environment variable in System Properties.
 
+NOTE: If you're having problems, make sure that you are not adding the library to a different user's 'PATH' (such as the user path of the local admin). The library can be added to the System 'PATH' variable so that it is visible to all users on the machine.
+<br>
+<img src="resource/system_path.png" width="500" alt="System 'PATH' is highlighted">
+
 ### Run python extractor
 
 Installing Python applications in a `virtualenv` is considered best practice. To do so, run:
@@ -147,7 +151,7 @@ energuide extract --infile tests/randomized_energuide_data.csv --outfile allthed
 energuide load --filename allthedata.zip
 
 # delete zip file
-del allthedata.zip							
+del allthedata.zip
 ```
 Unit tests for the python code.
 ```sh
@@ -188,7 +192,7 @@ db.dwellings.find({}, {'forwardSortationArea': 1})
 quit()
 ```
 
-### Run `GraphQL API`  
+### Run `GraphQL API`
 
 Move to `nrcan_api\api` folder.
 
@@ -214,7 +218,7 @@ If `yarn` is not installed, run `npm install --global yarn` to install.
 
 Next command start `GraphQL`
 ```sh
-yarn start
+yarm build && yarn start
 ```
 
 ### Using the API locally
