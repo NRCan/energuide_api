@@ -43,6 +43,10 @@ const resolvers = {
 
       if (filter) {
         let value = filter.value
+        // if the value is a number
+        // - optionally starting with a minus sign
+        // - containing zero or one decimal places
+        // convert it to a float instead of a string
         if (filter.value.match(/^-?\d+\.?\d+$/)) {
           value = parseFloat(filter.value)
         }
