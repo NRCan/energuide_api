@@ -21,7 +21,7 @@ class EnvVariables(enum.Enum):
 class DefaultVariables(enum.Enum):
     account = 'devstoreaccount1'
     key = 'Eby8vdM02xNOcqFlqUwJPLlmEtlCDXJ1OUzFT50uSRZ6IFsuFq2UVErCz4I6tq/K1SZFPTOtr/KBHBeksoGMGw=='
-    container = 'energuide-extracted-data'
+    container = 'endpoint'
     domain = None
 
 

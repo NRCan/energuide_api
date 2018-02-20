@@ -26,7 +26,9 @@ def sample_domain() -> Optional[str]:
 
 
 @pytest.fixture
-def sample_storage_coordinates(sample_account: str, sample_key: str, sample_container: str,
+def sample_storage_coordinates(sample_account: str,
+                               sample_key: str,
+                               sample_container: str,
                                sample_domain: Optional[str]) -> StorageCoordinates:
     return StorageCoordinates(account=sample_account, key=sample_key, container=sample_container, domain=sample_domain)
 
@@ -64,8 +66,7 @@ def test_upload_stream_to_azure(sample_storage_coordinates: StorageCoordinates,
     actual = sample_block_blob_service.get_blob_to_text(sample_container, sample_filename)
     sample_block_blob_service.delete_blob(sample_container, sample_filename)
 
-    # if isinstance(actual, str):
-    #     assert actual == sample_stream_content
-    # else:
-    print(f'type of actual= {type(actual)}')
-    assert actual.content == sample_stream_content
+    if isinstance(actual, str):
+        assert actual == sample_stream_content
+    else:
+        assert actual.content == sample_stream_content
