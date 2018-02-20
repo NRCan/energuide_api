@@ -63,13 +63,6 @@ def test_upload_stream_to_azure(sample_storage_coordinates: StorageCoordinates,
     actual = upload_stream_to_azure(sample_storage_coordinates, sample_stream, sample_filename)
     assert 'succeeded' in actual.lower()
     assert sample_filename in [blob.name for blob in sample_block_blob_service.list_blobs(sample_container)]
-    actual = sample_block_blob_service.get_blob_to_text(sample_container, sample_filename)
+    actual_file_blob = sample_block_blob_service.get_blob_to_text(sample_container, sample_filename)
     sample_block_blob_service.delete_blob(sample_container, sample_filename)
-
-    print(f'type of actual is {type(actual)}')
-    print(f'type of sample_stream_content is {type(sample_stream_content)}')
-    assert False
-    # if isinstance(actual, str):
-    #     assert actual == sample_stream_content
-    # else:
-    #     assert actual.content == sample_stream_content
+    assert actual_file_blob.content == sample_stream_content
