@@ -1,4 +1,3 @@
-import os
 from io import BytesIO
 import base64
 import pytest
@@ -12,7 +11,8 @@ extract_endpoint.App.testing = True
 
 @pytest.fixture
 def sample_secret_key() -> str:
-    return 'sample secret key'
+    extract_endpoint.App.config['SECRET_KEY'] = 'sample secret key'
+    return extract_endpoint.App.config['SECRET_KEY']
 
 
 @pytest.fixture
@@ -31,36 +31,24 @@ def sample_file_name() -> str:
 
 
 @pytest.fixture
-def sample_azure_account() -> str:
-    return os.environ.get(azure_utils.EnvVariables.account.value, azure_utils.DefaultVariables.account.value)
-
-
-@pytest.fixture
-def sample_azure_key() -> str:
-    return os.environ.get(azure_utils.EnvVariables.key.value, azure_utils.DefaultVariables.key.value)
-
-
-@pytest.fixture
-def sample_azure_container() -> str:
-    return os.environ.get(azure_utils.EnvVariables.container.value, azure_utils.DefaultVariables.container.value)
-
-
-@pytest.fixture
-def sample_azure_domain() -> str:
-    return os.environ.get(azure_utils.EnvVariables.domain.value, azure_utils.DefaultVariables.domain.value)
-
-
-@pytest.fixture
-def sample_storage_coordinates(sample_azure_account: str, sample_azure_key: str,
-                               sample_azure_container: str, sample_azure_domain: str) -> azure_utils.StorageCoordinates:
-    return azure_utils.StorageCoordinates(account=sample_azure_account, key=sample_azure_key,
-                                          container=sample_azure_container, domain=sample_azure_domain)
+def sample_storage_coordinates() -> azure_utils.StorageCoordinates:
+    coords = azure_utils.StorageCoordinates(account='devstoreaccount1',
+                                            key='Eby8vdM02xNOcqFlqUwJPLlmEtlCDXJ1OUzFT50uS'
+                                            + 'RZ6IFsuFq2UVErCz4I6tq/K1SZFPTOtr/KBHBeksoGMGw==',
+                                            container='test-container',
+                                            domain='http://127.0.0.1:10000/devstoreaccount1')
+    extract_endpoint.App.config['AZURE_COORDINATES'] = coords
+    return coords
 
 
 @pytest.fixture
 def sample_block_blob_service(sample_storage_coordinates: azure_utils.StorageCoordinates) -> blob.BlockBlobService:
-    account, key, _, domain = sample_storage_coordinates
-    return blob.BlockBlobService(account_name=account, account_key=key, custom_domain=domain)
+    block_blob_service = blob.BlockBlobService(account_name=sample_storage_coordinates.account,
+                                               account_key=sample_storage_coordinates.key,
+                                               custom_domain=sample_storage_coordinates.domain)
+    block_blob_service.create_container(sample_storage_coordinates.container)
+    yield block_blob_service
+    block_blob_service.delete_container(sample_storage_coordinates.container)
 
 
 def test_test_alive() -> None:
@@ -70,22 +58,20 @@ def test_test_alive() -> None:
 
 
 def test_upload(sample_salt: str, sample_secret_key: str, sample_block_blob_service: blob.BlockBlobService,
-                sample_azure_container: str, sample_file_contents: str, sample_file_name: str) -> None:
-    extract_endpoint.App.config['SECRET_KEY'] = sample_secret_key
+                sample_storage_coordinates: azure_utils.StorageCoordinates, sample_file_contents: str,
+                sample_file_name: str) -> None:
     app = extract_endpoint.App.test_client()
     file = BytesIO(sample_file_contents.encode('utf-8'))
     file_as_string = base64.b64encode(file.read()).decode('utf-8')
     file.seek(0)
+    container = sample_storage_coordinates.container
     signature = crypt_utils.sign_string(salt=sample_salt, key=sample_secret_key, data=file_as_string)
-    if sample_file_name in [blob.name for blob in sample_block_blob_service.list_blobs(sample_azure_container)]:
-        sample_block_blob_service.delete_blob(sample_azure_container, sample_file_name)
-    assert sample_file_name not in [blob.name for blob in sample_block_blob_service.list_blobs(sample_azure_container)]
 
     app.post('/upload_file', data=dict(salt=sample_salt, signature=signature, file=(file, sample_file_name)))
 
-    assert sample_file_name in [blob.name for blob in sample_block_blob_service.list_blobs(sample_azure_container)]
-    actual_blob = sample_block_blob_service.get_blob_to_text(sample_azure_container, sample_file_name)
-    sample_block_blob_service.delete_blob(sample_azure_container, sample_file_name)
+    assert sample_file_name in [blob.name for blob in sample_block_blob_service.list_blobs(container)]
+    actual_blob = sample_block_blob_service.get_blob_to_text(container, sample_file_name)
+    # sample_block_blob_service.delete_blob(container, sample_file_name)
     assert actual_blob.content == sample_file_contents
 
 

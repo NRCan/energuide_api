@@ -14,6 +14,13 @@ DEFAULT_ENDPOINT_SECRET_KEY = 'no key'
 App = flask.Flask(__name__)
 App.config.update(dict(
     SECRET_KEY=os.environ.get('ENDPOINT_SECRET_KEY', DEFAULT_ENDPOINT_SECRET_KEY),
+    AZURE_COORDINATES=azure_utils.StorageCoordinates(
+        account=os.environ.get(azure_utils.EnvVariables.account.value, azure_utils.DefaultVariables.account.value),
+        key=os.environ.get(azure_utils.EnvVariables.key.value, azure_utils.DefaultVariables.key.value),
+        container=os.environ.get(azure_utils.EnvVariables.container.value,
+                                 azure_utils.DefaultVariables.container.value),
+        domain=os.environ.get(azure_utils.EnvVariables.domain.value, azure_utils.DefaultVariables.domain.value)
+    )
 ))
 
 
@@ -41,20 +48,15 @@ def upload_file() -> str:
 
     file = flask.request.files['file']
     file_as_string = base64.b64encode(file.read()).decode('utf-8')
-    signed_file = crypt_utils.sign_string(salt=flask.request.form['salt'], key=App.config['SECRET_KEY'],
-                                          data=file_as_string)
-    if flask.request.form['signature'] != signed_file:
-        App.logger.error(f"Sig sent: {flask.request.form['signature']} != {signed_file}")
+    signature = crypt_utils.sign_string(salt=flask.request.form['salt'], key=App.config['SECRET_KEY'],
+                                        data=file_as_string)
+    if flask.request.form['signature'] != signature:
+        App.logger.error(f"Sig sent {flask.request.form['signature']} != sig of file {signature}")
         flask.abort(404)
 
     file.seek(0)
     filename = utils.secure_filename(file.filename)
-    account = os.environ.get(azure_utils.EnvVariables.account.value, azure_utils.DefaultVariables.account.value)
-    key = os.environ.get(azure_utils.EnvVariables.key.value, azure_utils.DefaultVariables.key.value)
-    container = os.environ.get(azure_utils.EnvVariables.container.value, azure_utils.DefaultVariables.container.value)
-    domain = os.environ.get(azure_utils.EnvVariables.domain.value, azure_utils.DefaultVariables.domain.value)
-    azure_sc = azure_utils.StorageCoordinates(account=account, key=key, container=container, domain=domain)
-    if azure_utils.upload_stream_to_azure(azure_sc, file, filename):
+    if azure_utils.upload_stream_to_azure(App.config['AZURE_COORDINATES'], file, filename):
         App.logger.info(f"File {filename} uploaded to Azure")
         return 'success'
     App.logger.error(f"File {filename} failed upload to Azure")
