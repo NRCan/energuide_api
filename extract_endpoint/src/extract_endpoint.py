@@ -41,7 +41,10 @@ def upload_file() -> str:
     if 'salt' not in flask.request.form:
         App.logger.error("No salt sent")
         flask.abort(404)
-    if 'file' not in flask.request.files or getattr(flask.request.files['file'], 'filename', '') == '':
+    if flask.request.form.get('filename', '') == '':
+        App.logger.error("Bad filename")
+        flask.abort(404)
+    if 'file' not in flask.request.files:
         App.logger.error("Bad file")
         flask.abort(404)
 
@@ -54,7 +57,7 @@ def upload_file() -> str:
         flask.abort(404)
 
     file.seek(0)
-    filename = utils.secure_filename(file.filename)
+    filename = utils.secure_filename(flask.request.form['filename'])
     if azure_utils.upload_stream_to_azure(App.config['AZURE_COORDINATES'], file, filename):
         App.logger.info(f"File {filename} uploaded to Azure")
         return 'success'

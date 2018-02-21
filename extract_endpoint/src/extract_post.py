@@ -1,30 +1,34 @@
+import io
 import os
 import base64
 import secrets
 import requests
 import click
+import typing
 from crypt_utils import sign_string
 
 
-ENDPOINT_URL = 'http://127.0.0.1:5000/upload_file'
+def post_file(stream: typing.IO[bytes], filename: str, url: str) -> requests.models.Response:
+    if filename is None and stream.name == '<stdin>':
+        raise ValueError("must have a filename if reading from stdin")
+    if filename is None:
+        filename = stream.name
+    memory_stream = io.BytesIO(stream.read())
 
-
-def post_file(filename: str, url: str) -> str:
     salt = secrets.token_hex(16)
-    with open(filename, 'rb') as file:
-        file_as_string = base64.b64encode(file.read()).decode('utf-8')
-        file.seek(0)
-        signature = sign_string(salt=salt, key=os.environ.get('ENDPOINT_SECRET_KEY', ''), data=file_as_string)
-
-        retval = requests.post(url=url, files={'file': file},
-                               data={'salt': salt, 'signature': signature})
-        return str(retval.content)
-
+    signature = sign_string(salt=salt, key=os.environ.get('ENDPOINT_SECRET_KEY', ''),
+                            data=base64.b64encode(memory_stream.read()).decode('utf-8'))
+    memory_stream.seek(0)
+    return requests.post(url=url,
+                         files={'file': memory_stream},
+                         data={'salt': salt, 'signature': signature, 'filename': filename})
 
 @click.command()
-@click.option('--filename', type=click.Path(exists=True), required=True)
-def main(filename='test.txt') -> None:
-    print(f'POST returned: {post_file(filename, url=ENDPOINT_URL)}')
+@click.argument('stream', type=click.File('rb'))
+@click.option('--filename')
+@click.option('--url', default='http://127.0.0.1:5000/upload_file')
+def main(stream: typing.IO[bytes], filename: str, url: str) -> None:
+    print(f'POST returned: {post_file(stream=stream, filename=filename, url=url)}')
 
 
 if __name__ == "__main__":
