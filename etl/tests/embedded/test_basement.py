@@ -33,7 +33,7 @@ def sample_crawlspace_floors_raw() -> str:
 
 
 @pytest.fixture
-def sample_crawlspace_floor_raw() -> str:
+def sample_crawlspace_floors_raw() -> str:
     return """
 <Floor>
     <Construction isBelowFrostline="false" hasIntegralFooting="false" heatedFloor="false">
@@ -175,8 +175,8 @@ def sample_crawlspace_floors_element(sample_crawlspace_floors_raw: str) -> eleme
 
 
 @pytest.fixture
-def sample_crawlspace_floor_element(sample_crawlspace_floor_raw: str) -> element.Element:
-    return element.Element.from_string(sample_crawlspace_floor_raw)
+def sample_crawlspace_floors_element(sample_crawlspace_floors_raw: str) -> element.Element:
+    return element.Element.from_string(sample_crawlspace_floors_raw)
 
 
 @pytest.fixture
@@ -197,11 +197,6 @@ def sample_basement_header_element(sample_basement_header_raw: str) -> element.E
 @pytest.fixture
 def sample_basement_element(sample_basement_raw: str) -> element.Element:
     return element.Element.from_string(sample_basement_raw)
-
-
-@pytest.fixture
-def sample_crawlspace_element(sample_crawlspace_raw: str) -> element.Element:
-    return element.Element.from_string(sample_crawlspace_raw)
 
 
 @pytest.fixture
@@ -238,17 +233,6 @@ def sample_basement_walls() -> typing.List[basement.BasementWall]:
             wall_area=area.Area(7.3152)),
     ]
 
-@pytest.fixture
-def sample_crawlspace_walls() -> typing.List[basement.BasementWall]:
-    return [
-        basement.BasementWall(
-            wall_type=basement.WallType.NOT_APPLICABLE,
-            nominal_insulation=insulation.Insulation(rsi=1.432),
-            effective_insulation=insulation.Insulation(rsi=1.7968),
-            composite_percentage=100.0,
-            wall_area=area.Area(21.333012959999998)
-        )
-    ]
 
 @pytest.fixture
 def sample_crawlspace_walls() -> typing.List[basement.BasementWall]:
@@ -300,18 +284,6 @@ def sample_crawlspace_floors() -> typing.List[basement.BasementFloor]:
             floor_area=area.Area(24.993000130000002)
         )
     ]
-
-@pytest.fixture
-def sample_crawlspace_floor() -> basement.BasementFloor:
-    return basement.BasementFloor(
-        rectangular=True,
-        nominal_insulation=insulation.Insulation(rsi=0.0),
-        effective_insulation=insulation.Insulation(rsi=0.468),
-        width=distance.Distance(distance_metres=4.9987),
-        length=distance.Distance(distance_metres=4.9999),
-        perimeter=None,
-        optional_area=None
-    )
 
 
 @pytest.fixture
@@ -456,24 +428,6 @@ def test_crawlspace_floors_to_dict(sample_crawlspace_floors_element: element.Ele
         'areaFeet': 269.02243166156927,
         'perimeterMetres': 19.9972,
         'perimeterFeet': 65.607613648,
-        'lengthMetres': 4.9999,
-        'lengthFeet': 16.403871916,
-        'widthMetres': 4.9987,
-        'widthFeet': 16.399934908000002,
-    }
-
-
-def test_crawlspace_floor_to_dict(sample_crawlspace_floor_element: element.Element) -> None:
-    output = basement.BasementFloor.from_crawlspace(sample_crawlspace_floor_element).to_dict()
-    assert output == {
-        'insulationNominalRsi': 0.0,
-        'insulationNominalR': 0.0,
-        'insulationEffectiveRsi': 0.468,
-        'insulationEffectiveR': 2.657427241716,
-        'areaMetres': 24.993000130000002,
-        'areaFeet': 269.02243166156927,
-        'perimeterMetres': None,
-        'perimeterFeet': None,
         'lengthMetres': 4.9999,
         'lengthFeet': 16.403871916,
         'widthMetres': 4.9987,
