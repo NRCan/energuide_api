@@ -57,7 +57,7 @@ const resolvers = {
           // - optionally starting with a minus sign
           // - containing zero or one decimal places
           // convert it to a float instead of a string
-          if (filter.value.match(/^-?\d+\.?\d+$/)) {
+          if (filter.value.match(/^-?\d+$|^-?\d+\.\d+$/)) {
             value = parseFloat(filter.value)
           }
           // We are evaling our own code here, not user input.
