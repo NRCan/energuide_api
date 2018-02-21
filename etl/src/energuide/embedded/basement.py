@@ -312,8 +312,6 @@ class Basement(_Basement):
             header_from_data = BasementHeader.from_data
         else:
             floor_from_data = BasementFloor.from_slab
-            wall_from_data = None
-            header_from_data = None
 
         floors = floor_from_data(basement.xpath('Floor')[0])
         floor_perimeter = floors[0].perimeter.metres
@@ -323,10 +321,10 @@ class Basement(_Basement):
             label=basement.get_text('Label'),
             configuration_type=basement.xpath('Configuration/@type')[0],
             walls=wall_from_data(basement.xpath('Wall')[0], floor_perimeter)
-                  if wall_from_data else [],
+            if foundation_type is not FoundationType.SLAB else [],
             floors=floors,
             header=header_from_data(basement.xpath('Components/FloorHeader')[0])
-            if header_from_data is not None else None,
+            if foundation_type is not FoundationType.SLAB else None,
         )
 
     @staticmethod
