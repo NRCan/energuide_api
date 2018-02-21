@@ -33,17 +33,6 @@ def sample_crawlspace_floors_raw() -> str:
 
 
 @pytest.fixture
-def sample_crawlspace_floors_raw() -> str:
-    return """
-<Floor>
-    <Construction isBelowFrostline="false" hasIntegralFooting="false" heatedFloor="false">
-        <FloorsAbove idref="Code 15" rValue="0.468" nominalInsulation="0">4200000000</FloorsAbove>
-    </Construction>
-    <Measurements isRectangular="true" width="4.9987" length="4.9999" />
-</Floor>
-    """
-
-@pytest.fixture
 def sample_basement_wall_raw() -> str:
     return """
 <Wall hasPonyWall="true">
@@ -91,23 +80,6 @@ def sample_crawlspace_wall_raw() -> str:
 </Wall>
     """
 
-
-@pytest.fixture
-def sample_crawlspace_wall_raw() -> str:
-    return """
-<Wall>
-    <Construction corners="1">
-        <Type idref="Code 18" nominalInsulation="1.432">
-            <Description>1211100700</Description>
-            <Composite>
-                <Section rank="1" percentage="100" rsi="1.7968" nominalRsi="1.432" />
-            </Composite>
-        </Type>
-    </Construction>
-    <Measurements height="1.0668" depth="0.4572" />
-    <RValues skirt="0" thermalBreak="0" />
-</Wall>
-    """
 
 @pytest.fixture
 def sample_basement_header_raw() -> str:
