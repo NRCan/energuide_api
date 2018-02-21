@@ -1,13 +1,24 @@
 import io
+import subprocess
+import psutil
 import pytest
 import requests
 import extract_post
-
+import time
+import typing
 
 class NamedStream(io.BytesIO):
     def __init__(self, *args, **kwargs):
         super(NamedStream, self).__init__(*args)
         self.name = kwargs['name']
+
+
+@pytest.fixture
+def post_stream():
+    proc = psutil.Popen(['python', 'src/extract_endpoint.py'], stderr=subprocess.PIPE, stdout=subprocess.PIPE)
+    time.sleep(0.5)
+    yield extract_post.post_stream
+    proc.kill()
 
 
 @pytest.fixture
@@ -35,18 +46,18 @@ def sample_filename() -> str:
     return "sample_filename.txt"
 
 
-def test_post_stream(sample_stream: NamedStream, sample_filename: str, sample_url: str) -> None:
-    post_return = extract_post.post_stream(stream=sample_stream, filename=sample_filename, url=sample_url)
+def test_post_stream(post_stream, sample_stream: NamedStream, sample_filename: str, sample_url: str) -> None:
+    post_return = post_stream(stream=sample_stream, filename=sample_filename, url=sample_url)
     assert post_return.status_code == 200
 
 
-def test_post_stream_stdin(sample_stream_stdin: NamedStream, sample_filename: str, sample_url: str) -> None:
-    post_return = extract_post.post_stream(stream=sample_stream_stdin, filename=sample_filename, url=sample_url)
+def test_post_stream_stdin(post_stream, sample_stream_stdin: NamedStream, sample_filename: str, sample_url: str) -> None:
+    post_return = post_stream(stream=sample_stream_stdin, filename=sample_filename, url=sample_url)
     assert post_return.status_code == 200
 
 
-def test_post_stream_no_filename(sample_stream: NamedStream, sample_url: str) -> None:
-    post_return = extract_post.post_stream(stream=sample_stream, filename=None, url=sample_url)
+def test_post_stream_no_filename(post_stream, sample_stream: NamedStream, sample_url: str) -> None:
+    post_return = post_stream(stream=sample_stream, filename=None, url=sample_url)
     assert post_return.status_code == 200
 
 

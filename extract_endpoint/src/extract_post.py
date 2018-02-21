@@ -23,6 +23,7 @@ def post_stream(stream: typing.IO[bytes], filename: str, url: str) -> requests.m
                          files={'file': memory_stream},
                          data={'salt': salt, 'signature': signature, 'filename': filename})
 
+
 @click.command()
 @click.argument('stream', type=click.File('rb'))
 @click.option('--filename')

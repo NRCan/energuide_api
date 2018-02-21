@@ -45,7 +45,7 @@ def upload_file() -> str:
         App.logger.error("Bad filename")
         flask.abort(404)
     if 'file' not in flask.request.files:
-        App.logger.error("Bad file")
+        App.logger.error("Bad file ")
         flask.abort(404)
 
     file = flask.request.files['file']
