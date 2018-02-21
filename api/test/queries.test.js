@@ -27,7 +27,7 @@ describe('queries', () => {
         .set('Content-Type', 'application/json; charset=utf-8')
         .send({
           query: `{
-          evaluations:evaluationsFor(account: 189250) {
+          evaluations:dwelling(houseId: 189250) {
               houseId
               yearBuilt
               city
@@ -53,7 +53,7 @@ describe('queries', () => {
         .set('Content-Type', 'application/json; charset=utf-8')
         .send({
           query: `{
-          evaluations:evaluationsFor(account: 189250) {
+          evaluations:dwelling(houseId: 189250) {
             evaluations {
               evaluationType
               entryDate
@@ -89,7 +89,7 @@ describe('queries', () => {
         .set('Content-Type', 'application/json; charset=utf-8')
         .send({
           query: `{
-          evaluationsFor(account: 189250) {
+          dwelling(houseId: 189250) {
             evaluations {
               ceilings {
                 label
@@ -109,7 +109,7 @@ describe('queries', () => {
         }`,
         })
 
-      let { evaluationsFor: { evaluations } } = response.body.data
+      let { dwelling: { evaluations } } = response.body.data
       let [first] = evaluations
       let [ceiling] = first.ceilings
       expect(ceiling).toEqual({
@@ -133,7 +133,7 @@ describe('queries', () => {
         .set('Content-Type', 'application/json; charset=utf-8')
         .send({
           query: `{
-          evaluationsFor(account: 189250) {
+          dwelling(houseId: 189250) {
             evaluations {
               walls {
                 label
@@ -157,7 +157,7 @@ describe('queries', () => {
         }`,
         })
 
-      let { evaluationsFor: { evaluations } } = response.body.data
+      let { dwelling: { evaluations } } = response.body.data
       let [first] = evaluations
       let [wall] = first.walls
       expect(wall).toEqual({
@@ -185,7 +185,7 @@ describe('queries', () => {
         .set('Content-Type', 'application/json; charset=utf-8')
         .send({
           query: `{
-          evaluationsFor(account: 189250) {
+          dwelling(houseId: 189250) {
             evaluations {
               doors {
                 typeEnglish
@@ -202,7 +202,7 @@ describe('queries', () => {
         }`,
         })
 
-      let { evaluationsFor: { evaluations } } = response.body.data
+      let { dwelling: { evaluations } } = response.body.data
       let [first] = evaluations
       let [door] = first.doors
       expect(door).toEqual({
@@ -223,7 +223,7 @@ describe('queries', () => {
         .set('Content-Type', 'application/json; charset=utf-8')
         .send({
           query: `{
-          evaluationsFor(account: 189250) {
+          dwelling(houseId: 189250) {
             evaluations {
                waterHeatings {
                   typeEnglish
@@ -237,7 +237,7 @@ describe('queries', () => {
         }`,
         })
 
-      let { evaluationsFor: { evaluations } } = response.body.data
+      let { dwelling: { evaluations } } = response.body.data
       let [first] = evaluations
       let [waterHeatings] = first.waterHeatings
       expect(waterHeatings).toEqual({
@@ -255,7 +255,7 @@ describe('queries', () => {
         .set('Content-Type', 'application/json; charset=utf-8')
         .send({
           query: `{
-          evaluationsFor(account: 189250) {
+          dwelling(houseId: 189250) {
             evaluations {
               floors {
                 label
@@ -273,7 +273,7 @@ describe('queries', () => {
         }`,
         })
 
-      let { evaluationsFor: { evaluations } } = response.body.data
+      let { dwelling: { evaluations } } = response.body.data
       let [first] = evaluations
       let [floor] = first.floors
       expect(floor).toEqual({
@@ -295,7 +295,7 @@ describe('queries', () => {
         .set('Content-Type', 'application/json; charset=utf-8')
         .send({
           query: `{
-          evaluations:evaluationsFor(account: 189250) {
+          evaluations:dwelling(houseId: 189250) {
             evaluations {
               windows {
                 label
@@ -353,14 +353,14 @@ describe('queries', () => {
     })
   })
 
-  describe('evaluationsFor', () => {
-    it('retrieves evaluations given an account id and a postalcode', async () => {
+  describe('dwelling', () => {
+    it('retrieves evaluations given an houseId id', async () => {
       let response = await request(server)
         .post('/graphql')
         .set('Content-Type', 'application/json; charset=utf-8')
         .send({
           query: `{
-          evaluations:evaluationsFor(account: 189250) {
+          evaluations:dwelling(houseId: 189250) {
             yearBuilt
           }
         }`,
