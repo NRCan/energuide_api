@@ -140,7 +140,6 @@ class BasementFloor(_BasementFloor):
             floor_area=area.Area(floor_area),
         )
 
-
     @classmethod
     def from_basement(cls, floor: element.Element) -> typing.List['BasementFloor']:
         return [cls._from_data(floor, 'AddedToSlab', FloorType.SLAB)]
