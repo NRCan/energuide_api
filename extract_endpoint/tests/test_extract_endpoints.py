@@ -85,8 +85,9 @@ def test_upload(test_client: testing.FlaskClient,
                 sample_stream: io.BytesIO,
                 sample_file_name: str) -> None:
 
-    test_client.post('/upload_file', data=dict(salt=sample_salt, signature=sample_signature, filename=sample_file_name,
-                                               file=(sample_stream, sample_file_name)))
+    post_return = test_client.post('/upload_file', data=dict(salt=sample_salt, signature=sample_signature, filename=sample_file_name,
+                                                   file=(sample_stream, sample_file_name)))
+    assert post_return.status_code == 200
     assert sample_file_name in [blob.name for blob in
                                 sample_block_blob_service.list_blobs(sample_storage_coordinates.container)]
     actual_blob = sample_block_blob_service.get_blob_to_text(sample_storage_coordinates.container, sample_file_name)
@@ -108,57 +109,51 @@ def test_upload_no_salt(test_client: testing.FlaskClient,
                         sample_signature: str,
                         sample_stream: io.BytesIO,
                         sample_file_name: str) -> None:
-
-    actual = test_client.post('/upload_file', data=dict(signature=sample_signature, filename=sample_file_name,
-                                                        file=(sample_stream, sample_file_name)))
-    assert actual.status_code == 404
+    post_return = test_client.post('/upload_file', data=dict(signature=sample_signature, filename=sample_file_name,
+                                                             file=(sample_stream, sample_file_name)))
+    assert post_return.status_code == 404
 
 
 def test_upload_wrong_salt(test_client: testing.FlaskClient,
                            sample_signature: str,
                            sample_stream: io.BytesIO,
                            sample_file_name: str) -> None:
-
-    actual = test_client.post('/upload_file', data=dict(salt='wrong salt', signature=sample_signature,
-                                                        filename=sample_file_name,
-                                                        file=(sample_stream, sample_file_name)))
-    assert actual.status_code == 404
+    post_return = test_client.post('/upload_file', data=dict(salt='wrong salt', signature=sample_signature,
+                                                             filename=sample_file_name,
+                                                             file=(sample_stream, sample_file_name)))
+    assert post_return.status_code == 404
 
 
 def test_upload_no_signature(test_client: testing.FlaskClient,
                              sample_salt: str,
                              sample_stream: io.BytesIO,
                              sample_file_name: str) -> None:
-
-    actual = test_client.post('/upload_file', data=dict(salt=sample_salt, filename=sample_file_name,
-                                                        file=(sample_stream, sample_file_name)))
-    assert actual.status_code == 404
+    post_return = test_client.post('/upload_file', data=dict(salt=sample_salt, filename=sample_file_name,
+                                                             file=(sample_stream, sample_file_name)))
+    assert post_return.status_code == 404
 
 
 def test_upload_wrong_signature(test_client: testing.FlaskClient,
                                 sample_salt: str,
                                 sample_stream: io.BytesIO,
                                 sample_file_name: str) -> None:
-
-    actual = test_client.post('/upload_file', data=dict(salt=sample_salt, signature='wrong signature',
-                                                        filename=sample_file_name,
-                                                        file=(sample_stream, sample_file_name)))
-    assert actual.status_code == 404
+    post_return = test_client.post('/upload_file', data=dict(salt=sample_salt, signature='wrong signature',
+                                                             filename=sample_file_name,
+                                                             file=(sample_stream, sample_file_name)))
+    assert post_return.status_code == 404
 
 
 def test_upload_no_file(test_client: testing.FlaskClient,
                         sample_salt: str, sample_signature: str) -> None:
-
-    actual = test_client.post('/upload_file', data=dict(salt=sample_salt, signature=sample_signature,
-                                                        filename=sample_file_name))
-    assert actual.status_code == 404
+    post_return = test_client.post('/upload_file', data=dict(salt=sample_salt, signature=sample_signature,
+                                                             filename=sample_file_name))
+    assert post_return.status_code == 404
 
 
 def test_upload_no_filename(test_client: testing.FlaskClient,
                             sample_salt: str,
                             sample_signature: str,
                             sample_stream: io.BytesIO) -> None:
-
-    actual = test_client.post('/upload_file', data=dict(salt=sample_salt, signature=sample_signature,
-                                                        filename=sample_file_name, file=(sample_stream, '')))
-    assert actual.status_code == 404
+    post_return = test_client.post('/upload_file', data=dict(salt=sample_salt, signature=sample_signature,
+                                                             filename=sample_file_name, file=(sample_stream, '')))
+    assert post_return.status_code == 404

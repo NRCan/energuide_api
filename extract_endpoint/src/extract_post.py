@@ -8,7 +8,7 @@ import typing
 from crypt_utils import sign_string
 
 
-def post_file(stream: typing.IO[bytes], filename: str, url: str) -> requests.models.Response:
+def post_stream(stream: typing.IO[bytes], filename: str, url: str) -> requests.models.Response:
     if filename is None and stream.name == '<stdin>':
         raise ValueError("must have a filename if reading from stdin")
     if filename is None:
@@ -28,7 +28,7 @@ def post_file(stream: typing.IO[bytes], filename: str, url: str) -> requests.mod
 @click.option('--filename')
 @click.option('--url', default='http://127.0.0.1:5000/upload_file')
 def main(stream: typing.IO[bytes], filename: str, url: str) -> None:
-    print(f'POST returned: {post_file(stream=stream, filename=filename, url=url)}')
+    print(f'POST returned: {post_stream(stream=stream, filename=filename, url=url)}')
 
 
 if __name__ == "__main__":
