@@ -38,6 +38,7 @@ REQUIRED_FIELDS = DROP_FIELDS + [
 ]
 
 _SCHEMA = {field: {'type': 'string', 'required': True} for field in REQUIRED_FIELDS}
+_WINDOWS_LONG_SIZE = (2 ** 31) - 1
 
 
 def _validated(data: typing.Iterable[reader.InputData], validator) -> typing.Iterator[reader.InputData]:
@@ -49,8 +50,12 @@ def _validated(data: typing.Iterable[reader.InputData], validator) -> typing.Ite
 
 
 def _read_csv(filepath: str) -> typing.Iterator[reader.InputData]:
-    csv.field_size_limit(sys.maxsize)
-    with open(filepath, 'r') as file:
+    try:
+        csv.field_size_limit(sys.maxsize)
+    except OverflowError:
+        csv.field_size_limit(_WINDOWS_LONG_SIZE)
+
+    with open(filepath, 'r', encoding='utf-8', newline='') as file:
         csv_reader = csv.DictReader(file)
         for row in csv_reader:
             yield row
