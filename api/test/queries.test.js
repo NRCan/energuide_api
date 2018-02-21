@@ -478,7 +478,32 @@ describe('queries', () => {
       expect(dwellings.results.length).toEqual(1)
     })
 
-    describe('filter', () => {
+    describe('filters', () => {
+      it('allows for multiple filters', async () => {
+        let response = await request(server)
+          .post('/graphql')
+          .set('Content-Type', 'application/json; charset=utf-8')
+          .send({
+            query: `{
+               dwellings:dwellingsInFSA(
+                forwardSortationArea: "C1A"
+                filters: [
+                  {field: dwellingCity comparator: eq value: "Charlottetown"}
+                  {field: dwellingYearBuilt comparator: eq value: "1900"}
+                ]
+               ) {
+                 results {
+                   city
+                   yearBuilt
+                 }
+               }
+             }`,
+          })
+        let { dwellings: { results: [first] } } = response.body.data
+        expect(first.city).toEqual('Charlottetown')
+        expect(first.yearBuilt).toEqual(1900)
+      })
+
       describe('gt: greater than', () => {
         it('returns dwellings where the field is greater than the given value', async () => {
           let response = await request(server)
@@ -488,7 +513,7 @@ describe('queries', () => {
               query: `{
                  dwellings:dwellingsInFSA(
                   forwardSortationArea: "C1A"
-                  filter: {field: dwellingYearBuilt comparator: gt value: "1900"}
+                  filters: [{field: dwellingYearBuilt comparator: gt value: "1900"}]
                  ) {
                     results {
                       yearBuilt
@@ -509,7 +534,7 @@ describe('queries', () => {
               query: `{
                  dwellings:dwellingsInFSA(
                   forwardSortationArea: "C1A"
-                  filter: {field: dwellingCity comparator: eq value: "Charlottetown"}
+                  filters: [{field: dwellingCity comparator: eq value: "Charlottetown"}]
                  ) {
                    results {
                      city
@@ -531,7 +556,7 @@ describe('queries', () => {
               query: `{
                  dwellings:dwellingsInFSA(
                   forwardSortationArea: "C1A"
-                  filter: {field: dwellingYearBuilt comparator: lt value: "2000"}
+                  filters: [{field: dwellingYearBuilt comparator: lt value: "2000"}]
                  ) {
                      results {
                        yearBuilt
@@ -553,7 +578,7 @@ describe('queries', () => {
               query: `{
                  dwellings:dwellingsInFSA(
                   forwardSortationArea: "C1A"
-                  filter: {field: dwellingYearBuilt comparator: eq value: "1900"}
+                  filters: [{field: dwellingYearBuilt comparator: eq value: "1900"}]
                  ) {
                    results {
                      yearBuilt
@@ -574,7 +599,7 @@ describe('queries', () => {
               query: `{
                  dwellings:dwellingsInFSA(
                   forwardSortationArea: "C1A"
-                  filter: {field: dwellingCity comparator: eq value: "Charlottetown"}
+                  filters: [{field: dwellingCity comparator: eq value: "Charlottetown"}]
                  ) {
                    results {
                      city

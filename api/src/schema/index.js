@@ -158,7 +158,7 @@ const Schema = i18n => {
     type Query {
       # ${i18n.t`Details for a specific dwelling`}
       dwelling(houseId: Int!): Dwelling
-      dwellingsInFSA(filter: Filter forwardSortationArea: ForwardSortationArea! limit: Int, next: String): PaginatedResultSet
+      dwellingsInFSA(filters: [Filter!] forwardSortationArea: ForwardSortationArea! limit: Int, next: String): PaginatedResultSet
     }
 
     enum Field {
