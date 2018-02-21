@@ -6,6 +6,7 @@ from energuide.embedded import basement
 from energuide.embedded import distance
 from energuide.embedded import insulation
 
+
 @pytest.fixture
 def sample_basement_floors_raw() -> str:
     return """
@@ -18,6 +19,7 @@ def sample_basement_floors_raw() -> str:
 </Floor>
     """
 
+
 @pytest.fixture
 def sample_crawlspace_floors_raw() -> str:
     return """
@@ -28,6 +30,7 @@ def sample_crawlspace_floors_raw() -> str:
     <Measurements isRectangular="true" width="4.9987" length="4.9999" />
 </Floor>
     """
+
 
 @pytest.fixture
 def sample_basement_wall_raw() -> str:
@@ -59,6 +62,7 @@ def sample_basement_wall_raw() -> str:
 </Wall>
     """
 
+
 @pytest.fixture
 def sample_crawlspace_wall_raw() -> str:
     return """
@@ -76,6 +80,7 @@ def sample_crawlspace_wall_raw() -> str:
 </Wall>
     """
 
+
 @pytest.fixture
 def sample_basement_header_raw() -> str:
     return """
@@ -91,6 +96,7 @@ def sample_basement_header_raw() -> str:
     </FacingDirection>
 </FloorHeader>
     """
+
 
 @pytest.fixture
 def sample_basement_raw(
@@ -128,7 +134,6 @@ def sample_crawlspace_raw(
     </Components>
 </Crawlspace>
     """
-
 
 
 @pytest.fixture
