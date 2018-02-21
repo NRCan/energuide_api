@@ -1,33 +1,14 @@
-from io import BytesIO
+import io
 import base64
 import pytest
+from flask import testing
 from azure.storage import blob
 import azure_utils
 import crypt_utils
 import extract_endpoint
 
+
 extract_endpoint.App.testing = True
-
-
-@pytest.fixture
-def sample_secret_key() -> str:
-    extract_endpoint.App.config['SECRET_KEY'] = 'sample secret key'
-    return extract_endpoint.App.config['SECRET_KEY']
-
-
-@pytest.fixture
-def sample_salt() -> str:
-    return 'sample salt'
-
-
-@pytest.fixture
-def sample_file_contents() -> str:
-    return 'sample file contents'
-
-
-@pytest.fixture
-def sample_file_name() -> str:
-    return 'test_sample_blob_filename.txt'
 
 
 @pytest.fixture
@@ -43,12 +24,50 @@ def sample_storage_coordinates() -> azure_utils.StorageCoordinates:
 
 @pytest.fixture
 def sample_block_blob_service(sample_storage_coordinates: azure_utils.StorageCoordinates) -> blob.BlockBlobService:
-    block_blob_service = blob.BlockBlobService(account_name=sample_storage_coordinates.account,
-                                               account_key=sample_storage_coordinates.key,
-                                               custom_domain=sample_storage_coordinates.domain)
-    block_blob_service.create_container(sample_storage_coordinates.container)
-    yield block_blob_service
-    block_blob_service.delete_container(sample_storage_coordinates.container)
+    return blob.BlockBlobService(account_name=sample_storage_coordinates.account,
+                                 account_key=sample_storage_coordinates.key,
+                                 custom_domain=sample_storage_coordinates.domain)
+
+
+@pytest.fixture
+def test_client(sample_block_blob_service, sample_storage_coordinates) -> testing.FlaskClient:
+    sample_block_blob_service.create_container(sample_storage_coordinates.container)
+    yield extract_endpoint.App.test_client()
+    sample_block_blob_service.delete_container(sample_storage_coordinates.container)
+
+
+@pytest.fixture
+def sample_salt() -> str:
+    return 'sample salt'
+
+
+@pytest.fixture
+def sample_secret_key() -> str:
+    extract_endpoint.App.config['SECRET_KEY'] = 'sample secret key'
+    return extract_endpoint.App.config['SECRET_KEY']
+
+
+@pytest.fixture
+def sample_stream_content() -> str:
+    return "Sample stream content"
+
+
+@pytest.fixture
+def sample_stream(sample_stream_content: str) -> io.BytesIO:
+    return io.BytesIO(sample_stream_content.encode())
+
+
+@pytest.fixture
+def sample_signature(sample_salt: str, sample_secret_key: str, sample_stream: io.BytesIO) -> str:
+    signature = crypt_utils.sign_string(salt=sample_salt, key=sample_secret_key,
+                                        data=base64.b64encode(sample_stream.read()).decode('utf-8'))
+    sample_stream.seek(0)
+    return signature
+
+
+@pytest.fixture
+def sample_file_name() -> str:
+    return 'test_sample_blob_filename.txt'
 
 
 def test_test_alive() -> None:
@@ -57,91 +76,85 @@ def test_test_alive() -> None:
     assert b'Alive' in actual.data
 
 
-def test_upload(sample_salt: str, sample_secret_key: str, sample_block_blob_service: blob.BlockBlobService,
-                sample_storage_coordinates: azure_utils.StorageCoordinates, sample_file_contents: str,
+def test_upload(test_client: testing.FlaskClient,
+                sample_storage_coordinates: azure_utils.StorageCoordinates,
+                sample_block_blob_service: blob.BlockBlobService,
+                sample_salt: str,
+                sample_signature: str,
+                sample_stream_content: str,
+                sample_stream: io.BytesIO,
                 sample_file_name: str) -> None:
-    app = extract_endpoint.App.test_client()
-    file = BytesIO(sample_file_contents.encode('utf-8'))
-    file_as_string = base64.b64encode(file.read()).decode('utf-8')
-    file.seek(0)
-    container = sample_storage_coordinates.container
-    signature = crypt_utils.sign_string(salt=sample_salt, key=sample_secret_key, data=file_as_string)
 
-    app.post('/upload_file', data=dict(salt=sample_salt, signature=signature, file=(file, sample_file_name)))
-
-    assert sample_file_name in [blob.name for blob in sample_block_blob_service.list_blobs(container)]
-    actual_blob = sample_block_blob_service.get_blob_to_text(container, sample_file_name)
-    # sample_block_blob_service.delete_blob(container, sample_file_name)
-    assert actual_blob.content == sample_file_contents
+    test_client.post('/upload_file', data=dict(salt=sample_salt, signature=sample_signature,
+                                               file=(sample_stream, sample_file_name)))
+    assert sample_file_name in [blob.name for blob in
+                                sample_block_blob_service.list_blobs(sample_storage_coordinates.container)]
+    actual_blob = sample_block_blob_service.get_blob_to_text(sample_storage_coordinates.container, sample_file_name)
+    assert actual_blob.content == sample_stream_content
 
 
-def test_upload_no_key_in_env(sample_file_contents: str, sample_file_name: str) -> None:
+def test_upload_no_key_in_env(test_client: testing.FlaskClient,
+                              sample_salt: str, sample_signature: str,
+                              sample_stream: io.BytesIO,
+                              sample_file_name: str) -> None:
+
     extract_endpoint.App.config['SECRET_KEY'] = extract_endpoint.DEFAULT_ENDPOINT_SECRET_KEY
-    app = extract_endpoint.App.test_client()
-    stream = BytesIO(sample_file_contents.encode('utf-8'))
     with pytest.raises(ValueError):
-        app.post('/upload_file', data=dict(file=(stream, sample_file_name)))
+        test_client.post('/upload_file', data=dict(salt=sample_salt, signature=sample_signature,
+                                                   file=(sample_stream, sample_file_name)))
 
 
-def test_upload_no_salt(sample_salt: str, sample_secret_key: str,
-                        sample_file_contents: str, sample_file_name: str) -> None:
-    extract_endpoint.App.config['SECRET_KEY'] = sample_secret_key
-    app = extract_endpoint.App.test_client()
-    file = BytesIO(sample_file_contents.encode('utf-8'))
-    file_as_string = base64.b64encode(file.read()).decode('utf-8')
-    file.seek(0)
-    signature = crypt_utils.sign_string(salt=sample_salt, key=sample_secret_key, data=file_as_string)
-    actual = app.post('/upload_file', data=dict(signature=signature, file=(file, sample_file_name)))
+def test_upload_no_salt(test_client: testing.FlaskClient,
+                        sample_signature: str,
+                        sample_stream: io.BytesIO,
+                        sample_file_name: str) -> None:
+
+    actual = test_client.post('/upload_file', data=dict(signature=sample_signature,
+                                                        file=(sample_stream, sample_file_name)))
     assert actual.status_code == 404
 
 
-def test_upload_wrong_salt(sample_salt: str, sample_secret_key: str,
-                           sample_file_contents: str, sample_file_name: str) -> None:
-    extract_endpoint.App.config['SECRET_KEY'] = sample_secret_key
-    app = extract_endpoint.App.test_client()
-    file = BytesIO(sample_file_contents.encode('utf-8'))
-    file_as_string = base64.b64encode(file.read()).decode('utf-8')
-    file.seek(0)
-    signature = crypt_utils.sign_string(salt=sample_salt, key=sample_secret_key, data=file_as_string)
-    actual = app.post('/upload_file', data=dict(salt='wrong salt', signature=signature, file=(file, sample_file_name)))
+def test_upload_wrong_salt(test_client: testing.FlaskClient,
+                           sample_signature: str,
+                           sample_stream: io.BytesIO,
+                           sample_file_name: str) -> None:
+
+    actual = test_client.post('/upload_file', data=dict(salt='wrong salt', signature=sample_signature,
+                                                        file=(sample_stream, sample_file_name)))
     assert actual.status_code == 404
 
 
-def test_upload_no_signature(sample_salt: str, sample_secret_key: str,
-                             sample_file_contents: str, sample_file_name: str) -> None:
-    extract_endpoint.App.config['SECRET_KEY'] = sample_secret_key
-    app = extract_endpoint.App.test_client()
-    file = BytesIO(sample_file_contents.encode('utf-8'))
-    actual = app.post('/upload_file', data=dict(salt=sample_salt, file=(file, sample_file_name)))
+def test_upload_no_signature(test_client: testing.FlaskClient,
+                             sample_salt: str,
+                             sample_stream: io.BytesIO,
+                             sample_file_name: str) -> None:
+
+    actual = test_client.post('/upload_file', data=dict(salt=sample_salt, file=(sample_stream, sample_file_name)))
     assert actual.status_code == 404
 
 
-def test_upload_wrong_signature(sample_salt: str, sample_secret_key: str,
-                                sample_file_contents: str, sample_file_name: str) -> None:
-    extract_endpoint.App.config['SECRET_KEY'] = sample_secret_key
-    app = extract_endpoint.App.test_client()
-    file = BytesIO(sample_file_contents.encode('utf-8'))
-    actual = app.post('/upload_file', data=dict(salt=sample_salt, signature='wrong signature',
-                                                file=(file, sample_file_name)))
+def test_upload_wrong_signature(test_client: testing.FlaskClient,
+                                sample_salt: str,
+                                sample_stream: io.BytesIO,
+                                sample_file_name: str) -> None:
+
+    actual = test_client.post('/upload_file', data=dict(salt=sample_salt, signature='wrong signature',
+                                                        file=(sample_stream, sample_file_name)))
     assert actual.status_code == 404
 
 
-def test_upload_no_file(sample_salt: str, sample_secret_key: str, sample_file_contents: str) -> None:
-    extract_endpoint.App.config['SECRET_KEY'] = sample_secret_key
-    app = extract_endpoint.App.test_client()
-    file = BytesIO(sample_file_contents.encode('utf-8'))
-    file_as_string = base64.b64encode(file.read()).decode('utf-8')
-    signature = crypt_utils.sign_string(salt=sample_salt, key=sample_secret_key, data=file_as_string)
-    actual = app.post('/upload_file', data=dict(salt=sample_salt, signature=signature))
+def test_upload_no_file(test_client: testing.FlaskClient,
+                        sample_salt: str, sample_signature: str) -> None:
+
+    actual = test_client.post('/upload_file', data=dict(salt=sample_salt, signature=sample_signature))
     assert actual.status_code == 404
 
 
-def test_upload_no_filename(sample_salt: str, sample_secret_key: str, sample_file_contents: str) -> None:
-    extract_endpoint.App.config['SECRET_KEY'] = sample_secret_key
-    app = extract_endpoint.App.test_client()
-    file = BytesIO(sample_file_contents.encode('utf-8'))
-    file_as_string = base64.b64encode(file.read()).decode('utf-8')
-    file.seek(0)
-    signature = crypt_utils.sign_string(salt=sample_salt, key=sample_secret_key, data=file_as_string)
-    actual = app.post('/upload_file', data=dict(salt=sample_salt, signature=signature, file=(file, '')))
+def test_upload_no_filename(test_client: testing.FlaskClient,
+                            sample_salt: str,
+                            sample_signature: str,
+                            sample_stream: io.BytesIO) -> None:
+
+    actual = test_client.post('/upload_file', data=dict(salt=sample_salt, signature=sample_signature,
+                                                        file=(sample_stream, '')))
     assert actual.status_code == 404

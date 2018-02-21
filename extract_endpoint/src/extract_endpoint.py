@@ -38,10 +38,9 @@ def upload_file() -> str:
     if 'signature' not in flask.request.form:
         App.logger.error("No signature sent")
         flask.abort(404)
-    elif 'salt' not in flask.request.form:
+    if 'salt' not in flask.request.form:
         App.logger.error("No salt sent")
         flask.abort(404)
-
     if 'file' not in flask.request.files or getattr(flask.request.files['file'], 'filename', '') == '':
         App.logger.error("Bad file")
         flask.abort(404)
