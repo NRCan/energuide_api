@@ -15,13 +15,6 @@ class FoundationType(enum.Enum):
     UNKNOWN = enum.auto()
 
 
-class FoundationType(enum.Enum):
-    BASEMENT = enum.auto()
-    CRAWLSPACE = enum.auto()
-    SLAB = enum.auto()
-    UNKNOWN = enum.auto()
-
-
 class WallType(enum.Enum):
     INTERIOR = enum.auto()
     EXTERIOR = enum.auto()
@@ -146,7 +139,6 @@ class BasementFloor(_BasementFloor):
             perimeter=distance.Distance(perimeter),
             floor_area=area.Area(floor_area),
         )
-
 
     @classmethod
     def from_basement(cls, floor: element.Element) -> typing.List['BasementFloor']:
