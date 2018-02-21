@@ -147,11 +147,6 @@ def sample_crawlspace_floors_element(sample_crawlspace_floors_raw: str) -> eleme
 
 
 @pytest.fixture
-def sample_crawlspace_floors_element(sample_crawlspace_floors_raw: str) -> element.Element:
-    return element.Element.from_string(sample_crawlspace_floors_raw)
-
-
-@pytest.fixture
 def sample_basement_wall_element(sample_basement_wall_raw: str) -> element.Element:
     return element.Element.from_string(sample_basement_wall_raw)
 
