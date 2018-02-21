@@ -7,7 +7,7 @@ from energuide.embedded import distance
 from energuide.embedded import insulation
 
 @pytest.fixture
-def sample_basement_floor_raw() -> str:
+def sample_basement_floors_raw() -> str:
     return """
 <Floor>
     <Construction isBelowFrostline="true" hasIntegralFooting="false" heatedFloor="false">
@@ -19,7 +19,7 @@ def sample_basement_floor_raw() -> str:
     """
 
 @pytest.fixture
-def sample_crawlspace_floor_raw() -> str:
+def sample_crawlspace_floors_raw() -> str:
     return """
 <Floor>
     <Construction isBelowFrostline="false" hasIntegralFooting="false" heatedFloor="false">
@@ -96,13 +96,13 @@ def sample_basement_header_raw() -> str:
 def sample_basement_raw(
         sample_basement_header_raw: str,
         sample_basement_wall_raw: str,
-        sample_basement_floor_raw: str) -> str:
+        sample_basement_floors_raw: str) -> str:
 
     return f"""
 <Basement isExposedSurface="true" exposedSurfacePerimeter="34.7466" id="1">
     <Label>Foundation - 2</Label>
     <Configuration type="BBEN" subtype="1" overlap="0">BCIN_1</Configuration>
-    {sample_basement_floor_raw}
+    {sample_basement_floors_raw}
     {sample_basement_wall_raw}
     <Components>
         {sample_basement_header_raw}
@@ -113,7 +113,7 @@ def sample_basement_raw(
 
 @pytest.fixture
 def sample_crawlspace_raw(
-        sample_crawlspace_floor_raw: str,
+        sample_crawlspace_floors_raw: str,
         sample_crawlspace_wall_raw: str,
         sample_basement_header_raw: str) -> str:
 
@@ -121,7 +121,7 @@ def sample_crawlspace_raw(
 <Crawlspace isExposedSurface="true" exposedSurfacePerimeter="9.144" id="29">
     <Label>Crawl</Label>
     <Configuration type="SCN" subtype="1">SCN_1</Configuration>
-    {sample_crawlspace_floor_raw}
+    {sample_crawlspace_floors_raw}
     {sample_crawlspace_wall_raw}
     <Components>
         {sample_basement_header_raw}
@@ -132,13 +132,13 @@ def sample_crawlspace_raw(
 
 
 @pytest.fixture
-def sample_basement_floor_element(sample_basement_floor_raw: str) -> element.Element:
-    return element.Element.from_string(sample_basement_floor_raw)
+def sample_basement_floors_element(sample_basement_floors_raw: str) -> element.Element:
+    return element.Element.from_string(sample_basement_floors_raw)
 
 
 @pytest.fixture
-def sample_crawlspace_floor_element(sample_crawlspace_floor_raw: str) -> element.Element:
-    return element.Element.from_string(sample_crawlspace_floor_raw)
+def sample_crawlspace_floors_element(sample_crawlspace_floors_raw: str) -> element.Element:
+    return element.Element.from_string(sample_crawlspace_floors_raw)
 
 
 @pytest.fixture
@@ -160,9 +160,11 @@ def sample_basement_header_element(sample_basement_header_raw: str) -> element.E
 def sample_basement_element(sample_basement_raw: str) -> element.Element:
     return element.Element.from_string(sample_basement_raw)
 
+
 @pytest.fixture
 def sample_crawlspace_element(sample_crawlspace_raw: str) -> element.Element:
     return element.Element.from_string(sample_crawlspace_raw)
+
 
 @pytest.fixture
 def sample_basement_walls() -> typing.List[basement.BasementWall]:
@@ -193,6 +195,7 @@ def sample_basement_walls() -> typing.List[basement.BasementWall]:
             wall_area=area.Area(7.3152)),
     ]
 
+
 @pytest.fixture
 def sample_crawlspace_walls() -> typing.List[basement.BasementWall]:
     return [
@@ -205,29 +208,44 @@ def sample_crawlspace_walls() -> typing.List[basement.BasementWall]:
         )
     ]
 
+
 @pytest.fixture
-def sample_basement_floor() -> basement.BasementFloor:
-    return basement.BasementFloor(
+def sample_basement_floors() -> typing.List[basement.BasementFloor]:
+    return [basement.BasementFloor(
+        floor_type=basement.FloorType.SLAB,
         rectangular=True,
         nominal_insulation=insulation.Insulation(rsi=0.2),
         effective_insulation=insulation.Insulation(rsi=0.1),
         length=distance.Distance(distance_metres=2.0),
         width=distance.Distance(distance_metres=2.0),
-        perimeter=None,
-        optional_area=None
-    )
+        perimeter=distance.Distance(distance_metres=8.0),
+        floor_area=area.Area(4.0)
+    )]
+
 
 @pytest.fixture
-def sample_crawlspace_floor() -> basement.BasementFloor:
-    return basement.BasementFloor(
-        rectangular=True,
-        nominal_insulation=insulation.Insulation(rsi=0.0),
-        effective_insulation=insulation.Insulation(rsi=0.468),
-        width=distance.Distance(distance_metres=4.9987),
-        length=distance.Distance(distance_metres=4.9999),
-        perimeter=None,
-        optional_area=None
-    )
+def sample_crawlspace_floors() -> typing.List[basement.BasementFloor]:
+    return [
+        basement.BasementFloor(
+            floor_type=basement.FloorType.SLAB,
+            rectangular=True,
+            nominal_insulation=None,
+            effective_insulation=None,
+            width=distance.Distance(distance_metres=4.9987),
+            length=distance.Distance(distance_metres=4.9999),
+            perimeter=distance.Distance(distance_metres=19.9972),
+            floor_area=area.Area(24.993000130000002)
+        ), basement.BasementFloor(
+            floor_type=basement.FloorType.FLOOR_ABOVE_CRAWLSPACE,
+            rectangular=True,
+            nominal_insulation=insulation.Insulation(rsi=0.0),
+            effective_insulation=insulation.Insulation(rsi=0.468),
+            width=distance.Distance(distance_metres=4.9987),
+            length=distance.Distance(distance_metres=4.9999),
+            perimeter=distance.Distance(distance_metres=19.9972),
+            floor_area=area.Area(24.993000130000002)
+        )
+    ]
 
 
 @pytest.fixture
@@ -242,7 +260,7 @@ def sample_basement_header() -> basement.BasementHeader:
 
 @pytest.fixture
 def sample_basement(
-        sample_basement_floor: basement.BasementFloor,
+        sample_basement_floors: typing.List[basement.BasementFloor],
         sample_basement_walls: typing.List[basement.BasementWall],
         sample_basement_header: basement.BasementHeader,
     ) -> basement.Basement:
@@ -252,14 +270,14 @@ def sample_basement(
         label='Foundation - 2',
         configuration_type='BBEN',
         walls=sample_basement_walls,
-        floor=sample_basement_floor,
+        floors=sample_basement_floors,
         header=sample_basement_header
     )
 
 
 @pytest.fixture
 def sample_crawlspace(
-        sample_crawlspace_floor: basement.BasementFloor,
+        sample_crawlspace_floors: typing.List[basement.BasementFloor],
         sample_crawlspace_walls: typing.List[basement.BasementWall],
         sample_basement_header: basement.BasementHeader,
     ) -> basement.Basement:
@@ -269,7 +287,7 @@ def sample_crawlspace(
         label='Crawl',
         configuration_type='SCN',
         walls=sample_crawlspace_walls,
-        floor=sample_crawlspace_floor,
+        floors=sample_crawlspace_floors,
         header=sample_basement_header,
     )
 
@@ -320,51 +338,58 @@ def test_crawlspace_walls_to_dict(sample_crawlspace_wall_element: element.Elemen
     }
 
 
-def test_basement_floor_from_data(
-        sample_basement_floor: basement.BasementFloor,
-        sample_basement_floor_element: element.Element) -> None:
+def test_basement_floors_from_data(
+        sample_basement_floors: typing.List[basement.BasementFloor],
+        sample_basement_floors_element: element.Element) -> None:
 
-    output = basement.BasementFloor.from_basement(sample_basement_floor_element)
-    assert output == sample_basement_floor
-
-
-def test_crawlspace_floor_from_data(
-        sample_crawlspace_floor: basement.BasementFloor,
-        sample_crawlspace_floor_element: element.Element) -> None:
-
-    output = basement.BasementFloor.from_crawlspace(sample_crawlspace_floor_element)
-    assert output == sample_crawlspace_floor
+    output = basement.BasementFloor.from_basement(sample_basement_floors_element)
+    assert output == sample_basement_floors
 
 
-def test_basement_floor_to_dict(sample_basement_floor_element: element.Element) -> None:
-    output = basement.BasementFloor.from_basement(sample_basement_floor_element).to_dict()
-    assert output == {
+def test_crawlspace_floors_from_data(
+        sample_crawlspace_floors: typing.List[basement.BasementFloor],
+        sample_crawlspace_floors_element: element.Element) -> None:
+
+    output = basement.BasementFloor.from_crawlspace(sample_crawlspace_floors_element)
+    assert output == sample_crawlspace_floors
+
+
+def test_basement_floors_to_dict(sample_basement_floors_element: element.Element) -> None:
+    output = [basement.to_dict()
+              for basement in basement.BasementFloor.from_basement(sample_basement_floors_element)]
+    assert output == [{
+        'floorTypeEnglish': 'Slab',
+        'floorTypeFrench': 'Dalle',
         'insulationNominalRsi': 0.2,
         'insulationNominalR': 1.1356526674,
         'insulationEffectiveRsi': 0.1,
         'insulationEffectiveR': 0.5678263337,
         'areaMetres': 4.0,
         'areaFeet': 43.0556444224,
-        'perimeterMetres': None,
-        'perimeterFeet': None,
+        'perimeterMetres': 8.0,
+        'perimeterFeet': 26.24672,
         'widthMetres': 2.0,
         'widthFeet': 6.56168,
         'lengthMetres': 2.0,
         'lengthFeet': 6.56168,
-    }
+    }]
 
 
-def test_crawlspace_floor_to_dict(sample_crawlspace_floor_element: element.Element) -> None:
-    output = basement.BasementFloor.from_crawlspace(sample_crawlspace_floor_element).to_dict()
-    assert output == {
+def test_crawlspace_floors_to_dict(sample_crawlspace_floors_element: element.Element) -> None:
+    output = [basement.to_dict()
+              for basement in basement.BasementFloor.from_crawlspace(sample_crawlspace_floors_element)]
+
+    assert sorted(output, key=lambda basement: basement['floorTypeEnglish'])[0] == {
+        'floorTypeEnglish': 'Floor above crawl space',
+        'floorTypeFrench': 'Plancher au-dessus du vide sanitaire',
         'insulationNominalRsi': 0.0,
         'insulationNominalR': 0.0,
         'insulationEffectiveRsi': 0.468,
         'insulationEffectiveR': 2.657427241716,
         'areaMetres': 24.993000130000002,
         'areaFeet': 269.02243166156927,
-        'perimeterMetres': None,
-        'perimeterFeet': None,
+        'perimeterMetres': 19.9972,
+        'perimeterFeet': 65.607613648,
         'lengthMetres': 4.9999,
         'lengthFeet': 16.403871916,
         'widthMetres': 4.9987,
@@ -430,20 +455,37 @@ def test_crawlspace_to_dict(sample_crawlspace_element: element.Element) -> None:
             'areaFeet': 229.62665511605272,
             'percentage': 100.0,
         }],
-        'floor': {
+        'floors': [{
+            'floorTypeEnglish': 'Slab',
+            'floorTypeFrench': 'Dalle',
+            'insulationNominalRsi': None,
+            'insulationNominalR': None,
+            'insulationEffectiveRsi': None,
+            'insulationEffectiveR': None,
+            'areaMetres': 24.993000130000002,
+            'areaFeet': 269.02243166156927,
+            'perimeterMetres': 19.9972,
+            'perimeterFeet': 65.607613648,
+            'lengthMetres': 4.9999,
+            'lengthFeet': 16.403871916,
+            'widthMetres': 4.9987,
+            'widthFeet': 16.399934908000002,
+        }, {
+            'floorTypeEnglish': 'Floor above crawl space',
+            'floorTypeFrench': 'Plancher au-dessus du vide sanitaire',
             'insulationNominalRsi': 0.0,
             'insulationNominalR': 0.0,
             'insulationEffectiveRsi': 0.468,
             'insulationEffectiveR': 2.657427241716,
             'areaMetres': 24.993000130000002,
             'areaFeet': 269.02243166156927,
-            'perimeterMetres': None,
-            'perimeterFeet': None,
+            'perimeterMetres': 19.9972,
+            'perimeterFeet': 65.607613648,
             'lengthMetres': 4.9999,
             'lengthFeet': 16.403871916,
             'widthMetres': 4.9987,
             'widthFeet': 16.399934908000002,
-        },
+        }],
         'header': {
             'insulationNominalRsi': 3.3615,
             'insulationNominalR': 19.0874822073255,
@@ -509,20 +551,22 @@ def test_basement_to_dict(sample_basement_element: element.Element) -> None:
             'areaFeet': 78.74016251968511,
             'percentage': 100.0,
         }],
-        'floor': {
+        'floors': [{
+            'floorTypeEnglish': 'Slab',
+            'floorTypeFrench': 'Dalle',
             'insulationNominalRsi': 0.2,
             'insulationNominalR': 1.1356526674,
             'insulationEffectiveRsi': 0.1,
             'insulationEffectiveR': 0.5678263337,
             'areaMetres': 4.0,
             'areaFeet': 43.0556444224,
-            'perimeterMetres': None,
-            'perimeterFeet': None,
+            'perimeterMetres': 8.0,
+            'perimeterFeet': 26.24672,
             'widthMetres': 2.0,
             'widthFeet': 6.56168,
             'lengthMetres': 2.0,
             'lengthFeet': 6.56168,
-        },
+        }],
         'header': {
             'insulationNominalRsi': 3.3615,
             'insulationNominalR': 19.0874822073255,
