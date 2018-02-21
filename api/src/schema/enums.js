@@ -52,7 +52,7 @@ ventilationFields.forEach(attr => {
   module.exports[generateName('ventilation', attr)] = attachToString(fn)
 })
 
-// The fields on the ventilation type
+// The fields on the floor type
 const floorFields = [
   'label',
   'insulationNominalRsi',
