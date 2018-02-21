@@ -15,17 +15,11 @@ class FoundationType(enum.Enum):
     UNKNOWN = enum.auto()
 
 
-class FoundationType(enum.Enum):
-    BASEMENT = enum.auto()
-    CRAWLSPACE = enum.auto()
-    SLAB = enum.auto()
-    UNKNOWN = enum.auto()
-
-
 class WallType(enum.Enum):
     INTERIOR = enum.auto()
     EXTERIOR = enum.auto()
     PONY = enum.auto()
+    NOT_APPLICABLE = enum.auto()
 
 
 class MaterialType(enum.Enum):
@@ -93,7 +87,7 @@ class BasementHeader(_BasementHeader):
 class BasementFloor(_BasementFloor):
 
     @classmethod
-    def from_data(cls, floor: element.Element) -> 'BasementFloor':
+    def _from_data(cls, floor: element.Element, construction_tag: str) -> 'BasementFloor':
         rectangular = floor.xpath('Measurements/@isRectangular')[0] == 'true'
         length: typing.Optional[float] = None
         width: typing.Optional[float] = None
@@ -107,8 +101,8 @@ class BasementFloor(_BasementFloor):
             area = float(floor.xpath('Measurements/@area')[0])
             perimeter = float(floor.xpath('Measurements/@perimeter')[0])
 
-        nominal_insulation = floor.xpath('Construction/AddedToSlab/@nominalInsulation')
-        effective_insulation = floor.xpath('Construction/AddedToSlab/@rValue')
+        nominal_insulation = floor.xpath(f'Construction/{construction_tag}/@nominalInsulation')
+        effective_insulation = floor.xpath(f'Construction/{construction_tag}/@rValue')
 
         return BasementFloor(
             rectangular=rectangular,
@@ -129,6 +123,14 @@ class BasementFloor(_BasementFloor):
 
             optional_area=area,
         )
+
+    @classmethod
+    def from_basement(cls, floor: element.Element) -> 'BasementFloor':
+        return cls._from_data(floor, 'AddedToSlab')
+
+    @classmethod
+    def from_crawlspace(cls, floor: element.Element) -> 'BasementFloor':
+        return cls._from_data(floor, 'FloorsAbove')
 
     @property
     def area(self):
@@ -169,6 +171,10 @@ class BasementWall(_BasementWall):
             english='Pony Wall',
             french='Murs bas',
         ),
+        WallType.NOT_APPLICABLE: bilingual.Bilingual(
+            english='Wall',
+            french='Mur',
+        ),
     }
 
     @classmethod
@@ -183,7 +189,7 @@ class BasementWall(_BasementWall):
         )
 
     @classmethod
-    def from_data(cls, wall: element.Element, wall_perimiter: float) -> typing.List['BasementWall']:
+    def from_basement(cls, wall: element.Element, wall_perimiter: float) -> typing.List['BasementWall']:
         interior_wall_sections = wall.xpath('Construction/InteriorAddedInsulation/Composite/Section')
         exterior_wall_sections = wall.xpath('Construction/ExteriorAddedInsulation/Composite/Section')
         pony_wall_sections = wall.xpath('Construction/PonyWallType/Composite/Section')
@@ -202,6 +208,14 @@ class BasementWall(_BasementWall):
                       for wall_section in pony_wall_sections])
 
         return walls
+
+    @classmethod
+    def from_crawlspace(cls, wall: element.Element, wall_perimiter: float) -> typing.List['BasementWall']:
+        wall_sections = wall.xpath('Construction/Type/Composite/Section')
+        wall_height = float(wall.xpath('Measurements/@height')[0])
+        return [BasementWall._from_data(wall_section, wall_perimiter, wall_height, WallType.NOT_APPLICABLE)
+                for wall_section in wall_sections]
+
 
     def to_dict(self) -> typing.Dict[str, typing.Any]:
         wall_type = self._WALL_TYPE_TRANSLATION[self.wall_type]
@@ -225,7 +239,7 @@ class _Basement(typing.NamedTuple):
 
     walls: typing.List[BasementWall]
     floor: BasementFloor
-    header: BasementHeader
+    header: typing.Optional[BasementHeader]
 
 
 class Basement(_Basement):
@@ -267,9 +281,16 @@ class Basement(_Basement):
         if foundation_type is FoundationType.UNKNOWN:
             raise InvalidInputDataError(f'Invalid foundation type: {basement.tag}')
 
-        floor = BasementFloor.from_data(basement.xpath('Floor')[0])
+        if foundation_type is FoundationType.BASEMENT:
+            floor_from_data = BasementFloor.from_basement
+            wall_from_data = BasementWall.from_basement
+            header_from_data = BasementHeader.from_data
+        elif foundation_type is FoundationType.CRAWLSPACE:
+            floor_from_data = BasementFloor.from_crawlspace
+            wall_from_data = BasementWall.from_crawlspace
+            header_from_data = BasementHeader.from_data
 
-        foundation_type = cls._derive_foundation_type(basement.tag)
+        floor = floor_from_data(basement.xpath('Floor')[0])
 
         if floor.rectangular:
             length = typing.cast(distance.Distance, floor.length)
@@ -283,9 +304,10 @@ class Basement(_Basement):
             foundation_type=foundation_type,
             label=basement.get_text('Label'),
             configuration_type=basement.xpath('Configuration/@type')[0],
-            walls=BasementWall.from_data(basement.xpath('Wall')[0], floor_perimeter),
+            walls=wall_from_data(basement.xpath('Wall')[0], floor_perimeter),
             floor=floor,
-            header=BasementHeader.from_data(basement.xpath('Components/FloorHeader')[0]),
+            header=header_from_data(basement.xpath('Components/FloorHeader')[0])
+            if header_from_data is not None else None,
         )
 
     @staticmethod
@@ -325,5 +347,5 @@ class Basement(_Basement):
             'materialFrench': material.french if material else None,
             'wall': [wall.to_dict() for wall in self.walls],
             'floor': self.floor.to_dict(),
-            'header': self.header.to_dict(),
+            'header': self.header.to_dict() if self.header is not None else None,
         }
