@@ -81,11 +81,15 @@ def _chunk_data(data: typing.Iterable[dwelling.Dwelling],
 def load(coords: DatabaseCoordinates,
          database_name: str,
          collection_name: str,
-         data: typing.Iterable[dwelling.Dwelling]) -> None:
+         data: typing.Iterable[dwelling.Dwelling],
+         append: bool = False) -> None:
     client: pymongo.MongoClient
     with mongo_client(coords) as client:
         database = client[database_name]
         collection = database[collection_name]
+
+        if not append:
+            collection.drop()
 
         for data_to_load in _chunk_data(data):
             collection.insert_many(data_to_load)

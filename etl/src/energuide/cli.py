@@ -23,7 +23,15 @@ def main() -> None:
               envvar=database.EnvVariables.collection.value,
               default=database.EnvDefaults.collection.value)
 @click.option('--filename', type=click.Path(exists=True), required=True)
-def load(username: str, password: str, host: str, port: int, db_name: str, collection: str, filename: str) -> None:
+@click.option('-a', '--append', is_flag=True, help='Sets load to append instead overwrite')
+def load(username: str,
+         password: str,
+         host: str,
+         port: int,
+         db_name: str,
+         collection: str,
+         filename: str,
+         append: bool) -> None:
     coords = database.DatabaseCoordinates(
         username=username,
         password=password,
@@ -32,7 +40,7 @@ def load(username: str, password: str, host: str, port: int, db_name: str, colle
     )
 
     LOGGER.info(f'Loading data from {filename} into {db_name}.{collection}')
-    transform.run(coords, db_name, collection, filename)
+    transform.run(coords, db_name, collection, filename, append)
     LOGGER.info(f'Finished loading data')
 
 
