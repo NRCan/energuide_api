@@ -145,6 +145,7 @@ class ParsedDwellingDataRow(_ParsedDwellingDataRow):
     def from_row(cls, row: reader.InputData) -> 'ParsedDwellingDataRow':
         checker = validator.DwellingValidator(cls._SCHEMA, allow_unknown=True, ignore_none_values=True)
         if not checker.validate(row):
+            # import pdb; pdb.set_trace()
             error_keys = ', '.join(checker.errors.keys())
             raise InvalidInputDataError(f'Validator failed on keys: {error_keys}')
 
