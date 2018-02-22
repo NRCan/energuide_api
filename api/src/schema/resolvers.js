@@ -1,4 +1,3 @@
-import ForwardSortationArea from './types/ForwardSortationArea'
 import MongoPaging from 'mongo-cursor-pagination'
 /* eslint-disable import/named */
 import {
