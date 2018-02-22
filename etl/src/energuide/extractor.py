@@ -35,6 +35,7 @@ REQUIRED_FIELDS = DROP_FIELDS + [
     'EVAL_TYPE',
     'BUILDER',
     'DHWHPCOP',
+    'ERSRATING'
 ]
 
 _SCHEMA = {field: {'type': 'string', 'required': True} for field in REQUIRED_FIELDS}
