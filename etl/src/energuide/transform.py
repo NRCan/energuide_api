@@ -27,9 +27,10 @@ def _generate_dwellings(grouped: typing.Iterable[typing.List[reader.InputData]])
 def run(coords: database.DatabaseCoordinates,
         database_name: str,
         collection: str,
-        filename: str) -> None:
+        filename: str,
+        append: bool) -> None:
 
     raw_data = reader.read(filename)
     grouped = reader.grouper(raw_data, dwelling.Dwelling.GROUPING_FIELD)
     dwellings = _generate_dwellings(grouped)
-    database.load(coords, database_name, collection, dwellings)
+    database.load(coords, database_name, collection, dwellings, append)
