@@ -3,6 +3,7 @@ import subprocess
 import typing
 import psutil
 import pytest
+import _pytest
 import requests
 from extract_endpoint import post_to_endpoint
 
@@ -24,7 +25,11 @@ def upload_url(test_host: str) -> str:
 
 
 @pytest.fixture(scope='session')
-def test_context(test_host: str) -> typing.Generator:
+def test_context(request: _pytest.fixtures.SubRequest, test_host: str) -> typing.Generator:
+    monkeysession = _pytest.monkeypatch.MonkeyPatch()
+    request.addfinalizer(monkeysession.undo)
+    monkeysession.setenv('ENDPOINT_SECRET_KEY', 'secret key')
+
     proc = psutil.Popen(['python', 'src/extract_endpoint/endpoint.py'],
                         stderr=subprocess.PIPE, stdout=subprocess.PIPE)
     while True:
