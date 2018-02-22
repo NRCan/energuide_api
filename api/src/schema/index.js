@@ -296,6 +296,11 @@ const Schema = i18n => {
       floorAreaFeet
       floorLengthMetres
       floorLengthFeet
+      waterHeatingTypeEnglish
+      waterHeatingTypeFrench
+      waterHeatingTankVolumeLitres
+      waterHeatingTankVolumeGallon
+      waterHeatingEfficiency
     }
   `
 
