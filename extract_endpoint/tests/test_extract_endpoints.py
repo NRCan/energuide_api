@@ -70,10 +70,14 @@ def sample_file_name() -> str:
     return 'test_sample_blob_filename.txt'
 
 
-def test_test_alive() -> None:
-    app = extract_endpoint.App.test_client()
-    actual = app.get('/test_alive')
-    assert b'Alive' in actual.data
+def test_test_alive(test_client: testing.FlaskClient) -> None:
+    get_return = test_client.get('/test_alive')
+    assert b'Alive' in get_return.data
+
+
+def test_robots(test_client: testing.FlaskClient) -> None:
+    get_return = test_client.get('/robots933456.txt')
+    assert get_return.status_code == 404
 
 
 def test_upload(test_client: testing.FlaskClient,

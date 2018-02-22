@@ -29,6 +29,11 @@ def frontend() -> str:
     return 'Alive!'
 
 
+@App.route('/robots933456.txt', methods=['GET'])
+def robots() -> None:
+    flask.abort(404)
+
+
 @App.route('/upload_file', methods=['POST'])
 def upload_file() -> str:
     if App.config['SECRET_KEY'] == DEFAULT_ENDPOINT_SECRET_KEY:
