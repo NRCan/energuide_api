@@ -26,8 +26,7 @@ describe('configuration', () => {
   })
 
   it('redirect to  graphiql from the / endpoint', async () => {
-    let response = await request(server)
-      .get('/')
+    let response = await request(server).get('/')
     expect(response.headers.location).toEqual('/graphiql')
     expect(response.status).toEqual(302)
   })
@@ -79,7 +78,9 @@ describe('i18n', () => {
       })
 
     let { __type: { description } } = response.body.data
-    expect(description).toEqual('Ceci est une description des évaluations')
+    expect(description).toEqual(
+      "Informations détaillées sur les caractéristiques spécifiques d'un logement donné",
+    )
   })
 
   it('returns english description when english language header sent', async () => {
@@ -99,7 +100,9 @@ describe('i18n', () => {
       })
 
     let { __type: { description } } = response.body.data
-    expect(description).toEqual('This is a description of evaluations')
+    expect(description).toEqual(
+      'Detailed information about specific features of a given dwelling',
+    )
   })
 
   it('defaults to english if no language header is set', async () => {
@@ -116,6 +119,8 @@ describe('i18n', () => {
       })
 
     let { __type: { description } } = response.body.data
-    expect(description).toEqual('This is a description of evaluations')
+    expect(description).toEqual(
+      'Detailed information about specific features of a given dwelling',
+    )
   })
 })
