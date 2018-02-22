@@ -24,6 +24,7 @@ def data1() -> typing.Dict[str, typing.Optional[str]]:
         'RAW_XML': '<tag>thing</tag>',
         'BUILDER': '4K13D01404',
         'DHWHPCOP': '0',
+        'ERSRATING': '10',
         'INFO1': None,
         'INFO2': None,
         'INFO3': None,

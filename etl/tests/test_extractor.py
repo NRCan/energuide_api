@@ -25,6 +25,7 @@ def data1() -> typing.Dict[str, typing.Optional[str]]:
         'RAW_XML': '<tag>thing</tag>',
         'BUILDER': '4K13D01404',
         'DHWHPCOP': '0',
+        'ERSRATING': '200',
         'INFO1': None,
         'INFO2': None,
         'INFO3': None,
@@ -45,7 +46,13 @@ def data2() -> typing.Dict[str, typing.Optional[str]]:
     return data
 
 
-@pytest.fixture(params=[data1(), data2()])
+def data3() -> typing.Dict[str, typing.Optional[str]]:
+    data = data1()
+    data['ERSRATING'] = ''
+    return data
+
+
+@pytest.fixture(params=[data1(), data2(), data3()])
 def data_dict(request: _pytest.fixtures.SubRequest) -> typing.Dict[str, str]:
     return request.param
 

@@ -515,6 +515,7 @@ def sample_input_d(ceiling_input: typing.List[str],
         'crawlspaces': crawlspace_input,
         'slabs': slab_input,
         'codes': raw_codes,
+        'ERSRATING': '567'
     }
 
 
@@ -621,6 +622,7 @@ class TestParsedDwellingDataRow:
             city='Ottawa',
             region=dwelling.Region.ONTARIO,
             forward_sortation_area='K1P',
+            ers_rating=567,
             ceilings=[
                 ceiling.Ceiling(
                     label='Main attic',
@@ -805,6 +807,11 @@ class TestParsedDwellingDataRow:
             dwelling.ParsedDwellingDataRow.from_row(input_data)
         assert 'EVAL_TYPE' in ex.exconly()
         assert 'EVAL_ID' not in ex.exconly()
+
+    def test_missing_ers(self, sample_input_d: reader.InputData) -> None:
+        sample_input_d['ERSRATING'] = ''
+        output = dwelling.ParsedDwellingDataRow.from_row(sample_input_d)
+        assert output.ers_rating is None
 
 
 class TestDwellingEvaluation:

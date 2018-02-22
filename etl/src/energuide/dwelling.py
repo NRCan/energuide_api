@@ -94,6 +94,13 @@ class _ParsedDwellingDataRow(typing.NamedTuple):
     ventilations: typing.List[ventilation.Ventilation]
     heating_system: heating.Heating
     foundations: typing.List[basement.Basement]
+    ers_rating: typing.Optional[int]
+
+
+def _cast_nullable_string(value: str) -> typing.Optional[int]:
+    if value == '':
+        return None
+    return int(value)
 
 
 class ParsedDwellingDataRow(_ParsedDwellingDataRow):
@@ -111,6 +118,7 @@ class ParsedDwellingDataRow(_ParsedDwellingDataRow):
         'CLIENTCITY': {'type': 'string', 'required': True},
         'forwardSortationArea': {'type': 'string', 'required': True, 'regex': '[A-Z][0-9][A-Z]'},
         'HOUSEREGION': {'type': 'string', 'required': True},
+        'ERSRATING': {'type': 'integer', 'nullable': True, 'coerce': _cast_nullable_string},
 
         'ceilings': _XML_LIST_SCHEMA,
         'floors': _XML_LIST_SCHEMA,
@@ -170,6 +178,7 @@ class ParsedDwellingDataRow(_ParsedDwellingDataRow):
                           for ventilation_node in parsed['ventilations']],
             heating_system=heating.Heating.from_data(parsed['heating_cooling']),
             foundations=foundations,
+            ers_rating=parsed['ERSRATING'],
         )
 
 
@@ -189,6 +198,7 @@ class Evaluation:
                  water_heatings: typing.List[water_heating.WaterHeating],
                  ventilations: typing.List[ventilation.Ventilation],
                  foundations: typing.List[basement.Basement],
+                 ers_rating: typing.Optional[int]
                 ) -> None:
         self._evaluation_type = evaluation_type
         self._entry_date = entry_date
@@ -203,6 +213,7 @@ class Evaluation:
         self._ventilations = ventilations
         self._water_heatings = water_heatings
         self._foundations = foundations
+        self._ers_rating = ers_rating
 
     @classmethod
     def from_data(cls, data: ParsedDwellingDataRow) -> 'Evaluation':
@@ -220,6 +231,7 @@ class Evaluation:
             ventilations=data.ventilations,
             water_heatings=data.water_heatings,
             foundations=data.foundations,
+            ers_rating=data.ers_rating
         )
 
     @property
@@ -229,6 +241,10 @@ class Evaluation:
     @property
     def entry_date(self) -> datetime.date:
         return self._entry_date
+
+    @property
+    def ers_rating(self) -> typing.Optional[int]:
+        return self._ers_rating
 
     @property
     def creation_date(self) -> datetime.datetime:
@@ -289,6 +305,7 @@ class Evaluation:
             'ventilations': [ventilation.to_dict() for ventilation in self.ventilations],
             'waterHeatings': [water_heating.to_dict() for water_heating in self.water_heatings],
             'foundations': [foundation.to_dict() for foundation in self.foundations],
+            'ersRating': self.ers_rating
         }
 
 
