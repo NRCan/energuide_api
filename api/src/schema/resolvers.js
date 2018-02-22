@@ -20,6 +20,11 @@ import {
   floorAreaFeet,
   floorLengthMetres,
   floorLengthFeet,
+  waterHeatingTypeEnglish,
+  waterHeatingTypeFrench,
+  waterHeatingTankVolumeLitres,
+  waterHeatingTankVolumeGallon,
+  waterHeatingEfficiency,
 } from './enums'
 /* eslint-enable import/named */
 
@@ -97,6 +102,11 @@ const resolvers = {
     floorAreaFeet: floorAreaFeet.toString(),
     floorLengthMetres: floorLengthMetres.toString(),
     floorLengthFeet: floorLengthFeet.toString(),
+    waterHeatingTypeEnglish: waterHeatingTypeEnglish.toString(),
+    waterHeatingTypeFrench: waterHeatingTypeFrench.toString(),
+    waterHeatingTankVolumeLitres: waterHeatingTankVolumeLitres.toString(),
+    waterHeatingTankVolumeGallon: waterHeatingTankVolumeGallon.toString(),
+    waterHeatingEfficiency: waterHeatingEfficiency.toString(),
   },
   Comparator: {
     gt: '$gt',

@@ -83,3 +83,31 @@ floorFields.forEach(attr => {
   )
   module.exports[generateName('floor', attr)] = attachToString(fn)
 })
+
+// The fields on the WaterHeating type
+const waterHeatingFields = [
+  'typeEnglish',
+  'typeFrench',
+  'tankVolumeLitres',
+  'tankVolumeGallon',
+  'efficiency',
+]
+
+waterHeatingFields.forEach(attr => {
+  // eslint-disable-next-line no-new-func
+  let fn = new Function(
+    'matcher',
+    `
+  return {
+    evaluations: {
+      $elemMatch: {
+        waterHeatings: {
+          $elemMatch:{ ${attr}: matcher },
+        },
+      },
+    },
+  }
+  `,
+  )
+  module.exports[generateName('waterHeating', attr)] = attachToString(fn)
+})

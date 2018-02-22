@@ -81,6 +81,21 @@ describe('Enum values', () => {
     floorLengthFeet: {
       testValue: 10.00000032,
     },
+    waterHeatingTypeEnglish: {
+      testValue: 'Natural gas storage tank',
+    },
+    waterHeatingTypeFrench: {
+      testValue: 'Réservoir au gaz naturel',
+    },
+    waterHeatingTankVolumeLitres: {
+      testValue: 151.4,
+    },
+    waterHeatingTankVolumeGallon: {
+      testValue: 39.995640800000004,
+    },
+    waterHeatingEfficiency: {
+      testValue: 0.554,
+    },
   }
 
   Object.keys(testData).forEach(functionName => {
