@@ -23,7 +23,7 @@ def main() -> None:
               envvar=database.EnvVariables.collection.value,
               default=database.EnvDefaults.collection.value)
 @click.option('--filename', type=click.Path(exists=True), required=True)
-@click.option('-a', '--append', is_flag=True, help='Sets load to append instead overwrite')
+@click.option('-a', '--append', is_flag=True, help='Append data instead of overwriting')
 def load(username: str,
          password: str,
          host: str,
