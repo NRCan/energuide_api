@@ -319,7 +319,6 @@ class Dwelling:
                  city: str,
                  region: Region,
                  forward_sortation_area: str,
-
                  evaluations: typing.List[Evaluation]) -> None:
         self._house_id = house_id
         self._year_built = year_built
@@ -327,7 +326,6 @@ class Dwelling:
         self._region = region
         self._forward_sortation_area = forward_sortation_area
         self._evaluations = evaluations
-
 
     @classmethod
     def _from_parsed_group(cls, data: typing.List[ParsedDwellingDataRow]) -> 'Dwelling':
