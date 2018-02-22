@@ -231,7 +231,7 @@ class Evaluation:
             ventilations=data.ventilations,
             water_heatings=data.water_heatings,
             foundations=data.foundations,
-            ers_rating = data.ers_rating
+            ers_rating=data.ers_rating
         )
 
     @property
