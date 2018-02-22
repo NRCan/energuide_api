@@ -14,6 +14,7 @@ from energuide.embedded import window
 from energuide.embedded import ventilation
 from energuide.embedded import water_heating
 from energuide.embedded import heated_floor_area
+from energuide.embedded import basement
 from energuide.exceptions import InvalidGroupSizeError
 from energuide.exceptions import InvalidInputDataError
 
@@ -92,6 +93,7 @@ class _ParsedDwellingDataRow(typing.NamedTuple):
     water_heatings: typing.List[water_heating.WaterHeating]
     ventilations: typing.List[ventilation.Ventilation]
     heating_system: heating.Heating
+    foundations: typing.List[basement.Basement]
 
 
 class ParsedDwellingDataRow(_ParsedDwellingDataRow):
@@ -119,6 +121,9 @@ class ParsedDwellingDataRow(_ParsedDwellingDataRow):
         'heating_cooling': _XML_SCHEMA,
         'ventilations': _XML_LIST_SCHEMA,
         'waterHeatings': _XML_SCHEMA,
+        'basements': _XML_LIST_SCHEMA,
+        'crawlspaces': _XML_LIST_SCHEMA,
+        'slabs': _XML_LIST_SCHEMA,
 
         'codes': {'type': 'dict', 'required': True, 'schema': {'wall': _XML_LIST_SCHEMA, 'window': _XML_LIST_SCHEMA}},
     }
@@ -127,11 +132,23 @@ class ParsedDwellingDataRow(_ParsedDwellingDataRow):
     def from_row(cls, row: reader.InputData) -> 'ParsedDwellingDataRow':
         checker = validator.DwellingValidator(cls._SCHEMA, allow_unknown=True, ignore_none_values=True)
         if not checker.validate(row):
+            # import pdb; pdb.set_trace()
             error_keys = ', '.join(checker.errors.keys())
             raise InvalidInputDataError(f'Validator failed on keys: {error_keys}')
 
         parsed = checker.document
         codes = code.Codes.from_data(parsed['codes'])
+
+        foundations = []
+        foundations.extend(
+            [basement.Basement.from_data(basement_node) for basement_node in parsed['basements']]
+        )
+        foundations.extend(
+            [basement.Basement.from_data(crawlspace_node) for crawlspace_node in parsed['crawlspaces']]
+        )
+        foundations.extend(
+            [basement.Basement.from_data(slab_node) for slab_node in parsed['slabs']]
+        )
 
         return ParsedDwellingDataRow(
             eval_id=parsed['EVAL_ID'],
@@ -153,6 +170,7 @@ class ParsedDwellingDataRow(_ParsedDwellingDataRow):
             ventilations=[ventilation.Ventilation.from_data(ventilation_node)
                           for ventilation_node in parsed['ventilations']],
             heating_system=heating.Heating.from_data(parsed['heating_cooling']),
+            foundations=foundations,
         )
 
 
@@ -171,6 +189,7 @@ class Evaluation:
                  heated_floor_area: heated_floor_area.HeatedFloorArea,
                  water_heatings: typing.List[water_heating.WaterHeating],
                  ventilations: typing.List[ventilation.Ventilation],
+                 foundations: typing.List[basement.Basement],
                 ) -> None:
         self._evaluation_type = evaluation_type
         self._entry_date = entry_date
@@ -184,6 +203,7 @@ class Evaluation:
         self._heated_floor_area = heated_floor_area
         self._ventilations = ventilations
         self._water_heatings = water_heatings
+        self._foundations = foundations
 
     @classmethod
     def from_data(cls, data: ParsedDwellingDataRow) -> 'Evaluation':
@@ -199,7 +219,8 @@ class Evaluation:
             windows=data.windows,
             heated_floor_area=data.heated_floor,
             ventilations=data.ventilations,
-            water_heatings=data.water_heatings
+            water_heatings=data.water_heatings,
+            foundations=data.foundations,
         )
 
     @property
@@ -250,6 +271,10 @@ class Evaluation:
     def water_heatings(self) -> typing.List[water_heating.WaterHeating]:
         return self._water_heatings
 
+    @property
+    def foundations(self) -> typing.List[basement.Basement]:
+        return self._foundations
+
     def to_dict(self) -> typing.Dict[str, typing.Any]:
         return {
             'evaluationType': self.evaluation_type.value,
@@ -263,7 +288,8 @@ class Evaluation:
             'windows': [window.to_dict() for window in self.windows],
             'heatedFloorArea': self.heated_floor.to_dict(),
             'ventilations': [ventilation.to_dict() for ventilation in self.ventilations],
-            'waterHeatings': [water_heating.to_dict() for water_heating in self.water_heatings]
+            'waterHeatings': [water_heating.to_dict() for water_heating in self.water_heatings],
+            'foundations': [foundation.to_dict() for foundation in self.foundations],
         }
 
 
