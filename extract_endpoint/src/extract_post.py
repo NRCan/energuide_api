@@ -7,6 +7,10 @@ import requests
 import click
 from crypt_utils import sign_string
 
+@click.group()
+def main() -> None:
+    pass
+
 
 def post_stream(stream: typing.IO[bytes], filename: typing.Optional[str], url: str) -> requests.models.Response:
     if filename is None and stream.name == '<stdin>':
@@ -24,13 +28,9 @@ def post_stream(stream: typing.IO[bytes], filename: typing.Optional[str], url: s
                          data={'salt': salt, 'signature': signature, 'filename': filename})
 
 
-@click.command()
+@main.command()
 @click.argument('stream', type=click.File('rb'))
 @click.option('--filename')
 @click.option('--url', default='http://127.0.0.1:5000/upload_file')
-def main(stream: typing.IO[bytes], filename: str, url: str) -> None:
-    print(f'POST returned: {post_stream(stream=stream, filename=filename, url=url)}')
-
-
-if __name__ == "__main__":
-    main()
+def upload(stream: typing.IO[bytes], filename: typing.Optional[str], url: str) -> requests.models.Response:
+    return post_stream(stream=stream, filename=filename, url=url)

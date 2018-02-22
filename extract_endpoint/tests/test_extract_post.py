@@ -17,6 +17,7 @@ class TestContext():
     hostname = '127.0.0.1:5000'
     upload_url = f'http://{hostname}/upload_file'
     test_alive_url = f'http://{hostname}/test_alive'
+    proc: psutil.Popen
 
     def create(self) -> None:
         self.proc = psutil.Popen(['python', 'src/extract_endpoint.py'], stderr=subprocess.PIPE, stdout=subprocess.PIPE)
