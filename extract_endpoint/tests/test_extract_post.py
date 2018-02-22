@@ -1,5 +1,6 @@
 import io
 import subprocess
+import typing
 import psutil
 import pytest
 import requests
@@ -12,32 +13,27 @@ class NamedStream(io.BytesIO):
         self.name = kwargs['name']
 
 
-class TestContext():
+@pytest.fixture(scope='session')
+def test_host() -> str:
+    return '127.0.0.1:5000'
 
-    hostname = '127.0.0.1:5000'
-    upload_url = f'http://{hostname}/upload_file'
-    test_alive_url = f'http://{hostname}/test_alive'
-    proc: psutil.Popen
 
-    def create(self) -> None:
-        self.proc = psutil.Popen(['python', 'src/extract_endpoint.py'], stderr=subprocess.PIPE, stdout=subprocess.PIPE)
-        while True:
-            try:
-                requests.get(self.test_alive_url)
-                break
-            except requests.exceptions.ConnectionError:
-                pass
-
-    def tear_down(self) -> None:
-        self.proc.kill()
+@pytest.fixture()
+def upload_url(test_host: str) -> str:
+    return f'http://{test_host}/upload_file'
 
 
 @pytest.fixture(scope='session')
-def test_context():
-    context = TestContext()
-    context.create()
-    yield context
-    context.tear_down()
+def test_context(test_host: str) -> typing.Generator:
+    proc = psutil.Popen(['python', 'src/extract_endpoint.py'], stderr=subprocess.PIPE, stdout=subprocess.PIPE)
+    while True:
+        try:
+            requests.get(f'http://{test_host}/test_alive')
+            break
+        except requests.exceptions.ConnectionError:
+            pass
+    yield None
+    proc.kill()
 
 
 @pytest.fixture
@@ -60,32 +56,25 @@ def sample_filename() -> str:
     return "sample_filename.txt"
 
 
-def test_post_stream(test_context: TestContext,
-                     sample_stream: NamedStream,
-                     sample_filename: str) -> None:
-
-    post_return = extract_post.post_stream(stream=sample_stream, filename=sample_filename, url=test_context.upload_url)
+@pytest.mark.usefixtures('test_context')
+def test_post_stream(upload_url: str, sample_stream: NamedStream, sample_filename: str) -> None:
+    post_return = extract_post.post_stream(stream=sample_stream, filename=sample_filename, url=upload_url)
     assert post_return.status_code == 200
 
 
-def test_post_stream_stdin(test_context: TestContext,
-                           sample_stream_stdin: NamedStream,
-                           sample_filename: str) -> None:
-
-    post_return = extract_post.post_stream(stream=sample_stream_stdin, filename=sample_filename,
-                                           url=test_context.upload_url)
+@pytest.mark.usefixtures('test_context')
+def test_post_stream_stdin(upload_url: str, sample_stream_stdin: NamedStream, sample_filename: str) -> None:
+    post_return = extract_post.post_stream(stream=sample_stream_stdin, filename=sample_filename, url=upload_url)
     assert post_return.status_code == 200
 
 
-def test_post_stream_no_filename(test_context: TestContext,
-                                 sample_stream: NamedStream) -> None:
-
-    post_return = extract_post.post_stream(stream=sample_stream, filename=None, url=test_context.upload_url)
+@pytest.mark.usefixtures('test_context')
+def test_post_stream_no_filename(upload_url: str, sample_stream: NamedStream) -> None:
+    post_return = extract_post.post_stream(stream=sample_stream, filename=None, url=upload_url)
     assert post_return.status_code == 200
 
 
-def test_post_stream_stdin_no_filename(test_context: TestContext,
-                                       sample_stream_stdin: NamedStream) -> None:
-
+@pytest.mark.usefixtures('test_context')
+def test_post_stream_stdin_no_filename(upload_url: str, sample_stream_stdin: NamedStream) -> None:
     with pytest.raises(ValueError):
-        extract_post.post_stream(stream=sample_stream_stdin, filename=None, url=test_context.upload_url)
+        extract_post.post_stream(stream=sample_stream_stdin, filename=None, url=upload_url)
