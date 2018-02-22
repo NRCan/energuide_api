@@ -307,6 +307,10 @@ const Schema = i18n => {
       waterHeatingTankVolumeLitres
       waterHeatingTankVolumeGallon
       waterHeatingEfficiency
+      heatedFloorAreaAreaAboveGradeMetres
+      heatedFloorAreaAreaAboveGradeFeet
+      heatedFloorAreaAreaBelowGradeMetres
+      heatedFloorAreaAreaBelowGradeFeet
     }
   `
 

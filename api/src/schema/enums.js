@@ -111,3 +111,20 @@ waterHeatingFields.forEach(attr => {
   )
   module.exports[generateName('waterHeating', attr)] = attachToString(fn)
 })
+
+// The fields on the HeatedFloorArea  type
+const heatedFloorAreaFields = [
+  'areaAboveGradeMetres',
+  'areaAboveGradeFeet',
+  'areaBelowGradeMetres',
+  'areaBelowGradeFeet',
+]
+
+heatedFloorAreaFields.forEach(attr => {
+  // eslint-disable-next-line no-new-func
+  let fn = new Function(
+    'matcher',
+    `return {"evaluations.heatedFloorArea.${attr}": matcher}`,
+  )
+  module.exports[generateName('heatedFloorArea', attr)] = attachToString(fn)
+})
