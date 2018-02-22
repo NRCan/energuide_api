@@ -85,8 +85,9 @@ def test_upload(test_client: testing.FlaskClient,
                 sample_stream: io.BytesIO,
                 sample_file_name: str) -> None:
 
-    post_return = test_client.post('/upload_file', data=dict(salt=sample_salt, signature=sample_signature, filename=sample_file_name,
-                                                   file=(sample_stream, sample_file_name)))
+    post_return = test_client.post('/upload_file', data=dict(salt=sample_salt, signature=sample_signature,
+                                                             filename=sample_file_name,
+                                                             file=(sample_stream, sample_file_name)))
     assert post_return.status_code == 200
     assert sample_file_name in [blob.name for blob in
                                 sample_block_blob_service.list_blobs(sample_storage_coordinates.container)]

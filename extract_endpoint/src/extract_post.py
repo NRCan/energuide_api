@@ -2,13 +2,13 @@ import io
 import os
 import base64
 import secrets
+import typing
 import requests
 import click
-import typing
 from crypt_utils import sign_string
 
 
-def post_stream(stream: typing.IO[bytes], filename: str, url: str) -> requests.models.Response:
+def post_stream(stream: typing.IO[bytes], filename: typing.Optional[str], url: str) -> requests.models.Response:
     if filename is None and stream.name == '<stdin>':
         raise ValueError("must have a filename if reading from stdin")
     if filename is None:
