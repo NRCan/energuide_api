@@ -90,6 +90,7 @@ jobs:
           EXTRACT_ENDPOINT_STORAGE_KEY: Eby8vdM02xNOcqFlqUwJPLlmEtlCDXJ1OUzFT50uSRZ6IFsuFq2UVErCz4I6tq/K1SZFPTOtr/KBHBeksoGMGw==
           EXTRACT_ENDPOINT_CONTAINER: energuide-extracted-data
           EXTRACT_ENDPOINT_STORAGE_DOMAIN: http://127.0.0.1:10000/devstoreaccount1
+          ENDPOINT_SECRET_KEY: endpoint_secret_key
 
       - image: arafato/azurite
         environment:
