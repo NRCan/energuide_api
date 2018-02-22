@@ -25,7 +25,6 @@ import {
 /* eslint-enable import/named */
 
 const resolvers = {
-  ForwardSortationArea,
   Query: {
     dwelling: async (root, { houseId }, { client }) => {
       let query = {
@@ -34,20 +33,16 @@ const resolvers = {
 
       return client.findOne(query)
     },
-    dwellingsInFSA: async (root, args, { client }) => {
+    dwellings: async (root, args, { client }) => {
       // TODO: look into the creation & handling of this next param
       // This is an opaque string that passes through the GraphQL type system
       // and is passed directly into library code to be decoded and used while
       // talking to the database.
       // ಠ_ಠ
-      const { filters, forwardSortationArea, limit, next } = args
+      const { filters, limit, next } = args
 
       let query = {
-        $and: [
-          {
-            forwardSortationArea,
-          },
-        ],
+        $and: [{}],
       }
 
       if (filters && filters.length > 0) {

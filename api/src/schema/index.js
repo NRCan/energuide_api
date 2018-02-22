@@ -3,8 +3,6 @@ import { makeExecutableSchema } from 'graphql-tools'
 
 const Schema = i18n => {
   const typeDefs = `
-    scalar ForwardSortationArea
-
     enum Comparator {
       gt
       lt
@@ -158,7 +156,7 @@ const Schema = i18n => {
     type Query {
       # ${i18n.t`Details for a specific dwelling`}
       dwelling(houseId: Int!): Dwelling
-      dwellingsInFSA(filters: [Filter!] forwardSortationArea: ForwardSortationArea! limit: Int, next: String): PaginatedResultSet
+      dwellings(filters: [Filter!] limit: Int, next: String): PaginatedResultSet
     }
 
     enum Field {
