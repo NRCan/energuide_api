@@ -169,8 +169,11 @@ class BasementFloor(_BasementFloor):
         if floor is None:
             return [cls._empty_floor(FloorType.SLAB), cls._empty_floor(FloorType.FLOOR_ABOVE_CRAWLSPACE)]
         return [
-            cls._from_data(floor, 'AddedToSlab', FloorType.SLAB),
-            cls._from_data(floor, 'FloorsAbove', FloorType.FLOOR_ABOVE_CRAWLSPACE),
+            cls._from_data(floor, 'AddedToSlab', FloorType.SLAB)
+            if floor is not None else cls._empty_floor(FloorType.SLAB),
+
+            cls._from_data(floor, 'FloorsAbove', FloorType.FLOOR_ABOVE_CRAWLSPACE)
+            if floor is not None else cls._empty_floor(FloorType.FLOOR_ABOVE_CRAWLSPACE),
         ]
 
     @classmethod
