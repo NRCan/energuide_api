@@ -300,7 +300,7 @@ spelling-store-unknown-words=no
 [DESIGN]
 
 # Maximum number of arguments for function / method
-max-args=10
+max-args=20
 
 # Argument names that match this expression will be ignored. Default to name
 # with leading underscore
