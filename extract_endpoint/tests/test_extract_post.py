@@ -4,7 +4,7 @@ import typing
 import psutil
 import pytest
 import requests
-import extract_post
+from extract_endpoint import post_to_endpoint
 
 
 class NamedStream(io.BytesIO):
@@ -25,7 +25,8 @@ def upload_url(test_host: str) -> str:
 
 @pytest.fixture(scope='session')
 def test_context(test_host: str) -> typing.Generator:
-    proc = psutil.Popen(['python', 'src/extract_endpoint.py'], stderr=subprocess.PIPE, stdout=subprocess.PIPE)
+    proc = psutil.Popen(['python', 'src/extract_endpoint/endpoint.py'],
+                        stderr=subprocess.PIPE, stdout=subprocess.PIPE)
     while True:
         try:
             requests.get(f'http://{test_host}/test_alive')
@@ -58,23 +59,23 @@ def sample_filename() -> str:
 
 @pytest.mark.usefixtures('test_context')
 def test_post_stream(upload_url: str, sample_stream: NamedStream, sample_filename: str) -> None:
-    post_return = extract_post.post_stream(stream=sample_stream, filename=sample_filename, url=upload_url)
+    post_return = post_to_endpoint.post_stream(stream=sample_stream, filename=sample_filename, url=upload_url)
     assert post_return.status_code == 200
 
 
 @pytest.mark.usefixtures('test_context')
 def test_post_stream_stdin(upload_url: str, sample_stream_stdin: NamedStream, sample_filename: str) -> None:
-    post_return = extract_post.post_stream(stream=sample_stream_stdin, filename=sample_filename, url=upload_url)
+    post_return = post_to_endpoint.post_stream(stream=sample_stream_stdin, filename=sample_filename, url=upload_url)
     assert post_return.status_code == 200
 
 
 @pytest.mark.usefixtures('test_context')
 def test_post_stream_no_filename(upload_url: str, sample_stream: NamedStream) -> None:
-    post_return = extract_post.post_stream(stream=sample_stream, filename=None, url=upload_url)
+    post_return = post_to_endpoint.post_stream(stream=sample_stream, filename=None, url=upload_url)
     assert post_return.status_code == 200
 
 
 @pytest.mark.usefixtures('test_context')
 def test_post_stream_stdin_no_filename(upload_url: str, sample_stream_stdin: NamedStream) -> None:
     with pytest.raises(ValueError):
-        extract_post.post_stream(stream=sample_stream_stdin, filename=None, url=upload_url)
+        post_to_endpoint.post_stream(stream=sample_stream_stdin, filename=None, url=upload_url)

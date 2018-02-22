@@ -2,11 +2,12 @@ import os
 import base64
 import flask
 from werkzeug import utils
-import azure_utils
-import crypt_utils
+from extract_endpoint import azure_utils
+from extract_endpoint import crypt_utils
 
 
 DEFAULT_ENDPOINT_SECRET_KEY = 'no key'
+
 
 App = flask.Flask(__name__)
 App.config.update(dict(

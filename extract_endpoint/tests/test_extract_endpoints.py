@@ -3,12 +3,12 @@ import base64
 import pytest
 from flask import testing
 from azure.storage import blob
-import azure_utils
-import crypt_utils
-import extract_endpoint
+from extract_endpoint import azure_utils
+from extract_endpoint import crypt_utils
+from extract_endpoint import endpoint
 
 
-extract_endpoint.App.testing = True
+endpoint.App.testing = True
 
 
 @pytest.fixture
@@ -18,7 +18,7 @@ def sample_storage_coordinates() -> azure_utils.StorageCoordinates:
                                             + 'RZ6IFsuFq2UVErCz4I6tq/K1SZFPTOtr/KBHBeksoGMGw==',
                                             container='test-container',
                                             domain='http://127.0.0.1:10000/devstoreaccount1')
-    extract_endpoint.App.config['AZURE_COORDINATES'] = coords
+    endpoint.App.config['AZURE_COORDINATES'] = coords
     return coords
 
 
@@ -32,7 +32,7 @@ def sample_block_blob_service(sample_storage_coordinates: azure_utils.StorageCoo
 @pytest.fixture
 def test_client(sample_block_blob_service, sample_storage_coordinates) -> testing.FlaskClient:
     sample_block_blob_service.create_container(sample_storage_coordinates.container)
-    yield extract_endpoint.App.test_client()
+    yield endpoint.App.test_client()
     sample_block_blob_service.delete_container(sample_storage_coordinates.container)
 
 
@@ -43,8 +43,8 @@ def sample_salt() -> str:
 
 @pytest.fixture
 def sample_secret_key() -> str:
-    extract_endpoint.App.config['SECRET_KEY'] = 'sample secret key'
-    return extract_endpoint.App.config['SECRET_KEY']
+    endpoint.App.config['SECRET_KEY'] = 'sample secret key'
+    return endpoint.App.config['SECRET_KEY']
 
 
 @pytest.fixture
@@ -104,7 +104,7 @@ def test_upload_no_key_in_env(test_client: testing.FlaskClient,
                               sample_stream: io.BytesIO,
                               sample_file_name: str) -> None:
 
-    extract_endpoint.App.config['SECRET_KEY'] = extract_endpoint.DEFAULT_ENDPOINT_SECRET_KEY
+    endpoint.App.config['SECRET_KEY'] = endpoint.DEFAULT_ENDPOINT_SECRET_KEY
     with pytest.raises(ValueError):
         test_client.post('/upload_file', data=dict(salt=sample_salt, signature=sample_signature,
                                                    filename=sample_file_name, file=(sample_stream, sample_file_name)))

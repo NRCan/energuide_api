@@ -17,5 +17,6 @@ setuptools.setup(
     ],
     entry_points='''
         [console_scripts]
+        extract_endpoint=extract_endpoint.post_to_endpoint:main
     '''
 )
