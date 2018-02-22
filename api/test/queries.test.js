@@ -27,7 +27,7 @@ describe('queries', () => {
         .set('Content-Type', 'application/json; charset=utf-8')
         .send({
           query: `{
-          evaluations:evaluationsFor(account: 189250) {
+          evaluations:dwelling(houseId: 189250) {
               houseId
               yearBuilt
               city
@@ -53,7 +53,7 @@ describe('queries', () => {
         .set('Content-Type', 'application/json; charset=utf-8')
         .send({
           query: `{
-          evaluations:evaluationsFor(account: 189250) {
+          evaluations:dwelling(houseId: 189250) {
             evaluations {
               evaluationType
               entryDate
@@ -89,7 +89,7 @@ describe('queries', () => {
         .set('Content-Type', 'application/json; charset=utf-8')
         .send({
           query: `{
-          evaluationsFor(account: 189250) {
+          dwelling(houseId: 189250) {
             evaluations {
               ceilings {
                 label
@@ -109,7 +109,7 @@ describe('queries', () => {
         }`,
         })
 
-      let { evaluationsFor: { evaluations } } = response.body.data
+      let { dwelling: { evaluations } } = response.body.data
       let [first] = evaluations
       let [ceiling] = first.ceilings
       expect(ceiling).toEqual({
@@ -133,7 +133,7 @@ describe('queries', () => {
         .set('Content-Type', 'application/json; charset=utf-8')
         .send({
           query: `{
-          evaluationsFor(account: 189250) {
+          dwelling(houseId: 189250) {
             evaluations {
               walls {
                 label
@@ -157,7 +157,7 @@ describe('queries', () => {
         }`,
         })
 
-      let { evaluationsFor: { evaluations } } = response.body.data
+      let { dwelling: { evaluations } } = response.body.data
       let [first] = evaluations
       let [wall] = first.walls
       expect(wall).toEqual({
@@ -185,7 +185,7 @@ describe('queries', () => {
         .set('Content-Type', 'application/json; charset=utf-8')
         .send({
           query: `{
-          evaluationsFor(account: 189250) {
+          dwelling(houseId: 189250) {
             evaluations {
               doors {
                 typeEnglish
@@ -202,7 +202,7 @@ describe('queries', () => {
         }`,
         })
 
-      let { evaluationsFor: { evaluations } } = response.body.data
+      let { dwelling: { evaluations } } = response.body.data
       let [first] = evaluations
       let [door] = first.doors
       expect(door).toEqual({
@@ -223,7 +223,7 @@ describe('queries', () => {
         .set('Content-Type', 'application/json; charset=utf-8')
         .send({
           query: `{
-          evaluationsFor(account: 189250) {
+          dwelling(houseId: 189250) {
             evaluations {
                waterHeatings {
                   typeEnglish
@@ -237,7 +237,7 @@ describe('queries', () => {
         }`,
         })
 
-      let { evaluationsFor: { evaluations } } = response.body.data
+      let { dwelling: { evaluations } } = response.body.data
       let [first] = evaluations
       let [waterHeatings] = first.waterHeatings
       expect(waterHeatings).toEqual({
@@ -255,7 +255,7 @@ describe('queries', () => {
         .set('Content-Type', 'application/json; charset=utf-8')
         .send({
           query: `{
-          evaluationsFor(account: 189250) {
+          dwelling(houseId: 189250) {
             evaluations {
               floors {
                 label
@@ -273,7 +273,7 @@ describe('queries', () => {
         }`,
         })
 
-      let { evaluationsFor: { evaluations } } = response.body.data
+      let { dwelling: { evaluations } } = response.body.data
       let [first] = evaluations
       let [floor] = first.floors
       expect(floor).toEqual({
@@ -295,7 +295,7 @@ describe('queries', () => {
         .set('Content-Type', 'application/json; charset=utf-8')
         .send({
           query: `{
-          evaluations:evaluationsFor(account: 189250) {
+          evaluations:dwelling(houseId: 189250) {
             evaluations {
               windows {
                 label
@@ -353,14 +353,14 @@ describe('queries', () => {
     })
   })
 
-  describe('evaluationsFor', () => {
-    it('retrieves evaluations given an account id and a postalcode', async () => {
+  describe('dwelling', () => {
+    it('retrieves evaluations given an houseId id', async () => {
       let response = await request(server)
         .post('/graphql')
         .set('Content-Type', 'application/json; charset=utf-8')
         .send({
           query: `{
-          evaluations:evaluationsFor(account: 189250) {
+          evaluations:dwelling(houseId: 189250) {
             yearBuilt
           }
         }`,
@@ -478,7 +478,32 @@ describe('queries', () => {
       expect(dwellings.results.length).toEqual(1)
     })
 
-    describe('filter', () => {
+    describe('filters', () => {
+      it('allows for multiple filters', async () => {
+        let response = await request(server)
+          .post('/graphql')
+          .set('Content-Type', 'application/json; charset=utf-8')
+          .send({
+            query: `{
+               dwellings:dwellingsInFSA(
+                forwardSortationArea: "C1A"
+                filters: [
+                  {field: dwellingCity comparator: eq value: "Charlottetown"}
+                  {field: dwellingYearBuilt comparator: eq value: "1900"}
+                ]
+               ) {
+                 results {
+                   city
+                   yearBuilt
+                 }
+               }
+             }`,
+          })
+        let { dwellings: { results: [first] } } = response.body.data
+        expect(first.city).toEqual('Charlottetown')
+        expect(first.yearBuilt).toEqual(1900)
+      })
+
       describe('gt: greater than', () => {
         it('returns dwellings where the field is greater than the given value', async () => {
           let response = await request(server)
@@ -488,7 +513,7 @@ describe('queries', () => {
               query: `{
                  dwellings:dwellingsInFSA(
                   forwardSortationArea: "C1A"
-                  filter: {field: dwellingYearBuilt comparator: gt value: "1900"}
+                  filters: [{field: dwellingYearBuilt comparator: gt value: "1900"}]
                  ) {
                     results {
                       yearBuilt
@@ -509,7 +534,7 @@ describe('queries', () => {
               query: `{
                  dwellings:dwellingsInFSA(
                   forwardSortationArea: "C1A"
-                  filter: {field: dwellingCity comparator: eq value: "Charlottetown"}
+                  filters: [{field: dwellingCity comparator: eq value: "Charlottetown"}]
                  ) {
                    results {
                      city
@@ -517,8 +542,34 @@ describe('queries', () => {
                  }
                }`,
             })
+
           let { dwellings: { results: [first] } } = response.body.data
           expect(first.city).toEqual('Charlottetown')
+        })
+
+        it('correctly handles integer values', async () => {
+          let response = await request(server)
+            .post('/graphql')
+            .set('Content-Type', 'application/json; charset=utf-8')
+            .send({
+              query: `{
+                dwellingsInFSA(
+                  forwardSortationArea: "C1A"
+                  filters: [{
+                    field: dwellingYearBuilt
+                    comparator: gt
+                    value: "1"
+                  }]) {
+                  results {
+                    yearBuilt
+                  }
+                }
+               }`,
+            })
+
+          let { data } = response.body
+          let { dwellingsInFSA } = data
+          expect(dwellingsInFSA.results.length).toBeGreaterThan(0)
         })
       })
 
@@ -531,7 +582,7 @@ describe('queries', () => {
               query: `{
                  dwellings:dwellingsInFSA(
                   forwardSortationArea: "C1A"
-                  filter: {field: dwellingYearBuilt comparator: lt value: "2000"}
+                  filters: [{field: dwellingYearBuilt comparator: lt value: "2000"}]
                  ) {
                      results {
                        yearBuilt
@@ -553,7 +604,7 @@ describe('queries', () => {
               query: `{
                  dwellings:dwellingsInFSA(
                   forwardSortationArea: "C1A"
-                  filter: {field: dwellingYearBuilt comparator: eq value: "1900"}
+                  filters: [{field: dwellingYearBuilt comparator: eq value: "1900"}]
                  ) {
                    results {
                      yearBuilt
@@ -574,7 +625,7 @@ describe('queries', () => {
               query: `{
                  dwellings:dwellingsInFSA(
                   forwardSortationArea: "C1A"
-                  filter: {field: dwellingCity comparator: eq value: "Charlottetown"}
+                  filters: [{field: dwellingCity comparator: eq value: "Charlottetown"}]
                  ) {
                    results {
                      city
