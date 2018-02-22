@@ -555,11 +555,11 @@ describe('queries', () => {
               query: `{
                 dwellingsInFSA(
                   forwardSortationArea: "C1A"
-                  filter: {
+                  filters: [{
                     field: dwellingYearBuilt
                     comparator: gt
                     value: "1"
-                  }) {
+                  }]) {
                   results {
                     yearBuilt
                   }
