@@ -24,6 +24,7 @@ def data1() -> typing.Dict[str, typing.Optional[str]]:
         'RAW_XML': '<tag>thing</tag>',
         'BUILDER': '4K13D01404',
         'DHWHPCOP': '0',
+        'ERSRATING': '10',
         'INFO1': None,
         'INFO2': None,
         'INFO3': None,
@@ -87,6 +88,32 @@ def test_load(energuide_zip_fixture: str,
 
     coll = mongo_client.get_database(database_name).get_collection(collection)
     assert coll.count() == 7
+
+
+def test_load_append(energuide_zip_fixture: str,
+                     database_name: str,
+                     collection: str,
+                     mongo_client: pymongo.MongoClient) -> None:
+    runner = testing.CliRunner()
+    result = runner.invoke(cli.main, args=[
+        'load',
+        '--db_name', database_name,
+        '--filename', energuide_zip_fixture,
+    ])
+
+    assert result.exit_code == 0
+
+    result = runner.invoke(cli.main, args=[
+        'load',
+        '--db_name', database_name,
+        '--filename', energuide_zip_fixture,
+        '--append',
+    ])
+
+    assert result.exit_code == 0
+
+    coll = mongo_client.get_database(database_name).get_collection(collection)
+    assert coll.count() == 14
 
 
 def test_extract_valid(valid_filepath: str, tmpdir: py._path.local.LocalPath) -> None:

@@ -23,7 +23,7 @@ make watch
 - rebuild and restart if you make any changes
 
 Once it's running, check it out at [http://localhost:3000/](http://localhost:3000/).
-Or [here's an example query](http://localhost:3000/graphiql?query=%7B%0A%20%20dwellingsInFSA(%0A%20%20%20%20forwardSortationArea%3A%20%22C1A%22%0A%20%20)%20%7B%0A%20%20%20%20results%20%7B%0A%20%20%20%20%20%20yearBuilt%0A%20%20%20%20%20%20city%0A%20%20%20%20%7D%0A%20%20%7D%0A%7D) to get you going.
+Or [here's an example query](http://localhost:3000/graphiql?query=%7B%0A%20%20dwellings(%0A%20%20%20%20filters%3A%20%5B%0A%20%20%20%20%20%20%7Bfield%3A%20dwellingForwardSortationArea%20comparator%3A%20eq%20value%3A%20%22C1A%22%7D%0A%20%20%20%20%5D%0A%20%20)%20%7B%0A%20%20%20%20results%20%7B%0A%20%20%20%20%20%20yearBuilt%0A%20%20%20%20%20%20city%0A%20%20%20%20%7D%0A%20%20%7D%0A%7D) to get you going.
 
 ### Manually starting the server
 
@@ -60,7 +60,7 @@ Assuming the DB credentials/connectivity is correct, the command above will
 start a graphql endpoint that will respond to the following `curl` commands:
 
 ```sh
-curl -s -H "Content-Type: application/json" -d '{"query": "{dwellingsInFSA(forwardSortationArea: \"C1A\"){ results { yearBuilt }}}"}'  "localhost:3000/graphql"
+curl -s -H "Content-Type: application/json" -d '{"query": "{dwellings(filters: [{field: dwellingForwardSortationArea comparator: eq value: \"C1A\"}]){ results { yearBuilt city }}}"}'  "localhost:3000/graphql"
 ```
 
 It is also possible to access the API via `/graphiql` which will serve up a Graphical IDE to allow you to explore the functionality the API offers and run queries against it.

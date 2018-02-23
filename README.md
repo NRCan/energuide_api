@@ -231,8 +231,10 @@ Try out this query to get you going.
 
 ```
 {
-  dwellingsInFSA(
-    forwardSortationArea: "C1A"
+  dwellings(
+    filters: [
+      {field: dwellingForwardSortationArea comparator: eq value: "C1A"}
+    ]
   ) {
     results {
       yearBuilt
@@ -242,4 +244,4 @@ Try out this query to get you going.
 }
 ```
 
-<sup>Or just [click here](http://localhost:3000/graphiql?query=%7B%0A%20%20dwellingsInFSA(%0A%20%20%20%20forwardSortationArea%3A%20%22C1A%22%0A%20%20)%20%7B%0A%20%20%20%20results%20%7B%0A%20%20%20%20%20%20yearBuilt%0A%20%20%20%20%20%20city%0A%20%20%20%20%7D%0A%20%20%7D%0A%7D)</sup>
+<sup>Or just [click here](http://localhost:3000/graphiql?query=%7B%0A%20%20dwellings(%0A%20%20%20%20filters%3A%20%5B%0A%20%20%20%20%20%20%7Bfield%3A%20dwellingForwardSortationArea%20comparator%3A%20eq%20value%3A%20%22C1A%22%7D%0A%20%20%20%20%5D%0A%20%20)%20%7B%0A%20%20%20%20results%20%7B%0A%20%20%20%20%20%20yearBuilt%0A%20%20%20%20%20%20city%0A%20%20%20%20%7D%0A%20%20%7D%0A%7D)</sup>

@@ -12,7 +12,7 @@ def test_run(database_coordinates: database.DatabaseCoordinates,
              collection: str,
              energuide_zip_fixture: str) -> None:
 
-    transform.run(database_coordinates, database_name, collection, energuide_zip_fixture)
+    transform.run(database_coordinates, database_name, collection, energuide_zip_fixture, append=False)
     assert mongo_client[database_name][collection].count() == 7
 
 
@@ -29,7 +29,7 @@ def test_bad_data(database_coordinates: database.DatabaseCoordinates,
 
     monkeypatch.setattr(ceiling.Ceiling, 'from_data', raise_error)
 
-    transform.run(database_coordinates, database_name, collection, energuide_zip_fixture)
+    transform.run(database_coordinates, database_name, collection, energuide_zip_fixture, append=False)
     assert mongo_client[database_name][collection].count() == 0
 
     _, err = capsys.readouterr()

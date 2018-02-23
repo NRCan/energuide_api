@@ -18,6 +18,7 @@ from energuide.embedded import window
 from energuide.embedded import water_heating
 from energuide.embedded import ventilation
 from energuide.embedded import heated_floor_area
+from energuide.embedded import basement
 from energuide.exceptions import InvalidInputDataError
 from energuide.exceptions import InvalidGroupSizeError
 
@@ -272,6 +273,109 @@ def water_heating_input() -> str:
 
 
 @pytest.fixture
+def basement_input() -> typing.List[str]:
+    doc = """
+    <Basement isExposedSurface="true" exposedSurfacePerimeter="35.052" id="1">
+        <Label>Basement</Label>
+        <Configuration type="BCCB" subtype="4" overlap="0">BCCB_4</Configuration>
+        <Floor>
+            <Construction isBelowFrostline="true" hasIntegralFooting="false" heatedFloor="false">
+                <AddedToSlab rValue="0" nominalInsulation="0">User specified</AddedToSlab>
+                <FloorsAbove idref="Code 16" rValue="0.7059" nominalInsulation="0">4231000660</FloorsAbove>
+            </Construction>
+            <Measurements isRectangular="false" area="92.903" perimeter="39.9297" />
+        </Floor>
+        <Wall hasPonyWall="false">
+            <Construction corners="4">
+                <InteriorAddedInsulation idref="Code 17" nominalInsulation="1.432">
+                    <Description>2101010</Description>
+                    <Composite>
+                        <Section rank="1" percentage="100" rsi="1.4603" nominalRsi="1.432" />
+                    </Composite>
+                </InteriorAddedInsulation>
+                <Lintels idref="Code 10">Bsmnt Lintel</Lintels>
+            </Construction>
+            <Measurements height="2.4384" depth="1.8288" ponyWallHeight="0" />
+        </Wall>
+        <Components>
+            <FloorHeader adjacentEnclosedSpace="false" id="6">
+                <Label>BW hdr-01</Label>
+                <Construction>
+                    <Type idref="Code 21" rValue="4.0777" nominalInsulation="3.87">1800400220</Type>
+                </Construction>
+                <Measurements height="0.23" perimeter="39.9288" />
+                <FacingDirection code="1">
+                    <English>N/A</English>
+                    <French>S/O</French>
+                </FacingDirection>
+            </FloorHeader>
+        </Components>
+    </Basement>
+    """
+    return [doc]
+
+
+@pytest.fixture
+def crawlspace_input() -> typing.List[str]:
+    doc = """
+    <Crawlspace isExposedSurface="true" exposedSurfacePerimeter="9.144" id="29">
+        <Label>Crawl</Label>
+        <Configuration type="SCN" subtype="1">SCN_1</Configuration>
+        <Floor>
+            <Construction isBelowFrostline="false" hasIntegralFooting="false" heatedFloor="false">
+                <FloorsAbove idref="Code 15" rValue="0.468" nominalInsulation="0">4200000000</FloorsAbove>
+            </Construction>
+            <Measurements isRectangular="true" width="4.9987" length="4.9999" />
+        </Floor>
+        <Wall>
+            <Construction corners="1">
+                <Type idref="Code 18" nominalInsulation="1.432">
+                    <Description>1211100700</Description>
+                    <Composite>
+                        <Section rank="1" percentage="100" rsi="1.7968" nominalRsi="1.432" />
+                    </Composite>
+                </Type>
+            </Construction>
+            <Measurements height="1.0668" depth="0.4572" />
+            <RValues skirt="0" thermalBreak="0" />
+        </Wall>
+        <Components>
+            <FloorHeader adjacentEnclosedSpace="false" id="6">
+                <Label>BW hdr-01</Label>
+                <Construction>
+                    <Type idref="Code 21" rValue="4.0777" nominalInsulation="3.87">1800400220</Type>
+                </Construction>
+                <Measurements height="0.23" perimeter="39.9288" />
+                <FacingDirection code="1">
+                    <English>N/A</English>
+                    <French>S/O</French>
+                </FacingDirection>
+            </FloorHeader>
+        </Components>
+    </Crawlspace>
+    """
+    return [doc]
+
+
+@pytest.fixture
+def slab_input() -> typing.List[str]:
+    doc = """
+    <Slab isExposedSurface="true" exposedSurfacePerimeter="6.096" id="30">
+        <Label>Slab</Label>
+        <Configuration type="SCN" subtype="1">SCN_1</Configuration>
+        <Floor>
+            <Construction isBelowFrostline="false" hasIntegralFooting="false" heatedFloor="false" />
+            <Measurements isRectangular="true" width="3.048" length="6.096" />
+        </Floor>
+        <Wall>
+            <RValues skirt="0" thermalBreak="0" />
+        </Wall>
+    </Slab>
+    """
+    return [doc]
+
+
+@pytest.fixture
 def raw_codes() -> typing.Dict[str, typing.List[str]]:
     return {
         'wall': [
@@ -383,6 +487,9 @@ def sample_input_d(ceiling_input: typing.List[str],
                    heating_cooling_input: str,
                    ventilation_input: typing.List[str],
                    water_heating_input: str,
+                   basement_input: typing.List[str],
+                   crawlspace_input: typing.List[str],
+                   slab_input: typing.List[str],
                    raw_codes: typing.Dict[str, typing.List[str]]) -> reader.InputData:
 
     return {
@@ -404,7 +511,11 @@ def sample_input_d(ceiling_input: typing.List[str],
         'heatedFloorArea': heated_floor_area_input,
         'ventilations': ventilation_input,
         'waterHeatings': water_heating_input,
+        'basements': basement_input,
+        'crawlspaces': crawlspace_input,
+        'slabs': slab_input,
         'codes': raw_codes,
+        'ERSRATING': '567'
     }
 
 
@@ -511,6 +622,7 @@ class TestParsedDwellingDataRow:
             city='Ottawa',
             region=dwelling.Region.ONTARIO,
             forward_sortation_area='K1P',
+            ers_rating=567,
             ceilings=[
                 ceiling.Ceiling(
                     label='Main attic',
@@ -585,7 +697,101 @@ class TestParsedDwellingDataRow:
                 output_size=0.009671344275824395,
                 efficiency=78.0,
                 steady_state='Steady State',
-            )
+            ),
+            foundations=[
+                basement.Basement(
+                    foundation_type=basement.FoundationType.BASEMENT,
+                    label='Basement',
+                    configuration_type='BCCB',
+                    walls=[
+                        basement.BasementWall(
+                            wall_type=basement.WallType.INTERIOR,
+                            nominal_insulation=insulation.Insulation(rsi=1.432),
+                            effective_insulation=insulation.Insulation(rsi=1.4603),
+                            composite_percentage=100.0,
+                            wall_area=area.Area(97.36458048)
+                        )
+                    ],
+                    floors=[
+                        basement.BasementFloor(
+                            floor_type=basement.FloorType.SLAB,
+                            rectangular=False,
+                            nominal_insulation=insulation.Insulation(rsi=0.0),
+                            effective_insulation=insulation.Insulation(rsi=0.0),
+                            length=None,
+                            width=None,
+                            perimeter=distance.Distance(distance_metres=39.9297),
+                            floor_area=area.Area(92.903)
+                        )
+                    ],
+                    header=basement.BasementHeader(
+                        nominal_insulation=insulation.Insulation(rsi=3.87),
+                        effective_insulation=insulation.Insulation(rsi=4.0777),
+                        height=distance.Distance(distance_metres=0.23),
+                        perimeter=distance.Distance(distance_metres=39.9288)
+                    ),
+                ),
+                basement.Basement(
+                    foundation_type=basement.FoundationType.CRAWLSPACE,
+                    label='Crawl',
+                    configuration_type='SCN',
+                    walls=[
+                        basement.BasementWall(
+                            wall_type=basement.WallType.NOT_APPLICABLE,
+                            nominal_insulation=insulation.Insulation(rsi=1.432),
+                            effective_insulation=insulation.Insulation(rsi=1.7968),
+                            composite_percentage=100.0,
+                            wall_area=area.Area(21.333012959999998)
+                        )
+                    ],
+                    floors=[
+                        basement.BasementFloor(
+                            floor_type=basement.FloorType.SLAB,
+                            rectangular=True,
+                            nominal_insulation=None,
+                            effective_insulation=None,
+                            width=distance.Distance(distance_metres=4.9987),
+                            length=distance.Distance(distance_metres=4.9999),
+                            perimeter=distance.Distance(distance_metres=19.9972),
+                            floor_area=area.Area(24.993000130000002)
+                        ), basement.BasementFloor(
+                            floor_type=basement.FloorType.FLOOR_ABOVE_CRAWLSPACE,
+                            rectangular=True,
+                            nominal_insulation=insulation.Insulation(rsi=0.0),
+                            effective_insulation=insulation.Insulation(rsi=0.468),
+                            width=distance.Distance(distance_metres=4.9987),
+                            length=distance.Distance(distance_metres=4.9999),
+                            perimeter=distance.Distance(distance_metres=19.9972),
+                            floor_area=area.Area(24.993000130000002)
+                        )
+                    ],
+                    header=basement.BasementHeader(
+                        nominal_insulation=insulation.Insulation(rsi=3.87),
+                        effective_insulation=insulation.Insulation(rsi=4.0777),
+                        height=distance.Distance(distance_metres=0.23),
+                        perimeter=distance.Distance(distance_metres=39.9288)
+                    ),
+                ),
+                basement.Basement(
+                    foundation_type=basement.FoundationType.SLAB,
+                    label='Slab',
+                    configuration_type='SCN',
+                    walls=[],
+                    floors=[
+                        basement.BasementFloor(
+                            floor_type=basement.FloorType.SLAB,
+                            rectangular=True,
+                            nominal_insulation=None,
+                            effective_insulation=None,
+                            width=distance.Distance(distance_metres=3.048),
+                            length=distance.Distance(distance_metres=6.096),
+                            perimeter=distance.Distance(distance_metres=18.288),
+                            floor_area=area.Area(18.580608)
+                        )
+                    ],
+                    header=None,
+                ),
+            ],
         )
 
     def test_bad_postal_code(self, sample_input_d: reader.InputData) -> None:
@@ -601,6 +807,11 @@ class TestParsedDwellingDataRow:
             dwelling.ParsedDwellingDataRow.from_row(input_data)
         assert 'EVAL_TYPE' in ex.exconly()
         assert 'EVAL_ID' not in ex.exconly()
+
+    def test_missing_ers(self, sample_input_d: reader.InputData) -> None:
+        sample_input_d['ERSRATING'] = ''
+        output = dwelling.ParsedDwellingDataRow.from_row(sample_input_d)
+        assert output.ers_rating is None
 
 
 class TestDwellingEvaluation:

@@ -289,6 +289,67 @@ describe('queries', () => {
       })
     })
 
+    it('retrieves all top level keys of the heated floor area data', async () => {
+      let response = await request(server)
+        .post('/graphql')
+        .set('Content-Type', 'application/json; charset=utf-8')
+        .send({
+          query: `{
+          evaluationsFor(account: 189250) {
+            evaluations {
+              heatedFloorArea {
+                areaAboveGradeMetres
+                areaBelowGradeMetres
+                areaAboveGradeFeet
+                areaBelowGradeFeet
+              }
+            }
+          }
+        }`,
+        })
+
+      let { evaluationsFor: { evaluations } } = response.body.data
+      let [first] = evaluations
+      // there is only one heatedFloorArea object, unlike most other evaluation types
+      let heatedFloorArea = first.heatedFloorArea
+      expect(heatedFloorArea).toEqual({
+        areaAboveGradeMetres: 600,
+        areaBelowGradeMetres: 600,
+        areaAboveGradeFeet: 6458.34666336,
+        areaBelowGradeFeet: 6458.34666336,
+      })
+    })
+
+    it('retrieves all top level keys of the ventilations data', async () => {
+      let response = await request(server)
+        .post('/graphql')
+        .set('Content-Type', 'application/json; charset=utf-8')
+        .send({
+          query: `{
+          evaluationsFor(account: 189250) {
+            evaluations {
+              ventilations {
+                typeEnglish
+                typeFrench
+                airFlowRateLps
+                airFlowRateCfm
+              }
+            }
+          }
+        }`,
+        })
+
+      let { evaluationsFor: { evaluations } } = response.body.data
+      let [first] = evaluations
+      let [ventilations] = first.ventilations
+      expect(ventilations).toEqual({
+        airFlowRateCfm: 466.1536,
+        airFlowRateLps: 220,
+        typeEnglish: 'Heat recovery ventilator',
+        typeFrench: 'Ventilateur-récupérateur de chaleur',
+      })
+    })
+
     it('retrieves all top level keys of the window data', async () => {
       let response = await request(server)
         .post('/graphql')
@@ -377,8 +438,8 @@ describe('queries', () => {
         .set('Content-Type', 'application/json; charset=utf-8')
         .send({
           query: `{
-           dwellings:dwellingsInFSA(
-             forwardSortationArea: "C1A"
+           dwellings(
+             filters: [{field: dwellingForwardSortationArea comparator: eq value: "C1A"}]
            ) {
           results {
             yearBuilt
@@ -418,8 +479,8 @@ describe('queries', () => {
           .set('Content-Type', 'application/json; charset=utf-8')
           .send({
             query: `{
-              dwellings:dwellingsInFSA(
-               forwardSortationArea: "C1A"
+              dwellings(
+               filters: [{field: dwellingForwardSortationArea comparator: eq value: "C1A"}]
                limit: 1
               ) {
                 hasNext
@@ -437,8 +498,8 @@ describe('queries', () => {
           .set('Content-Type', 'application/json; charset=utf-8')
           .send({
             query: `{
-              dwellings:dwellingsInFSA(
-               forwardSortationArea: "C1A"
+              dwellings(
+               filters: [{field: dwellingForwardSortationArea comparator: eq value: "C1A"}]
                limit: 1
                next: "${response.body.data.dwellings.next}"
               ) {
@@ -464,8 +525,8 @@ describe('queries', () => {
         .set('Content-Type', 'application/json; charset=utf-8')
         .send({
           query: `{
-          dwellings:dwellingsInFSA(
-           forwardSortationArea: "C1A"
+          dwellings(
+            filters: [{field: dwellingForwardSortationArea comparator: eq value: "C1A"}]
           ) {
             results {
               yearBuilt
@@ -485,8 +546,7 @@ describe('queries', () => {
           .set('Content-Type', 'application/json; charset=utf-8')
           .send({
             query: `{
-               dwellings:dwellingsInFSA(
-                forwardSortationArea: "C1A"
+               dwellings(
                 filters: [
                   {field: dwellingCity comparator: eq value: "Charlottetown"}
                   {field: dwellingYearBuilt comparator: eq value: "1900"}
@@ -511,10 +571,12 @@ describe('queries', () => {
             .set('Content-Type', 'application/json; charset=utf-8')
             .send({
               query: `{
-                 dwellings:dwellingsInFSA(
-                  forwardSortationArea: "C1A"
-                  filters: [{field: dwellingYearBuilt comparator: gt value: "1900"}]
-                 ) {
+                 dwellings(
+                   filters: [
+                    {field: dwellingForwardSortationArea comparator: eq value: "C1A"}
+                    {field: dwellingYearBuilt comparator: gt value: "1900"}
+                   ]
+                  ) {
                     results {
                       yearBuilt
                     }
@@ -532,10 +594,12 @@ describe('queries', () => {
             .set('Content-Type', 'application/json; charset=utf-8')
             .send({
               query: `{
-                 dwellings:dwellingsInFSA(
-                  forwardSortationArea: "C1A"
-                  filters: [{field: dwellingCity comparator: eq value: "Charlottetown"}]
-                 ) {
+                 dwellings(
+                   filters: [
+                    {field: dwellingForwardSortationArea comparator: eq value: "C1A"}
+                    {field: dwellingCity comparator: eq value: "Charlottetown"}
+                   ]
+                  ) {
                    results {
                      city
                    }
@@ -553,13 +617,12 @@ describe('queries', () => {
             .set('Content-Type', 'application/json; charset=utf-8')
             .send({
               query: `{
-                dwellingsInFSA(
-                  forwardSortationArea: "C1A"
-                  filters: [{
-                    field: dwellingYearBuilt
-                    comparator: gt
-                    value: "1"
-                  }]) {
+                 dwellings(
+                   filters: [
+                    {field: dwellingForwardSortationArea comparator: eq value: "C1A"}
+                    {field: dwellingYearBuilt comparator: gt value: "1" }
+                   ]
+                 ) {
                   results {
                     yearBuilt
                   }
@@ -568,8 +631,8 @@ describe('queries', () => {
             })
 
           let { data } = response.body
-          let { dwellingsInFSA } = data
-          expect(dwellingsInFSA.results.length).toBeGreaterThan(0)
+          let { dwellings } = data
+          expect(dwellings.results.length).toBeGreaterThan(0)
         })
       })
 
@@ -580,9 +643,11 @@ describe('queries', () => {
             .set('Content-Type', 'application/json; charset=utf-8')
             .send({
               query: `{
-                 dwellings:dwellingsInFSA(
-                  forwardSortationArea: "C1A"
-                  filters: [{field: dwellingYearBuilt comparator: lt value: "2000"}]
+                 dwellings(
+                   filters: [
+                     {field: dwellingForwardSortationArea comparator: eq value: "C1A"}
+                     {field: dwellingYearBuilt comparator: lt value: "2000"}
+                   ]
                  ) {
                      results {
                        yearBuilt
@@ -602,9 +667,11 @@ describe('queries', () => {
             .set('Content-Type', 'application/json; charset=utf-8')
             .send({
               query: `{
-                 dwellings:dwellingsInFSA(
-                  forwardSortationArea: "C1A"
-                  filters: [{field: dwellingYearBuilt comparator: eq value: "1900"}]
+                 dwellings(
+                   filters: [
+                     {field: dwellingForwardSortationArea comparator: eq value: "C1A"}
+                     {field: dwellingYearBuilt comparator: eq value: "1900"}
+                   ]
                  ) {
                    results {
                      yearBuilt
@@ -623,9 +690,11 @@ describe('queries', () => {
             .set('Content-Type', 'application/json; charset=utf-8')
             .send({
               query: `{
-                 dwellings:dwellingsInFSA(
-                  forwardSortationArea: "C1A"
-                  filters: [{field: dwellingCity comparator: eq value: "Charlottetown"}]
+                 dwellings(
+                  filters: [
+                    {field: dwellingForwardSortationArea comparator: eq value: "C1A"}
+                    {field: dwellingCity comparator: eq value: "Charlottetown"}
+                  ]
                  ) {
                    results {
                      city
