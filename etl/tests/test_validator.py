@@ -38,3 +38,4 @@ def test_embedded_xml() -> None:
 
 def test_fail() -> None:
     assert False
+    assert False
