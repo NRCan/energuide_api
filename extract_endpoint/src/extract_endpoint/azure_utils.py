@@ -3,17 +3,19 @@ import typing
 from azure.storage import blob
 
 
-AZURE_EMULATOR_ACCOUNT = 'devstoreaccount1'
-AZURE_EMULATOR_KEY = 'Eby8vdM02xNOcqFlqUwJPLlmEtlCDXJ1OUzFT50uSRZ6IFsuFq2UVErCz4I6tq/K1SZFPTOtr/KBHBeksoGMGw=='
-AZURE_EMULATOR_CONTAINER = 'test-container'
-AZURE_EMULATOR_DOMAIN = 'http://127.0.0.1:10000/devstoreaccount1'
-
-
 class StorageCoordinates(typing.NamedTuple):
     account: str
     key: str
     container: str
     domain: typing.Optional[str]
+
+
+AZURE_EMULATOR_COORDS = StorageCoordinates(
+    account='devstoreaccount1',
+    key='Eby8vdM02xNOcqFlqUwJPLlmEtlCDXJ1OUzFT50uSRZ6IFsuFq2UVErCz4I6tq/K1SZFPTOtr/KBHBeksoGMGw==',
+    container='test-container',
+    domain='http://127.0.0.1:10000/devstoreaccount1',
+)
 
 
 class EnvVariables(enum.Enum):
@@ -24,14 +26,14 @@ class EnvVariables(enum.Enum):
 
 
 class DefaultVariables(enum.Enum):
-    account = AZURE_EMULATOR_ACCOUNT
-    key = AZURE_EMULATOR_KEY
-    container = AZURE_EMULATOR_CONTAINER
+    account = AZURE_EMULATOR_COORDS.account
+    key = AZURE_EMULATOR_COORDS.key
+    container = AZURE_EMULATOR_COORDS.container
     domain = None
 
 
 def upload_stream_to_azure(coords: StorageCoordinates, stream: typing.IO[bytes], filename: str) -> bool:
-    block_blob_service = blob.BlockBlobService(account_name=coords.account, account_key=coords.key,
-                                               custom_domain=coords.domain)
-    block_blob_service.create_blob_from_stream(coords.container, filename, stream)
-    return filename in [blob.name for blob in block_blob_service.list_blobs(coords.container)]
+    azure_service = blob.BlockBlobService(account_name=coords.account, account_key=coords.key,
+                                          custom_domain=coords.domain)
+    azure_service.create_blob_from_stream(coords.container, filename, stream)
+    return filename in [blob.name for blob in azure_service.list_blobs(coords.container)]

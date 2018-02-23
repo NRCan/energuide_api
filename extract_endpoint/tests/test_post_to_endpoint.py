@@ -16,39 +16,39 @@ class NamedStream(io.BytesIO):
 
 
 @pytest.fixture(scope='session')
-def test_host() -> str:
+def endpoint_host() -> str:
     return '127.0.0.1:5000'
 
 
 @pytest.fixture()
-def upload_url(test_host: str) -> str:
-    return f'http://{test_host}/upload_file'
+def upload_url(endpoint_host: str) -> str:
+    return f'http://{endpoint_host}/upload_file'
 
 
 @pytest.fixture(scope='session')
 def azure_service() -> blob.BlockBlobService:
-    return blob.BlockBlobService(account_name=azure_utils.AZURE_EMULATOR_ACCOUNT,
-                                 account_key=azure_utils.AZURE_EMULATOR_KEY,
-                                 custom_domain=azure_utils.AZURE_EMULATOR_DOMAIN)
+    return blob.BlockBlobService(account_name=azure_utils.AZURE_EMULATOR_COORDS.account,
+                                 account_key=azure_utils.AZURE_EMULATOR_COORDS.key,
+                                 custom_domain=azure_utils.AZURE_EMULATOR_COORDS.domain)
 
 
 @pytest.fixture(scope='session')
 def test_context(azure_service: blob.BlockBlobService,
                  request: _pytest.fixtures.SubRequest,
-                 test_host: str) -> typing.Generator:
+                 endpoint_host: str) -> typing.Generator:
 
-    azure_service.create_container(azure_utils.AZURE_EMULATOR_CONTAINER)
+    azure_service.create_container(azure_utils.AZURE_EMULATOR_COORDS.container)
 
     monkeysession = _pytest.monkeypatch.MonkeyPatch()
     request.addfinalizer(monkeysession.undo)
     monkeysession.setenv('ENDPOINT_SECRET_KEY', 'endpoint secret key')
-    monkeysession.setenv('EXTRACT_ENDPOINT_STORAGE_DOMAIN', azure_utils.AZURE_EMULATOR_DOMAIN)
+    monkeysession.setenv('EXTRACT_ENDPOINT_STORAGE_DOMAIN', azure_utils.AZURE_EMULATOR_COORDS.domain)
 
     proc = psutil.Popen(['python', 'src/extract_endpoint/endpoint.py'],
                         stderr=subprocess.PIPE, stdout=subprocess.PIPE)
     while True:
         try:
-            requests.get(f'http://{test_host}/test_alive')
+            requests.get(f'http://{endpoint_host}/test_alive')
             break
         except requests.exceptions.ConnectionError:
             pass
@@ -56,7 +56,7 @@ def test_context(azure_service: blob.BlockBlobService,
     yield None
 
     proc.kill()
-    azure_service.delete_container(azure_utils.AZURE_EMULATOR_CONTAINER)
+    azure_service.delete_container(azure_utils.AZURE_EMULATOR_COORDS.container)
 
 
 @pytest.fixture
@@ -80,8 +80,9 @@ def sample_filename() -> str:
 
 
 def check_file_in_azure(azure_service: blob.BlockBlobService, filename: str, contents: str) -> None:
-    assert filename in [blob.name for blob in azure_service.list_blobs(azure_utils.AZURE_EMULATOR_CONTAINER)]
-    actual_blob = azure_service.get_blob_to_text(azure_utils.AZURE_EMULATOR_CONTAINER, filename)
+    assert filename in \
+           [blob.name for blob in azure_service.list_blobs(azure_utils.AZURE_EMULATOR_COORDS.container)]
+    actual_blob = azure_service.get_blob_to_text(azure_utils.AZURE_EMULATOR_COORDS.container, filename)
     assert actual_blob.content == contents
 
 

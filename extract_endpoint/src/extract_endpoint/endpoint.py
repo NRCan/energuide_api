@@ -22,8 +22,13 @@ App.config.update(dict(
 ))
 
 
-@App.route('/test_alive', methods=['GET'])
+@App.route('/', methods=['GET'])
 def frontend() -> str:
+    return ''
+
+
+@App.route('/test_alive', methods=['GET'])
+def test_alive() -> str:
     return 'Alive!'
 
 
@@ -54,6 +59,10 @@ def upload_file() -> str:
         flask.abort(404)
 
     file.seek(0)
+
+    print(f"container {App.config['AZURE_COORDINATES'].container} ------------------")
+    print(f"coords {App.config['AZURE_COORDINATES']} ------------------")
+
     filename = utils.secure_filename(flask.request.form['filename'])
     if azure_utils.upload_stream_to_azure(App.config['AZURE_COORDINATES'], file, filename):
         return 'success'
