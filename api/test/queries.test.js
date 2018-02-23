@@ -295,7 +295,7 @@ describe('queries', () => {
         .set('Content-Type', 'application/json; charset=utf-8')
         .send({
           query: `{
-          evaluationsFor(account: 189250) {
+          dwelling(houseId: 189250) {
             evaluations {
               heatedFloorArea {
                 areaAboveGradeMetres
@@ -308,7 +308,7 @@ describe('queries', () => {
         }`,
         })
 
-      let { evaluationsFor: { evaluations } } = response.body.data
+      let { dwelling: { evaluations } } = response.body.data
       let [first] = evaluations
       // there is only one heatedFloorArea object, unlike most other evaluation types
       let heatedFloorArea = first.heatedFloorArea
@@ -326,7 +326,7 @@ describe('queries', () => {
         .set('Content-Type', 'application/json; charset=utf-8')
         .send({
           query: `{
-          evaluationsFor(account: 189250) {
+          dwelling(houseId: 189250) {
             evaluations {
               ventilations {
                 typeEnglish
@@ -339,7 +339,7 @@ describe('queries', () => {
         }`,
         })
 
-      let { evaluationsFor: { evaluations } } = response.body.data
+      let { dwelling: { evaluations } } = response.body.data
       let [first] = evaluations
       let [ventilations] = first.ventilations
       expect(ventilations).toEqual({
