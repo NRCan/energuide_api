@@ -41,7 +41,6 @@ def robots() -> None:
 def upload_file() -> str:
     if App.config['SECRET_KEY'] == DEFAULT_ENDPOINT_SECRET_KEY:
         raise ValueError("Need to define environment variable ENDPOINT_SECRET_KEY")
-
     if 'signature' not in flask.request.form:
         flask.abort(404)
     if 'salt' not in flask.request.form:
