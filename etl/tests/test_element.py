@@ -1,7 +1,7 @@
 import py._path.local
 import pytest
 from energuide import element
-from energuide.exceptions import EnerguideError
+from energuide.exceptions import ElementGetValueError
 
 
 @pytest.fixture
@@ -128,10 +128,10 @@ def test_get_str(fragment_node: element.Element) -> None:
 
 
 def test_get_raises_when_not_found(fragment_node: element.Element) -> None:
-    with pytest.raises(EnerguideError):
+    with pytest.raises(ElementGetValueError):
         fragment_node.get('Bar/@foo', int)
 
 
 def test_get_raises_when_cant_cast(fragment_node: element.Element) -> None:
-    with pytest.raises(EnerguideError):
+    with pytest.raises(ElementGetValueError):
         fragment_node.get('Bar/text()', int)

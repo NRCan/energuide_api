@@ -1,6 +1,6 @@
 import typing
 from lxml import etree
-from energuide.exceptions import EnerguideError
+from energuide.exceptions import EnerguideError, ElementGetValueError
 
 
 class MalformedXmlError(EnerguideError):
@@ -71,10 +71,10 @@ class Element:
         try:
             value = self.__node.xpath(xpath)[0]
         except IndexError as ex:
-            raise EnerguideError(f"Couldn't find element at {xpath} in {self.tag}", ex)
+            raise ElementGetValueError(f"Couldn't find element at {xpath} in {self.tag}", ex)
 
         try:
             result = type_(value)
         except ValueError as ex:
-            raise EnerguideError(f"Unable to cast {value} to {type_} in {self.tag}", ex)
+            raise ElementGetValueError(f"Unable to cast {value} to {type_} in {self.tag}", ex)
         return typing.cast(T, result)
