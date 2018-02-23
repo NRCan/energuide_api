@@ -309,3 +309,8 @@ workflows:
       - deploy:
           requires:
             - yarn_build
+experimental:
+  notify:
+    branches:
+      only:
+        - slack_notification
