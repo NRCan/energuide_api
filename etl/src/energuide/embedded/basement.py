@@ -168,11 +168,10 @@ class BasementFloor(_BasementFloor):
     def from_crawlspace(cls, floor: typing.Optional[element.Element]) -> typing.List['BasementFloor']:
         if floor is None:
             return [cls._empty_floor(FloorType.SLAB), cls._empty_floor(FloorType.FLOOR_ABOVE_CRAWLSPACE)]
-        else:
-            return [
-                cls._from_data(floor, 'AddedToSlab', FloorType.SLAB),
-                cls._from_data(floor, 'FloorsAbove', FloorType.FLOOR_ABOVE_CRAWLSPACE),
-            ]
+        return [
+            cls._from_data(floor, 'AddedToSlab', FloorType.SLAB),
+            cls._from_data(floor, 'FloorsAbove', FloorType.FLOOR_ABOVE_CRAWLSPACE),
+        ]
 
     @classmethod
     def from_slab(cls, floor: typing.Optional[element.Element]) -> typing.List['BasementFloor']:
