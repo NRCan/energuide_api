@@ -3,6 +3,12 @@ import typing
 from azure.storage import blob
 
 
+AZURE_EMULATOR_ACCOUNT = 'devstoreaccount1'
+AZURE_EMULATOR_KEY = 'Eby8vdM02xNOcqFlqUwJPLlmEtlCDXJ1OUzFT50uSRZ6IFsuFq2UVErCz4I6tq/K1SZFPTOtr/KBHBeksoGMGw=='
+AZURE_EMULATOR_CONTAINER = 'test-container'
+AZURE_EMULATOR_DOMAIN = 'http://127.0.0.1:10000/devstoreaccount1'
+
+
 class StorageCoordinates(typing.NamedTuple):
     account: str
     key: str
@@ -18,9 +24,9 @@ class EnvVariables(enum.Enum):
 
 
 class DefaultVariables(enum.Enum):
-    account = 'devstoreaccount1'
-    key = 'Eby8vdM02xNOcqFlqUwJPLlmEtlCDXJ1OUzFT50uSRZ6IFsuFq2UVErCz4I6tq/K1SZFPTOtr/KBHBeksoGMGw=='
-    container = 'endpoint'
+    account = AZURE_EMULATOR_ACCOUNT
+    key = AZURE_EMULATOR_KEY
+    container = AZURE_EMULATOR_CONTAINER
     domain = None
 
 

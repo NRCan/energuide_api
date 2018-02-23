@@ -8,7 +8,7 @@ import click
 from extract_endpoint import crypt_utils
 
 
-DEFAULT_ENDPOINT_SECRET_KEY = 'endpoint_secret_key'
+DEFAULT_ENDPOINT_SECRET_KEY = 'no key'
 
 
 @click.group()

@@ -85,13 +85,6 @@ jobs:
   extract_endpoint:
     docker:
       - image: circleci/python:3.6.1
-        environment:
-          EXTRACT_ENDPOINT_STORAGE_ACCOUNT: devstoreaccount1
-          EXTRACT_ENDPOINT_STORAGE_KEY: Eby8vdM02xNOcqFlqUwJPLlmEtlCDXJ1OUzFT50uSRZ6IFsuFq2UVErCz4I6tq/K1SZFPTOtr/KBHBeksoGMGw==
-          EXTRACT_ENDPOINT_CONTAINER: energuide-extracted-data
-          EXTRACT_ENDPOINT_STORAGE_DOMAIN: http://127.0.0.1:10000/devstoreaccount1
-          ENDPOINT_SECRET_KEY: endpoint_secret_key
-
       - image: arafato/azurite
         environment:
           executable=blob
@@ -122,11 +115,6 @@ jobs:
             . ~/.venv/bin/activate
             pip install -r requirements.txt
             pip install -e .
-
-      - run:
-          name: Setup storage
-          command: |
-            az storage container create --name "$EXTRACT_ENDPOINT_CONTAINER" --connection-string 'DefaultEndpointsProtocol=http;AccountName=devstoreaccount1;AccountKey=Eby8vdM02xNOcqFlqUwJPLlmEtlCDXJ1OUzFT50uSRZ6IFsuFq2UVErCz4I6tq/K1SZFPTOtr/KBHBeksoGMGw==;BlobEndpoint=http://127.0.0.1:10000/devstoreaccount1;'
 
       - save_cache:
           key: deps2-{{ .Branch }}-{{ checksum "requirements.txt" }}

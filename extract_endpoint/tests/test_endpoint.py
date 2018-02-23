@@ -13,11 +13,10 @@ endpoint.App.testing = True
 
 @pytest.fixture
 def sample_storage_coordinates() -> azure_utils.StorageCoordinates:
-    coords = azure_utils.StorageCoordinates(account='devstoreaccount1',
-                                            key='Eby8vdM02xNOcqFlqUwJPLlmEtlCDXJ1OUzFT50uS'
-                                            + 'RZ6IFsuFq2UVErCz4I6tq/K1SZFPTOtr/KBHBeksoGMGw==',
-                                            container='test-container',
-                                            domain='http://127.0.0.1:10000/devstoreaccount1')
+    coords = azure_utils.StorageCoordinates(account=azure_utils.AZURE_EMULATOR_ACCOUNT,
+                                            key=azure_utils.AZURE_EMULATOR_KEY,
+                                            container=azure_utils.AZURE_EMULATOR_CONTAINER,
+                                            domain=azure_utils.AZURE_EMULATOR_DOMAIN)
     endpoint.App.config['AZURE_COORDINATES'] = coords
     return coords
 
