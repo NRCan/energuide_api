@@ -473,6 +473,48 @@ const Schema = i18n => {
       doorAreaMetres
       # ${i18n.t`Filter results by dwellings where the area of the doors have certain value in square feet (ft2)`}
       doorAreaFeet
+      # ${i18n.t`Filter results by dwellings have window with a matching label`}
+      windowLabel
+      # ${i18n.t`Filter results by dwellings with a specific window RSI (R-value Systeme International)`}
+      windowInsulationRsi
+      # ${i18n.t`Filter results by dwellings with a specific window R-value`}
+      windowInsulationR
+      # ${i18n.t`Filter results by dwellings with a matching number of panes of transparent material in a window (en)`}
+      windowGlazingTypesEnglish
+      # ${i18n.t`Filter results by dwellings with a matching number of panes of transparent material in a window (fr)`}
+      windowGlazingTypesFrench
+      # ${i18n.t`Filter results for dwellings with a specific type of coating and tint on a window pane (en)`}
+      windowCoatingsTintsEnglish
+      # ${i18n.t`Filter results for dwellings with a specific type of coating and tint on a window pane (fr)`}
+      windowCoatingsTintsFrench
+      # ${i18n.t`Filter results for dwellings with windows containing a specific type of gas injected between the glass layers (en)`}
+      windowFillTypeEnglish
+      # ${i18n.t`Filter results for dwellings with windows containing a specific type of gas injected between the glass layers (fr)`}
+      windowFillTypeFrench
+      # ${i18n.t`Filter results for dwellings with a specific spacer system used between the glass layers (en)`}
+      windowSpacerTypeEnglish
+      # ${i18n.t`Filter results for dwellings with a specific spacer system used between the glass layers (fr)`}
+      windowSpacerTypeFrench
+      # ${i18n.t`Filter results for dwellings with a particular type of window construction (en)`}
+      windowTypeEnglish
+      # ${i18n.t`Filter results for dwellings with a particular type of window construction (fr)`}
+      windowTypeFrench
+      # ${i18n.t`Filter results for dwellings with window frames matching a specific material (en)`}
+      windowFrameMaterialEnglish
+      # ${i18n.t`Filter results for dwellings with window frames matching a specific material (fr)`}
+      windowFrameMaterialFrench
+      # ${i18n.t`Filter results for dwellings with a window matching a specific area in square metres (m2)`}
+      windowAreaMetres
+      # ${i18n.t`Filter results for dwellings with a window matching a specific area in square feet (ft2)`}
+      windowAreaFeet
+      # ${i18n.t`Filter resutls for dwellings with a window matching a specific width in metres (m)`}
+      windowWidthMetres
+      # ${i18n.t`Filter resutls for dwellings with a window matching a specific width in feet (ft)`}
+      windowWidthFeet
+      # ${i18n.t`Filter resutls for dwellings with a window matching a specific height in metres (m)`}
+      windowHeightMetres
+      # ${i18n.t`Filter resutls for dwellings with a window matching a specific height in feet (ft)`}
+      windowHeightFeet
     }
   `,
   ]
