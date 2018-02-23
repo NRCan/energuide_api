@@ -110,15 +110,21 @@ def test_insert_node() -> None:
 
 
 def test_get_int(fragment_node: element.Element) -> None:
-    assert fragment_node.get('Bar/@id', int) == 1
+    result = fragment_node.get('Bar/@id', int)
+    assert result == 1
+    assert isinstance(result, int)
 
 
 def test_get_float(fragment_node: element.Element) -> None:
-    assert fragment_node.get('Bar/@id', float) == 1.0
+    result = fragment_node.get('Bar/@id', float)
+    assert result == 1.0
+    assert isinstance(result, float)
 
 
 def test_get_str(fragment_node: element.Element) -> None:
-    assert fragment_node.get('Bar/@id', str) == '1'
+    result = fragment_node.get('Bar/@id', str)
+    assert result == '1'
+    assert isinstance(result, str)
 
 
 def test_get_raises_when_not_found(fragment_node: element.Element) -> None:
