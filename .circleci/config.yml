@@ -82,9 +82,6 @@ jobs:
               exit 1
             fi
       - run:
-          name: Fail
-          command: exit 1
-      - run:
           name: Report failing Master
           command: ~/repo/scripts/notify_failure.sh
           when: on_fail
