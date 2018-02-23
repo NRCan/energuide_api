@@ -301,6 +301,9 @@ workflows:
             - python_integration
       - yarn_build:
           requires:
+            - node
+            - etl
+            - extract_endpoint
             - node_integration
           filters:
             branches:
