@@ -32,6 +32,10 @@ import {
   waterHeatingTankVolumeLitres,
   waterHeatingTankVolumeGallon,
   waterHeatingEfficiency,
+  heatedFloorAreaAreaAboveGradeMetres,
+  heatedFloorAreaAreaAboveGradeFeet,
+  heatedFloorAreaAreaBelowGradeMetres,
+  heatedFloorAreaAreaBelowGradeFeet,
 } from './enums'
 /* eslint-enable import/named */
 
@@ -146,6 +150,10 @@ const Resolvers = i18n => {
       waterHeatingTankVolumeLitres: waterHeatingTankVolumeLitres.toString(),
       waterHeatingTankVolumeGallon: waterHeatingTankVolumeGallon.toString(),
       waterHeatingEfficiency: waterHeatingEfficiency.toString(),
+      heatedFloorAreaAreaAboveGradeMetres: heatedFloorAreaAreaAboveGradeMetres.toString(),
+      heatedFloorAreaAreaAboveGradeFeet: heatedFloorAreaAreaAboveGradeFeet.toString(),
+      heatedFloorAreaAreaBelowGradeMetres: heatedFloorAreaAreaBelowGradeMetres.toString(),
+      heatedFloorAreaAreaBelowGradeFeet: heatedFloorAreaAreaBelowGradeFeet.toString(),
     },
     Comparator: {
       gt: '$gt',

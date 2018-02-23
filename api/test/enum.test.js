@@ -96,6 +96,18 @@ describe('Enum values', () => {
     waterHeatingEfficiency: {
       testValue: 0.554,
     },
+    heatedFloorAreaAreaAboveGradeMetres: {
+      testValue: 600,
+    },
+    heatedFloorAreaAreaAboveGradeFeet: {
+      testValue: 6458.34666336,
+    },
+    heatedFloorAreaAreaBelowGradeMetres: {
+      testValue: 600,
+    },
+    heatedFloorAreaAreaBelowGradeFeet: {
+      testValue: 6458.34666336,
+    },
   }
 
   Object.keys(testData).forEach(functionName => {
