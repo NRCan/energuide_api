@@ -81,6 +81,13 @@ jobs:
               echo Failing build due to less than 80% test coverage
               exit 1
             fi
+      - run:
+          name: Report failing Master
+          command: |
+            if [ "${CIRCLE_BRANCH}" == "slack_notification" ]; then
+              curl -X POST --data-urlencode "payload={\"channel\": \"#nrcan\", \"username\": \"webhookbot\", \"text\": \"This is Dave's custom alerting solution\"}" $NRCAN_SLACK_URL
+            fi
+          when: on_fail
 
   extract_endpoint:
     docker:
