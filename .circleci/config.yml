@@ -84,8 +84,8 @@ jobs:
       - run:
           name: Report failing Master
           command: |
-            if [ "${CIRCLE_BRANCH}" == "slack_notification" ]; then
-              curl -X POST --data-urlencode "payload={\"channel\": \"#nrcan\", \"username\": \"webhookbot\", \"text\": \"This is Dave's custom alerting solution\"}" $NRCAN_SLACK_URL
+            if [ "${CIRCLE_BRANCH}" == "master" ]; then
+              curl -X POST --data-urlencode "payload={\"channel\": \"#nrcan\", \"username\": \"webhookbot\", \"text\": \"@here Master is failing\"}" $NRCAN_SLACK_URL
             fi
           when: on_fail
 
@@ -316,8 +316,3 @@ workflows:
       - deploy:
           requires:
             - yarn_build
-experimental:
-  notify:
-    branches:
-      only:
-        - slack_notification
