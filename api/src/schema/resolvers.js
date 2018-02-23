@@ -36,6 +36,21 @@ import {
   heatedFloorAreaAreaAboveGradeFeet,
   heatedFloorAreaAreaBelowGradeMetres,
   heatedFloorAreaAreaBelowGradeFeet,
+  wallLabel,
+  wallStructureTypeEnglish,
+  wallStructureTypeFrench,
+  wallComponentTypeSizeEnglish,
+  wallComponentTypeSizeFrench,
+  wallInsulationNominalRsi,
+  wallInsulationNominalR,
+  wallInsulationEffectiveRsi,
+  wallInsulationEffectiveR,
+  wallAreaMetres,
+  wallAreaFeet,
+  wallPerimeterMetres,
+  wallPerimeterFeet,
+  wallHeightMetres,
+  wallHeightFeet,
 } from './enums'
 /* eslint-enable import/named */
 
@@ -65,7 +80,6 @@ const Resolvers = i18n => {
   I18NBoolean.description = i18n.t`
     The 'Boolean' scalar type represents 'true' or 'false'.
   `
-
 
   return {
     I18NInt,
@@ -154,6 +168,21 @@ const Resolvers = i18n => {
       heatedFloorAreaAreaAboveGradeFeet: heatedFloorAreaAreaAboveGradeFeet.toString(),
       heatedFloorAreaAreaBelowGradeMetres: heatedFloorAreaAreaBelowGradeMetres.toString(),
       heatedFloorAreaAreaBelowGradeFeet: heatedFloorAreaAreaBelowGradeFeet.toString(),
+      wallLabel: wallLabel.toString(),
+      wallStructureTypeEnglish: wallStructureTypeEnglish.toString(),
+      wallStructureTypeFrench: wallStructureTypeFrench.toString(),
+      wallComponentTypeSizeEnglish: wallComponentTypeSizeEnglish.toString(),
+      wallComponentTypeSizeFrench: wallComponentTypeSizeFrench.toString(),
+      wallInsulationNominalRsi: wallInsulationNominalRsi.toString(),
+      wallInsulationNominalR: wallInsulationNominalR.toString(),
+      wallInsulationEffectiveRsi: wallInsulationEffectiveRsi.toString(),
+      wallInsulationEffectiveR: wallInsulationEffectiveR.toString(),
+      wallAreaMetres: wallAreaMetres.toString(),
+      wallAreaFeet: wallAreaFeet.toString(),
+      wallPerimeterMetres: wallPerimeterMetres.toString(),
+      wallPerimeterFeet: wallPerimeterFeet.toString(),
+      wallHeightMetres: wallHeightMetres.toString(),
+      wallHeightFeet: wallHeightFeet.toString(),
     },
     Comparator: {
       gt: '$gt',

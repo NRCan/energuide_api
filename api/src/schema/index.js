@@ -311,6 +311,21 @@ const Schema = i18n => {
       heatedFloorAreaAreaAboveGradeFeet
       heatedFloorAreaAreaBelowGradeMetres
       heatedFloorAreaAreaBelowGradeFeet
+      wallLabel
+      wallStructureTypeEnglish
+      wallStructureTypeFrench
+      wallComponentTypeSizeEnglish
+      wallComponentTypeSizeFrench
+      wallInsulationNominalRsi
+      wallInsulationNominalR
+      wallInsulationEffectiveRsi
+      wallInsulationEffectiveR
+      wallAreaMetres
+      wallAreaFeet
+      wallPerimeterMetres
+      wallPerimeterFeet
+      wallHeightMetres
+      wallHeightFeet
     }
   `
 
