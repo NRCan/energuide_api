@@ -1,0 +1,34 @@
+{
+  "The 'Int' scalar type represents non-fractional signed whole numeric values. Int can represent values between -(2^31) and 2^31 - 1.": {
+    "origin": [
+      [
+        "src/schema/resolvers.js",
+        44
+      ]
+    ]
+  },
+  "The 'Float' scalar type represents signed double-precision fractional values as specified by [IEEE 754](http://en.wikipedia.org/wiki/IEEE_floating_point).": {
+    "origin": [
+      [
+        "src/schema/resolvers.js",
+        49
+      ]
+    ]
+  },
+  "The 'String' scalar type represents textual data, represented as UTF-8 character sequences. The String type is most often used by GraphQL to represent free-form human-readable text.": {
+    "origin": [
+      [
+        "src/schema/resolvers.js",
+        55
+      ]
+    ]
+  },
+  "The 'Boolean' scalar type represents 'true' or 'false'.": {
+    "origin": [
+      [
+        "src/schema/resolvers.js",
+        61
+      ]
+    ]
+  }
+}
