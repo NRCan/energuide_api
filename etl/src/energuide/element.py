@@ -7,6 +7,9 @@ class MalformedXmlError(EnerguideError):
     pass
 
 
+T = typing.TypeVar('T', int, float, str)
+
+
 class Element:
 
     _PARSER = etree.XMLParser(ns_clean=True, recover=True, encoding='utf-8')
@@ -63,3 +66,15 @@ class Element:
 
     def insert(self, index: int, element: 'Element') -> None:
         self.__node.insert(index, element.__node)
+
+    def get(self, xpath: str, type_: typing.Type[T]) -> T:
+        try:
+            value = self.__node.xpath(xpath)[0]
+        except IndexError as ex:
+            raise EnerguideError(f"Couldn't find element at {xpath} in {self.tag}", ex)
+
+        try:
+            result = type_(value)
+        except ValueError as ex:
+            raise EnerguideError(f"Unable to cast {value} to {type_} in {self.tag}", ex)
+        return typing.cast(T, result)

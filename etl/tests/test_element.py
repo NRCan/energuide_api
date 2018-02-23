@@ -1,11 +1,12 @@
 import py._path.local
 import pytest
 from energuide import element
+from energuide.exceptions import EnerguideError
 
 
 @pytest.fixture
 def fragment() -> str:
-    return "<Foo><Bar id='1'>baz</Bar><Bar id='1'>qux</Bar></Foo>"
+    return "<Foo><Bar id='1'>baz</Bar><Bar id='2'>qux</Bar></Foo>"
 
 
 @pytest.fixture
@@ -106,3 +107,25 @@ def test_insert_node() -> None:
     root.insert(0, child1)
     root.insert(0, child2)
     assert len(root.xpath('*')) == 2
+
+
+def test_get_int(fragment_node: element.Element) -> None:
+    assert fragment_node.get('Bar/@id', int) == 1
+
+
+def test_get_float(fragment_node: element.Element) -> None:
+    assert fragment_node.get('Bar/@id', float) == 1.0
+
+
+def test_get_str(fragment_node: element.Element) -> None:
+    assert fragment_node.get('Bar/@id', str) == '1'
+
+
+def test_get_raises_when_not_found(fragment_node: element.Element) -> None:
+    with pytest.raises(EnerguideError):
+        fragment_node.get('Bar/@foo', int)
+
+
+def test_get_raises_when_cant_cast(fragment_node: element.Element) -> None:
+    with pytest.raises(EnerguideError):
+        fragment_node.get('Bar/text()', int)
