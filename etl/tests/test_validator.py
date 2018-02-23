@@ -34,8 +34,3 @@ def test_embedded_xml() -> None:
     assert isinstance(checker.document['raw_xml'], list)
     assert len(checker.document['raw_xml']) == 2
     assert isinstance(checker.document['raw_xml'][0], element.Element)
-
-
-def test_fail() -> None:
-    assert False
-    assert False
