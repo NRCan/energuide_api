@@ -104,7 +104,24 @@ class BasementFloor(_BasementFloor):
     }
 
     @classmethod
-    def _from_data(cls, floor: element.Element, construction_type: str, floor_type: FloorType) -> 'BasementFloor':
+    def _empty_floor(cls, floor_type: FloorType) -> 'BasementFloor':
+        return BasementFloor(
+            floor_type=floor_type,
+            rectangular=False,
+            nominal_insulation=None,
+            effective_insulation=None,
+            length=None,
+            width=None,
+            perimeter=distance.Distance(0.0),
+            floor_area=area.Area(0.0),
+        )
+
+    @classmethod
+    def _from_data(cls,
+                   floor: element.Element,
+                   construction_type: str,
+                   floor_type: FloorType) -> 'BasementFloor':
+
         rectangular = floor.xpath('Measurements/@isRectangular')[0] == 'true'
         length: typing.Optional[float] = None
         width: typing.Optional[float] = None
@@ -141,19 +158,27 @@ class BasementFloor(_BasementFloor):
         )
 
     @classmethod
-    def from_basement(cls, floor: element.Element) -> typing.List['BasementFloor']:
-        return [cls._from_data(floor, 'AddedToSlab', FloorType.SLAB)]
+    def from_basement(cls, floor: typing.Optional[element.Element]) -> typing.List['BasementFloor']:
+        return [
+            cls._from_data(floor, 'AddedToSlab', FloorType.SLAB)
+            if floor is not None else cls._empty_floor(FloorType.SLAB)
+        ]
 
     @classmethod
-    def from_crawlspace(cls, floor: element.Element) -> typing.List['BasementFloor']:
+    def from_crawlspace(cls, floor: typing.Optional[element.Element]) -> typing.List['BasementFloor']:
+        if floor is None:
+            return [cls._empty_floor(FloorType.SLAB), cls._empty_floor(FloorType.FLOOR_ABOVE_CRAWLSPACE)]
         return [
             cls._from_data(floor, 'AddedToSlab', FloorType.SLAB),
             cls._from_data(floor, 'FloorsAbove', FloorType.FLOOR_ABOVE_CRAWLSPACE),
         ]
 
     @classmethod
-    def from_slab(cls, floor: element.Element) -> typing.List['BasementFloor']:
-        return [cls._from_data(floor, 'AddedToSlab', FloorType.SLAB)]
+    def from_slab(cls, floor: typing.Optional[element.Element]) -> typing.List['BasementFloor']:
+        return [
+            cls._from_data(floor, 'AddedToSlab', FloorType.SLAB)
+            if floor is not None else cls._empty_floor(FloorType.SLAB)
+        ]
 
     def to_dict(self) -> typing.Dict[str, typing.Any]:
         floor_type = self._FLOOR_TYPE_TRANSLATION.get(self.floor_type)
@@ -312,19 +337,25 @@ class Basement(_Basement):
             header_from_data = BasementHeader.from_data
         else:
             floor_from_data = BasementFloor.from_slab
+            wall_from_data = lambda *args: []
+            header_from_data = lambda *args: None
 
-        floors = floor_from_data(basement.xpath('Floor')[0])
-        floor_perimeter = floors[0].perimeter.metres
+
+        floor_nodes = basement.xpath('Floor')
+        header_nodes = basement.xpath('Components/FloorHeader')
+        wall_nodes = basement.xpath('Wall')
+
+        floors = floor_from_data(floor_nodes[0] if floor_nodes else None)
+        walls = wall_from_data(wall_nodes[0], floors[0].perimeter.metres) if wall_nodes else []
+        header = header_from_data(header_nodes[0]) if header_nodes else None
 
         return Basement(
             foundation_type=foundation_type,
             label=basement.get_text('Label'),
             configuration_type=basement.xpath('Configuration/@type')[0],
-            walls=wall_from_data(basement.xpath('Wall')[0], floor_perimeter)
-            if foundation_type is not FoundationType.SLAB else [],
+            walls=walls,
             floors=floors,
-            header=header_from_data(basement.xpath('Components/FloorHeader')[0])
-            if foundation_type is not FoundationType.SLAB else None,
+            header=header,
         )
 
     @staticmethod

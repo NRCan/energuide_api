@@ -339,19 +339,6 @@ def crawlspace_input() -> typing.List[str]:
             <Measurements height="1.0668" depth="0.4572" />
             <RValues skirt="0" thermalBreak="0" />
         </Wall>
-        <Components>
-            <FloorHeader adjacentEnclosedSpace="false" id="6">
-                <Label>BW hdr-01</Label>
-                <Construction>
-                    <Type idref="Code 21" rValue="4.0777" nominalInsulation="3.87">1800400220</Type>
-                </Construction>
-                <Measurements height="0.23" perimeter="39.9288" />
-                <FacingDirection code="1">
-                    <English>N/A</English>
-                    <French>S/O</French>
-                </FacingDirection>
-            </FloorHeader>
-        </Components>
     </Crawlspace>
     """
     return [doc]
@@ -765,12 +752,7 @@ class TestParsedDwellingDataRow:
                             floor_area=area.Area(24.993000130000002)
                         )
                     ],
-                    header=basement.BasementHeader(
-                        nominal_insulation=insulation.Insulation(rsi=3.87),
-                        effective_insulation=insulation.Insulation(rsi=4.0777),
-                        height=distance.Distance(distance_metres=0.23),
-                        perimeter=distance.Distance(distance_metres=39.9288)
-                    ),
+                    header=None,
                 ),
                 basement.Basement(
                     foundation_type=basement.FoundationType.SLAB,
