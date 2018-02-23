@@ -58,6 +58,12 @@ def data3() -> typing.Dict[str, typing.Optional[str]]:
     return data
 
 
+def data4() -> typing.Dict[str, typing.Optional[str]]:
+    data = data1()
+    data['UNKNOWN'] = 'value'
+    return data
+
+
 @pytest.fixture(params=[data1(), data2(), data3()])
 def data_dict(request: _pytest.fixtures.SubRequest) -> typing.Dict[str, str]:
     return request.param
@@ -86,6 +92,18 @@ def invalid_filepath(tmpdir: py._path.local.LocalPath) -> str:
     return filepath
 
 
+@pytest.fixture
+def extra_filepath(tmpdir: py._path.local.LocalPath) -> str:
+    filepath = f'{tmpdir}/sample.csv'
+    data = data4()
+    with open(filepath, 'w') as file:
+        writer = csv.DictWriter(file, fieldnames=list(data.keys()))
+        writer.writeheader()
+        writer.writerow(data)
+
+    return filepath
+
+
 def test_extract_valid(valid_filepath: str) -> None:
     output = extractor.extract_data(valid_filepath)
     item = dict(next(output))
@@ -93,6 +111,13 @@ def test_extract_valid(valid_filepath: str) -> None:
     assert 'EVAL_ID' in item
 
     assert 'CLIENTADDR' not in item
+
+
+def test_purge_unknown(extra_filepath: str) -> None:
+    output = extractor.extract_data(extra_filepath)
+    item = dict(next(output))
+
+    assert 'UNKNOWN' not in item
 
 
 def test_extract_missing(invalid_filepath: str) -> None:
