@@ -128,3 +128,41 @@ heatedFloorAreaFields.forEach(attr => {
   )
   module.exports[generateName('heatedFloorArea', attr)] = attachToString(fn)
 })
+
+// The fields on the Wall type
+const wallFields = [
+  'label',
+  'structureTypeEnglish',
+  'structureTypeFrench',
+  'componentTypeSizeEnglish',
+  'componentTypeSizeFrench',
+  'insulationNominalRsi',
+  'insulationNominalR',
+  'insulationEffectiveRsi',
+  'insulationEffectiveR',
+  'areaMetres',
+  'areaFeet',
+  'perimeterMetres',
+  'perimeterFeet',
+  'heightMetres',
+  'heightFeet',
+]
+
+wallFields.forEach(attr => {
+  // eslint-disable-next-line no-new-func
+  let fn = new Function(
+    'matcher',
+    `
+  return {
+    evaluations: {
+      $elemMatch: {
+        walls: {
+          $elemMatch:{ ${attr}: matcher },
+        },
+      },
+    },
+  }
+  `,
+  )
+  module.exports[generateName('wall', attr)] = attachToString(fn)
+})
