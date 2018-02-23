@@ -5,7 +5,6 @@ from energuide import bilingual
 from energuide.embedded import area
 from energuide.embedded import distance
 from energuide.embedded import insulation
-from energuide.exceptions import InvalidInputDataError
 from energuide.exceptions import InvalidEmbeddedDataTypeError
 
 
@@ -67,7 +66,9 @@ class BasementHeader(_BasementHeader):
     def from_data(cls, header: element.Element) -> 'BasementHeader':
         try:
             return BasementHeader(
-                nominal_insulation=insulation.Insulation(float(header.xpath('Construction/Type/@nominalInsulation')[0])),
+                nominal_insulation=insulation.Insulation(
+                    float(header.xpath('Construction/Type/@nominalInsulation')[0])
+                ),
                 effective_insulation=insulation.Insulation(float(header.xpath('Construction/Type/@rValue')[0])),
                 height=distance.Distance(float(header.xpath('Measurements/@height')[0])),
                 perimeter=distance.Distance(float(header.xpath('Measurements/@perimeter')[0])),
