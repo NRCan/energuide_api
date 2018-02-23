@@ -85,7 +85,7 @@ def test_upload(test_client: testing.FlaskClient,
     post_return = test_client.post('/upload_file', data=dict(salt=sample_salt, signature=sample_signature,
                                                              filename=sample_filename,
                                                              file=(sample_stream, sample_filename)))
-    assert post_return.status_code == 200
+    assert post_return.status_code == 201
     assert sample_filename in \
            [blob.name for blob in azure_service.list_blobs(azure_utils.AZURE_EMULATOR_COORDS.container)]
     actual_blob = azure_service.get_blob_to_text(azure_utils.AZURE_EMULATOR_COORDS.container, sample_filename)
@@ -111,7 +111,7 @@ def test_upload_no_salt(test_client: testing.FlaskClient,
 
     post_return = test_client.post('/upload_file', data=dict(signature=sample_signature, filename=sample_filename,
                                                              file=(sample_stream, sample_filename)))
-    assert post_return.status_code == 404
+    assert post_return.status_code == 400
 
 
 def test_upload_wrong_salt(test_client: testing.FlaskClient,
@@ -122,7 +122,7 @@ def test_upload_wrong_salt(test_client: testing.FlaskClient,
     post_return = test_client.post('/upload_file', data=dict(salt='wrong salt', signature=sample_signature,
                                                              filename=sample_filename,
                                                              file=(sample_stream, sample_filename)))
-    assert post_return.status_code == 404
+    assert post_return.status_code == 400
 
 
 def test_upload_no_signature(test_client: testing.FlaskClient,
@@ -132,7 +132,7 @@ def test_upload_no_signature(test_client: testing.FlaskClient,
 
     post_return = test_client.post('/upload_file', data=dict(salt=sample_salt, filename=sample_filename,
                                                              file=(sample_stream, sample_filename)))
-    assert post_return.status_code == 404
+    assert post_return.status_code == 400
 
 
 def test_upload_wrong_signature(test_client: testing.FlaskClient,
@@ -143,7 +143,7 @@ def test_upload_wrong_signature(test_client: testing.FlaskClient,
     post_return = test_client.post('/upload_file', data=dict(salt=sample_salt, signature='wrong signature',
                                                              filename=sample_filename,
                                                              file=(sample_stream, sample_filename)))
-    assert post_return.status_code == 404
+    assert post_return.status_code == 400
 
 
 def test_upload_no_file(test_client: testing.FlaskClient,
@@ -152,7 +152,7 @@ def test_upload_no_file(test_client: testing.FlaskClient,
 
     post_return = test_client.post('/upload_file', data=dict(salt=sample_salt, signature=sample_signature,
                                                              filename=sample_filename))
-    assert post_return.status_code == 404
+    assert post_return.status_code == 400
 
 
 def test_upload_no_filename(test_client: testing.FlaskClient,
@@ -162,4 +162,4 @@ def test_upload_no_filename(test_client: testing.FlaskClient,
 
     post_return = test_client.post('/upload_file', data=dict(salt=sample_salt, signature=sample_signature,
                                                              filename=sample_filename, file=(sample_stream, '')))
-    assert post_return.status_code == 404
+    assert post_return.status_code == 400
