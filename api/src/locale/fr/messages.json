@@ -1,10 +1,19 @@
 {
-  "Evaluation type codes are used to define the type of evaluation performed and to distinguish the house type (i.e. newly built or existing)": {
-    "translation": "",
+  "The 'Float' scalar type represents signed double-precision fractional values as specified by [IEEE 754](http://en.wikipedia.org/wiki/IEEE_floating_point).": {
+    "translation": "Le type scalaire 'Float' représente des valeurs fractionnelles dédicacées à double précision, comme spécifié par [IEEE 754](http://en.wikipedia.org/wiki/IEEE_floating_point).",
     "origin": [
       [
-        "src/schema/index.js",
-        230
+        "src/schema/resolvers.js",
+        49
+      ]
+    ]
+  },
+  "The 'String' scalar type represents textual data, represented as UTF-8 character sequences. The String type is most often used by GraphQL to represent free-form human-readable text.": {
+    "translation": "Le type scalaire 'String' représente des données textuelles, représentées par des séquences de caractères UTF-8. Le type String est le plus souvent utilisé par GraphQL pour représenter un texte lisible par un humain.",
+    "origin": [
+      [
+        "src/schema/resolvers.js",
+        55
       ]
     ]
   },
@@ -13,11 +22,11 @@
     "origin": [
       [
         "src/schema/index.js",
-        8
+        12
       ],
       [
         "src/schema/index.js",
-        22
+        26
       ]
     ]
   },
@@ -26,7 +35,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        10
+        14
       ]
     ]
   },
@@ -35,7 +44,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        12
+        16
       ]
     ]
   },
@@ -44,7 +53,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        14
+        18
       ]
     ]
   },
@@ -53,7 +62,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        18
+        22
       ]
     ]
   },
@@ -62,7 +71,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        20
+        24
       ]
     ]
   },
@@ -71,7 +80,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        24
+        28
       ]
     ]
   },
@@ -80,7 +89,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        28
+        32
       ]
     ]
   },
@@ -89,7 +98,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        30
+        34
       ]
     ]
   },
@@ -98,7 +107,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        32
+        36
       ]
     ]
   },
@@ -107,7 +116,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        34
+        38
       ]
     ]
   },
@@ -116,7 +125,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        36
+        40
       ]
     ]
   },
@@ -125,7 +134,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        40
+        44
       ]
     ]
   },
@@ -134,7 +143,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        42
+        46
       ]
     ]
   },
@@ -143,7 +152,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        44
+        48
       ]
     ]
   },
@@ -152,7 +161,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        46
+        50
       ]
     ]
   },
@@ -161,7 +170,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        48
+        52
       ]
     ]
   },
@@ -170,7 +179,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        50
+        54
       ]
     ]
   },
@@ -179,7 +188,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        52
+        56
       ]
     ]
   },
@@ -188,7 +197,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        54
+        58
       ]
     ]
   },
@@ -197,7 +206,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        56
+        60
       ]
     ]
   },
@@ -206,7 +215,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        58
+        62
       ]
     ]
   },
@@ -215,7 +224,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        62
+        66
       ]
     ]
   },
@@ -224,7 +233,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        64
+        68
       ]
     ]
   },
@@ -233,7 +242,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        66
+        70
       ]
     ]
   },
@@ -242,7 +251,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        68
+        72
       ]
     ]
   },
@@ -251,7 +260,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        70
+        74
       ]
     ]
   },
@@ -260,7 +269,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        72
+        76
       ]
     ]
   },
@@ -269,7 +278,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        76
+        80
       ]
     ]
   },
@@ -278,7 +287,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        78
+        82
       ]
     ]
   },
@@ -287,7 +296,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        80
+        84
       ]
     ]
   },
@@ -296,7 +305,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        82
+        86
       ]
     ]
   },
@@ -305,7 +314,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        84
+        88
       ]
     ]
   },
@@ -314,7 +323,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        86
+        90
       ]
     ]
   },
@@ -323,7 +332,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        90
+        94
       ]
     ]
   },
@@ -332,7 +341,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        92
+        96
       ]
     ]
   },
@@ -341,7 +350,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        94
+        98
       ]
     ]
   },
@@ -350,7 +359,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        96
+        100
       ]
     ]
   },
@@ -359,7 +368,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        98
+        102
       ]
     ]
   },
@@ -368,7 +377,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        102
+        106
       ]
     ]
   },
@@ -377,7 +386,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        104
+        108
       ]
     ]
   },
@@ -386,7 +395,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        106
+        110
       ]
     ]
   },
@@ -395,7 +404,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        108
+        112
       ]
     ]
   },
@@ -404,7 +413,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        110
+        114
       ]
     ]
   },
@@ -413,7 +422,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        112
+        116
       ]
     ]
   },
@@ -422,7 +431,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        114
+        118
       ]
     ]
   },
@@ -431,11 +440,11 @@
     "origin": [
       [
         "src/schema/index.js",
-        116
+        120
       ],
       [
         "src/schema/index.js",
-        120
+        124
       ]
     ]
   },
@@ -444,7 +453,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        118
+        122
       ]
     ]
   },
@@ -453,7 +462,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        122
+        126
       ]
     ]
   },
@@ -462,7 +471,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        124
+        128
       ]
     ]
   },
@@ -471,7 +480,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        126
+        130
       ]
     ]
   },
@@ -480,7 +489,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        128
+        132
       ]
     ]
   },
@@ -489,7 +498,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        130
+        134
       ]
     ]
   },
@@ -498,7 +507,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        132
+        136
       ]
     ]
   },
@@ -507,7 +516,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        136
+        140
       ]
     ]
   },
@@ -516,7 +525,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        138
+        142
       ]
     ]
   },
@@ -525,7 +534,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        140
+        144
       ]
     ]
   },
@@ -534,7 +543,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        142
+        146
       ]
     ]
   },
@@ -543,7 +552,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        144
+        148
       ]
     ]
   },
@@ -552,7 +561,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        146
+        150
       ]
     ]
   },
@@ -561,7 +570,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        148
+        152
       ]
     ]
   },
@@ -570,7 +579,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        150
+        154
       ]
     ]
   },
@@ -579,7 +588,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        152
+        156
       ]
     ]
   },
@@ -588,7 +597,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        156
+        160
       ]
     ]
   },
@@ -597,7 +606,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        158
+        162
       ]
     ]
   },
@@ -606,7 +615,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        160
+        164
       ]
     ]
   },
@@ -615,7 +624,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        162
+        166
       ]
     ]
   },
@@ -624,7 +633,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        164
+        168
       ]
     ]
   },
@@ -633,7 +642,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        166
+        170
       ]
     ]
   },
@@ -642,7 +651,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        168
+        172
       ]
     ]
   },
@@ -651,7 +660,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        170
+        174
       ]
     ]
   },
@@ -660,7 +669,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        172
+        176
       ]
     ]
   },
@@ -669,7 +678,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        174
+        178
       ]
     ]
   },
@@ -678,7 +687,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        176
+        180
       ]
     ]
   },
@@ -687,7 +696,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        178
+        182
       ]
     ]
   },
@@ -696,7 +705,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        180
+        184
       ]
     ]
   },
@@ -705,7 +714,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        182
+        186
       ]
     ]
   },
@@ -714,7 +723,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        184
+        188
       ]
     ]
   },
@@ -723,7 +732,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        186
+        190
       ]
     ]
   },
@@ -732,7 +741,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        188
+        192
       ]
     ]
   },
@@ -741,7 +750,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        190
+        194
       ]
     ]
   },
@@ -750,7 +759,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        192
+        196
       ]
     ]
   },
@@ -759,7 +768,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        194
+        198
       ]
     ]
   },
@@ -768,7 +777,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        196
+        200
       ]
     ]
   },
@@ -777,7 +786,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        198
+        202
       ]
     ]
   },
@@ -786,7 +795,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        202
+        206
       ]
     ]
   },
@@ -795,7 +804,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        204
+        208
       ]
     ]
   },
@@ -804,7 +813,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        206
+        210
       ]
     ]
   },
@@ -813,7 +822,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        208
+        212
       ]
     ]
   },
@@ -822,7 +831,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        210
+        214
       ]
     ]
   },
@@ -831,7 +840,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        212
+        216
       ]
     ]
   },
@@ -840,7 +849,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        214
+        218
       ]
     ]
   },
@@ -849,7 +858,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        216
+        220
       ]
     ]
   },
@@ -858,7 +867,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        218
+        222
       ]
     ]
   },
@@ -867,7 +876,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        220
+        224
       ]
     ]
   },
@@ -876,7 +885,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        222
+        226
       ]
     ]
   },
@@ -885,7 +894,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        224
+        228
       ]
     ]
   },
@@ -894,7 +903,16 @@
     "origin": [
       [
         "src/schema/index.js",
-        228
+        232
+      ]
+    ]
+  },
+  "Evaluation type codes are used to define the type of evaluation performed and to distinguish the house type (i.e. newly built or existing)": {
+    "translation": "Des codes de type d'évaluation sont utilisés pour définir le type d'évaluation effectuée et pour distinguer le type de maison (c'est-à-dire nouvellement construit ou existant)",
+    "origin": [
+      [
+        "src/schema/index.js",
+        234
       ]
     ]
   },
@@ -903,7 +921,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        232
+        236
       ]
     ]
   },
@@ -912,7 +930,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        234
+        238
       ]
     ]
   },
@@ -921,7 +939,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        236
+        240
       ]
     ]
   },
@@ -930,7 +948,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        238
+        242
       ]
     ]
   },
@@ -939,7 +957,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        240
+        244
       ]
     ]
   },
@@ -948,7 +966,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        242
+        246
       ]
     ]
   },
@@ -957,7 +975,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        244
+        248
       ]
     ]
   },
@@ -966,7 +984,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        246
+        250
       ]
     ]
   },
@@ -975,7 +993,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        248
+        252
       ]
     ]
   },
@@ -984,7 +1002,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        250
+        254
       ]
     ]
   },
@@ -993,7 +1011,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        252
+        256
       ]
     ]
   },
@@ -1002,7 +1020,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        257
+        261
       ]
     ]
   },
@@ -1011,7 +1029,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        259
+        263
       ]
     ]
   },
@@ -1020,7 +1038,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        261
+        265
       ]
     ]
   },
@@ -1029,7 +1047,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        263
+        267
       ]
     ]
   },
@@ -1038,7 +1056,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        265
+        269
       ]
     ]
   },
@@ -1047,7 +1065,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        267
+        271
       ]
     ]
   },
@@ -1056,7 +1074,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        269
+        273
       ]
     ]
   },
@@ -1065,7 +1083,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        273
+        277
       ]
     ]
   },
@@ -1074,16 +1092,34 @@
     "origin": [
       [
         "src/schema/index.js",
-        275
+        279
       ]
     ]
   },
-  "Details for all dwellings in a specfified forward sortation area, optionally filtered by one or more values": {
-    "translation": "Détails pour tous les logements dans une zone de tri d'acheminement spécifiée, éventuellement filtrée par une ou plusieurs valeurs",
+  "Details for all dwellings, optionally filtered by one or more values": {
+    "translation": "Détails pour tous les logements, éventuellement filtrés par une ou plusieurs valeurs",
     "origin": [
       [
         "src/schema/index.js",
-        277
+        281
+      ]
+    ]
+  },
+  "The 'Int' scalar type represents non-fractional signed whole numeric values. Int can represent values between -(2^31) and 2^31 - 1.": {
+    "translation": "Le type scalaire 'Int' représente des valeurs numériques entières signées non fractionnaires. Int peut représenter des valeurs comprises entre -(2^31) et 2^31 - 1.",
+    "origin": [
+      [
+        "src/schema/resolvers.js",
+        44
+      ]
+    ]
+  },
+  "The 'Boolean' scalar type represents 'true' or 'false'.": {
+    "translation": "Le type scalaire 'Booléen' représente 'vrai' ou 'faux'.",
+    "origin": [
+      [
+        "src/schema/resolvers.js",
+        61
       ]
     ]
   }
