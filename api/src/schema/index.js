@@ -283,7 +283,7 @@ const Schema = i18n => {
     }
 
     enum Field {
-      # ${i18n.t`Filter results by the houseId of a dwelling`}
+      # ${i18n.t`Filter results by the house ID of a dwelling`}
       dwellingHouseId
       # ${i18n.t`Filter results by dwellings built in a specific year`}
       dwellingYearBuilt

@@ -1,19 +1,10 @@
 {
-  "The 'Float' scalar type represents signed double-precision fractional values as specified by [IEEE 754](http://en.wikipedia.org/wiki/IEEE_floating_point).": {
-    "translation": "Le type scalaire 'Float' représente des valeurs fractionnelles dédicacées à double précision, comme spécifié par [IEEE 754](http://en.wikipedia.org/wiki/IEEE_floating_point).",
+  "Filter results by the house ID of a dwelling": {
+    "translation": "Filtrer les résultats par l'ID de maison d'un logement",
     "origin": [
       [
-        "src/schema/resolvers.js",
-        49
-      ]
-    ]
-  },
-  "The 'String' scalar type represents textual data, represented as UTF-8 character sequences. The String type is most often used by GraphQL to represent free-form human-readable text.": {
-    "translation": "Le type scalaire 'String' représente des données textuelles, représentées par des séquences de caractères UTF-8. Le type String est le plus souvent utilisé par GraphQL pour représenter un texte lisible par un humain.",
-    "origin": [
-      [
-        "src/schema/resolvers.js",
-        55
+        "src/schema/index.js",
+        286
       ]
     ]
   },
@@ -1105,12 +1096,403 @@
       ]
     ]
   },
+  "Filter results by dwellings built in a specific year": {
+    "translation": "Filtrer les résultats par logements construits dans une année spécifique",
+    "origin": [
+      [
+        "src/schema/index.js",
+        288
+      ]
+    ]
+  },
+  "Filter results by the dwellings in a specific city": {
+    "translation": "Filtrer les résultats par logements dans une ville spécifique",
+    "origin": [
+      [
+        "src/schema/index.js",
+        290
+      ]
+    ]
+  },
+  "Filter results by the dwellings in a specific region": {
+    "translation": "Filtrer les résultats par habitation dans une région spécifique",
+    "origin": [
+      [
+        "src/schema/index.js",
+        292
+      ]
+    ]
+  },
+  "Filter results by the dwellings in a specific forward sortation area": {
+    "translation": "Filtrer les résultats par habitation dans une zone de tri spécifique",
+    "origin": [
+      [
+        "src/schema/index.js",
+        294
+      ]
+    ]
+  },
+  "Filter results by the dwellings containing at least one ventilation system with a specific type (en)": {
+    "translation": "Filtrer les résultats par les logements contenant au moins un système de ventilation avec un type spécifique (en)",
+    "origin": [
+      [
+        "src/schema/index.js",
+        296
+      ]
+    ]
+  },
+  "Filter results by the dwellings containing at least one ventilation system with a specific type (fr)": {
+    "translation": "Filtrer les résultats par les logements contenant au moins un système de ventilation avec un type spécifique (fr)",
+    "origin": [
+      [
+        "src/schema/index.js",
+        298
+      ]
+    ]
+  },
+  "Filter results by the dwellings containing at least one ventilation system with a specific air flow rate in Litres per Second (LpS)": {
+    "translation": "Filtrer les résultats par les logements contenant au moins un système de ventilation avec un débit d'air spécifique en litres par seconde (LpS)",
+    "origin": [
+      [
+        "src/schema/index.js",
+        300
+      ]
+    ]
+  },
+  "Filter results by the dwellings containing at least one ventilation system with a specific air flow rate in Cubic feet per Minute (CfM)": {
+    "translation": "Filtrer les résultats par les logements contenant au moins un système de ventilation avec un débit d'air spécifique en pieds cubes par minute (CfM)",
+    "origin": [
+      [
+        "src/schema/index.js",
+        302
+      ]
+    ]
+  },
+  "Filter results by the dwellings containing at least one ventilation system with a specific efficiency rating": {
+    "translation": "Filtrer les résultats par les logements contenant au moins un système de ventilation avec une cote d'efficacité spécifique",
+    "origin": [
+      [
+        "src/schema/index.js",
+        304
+      ]
+    ]
+  },
+  "Filter results by the dwellings containing at least one floor with a specific location": {
+    "translation": "Filtrer les résultats par les logements contenant au moins un étage avec un emplacement spécifique",
+    "origin": [
+      [
+        "src/schema/index.js",
+        306
+      ]
+    ]
+  },
+  "Filter results by the dwellings containing at least one floor with a specific nominal RSI (R-value Systeme International)": {
+    "translation": "Filtrer les résultats par les logements contenant au moins un étage avec un RSI nominal spécifique (valeur R Systeme International)",
+    "origin": [
+      [
+        "src/schema/index.js",
+        308
+      ]
+    ]
+  },
+  "Filter results by the dwellings containing at least one floor with a specific nominal R-value": {
+    "translation": "Filtrer les résultats par les logements contenant au moins un étage avec une valeur R nominale spécifique",
+    "origin": [
+      [
+        "src/schema/index.js",
+        310
+      ]
+    ]
+  },
+  "Filter results by the dwellings containing at least one floor with a specific effective R-value": {
+    "translation": "Filtrer les résultats par les logements contenant au moins un étage avec une valeur R efficace spécifique",
+    "origin": [
+      [
+        "src/schema/index.js",
+        312
+      ],
+      [
+        "src/schema/index.js",
+        314
+      ]
+    ]
+  },
+  "Filter results by the dwellings containing at least one floor with a specific area in square metres (m2)": {
+    "translation": "Filtrer les résultats par les logements contenant au moins un étage avec une surface spécifique en mètres carrés (m2)",
+    "origin": [
+      [
+        "src/schema/index.js",
+        316
+      ]
+    ]
+  },
+  "Filter results by the dwellings containing at least one floor with a specific area in square feet (ft2)": {
+    "translation": "Filtrer les résultats par les logements contenant au moins un étage avec une surface spécifique en pieds carrés (pi2)",
+    "origin": [
+      [
+        "src/schema/index.js",
+        318
+      ]
+    ]
+  },
+  "Filter results by the dwellings containing at least one floor with a specific length in metres (m)": {
+    "translation": "Filtrer les résultats par les logements contenant au moins un étage avec une longueur spécifique en mètres (m)",
+    "origin": [
+      [
+        "src/schema/index.js",
+        320
+      ]
+    ]
+  },
+  "Filter results by the dwellings containing at least one floor with a specific length in feet (ft)": {
+    "translation": "Filtrer les résultats par les logements contenant au moins un étage avec une longueur spécifique en pieds (pi)",
+    "origin": [
+      [
+        "src/schema/index.js",
+        322
+      ]
+    ]
+  },
+  "Filter results by the dwellings containing at least one water heating system of a specific type (en)": {
+    "translation": "Filtrer les résultats par les logements contenant au moins un système de chauffage de l'eau d'un type spécifique (en)",
+    "origin": [
+      [
+        "src/schema/index.js",
+        324
+      ]
+    ]
+  },
+  "Filter results by the dwellings containing at least one water heating system of a specific type (fr)": {
+    "translation": "Filtrer les résultats par les logements contenant au moins un système de chauffage de l'eau d'un type spécifique (fr)",
+    "origin": [
+      [
+        "src/schema/index.js",
+        326
+      ]
+    ]
+  },
+  "Filter results by the dwellings containing at least one water heating system with a specific capacity in Litres (L)": {
+    "translation": "Filtrer les résultats par les logements contenant au moins un système de chauffage de l'eau d'une capacité spécifique en Litres (L)",
+    "origin": [
+      [
+        "src/schema/index.js",
+        328
+      ]
+    ]
+  },
+  "Filter results by the dwellings containing at least one water heating system with a specific capacity in Gallons (g)": {
+    "translation": "Filtrer les résultats par les logements contenant au moins un système de chauffage de l'eau d'une capacité spécifique en gallons (g)",
+    "origin": [
+      [
+        "src/schema/index.js",
+        330
+      ]
+    ]
+  },
+  "Filter results by the dwellings containing at least one water heating system with a specific efficiency rating": {
+    "translation": "Filtrer les résultats par les logements contenant au moins un système de chauffage de l'eau avec une cote d'efficacité spécifique",
+    "origin": [
+      [
+        "src/schema/index.js",
+        332
+      ]
+    ]
+  },
+  "Filter results by the dwellings containing an above-grade heated floor area with a specific area in square metres (m2)": {
+    "translation": "Filtrer les résultats pour les habitations contenant une surface de plancher chauffant au-dessus du niveau du sol avec une surface spécifique en mètres carrés (m2)",
+    "origin": [
+      [
+        "src/schema/index.js",
+        334
+      ]
+    ]
+  },
+  "Filter results by the dwellings containing an above-grade heated floor area with a specific area in square feet (ft2)": {
+    "translation": "Filtrer les résultats en fonction des habitations contenant une surface de plancher chauffant au-dessus du niveau du sol avec une surface spécifique en pieds carrés (pi2)",
+    "origin": [
+      [
+        "src/schema/index.js",
+        336
+      ]
+    ]
+  },
+  "Filter results by the dwellings containing a below-grade heated floor area with a specific area in square metres (m2)": {
+    "translation": "Filtrer les résultats par les logements contenant une surface de plancher chauffant de qualité inférieure avec une surface spécifique en mètres carrés (m2)",
+    "origin": [
+      [
+        "src/schema/index.js",
+        338
+      ]
+    ]
+  },
+  "Filter results by the dwellings containing a below-grade heated floor area with a specific area in square feet (ft2)": {
+    "translation": "Filtrer les résultats en fonction des habitations contenant une surface de plancher chauffant de qualité inférieure avec une surface spécifique en pieds carrés (pi2)",
+    "origin": [
+      [
+        "src/schema/index.js",
+        340
+      ]
+    ]
+  },
+  "Filter results by the dwellings containing at least one wall with a specific location": {
+    "translation": "Filtrer les résultats par les logements contenant au moins un mur avec un emplacement spécifique",
+    "origin": [
+      [
+        "src/schema/index.js",
+        342
+      ]
+    ]
+  },
+  "Filter results by the dwellings containing at least one wall of a specific type (en)": {
+    "translation": "Filtrer les résultats par les logements contenant au moins une paroi d'un type spécifique (en)",
+    "origin": [
+      [
+        "src/schema/index.js",
+        344
+      ]
+    ]
+  },
+  "Filter results by the dwellings containing at least one wall of a specific type (fr)": {
+    "translation": "Filtrer les résultats par les logements contenant au moins une paroi d'un type spécifique (fr)",
+    "origin": [
+      [
+        "src/schema/index.js",
+        346
+      ]
+    ]
+  },
+  "Filter results by the dwellings containing at least one wall with a component of a specific size (en)": {
+    "translation": "Filtrer les résultats par les logements contenant au moins un mur avec un composant d'une taille spécifique (en)",
+    "origin": [
+      [
+        "src/schema/index.js",
+        348
+      ]
+    ]
+  },
+  "Filter results by the dwellings containing at least one wall with a component of a specific size (fr)": {
+    "translation": "Filtrer les résultats par les logements contenant au moins un mur avec un composant d'une taille spécifique",
+    "origin": [
+      [
+        "src/schema/index.js",
+        350
+      ]
+    ]
+  },
+  "Filter results by the dwellings containing at least one wall with a specific nominal RSI (R-value Systeme International)": {
+    "translation": "Filtrer les résultats par les logements contenant au moins un mur avec un RSI nominal spécifique (valeur R Systeme International)",
+    "origin": [
+      [
+        "src/schema/index.js",
+        352
+      ]
+    ]
+  },
+  "Filter results by the dwellings containing at least one wall with a specific nominal R-value": {
+    "translation": "Filtrer les résultats par les logements contenant au moins un mur avec une valeur R nominale spécifique",
+    "origin": [
+      [
+        "src/schema/index.js",
+        354
+      ]
+    ]
+  },
+  "Filter results by the dwellings containing at least one wall with a specific effective RSI (R-value Systeme International)": {
+    "translation": "Filtrer les résultats par les logements contenant au moins un mur avec un RSI efficace spécifique (valeur R Systeme International)",
+    "origin": [
+      [
+        "src/schema/index.js",
+        356
+      ]
+    ]
+  },
+  "Filter results by the dwellings containing at least one wall with a specific effective R-value": {
+    "translation": "Filtrer les résultats par les logements contenant au moins un mur avec une valeur R effective spécifique",
+    "origin": [
+      [
+        "src/schema/index.js",
+        358
+      ]
+    ]
+  },
+  "Filter results by the dwellings containing at least one wall with a specific area in square metres (m2)": {
+    "translation": "Filtrer les résultats par les logements contenant au moins un mur avec une surface spécifique en mètres carrés (m2)",
+    "origin": [
+      [
+        "src/schema/index.js",
+        360
+      ]
+    ]
+  },
+  "Filter results by the dwellings containing at least one wall with a specific area in square feet (ft2)": {
+    "translation": "Filtrer les résultats par les logements contenant au moins un mur avec une surface spécifique en pieds carrés (ft2)",
+    "origin": [
+      [
+        "src/schema/index.js",
+        362
+      ]
+    ]
+  },
+  "Filter results by the dwellings containing at least one wall with a specific perimeter in metres (m)": {
+    "translation": "Filtrer les résultats par les logements contenant au moins un mur avec un périmètre spécifique en mètres (m)",
+    "origin": [
+      [
+        "src/schema/index.js",
+        364
+      ]
+    ]
+  },
+  "Filter results by the dwellings containing at least one wall with a specific perimeter in feet (ft)": {
+    "translation": "Filtrer les résultats par les logements contenant au moins un mur avec un périmètre spécifique en pieds (ft)",
+    "origin": [
+      [
+        "src/schema/index.js",
+        366
+      ]
+    ]
+  },
+  "Filter results by the dwellings containing at least one wall with a specific height in metres (m)": {
+    "translation": "Filtrer les résultats par les logements contenant au moins un mur avec une hauteur spécifique en mètres (m)",
+    "origin": [
+      [
+        "src/schema/index.js",
+        368
+      ]
+    ]
+  },
+  "Filter results by the dwellings containing at least one wall with a specific height in feet (ft)": {
+    "translation": "Filtrer les résultats par les logements contenant au moins un mur avec une hauteur spécifique en pieds (ft)",
+    "origin": [
+      [
+        "src/schema/index.js",
+        370
+      ]
+    ]
+  },
   "The 'Int' scalar type represents non-fractional signed whole numeric values. Int can represent values between -(2^31) and 2^31 - 1.": {
     "translation": "Le type scalaire 'Int' représente des valeurs numériques entières signées non fractionnaires. Int peut représenter des valeurs comprises entre -(2^31) et 2^31 - 1.",
     "origin": [
       [
         "src/schema/resolvers.js",
-        44
+        63
+      ]
+    ]
+  },
+  "The 'Float' scalar type represents signed double-precision fractional values as specified by [IEEE 754](http://en.wikipedia.org/wiki/IEEE_floating_point).": {
+    "translation": "Le type scalaire 'Float' représente les valeurs fractionnelles dédicacées à double précision spécifiées par [IEEE 754](http://en.wikipedia.org/wiki/IEEE_floating_point).",
+    "origin": [
+      [
+        "src/schema/resolvers.js",
+        68
+      ]
+    ]
+  },
+  "The 'String' scalar type represents textual data, represented as UTF-8 character sequences. The String type is most often used by GraphQL to represent free-form human-readable text.": {
+    "translation": "Le type scalaire 'String' représente des données textuelles, représentées par des séquences de caractères UTF-8. Le type String est le plus souvent utilisé par GraphQL pour représenter un texte lisible par un humain.",
+    "origin": [
+      [
+        "src/schema/resolvers.js",
+        74
       ]
     ]
   },
@@ -1119,7 +1501,7 @@
     "origin": [
       [
         "src/schema/resolvers.js",
-        61
+        80
       ]
     ]
   }
