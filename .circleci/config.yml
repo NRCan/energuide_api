@@ -292,7 +292,7 @@ jobs:
             chmod 755 ~/repo/extract_endpoint/src/extract_endpoint
             docker login -u "$DOCKER_USERNAME" -p "$DOCKER_PASSWORD" 
             docker build --build-arg VERSION="${VERSION} -t "${DOCKER_REGISTRY}/${NAMESPACE}/deploy_etl:${VERSION}" .
-            docker build --build-arg VERSION="${VERSION} -t "${DOCKER_REGISTRY}/${NAMESPACE}/deploy_etl}:${VERSION}" .
+            docker build --build-arg VERSION="${VERSION} -t "${DOCKER_REGISTRY}/${NAMESPACE}/deploy_etl:${VERSION}" .
             docker push "${DOCKER_REGISTRY/${NAMESPACE}/nrcan_etl:${VERSION}"
             docker push "${DOCKER_REGISTRY/${NAMESPACE}/nrcan_etl:latest"
   deploy_api:
@@ -329,6 +329,7 @@ workflows:
       - extract_endpoint
       - python_integration
       - deploy_etl
+      - install_etl 
       - node_integration:
           requires:
             - python_integration
@@ -342,3 +343,6 @@ workflows:
       - deploy_api:
           requires:
             - yarn_build
+      - deploy_etl:
+          requires:
+            - install_etl
