@@ -76,7 +76,6 @@ def energuide_zip_fixture(tmpdir: py._path.local.LocalPath, energuide_fixture: s
     outfile = f'{tmpdir}/randomized_energuide_data.zip'
 
     data = extractor.extract_data(energuide_fixture)
-    # import pdb; pdb.set_trace()
     extractor.write_data(data, outfile)
     return outfile
 

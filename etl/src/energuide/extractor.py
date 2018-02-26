@@ -55,7 +55,6 @@ def _validated(data: typing.Iterable[reader.InputData]) -> typing.Iterator[reade
     validator = cerberus.Validator(_SCHEMA, allow_unknown=True, purge_unknown=True)
     for row in data:
         if not validator.validate(row):
-            # import pdb; pdb.set_trace()
             error_keys = ', '.join(validator.errors.keys())
             raise InvalidInputDataError(f'Validator failed on keys: {error_keys}')
         yield validator.document
