@@ -19,6 +19,7 @@ from energuide.embedded import water_heating
 from energuide.embedded import ventilation
 from energuide.embedded import heated_floor_area
 from energuide.embedded import basement
+from energuide.embedded import upgrade
 from energuide.exceptions import InvalidInputDataError
 from energuide.exceptions import InvalidGroupSizeError
 
@@ -465,6 +466,15 @@ def raw_codes() -> typing.Dict[str, typing.List[str]]:
 
 
 @pytest.fixture
+def upgrades_input() -> typing.List[str]:
+    return [
+        '<Ceilings cost="0" priority="12" />',
+        '<MainWalls cost="1" priority="2" />',
+        '<Foundation cost="2" priority="3" />',
+        ]
+
+
+@pytest.fixture
 def sample_input_d(ceiling_input: typing.List[str],
                    floor_input: typing.List[str],
                    wall_input: typing.List[str],
@@ -477,6 +487,7 @@ def sample_input_d(ceiling_input: typing.List[str],
                    basement_input: typing.List[str],
                    crawlspace_input: typing.List[str],
                    slab_input: typing.List[str],
+                   upgrades_input: typing.List[str],
                    raw_codes: typing.Dict[str, typing.List[str]]) -> reader.InputData:
 
     return {
@@ -502,7 +513,8 @@ def sample_input_d(ceiling_input: typing.List[str],
         'crawlspaces': crawlspace_input,
         'slabs': slab_input,
         'codes': raw_codes,
-        'ERSRATING': '567'
+        'ERSRATING': '567',
+        'upgrades': upgrades_input,
     }
 
 
@@ -774,6 +786,23 @@ class TestParsedDwellingDataRow:
                     header=None,
                 ),
             ],
+            energy_upgrades=[
+                upgrade.Upgrade(
+                    upgrade_type='Ceilings',
+                    cost=0,
+                    priority=12,
+                ),
+                upgrade.Upgrade(
+                    upgrade_type='MainWalls',
+                    cost=1,
+                    priority=2,
+                ),
+                upgrade.Upgrade(
+                    upgrade_type='Foundation',
+                    cost=2,
+                    priority=3,
+                ),
+            ]
         )
 
     def test_bad_postal_code(self, sample_input_d: reader.InputData) -> None:
