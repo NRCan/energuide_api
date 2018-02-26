@@ -52,6 +52,18 @@ class HouseSnippet(_HouseSnippet):
         }
 
 
+class _EnergyUpgradesSnippet(typing.NamedTuple):
+    upgrades: typing.List[str]
+
+
+class EnergyUpgradesSnippet(_EnergyUpgradesSnippet):
+
+    def to_dict(self) -> typing.Dict[str, typing.Any]:
+        return {
+            'upgrades': self.upgrades,
+        }
+
+
 def _extract_nodes(node: element.Element, path: str) -> typing.List[element.Element]:
     return node.xpath(path)
 
@@ -98,4 +110,12 @@ def snip_codes(codes: element.Element) -> Codes:
     return Codes(
         wall=[node.to_string() for node in wall_codes],
         window=[node.to_string() for node in window_codes],
+    )
+
+
+def snip_energy_upgrades(energy_upgrades: element.Element) -> EnergyUpgradesSnippet:
+    upgrades = _extract_nodes(energy_upgrades, 'Settings/*')
+
+    return EnergyUpgradesSnippet(
+        upgrades=[upgrade.to_string() for upgrade in upgrades],
     )
