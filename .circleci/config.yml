@@ -323,6 +323,8 @@ workflows:
       - etl
       - extract_endpoint
       - python_integration
+      - etl_install
+      - etl_deploy
       - node_integration:
           requires:
             - python_integration
