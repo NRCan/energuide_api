@@ -60,7 +60,7 @@ class EnergyUpgradesSnippet(_EnergyUpgradesSnippet):
 
     def to_dict(self) -> typing.Dict[str, typing.Any]:
         return {
-            'upgrades': [upgrade.to_string() for upgrade in self.upgrades],
+            'upgrades': self.upgrades,
         }
 
 
@@ -117,5 +117,5 @@ def snip_energy_upgrades(energy_upgrades: element.Element) -> EnergyUpgradesSnip
     upgrades = _extract_nodes(energy_upgrades, 'Settings/*')
 
     return EnergyUpgradesSnippet(
-        upgrades=upgrades,
+        upgrades=[upgrade.to_string() for upgrade in upgrades],
     )
