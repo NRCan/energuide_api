@@ -4,7 +4,7 @@ from energuide import element
 from energuide.embedded import area
 from energuide.embedded import distance
 from energuide.embedded import insulation
-from energuide.exceptions import InvalidEmbeddedDataTypeError
+from energuide.exceptions import InvalidEmbeddedDataTypeError, ElementGetValueError
 
 
 class _Ceiling(typing.NamedTuple):
@@ -28,13 +28,13 @@ class Ceiling(_Ceiling):
                     french=ceiling.get_text('Construction/Type/French'),
                 ),
                 nominal_insulation=insulation.Insulation(
-                    float(ceiling.xpath('Construction/CeilingType/@nominalInsulation')[0])),
+                    ceiling.get('Construction/CeilingType/@nominalInsulation', float)),
                 effective_insulation=insulation.Insulation(
-                    float(ceiling.xpath('Construction/CeilingType/@rValue')[0])),
-                ceiling_area=area.Area(float(ceiling.xpath('Measurements/@area')[0])),
-                ceiling_length=distance.Distance(float(ceiling.xpath('Measurements/@length')[0])),
+                    ceiling.get('Construction/CeilingType/@rValue', float)),
+                ceiling_area=area.Area(ceiling.get('Measurements/@area', float)),
+                ceiling_length=distance.Distance(ceiling.get('Measurements/@length', float)),
             )
-        except (IndexError, ValueError, AssertionError) as exc:
+        except (AssertionError, ElementGetValueError) as exc:
             raise InvalidEmbeddedDataTypeError(Ceiling) from exc
 
     def to_dict(self) -> typing.Dict[str, typing.Any]:
