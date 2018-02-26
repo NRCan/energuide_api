@@ -30,24 +30,34 @@ DROP_FIELDS = ['ENTRYBY',
                'INFO9',
                'INFO10']
 
-REQUIRED_FIELDS = DROP_FIELDS + [
+KEEP_FIELDS = [
     'EVAL_ID',
     'EVAL_TYPE',
     'BUILDER',
     'DHWHPCOP',
-    'ERSRATING'
+    'ERSRATING',
+    'ENTRYDATE',
+    'CREATIONDATE',
+    'MODIFICATIONDATE',
+    'YEARBUILT',
+    'CLIENTCITY',
+    'HOUSEREGION',
 ]
+
+REQUIRED_FIELDS = DROP_FIELDS + KEEP_FIELDS
+
 
 _SCHEMA = {field: {'type': 'string', 'required': True} for field in REQUIRED_FIELDS}
 _WINDOWS_LONG_SIZE = (2 ** 31) - 1
 
 
-def _validated(data: typing.Iterable[reader.InputData], validator) -> typing.Iterator[reader.InputData]:
+def _validated(data: typing.Iterable[reader.InputData]) -> typing.Iterator[reader.InputData]:
+    validator = cerberus.Validator(_SCHEMA, allow_unknown=True, purge_unknown=True)
     for row in data:
         if not validator.validate(row):
             error_keys = ', '.join(validator.errors.keys())
             raise InvalidInputDataError(f'Validator failed on keys: {error_keys}')
-        yield row
+        yield validator.document
 
 
 def _read_csv(filepath: str) -> typing.Iterator[reader.InputData]:
@@ -95,9 +105,8 @@ def _remove_pii_fields(data: typing.Iterable[reader.InputData]) -> typing.Iterat
 
 
 def extract_data(input_path: str) -> typing.Iterator[reader.InputData]:
-    validator = cerberus.Validator(_SCHEMA, allow_unknown=True)
     data = _read_csv(input_path)
-    validated_data = _validated(data, validator)
+    validated_data = _validated(data)
     data_with_snippets = _extract_snippets(validated_data)
     safe_extract = _remove_pii_fields(data_with_snippets)
     return safe_extract

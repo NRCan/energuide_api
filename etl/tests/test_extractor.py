@@ -35,7 +35,13 @@ def data1() -> typing.Dict[str, typing.Optional[str]]:
         'INFO7': None,
         'INFO8': None,
         'INFO9': None,
-        'INFO10': None
+        'INFO10': None,
+        'ENTRYDATE': '2012-02-25',
+        'CREATIONDATE': '2012-06-08 09:26:10',
+        'MODIFICATIONDATE': '2012-06-09 09:26:10',
+        'YEARBUILT': '1894',
+        'CLIENTCITY': 'Brooks',
+        'HOUSEREGION': 'AB',
     }
 
 
@@ -49,6 +55,12 @@ def data2() -> typing.Dict[str, typing.Optional[str]]:
 def data3() -> typing.Dict[str, typing.Optional[str]]:
     data = data1()
     data['ERSRATING'] = ''
+    return data
+
+
+def data4() -> typing.Dict[str, typing.Optional[str]]:
+    data = data1()
+    data['UNKNOWN'] = 'value'
     return data
 
 
@@ -80,6 +92,18 @@ def invalid_filepath(tmpdir: py._path.local.LocalPath) -> str:
     return filepath
 
 
+@pytest.fixture
+def extra_filepath(tmpdir: py._path.local.LocalPath) -> str:
+    filepath = f'{tmpdir}/sample.csv'
+    data = data4()
+    with open(filepath, 'w') as file:
+        writer = csv.DictWriter(file, fieldnames=list(data.keys()))
+        writer.writeheader()
+        writer.writerow(data)
+
+    return filepath
+
+
 def test_extract_valid(valid_filepath: str) -> None:
     output = extractor.extract_data(valid_filepath)
     item = dict(next(output))
@@ -87,6 +111,13 @@ def test_extract_valid(valid_filepath: str) -> None:
     assert 'EVAL_ID' in item
 
     assert 'CLIENTADDR' not in item
+
+
+def test_purge_unknown(extra_filepath: str) -> None:
+    output = extractor.extract_data(extra_filepath)
+    item = dict(next(output))
+
+    assert 'UNKNOWN' not in item
 
 
 def test_extract_missing(invalid_filepath: str) -> None:
