@@ -262,7 +262,7 @@ jobs:
       - run:
           name: "pip install"
           command: |
-            cd ~repo/extract_endpoint
+            cd ~/repo/extract_endpoint
             pip install -r requirements
             pip install -e .
       - persist_to_workspace:
@@ -336,7 +336,7 @@ workflows:
             branches:
               only:
                 - continuous_deploy
-      - aeploy_api:
+      - deploy_api:
           requires:
             - yarn_build
       - deploy_etl: 
