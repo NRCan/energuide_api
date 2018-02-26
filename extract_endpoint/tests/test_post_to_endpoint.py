@@ -39,8 +39,7 @@ def run_endpoint(azure_emulator_coords: azure_utils.StorageCoordinates,
     monkeysession.setenv('EXTRACT_ENDPOINT_CONTAINER', azure_emulator_coords.container)
     monkeysession.setenv('EXTRACT_ENDPOINT_STORAGE_DOMAIN', azure_emulator_coords.domain)
 
-    proc = psutil.Popen(['python', 'src/extract_endpoint/endpoint.py'],
-                        stderr=subprocess.PIPE, stdout=subprocess.PIPE)
+    proc = psutil.Popen(['python', 'src/extract_endpoint/endpoint.py'], stderr=subprocess.PIPE, stdout=subprocess.PIPE)
     while True:
         try:
             requests.get(f'http://{endpoint_host}/test_alive')

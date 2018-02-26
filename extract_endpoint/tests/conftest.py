@@ -13,7 +13,7 @@ def azure_emulator_coords() -> azure_utils.StorageCoordinates:
     )
 
 
-@pytest.fixture(scope='session')
+@pytest.fixture
 def azure_service(azure_emulator_coords) -> blob.BlockBlobService:
     azure_service = blob.BlockBlobService(account_name=azure_emulator_coords.account,
                                           account_key=azure_emulator_coords.key,

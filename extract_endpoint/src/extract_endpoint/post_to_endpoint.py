@@ -1,4 +1,3 @@
-import io
 import os
 import base64
 import secrets
@@ -18,18 +17,17 @@ def main() -> None:
 
 def post_stream(stream: typing.IO[bytes], filename: typing.Optional[str], url: str) -> requests.models.Response:
     if filename is None and stream.name == '<stdin>':
-        raise ValueError("must have a filename if reading from stdin")
+        raise ValueError("Must supply a filename if reading from stdin")
     if filename is None:
         filename = stream.name
-    memory_stream = io.BytesIO(stream.read())
 
+    data = stream.read()
     salt = secrets.token_hex(16)
     signature = crypt_utils.sign_string(salt=salt,
                                         key=os.environ.get('ENDPOINT_SECRET_KEY', DEFAULT_ENDPOINT_SECRET_KEY),
-                                        data=base64.b64encode(memory_stream.read()).decode('utf-8'))
-    memory_stream.seek(0)
+                                        data=base64.b64encode(data).decode('utf-8'))
     return requests.post(url=url,
-                         files={'file': memory_stream},
+                         files={'file': data},
                          data={'salt': salt, 'signature': signature, 'filename': filename})
 
 
