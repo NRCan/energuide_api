@@ -94,6 +94,11 @@ def _extract_snippets(data: typing.Iterable[reader.InputData]) -> typing.Iterato
             code_snippets = snippets.snip_codes(code_node[0])
             row = _safe_merge(row, code_snippets.to_dict())
 
+        upgrades_node = doc.xpath('EnergyUpgrades')
+        if upgrades_node:
+            energy_snippets = snippets.snip_energy_upgrades(upgrades_node[0])
+            row = _safe_merge(row, energy_snippets.to_dict())
+
         yield row
 
 
