@@ -249,7 +249,7 @@ def test_slab_snippet(house: element.Element) -> None:
     assert checker.validate(doc)
 
 
-def test_upgrades_snuppet(energy_upgrades: element.Element) -> None:
+def test_upgrades_snippet(energy_upgrades: element.Element) -> None:
     output = snippets.snip_energy_upgrades(energy_upgrades)
     assert len(output.upgrades) == 12
     checker = validator.DwellingValidator({
