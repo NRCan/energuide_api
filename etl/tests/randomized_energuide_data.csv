@@ -980,6 +980,24 @@ EVAL_ID,IDNUMBER,PARTNER,EVALUATOR,PREVIOUSFILEID,STATUS,CREATIONDATE,MODIFICATI
             </Standard>
         </FloorsAbove>
     </Codes>
+    <EnergyUpgrades>
+        <Settings>
+            <CathedralCeilingsFlat cost=""0"" priority=""1"" />
+            <Ceilings cost=""0"" priority=""12"" />
+            <MainWalls cost=""0"" priority=""2"" />
+            <Foundation cost=""0"" priority=""3"" />
+            <Floor cost=""0"" priority=""4"" />
+            <Windows cost=""0"" priority=""10"">
+                <Cost east=""0"" />
+            </Windows>
+            <AirTightness cost=""0"" priority=""5"" />
+            <Doors cost=""0"" priority=""9"" />
+            <Heating cost=""0"" priority=""7"" />
+            <HotWater cost=""0"" priority=""6"" />
+            <Ventilation cost=""0"" priority=""8"" />
+            <Cooling cost=""0"" priority=""11"" />
+        </Settings>
+    </EnergyUpgrades>
     <FuelCosts includeCostCalculations=""true"" library=""fuelLib.flc"">
         <Electricity>
             <Fuel id=""1"">
@@ -3529,6 +3547,24 @@ EVAL_ID,IDNUMBER,PARTNER,EVALUATOR,PREVIOUSFILEID,STATUS,CREATIONDATE,MODIFICATI
             </Standard>
         </FloorsAbove>
     </Codes>
+    <EnergyUpgrades>
+        <Settings>
+            <CathedralCeilingsFlat cost=""0"" priority=""1"" />
+            <Ceilings cost=""0"" priority=""12"" />
+            <MainWalls cost=""0"" priority=""2"" />
+            <Foundation cost=""0"" priority=""3"" />
+            <Floor cost=""0"" priority=""4"" />
+            <Windows cost=""0"" priority=""10"">
+                <Cost east=""0"" />
+            </Windows>
+            <AirTightness cost=""0"" priority=""5"" />
+            <Doors cost=""0"" priority=""9"" />
+            <Heating cost=""0"" priority=""7"" />
+            <HotWater cost=""0"" priority=""6"" />
+            <Ventilation cost=""0"" priority=""8"" />
+            <Cooling cost=""0"" priority=""11"" />
+        </Settings>
+    </EnergyUpgrades>
     <FuelCosts includeCostCalculations=""true"" library=""fuelLib.flc"">
         <Electricity>
             <Fuel id=""1"">
@@ -6078,6 +6114,24 @@ EVAL_ID,IDNUMBER,PARTNER,EVALUATOR,PREVIOUSFILEID,STATUS,CREATIONDATE,MODIFICATI
             </Standard>
         </FloorsAbove>
     </Codes>
+    <EnergyUpgrades>
+        <Settings>
+            <CathedralCeilingsFlat cost=""0"" priority=""1"" />
+            <Ceilings cost=""0"" priority=""12"" />
+            <MainWalls cost=""0"" priority=""2"" />
+            <Foundation cost=""0"" priority=""3"" />
+            <Floor cost=""0"" priority=""4"" />
+            <Windows cost=""0"" priority=""10"">
+                <Cost east=""0"" />
+            </Windows>
+            <AirTightness cost=""0"" priority=""5"" />
+            <Doors cost=""0"" priority=""9"" />
+            <Heating cost=""0"" priority=""7"" />
+            <HotWater cost=""0"" priority=""6"" />
+            <Ventilation cost=""0"" priority=""8"" />
+            <Cooling cost=""0"" priority=""11"" />
+        </Settings>
+    </EnergyUpgrades>
     <FuelCosts includeCostCalculations=""true"" library=""fuelLib.flc"">
         <Electricity>
             <Fuel id=""1"">
@@ -8627,6 +8681,24 @@ EVAL_ID,IDNUMBER,PARTNER,EVALUATOR,PREVIOUSFILEID,STATUS,CREATIONDATE,MODIFICATI
             </Standard>
         </FloorsAbove>
     </Codes>
+    <EnergyUpgrades>
+        <Settings>
+            <CathedralCeilingsFlat cost=""0"" priority=""1"" />
+            <Ceilings cost=""0"" priority=""12"" />
+            <MainWalls cost=""0"" priority=""2"" />
+            <Foundation cost=""0"" priority=""3"" />
+            <Floor cost=""0"" priority=""4"" />
+            <Windows cost=""0"" priority=""10"">
+                <Cost east=""0"" />
+            </Windows>
+            <AirTightness cost=""0"" priority=""5"" />
+            <Doors cost=""0"" priority=""9"" />
+            <Heating cost=""0"" priority=""7"" />
+            <HotWater cost=""0"" priority=""6"" />
+            <Ventilation cost=""0"" priority=""8"" />
+            <Cooling cost=""0"" priority=""11"" />
+        </Settings>
+    </EnergyUpgrades>
     <FuelCosts includeCostCalculations=""true"" library=""fuelLib.flc"">
         <Electricity>
             <Fuel id=""1"">
@@ -11176,6 +11248,24 @@ EVAL_ID,IDNUMBER,PARTNER,EVALUATOR,PREVIOUSFILEID,STATUS,CREATIONDATE,MODIFICATI
             </Standard>
         </FloorsAbove>
     </Codes>
+    <EnergyUpgrades>
+        <Settings>
+            <CathedralCeilingsFlat cost=""0"" priority=""1"" />
+            <Ceilings cost=""0"" priority=""12"" />
+            <MainWalls cost=""0"" priority=""2"" />
+            <Foundation cost=""0"" priority=""3"" />
+            <Floor cost=""0"" priority=""4"" />
+            <Windows cost=""0"" priority=""10"">
+                <Cost east=""0"" />
+            </Windows>
+            <AirTightness cost=""0"" priority=""5"" />
+            <Doors cost=""0"" priority=""9"" />
+            <Heating cost=""0"" priority=""7"" />
+            <HotWater cost=""0"" priority=""6"" />
+            <Ventilation cost=""0"" priority=""8"" />
+            <Cooling cost=""0"" priority=""11"" />
+        </Settings>
+    </EnergyUpgrades>
     <FuelCosts includeCostCalculations=""true"" library=""fuelLib.flc"">
         <Electricity>
             <Fuel id=""1"">
@@ -13725,6 +13815,24 @@ EVAL_ID,IDNUMBER,PARTNER,EVALUATOR,PREVIOUSFILEID,STATUS,CREATIONDATE,MODIFICATI
             </Standard>
         </FloorsAbove>
     </Codes>
+    <EnergyUpgrades>
+        <Settings>
+            <CathedralCeilingsFlat cost=""0"" priority=""1"" />
+            <Ceilings cost=""0"" priority=""12"" />
+            <MainWalls cost=""0"" priority=""2"" />
+            <Foundation cost=""0"" priority=""3"" />
+            <Floor cost=""0"" priority=""4"" />
+            <Windows cost=""0"" priority=""10"">
+                <Cost east=""0"" />
+            </Windows>
+            <AirTightness cost=""0"" priority=""5"" />
+            <Doors cost=""0"" priority=""9"" />
+            <Heating cost=""0"" priority=""7"" />
+            <HotWater cost=""0"" priority=""6"" />
+            <Ventilation cost=""0"" priority=""8"" />
+            <Cooling cost=""0"" priority=""11"" />
+        </Settings>
+    </EnergyUpgrades>
     <FuelCosts includeCostCalculations=""true"" library=""fuelLib.flc"">
         <Electricity>
             <Fuel id=""1"">
@@ -16274,6 +16382,24 @@ EVAL_ID,IDNUMBER,PARTNER,EVALUATOR,PREVIOUSFILEID,STATUS,CREATIONDATE,MODIFICATI
             </Standard>
         </FloorsAbove>
     </Codes>
+    <EnergyUpgrades>
+        <Settings>
+            <CathedralCeilingsFlat cost=""0"" priority=""1"" />
+            <Ceilings cost=""0"" priority=""12"" />
+            <MainWalls cost=""0"" priority=""2"" />
+            <Foundation cost=""0"" priority=""3"" />
+            <Floor cost=""0"" priority=""4"" />
+            <Windows cost=""0"" priority=""10"">
+                <Cost east=""0"" />
+            </Windows>
+            <AirTightness cost=""0"" priority=""5"" />
+            <Doors cost=""0"" priority=""9"" />
+            <Heating cost=""0"" priority=""7"" />
+            <HotWater cost=""0"" priority=""6"" />
+            <Ventilation cost=""0"" priority=""8"" />
+            <Cooling cost=""0"" priority=""11"" />
+        </Settings>
+    </EnergyUpgrades>
     <FuelCosts includeCostCalculations=""true"" library=""fuelLib.flc"">
         <Electricity>
             <Fuel id=""1"">
@@ -18823,6 +18949,24 @@ EVAL_ID,IDNUMBER,PARTNER,EVALUATOR,PREVIOUSFILEID,STATUS,CREATIONDATE,MODIFICATI
             </Standard>
         </FloorsAbove>
     </Codes>
+    <EnergyUpgrades>
+        <Settings>
+            <CathedralCeilingsFlat cost=""0"" priority=""1"" />
+            <Ceilings cost=""0"" priority=""12"" />
+            <MainWalls cost=""0"" priority=""2"" />
+            <Foundation cost=""0"" priority=""3"" />
+            <Floor cost=""0"" priority=""4"" />
+            <Windows cost=""0"" priority=""10"">
+                <Cost east=""0"" />
+            </Windows>
+            <AirTightness cost=""0"" priority=""5"" />
+            <Doors cost=""0"" priority=""9"" />
+            <Heating cost=""0"" priority=""7"" />
+            <HotWater cost=""0"" priority=""6"" />
+            <Ventilation cost=""0"" priority=""8"" />
+            <Cooling cost=""0"" priority=""11"" />
+        </Settings>
+    </EnergyUpgrades>
     <FuelCosts includeCostCalculations=""true"" library=""fuelLib.flc"">
         <Electricity>
             <Fuel id=""1"">
@@ -21372,6 +21516,24 @@ EVAL_ID,IDNUMBER,PARTNER,EVALUATOR,PREVIOUSFILEID,STATUS,CREATIONDATE,MODIFICATI
             </Standard>
         </FloorsAbove>
     </Codes>
+    <EnergyUpgrades>
+        <Settings>
+            <CathedralCeilingsFlat cost=""0"" priority=""1"" />
+            <Ceilings cost=""0"" priority=""12"" />
+            <MainWalls cost=""0"" priority=""2"" />
+            <Foundation cost=""0"" priority=""3"" />
+            <Floor cost=""0"" priority=""4"" />
+            <Windows cost=""0"" priority=""10"">
+                <Cost east=""0"" />
+            </Windows>
+            <AirTightness cost=""0"" priority=""5"" />
+            <Doors cost=""0"" priority=""9"" />
+            <Heating cost=""0"" priority=""7"" />
+            <HotWater cost=""0"" priority=""6"" />
+            <Ventilation cost=""0"" priority=""8"" />
+            <Cooling cost=""0"" priority=""11"" />
+        </Settings>
+    </EnergyUpgrades>
     <FuelCosts includeCostCalculations=""true"" library=""fuelLib.flc"">
         <Electricity>
             <Fuel id=""1"">
@@ -23921,6 +24083,24 @@ EVAL_ID,IDNUMBER,PARTNER,EVALUATOR,PREVIOUSFILEID,STATUS,CREATIONDATE,MODIFICATI
             </Standard>
         </FloorsAbove>
     </Codes>
+    <EnergyUpgrades>
+        <Settings>
+            <CathedralCeilingsFlat cost=""0"" priority=""1"" />
+            <Ceilings cost=""0"" priority=""12"" />
+            <MainWalls cost=""0"" priority=""2"" />
+            <Foundation cost=""0"" priority=""3"" />
+            <Floor cost=""0"" priority=""4"" />
+            <Windows cost=""0"" priority=""10"">
+                <Cost east=""0"" />
+            </Windows>
+            <AirTightness cost=""0"" priority=""5"" />
+            <Doors cost=""0"" priority=""9"" />
+            <Heating cost=""0"" priority=""7"" />
+            <HotWater cost=""0"" priority=""6"" />
+            <Ventilation cost=""0"" priority=""8"" />
+            <Cooling cost=""0"" priority=""11"" />
+        </Settings>
+    </EnergyUpgrades>
     <FuelCosts includeCostCalculations=""true"" library=""fuelLib.flc"">
         <Electricity>
             <Fuel id=""1"">
@@ -26470,6 +26650,24 @@ EVAL_ID,IDNUMBER,PARTNER,EVALUATOR,PREVIOUSFILEID,STATUS,CREATIONDATE,MODIFICATI
             </Standard>
         </FloorsAbove>
     </Codes>
+    <EnergyUpgrades>
+        <Settings>
+            <CathedralCeilingsFlat cost=""0"" priority=""1"" />
+            <Ceilings cost=""0"" priority=""12"" />
+            <MainWalls cost=""0"" priority=""2"" />
+            <Foundation cost=""0"" priority=""3"" />
+            <Floor cost=""0"" priority=""4"" />
+            <Windows cost=""0"" priority=""10"">
+                <Cost east=""0"" />
+            </Windows>
+            <AirTightness cost=""0"" priority=""5"" />
+            <Doors cost=""0"" priority=""9"" />
+            <Heating cost=""0"" priority=""7"" />
+            <HotWater cost=""0"" priority=""6"" />
+            <Ventilation cost=""0"" priority=""8"" />
+            <Cooling cost=""0"" priority=""11"" />
+        </Settings>
+    </EnergyUpgrades>
     <FuelCosts includeCostCalculations=""true"" library=""fuelLib.flc"">
         <Electricity>
             <Fuel id=""1"">
@@ -29019,6 +29217,24 @@ EVAL_ID,IDNUMBER,PARTNER,EVALUATOR,PREVIOUSFILEID,STATUS,CREATIONDATE,MODIFICATI
             </Standard>
         </FloorsAbove>
     </Codes>
+    <EnergyUpgrades>
+        <Settings>
+            <CathedralCeilingsFlat cost=""0"" priority=""1"" />
+            <Ceilings cost=""0"" priority=""12"" />
+            <MainWalls cost=""0"" priority=""2"" />
+            <Foundation cost=""0"" priority=""3"" />
+            <Floor cost=""0"" priority=""4"" />
+            <Windows cost=""0"" priority=""10"">
+                <Cost east=""0"" />
+            </Windows>
+            <AirTightness cost=""0"" priority=""5"" />
+            <Doors cost=""0"" priority=""9"" />
+            <Heating cost=""0"" priority=""7"" />
+            <HotWater cost=""0"" priority=""6"" />
+            <Ventilation cost=""0"" priority=""8"" />
+            <Cooling cost=""0"" priority=""11"" />
+        </Settings>
+    </EnergyUpgrades>
     <FuelCosts includeCostCalculations=""true"" library=""fuelLib.flc"">
         <Electricity>
             <Fuel id=""1"">
@@ -31568,6 +31784,24 @@ EVAL_ID,IDNUMBER,PARTNER,EVALUATOR,PREVIOUSFILEID,STATUS,CREATIONDATE,MODIFICATI
             </Standard>
         </FloorsAbove>
     </Codes>
+    <EnergyUpgrades>
+        <Settings>
+            <CathedralCeilingsFlat cost=""0"" priority=""1"" />
+            <Ceilings cost=""0"" priority=""12"" />
+            <MainWalls cost=""0"" priority=""2"" />
+            <Foundation cost=""0"" priority=""3"" />
+            <Floor cost=""0"" priority=""4"" />
+            <Windows cost=""0"" priority=""10"">
+                <Cost east=""0"" />
+            </Windows>
+            <AirTightness cost=""0"" priority=""5"" />
+            <Doors cost=""0"" priority=""9"" />
+            <Heating cost=""0"" priority=""7"" />
+            <HotWater cost=""0"" priority=""6"" />
+            <Ventilation cost=""0"" priority=""8"" />
+            <Cooling cost=""0"" priority=""11"" />
+        </Settings>
+    </EnergyUpgrades>
     <FuelCosts includeCostCalculations=""true"" library=""fuelLib.flc"">
         <Electricity>
             <Fuel id=""1"">
@@ -34117,6 +34351,24 @@ EVAL_ID,IDNUMBER,PARTNER,EVALUATOR,PREVIOUSFILEID,STATUS,CREATIONDATE,MODIFICATI
             </Standard>
         </FloorsAbove>
     </Codes>
+    <EnergyUpgrades>
+        <Settings>
+            <CathedralCeilingsFlat cost=""0"" priority=""1"" />
+            <Ceilings cost=""0"" priority=""12"" />
+            <MainWalls cost=""0"" priority=""2"" />
+            <Foundation cost=""0"" priority=""3"" />
+            <Floor cost=""0"" priority=""4"" />
+            <Windows cost=""0"" priority=""10"">
+                <Cost east=""0"" />
+            </Windows>
+            <AirTightness cost=""0"" priority=""5"" />
+            <Doors cost=""0"" priority=""9"" />
+            <Heating cost=""0"" priority=""7"" />
+            <HotWater cost=""0"" priority=""6"" />
+            <Ventilation cost=""0"" priority=""8"" />
+            <Cooling cost=""0"" priority=""11"" />
+        </Settings>
+    </EnergyUpgrades>
     <FuelCosts includeCostCalculations=""true"" library=""fuelLib.flc"">
         <Electricity>
             <Fuel id=""1"">
