@@ -29,6 +29,16 @@ const Schema = i18n => {
       value: I18NString!
     }
 
+    # ${i18n.t`An improvement that could improve the energy efficiency of the dwelling`}
+    type Upgrade {
+      # ${i18n.t`the part of the dwelling to be upgraded`}
+      upgradeType: I18NString
+      # ${i18n.t`An operator to describe how results will be filtered`}
+      cost: I18NInt
+      # ${i18n.t`Results will be compared to this value`}
+      priority: I18NInt
+    }
+
     # ${i18n.t`Ventilation systems draw exterior air into the house, exhaust interior air to the exterior, or both`}
     type Ventilation {
       # ${i18n.t`Ventilation type installed (en)`}
@@ -255,6 +265,8 @@ const Schema = i18n => {
       ventilations: [Ventilation]
       # ${i18n.t`A list of water heater data entries for a dwelling`}
       waterHeatings: [WaterHeater]
+      # ${i18n.t`A list of upgrades that would improve energy efficiency`}
+      energyUpgrades: [Upgrade]
     }
 
 
