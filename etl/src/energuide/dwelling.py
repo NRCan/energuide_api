@@ -204,6 +204,7 @@ class Evaluation:
                  foundations: typing.List[basement.Basement],
                  ers_rating: typing.Optional[int],
                  energy_upgrades: typing.List[upgrade.Upgrade],
+                 heating_system: heating.Heating,
                 ) -> None:
         self._evaluation_type = evaluation_type
         self._entry_date = entry_date
@@ -220,6 +221,7 @@ class Evaluation:
         self._foundations = foundations
         self._ers_rating = ers_rating
         self._energy_upgrades = energy_upgrades
+        self._heating_system = heating_system
 
     @classmethod
     def from_data(cls, data: ParsedDwellingDataRow) -> 'Evaluation':
@@ -239,6 +241,7 @@ class Evaluation:
             foundations=data.foundations,
             ers_rating=data.ers_rating,
             energy_upgrades=data.energy_upgrades,
+            heating_system=data.heating_system,
         )
 
     @property
@@ -301,6 +304,10 @@ class Evaluation:
     def energy_upgrades(self) -> typing.List[upgrade.Upgrade]:
         return self._energy_upgrades
 
+    @property
+    def heating_system(self) -> heating.Heating:
+        return self._heating_system
+
     def to_dict(self) -> typing.Dict[str, typing.Any]:
         return {
             'evaluationType': self.evaluation_type.value,
@@ -318,6 +325,7 @@ class Evaluation:
             'foundations': [foundation.to_dict() for foundation in self.foundations],
             'ersRating': self.ers_rating,
             'energyUgrades': [upgrade.to_dict() for upgrade in self.energy_upgrades],
+            'heating': self.heating_system.to_dict(),
         }
 
 

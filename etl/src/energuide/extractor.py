@@ -52,7 +52,7 @@ _WINDOWS_LONG_SIZE = (2 ** 31) - 1
 
 
 def _validated(data: typing.Iterable[reader.InputData]) -> typing.Iterator[reader.InputData]:
-    validator = cerberus.Validator(_SCHEMA, allow_unknown=True, purge_unknown=True)
+    validator = cerberus.Validator(_SCHEMA, purge_unknown=True)
     for row in data:
         if not validator.validate(row):
             error_keys = ', '.join(validator.errors.keys())
