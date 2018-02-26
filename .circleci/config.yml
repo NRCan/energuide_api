@@ -265,7 +265,8 @@ jobs:
       - run:
           name: "Build and Deploy ETL Docker Image"
           command: |
-            cd extract_endpoint
+            pwd
+            ls -laR
             pip install -r requirements.txt
             pip install -e .
             docker login -u "$DOCKER_USERNAME" -p "$DOCKER_PASSWORD" 
