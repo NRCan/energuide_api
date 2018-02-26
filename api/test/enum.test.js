@@ -69,6 +69,17 @@ describe('Enum values', () => {
     wallPerimeterFeet: { testValue: 117.328087744 },
     wallHeightMetres: { testValue: 2.5999 },
     wallHeightFeet: { testValue: 8.529855915999999 },
+    ceilingLabel: { testValue: 'Ceiling01' },
+    ceilingTypeEnglish: { testValue: 'Attic/gable' },
+    ceilingTypeFrench: { testValue: 'Combles/pignon' },
+    ceilingInsulationNominalRsi: { testValue: 6.3998 },
+    ceilingInsulationNominalR: { testValue: 36.3397497041326 },
+    ceilingInsulationEffectiveRsi: { testValue: 6.3998 },
+    ceilingInsulationEffectiveR: { testValue: 36.3397497041326 },
+    ceilingAreaMetres: { testValue: 77.1204 },
+    ceilingAreaFeet: { testValue: 830.1171300283143 },
+    ceilingLengthMetres: { testValue: 14.528 },
+    ceilingLengthFeet: { testValue: 47.66404352 },
   }
 
   Object.keys(testData).forEach(functionName => {
