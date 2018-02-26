@@ -31,11 +31,11 @@ const Schema = i18n => {
 
     # ${i18n.t`An improvement that could improve the energy efficiency of the dwelling`}
     type Upgrade {
-      # ${i18n.t`the part of the dwelling to be upgraded`}
+      # ${i18n.t`Part of the dwelling to be upgraded`}
       upgradeType: I18NString
-      # ${i18n.t`An operator to describe how results will be filtered`}
+      # ${i18n.t`Estimated cost of upgrade`}
       cost: I18NInt
-      # ${i18n.t`Results will be compared to this value`}
+      # ${i18n.t`Order of importance of upgrade recommendation (lower number means a higher priority)`}
       priority: I18NInt
     }
 
@@ -87,18 +87,30 @@ const Schema = i18n => {
       efficiency: I18NFloat
     }
 
-    # ~TODO translations
+    # ${i18n.t`A principal heating system is either the only source of heat for the house, or is used for at least 70% of the heating load`}
     type Heating {
+      # ${i18n.t`Description of heating system`}
       label: I18NString
+      # ${i18n.t`Type of heating system (en)`}
       heatingTypeEnglish: I18NString
+      # ${i18n.t`Type of heating system (fr)`}
       heatingTypeFrench: I18NString
+      # ${i18n.t`The source of fuel for the heating system (en)`}
       energySourceEnglish: I18NString
+      # ${i18n.t`The source of fuel for the heating system (fr)`}
       energySourceFrench: I18NString
+      # ${i18n.t`Equipment type of heating system (en)`}
       equipmentTypeEnglish: I18NString
+      # ${i18n.t`Equipment type of heating system (fr)`}
       equipmentTypeFrench: I18NString
+      # ${i18n.t`Output capacity of the heating system in kilowatt hours (kWh)`}
       outputSizeKW: I18NFloat
+      # ${i18n.t`Output capacity of the heating system in British Thermal Units per hour (BTU/h)`}
       outputSizeBtu: I18NFloat
+      # ${i18n.t`Measures how effectively your heating system is burning fuel or turning fuel into heat`}
       efficiency: I18NFloat
+      # ${i18n.t`Steady-state efficiency is the combustion efficiency of the equipment at peak performance.
+        The Annual Fuel Utilization Efficiency (AFUE) is a measure of efficiency based on average usage, accounting for the fact that most heating systems rarely run long enough to reach peak performance.`}
       steadyState: I18NString
     }
 
@@ -280,11 +292,11 @@ const Schema = i18n => {
       ventilations: [Ventilation]
       # ${i18n.t`A list of water heater data entries for a dwelling`}
       waterHeatings: [WaterHeater]
-      heatings: [Heating]
+      # ${i18n.t`A principal heating system for a dwelling`}
+      heating: Heating
       # ${i18n.t`A list of upgrades that would improve energy efficiency`}
       energyUpgrades: [Upgrade]
     }
-
 
     # ${i18n.t`A residential building evaluted under the Energuide program`}
     type Dwelling @cacheControl(maxAge: 90) {
