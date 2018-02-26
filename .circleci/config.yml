@@ -304,7 +304,6 @@ workflows:
       - extract_endpoint
       - python_integration
       - deploy_etl
-      - install_etl 
       - node_integration:
           requires:
             - python_integration
@@ -318,6 +317,3 @@ workflows:
       - deploy_api:
           requires:
             - yarn_build
-      - deploy_etl:
-          requires:
-            - install_etl
