@@ -259,7 +259,7 @@ jobs:
       - image: circleci/python:3.6.1
     steps:
       - checkout:
-        path: ~/repo
+          path: ~/repo
       - run:
           name: "Installing dependencies"
           command: |
