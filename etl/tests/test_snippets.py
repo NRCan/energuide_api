@@ -39,6 +39,11 @@ def test_house_snippet_to_dict(house: element.Element) -> None:
     assert len(output) == 12
 
 
+def test_energy_snippet_to_dict(energy_upgrades: element.Element) -> None:
+    output = snippets.snip_energy_upgrades(energy_upgrades).to_dict()
+    assert len(output) == 1
+
+
 def test_ceiling_snippet(house: element.Element) -> None:
     output = snippets.snip_house(house)
     assert len(output.ceilings) == 2
