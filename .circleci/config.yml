@@ -291,10 +291,10 @@ jobs:
             mv /tmp/workspace_etl/ ~/repo/extract_endpoint/src/extract_endpoint 
             chmod 755 ~/repo/extract_endpoint/src/extract_endpoint
             docker login -u "$DOCKER_USERNAME" -p "$DOCKER_PASSWORD" 
-            docker build --build-arg VERSION="${VERSION} -t "${DOCKER_REGISTRY}/${NAMESPACE}/${CIRCLE_PROJECT_REPONAME}:${VERSION} -t ${DOCKER_REGISTRY/${NAMESPACE}/${CIRCLE_PROJECT_REPONAME:latest"
-            docker build --build-arg VERSION="${VERSION} -t "${DOCKER_REGISTRY}/${NAMESPACE}/${CIRCLE_PROJECT_REPONAME}:${VERSION} -t ${DOCKER_REGISTRY/${NAMESPACE}/${CIRCLE_PROJECT_REPONAME:${VERSION}"
+            docker build --build-arg VERSION="${VERSION} -t "${DOCKER_REGISTRY}/${NAMESPACE}/deploy_etl:${VERSION}" .
+            docker build --build-arg VERSION="${VERSION} -t "${DOCKER_REGISTRY}/${NAMESPACE}/deploy_etl}:${VERSION}" .
             docker push "${DOCKER_REGISTRY/${NAMESPACE}/nrcan_etl:${VERSION}"
-            docker push "${DOCKER_REGISTRY/${NAMESPACE}/nrcan_etl:""latest"
+            docker push "${DOCKER_REGISTRY/${NAMESPACE}/nrcan_etl:latest"
   deploy_api:
     environment:
       - VERSION: "0.1.3"
