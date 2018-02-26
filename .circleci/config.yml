@@ -253,25 +253,6 @@ jobs:
             - dist
             - node_modules
  
-  install_etl:
-    working_directory: ~/repo/extract_endpoint
-    docker:
-      - image: circleci/python:3.6.1
-    steps:
-      - checkout:
-          path: ~/repo
-      - run:
-          name: "Installing dependencies"
-          command: |
-            python3 -m venv ~/.venv
-            . ~/.venv/bin/activate
-            pip install -r requirements.txt
-            pip install -e . 
-      - persist_to_workspace:
-          root: /home/circleci/repo/extract_endpoint
-          paths: 
-             - src/extract_endpoint
-
   deploy_etl:
     environment:
       - VERSION: "0.1.3"
@@ -281,15 +262,10 @@ jobs:
     steps:
       - checkout:
           path: ~/repo
-      - attach_workspace:
-          at: /tmp/workspace_etl
       - setup_remote_docker
       - run:
           name: "Build and Deploy ETL Docker Image"
           command: | 
-            rm -rf ~/repo/extract_endpoint/src/extract_endpoint
-            mv /tmp/workspace_etl/ ~/repo/extract_endpoint/src/extract_endpoint 
-            chmod 755 ~/repo/extract_endpoint/src/extract_endpoint
             docker login -u "$DOCKER_USERNAME" -p "$DOCKER_PASSWORD"
             docker build --build-arg VERSION="${VERSION}" -t "${DOCKER_REGISTRY}"/"${NAMESPACE}"/"nrcan_etl":"${VERSION}" -t "${DOCKER_REGISTRY}"/"${NAMESPACE}"/"nrcan_etl":"latest" .
             docker push "${DOCKER_REGISTRY}"/"${NAMESPACE}"/"nrcan_etl":"${VERSION}"
