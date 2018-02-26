@@ -27,7 +27,7 @@ def test_from_data(sample_raw: element.Element, sample: upgrade.Upgrade) -> None
 
 def test_to_dict(sample: upgrade.Upgrade) -> None:
     output = sample.to_dict()
-    assert {
+    assert output == {
         'upgradeType': 'CathedralCeilingsFlat',
         'cost': 0,
         'priority': 1,

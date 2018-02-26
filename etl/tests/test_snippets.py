@@ -258,4 +258,3 @@ def test_upgrades_snuppet(energy_upgrades: element.Element) -> None:
 
     doc = {'upgrades': output.upgrades}
     assert checker.validate(doc)
-

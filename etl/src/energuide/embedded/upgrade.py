@@ -1,6 +1,5 @@
 import typing
 from energuide import element
-from energuide.exceptions import InvalidEmbeddedDataTypeError
 
 
 class _Upgrade(typing.NamedTuple):

@@ -466,7 +466,7 @@ def raw_codes() -> typing.Dict[str, typing.List[str]]:
 
 
 @pytest.fixture
-def upgrades_input() -> str:
+def upgrades_input() -> typing.List[str]:
     doc = [
         '<Ceilings cost="0" priority="12" />',
         '<MainWalls cost="1" priority="2" />',
