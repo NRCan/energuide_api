@@ -966,5 +966,345 @@
         281
       ]
     ]
+  },
+  "Filter results by the house ID of a dwelling": {
+    "origin": [
+      [
+        "src/schema/index.js",
+        286
+      ]
+    ]
+  },
+  "Filter results by dwellings built in a specific year": {
+    "origin": [
+      [
+        "src/schema/index.js",
+        288
+      ]
+    ]
+  },
+  "Filter results by the dwellings in a specific city": {
+    "origin": [
+      [
+        "src/schema/index.js",
+        290
+      ]
+    ]
+  },
+  "Filter results by the dwellings in a specific region": {
+    "origin": [
+      [
+        "src/schema/index.js",
+        292
+      ]
+    ]
+  },
+  "Filter results by the dwellings in a specific forward sortation area": {
+    "origin": [
+      [
+        "src/schema/index.js",
+        294
+      ]
+    ]
+  },
+  "Filter results by the dwellings containing at least one ventilation system with a specific type (en)": {
+    "origin": [
+      [
+        "src/schema/index.js",
+        296
+      ]
+    ]
+  },
+  "Filter results by the dwellings containing at least one ventilation system with a specific type (fr)": {
+    "origin": [
+      [
+        "src/schema/index.js",
+        298
+      ]
+    ]
+  },
+  "Filter results by the dwellings containing at least one ventilation system with a specific air flow rate in Litres per Second (LpS)": {
+    "origin": [
+      [
+        "src/schema/index.js",
+        300
+      ]
+    ]
+  },
+  "Filter results by the dwellings containing at least one ventilation system with a specific air flow rate in Cubic feet per Minute (CfM)": {
+    "origin": [
+      [
+        "src/schema/index.js",
+        302
+      ]
+    ]
+  },
+  "Filter results by the dwellings containing at least one ventilation system with a specific efficiency rating": {
+    "origin": [
+      [
+        "src/schema/index.js",
+        304
+      ]
+    ]
+  },
+  "Filter results by the dwellings containing at least one floor with a specific location": {
+    "origin": [
+      [
+        "src/schema/index.js",
+        306
+      ]
+    ]
+  },
+  "Filter results by the dwellings containing at least one floor with a specific nominal RSI (R-value Systeme International)": {
+    "origin": [
+      [
+        "src/schema/index.js",
+        308
+      ]
+    ]
+  },
+  "Filter results by the dwellings containing at least one floor with a specific nominal R-value": {
+    "origin": [
+      [
+        "src/schema/index.js",
+        310
+      ]
+    ]
+  },
+  "Filter results by the dwellings containing at least one floor with a specific effective R-value": {
+    "origin": [
+      [
+        "src/schema/index.js",
+        312
+      ],
+      [
+        "src/schema/index.js",
+        314
+      ]
+    ]
+  },
+  "Filter results by the dwellings containing at least one floor with a specific area in square metres (m2)": {
+    "origin": [
+      [
+        "src/schema/index.js",
+        316
+      ]
+    ]
+  },
+  "Filter results by the dwellings containing at least one floor with a specific area in square feet (ft2)": {
+    "origin": [
+      [
+        "src/schema/index.js",
+        318
+      ]
+    ]
+  },
+  "Filter results by the dwellings containing at least one floor with a specific length in metres (m)": {
+    "origin": [
+      [
+        "src/schema/index.js",
+        320
+      ]
+    ]
+  },
+  "Filter results by the dwellings containing at least one floor with a specific length in feet (ft)": {
+    "origin": [
+      [
+        "src/schema/index.js",
+        322
+      ]
+    ]
+  },
+  "Filter results by the dwellings containing at least one water heating system of a specific type (en)": {
+    "origin": [
+      [
+        "src/schema/index.js",
+        324
+      ]
+    ]
+  },
+  "Filter results by the dwellings containing at least one water heating system of a specific type (fr)": {
+    "origin": [
+      [
+        "src/schema/index.js",
+        326
+      ]
+    ]
+  },
+  "Filter results by the dwellings containing at least one water heating system with a specific capacity in Litres (L)": {
+    "origin": [
+      [
+        "src/schema/index.js",
+        328
+      ]
+    ]
+  },
+  "Filter results by the dwellings containing at least one water heating system with a specific capacity in Gallons (g)": {
+    "origin": [
+      [
+        "src/schema/index.js",
+        330
+      ]
+    ]
+  },
+  "Filter results by the dwellings containing at least one water heating system with a specific efficiency rating": {
+    "origin": [
+      [
+        "src/schema/index.js",
+        332
+      ]
+    ]
+  },
+  "Filter results by the dwellings containing an above-grade heated floor area with a specific area in square metres (m2)": {
+    "origin": [
+      [
+        "src/schema/index.js",
+        334
+      ]
+    ]
+  },
+  "Filter results by the dwellings containing an above-grade heated floor area with a specific area in square feet (ft2)": {
+    "origin": [
+      [
+        "src/schema/index.js",
+        336
+      ]
+    ]
+  },
+  "Filter results by the dwellings containing a below-grade heated floor area with a specific area in square metres (m2)": {
+    "origin": [
+      [
+        "src/schema/index.js",
+        338
+      ]
+    ]
+  },
+  "Filter results by the dwellings containing a below-grade heated floor area with a specific area in square feet (ft2)": {
+    "origin": [
+      [
+        "src/schema/index.js",
+        340
+      ]
+    ]
+  },
+  "Filter results by the dwellings containing at least one wall with a specific location": {
+    "origin": [
+      [
+        "src/schema/index.js",
+        342
+      ]
+    ]
+  },
+  "Filter results by the dwellings containing at least one wall of a specific type (en)": {
+    "origin": [
+      [
+        "src/schema/index.js",
+        344
+      ]
+    ]
+  },
+  "Filter results by the dwellings containing at least one wall of a specific type (fr)": {
+    "origin": [
+      [
+        "src/schema/index.js",
+        346
+      ]
+    ]
+  },
+  "Filter results by the dwellings containing at least one wall with a component of a specific size (en)": {
+    "origin": [
+      [
+        "src/schema/index.js",
+        348
+      ]
+    ]
+  },
+  "Filter results by the dwellings containing at least one wall with a component of a specific size (fr)": {
+    "origin": [
+      [
+        "src/schema/index.js",
+        350
+      ]
+    ]
+  },
+  "Filter results by the dwellings containing at least one wall with a specific nominal RSI (R-value Systeme International)": {
+    "origin": [
+      [
+        "src/schema/index.js",
+        352
+      ]
+    ]
+  },
+  "Filter results by the dwellings containing at least one wall with a specific nominal R-value": {
+    "origin": [
+      [
+        "src/schema/index.js",
+        354
+      ]
+    ]
+  },
+  "Filter results by the dwellings containing at least one wall with a specific effective RSI (R-value Systeme International)": {
+    "origin": [
+      [
+        "src/schema/index.js",
+        356
+      ]
+    ]
+  },
+  "Filter results by the dwellings containing at least one wall with a specific effective R-value": {
+    "origin": [
+      [
+        "src/schema/index.js",
+        358
+      ]
+    ]
+  },
+  "Filter results by the dwellings containing at least one wall with a specific area in square metres (m2)": {
+    "origin": [
+      [
+        "src/schema/index.js",
+        360
+      ]
+    ]
+  },
+  "Filter results by the dwellings containing at least one wall with a specific area in square feet (ft2)": {
+    "origin": [
+      [
+        "src/schema/index.js",
+        362
+      ]
+    ]
+  },
+  "Filter results by the dwellings containing at least one wall with a specific perimeter in metres (m)": {
+    "origin": [
+      [
+        "src/schema/index.js",
+        364
+      ]
+    ]
+  },
+  "Filter results by the dwellings containing at least one wall with a specific perimeter in feet (ft)": {
+    "origin": [
+      [
+        "src/schema/index.js",
+        366
+      ]
+    ]
+  },
+  "Filter results by the dwellings containing at least one wall with a specific height in metres (m)": {
+    "origin": [
+      [
+        "src/schema/index.js",
+        368
+      ]
+    ]
+  },
+  "Filter results by the dwellings containing at least one wall with a specific height in feet (ft)": {
+    "origin": [
+      [
+        "src/schema/index.js",
+        370
+      ]
+    ]
   }
 }

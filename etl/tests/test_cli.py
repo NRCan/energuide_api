@@ -24,7 +24,7 @@ def data1() -> typing.Dict[str, typing.Optional[str]]:
         'RAW_XML': '<tag>thing</tag>',
         'BUILDER': '4K13D01404',
         'DHWHPCOP': '0',
-        'ERSRATING': '10',
+        'ERSRATING': '200',
         'INFO1': None,
         'INFO2': None,
         'INFO3': None,
@@ -34,7 +34,13 @@ def data1() -> typing.Dict[str, typing.Optional[str]]:
         'INFO7': None,
         'INFO8': None,
         'INFO9': None,
-        'INFO10': None
+        'INFO10': None,
+        'ENTRYDATE': '2012-02-25',
+        'CREATIONDATE': '2012-06-08 09:26:10',
+        'MODIFICATIONDATE': '2012-06-09 09:26:10',
+        'YEARBUILT': '1894',
+        'CLIENTCITY': 'Brooks',
+        'HOUSEREGION': 'AB',
     }
 
 
