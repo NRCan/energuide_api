@@ -25,21 +25,25 @@ App.config.update(dict(
 
 @App.route('/', methods=['GET'])
 def frontend() -> str:
+    print(flask.request.headers)
     return ''
 
 
 @App.route('/test_alive', methods=['GET'])
 def test_alive() -> str:
+    print(flask.request.headers)
     return 'Alive!'
 
 
 @App.route('/robots933456.txt', methods=['GET'])
 def robots() -> None:
+    print(flask.request.headers)
     flask.abort(HTTPStatus.NOT_FOUND)
 
 
 @App.route('/upload_file', methods=['POST'])
 def upload_file() -> typing.Tuple[str, int]:
+    print(flask.request.headers)
     if App.config['SECRET_KEY'] == DEFAULT_ENDPOINT_SECRET_KEY:
         raise ValueError("Need to define environment variable ENDPOINT_SECRET_KEY")
     if 'signature' not in flask.request.form:
