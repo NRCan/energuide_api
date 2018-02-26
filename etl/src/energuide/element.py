@@ -38,7 +38,13 @@ class Element:
 
     def get_text(self, *args, **kwargs) -> str:
         result: typing.Optional[str] = self.__node.findtext(*args, **kwargs)
-        assert result is not None
+        if result is None:
+            error_message = (
+                f"Couldn't find text at path {args[0]} in tag {self.tag}"
+                if len(args) > 0
+                else "Couldn't find text in {self.tag}"
+            )
+            raise ElementGetValueError(error_message)
         return result
 
     @property
