@@ -289,7 +289,7 @@ jobs:
           command: | 
             rm -rf ~/repo/extract_endpoint/src/extract_endpoint
             mv /tmp/workspace_etl/ ~/repo/extract_endpoint/src/extract_endpoint 
-            chmod 758 ~/repo/extract_endpoint/src/extract_endpoint
+            chmod 755 ~/repo/extract_endpoint/src/extract_endpoint
             docker login -u "$DOCKER_USERNAME" -p "$DOCKER_PASSWORD"
             docker build --build-arg VERSION="${VERSION}" -t "${DOCKER_REGISTRY}"/"${NAMESPACE}"/"nrcan_etl":"${VERSION}" -t "${DOCKER_REGISTRY}"/"${NAMESPACE}"/"nrcan_etl":"latest" .
             docker push "${DOCKER_REGISTRY}"/"${NAMESPACE}"/"nrcan_etl":"${VERSION}"
