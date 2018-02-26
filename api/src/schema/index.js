@@ -381,6 +381,28 @@ const Schema = i18n => {
       wallHeightMetres
       # ${i18n.t`Filter results by the dwellings containing at least one wall with a specific height in feet (ft)`}
       wallHeightFeet
+      # ${i18n.t`Filter results by the dwellings where at least one ceiling has a matching label`}
+      ceilingLabel
+      # ${i18n.t`Filter results by the dwellings where at least one ceiling has a matching type (en)`}
+      ceilingTypeEnglish
+      # ${i18n.t`Filter results by the dwellings where at least one ceiling has a matching type (fr)`}
+      ceilingTypeFrench
+      # ${i18n.t`Filter results by the dwellings where at least one ceiling has a specific nominal RSI (R-value Systeme International)`}
+      ceilingInsulationNominalRsi
+      # ${i18n.t`Filter results by the dwellings containing at least one ceiling with a specific nominal R-value`}
+      ceilingInsulationNominalR
+      # ${i18n.t`Filter results by the dwellings containing at least one ceiling with a specific effective RSI (R-value Systeme International)`}
+      ceilingInsulationEffectiveRsi
+      # ${i18n.t`Filter results by the dwellings containing at least one ceiling with a specific effective R-value`}
+      ceilingInsulationEffectiveR
+      # ${i18n.t`Filter results by the dwellings containing at least one ceiling with a specific area in square metres (m2)`}
+      ceilingAreaMetres
+      # ${i18n.t`Filter results by the dwellings containing at least one ceiling with a specific area in square feet (ft2)`}
+      ceilingAreaFeet
+      # ${i18n.t`Filter results by the dwellings containing at least one ceiling with a specific length in metres (m)`}
+      ceilingLengthMetres
+      # ${i18n.t`Filter results by the dwellings containing at least one ceiling with a specific length in feet (ft)`}
+      ceilingLengthFeet
     }
   `
 
