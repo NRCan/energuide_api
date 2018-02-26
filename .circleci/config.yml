@@ -275,7 +275,7 @@ jobs:
   deploy_etl:
     environment:
       - VERSION: "0.1.3"
-    working_directory: ~/repo
+    working_directory: ~/repo/extract_endpoint
     docker: 
      - image: docker
     steps:
