@@ -283,48 +283,91 @@ const Schema = i18n => {
     }
 
     enum Field {
+      # ${i18n.t`Filter results by the house ID of a dwelling`}
       dwellingHouseId
+      # ${i18n.t`Filter results by dwellings built in a specific year`}
       dwellingYearBuilt
+      # ${i18n.t`Filter results by the dwellings in a specific city`}
       dwellingCity
+      # ${i18n.t`Filter results by the dwellings in a specific region`}
       dwellingRegion
+      # ${i18n.t`Filter results by the dwellings in a specific forward sortation area`}
       dwellingForwardSortationArea
+      # ${i18n.t`Filter results by the dwellings containing at least one ventilation system with a specific type (en)`}
       ventilationTypeEnglish
+      # ${i18n.t`Filter results by the dwellings containing at least one ventilation system with a specific type (fr)`}
       ventilationTypeFrench
+      # ${i18n.t`Filter results by the dwellings containing at least one ventilation system with a specific air flow rate in Litres per Second (LpS)`}
       ventilationAirFlowRateLps
+      # ${i18n.t`Filter results by the dwellings containing at least one ventilation system with a specific air flow rate in Cubic feet per Minute (CfM)`}
       ventilationAirFlowRateCfm
+      # ${i18n.t`Filter results by the dwellings containing at least one ventilation system with a specific efficiency rating`}
       ventilationEfficiency
+      # ${i18n.t`Filter results by the dwellings containing at least one floor with a specific location`}
       floorLabel
+      # ${i18n.t`Filter results by the dwellings containing at least one floor with a specific nominal RSI (R-value Systeme International)`}
       floorInsulationNominalRsi
+      # ${i18n.t`Filter results by the dwellings containing at least one floor with a specific nominal R-value`}
       floorInsulationNominalR
+      # ${i18n.t`Filter results by the dwellings containing at least one floor with a specific effective R-value`}
       floorInsulationEffectiveRsi
+      # ${i18n.t`Filter results by the dwellings containing at least one floor with a specific effective R-value`}
       floorInsulationEffectiveR
+      # ${i18n.t`Filter results by the dwellings containing at least one floor with a specific area in square metres (m2)`}
       floorAreaMetres
+      # ${i18n.t`Filter results by the dwellings containing at least one floor with a specific area in square feet (ft2)`}
       floorAreaFeet
+      # ${i18n.t`Filter results by the dwellings containing at least one floor with a specific length in metres (m)`}
       floorLengthMetres
+      # ${i18n.t`Filter results by the dwellings containing at least one floor with a specific length in feet (ft)`}
       floorLengthFeet
+      # ${i18n.t`Filter results by the dwellings containing at least one water heating system of a specific type (en)`}
       waterHeatingTypeEnglish
+      # ${i18n.t`Filter results by the dwellings containing at least one water heating system of a specific type (fr)`}
       waterHeatingTypeFrench
+      # ${i18n.t`Filter results by the dwellings containing at least one water heating system with a specific capacity in Litres (L)`}
       waterHeatingTankVolumeLitres
+      # ${i18n.t`Filter results by the dwellings containing at least one water heating system with a specific capacity in Gallons (g)`}
       waterHeatingTankVolumeGallon
+      # ${i18n.t`Filter results by the dwellings containing at least one water heating system with a specific efficiency rating`}
       waterHeatingEfficiency
+      # ${i18n.t`Filter results by the dwellings containing an above-grade heated floor area with a specific area in square metres (m2)`}
       heatedFloorAreaAreaAboveGradeMetres
+      # ${i18n.t`Filter results by the dwellings containing an above-grade heated floor area with a specific area in square feet (ft2)`}
       heatedFloorAreaAreaAboveGradeFeet
+      # ${i18n.t`Filter results by the dwellings containing a below-grade heated floor area with a specific area in square metres (m2)`}
       heatedFloorAreaAreaBelowGradeMetres
+      # ${i18n.t`Filter results by the dwellings containing a below-grade heated floor area with a specific area in square feet (ft2)`}
       heatedFloorAreaAreaBelowGradeFeet
+      # ${i18n.t`Filter results by the dwellings containing at least one wall with a specific location`}
       wallLabel
+      # ${i18n.t`Filter results by the dwellings containing at least one wall of a specific type (en)`}
       wallStructureTypeEnglish
+      # ${i18n.t`Filter results by the dwellings containing at least one wall of a specific type (fr)`}
       wallStructureTypeFrench
+      # ${i18n.t`Filter results by the dwellings containing at least one wall with a component of a specific size (en)`}
       wallComponentTypeSizeEnglish
+      # ${i18n.t`Filter results by the dwellings containing at least one wall with a component of a specific size (fr)`}
       wallComponentTypeSizeFrench
+      # ${i18n.t`Filter results by the dwellings containing at least one wall with a specific nominal RSI (R-value Systeme International)`}
       wallInsulationNominalRsi
+      # ${i18n.t`Filter results by the dwellings containing at least one wall with a specific nominal R-value`}
       wallInsulationNominalR
+      # ${i18n.t`Filter results by the dwellings containing at least one wall with a specific effective RSI (R-value Systeme International)`}
       wallInsulationEffectiveRsi
+      # ${i18n.t`Filter results by the dwellings containing at least one wall with a specific effective R-value`}
       wallInsulationEffectiveR
+      # ${i18n.t`Filter results by the dwellings containing at least one wall with a specific area in square metres (m2)`}
       wallAreaMetres
+      # ${i18n.t`Filter results by the dwellings containing at least one wall with a specific area in square feet (ft2)`}
       wallAreaFeet
+      # ${i18n.t`Filter results by the dwellings containing at least one wall with a specific perimeter in metres (m)`}
       wallPerimeterMetres
+      # ${i18n.t`Filter results by the dwellings containing at least one wall with a specific perimeter in feet (ft)`}
       wallPerimeterFeet
+      # ${i18n.t`Filter results by the dwellings containing at least one wall with a specific height in metres (m)`}
       wallHeightMetres
+      # ${i18n.t`Filter results by the dwellings containing at least one wall with a specific height in feet (ft)`}
       wallHeightFeet
     }
   `
