@@ -252,22 +252,6 @@ jobs:
           paths:
             - dist
             - node_modules
-  etl_install:
-    working_directory: ~/repo/extract_endpoint
-    docker:
-      - image: python:3
-    steps:
-      - checkout: 
-          path: ~/repo
-      - run:
-          name: "pip install"
-          command: |
-            cd ~/repo/extract_endpoint
-            pip install -r requirements.txt
-            pip install -e .
-      - persist_to_workspace:
-         root: /home/circleci/repo/etl
-         paths: src/extract_endpoint
   deploy_etl:
     environment:
       - VERSION="0.1.2"
@@ -277,20 +261,18 @@ jobs:
     steps:
       - checkout:
           path: ~/repo
-      - attach_workspace:
-         at: /tmp/workspace_etl 
-      - setup_reote_docker
+      - setup_remote_docker
       - run:
           name: "Build and Deploy ETL Docker Image"
           command: |
-            mkdir ~/repo/etl/extract_endpoint
-            cp -pr /tmp/workspace_etl/* ~/repo/etl/extract_endpoint
-            chmod 755 ~repo/etl/extract_endpoint
+            cd extract_endpoint
+            pip install -r requirements.txt
+            pip install -e .
             docker login -u "$DOCKER_USERNAME" -p "$DOCKER_PASSWORD" 
             docker build --build-arg VERSION="${VERSION} -t "${DOCKER_REGISTRY}/${NAMESPACE}/${CIRCLE_PROJECT_REPONAME}:${VERSION} -t ${DOCKER_REGISTRY/${NAMESPACE}/${CIRCLE_PROJECT_REPONAME:latest"
             docker build --build-arg VERSION="${VERSION} -t "${DOCKER_REGISTRY}/${NAMESPACE}/${CIRCLE_PROJECT_REPONAME}:${VERSION} -t ${DOCKER_REGISTRY/${NAMESPACE}/${CIRCLE_PROJECT_REPONAME:${VERSION}"
-            docker push "${DOCKER_REGISTRY/${NAMESPACE}/${CIRCLE_PROJECT_REPONAME}:${VERSION}"
-            docker push "${DOCKER_REGISTRY/${NAMESPACE}/${CIRCLE_PROJECT_REPONAME}:""latest"
+            docker push "${DOCKER_REGISTRY/${NAMESPACE}/nrcan_etl:${VERSION}"
+            docker push "${DOCKER_REGISTRY/${NAMESPACE}/nrcan_etl:""latest"
   deploy_api:
     environment:
       - VERSION: "0.1.3"
@@ -324,7 +306,6 @@ workflows:
       - etl
       - extract_endpoint
       - python_integration
-      - etl_install
       - deploy_etl
       - node_integration:
           requires:
@@ -339,6 +320,3 @@ workflows:
       - deploy_api:
           requires:
             - yarn_build
-      - deploy_etl: 
-          requires:
-            - etl_install
