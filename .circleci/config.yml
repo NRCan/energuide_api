@@ -332,8 +332,8 @@ workflows:
           filters:
             branches:
               only:
-                - master
-      - deploy_api:
+                - continuous_deploy
+      - aeploy_api:
           requires:
             - yarn_build
       - deploy_etl: 
