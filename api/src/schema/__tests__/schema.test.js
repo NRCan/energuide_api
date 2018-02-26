@@ -121,6 +121,7 @@ describe('Schema', () => {
         'heatedFloorArea',
         'ventilations',
         'waterHeatings',
+        'heating',
         'energyUpgrades',
       ])
     })
@@ -226,6 +227,30 @@ describe('Schema', () => {
         'tankVolumeLitres',
         'tankVolumeGallon',
         'efficiency',
+      ])
+    })
+  })
+
+  describe('Heating', () => {
+    it('is defined', () => {
+      expect(typeMap).toHaveProperty('Heating')
+    })
+
+    it('has the expected fields', () => {
+      const { Heating } = typeMap
+      const fields = Object.keys(Heating.getFields())
+      expect(fields).toEqual([
+        'label',
+        'heatingTypeEnglish',
+        'heatingTypeFrench',
+        'energySourceEnglish',
+        'energySourceFrench',
+        'equipmentTypeEnglish',
+        'equipmentTypeFrench',
+        'outputSizeKW',
+        'outputSizeBtu',
+        'efficiency',
+        'steadyState',
       ])
     })
   })

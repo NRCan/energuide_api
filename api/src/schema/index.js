@@ -87,6 +87,21 @@ const Schema = i18n => {
       efficiency: I18NFloat
     }
 
+    # ~TODO translations
+    type Heating {
+      label: I18NString
+      heatingTypeEnglish: I18NString
+      heatingTypeFrench: I18NString
+      energySourceEnglish: I18NString
+      energySourceFrench: I18NString
+      equipmentTypeEnglish: I18NString
+      equipmentTypeFrench: I18NString
+      outputSizeKW: I18NFloat
+      outputSizeBtu: I18NFloat
+      efficiency: I18NFloat
+      steadyState: I18NString
+    }
+
     # ${i18n.t`One page of results`}
     type PaginatedResultSet @cacheControl(maxAge: 90) {
       # ${i18n.t`If true, a further page of results can be returned`}
@@ -265,6 +280,7 @@ const Schema = i18n => {
       ventilations: [Ventilation]
       # ${i18n.t`A list of water heater data entries for a dwelling`}
       waterHeatings: [WaterHeater]
+      heatings: [Heating]
       # ${i18n.t`A list of upgrades that would improve energy efficiency`}
       energyUpgrades: [Upgrade]
     }
