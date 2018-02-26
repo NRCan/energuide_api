@@ -263,7 +263,7 @@ jobs:
           name: "pip install"
           command: |
             cd ~/repo/extract_endpoint
-            pip install -r requirements
+            pip install -r requirements.txt
             pip install -e .
       - persist_to_workspace:
          root: /home/circleci/repo/etl
