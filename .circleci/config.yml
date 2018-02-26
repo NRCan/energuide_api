@@ -252,7 +252,45 @@ jobs:
           paths:
             - dist
             - node_modules
-  deploy:
+  etl_install:
+    working_directory: ~/repo/extract_endpoint
+    docker:
+      - image: python:3
+    steps:
+      - checkout: 
+          path: ~/repo
+      - run:
+          name: "pip install"
+          command: |
+            pip install -r requirements
+            pip install -e .
+      - persist_to_workspace:
+         root: /home/circleci/repo/etl
+         paths: src/extract_endpoint
+  deploy_etl:
+    environment:
+      - VERSION="0.1.2"
+    working_directory: ~/repo/api
+    docker: 
+     - image: docker
+    steps:
+      - checkout:
+          path: ~/repo
+      - attach_workspace:
+         at: /tmp/workspace_etl 
+      - setup_reote_docker
+      - run:
+          name: "Build and Deploy ETL Docker Image"
+          command: |
+            mkdir ~/repo/etl/extract_endpoint
+            cp -pr /tmp/workspace_etl/* ~/repo/etl/extract_endpoint
+            chmod 755 ~repo/etl/extract_endpoint
+            docker login -u "$DOCKER_USERNAME" -p "$DOCKER_PASSWORD" 
+            docker build --build-arg VERSION="${VERSION} -t "${DOCKER_REGISTRY}/${NAMESPACE}/${CIRCLE_PROJECT_REPONAME}:${VERSION} -t ${DOCKER_REGISTRY/${NAMESPACE}/${CIRCLE_PROJECT_REPONAME:latest"
+            docker build --build-arg VERSION="${VERSION} -t "${DOCKER_REGISTRY}/${NAMESPACE}/${CIRCLE_PROJECT_REPONAME}:${VERSION} -t ${DOCKER_REGISTRY/${NAMESPACE}/${CIRCLE_PROJECT_REPONAME:${VERSION}"
+            docker push "${DOCKER_REGISTRY/${NAMESPACE}/${CIRCLE_PROJECT_REPONAME}:${VERSION}"
+            docker push "${DOCKER_REGISTRY/${NAMESPACE}/${CIRCLE_PROJECT_REPONAME}:""latest"
+  deploy_api:
     environment:
       - VERSION: "0.1.2"
     working_directory: ~/repo/api
@@ -295,6 +333,9 @@ workflows:
             branches:
               only:
                 - master
-      - deploy:
+      - deploy_api:
           requires:
             - yarn_build
+      - deploy_etl: 
+          requires:
+            - etl_install
