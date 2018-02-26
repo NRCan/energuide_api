@@ -40,7 +40,7 @@ const Schema = i18n => {
     }
 
     # ${i18n.t`Ventilation systems draw exterior air into the house, exhaust interior air to the exterior, or both`}
-    type Ventilation {
+    type Ventilation @cacheControl(maxAge: 90) {
       # ${i18n.t`Ventilation type installed (en)`}
       typeEnglish: I18NString
       # ${i18n.t`Ventilation type installed (fr)`}
@@ -52,7 +52,7 @@ const Schema = i18n => {
     }
 
     # ${i18n.t`Floors represents the usable area of the house`}
-    type Floor {
+    type Floor @cacheControl(maxAge: 90) {
       # ${i18n.t`Description of floor location`}
       label: I18NString
       # ${i18n.t`Floor insulation nominal RSI (R-value Systeme International)`}
@@ -74,7 +74,7 @@ const Schema = i18n => {
     }
 
     # ${i18n.t`Water heaters heat the domestic hot water in a house`}
-    type WaterHeater {
+    type WaterHeater @cacheControl(maxAge: 90) {
       # ${i18n.t`Type of tank being used to heat the domestic hot water in the house (en)`}
       typeEnglish: I18NString
       # ${i18n.t`Type of tank being used to heat the domestic hot water in the house (fr)`}
@@ -88,7 +88,7 @@ const Schema = i18n => {
     }
 
     # ${i18n.t`One page of results`}
-    type PaginatedResultSet {
+    type PaginatedResultSet @cacheControl(maxAge: 90) {
       # ${i18n.t`If true, a further page of results can be returned`}
       hasNext: I18NBoolean
       # ${i18n.t`If true, a previous page of results can be returned`}
@@ -102,7 +102,7 @@ const Schema = i18n => {
     }
 
     # ${i18n.t`Heated floor areas represents the usable areas of a house that is conditioned to a specified temperature during the whole heating season`}
-    type HeatedFloorArea {
+    type HeatedFloorArea @cacheControl(maxAge: 90) {
       # ${i18n.t`Above-grade heated area of the house in square metres (m2), i.e. the ground floor`}
       areaAboveGradeMetres: I18NFloat
       # ${i18n.t`Above-grade heated area of the house in square feet (ft2), i.e. the ground floor`}
@@ -114,7 +114,7 @@ const Schema = i18n => {
     }
 
     # ${i18n.t`Walls separate the interior heated space from the outside (interior partition walls are not considered walls)`}
-    type Wall {
+    type Wall @cacheControl(maxAge: 90) {
       # ${i18n.t`Description of wall location`}
       label: I18NString
       # ${i18n.t`Wall construction being used (en)`}
@@ -148,7 +148,7 @@ const Schema = i18n => {
     }
 
     # ${i18n.t`Doors are on outside walls, separating the interior heated space from the outside`}
-    type Door {
+    type Door @cacheControl(maxAge: 90) {
       # ${i18n.t`Describes the construction of the door (en)`}
       typeEnglish: I18NString
       # ${i18n.t`Describes the construction of the door (fr)`}
@@ -168,7 +168,7 @@ const Schema = i18n => {
     }
 
     # ${i18n.t`Windows separate the interior heated space from the outside`}
-    type Window {
+    type Window @cacheControl(maxAge: 90) {
       # ${i18n.t`Used to identify the window component in the house`}
       label: I18NString
       # ${i18n.t`Window RSI (R-value Systeme International)`}
@@ -214,7 +214,7 @@ const Schema = i18n => {
     }
 
     # ${i18n.t`Ceilings are the upper interior surface of a room`}
-    type Ceiling {
+    type Ceiling @cacheControl(maxAge: 90) {
       # ${i18n.t`Used to identify the ceiling in the house`}
       label: I18NString
       # ${i18n.t`Describes the construction of the ceiling (en)`}
@@ -240,7 +240,7 @@ const Schema = i18n => {
     }
 
     # ${i18n.t`Detailed information about specific features of a given dwelling`}
-    type Evaluation {
+    type Evaluation @cacheControl(maxAge: 90) {
       # ${i18n.t`Evaluation type codes are used to define the type of evaluation performed and to distinguish the house type (i.e. newly built or existing)`}
       evaluationType: I18NString
       # ${i18n.t`Date the evaluation was made`}
@@ -271,7 +271,7 @@ const Schema = i18n => {
 
 
     # ${i18n.t`A residential building evaluted under the Energuide program`}
-    type Dwelling {
+    type Dwelling @cacheControl(maxAge: 90) {
       # ${i18n.t`Unique identification number for a dwelling`}
       houseId: I18NInt
       # ${i18n.t`Year of construction`}
@@ -287,7 +287,7 @@ const Schema = i18n => {
     }
 
     # ${i18n.t`The root query type`}
-    type Query {
+    type Query @cacheControl(maxAge: 90) {
       # ${i18n.t`Details for a specific dwelling`}
       dwelling(houseId: I18NInt!): Dwelling
       # ${i18n.t`Details for all dwellings, optionally filtered by one or more values`}
