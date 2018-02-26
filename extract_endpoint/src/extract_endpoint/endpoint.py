@@ -67,4 +67,4 @@ def upload_file() -> typing.Tuple[str, int]:
 
 
 if __name__ == "__main__":
-    App.run()
+    App.run(host='0.0.0.0')
