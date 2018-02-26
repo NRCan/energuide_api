@@ -37,5 +37,5 @@ def post_stream(stream: typing.IO[bytes], filename: typing.Optional[str], url: s
 @click.argument('stream', type=click.File('rb'))
 @click.option('--filename')
 @click.option('--url', default='http://127.0.0.1:5000/upload_file')
-def upload(stream: typing.IO[bytes], filename: typing.Optional[str], url: str) -> requests.models.Response:
-    click.echo(post_stream(stream=stream, filename=filename, url=url))
+def upload(stream: typing.IO[bytes], filename: typing.Optional[str], url: str) -> None:
+    click.echo(str(post_stream(stream=stream, filename=filename, url=url)))
