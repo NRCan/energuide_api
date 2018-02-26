@@ -4,7 +4,7 @@ from energuide import element
 from energuide.embedded import area
 from energuide.embedded import distance
 from energuide.embedded import insulation
-from energuide.exceptions import InvalidEmbeddedDataTypeError
+from energuide.exceptions import InvalidEmbeddedDataTypeError, ElementGetValueError
 
 
 class _Ceiling(typing.NamedTuple):
@@ -34,7 +34,7 @@ class Ceiling(_Ceiling):
                 ceiling_area=area.Area(float(ceiling.xpath('Measurements/@area')[0])),
                 ceiling_length=distance.Distance(float(ceiling.xpath('Measurements/@length')[0])),
             )
-        except (IndexError, ValueError, AssertionError) as exc:
+        except (IndexError, ValueError, ElementGetValueError) as exc:
             raise InvalidEmbeddedDataTypeError(Ceiling) from exc
 
     def to_dict(self) -> typing.Dict[str, typing.Any]:

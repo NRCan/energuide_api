@@ -1,7 +1,7 @@
 import typing
 from energuide import bilingual
 from energuide import element
-from energuide.exceptions import InvalidEmbeddedDataTypeError
+from energuide.exceptions import InvalidEmbeddedDataTypeError, ElementGetValueError
 
 
 class _WallCode(typing.NamedTuple):
@@ -28,7 +28,7 @@ class WallCode(_WallCode):
                     french=wall_code.get_text('Layers/ComponentTypeSize/French'),
                 )
             )
-        except (KeyError, AssertionError) as exc:
+        except (KeyError, ElementGetValueError) as exc:
             raise InvalidEmbeddedDataTypeError(WallCode) from exc
 
 
@@ -76,7 +76,7 @@ class WindowCode(_WindowCode):
                     french=window_code.get_text('Layers/FrameMaterial/French'),
                 )
             )
-        except (KeyError, AssertionError) as exc:
+        except (KeyError, ElementGetValueError) as exc:
             raise InvalidEmbeddedDataTypeError(WindowCode) from exc
 
 

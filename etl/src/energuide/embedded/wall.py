@@ -4,7 +4,7 @@ from energuide.embedded import code
 from energuide.embedded import insulation
 from energuide.embedded import distance
 from energuide import element
-from energuide.exceptions import InvalidEmbeddedDataTypeError
+from energuide.exceptions import InvalidEmbeddedDataTypeError, ElementGetValueError
 
 
 class _Wall(typing.NamedTuple):
@@ -35,7 +35,7 @@ class Wall(_Wall):
                 perimeter=distance.Distance(float(wall.xpath('Measurements/@perimeter')[0])),
                 height=distance.Distance(float(wall.xpath('Measurements/@height')[0])),
             )
-        except (AssertionError, ValueError, IndexError) as exc:
+        except (ElementGetValueError, ValueError, IndexError) as exc:
             raise InvalidEmbeddedDataTypeError(Wall) from exc
 
     @property
