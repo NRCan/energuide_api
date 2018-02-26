@@ -267,6 +267,8 @@ const Schema = i18n => {
       waterHeatings: [WaterHeater]
       # ${i18n.t`A list of upgrades that would improve energy efficiency`}
       energyUpgrades: [Upgrade]
+      # ${i18n.t`The Energyguide Rating calculated for this evaluation`}
+      ersRating: I18NString
     }
 
 

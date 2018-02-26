@@ -53,33 +53,54 @@ describe('queries', () => {
         .set('Content-Type', 'application/json; charset=utf-8')
         .send({
           query: `{
-          evaluations:dwelling(houseId: 189250) {
+          dwelling(houseId: 189250) {
             evaluations {
               evaluationType
               entryDate
               creationDate
               modificationDate
+              ersRating
             }
           }
         }`,
         })
 
-      let { evaluations } = response.body.data
-      expect(evaluations).toEqual({
-        evaluations: [
-          {
-            creationDate: '2012-10-01T15:08:41',
-            entryDate: '2011-11-18',
-            evaluationType: 'E',
-            modificationDate: '2012-06-09T11:20:20',
-          },
-          {
-            creationDate: '2012-10-01T15:08:39',
-            entryDate: '2011-08-18',
-            evaluationType: 'D',
-            modificationDate: '2012-06-09T11:20:20',
-          },
-        ],
+      let { dwelling } = response.body.data
+      let [first] = dwelling.evaluations
+      expect(first).toEqual({
+        creationDate: '2012-10-01T15:08:41',
+        entryDate: '2011-11-18',
+        ersRating: 120,
+        evaluationType: 'E',
+        modificationDate: '2012-06-09T11:20:20',
+      })
+    })
+
+    it('retrieves all top level keys of the upgrade data', async () => {
+      let response = await request(server)
+        .post('/graphql')
+        .set('Content-Type', 'application/json; charset=utf-8')
+        .send({
+          query: `{
+          dwelling(houseId: 189250) {
+            evaluations {
+              energyUpgrades {
+                upgradeType
+                cost
+                priority
+              }
+            }
+          }
+        }`,
+        })
+
+      let { dwelling: { evaluations } } = response.body.data
+      let [first] = evaluations
+      let [upgrade] = first.energyUpgrades
+      expect(upgrade).toEqual({
+        upgradeType: 'CathedralCeilingsFlat',
+        cost: 0,
+        priority: 1,
       })
     })
 
