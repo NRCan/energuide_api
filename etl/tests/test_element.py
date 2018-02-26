@@ -38,7 +38,7 @@ def test_get_text(fragment_node: element.Element) -> None:
 
 
 def test_get_text_raises_when_not_found(fragment_node: element.Element) -> None:
-    with pytest.raises(AssertionError):
+    with pytest.raises(ElementGetValueError):
         fragment_node.get_text('Baz')
 
 

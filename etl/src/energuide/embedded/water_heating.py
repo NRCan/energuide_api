@@ -2,7 +2,7 @@ import enum
 import typing
 from energuide import bilingual
 from energuide import element
-from energuide.exceptions import InvalidEmbeddedDataTypeError
+from energuide.exceptions import InvalidEmbeddedDataTypeError, ElementGetValueError
 
 
 class WaterHeaterType(enum.Enum):
@@ -298,7 +298,7 @@ class WaterHeating(_WaterHeating):
                 tank_volume=volume,
                 efficiency=efficiency,
             )
-        except (AssertionError, KeyError, ValueError, IndexError) as exc:
+        except (ElementGetValueError, AssertionError, KeyError, ValueError, IndexError) as exc:
             raise InvalidEmbeddedDataTypeError(WaterHeating) from exc
 
     @classmethod
