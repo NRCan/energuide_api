@@ -41,7 +41,7 @@ class Element:
         if result is None:
             error_message = (
                 f"Couldn't find text at path {args[0]} in tag {self.tag}"
-                if len(args) > 0
+                if args
                 else "Couldn't find text in {self.tag}"
             )
             raise ElementGetValueError(error_message)
