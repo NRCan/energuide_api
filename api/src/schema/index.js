@@ -359,6 +359,28 @@ const Schema = i18n => {
       waterHeatingTankVolumeGallon
       # ${i18n.t`Filter results by the dwellings containing at least one water heating system with a specific efficiency rating`}
       waterHeatingEfficiency
+      # ${i18n.t`Filter results by the dwellings containing a heating system with a specific description`}
+      heatingLabel
+      # ${i18n.t`Filter results by the dwellings containing a heating system of a specific type (en)`}
+      heatingHeatingTypeEnglish
+      # ${i18n.t`Filter results by the dwellings containing a heating system of a specific type (fr)`}
+      heatingHeatingTypeFrench
+      # ${i18n.t`Filter results by the dwellings containing a heating system with a specific fuel source (en)`}
+      heatingEnergySourceEnglish
+      # ${i18n.t`Filter results by the dwellings containing a heating system with a specific fuel source (fr)`}
+      heatingEnergySourceFrench
+      # ${i18n.t`Filter results by the dwellings containing a heating system with a specific type of equipment (en)`}
+      heatingEquipmentTypeEnglish
+      # ${i18n.t`Filter results by the dwellings containing a heating system with a specific type of equipment (fr)`}
+      heatingEquipmentTypeFrench
+      # ${i18n.t`Filter results by the dwellings containing a heating system with a specific output capacity in kilowatt hours (kWh)`}
+      heatingOutputSizeKW
+      # ${i18n.t`Filter results by the dwellings containing a heating system with a specific output capacity in British Thermal Units per hour (BTU/h)`}
+      heatingOutputSizeBtu
+      # ${i18n.t`Filter results by the dwellings containing a heating system with a specific efficiency rating`}
+      heatingEfficiency
+      # ${i18n.t`Filter results by the dwellings containing a heating system efficiency measurement that is either 'Steady State' or 'AFUE'`}
+      heatingSteadyState
       # ${i18n.t`Filter results by the dwellings containing an above-grade heated floor area with a specific area in square metres (m2)`}
       heatedFloorAreaAreaAboveGradeMetres
       # ${i18n.t`Filter results by the dwellings containing an above-grade heated floor area with a specific area in square feet (ft2)`}
