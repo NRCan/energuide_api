@@ -40,6 +40,11 @@ jobs:
           command: |
             yarn test
             yarn lint
+
+      - run:
+          name: Report failing Master
+          command: ~/repo/scripts/notify_failure.sh
+          when: on_fail
   etl:
     docker:
       - image: circleci/python:3.6.1
@@ -81,6 +86,10 @@ jobs:
               echo Failing build due to less than 80% test coverage
               exit 1
             fi
+      - run:
+          name: Report failing Master
+          command: ~/repo/scripts/notify_failure.sh
+          when: on_fail
 
   extract_endpoint:
     docker:
@@ -127,6 +136,11 @@ jobs:
             pylint src tests
             mypy src tests
             pytest tests
+      - run:
+          name: Report failing Master
+          command: ~/repo/scripts/notify_failure.sh
+          when: on_fail
+
   python_integration:
     docker:
       - image: circleci/python:3.6.1
@@ -182,6 +196,12 @@ jobs:
           root: workspace
           paths:
             - mongo_dump
+
+      - run:
+          name: Report failing Master
+          command: ~/repo/scripts/notify_failure.sh
+          when: on_fail
+
   node_integration:
     docker:
       # specify the version you desire here
@@ -234,6 +254,12 @@ jobs:
           name: Running integration tests
           command: |
             yarn integration
+
+      - run:
+          name: Report failing Master
+          command: ~/repo/scripts/notify_failure.sh
+          when: on_fail
+
   yarn_build:
     working_directory: ~/repo/api
     docker:
@@ -252,6 +278,10 @@ jobs:
           paths:
             - dist
             - node_modules
+      - run:
+          name: Report failing Master
+          command: ~/repo/scripts/notify_failure.sh
+          when: on_fail
   deploy:
     environment:
       - VERSION: "0.1.2"
@@ -276,6 +306,10 @@ jobs:
             docker build --build-arg VERSION="${VERSION}" -t "${DOCKER_REGISTRY}"/"${NAMESPACE}"/"${CIRCLE_PROJECT_REPONAME}":"${VERSION}" -t "${DOCKER_REGISTRY}"/"${NAMESPACE}"/"${CIRCLE_PROJECT_REPONAME}":"latest" .
             docker push "${DOCKER_REGISTRY}"/"${NAMESPACE}"/"${CIRCLE_PROJECT_REPONAME}":"${VERSION}"
             docker push "${DOCKER_REGISTRY}"/"${NAMESPACE}"/"${CIRCLE_PROJECT_REPONAME}":"latest"
+      - run:
+          name: Report failing Master
+          command: ~/repo/scripts/notify_failure.sh
+          when: on_fail
 
 workflows:
   version: 2
