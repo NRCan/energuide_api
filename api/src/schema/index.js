@@ -383,13 +383,13 @@ const Schema = i18n => {
       ceilingInsulationEffectiveRsi
       # ${i18n.t`Filter results by the dwellings containing at least one ceiling with a specific effective R-value`}
       ceilingInsulationEffectiveR
-      # ${i18n.t`Ceiling area of the house in square metres (m2)`}
+      # ${i18n.t`Filter results by the dwellings containing at least one ceiling with a specific area in square metres (m2)`}
       ceilingAreaMetres
-      # ${i18n.t`Ceiling area of the house in square feet (ft2)`}
+      # ${i18n.t`Filter results by the dwellings containing at least one ceiling with a specific area in square feet (ft2)`}
       ceilingAreaFeet
-      # ${i18n.t`Ceiling length of the house in metres (m)`}
+      # ${i18n.t`Filter results by the dwellings containing at least one ceiling with a specific length in metres (m)`}
       ceilingLengthMetres
-      # ${i18n.t`Ceiling length of the house in feet (ft)`}
+      # ${i18n.t`Filter results by the dwellings containing at least one ceiling with a specific length in feet (ft)`}
       ceilingLengthFeet
     }
   `

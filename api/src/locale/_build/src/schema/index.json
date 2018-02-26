@@ -1306,5 +1306,93 @@
         370
       ]
     ]
+  },
+  "Filter results by the dwellings where at least one ceiling has a matching label": {
+    "origin": [
+      [
+        "src/schema/index.js",
+        372
+      ]
+    ]
+  },
+  "Filter results by the dwellings where at least one ceiling has a matching type (en)": {
+    "origin": [
+      [
+        "src/schema/index.js",
+        374
+      ]
+    ]
+  },
+  "Filter results by the dwellings where at least one ceiling has a matching type (fr)": {
+    "origin": [
+      [
+        "src/schema/index.js",
+        376
+      ]
+    ]
+  },
+  "Filter results by the dwellings where at least one ceiling has a specific nominal RSI (R-value Systeme International)": {
+    "origin": [
+      [
+        "src/schema/index.js",
+        378
+      ]
+    ]
+  },
+  "Filter results by the dwellings containing at least one ceiling with a specific nominal R-value": {
+    "origin": [
+      [
+        "src/schema/index.js",
+        380
+      ]
+    ]
+  },
+  "Filter results by the dwellings containing at least one ceiling with a specific effective RSI (R-value Systeme International)": {
+    "origin": [
+      [
+        "src/schema/index.js",
+        382
+      ]
+    ]
+  },
+  "Filter results by the dwellings containing at least one ceiling with a specific effective R-value": {
+    "origin": [
+      [
+        "src/schema/index.js",
+        384
+      ]
+    ]
+  },
+  "Filter results by the dwellings containing at least one ceiling with a specific area in square metres (m2)": {
+    "origin": [
+      [
+        "src/schema/index.js",
+        386
+      ]
+    ]
+  },
+  "Filter results by the dwellings containing at least one ceiling with a specific area in square feet (ft2)": {
+    "origin": [
+      [
+        "src/schema/index.js",
+        388
+      ]
+    ]
+  },
+  "Filter results by the dwellings containing at least one ceiling with a specific length in metres (m)": {
+    "origin": [
+      [
+        "src/schema/index.js",
+        390
+      ]
+    ]
+  },
+  "Filter results by the dwellings containing at least one ceiling with a specific length in feet (ft)": {
+    "origin": [
+      [
+        "src/schema/index.js",
+        392
+      ]
+    ]
   }
 }
