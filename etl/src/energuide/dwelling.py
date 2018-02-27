@@ -85,6 +85,7 @@ class _ParsedDwellingDataRow(typing.NamedTuple):
     city: str
     region: Region
     forward_sortation_area: str
+    file_id: str
     ceilings: typing.List[ceiling.Ceiling]
     floors: typing.List[floor.Floor]
     walls: typing.List[wall.Wall]
@@ -121,6 +122,7 @@ class ParsedDwellingDataRow(_ParsedDwellingDataRow):
         'forwardSortationArea': {'type': 'string', 'required': True, 'regex': '[A-Z][0-9][A-Z]'},
         'HOUSEREGION': {'type': 'string', 'required': True},
         'ERSRATING': {'type': 'integer', 'nullable': True, 'coerce': _cast_nullable_string},
+        'BUILDER': {'type': 'string', 'required': True},
 
         'ceilings': _XML_LIST_SCHEMA,
         'floors': _XML_LIST_SCHEMA,
@@ -183,6 +185,7 @@ class ParsedDwellingDataRow(_ParsedDwellingDataRow):
             foundations=foundations,
             ers_rating=parsed['ERSRATING'],
             energy_upgrades=[upgrade.Upgrade.from_data(upgrade_node) for upgrade_node in parsed['upgrades']],
+            file_id=parsed['BUILDER'],
         )
 
 
@@ -205,6 +208,7 @@ class Evaluation:
                  ers_rating: typing.Optional[int],
                  energy_upgrades: typing.List[upgrade.Upgrade],
                  heating_system: heating.Heating,
+                 file_id: str,
                 ) -> None:
         self._evaluation_type = evaluation_type
         self._entry_date = entry_date
@@ -222,6 +226,7 @@ class Evaluation:
         self._ers_rating = ers_rating
         self._energy_upgrades = energy_upgrades
         self._heating_system = heating_system
+        self._file_id = file_id
 
     @classmethod
     def from_data(cls, data: ParsedDwellingDataRow) -> 'Evaluation':
@@ -242,6 +247,7 @@ class Evaluation:
             ers_rating=data.ers_rating,
             energy_upgrades=data.energy_upgrades,
             heating_system=data.heating_system,
+            file_id=data.file_id,
         )
 
     @property
@@ -263,6 +269,10 @@ class Evaluation:
     @property
     def modification_date(self) -> datetime.datetime:
         return self._modification_date
+
+    @property
+    def file_id(self) -> str:
+        return self._file_id
 
     @property
     def ceilings(self) -> typing.List[ceiling.Ceiling]:
@@ -326,6 +336,7 @@ class Evaluation:
             'ersRating': self.ers_rating,
             'energyUgrades': [upgrade.to_dict() for upgrade in self.energy_upgrades],
             'heating': self.heating_system.to_dict(),
+            'fileId': self.file_id,
         }
 
 
