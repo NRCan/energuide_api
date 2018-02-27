@@ -4,6 +4,7 @@ import secrets
 import typing
 import requests
 import click
+import datetime
 from extract_endpoint import crypt_utils
 
 
@@ -26,9 +27,11 @@ def post_stream(stream: typing.IO[bytes], filename: typing.Optional[str], url: s
     signature = crypt_utils.sign_string(salt=salt,
                                         key=os.environ.get('ENDPOINT_SECRET_KEY', DEFAULT_ENDPOINT_SECRET_KEY),
                                         data=base64.b64encode(data).decode('utf-8'))
+    timestamp = datetime.datetime.now()
+
     return requests.post(url=url,
                          files={'file': data},
-                         data={'salt': salt, 'signature': signature, 'filename': filename})
+                         data={'salt': salt, 'signature': signature, 'filename': filename, 'timestamp': timestamp})
 
 
 @main.command()
