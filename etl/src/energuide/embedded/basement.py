@@ -129,7 +129,7 @@ class BasementFloor(_BasementFloor):
                    floor_type: FloorType) -> 'BasementFloor':
 
         try:
-            rectangular = floor.xpath('Measurements/@isRectangular')[0] == 'true'
+            rectangular = floor.get('Measurements/@isRectangular', str) == 'true'
             length: typing.Optional[float] = None
             width: typing.Optional[float] = None
 
