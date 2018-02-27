@@ -200,4 +200,3 @@ def test_write_bad_data(tmpdir: py._path.local.LocalPath) -> None:
 
     with zipfile.ZipFile(output_path, 'r') as output:
         assert len(output.namelist()) == 1
-
