@@ -27,11 +27,11 @@ class Door(_Door):
                     english=door.get_text('Construction/Type/English'),
                     french=door.get_text('Construction/Type/French'),
                 ),
-                door_insulation=insulation.Insulation(float(door.xpath('Construction/Type/@value')[0])),
-                height=distance.Distance(float(door.xpath('Measurements/@height')[0])),
-                width=distance.Distance(float(door.xpath('Measurements/@width')[0])),
+                door_insulation=insulation.Insulation(door.get('Construction/Type/@value', float)),
+                height=distance.Distance(door.get('Measurements/@height', float)),
+                width=distance.Distance(door.get('Measurements/@width', float)),
             )
-        except (IndexError, ValueError, ElementGetValueError) as exc:
+        except (ElementGetValueError) as exc:
             raise InvalidEmbeddedDataTypeError(Door) from exc
 
     @property

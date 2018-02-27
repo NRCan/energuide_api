@@ -32,11 +32,11 @@ class Window(_Window):
             return Window(
                 label=window.get_text('Label'),
                 window_code=window_code,
-                window_insulation=insulation.Insulation(float(window.xpath('Construction/Type/@rValue')[0])),
-                width=distance.Distance(float(window.xpath('Measurements/@width')[0]) / _MILLIMETRES_TO_METRES),
-                height=distance.Distance(float(window.xpath('Measurements/@height')[0]) / _MILLIMETRES_TO_METRES),
+                window_insulation=insulation.Insulation(window.get('Construction/Type/@rValue', float)),
+                width=distance.Distance(window.get('Measurements/@width', float) / _MILLIMETRES_TO_METRES),
+                height=distance.Distance(window.get('Measurements/@height', float) / _MILLIMETRES_TO_METRES),
             )
-        except (ElementGetValueError, ValueError, IndexError) as exc:
+        except (ElementGetValueError) as exc:
             raise InvalidEmbeddedDataTypeError(Window) from exc
 
     @property

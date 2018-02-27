@@ -30,12 +30,12 @@ class Wall(_Wall):
             return Wall(
                 label=wall.get_text('Label'),
                 wall_code=wall_code,
-                nominal_insulation=insulation.Insulation(float(wall.xpath('Construction/Type/@nominalInsulation')[0])),
-                effective_insulation=insulation.Insulation(float(wall.xpath('Construction/Type/@rValue')[0])),
-                perimeter=distance.Distance(float(wall.xpath('Measurements/@perimeter')[0])),
-                height=distance.Distance(float(wall.xpath('Measurements/@height')[0])),
+                nominal_insulation=insulation.Insulation(wall.get('Construction/Type/@nominalInsulation', float)),
+                effective_insulation=insulation.Insulation(wall.get('Construction/Type/@rValue', float)),
+                perimeter=distance.Distance(wall.get('Measurements/@perimeter', float)),
+                height=distance.Distance(wall.get('Measurements/@height', float)),
             )
-        except (ElementGetValueError, ValueError, IndexError) as exc:
+        except (ElementGetValueError) as exc:
             raise InvalidEmbeddedDataTypeError(Wall) from exc
 
     @property

@@ -3,7 +3,7 @@ from azure.storage import blob
 from extract_endpoint import azure_utils
 
 
-@pytest.fixture
+@pytest.fixture(scope='session')
 def azure_emulator_coords() -> azure_utils.StorageCoordinates:
     return azure_utils.StorageCoordinates(
         account='devstoreaccount1',
