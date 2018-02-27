@@ -72,7 +72,7 @@ def data_dict(request: _pytest.fixtures.SubRequest) -> typing.Dict[str, str]:
 
 @pytest.fixture
 def valid_filepath(tmpdir: py._path.local.LocalPath, data_dict: typing.Dict[str, str]) -> str:
-    filepath = f'{tmpdir}/sample.csv'
+    filepath = os.path.join(tmpdir, 'sample.csv')
     with open(filepath, 'w') as file:
         writer = csv.DictWriter(file, fieldnames=list(data_dict.keys()))
         writer.writeheader()
@@ -83,7 +83,7 @@ def valid_filepath(tmpdir: py._path.local.LocalPath, data_dict: typing.Dict[str,
 
 @pytest.fixture
 def invalid_filepath(tmpdir: py._path.local.LocalPath) -> str:
-    filepath = f'{tmpdir}/sample.csv'
+    filepath = os.path.join(tmpdir, 'sample.csv')
     data = {'EVAL_ID': 'foo', 'EVAL_TYPE': 'bar'}
     with open(filepath, 'w') as file:
         writer = csv.DictWriter(file, fieldnames=list(data.keys()))
@@ -133,7 +133,7 @@ def test_extract_missing(invalid_filepath: str) -> None:
 
 
 def test_empty_to_none(tmpdir: py._path.local.LocalPath) -> None:
-    filepath = f'{tmpdir}/sample.csv'
+    filepath = os.path.join(tmpdir, 'sample.csv')
     data = data3()
     with open(filepath, 'w') as file:
         writer = csv.DictWriter(file, fieldnames=list(data.keys()))
