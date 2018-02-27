@@ -45,10 +45,21 @@ KEEP_FIELDS = [
 ]
 
 REQUIRED_FIELDS = DROP_FIELDS + KEEP_FIELDS
-
+NULLABLE_FIELDS = ['MODIFICATIONDATE', 'ERSRATING'] + DROP_FIELDS
 
 _SCHEMA = {field: {'type': 'string', 'required': True} for field in REQUIRED_FIELDS}
+for field in NULLABLE_FIELDS:
+    _SCHEMA[field] = {'type': 'string', 'required': True, 'nullable': True}
+
 _WINDOWS_LONG_SIZE = (2 ** 31) - 1
+
+
+def _empty_to_none(data: typing.Iterable[reader.InputData]) -> typing.Iterator[reader.InputData]:
+    for row in data:
+        for key, value in row.items():
+            if value == '':
+                row[key] = None
+        yield row
 
 
 def _validated(data: typing.Iterable[reader.InputData]) -> typing.Iterator[reader.InputData]:
@@ -56,7 +67,7 @@ def _validated(data: typing.Iterable[reader.InputData]) -> typing.Iterator[reade
     for row in data:
         if not validator.validate(row):
             error_keys = ', '.join(validator.errors.keys())
-            raise InvalidInputDataError(f'Validator failed on keys: {error_keys}')
+            raise InvalidInputDataError(f'Validator failed on keys: {error_keys} for {row.get("BUILDER")}')
         yield validator.document
 
 
@@ -111,7 +122,8 @@ def _remove_pii_fields(data: typing.Iterable[reader.InputData]) -> typing.Iterat
 
 def extract_data(input_path: str) -> typing.Iterator[reader.InputData]:
     data = _read_csv(input_path)
-    validated_data = _validated(data)
+    patched = _empty_to_none(data)
+    validated_data = _validated(patched)
     data_with_snippets = _extract_snippets(validated_data)
     safe_extract = _remove_pii_fields(data_with_snippets)
     return safe_extract
