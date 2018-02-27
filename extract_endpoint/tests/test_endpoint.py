@@ -62,6 +62,16 @@ def sample_filename() -> str:
     return 'test_sample_blob_filename.txt'
 
 
+@pytest.fixture
+def upload_timestamp_file(azure_emulator_coords: azure_utils.StorageCoordinates,
+                          azure_service: blob.BlockBlobService,
+                          sample_timestamp: str) -> typing.Generator:
+
+    azure_service.create_blob_from_text(azure_emulator_coords.container, endpoint.TIMESTAMP_FILENAME, sample_timestamp)
+    yield
+    azure_service.delete_blob(azure_emulator_coords.container, endpoint.TIMESTAMP_FILENAME)
+
+
 def test_frontend(test_client: testing.FlaskClient) -> None:
     assert test_client.get('/').status_code == HTTPStatus.OK
 
@@ -76,6 +86,12 @@ def test_robots(test_client: testing.FlaskClient) -> None:
     assert get_return.status_code == HTTPStatus.NOT_FOUND
 
 
+@pytest.mark.usefixtures('upload_timestamp_file')
+def test_timestamp(test_client: testing.FlaskClient, sample_timestamp: str) -> None:
+    get_return = test_client.get('/timestamp')
+    assert get_return.data == sample_timestamp.encode()
+
+
 def check_file_in_azure(azure_service: blob.BlockBlobService,
                         azure_emulator_coords: azure_utils.StorageCoordinates,
                         filename: str,
@@ -86,6 +102,7 @@ def check_file_in_azure(azure_service: blob.BlockBlobService,
     assert actual_blob.content == contents
 
 
+@pytest.fixture
 def test_upload_with_timestamp(azure_emulator_coords: azure_utils.StorageCoordinates,
                                test_client: testing.FlaskClient,
                                azure_service: blob.BlockBlobService,
@@ -105,6 +122,7 @@ def test_upload_with_timestamp(azure_emulator_coords: azure_utils.StorageCoordin
     check_file_in_azure(azure_service, azure_emulator_coords, sample_filename, sample_stream_content)
 
 
+@pytest.fixture
 def test_upload_without_timestamp(azure_emulator_coords: azure_utils.StorageCoordinates,
                                   test_client: testing.FlaskClient,
                                   azure_service: blob.BlockBlobService,
