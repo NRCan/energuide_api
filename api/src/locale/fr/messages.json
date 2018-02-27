@@ -1,6 +1,6 @@
 {
   "An operator to describe how results will be filtered": {
-    "translation": "Un opérateur pour décrire comment les résultats seront filtrés",
+    "translation": "Un opérateur indiquant comment les résultats seront filtrés",
     "origin": [
       [
         "src/schema/index.js",
@@ -13,7 +13,7 @@
     ]
   },
   "Greater than: returns true for results greater than the comparison value": {
-    "translation": "Supérieur à: renvoie vrai pour les résultats supérieurs à la valeur de comparaison",
+    "translation": "Supérieur à : renvoie vrai pour les résultats supérieurs à la valeur de comparaison",
     "origin": [
       [
         "src/schema/index.js",
@@ -22,7 +22,7 @@
     ]
   },
   "Less than: returns true for results less than the comparison value": {
-    "translation": "Inférieur à: renvoie vrai pour les résultats inférieurs à la valeur de comparaison",
+    "translation": "Inférieur à : renvoie vrai pour les résultats inférieurs à la valeur de comparaison",
     "origin": [
       [
         "src/schema/index.js",
@@ -31,7 +31,7 @@
     ]
   },
   "Equal to: returns true for results equal to the comparison value": {
-    "translation": "Egal à: renvoie vrai pour les résultats égaux à la valeur de comparaison",
+    "translation": "Egal à : renvoie vrai pour les résultats égaux à la valeur de comparaison",
     "origin": [
       [
         "src/schema/index.js",
@@ -40,7 +40,7 @@
     ]
   },
   "Filters will return results only if they satisfy a condition": {
-    "translation": "Les filtres renverront les résultats uniquement s'ils satisfont une condition",
+    "translation": "Les filtres renverront les résultats uniquement s'ils satisfontà une condition",
     "origin": [
       [
         "src/schema/index.js",
@@ -49,7 +49,7 @@
     ]
   },
   "Name of field results will be filtered by": {
-    "translation": "Les noms des résultats du champ seront filtrés par",
+    "translation": "Les noms des résultats de champs seront filtrés par",
     "origin": [
       [
         "src/schema/index.js",
@@ -76,7 +76,7 @@
     ]
   },
   "Part of the dwelling to be upgraded": {
-    "translation": "Une partie de l'habitation à améliorer",
+    "translation": "Partie du logement à améliorer",
     "origin": [
       [
         "src/schema/index.js",
@@ -94,7 +94,7 @@
     ]
   },
   "Order of importance of upgrade recommendation (lower number means a higher priority)": {
-    "translation": "Ordre d'importance de la recommandation de mise à niveau (nombre inférieur signifie une priorité plus élevée)",
+    "translation": "Ordre d'importance de la recommandation de mise à niveau (plus le chiffre est petit, plus la priorité est élevée)",
     "origin": [
       [
         "src/schema/index.js",
@@ -166,7 +166,7 @@
     ]
   },
   "Floor insulation nominal RSI (R-value Systeme International)": {
-    "translation": "Isolation du sol nominale RSI (valeur R Systeme International)",
+    "translation": "Isolation du sol valeur nominale RSI (valeur R Systeme International)",
     "origin": [
       [
         "src/schema/index.js",
@@ -193,7 +193,7 @@
     ]
   },
   "Floor insulation effective R-value": {
-    "translation": "Isolation du sol efficace R-value",
+    "translation": "Isolation du sol efficace valeur R",
     "origin": [
       [
         "src/schema/index.js",
