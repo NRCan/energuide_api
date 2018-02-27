@@ -1,5 +1,6 @@
 import io
 import base64
+import datetime
 from http import HTTPStatus
 import typing
 import pytest
@@ -36,7 +37,7 @@ def sample_secret_key() -> typing.Generator:
 
 @pytest.fixture
 def sample_timestamp() -> str:
-    return "Tue 27 Feb 2018 11:19:17 EST"
+    return datetime.datetime(2018, 1, 1, 0, 0, 0).strftime("%Y-%m-%d %H:%M:%S")
 
 
 @pytest.fixture

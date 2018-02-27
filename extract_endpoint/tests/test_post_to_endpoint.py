@@ -1,6 +1,7 @@
 import io
 import subprocess
 import typing
+import datetime
 from http import HTTPStatus
 import psutil
 import pytest
@@ -74,6 +75,11 @@ def sample_filename() -> str:
     return "sample_filename.txt"
 
 
+@pytest.fixture
+def sample_timestamp() -> str:
+    return datetime.datetime(2018, 1, 1, 0, 0, 0).strftime("%Y-%m-%d %H:%M:%S")
+
+
 def check_file_in_azure(azure_service: blob.BlockBlobService,
                         azure_emulator_coords: azure_utils.StorageCoordinates,
                         filename: str,
@@ -90,9 +96,13 @@ def test_post_stream(azure_service: blob.BlockBlobService,
                      upload_url: str,
                      sample_stream: NamedStream,
                      sample_stream_content: str,
-                     sample_filename: str) -> None:
+                     sample_filename: str,
+                     sample_timestamp: str) -> None:
 
-    post_return = post_to_endpoint.post_stream(stream=sample_stream, filename=sample_filename, url=upload_url)
+    post_return = post_to_endpoint.post_stream(stream=sample_stream,
+                                               filename=sample_filename,
+                                               url=upload_url,
+                                               timestamp=sample_timestamp)
     assert post_return.status_code == HTTPStatus.CREATED
     check_file_in_azure(azure_service, azure_emulator_coords, sample_filename, sample_stream_content)
 
@@ -103,8 +113,12 @@ def test_post_stream_stdin(azure_service: blob.BlockBlobService,
                            upload_url: str,
                            sample_stream_stdin: NamedStream,
                            sample_stream_content: str,
-                           sample_filename: str) -> None:
-    post_return = post_to_endpoint.post_stream(stream=sample_stream_stdin, filename=sample_filename, url=upload_url)
+                           sample_filename: str,
+                           sample_timestamp: str) -> None:
+    post_return = post_to_endpoint.post_stream(stream=sample_stream_stdin,
+                                               filename=sample_filename,
+                                               url=upload_url,
+                                               timestamp=sample_timestamp)
     assert post_return.status_code == HTTPStatus.CREATED
     check_file_in_azure(azure_service, azure_emulator_coords, sample_filename, sample_stream_content)
 
@@ -115,13 +129,22 @@ def test_post_stream_no_filename(azure_service: blob.BlockBlobService,
                                  upload_url: str,
                                  sample_stream: NamedStream,
                                  sample_stream_content: str,
-                                 sample_filename: str) -> None:
-    post_return = post_to_endpoint.post_stream(stream=sample_stream, filename=None, url=upload_url)
+                                 sample_filename: str,
+                                 sample_timestamp: str) -> None:
+    post_return = post_to_endpoint.post_stream(stream=sample_stream,
+                                               filename=None,
+                                               url=upload_url,
+                                               timestamp=sample_timestamp)
     assert post_return.status_code == HTTPStatus.CREATED
     check_file_in_azure(azure_service, azure_emulator_coords, sample_filename, sample_stream_content)
 
 
 @pytest.mark.usefixtures('run_endpoint')
-def test_post_stream_stdin_no_filename(upload_url: str, sample_stream_stdin: NamedStream) -> None:
+def test_post_stream_stdin_no_filename(upload_url: str,
+                                       sample_stream_stdin: NamedStream,
+                                       sample_timestamp: str) -> None:
     with pytest.raises(ValueError):
-        post_to_endpoint.post_stream(stream=sample_stream_stdin, filename=None, url=upload_url)
+        post_to_endpoint.post_stream(stream=sample_stream_stdin,
+                                     filename=None,
+                                     url=upload_url,
+                                     timestamp=sample_timestamp)
