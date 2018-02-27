@@ -11,7 +11,9 @@ from extract_endpoint import post_to_endpoint, azure_utils
 
 
 class NamedStream(io.BytesIO):
-    def __init__(self, *args, **kwargs):
+    name: str
+
+    def __init__(self, *args, **kwargs) -> None:
         super(NamedStream, self).__init__(*args)
         self.name = kwargs['name']
 
