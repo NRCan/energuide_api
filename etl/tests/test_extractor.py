@@ -1,5 +1,6 @@
 import csv
 import json
+import os
 import typing
 import zipfile
 import _pytest.fixtures
@@ -26,16 +27,16 @@ def data1() -> typing.Dict[str, typing.Optional[str]]:
         'BUILDER': '4K13D01404',
         'DHWHPCOP': '0',
         'ERSRATING': '200',
-        'INFO1': None,
-        'INFO2': None,
-        'INFO3': None,
-        'INFO4': None,
-        'INFO5': None,
-        'INFO6': None,
-        'INFO7': None,
-        'INFO8': None,
-        'INFO9': None,
-        'INFO10': None,
+        'INFO1': '',
+        'INFO2': '',
+        'INFO3': '',
+        'INFO4': '',
+        'INFO5': '',
+        'INFO6': '',
+        'INFO7': '',
+        'INFO8': '',
+        'INFO9': '',
+        'INFO10': '',
         'ENTRYDATE': '2012-02-25',
         'CREATIONDATE': '2012-06-08 09:26:10',
         'MODIFICATIONDATE': '2012-06-09 09:26:10',
@@ -94,7 +95,8 @@ def invalid_filepath(tmpdir: py._path.local.LocalPath) -> str:
 
 @pytest.fixture
 def extra_filepath(tmpdir: py._path.local.LocalPath) -> str:
-    filepath = f'{tmpdir}/sample.csv'
+    filepath = os.path.join(tmpdir, 'sample.csv')
+
     data = data4()
     with open(filepath, 'w') as file:
         writer = csv.DictWriter(file, fieldnames=list(data.keys()))
@@ -128,6 +130,19 @@ def test_extract_missing(invalid_filepath: str) -> None:
     assert 'EVAL_ID' not in ex.exconly()
 
     assert 'CLIENTADDR' in ex.exconly()
+
+
+def test_empty_to_none(tmpdir: py._path.local.LocalPath) -> None:
+    filepath = f'{tmpdir}/sample.csv'
+    data = data3()
+    with open(filepath, 'w') as file:
+        writer = csv.DictWriter(file, fieldnames=list(data.keys()))
+        writer.writeheader()
+        writer.writerow(data)
+
+    output = extractor.extract_data(filepath)
+    row = next(output)
+    assert row['ERSRATING'] is None
 
 
 def test_extract_with_snippets(tmpdir: py._path.local.LocalPath) -> None:
@@ -185,3 +200,4 @@ def test_write_bad_data(tmpdir: py._path.local.LocalPath) -> None:
 
     with zipfile.ZipFile(output_path, 'r') as output:
         assert len(output.namelist()) == 1
+

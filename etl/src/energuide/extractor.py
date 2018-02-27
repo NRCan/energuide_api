@@ -45,7 +45,7 @@ KEEP_FIELDS = [
 ]
 
 REQUIRED_FIELDS = DROP_FIELDS + KEEP_FIELDS
-NULLABLE_FIELDS = ['MODIFICATIONDATE'] + DROP_FIELDS
+NULLABLE_FIELDS = ['MODIFICATIONDATE', 'ERSRATING'] + DROP_FIELDS
 
 _SCHEMA = {field: {'type': 'string', 'required': True} for field in REQUIRED_FIELDS}
 for field in NULLABLE_FIELDS:
@@ -67,7 +67,7 @@ def _validated(data: typing.Iterable[reader.InputData]) -> typing.Iterator[reade
     for row in data:
         if not validator.validate(row):
             error_keys = ', '.join(validator.errors.keys())
-            raise InvalidInputDataError(f'Validator failed on keys: {error_keys} for {row["BUILDER"]}')
+            raise InvalidInputDataError(f'Validator failed on keys: {error_keys} for {row.get("BUILDER")}')
         yield validator.document
 
 
