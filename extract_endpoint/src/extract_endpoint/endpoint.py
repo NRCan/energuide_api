@@ -11,6 +11,9 @@ from extract_endpoint import crypt_utils
 DEFAULT_ENDPOINT_SECRET_KEY = 'no key'
 
 
+TIMESTAMP_FILENAME = 'timestamp.txt'
+
+
 App = flask.Flask(__name__)
 App.config.update(dict(
     SECRET_KEY=os.environ.get('ENDPOINT_SECRET_KEY', DEFAULT_ENDPOINT_SECRET_KEY),
@@ -50,6 +53,12 @@ def upload_file() -> typing.Tuple[str, int]:
         flask.abort(HTTPStatus.BAD_REQUEST)
     if 'file' not in flask.request.files:
         flask.abort(HTTPStatus.BAD_REQUEST)
+
+    timestamp = flask.request.form.get('timestamp', None)
+    if timestamp:
+        if not azure_utils.upload_bytes_to_azure(App.config['AZURE_COORDINATES'],
+                                                 timestamp.encode(), TIMESTAMP_FILENAME):
+            flask.abort(HTTPStatus.BAD_REQUEST)
 
     file = flask.request.files['file']
     file_contents = file.read()

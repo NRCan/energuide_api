@@ -35,6 +35,11 @@ def sample_secret_key() -> typing.Generator:
 
 
 @pytest.fixture
+def sample_timestamp() -> str:
+    return "Tue 27 Feb 2018 11:19:17 EST"
+
+
+@pytest.fixture
 def sample_stream_content() -> str:
     return "Sample stream content"
 
@@ -71,23 +76,51 @@ def test_robots(test_client: testing.FlaskClient) -> None:
     assert get_return.status_code == HTTPStatus.NOT_FOUND
 
 
-def test_upload(azure_emulator_coords: azure_utils.StorageCoordinates,
-                test_client: testing.FlaskClient,
-                azure_service: blob.BlockBlobService,
-                sample_salt: str,
-                sample_signature: str,
-                sample_stream_content: str,
-                sample_stream: io.BytesIO,
-                sample_filename: str) -> None:
+def check_file_in_azure(azure_service: blob.BlockBlobService,
+                        azure_emulator_coords: azure_utils.StorageCoordinates,
+                        filename: str,
+                        contents: str) -> None:
+
+    assert filename in [blob.name for blob in azure_service.list_blobs(azure_emulator_coords.container)]
+    actual_blob = azure_service.get_blob_to_text(azure_emulator_coords.container, filename)
+    assert actual_blob.content == contents
+
+
+def test_upload_with_timestamp(azure_emulator_coords: azure_utils.StorageCoordinates,
+                               test_client: testing.FlaskClient,
+                               azure_service: blob.BlockBlobService,
+                               sample_timestamp: str,
+                               sample_salt: str,
+                               sample_signature: str,
+                               sample_stream_content: str,
+                               sample_stream: io.BytesIO,
+                               sample_filename: str) -> None:
+
+    post_return = test_client.post('/upload_file', data=dict(salt=sample_salt, signature=sample_signature,
+                                                             timestamp=sample_timestamp,
+                                                             filename=sample_filename,
+                                                             file=(sample_stream, sample_filename)))
+    assert post_return.status_code == HTTPStatus.CREATED
+    check_file_in_azure(azure_service, azure_emulator_coords, endpoint.TIMESTAMP_FILENAME, sample_timestamp)
+    check_file_in_azure(azure_service, azure_emulator_coords, sample_filename, sample_stream_content)
+
+
+def test_upload_without_timestamp(azure_emulator_coords: azure_utils.StorageCoordinates,
+                                  test_client: testing.FlaskClient,
+                                  azure_service: blob.BlockBlobService,
+                                  sample_salt: str,
+                                  sample_signature: str,
+                                  sample_stream_content: str,
+                                  sample_stream: io.BytesIO,
+                                  sample_filename: str) -> None:
 
     post_return = test_client.post('/upload_file', data=dict(salt=sample_salt, signature=sample_signature,
                                                              filename=sample_filename,
                                                              file=(sample_stream, sample_filename)))
     assert post_return.status_code == HTTPStatus.CREATED
-    assert sample_filename in \
+    assert endpoint.TIMESTAMP_FILENAME not in \
            [blob.name for blob in azure_service.list_blobs(azure_emulator_coords.container)]
-    actual_blob = azure_service.get_blob_to_text(azure_emulator_coords.container, sample_filename)
-    assert actual_blob.content == sample_stream_content
+    check_file_in_azure(azure_service, azure_emulator_coords, sample_filename, sample_stream_content)
 
 
 @pytest.mark.usefixtures('azure_service')
