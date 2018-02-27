@@ -63,7 +63,7 @@ def upload_file() -> typing.Tuple[str, int]:
         flask.abort(HTTPStatus.BAD_REQUEST)
     if 'file' not in flask.request.files:
         flask.abort(HTTPStatus.BAD_REQUEST)
-    if flask.request.form.get('timestamp', None) == '':
+    if flask.request.form.get('timestamp', None) is None:
         flask.abort(HTTPStatus.BAD_REQUEST)
 
     file = flask.request.files['file']
