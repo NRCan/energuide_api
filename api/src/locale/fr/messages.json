@@ -1,40 +1,4 @@
 {
-  "Filter results by the dwellings containing at least one ceiling with a specific area in square metres (m2)": {
-    "translation": "Filtrer les résultats par les logements contenant au moins un plafond avec une surface spécifique en mètres carrés (m2)",
-    "origin": [
-      [
-        "src/schema/index.js",
-        386
-      ]
-    ]
-  },
-  "Filter results by the dwellings containing at least one ceiling with a specific area in square feet (ft2)": {
-    "translation": "Filtrer les résultats par les logements contenant au moins un plafond avec une surface spécifique en pieds carrés (pi2)",
-    "origin": [
-      [
-        "src/schema/index.js",
-        388
-      ]
-    ]
-  },
-  "Filter results by the dwellings containing at least one ceiling with a specific length in metres (m)": {
-    "translation": "Filtrer les résultats par les logements contenant au moins un plafond avec une longueur spécifique en mètres (m)",
-    "origin": [
-      [
-        "src/schema/index.js",
-        390
-      ]
-    ]
-  },
-  "Filter results by the dwellings containing at least one ceiling with a specific length in feet (ft)": {
-    "translation": "Filtrer les résultats par les logements contenant au moins un plafond avec une longueur spécifique en pieds (pi)",
-    "origin": [
-      [
-        "src/schema/index.js",
-        392
-      ]
-    ]
-  },
   "An operator to describe how results will be filtered": {
     "translation": "Un opérateur pour décrire comment les résultats seront filtrés",
     "origin": [
@@ -102,12 +66,48 @@
       ]
     ]
   },
+  "An improvement that could improve the energy efficiency of the dwelling": {
+    "translation": "Une amélioration qui pourrait améliorer l'efficacité énergétique du logement",
+    "origin": [
+      [
+        "src/schema/index.js",
+        32
+      ]
+    ]
+  },
+  "Part of the dwelling to be upgraded": {
+    "translation": "Une partie de l'habitation à améliorer",
+    "origin": [
+      [
+        "src/schema/index.js",
+        34
+      ]
+    ]
+  },
+  "Estimated cost of upgrade": {
+    "translation": "Coût estimatif de la mise à niveau",
+    "origin": [
+      [
+        "src/schema/index.js",
+        36
+      ]
+    ]
+  },
+  "Order of importance of upgrade recommendation (lower number means a higher priority)": {
+    "translation": "Ordre d'importance de la recommandation de mise à niveau (nombre inférieur signifie une priorité plus élevée)",
+    "origin": [
+      [
+        "src/schema/index.js",
+        38
+      ]
+    ]
+  },
   "Ventilation systems draw exterior air into the house, exhaust interior air to the exterior, or both": {
     "translation": "Les systèmes de ventilation aspirent l'air extérieur dans la maison, évacuent l'air intérieur vers l'extérieur ou les deux",
     "origin": [
       [
         "src/schema/index.js",
-        32
+        42
       ]
     ]
   },
@@ -116,7 +116,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        34
+        44
       ]
     ]
   },
@@ -125,7 +125,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        36
+        46
       ]
     ]
   },
@@ -134,7 +134,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        38
+        48
       ]
     ]
   },
@@ -143,7 +143,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        40
+        50
       ]
     ]
   },
@@ -152,7 +152,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        44
+        54
       ]
     ]
   },
@@ -161,7 +161,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        46
+        56
       ]
     ]
   },
@@ -170,7 +170,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        48
+        58
       ]
     ]
   },
@@ -179,7 +179,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        50
+        60
       ]
     ]
   },
@@ -188,7 +188,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        52
+        62
       ]
     ]
   },
@@ -197,7 +197,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        54
+        64
       ]
     ]
   },
@@ -206,7 +206,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        56
+        66
       ]
     ]
   },
@@ -215,7 +215,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        58
+        68
       ]
     ]
   },
@@ -224,7 +224,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        60
+        70
       ]
     ]
   },
@@ -233,7 +233,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        62
+        72
       ]
     ]
   },
@@ -242,7 +242,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        66
+        76
       ]
     ]
   },
@@ -251,7 +251,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        68
+        78
       ]
     ]
   },
@@ -260,7 +260,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        70
+        80
       ]
     ]
   },
@@ -269,7 +269,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        72
+        82
       ]
     ]
   },
@@ -278,7 +278,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        74
+        84
       ]
     ]
   },
@@ -287,7 +287,115 @@
     "origin": [
       [
         "src/schema/index.js",
-        76
+        86
+      ]
+    ]
+  },
+  "A principal heating system is either the only source of heat for the house, or is used for at least 70% of the heating load": {
+    "translation": "Un système de chauffage principal est soit la seule source de chaleur pour la maison, soit est utilisé pour au moins 70% de la charge de chauffage",
+    "origin": [
+      [
+        "src/schema/index.js",
+        90
+      ]
+    ]
+  },
+  "Description of heating system": {
+    "translation": "Description du système de chauffage",
+    "origin": [
+      [
+        "src/schema/index.js",
+        92
+      ]
+    ]
+  },
+  "Type of heating system (en)": {
+    "translation": "Type de système de chauffage (en)",
+    "origin": [
+      [
+        "src/schema/index.js",
+        94
+      ]
+    ]
+  },
+  "Type of heating system (fr)": {
+    "translation": "Type de système de chauffage",
+    "origin": [
+      [
+        "src/schema/index.js",
+        96
+      ]
+    ]
+  },
+  "The source of fuel for the heating system (en)": {
+    "translation": "La source de carburant pour le système de chauffage (en)",
+    "origin": [
+      [
+        "src/schema/index.js",
+        98
+      ]
+    ]
+  },
+  "The source of fuel for the heating system (fr)": {
+    "translation": "La source de carburant pour le système de chauffage",
+    "origin": [
+      [
+        "src/schema/index.js",
+        100
+      ]
+    ]
+  },
+  "Equipment type of heating system (en)": {
+    "translation": "Type d'équipement de chauffage (en)",
+    "origin": [
+      [
+        "src/schema/index.js",
+        102
+      ]
+    ]
+  },
+  "Equipment type of heating system (fr)": {
+    "translation": "Type d'équipement de chauffage (fr)",
+    "origin": [
+      [
+        "src/schema/index.js",
+        104
+      ]
+    ]
+  },
+  "Output capacity of the heating system in kilowatt hours (kWh)": {
+    "translation": "Capacité de production du système de chauffage en kilowattheures (kWh)",
+    "origin": [
+      [
+        "src/schema/index.js",
+        106
+      ]
+    ]
+  },
+  "Output capacity of the heating system in British Thermal Units per hour (BTU/h)": {
+    "translation": "Capacité de production du système de chauffage dans les unités thermiques britanniques par heure (BTU / h)",
+    "origin": [
+      [
+        "src/schema/index.js",
+        108
+      ]
+    ]
+  },
+  "Measures how effectively your heating system is burning fuel or turning fuel into heat": {
+    "translation": "Mesure l'efficacité avec laquelle votre système de chauffage brûle du carburant ou transforme le combustible en chaleur",
+    "origin": [
+      [
+        "src/schema/index.js",
+        110
+      ]
+    ]
+  },
+  "Steady-state efficiency is the combustion efficiency of the equipment at peak performance. The Annual Fuel Utilization Efficiency (AFUE) is a measure of efficiency based on average usage, accounting for the fact that most heating systems rarely run long enough to reach peak performance.": {
+    "translation": "L'efficacité à l'état d'équilibre est l'efficacité de combustion de l'équipement aux performances de pointe. L'efficacité annuelle de l'utilisation du combustible (AFUE) est une mesure de l'efficacité basée sur l'utilisation moyenne, tenant compte du fait que la plupart des systèmes de chauffage fonctionnent rarement assez longtemps pour atteindre une performance maximale.",
+    "origin": [
+      [
+        "src/schema/index.js",
+        112
       ]
     ]
   },
@@ -296,7 +404,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        80
+        117
       ]
     ]
   },
@@ -305,7 +413,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        82
+        119
       ]
     ]
   },
@@ -314,7 +422,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        84
+        121
       ]
     ]
   },
@@ -323,7 +431,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        86
+        123
       ]
     ]
   },
@@ -332,7 +440,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        88
+        125
       ]
     ]
   },
@@ -341,7 +449,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        90
+        127
       ]
     ]
   },
@@ -350,7 +458,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        94
+        131
       ]
     ]
   },
@@ -359,7 +467,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        96
+        133
       ]
     ]
   },
@@ -368,7 +476,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        98
+        135
       ]
     ]
   },
@@ -377,7 +485,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        100
+        137
       ]
     ]
   },
@@ -386,7 +494,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        102
+        139
       ]
     ]
   },
@@ -395,7 +503,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        106
+        143
       ]
     ]
   },
@@ -404,7 +512,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        108
+        145
       ]
     ]
   },
@@ -413,7 +521,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        110
+        147
       ]
     ]
   },
@@ -422,7 +530,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        112
+        149
       ]
     ]
   },
@@ -431,7 +539,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        114
+        151
       ]
     ]
   },
@@ -440,7 +548,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        116
+        153
       ]
     ]
   },
@@ -449,7 +557,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        118
+        155
       ]
     ]
   },
@@ -458,11 +566,11 @@
     "origin": [
       [
         "src/schema/index.js",
-        120
+        157
       ],
       [
         "src/schema/index.js",
-        124
+        161
       ]
     ]
   },
@@ -471,7 +579,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        122
+        159
       ]
     ]
   },
@@ -480,7 +588,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        126
+        163
       ]
     ]
   },
@@ -489,7 +597,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        128
+        165
       ]
     ]
   },
@@ -498,7 +606,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        130
+        167
       ]
     ]
   },
@@ -507,7 +615,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        132
+        169
       ]
     ]
   },
@@ -516,7 +624,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        134
+        171
       ]
     ]
   },
@@ -525,7 +633,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        136
+        173
       ]
     ]
   },
@@ -534,7 +642,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        140
+        177
       ]
     ]
   },
@@ -543,7 +651,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        142
+        179
       ]
     ]
   },
@@ -552,7 +660,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        144
+        181
       ]
     ]
   },
@@ -561,7 +669,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        146
+        183
       ]
     ]
   },
@@ -570,7 +678,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        148
+        185
       ]
     ]
   },
@@ -579,7 +687,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        150
+        187
       ]
     ]
   },
@@ -588,7 +696,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        152
+        189
       ]
     ]
   },
@@ -597,7 +705,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        154
+        191
       ]
     ]
   },
@@ -606,7 +714,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        156
+        193
       ]
     ]
   },
@@ -615,7 +723,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        160
+        197
       ]
     ]
   },
@@ -624,7 +732,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        162
+        199
       ]
     ]
   },
@@ -633,7 +741,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        164
+        201
       ]
     ]
   },
@@ -642,7 +750,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        166
+        203
       ]
     ]
   },
@@ -651,7 +759,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        168
+        205
       ]
     ]
   },
@@ -660,7 +768,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        170
+        207
       ]
     ]
   },
@@ -669,7 +777,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        172
+        209
       ]
     ]
   },
@@ -678,7 +786,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        174
+        211
       ]
     ]
   },
@@ -687,7 +795,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        176
+        213
       ]
     ]
   },
@@ -696,7 +804,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        178
+        215
       ]
     ]
   },
@@ -705,7 +813,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        180
+        217
       ]
     ]
   },
@@ -714,7 +822,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        182
+        219
       ]
     ]
   },
@@ -723,7 +831,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        184
+        221
       ]
     ]
   },
@@ -732,7 +840,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        186
+        223
       ]
     ]
   },
@@ -741,7 +849,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        188
+        225
       ]
     ]
   },
@@ -750,7 +858,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        190
+        227
       ]
     ]
   },
@@ -759,7 +867,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        192
+        229
       ]
     ]
   },
@@ -768,7 +876,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        194
+        231
       ]
     ]
   },
@@ -777,7 +885,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        196
+        233
       ]
     ]
   },
@@ -786,7 +894,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        198
+        235
       ]
     ]
   },
@@ -795,7 +903,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        200
+        237
       ]
     ]
   },
@@ -804,7 +912,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        202
+        239
       ]
     ]
   },
@@ -813,7 +921,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        206
+        243
       ]
     ]
   },
@@ -822,7 +930,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        208
+        245
       ]
     ]
   },
@@ -831,7 +939,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        210
+        247
       ]
     ]
   },
@@ -840,7 +948,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        212
+        249
       ]
     ]
   },
@@ -849,7 +957,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        214
+        251
       ]
     ]
   },
@@ -858,7 +966,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        216
+        253
       ]
     ]
   },
@@ -867,7 +975,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        218
+        255
       ]
     ]
   },
@@ -876,7 +984,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        220
+        257
       ]
     ]
   },
@@ -885,7 +993,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        222
+        259
       ]
     ]
   },
@@ -894,7 +1002,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        224
+        261
       ]
     ]
   },
@@ -903,7 +1011,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        226
+        263
       ]
     ]
   },
@@ -912,7 +1020,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        228
+        265
       ]
     ]
   },
@@ -921,7 +1029,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        232
+        269
       ]
     ]
   },
@@ -930,7 +1038,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        234
+        271
       ]
     ]
   },
@@ -939,7 +1047,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        236
+        273
       ]
     ]
   },
@@ -948,7 +1056,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        238
+        275
       ]
     ]
   },
@@ -957,7 +1065,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        240
+        277
       ]
     ]
   },
@@ -966,7 +1074,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        242
+        279
       ]
     ]
   },
@@ -975,7 +1083,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        244
+        281
       ]
     ]
   },
@@ -984,7 +1092,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        246
+        283
       ]
     ]
   },
@@ -993,7 +1101,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        248
+        285
       ]
     ]
   },
@@ -1002,7 +1110,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        250
+        287
       ]
     ]
   },
@@ -1011,7 +1119,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        252
+        289
       ]
     ]
   },
@@ -1020,7 +1128,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        254
+        291
       ]
     ]
   },
@@ -1029,7 +1137,25 @@
     "origin": [
       [
         "src/schema/index.js",
-        256
+        293
+      ]
+    ]
+  },
+  "A principal heating system for a dwelling": {
+    "translation": "Un système de chauffage principal pour un logement",
+    "origin": [
+      [
+        "src/schema/index.js",
+        295
+      ]
+    ]
+  },
+  "A list of upgrades that would improve energy efficiency": {
+    "translation": "Une liste de mises à niveau qui amélioreraient l'efficacité énergétique",
+    "origin": [
+      [
+        "src/schema/index.js",
+        297
       ]
     ]
   },
@@ -1038,7 +1164,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        261
+        301
       ]
     ]
   },
@@ -1047,7 +1173,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        263
+        303
       ]
     ]
   },
@@ -1056,7 +1182,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        265
+        305
       ]
     ]
   },
@@ -1065,7 +1191,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        267
+        307
       ]
     ]
   },
@@ -1074,7 +1200,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        269
+        309
       ]
     ]
   },
@@ -1083,7 +1209,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        271
+        311
       ]
     ]
   },
@@ -1092,7 +1218,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        273
+        313
       ]
     ]
   },
@@ -1101,7 +1227,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        277
+        317
       ]
     ]
   },
@@ -1110,7 +1236,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        279
+        319
       ]
     ]
   },
@@ -1119,7 +1245,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        281
+        321
       ]
     ]
   },
@@ -1128,7 +1254,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        286
+        326
       ]
     ]
   },
@@ -1137,7 +1263,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        288
+        328
       ]
     ]
   },
@@ -1146,7 +1272,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        290
+        330
       ]
     ]
   },
@@ -1155,7 +1281,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        292
+        332
       ]
     ]
   },
@@ -1164,7 +1290,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        294
+        334
       ]
     ]
   },
@@ -1173,7 +1299,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        296
+        336
       ]
     ]
   },
@@ -1182,7 +1308,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        298
+        338
       ]
     ]
   },
@@ -1191,7 +1317,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        300
+        340
       ]
     ]
   },
@@ -1200,7 +1326,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        302
+        342
       ]
     ]
   },
@@ -1209,7 +1335,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        304
+        344
       ]
     ]
   },
@@ -1218,7 +1344,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        306
+        346
       ]
     ]
   },
@@ -1227,7 +1353,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        308
+        348
       ]
     ]
   },
@@ -1236,7 +1362,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        310
+        350
       ]
     ]
   },
@@ -1245,11 +1371,11 @@
     "origin": [
       [
         "src/schema/index.js",
-        312
+        352
       ],
       [
         "src/schema/index.js",
-        314
+        354
       ]
     ]
   },
@@ -1258,7 +1384,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        316
+        356
       ]
     ]
   },
@@ -1267,7 +1393,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        318
+        358
       ]
     ]
   },
@@ -1276,7 +1402,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        320
+        360
       ]
     ]
   },
@@ -1285,7 +1411,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        322
+        362
       ]
     ]
   },
@@ -1294,7 +1420,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        324
+        364
       ]
     ]
   },
@@ -1303,7 +1429,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        326
+        366
       ]
     ]
   },
@@ -1312,7 +1438,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        328
+        368
       ]
     ]
   },
@@ -1321,7 +1447,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        330
+        370
       ]
     ]
   },
@@ -1330,7 +1456,106 @@
     "origin": [
       [
         "src/schema/index.js",
-        332
+        372
+      ]
+    ]
+  },
+  "Filter results by the dwellings containing a heating system with a specific description": {
+    "translation": "Filtrer les résultats par les logements contenant un système de chauffage avec une description spécifique",
+    "origin": [
+      [
+        "src/schema/index.js",
+        374
+      ]
+    ]
+  },
+  "Filter results by the dwellings containing a heating system of a specific type (en)": {
+    "translation": "Filtrer les résultats par les logements contenant un système de chauffage d'un type spécifique (en)",
+    "origin": [
+      [
+        "src/schema/index.js",
+        376
+      ]
+    ]
+  },
+  "Filter results by the dwellings containing a heating system of a specific type (fr)": {
+    "translation": "Filtrer les résultats par les logements contenant un système de chauffage d'un type spécifique (fr)",
+    "origin": [
+      [
+        "src/schema/index.js",
+        378
+      ]
+    ]
+  },
+  "Filter results by the dwellings containing a heating system with a specific fuel source (en)": {
+    "translation": "Filtrer les résultats par les logements contenant un système de chauffage avec une source de carburant spécifique (en)",
+    "origin": [
+      [
+        "src/schema/index.js",
+        380
+      ]
+    ]
+  },
+  "Filter results by the dwellings containing a heating system with a specific fuel source (fr)": {
+    "translation": "Filtrer les résultats par les logements contenant un système de chauffage avec une source de carburant spécifique",
+    "origin": [
+      [
+        "src/schema/index.js",
+        382
+      ]
+    ]
+  },
+  "Filter results by the dwellings containing a heating system with a specific type of equipment (en)": {
+    "translation": "Filtrer les résultats par les logements contenant un système de chauffage avec un type spécifique d'équipement (en)",
+    "origin": [
+      [
+        "src/schema/index.js",
+        384
+      ]
+    ]
+  },
+  "Filter results by the dwellings containing a heating system with a specific type of equipment (fr)": {
+    "translation": "Filtrer les résultats par les logements contenant un système de chauffage avec un type d'équipement spécifique",
+    "origin": [
+      [
+        "src/schema/index.js",
+        386
+      ]
+    ]
+  },
+  "Filter results by the dwellings containing a heating system with a specific output capacity in kilowatt hours (kWh)": {
+    "translation": "Filtrer les résultats par les logements contenant un système de chauffage ayant une capacité de production spécifique en kilowattheures (kWh)",
+    "origin": [
+      [
+        "src/schema/index.js",
+        388
+      ]
+    ]
+  },
+  "Filter results by the dwellings containing a heating system with a specific output capacity in British Thermal Units per hour (BTU/h)": {
+    "translation": "Filtrer les résultats par les logements contenant un système de chauffage avec une capacité de production spécifique en unités thermiques britanniques par heure (BTU / h)",
+    "origin": [
+      [
+        "src/schema/index.js",
+        390
+      ]
+    ]
+  },
+  "Filter results by the dwellings containing a heating system with a specific efficiency rating": {
+    "translation": "Filtrer les résultats par les logements contenant un système de chauffage avec une cote d'efficacité spécifique",
+    "origin": [
+      [
+        "src/schema/index.js",
+        392
+      ]
+    ]
+  },
+  "Filter results by the dwellings containing a heating system efficiency measurement that is either 'Steady State' or 'AFUE'": {
+    "translation": "Filtrer les résultats par les logements contenant une mesure d'efficacité du système de chauffage qui est soit 'Steady State' soit 'AFUE'",
+    "origin": [
+      [
+        "src/schema/index.js",
+        394
       ]
     ]
   },
@@ -1339,7 +1564,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        334
+        396
       ]
     ]
   },
@@ -1348,7 +1573,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        336
+        398
       ]
     ]
   },
@@ -1357,7 +1582,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        338
+        400
       ]
     ]
   },
@@ -1366,7 +1591,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        340
+        402
       ]
     ]
   },
@@ -1375,7 +1600,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        342
+        404
       ]
     ]
   },
@@ -1384,7 +1609,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        344
+        406
       ]
     ]
   },
@@ -1393,7 +1618,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        346
+        408
       ]
     ]
   },
@@ -1402,7 +1627,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        348
+        410
       ]
     ]
   },
@@ -1411,7 +1636,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        350
+        412
       ]
     ]
   },
@@ -1420,7 +1645,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        352
+        414
       ]
     ]
   },
@@ -1429,7 +1654,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        354
+        416
       ]
     ]
   },
@@ -1438,7 +1663,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        356
+        418
       ]
     ]
   },
@@ -1447,7 +1672,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        358
+        420
       ]
     ]
   },
@@ -1456,7 +1681,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        360
+        422
       ]
     ]
   },
@@ -1465,7 +1690,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        362
+        424
       ]
     ]
   },
@@ -1474,7 +1699,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        364
+        426
       ]
     ]
   },
@@ -1483,7 +1708,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        366
+        428
       ]
     ]
   },
@@ -1492,7 +1717,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        368
+        430
       ]
     ]
   },
@@ -1501,7 +1726,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        370
+        432
       ]
     ]
   },
@@ -1510,7 +1735,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        372
+        434
       ]
     ]
   },
@@ -1519,7 +1744,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        374
+        436
       ]
     ]
   },
@@ -1528,7 +1753,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        376
+        438
       ]
     ]
   },
@@ -1537,7 +1762,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        378
+        440
       ]
     ]
   },
@@ -1546,7 +1771,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        380
+        442
       ]
     ]
   },
@@ -1555,7 +1780,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        382
+        444
       ]
     ]
   },
@@ -1564,7 +1789,43 @@
     "origin": [
       [
         "src/schema/index.js",
-        384
+        446
+      ]
+    ]
+  },
+  "Filter results by the dwellings containing at least one ceiling with a specific area in square metres (m2)": {
+    "translation": "Filtrer les résultats par les logements contenant au moins un plafond avec une surface spécifique en mètres carrés (m2)",
+    "origin": [
+      [
+        "src/schema/index.js",
+        448
+      ]
+    ]
+  },
+  "Filter results by the dwellings containing at least one ceiling with a specific area in square feet (ft2)": {
+    "translation": "Filtrer les résultats par les logements contenant au moins un plafond avec une surface spécifique en pieds carrés (pi2)",
+    "origin": [
+      [
+        "src/schema/index.js",
+        450
+      ]
+    ]
+  },
+  "Filter results by the dwellings containing at least one ceiling with a specific length in metres (m)": {
+    "translation": "Filtrer les résultats par les logements contenant au moins un plafond avec une longueur spécifique en mètres (m)",
+    "origin": [
+      [
+        "src/schema/index.js",
+        452
+      ]
+    ]
+  },
+  "Filter results by the dwellings containing at least one ceiling with a specific length in feet (ft)": {
+    "translation": "Filtrer les résultats par les logements contenant au moins un plafond avec une longueur spécifique en pieds (pi)",
+    "origin": [
+      [
+        "src/schema/index.js",
+        454
       ]
     ]
   },
@@ -1573,7 +1834,7 @@
     "origin": [
       [
         "src/schema/resolvers.js",
-        74
+        85
       ]
     ]
   },
@@ -1582,7 +1843,7 @@
     "origin": [
       [
         "src/schema/resolvers.js",
-        79
+        90
       ]
     ]
   },
@@ -1591,7 +1852,7 @@
     "origin": [
       [
         "src/schema/resolvers.js",
-        85
+        96
       ]
     ]
   },
@@ -1600,7 +1861,7 @@
     "origin": [
       [
         "src/schema/resolvers.js",
-        91
+        102
       ]
     ]
   }

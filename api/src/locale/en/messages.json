@@ -1,40 +1,4 @@
 {
-  "Filter results by the dwellings containing at least one ceiling with a specific area in square metres (m2)": {
-    "translation": "",
-    "origin": [
-      [
-        "src/schema/index.js",
-        386
-      ]
-    ]
-  },
-  "Filter results by the dwellings containing at least one ceiling with a specific area in square feet (ft2)": {
-    "translation": "",
-    "origin": [
-      [
-        "src/schema/index.js",
-        388
-      ]
-    ]
-  },
-  "Filter results by the dwellings containing at least one ceiling with a specific length in metres (m)": {
-    "translation": "",
-    "origin": [
-      [
-        "src/schema/index.js",
-        390
-      ]
-    ]
-  },
-  "Filter results by the dwellings containing at least one ceiling with a specific length in feet (ft)": {
-    "translation": "",
-    "origin": [
-      [
-        "src/schema/index.js",
-        392
-      ]
-    ]
-  },
   "An operator to describe how results will be filtered": {
     "translation": "",
     "origin": [
@@ -102,7 +66,7 @@
       ]
     ]
   },
-  "Ventilation systems draw exterior air into the house, exhaust interior air to the exterior, or both": {
+  "An improvement that could improve the energy efficiency of the dwelling": {
     "translation": "",
     "origin": [
       [
@@ -111,7 +75,7 @@
       ]
     ]
   },
-  "Ventilation type installed (en)": {
+  "Part of the dwelling to be upgraded": {
     "translation": "",
     "origin": [
       [
@@ -120,7 +84,7 @@
       ]
     ]
   },
-  "Ventilation type installed (fr)": {
+  "Estimated cost of upgrade": {
     "translation": "",
     "origin": [
       [
@@ -129,7 +93,7 @@
       ]
     ]
   },
-  "Air flow rate in Litres per Second (LpS)": {
+  "Order of importance of upgrade recommendation (lower number means a higher priority)": {
     "translation": "",
     "origin": [
       [
@@ -138,16 +102,16 @@
       ]
     ]
   },
-  "Air flow rate in Cubic feet per Minute (CfM)": {
+  "Ventilation systems draw exterior air into the house, exhaust interior air to the exterior, or both": {
     "translation": "",
     "origin": [
       [
         "src/schema/index.js",
-        40
+        42
       ]
     ]
   },
-  "Floors represents the usable area of the house": {
+  "Ventilation type installed (en)": {
     "translation": "",
     "origin": [
       [
@@ -156,7 +120,7 @@
       ]
     ]
   },
-  "Description of floor location": {
+  "Ventilation type installed (fr)": {
     "translation": "",
     "origin": [
       [
@@ -165,7 +129,7 @@
       ]
     ]
   },
-  "Floor insulation nominal RSI (R-value Systeme International)": {
+  "Air flow rate in Litres per Second (LpS)": {
     "translation": "",
     "origin": [
       [
@@ -174,7 +138,7 @@
       ]
     ]
   },
-  "Floor insulation nominal R-value": {
+  "Air flow rate in Cubic feet per Minute (CfM)": {
     "translation": "",
     "origin": [
       [
@@ -183,16 +147,7 @@
       ]
     ]
   },
-  "Floor insulation effective RSI (R-value Systeme International)": {
-    "translation": "",
-    "origin": [
-      [
-        "src/schema/index.js",
-        52
-      ]
-    ]
-  },
-  "Floor insulation effective R-value": {
+  "Floors represents the usable area of the house": {
     "translation": "",
     "origin": [
       [
@@ -201,7 +156,7 @@
       ]
     ]
   },
-  "Floor area of the house in square metres (m2)": {
+  "Description of floor location": {
     "translation": "",
     "origin": [
       [
@@ -210,7 +165,7 @@
       ]
     ]
   },
-  "Floor area of the house in square feet (ft2)": {
+  "Floor insulation nominal RSI (R-value Systeme International)": {
     "translation": "",
     "origin": [
       [
@@ -219,7 +174,7 @@
       ]
     ]
   },
-  "Floor length of the house in metres (m)": {
+  "Floor insulation nominal R-value": {
     "translation": "",
     "origin": [
       [
@@ -228,7 +183,7 @@
       ]
     ]
   },
-  "Floor area of the house in feet (ft)": {
+  "Floor insulation effective RSI (R-value Systeme International)": {
     "translation": "",
     "origin": [
       [
@@ -237,7 +192,16 @@
       ]
     ]
   },
-  "Water heaters heat the domestic hot water in a house": {
+  "Floor insulation effective R-value": {
+    "translation": "",
+    "origin": [
+      [
+        "src/schema/index.js",
+        64
+      ]
+    ]
+  },
+  "Floor area of the house in square metres (m2)": {
     "translation": "",
     "origin": [
       [
@@ -246,7 +210,7 @@
       ]
     ]
   },
-  "Type of tank being used to heat the domestic hot water in the house (en)": {
+  "Floor area of the house in square feet (ft2)": {
     "translation": "",
     "origin": [
       [
@@ -255,7 +219,7 @@
       ]
     ]
   },
-  "Type of tank being used to heat the domestic hot water in the house (fr)": {
+  "Floor length of the house in metres (m)": {
     "translation": "",
     "origin": [
       [
@@ -264,7 +228,7 @@
       ]
     ]
   },
-  "Volume of the tank capacity in Litres (L)": {
+  "Floor area of the house in feet (ft)": {
     "translation": "",
     "origin": [
       [
@@ -273,16 +237,7 @@
       ]
     ]
   },
-  "Volume of the tank capacity in Gallons (G)": {
-    "translation": "",
-    "origin": [
-      [
-        "src/schema/index.js",
-        74
-      ]
-    ]
-  },
-  "Measures how effectively your water heater is burning fuel or turning fuel into heat": {
+  "Water heaters heat the domestic hot water in a house": {
     "translation": "",
     "origin": [
       [
@@ -291,7 +246,16 @@
       ]
     ]
   },
-  "One page of results": {
+  "Type of tank being used to heat the domestic hot water in the house (en)": {
+    "translation": "",
+    "origin": [
+      [
+        "src/schema/index.js",
+        78
+      ]
+    ]
+  },
+  "Type of tank being used to heat the domestic hot water in the house (fr)": {
     "translation": "",
     "origin": [
       [
@@ -300,7 +264,7 @@
       ]
     ]
   },
-  "If true, a further page of results can be returned": {
+  "Volume of the tank capacity in Litres (L)": {
     "translation": "",
     "origin": [
       [
@@ -309,7 +273,7 @@
       ]
     ]
   },
-  "If true, a previous page of results can be returned": {
+  "Volume of the tank capacity in Gallons (G)": {
     "translation": "",
     "origin": [
       [
@@ -318,7 +282,7 @@
       ]
     ]
   },
-  "Identifier used to return the next page of results": {
+  "Measures how effectively your water heater is burning fuel or turning fuel into heat": {
     "translation": "",
     "origin": [
       [
@@ -327,16 +291,7 @@
       ]
     ]
   },
-  "Identifier cursor used to return the previous page of results": {
-    "translation": "",
-    "origin": [
-      [
-        "src/schema/index.js",
-        88
-      ]
-    ]
-  },
-  "A list of dwellings": {
+  "A principal heating system is either the only source of heat for the house, or is used for at least 70% of the heating load": {
     "translation": "",
     "origin": [
       [
@@ -345,7 +300,16 @@
       ]
     ]
   },
-  "Heated floor areas represents the usable areas of a house that is conditioned to a specified temperature during the whole heating season": {
+  "Description of heating system": {
+    "translation": "",
+    "origin": [
+      [
+        "src/schema/index.js",
+        92
+      ]
+    ]
+  },
+  "Type of heating system (en)": {
     "translation": "",
     "origin": [
       [
@@ -354,7 +318,7 @@
       ]
     ]
   },
-  "Above-grade heated area of the house in square metres (m2), i.e. the ground floor": {
+  "Type of heating system (fr)": {
     "translation": "",
     "origin": [
       [
@@ -363,7 +327,7 @@
       ]
     ]
   },
-  "Above-grade heated area of the house in square feet (ft2), i.e. the ground floor": {
+  "The source of fuel for the heating system (en)": {
     "translation": "",
     "origin": [
       [
@@ -372,7 +336,7 @@
       ]
     ]
   },
-  "Below-grade heated area of the house in square metres (m2), i.e. the basement": {
+  "The source of fuel for the heating system (fr)": {
     "translation": "",
     "origin": [
       [
@@ -381,7 +345,7 @@
       ]
     ]
   },
-  "Below-grade heated area of the house in square feet (ft2), i.e. the basement": {
+  "Equipment type of heating system (en)": {
     "translation": "",
     "origin": [
       [
@@ -390,7 +354,16 @@
       ]
     ]
   },
-  "Walls separate the interior heated space from the outside (interior partition walls are not considered walls)": {
+  "Equipment type of heating system (fr)": {
+    "translation": "",
+    "origin": [
+      [
+        "src/schema/index.js",
+        104
+      ]
+    ]
+  },
+  "Output capacity of the heating system in kilowatt hours (kWh)": {
     "translation": "",
     "origin": [
       [
@@ -399,7 +372,7 @@
       ]
     ]
   },
-  "Description of wall location": {
+  "Output capacity of the heating system in British Thermal Units per hour (BTU/h)": {
     "translation": "",
     "origin": [
       [
@@ -408,7 +381,7 @@
       ]
     ]
   },
-  "Wall construction being used (en)": {
+  "Measures how effectively your heating system is burning fuel or turning fuel into heat": {
     "translation": "",
     "origin": [
       [
@@ -417,7 +390,7 @@
       ]
     ]
   },
-  "Wall construction being used (fr)": {
+  "Steady-state efficiency is the combustion efficiency of the equipment at peak performance. The Annual Fuel Utilization Efficiency (AFUE) is a measure of efficiency based on average usage, accounting for the fact that most heating systems rarely run long enough to reach peak performance.": {
     "translation": "",
     "origin": [
       [
@@ -426,12 +399,147 @@
       ]
     ]
   },
+  "One page of results": {
+    "translation": "",
+    "origin": [
+      [
+        "src/schema/index.js",
+        117
+      ]
+    ]
+  },
+  "If true, a further page of results can be returned": {
+    "translation": "",
+    "origin": [
+      [
+        "src/schema/index.js",
+        119
+      ]
+    ]
+  },
+  "If true, a previous page of results can be returned": {
+    "translation": "",
+    "origin": [
+      [
+        "src/schema/index.js",
+        121
+      ]
+    ]
+  },
+  "Identifier used to return the next page of results": {
+    "translation": "",
+    "origin": [
+      [
+        "src/schema/index.js",
+        123
+      ]
+    ]
+  },
+  "Identifier cursor used to return the previous page of results": {
+    "translation": "",
+    "origin": [
+      [
+        "src/schema/index.js",
+        125
+      ]
+    ]
+  },
+  "A list of dwellings": {
+    "translation": "",
+    "origin": [
+      [
+        "src/schema/index.js",
+        127
+      ]
+    ]
+  },
+  "Heated floor areas represents the usable areas of a house that is conditioned to a specified temperature during the whole heating season": {
+    "translation": "",
+    "origin": [
+      [
+        "src/schema/index.js",
+        131
+      ]
+    ]
+  },
+  "Above-grade heated area of the house in square metres (m2), i.e. the ground floor": {
+    "translation": "",
+    "origin": [
+      [
+        "src/schema/index.js",
+        133
+      ]
+    ]
+  },
+  "Above-grade heated area of the house in square feet (ft2), i.e. the ground floor": {
+    "translation": "",
+    "origin": [
+      [
+        "src/schema/index.js",
+        135
+      ]
+    ]
+  },
+  "Below-grade heated area of the house in square metres (m2), i.e. the basement": {
+    "translation": "",
+    "origin": [
+      [
+        "src/schema/index.js",
+        137
+      ]
+    ]
+  },
+  "Below-grade heated area of the house in square feet (ft2), i.e. the basement": {
+    "translation": "",
+    "origin": [
+      [
+        "src/schema/index.js",
+        139
+      ]
+    ]
+  },
+  "Walls separate the interior heated space from the outside (interior partition walls are not considered walls)": {
+    "translation": "",
+    "origin": [
+      [
+        "src/schema/index.js",
+        143
+      ]
+    ]
+  },
+  "Description of wall location": {
+    "translation": "",
+    "origin": [
+      [
+        "src/schema/index.js",
+        145
+      ]
+    ]
+  },
+  "Wall construction being used (en)": {
+    "translation": "",
+    "origin": [
+      [
+        "src/schema/index.js",
+        147
+      ]
+    ]
+  },
+  "Wall construction being used (fr)": {
+    "translation": "",
+    "origin": [
+      [
+        "src/schema/index.js",
+        149
+      ]
+    ]
+  },
   "Size of the component type (en)": {
     "translation": "",
     "origin": [
       [
         "src/schema/index.js",
-        114
+        151
       ]
     ]
   },
@@ -440,7 +548,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        116
+        153
       ]
     ]
   },
@@ -449,7 +557,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        118
+        155
       ]
     ]
   },
@@ -458,11 +566,11 @@
     "origin": [
       [
         "src/schema/index.js",
-        120
+        157
       ],
       [
         "src/schema/index.js",
-        124
+        161
       ]
     ]
   },
@@ -471,7 +579,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        122
+        159
       ]
     ]
   },
@@ -480,7 +588,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        126
+        163
       ]
     ]
   },
@@ -489,7 +597,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        128
+        165
       ]
     ]
   },
@@ -498,7 +606,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        130
+        167
       ]
     ]
   },
@@ -507,7 +615,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        132
+        169
       ]
     ]
   },
@@ -516,7 +624,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        134
+        171
       ]
     ]
   },
@@ -525,7 +633,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        136
+        173
       ]
     ]
   },
@@ -534,7 +642,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        140
+        177
       ]
     ]
   },
@@ -543,7 +651,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        142
+        179
       ]
     ]
   },
@@ -552,7 +660,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        144
+        181
       ]
     ]
   },
@@ -561,7 +669,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        146
+        183
       ]
     ]
   },
@@ -570,7 +678,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        148
+        185
       ]
     ]
   },
@@ -579,7 +687,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        150
+        187
       ]
     ]
   },
@@ -588,7 +696,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        152
+        189
       ]
     ]
   },
@@ -597,7 +705,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        154
+        191
       ]
     ]
   },
@@ -606,7 +714,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        156
+        193
       ]
     ]
   },
@@ -615,7 +723,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        160
+        197
       ]
     ]
   },
@@ -624,7 +732,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        162
+        199
       ]
     ]
   },
@@ -633,7 +741,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        164
+        201
       ]
     ]
   },
@@ -642,7 +750,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        166
+        203
       ]
     ]
   },
@@ -651,7 +759,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        168
+        205
       ]
     ]
   },
@@ -660,7 +768,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        170
+        207
       ]
     ]
   },
@@ -669,7 +777,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        172
+        209
       ]
     ]
   },
@@ -678,7 +786,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        174
+        211
       ]
     ]
   },
@@ -687,7 +795,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        176
+        213
       ]
     ]
   },
@@ -696,7 +804,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        178
+        215
       ]
     ]
   },
@@ -705,7 +813,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        180
+        217
       ]
     ]
   },
@@ -714,7 +822,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        182
+        219
       ]
     ]
   },
@@ -723,7 +831,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        184
+        221
       ]
     ]
   },
@@ -732,7 +840,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        186
+        223
       ]
     ]
   },
@@ -741,7 +849,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        188
+        225
       ]
     ]
   },
@@ -750,7 +858,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        190
+        227
       ]
     ]
   },
@@ -759,7 +867,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        192
+        229
       ]
     ]
   },
@@ -768,7 +876,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        194
+        231
       ]
     ]
   },
@@ -777,7 +885,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        196
+        233
       ]
     ]
   },
@@ -786,7 +894,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        198
+        235
       ]
     ]
   },
@@ -795,7 +903,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        200
+        237
       ]
     ]
   },
@@ -804,7 +912,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        202
+        239
       ]
     ]
   },
@@ -813,7 +921,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        206
+        243
       ]
     ]
   },
@@ -822,7 +930,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        208
+        245
       ]
     ]
   },
@@ -831,7 +939,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        210
+        247
       ]
     ]
   },
@@ -840,7 +948,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        212
+        249
       ]
     ]
   },
@@ -849,7 +957,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        214
+        251
       ]
     ]
   },
@@ -858,7 +966,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        216
+        253
       ]
     ]
   },
@@ -867,7 +975,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        218
+        255
       ]
     ]
   },
@@ -876,7 +984,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        220
+        257
       ]
     ]
   },
@@ -885,7 +993,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        222
+        259
       ]
     ]
   },
@@ -894,7 +1002,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        224
+        261
       ]
     ]
   },
@@ -903,7 +1011,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        226
+        263
       ]
     ]
   },
@@ -912,7 +1020,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        228
+        265
       ]
     ]
   },
@@ -921,7 +1029,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        232
+        269
       ]
     ]
   },
@@ -930,7 +1038,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        234
+        271
       ]
     ]
   },
@@ -939,7 +1047,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        236
+        273
       ]
     ]
   },
@@ -948,7 +1056,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        238
+        275
       ]
     ]
   },
@@ -957,7 +1065,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        240
+        277
       ]
     ]
   },
@@ -966,7 +1074,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        242
+        279
       ]
     ]
   },
@@ -975,7 +1083,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        244
+        281
       ]
     ]
   },
@@ -984,7 +1092,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        246
+        283
       ]
     ]
   },
@@ -993,7 +1101,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        248
+        285
       ]
     ]
   },
@@ -1002,7 +1110,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        250
+        287
       ]
     ]
   },
@@ -1011,7 +1119,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        252
+        289
       ]
     ]
   },
@@ -1020,7 +1128,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        254
+        291
       ]
     ]
   },
@@ -1029,7 +1137,25 @@
     "origin": [
       [
         "src/schema/index.js",
-        256
+        293
+      ]
+    ]
+  },
+  "A principal heating system for a dwelling": {
+    "translation": "",
+    "origin": [
+      [
+        "src/schema/index.js",
+        295
+      ]
+    ]
+  },
+  "A list of upgrades that would improve energy efficiency": {
+    "translation": "",
+    "origin": [
+      [
+        "src/schema/index.js",
+        297
       ]
     ]
   },
@@ -1038,7 +1164,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        261
+        301
       ]
     ]
   },
@@ -1047,7 +1173,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        263
+        303
       ]
     ]
   },
@@ -1056,7 +1182,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        265
+        305
       ]
     ]
   },
@@ -1065,7 +1191,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        267
+        307
       ]
     ]
   },
@@ -1074,7 +1200,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        269
+        309
       ]
     ]
   },
@@ -1083,7 +1209,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        271
+        311
       ]
     ]
   },
@@ -1092,7 +1218,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        273
+        313
       ]
     ]
   },
@@ -1101,7 +1227,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        277
+        317
       ]
     ]
   },
@@ -1110,7 +1236,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        279
+        319
       ]
     ]
   },
@@ -1119,7 +1245,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        281
+        321
       ]
     ]
   },
@@ -1128,7 +1254,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        286
+        326
       ]
     ]
   },
@@ -1137,7 +1263,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        288
+        328
       ]
     ]
   },
@@ -1146,7 +1272,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        290
+        330
       ]
     ]
   },
@@ -1155,7 +1281,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        292
+        332
       ]
     ]
   },
@@ -1164,7 +1290,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        294
+        334
       ]
     ]
   },
@@ -1173,7 +1299,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        296
+        336
       ]
     ]
   },
@@ -1182,7 +1308,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        298
+        338
       ]
     ]
   },
@@ -1191,7 +1317,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        300
+        340
       ]
     ]
   },
@@ -1200,7 +1326,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        302
+        342
       ]
     ]
   },
@@ -1209,7 +1335,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        304
+        344
       ]
     ]
   },
@@ -1218,7 +1344,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        306
+        346
       ]
     ]
   },
@@ -1227,7 +1353,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        308
+        348
       ]
     ]
   },
@@ -1236,7 +1362,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        310
+        350
       ]
     ]
   },
@@ -1245,11 +1371,11 @@
     "origin": [
       [
         "src/schema/index.js",
-        312
+        352
       ],
       [
         "src/schema/index.js",
-        314
+        354
       ]
     ]
   },
@@ -1258,7 +1384,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        316
+        356
       ]
     ]
   },
@@ -1267,7 +1393,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        318
+        358
       ]
     ]
   },
@@ -1276,7 +1402,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        320
+        360
       ]
     ]
   },
@@ -1285,7 +1411,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        322
+        362
       ]
     ]
   },
@@ -1294,7 +1420,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        324
+        364
       ]
     ]
   },
@@ -1303,7 +1429,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        326
+        366
       ]
     ]
   },
@@ -1312,7 +1438,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        328
+        368
       ]
     ]
   },
@@ -1321,7 +1447,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        330
+        370
       ]
     ]
   },
@@ -1330,191 +1456,11 @@
     "origin": [
       [
         "src/schema/index.js",
-        332
-      ]
-    ]
-  },
-  "Filter results by the dwellings containing an above-grade heated floor area with a specific area in square metres (m2)": {
-    "translation": "",
-    "origin": [
-      [
-        "src/schema/index.js",
-        334
-      ]
-    ]
-  },
-  "Filter results by the dwellings containing an above-grade heated floor area with a specific area in square feet (ft2)": {
-    "translation": "",
-    "origin": [
-      [
-        "src/schema/index.js",
-        336
-      ]
-    ]
-  },
-  "Filter results by the dwellings containing a below-grade heated floor area with a specific area in square metres (m2)": {
-    "translation": "",
-    "origin": [
-      [
-        "src/schema/index.js",
-        338
-      ]
-    ]
-  },
-  "Filter results by the dwellings containing a below-grade heated floor area with a specific area in square feet (ft2)": {
-    "translation": "",
-    "origin": [
-      [
-        "src/schema/index.js",
-        340
-      ]
-    ]
-  },
-  "Filter results by the dwellings containing at least one wall with a specific location": {
-    "translation": "",
-    "origin": [
-      [
-        "src/schema/index.js",
-        342
-      ]
-    ]
-  },
-  "Filter results by the dwellings containing at least one wall of a specific type (en)": {
-    "translation": "",
-    "origin": [
-      [
-        "src/schema/index.js",
-        344
-      ]
-    ]
-  },
-  "Filter results by the dwellings containing at least one wall of a specific type (fr)": {
-    "translation": "",
-    "origin": [
-      [
-        "src/schema/index.js",
-        346
-      ]
-    ]
-  },
-  "Filter results by the dwellings containing at least one wall with a component of a specific size (en)": {
-    "translation": "",
-    "origin": [
-      [
-        "src/schema/index.js",
-        348
-      ]
-    ]
-  },
-  "Filter results by the dwellings containing at least one wall with a component of a specific size (fr)": {
-    "translation": "",
-    "origin": [
-      [
-        "src/schema/index.js",
-        350
-      ]
-    ]
-  },
-  "Filter results by the dwellings containing at least one wall with a specific nominal RSI (R-value Systeme International)": {
-    "translation": "",
-    "origin": [
-      [
-        "src/schema/index.js",
-        352
-      ]
-    ]
-  },
-  "Filter results by the dwellings containing at least one wall with a specific nominal R-value": {
-    "translation": "",
-    "origin": [
-      [
-        "src/schema/index.js",
-        354
-      ]
-    ]
-  },
-  "Filter results by the dwellings containing at least one wall with a specific effective RSI (R-value Systeme International)": {
-    "translation": "",
-    "origin": [
-      [
-        "src/schema/index.js",
-        356
-      ]
-    ]
-  },
-  "Filter results by the dwellings containing at least one wall with a specific effective R-value": {
-    "translation": "",
-    "origin": [
-      [
-        "src/schema/index.js",
-        358
-      ]
-    ]
-  },
-  "Filter results by the dwellings containing at least one wall with a specific area in square metres (m2)": {
-    "translation": "",
-    "origin": [
-      [
-        "src/schema/index.js",
-        360
-      ]
-    ]
-  },
-  "Filter results by the dwellings containing at least one wall with a specific area in square feet (ft2)": {
-    "translation": "",
-    "origin": [
-      [
-        "src/schema/index.js",
-        362
-      ]
-    ]
-  },
-  "Filter results by the dwellings containing at least one wall with a specific perimeter in metres (m)": {
-    "translation": "",
-    "origin": [
-      [
-        "src/schema/index.js",
-        364
-      ]
-    ]
-  },
-  "Filter results by the dwellings containing at least one wall with a specific perimeter in feet (ft)": {
-    "translation": "",
-    "origin": [
-      [
-        "src/schema/index.js",
-        366
-      ]
-    ]
-  },
-  "Filter results by the dwellings containing at least one wall with a specific height in metres (m)": {
-    "translation": "",
-    "origin": [
-      [
-        "src/schema/index.js",
-        368
-      ]
-    ]
-  },
-  "Filter results by the dwellings containing at least one wall with a specific height in feet (ft)": {
-    "translation": "",
-    "origin": [
-      [
-        "src/schema/index.js",
-        370
-      ]
-    ]
-  },
-  "Filter results by the dwellings where at least one ceiling has a matching label": {
-    "translation": "",
-    "origin": [
-      [
-        "src/schema/index.js",
         372
       ]
     ]
   },
-  "Filter results by the dwellings where at least one ceiling has a matching type (en)": {
+  "Filter results by the dwellings containing a heating system with a specific description": {
     "translation": "",
     "origin": [
       [
@@ -1523,7 +1469,7 @@
       ]
     ]
   },
-  "Filter results by the dwellings where at least one ceiling has a matching type (fr)": {
+  "Filter results by the dwellings containing a heating system of a specific type (en)": {
     "translation": "",
     "origin": [
       [
@@ -1532,7 +1478,7 @@
       ]
     ]
   },
-  "Filter results by the dwellings where at least one ceiling has a specific nominal RSI (R-value Systeme International)": {
+  "Filter results by the dwellings containing a heating system of a specific type (fr)": {
     "translation": "",
     "origin": [
       [
@@ -1541,7 +1487,7 @@
       ]
     ]
   },
-  "Filter results by the dwellings containing at least one ceiling with a specific nominal R-value": {
+  "Filter results by the dwellings containing a heating system with a specific fuel source (en)": {
     "translation": "",
     "origin": [
       [
@@ -1550,7 +1496,7 @@
       ]
     ]
   },
-  "Filter results by the dwellings containing at least one ceiling with a specific effective RSI (R-value Systeme International)": {
+  "Filter results by the dwellings containing a heating system with a specific fuel source (fr)": {
     "translation": "",
     "origin": [
       [
@@ -1559,7 +1505,7 @@
       ]
     ]
   },
-  "Filter results by the dwellings containing at least one ceiling with a specific effective R-value": {
+  "Filter results by the dwellings containing a heating system with a specific type of equipment (en)": {
     "translation": "",
     "origin": [
       [
@@ -1568,25 +1514,322 @@
       ]
     ]
   },
+  "Filter results by the dwellings containing a heating system with a specific type of equipment (fr)": {
+    "translation": "",
+    "origin": [
+      [
+        "src/schema/index.js",
+        386
+      ]
+    ]
+  },
+  "Filter results by the dwellings containing a heating system with a specific output capacity in kilowatt hours (kWh)": {
+    "translation": "",
+    "origin": [
+      [
+        "src/schema/index.js",
+        388
+      ]
+    ]
+  },
+  "Filter results by the dwellings containing a heating system with a specific output capacity in British Thermal Units per hour (BTU/h)": {
+    "translation": "",
+    "origin": [
+      [
+        "src/schema/index.js",
+        390
+      ]
+    ]
+  },
+  "Filter results by the dwellings containing a heating system with a specific efficiency rating": {
+    "translation": "",
+    "origin": [
+      [
+        "src/schema/index.js",
+        392
+      ]
+    ]
+  },
+  "Filter results by the dwellings containing a heating system efficiency measurement that is either 'Steady State' or 'AFUE'": {
+    "translation": "",
+    "origin": [
+      [
+        "src/schema/index.js",
+        394
+      ]
+    ]
+  },
+  "Filter results by the dwellings containing an above-grade heated floor area with a specific area in square metres (m2)": {
+    "translation": "",
+    "origin": [
+      [
+        "src/schema/index.js",
+        396
+      ]
+    ]
+  },
+  "Filter results by the dwellings containing an above-grade heated floor area with a specific area in square feet (ft2)": {
+    "translation": "",
+    "origin": [
+      [
+        "src/schema/index.js",
+        398
+      ]
+    ]
+  },
+  "Filter results by the dwellings containing a below-grade heated floor area with a specific area in square metres (m2)": {
+    "translation": "",
+    "origin": [
+      [
+        "src/schema/index.js",
+        400
+      ]
+    ]
+  },
+  "Filter results by the dwellings containing a below-grade heated floor area with a specific area in square feet (ft2)": {
+    "translation": "",
+    "origin": [
+      [
+        "src/schema/index.js",
+        402
+      ]
+    ]
+  },
+  "Filter results by the dwellings containing at least one wall with a specific location": {
+    "translation": "",
+    "origin": [
+      [
+        "src/schema/index.js",
+        404
+      ]
+    ]
+  },
+  "Filter results by the dwellings containing at least one wall of a specific type (en)": {
+    "translation": "",
+    "origin": [
+      [
+        "src/schema/index.js",
+        406
+      ]
+    ]
+  },
+  "Filter results by the dwellings containing at least one wall of a specific type (fr)": {
+    "translation": "",
+    "origin": [
+      [
+        "src/schema/index.js",
+        408
+      ]
+    ]
+  },
+  "Filter results by the dwellings containing at least one wall with a component of a specific size (en)": {
+    "translation": "",
+    "origin": [
+      [
+        "src/schema/index.js",
+        410
+      ]
+    ]
+  },
+  "Filter results by the dwellings containing at least one wall with a component of a specific size (fr)": {
+    "translation": "",
+    "origin": [
+      [
+        "src/schema/index.js",
+        412
+      ]
+    ]
+  },
+  "Filter results by the dwellings containing at least one wall with a specific nominal RSI (R-value Systeme International)": {
+    "translation": "",
+    "origin": [
+      [
+        "src/schema/index.js",
+        414
+      ]
+    ]
+  },
+  "Filter results by the dwellings containing at least one wall with a specific nominal R-value": {
+    "translation": "",
+    "origin": [
+      [
+        "src/schema/index.js",
+        416
+      ]
+    ]
+  },
+  "Filter results by the dwellings containing at least one wall with a specific effective RSI (R-value Systeme International)": {
+    "translation": "",
+    "origin": [
+      [
+        "src/schema/index.js",
+        418
+      ]
+    ]
+  },
+  "Filter results by the dwellings containing at least one wall with a specific effective R-value": {
+    "translation": "",
+    "origin": [
+      [
+        "src/schema/index.js",
+        420
+      ]
+    ]
+  },
+  "Filter results by the dwellings containing at least one wall with a specific area in square metres (m2)": {
+    "translation": "",
+    "origin": [
+      [
+        "src/schema/index.js",
+        422
+      ]
+    ]
+  },
+  "Filter results by the dwellings containing at least one wall with a specific area in square feet (ft2)": {
+    "translation": "",
+    "origin": [
+      [
+        "src/schema/index.js",
+        424
+      ]
+    ]
+  },
+  "Filter results by the dwellings containing at least one wall with a specific perimeter in metres (m)": {
+    "translation": "",
+    "origin": [
+      [
+        "src/schema/index.js",
+        426
+      ]
+    ]
+  },
+  "Filter results by the dwellings containing at least one wall with a specific perimeter in feet (ft)": {
+    "translation": "",
+    "origin": [
+      [
+        "src/schema/index.js",
+        428
+      ]
+    ]
+  },
+  "Filter results by the dwellings containing at least one wall with a specific height in metres (m)": {
+    "translation": "",
+    "origin": [
+      [
+        "src/schema/index.js",
+        430
+      ]
+    ]
+  },
+  "Filter results by the dwellings containing at least one wall with a specific height in feet (ft)": {
+    "translation": "",
+    "origin": [
+      [
+        "src/schema/index.js",
+        432
+      ]
+    ]
+  },
+  "Filter results by the dwellings where at least one ceiling has a matching label": {
+    "translation": "",
+    "origin": [
+      [
+        "src/schema/index.js",
+        434
+      ]
+    ]
+  },
+  "Filter results by the dwellings where at least one ceiling has a matching type (en)": {
+    "translation": "",
+    "origin": [
+      [
+        "src/schema/index.js",
+        436
+      ]
+    ]
+  },
+  "Filter results by the dwellings where at least one ceiling has a matching type (fr)": {
+    "translation": "",
+    "origin": [
+      [
+        "src/schema/index.js",
+        438
+      ]
+    ]
+  },
+  "Filter results by the dwellings where at least one ceiling has a specific nominal RSI (R-value Systeme International)": {
+    "translation": "",
+    "origin": [
+      [
+        "src/schema/index.js",
+        440
+      ]
+    ]
+  },
+  "Filter results by the dwellings containing at least one ceiling with a specific nominal R-value": {
+    "translation": "",
+    "origin": [
+      [
+        "src/schema/index.js",
+        442
+      ]
+    ]
+  },
+  "Filter results by the dwellings containing at least one ceiling with a specific effective RSI (R-value Systeme International)": {
+    "translation": "",
+    "origin": [
+      [
+        "src/schema/index.js",
+        444
+      ]
+    ]
+  },
+  "Filter results by the dwellings containing at least one ceiling with a specific effective R-value": {
+    "translation": "",
+    "origin": [
+      [
+        "src/schema/index.js",
+        446
+      ]
+    ]
+  },
+  "Filter results by the dwellings containing at least one ceiling with a specific area in square metres (m2)": {
+    "translation": "",
+    "origin": [
+      [
+        "src/schema/index.js",
+        448
+      ]
+    ]
+  },
+  "Filter results by the dwellings containing at least one ceiling with a specific area in square feet (ft2)": {
+    "translation": "",
+    "origin": [
+      [
+        "src/schema/index.js",
+        450
+      ]
+    ]
+  },
+  "Filter results by the dwellings containing at least one ceiling with a specific length in metres (m)": {
+    "translation": "",
+    "origin": [
+      [
+        "src/schema/index.js",
+        452
+      ]
+    ]
+  },
+  "Filter results by the dwellings containing at least one ceiling with a specific length in feet (ft)": {
+    "translation": "",
+    "origin": [
+      [
+        "src/schema/index.js",
+        454
+      ]
+    ]
+  },
   "The 'Int' scalar type represents non-fractional signed whole numeric values. Int can represent values between -(2^31) and 2^31 - 1.": {
-    "translation": "",
-    "origin": [
-      [
-        "src/schema/resolvers.js",
-        74
-      ]
-    ]
-  },
-  "The 'Float' scalar type represents signed double-precision fractional values as specified by [IEEE 754](http://en.wikipedia.org/wiki/IEEE_floating_point).": {
-    "translation": "",
-    "origin": [
-      [
-        "src/schema/resolvers.js",
-        79
-      ]
-    ]
-  },
-  "The 'String' scalar type represents textual data, represented as UTF-8 character sequences. The String type is most often used by GraphQL to represent free-form human-readable text.": {
     "translation": "",
     "origin": [
       [
@@ -1595,12 +1838,30 @@
       ]
     ]
   },
+  "The 'Float' scalar type represents signed double-precision fractional values as specified by [IEEE 754](http://en.wikipedia.org/wiki/IEEE_floating_point).": {
+    "translation": "",
+    "origin": [
+      [
+        "src/schema/resolvers.js",
+        90
+      ]
+    ]
+  },
+  "The 'String' scalar type represents textual data, represented as UTF-8 character sequences. The String type is most often used by GraphQL to represent free-form human-readable text.": {
+    "translation": "",
+    "origin": [
+      [
+        "src/schema/resolvers.js",
+        96
+      ]
+    ]
+  },
   "The 'Boolean' scalar type represents 'true' or 'false'.": {
     "translation": "",
     "origin": [
       [
         "src/schema/resolvers.js",
-        91
+        102
       ]
     ]
   }
