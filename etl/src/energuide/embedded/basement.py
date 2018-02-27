@@ -270,15 +270,15 @@ class BasementWall(_BasementWall):
 
             return walls
         except ElementGetValueError as exc:
-            raise InvalidEmbeddedDataTypeError(BasementWall) from exc
+            raise InvalidEmbeddedDataTypeError(BasementWall, 'Missing/invalid basement wall height') from exc
 
     @classmethod
     def from_crawlspace(cls, wall: element.Element, wall_perimiter: float) -> typing.List['BasementWall']:
         try:
             wall_sections = wall.xpath('Construction/Type/Composite/Section')
-            wall_height = float(wall.xpath('Measurements/@height')[0])
-        except (ValueError, IndexError) as exc:
-            raise InvalidEmbeddedDataTypeError(BasementWall) from exc
+            wall_height = wall.get('Measurements/@height', float)
+        except ElementGetValueError as exc:
+            raise InvalidEmbeddedDataTypeError(BasementWall, 'Missing/invalid crawlspace wall height') from exc
 
         return [BasementWall._from_data(wall_section, wall_perimiter, wall_height, WallType.NOT_APPLICABLE)
                 for wall_section in wall_sections]
