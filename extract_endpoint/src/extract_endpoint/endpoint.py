@@ -4,11 +4,15 @@ import typing
 from http import HTTPStatus
 import flask
 from werkzeug import utils
+from azure.common import AzureMissingResourceHttpError
 from extract_endpoint import azure_utils
 from extract_endpoint import crypt_utils
 
 
 DEFAULT_ENDPOINT_SECRET_KEY = 'no key'
+
+
+TIMESTAMP_FILENAME = 'timestamp.txt'
 
 
 App = flask.Flask(__name__)
@@ -38,6 +42,15 @@ def robots() -> None:
     flask.abort(HTTPStatus.NOT_FOUND)
 
 
+@App.route('/timestamp', methods=['GET'])
+def timestamp() -> str:
+    try:
+        timestamp = azure_utils.download_bytes_from_azure(App.config['AZURE_COORDINATES'], TIMESTAMP_FILENAME)
+    except AzureMissingResourceHttpError:
+        flask.abort(HTTPStatus.BAD_GATEWAY)
+    return timestamp
+
+
 @App.route('/upload_file', methods=['POST'])
 def upload_file() -> typing.Tuple[str, int]:
     if App.config['SECRET_KEY'] == DEFAULT_ENDPOINT_SECRET_KEY:
@@ -61,9 +74,17 @@ def upload_file() -> typing.Tuple[str, int]:
 
     filename = utils.secure_filename(flask.request.form['filename'])
 
-    if azure_utils.upload_bytes_to_azure(App.config['AZURE_COORDINATES'], file_contents, filename):
-        return 'success', HTTPStatus.CREATED
-    return 'failure', HTTPStatus.BAD_REQUEST
+    if not azure_utils.upload_bytes_to_azure(App.config['AZURE_COORDINATES'], file_contents, filename):
+        flask.abort(HTTPStatus.BAD_GATEWAY)
+
+    timestamp = flask.request.form.get('timestamp', None)
+    if timestamp:
+        if not azure_utils.upload_bytes_to_azure(App.config['AZURE_COORDINATES'],
+                                                 timestamp.encode(),
+                                                 TIMESTAMP_FILENAME):
+            flask.abort(HTTPStatus.BAD_GATEWAY)
+
+    return 'success', HTTPStatus.CREATED
 
 
 if __name__ == "__main__":
