@@ -2,8 +2,8 @@ import { Resolvers } from './resolvers'
 import { makeExecutableSchema } from 'graphql-tools'
 
 const Schema = i18n => {
-  const typeDefs = `
-
+  const typeDefs = [
+    `
     scalar I18NInt
     scalar I18NFloat
     scalar I18NString
@@ -18,6 +18,7 @@ const Schema = i18n => {
       # ${i18n.t`Equal to: returns true for results equal to the comparison value`}
       eq
     }
+
 
     # ${i18n.t`Filters will return results only if they satisfy a condition`}
     input Filter {
@@ -456,7 +457,8 @@ const Schema = i18n => {
       # ${i18n.t`Filter results by the dwellings containing at least one ceiling with a specific length in feet (ft)`}
       ceilingLengthFeet
     }
-  `
+  `,
+  ]
 
   return makeExecutableSchema({ typeDefs, resolvers: new Resolvers(i18n) })
 }

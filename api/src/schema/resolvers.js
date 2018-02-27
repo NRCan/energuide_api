@@ -1,11 +1,4 @@
 import MongoPaging from 'mongo-cursor-pagination'
-import {
-  GraphQLInt,
-  GraphQLFloat,
-  GraphQLString,
-  GraphQLBoolean,
-} from 'graphql'
-
 /* eslint-disable import/named */
 import {
   dwellingHouseId,
@@ -76,38 +69,17 @@ import {
 } from './enums'
 /* eslint-enable import/named */
 
-const I18NInt = Object.create(GraphQLInt)
-const I18NFloat = Object.create(GraphQLFloat)
-const I18NString = Object.create(GraphQLString)
-const I18NBoolean = Object.create(GraphQLBoolean)
+import { createI18NFloat } from './types/I18NFloat'
+import { createI18NInt } from './types/I18NInt'
+import { createI18NString } from './types/I18NString'
+import { createI18NBoolean } from './types/I18NBoolean'
 
 const Resolvers = i18n => {
-  I18NInt.description = i18n.t`
-    The 'Int' scalar type represents non-fractional signed whole numeric
-    values. Int can represent values between -(2^31) and 2^31 - 1.
-  `
-
-  I18NFloat.description = i18n.t`
-    The 'Float' scalar type represents signed double-precision fractional
-    values as specified by
-    [IEEE 754](http://en.wikipedia.org/wiki/IEEE_floating_point).
-  `
-
-  I18NString.description = i18n.t`
-    The 'String' scalar type represents textual data, represented as UTF-8
-    character sequences. The String type is most often used by GraphQL to
-    represent free-form human-readable text.
-  `
-
-  I18NBoolean.description = i18n.t`
-    The 'Boolean' scalar type represents 'true' or 'false'.
-  `
-
   return {
-    I18NInt,
-    I18NString,
-    I18NFloat,
-    I18NBoolean,
+    I18NInt: createI18NInt(i18n),
+    I18NString: createI18NString(i18n),
+    I18NFloat: createI18NFloat(i18n),
+    I18NBoolean: createI18NBoolean(i18n),
     Query: {
       dwelling: async (root, { houseId }, { client }) => {
         let query = {
