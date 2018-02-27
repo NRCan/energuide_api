@@ -31,6 +31,16 @@ def put_file_in_azure(azure_emulator_coords: azure_utils.StorageCoordinates,
     azure_service.delete_blob(azure_emulator_coords.container, filename)
 
 
+def check_file_in_azure(azure_service: blob.BlockBlobService,
+                        azure_emulator_coords: azure_utils.StorageCoordinates,
+                        filename: str,
+                        contents: str) -> None:
+
+    assert filename in [blob.name for blob in azure_service.list_blobs(azure_emulator_coords.container)]
+    actual_blob = azure_service.get_blob_to_text(azure_emulator_coords.container, filename)
+    assert actual_blob.content == contents
+
+
 def test_upload_bytes(azure_emulator_coords: azure_utils.StorageCoordinates,
                       azure_service: blob.BlockBlobService,
                       sample_data: bytes,
@@ -38,10 +48,16 @@ def test_upload_bytes(azure_emulator_coords: azure_utils.StorageCoordinates,
                       sample_filename: str) -> None:
 
     assert azure_utils.upload_bytes_to_azure(azure_emulator_coords, sample_data, sample_filename)
-    assert sample_filename in \
-           [blob.name for blob in azure_service.list_blobs(azure_emulator_coords.container)]
-    actual_file_blob = azure_service.get_blob_to_text(azure_emulator_coords.container, sample_filename)
-    assert actual_file_blob.content == sample_stream_content
+    check_file_in_azure(azure_service, azure_emulator_coords, sample_filename, sample_stream_content)
+
+
+def test_upload_string(azure_emulator_coords: azure_utils.StorageCoordinates,
+                       azure_service: blob.BlockBlobService,
+                       sample_stream_content: str,
+                       sample_filename: str) -> None:
+
+    assert azure_utils.upload_string_to_azure(azure_emulator_coords, sample_stream_content, sample_filename)
+    check_file_in_azure(azure_service, azure_emulator_coords, sample_filename, sample_stream_content)
 
 
 def test_download_string(azure_emulator_coords: azure_utils.StorageCoordinates,
@@ -50,6 +66,7 @@ def test_download_string(azure_emulator_coords: azure_utils.StorageCoordinates,
 
     actual_contents = azure_utils.download_string_from_azure(azure_emulator_coords, put_file_in_azure)
     assert actual_contents == sample_stream_content
+
 
 @pytest.mark.usefixtures('put_file_in_azure')
 def test_download_string_bad_filename(azure_emulator_coords: azure_utils.StorageCoordinates) -> None:
