@@ -313,7 +313,7 @@ workflows:
           filters:
             branches:
               only:
-                - continuous_deploy
+                - master
       - deploy_api:
           requires:
             - yarn_build
