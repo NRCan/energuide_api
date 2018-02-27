@@ -92,6 +92,11 @@ def test_timestamp(test_client: testing.FlaskClient, sample_timestamp: str) -> N
     assert get_return.data == sample_timestamp.encode()
 
 
+def test_timestamp_no_file(test_client: testing.FlaskClient) -> None:
+    get_return = test_client.get('/timestamp')
+    assert get_return.status_code == HTTPStatus.BAD_GATEWAY
+
+
 def check_file_in_azure(azure_service: blob.BlockBlobService,
                         azure_emulator_coords: azure_utils.StorageCoordinates,
                         filename: str,
