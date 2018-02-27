@@ -105,7 +105,7 @@ class Heating(_Heating):
 
     @classmethod
     def _get_energy_source(cls, node: element.Element) -> EnergySource:
-        code = int(node.xpath('Type1/*/Equipment/EnergySource/@code')[0])
+        code = node.get('Type1/*/Equipment/EnergySource/@code', int)
         energy_source = cls._ENERGY_SOURCE_CODES.get(code)
         if energy_source is None:
             raise InvalidEmbeddedDataTypeError(
@@ -120,7 +120,7 @@ class Heating(_Heating):
 
     @staticmethod
     def _get_steady_state(node: element.Element) -> str:
-        steady_state_value = node.xpath('Type1/*/Specifications/@isSteadyState')[0]
+        steady_state_value = node.get('Type1/*/Specifications/@isSteadyState', str)
         return 'Steady State' if steady_state_value == 'true' else 'AFUE'
 
     @classmethod
@@ -128,7 +128,7 @@ class Heating(_Heating):
         return Heating(
             label=node.get_text('Label'),
             output_size=float(Heating._get_output_size(node)),
-            efficiency=float(node.xpath('Type1/*/Specifications/@efficiency')[0]),
+            efficiency=node.get('Type1/*/Specifications/@efficiency', float),
             steady_state=cls._get_steady_state(node),
             heating_type=cls._get_heating_type(node),
             energy_source=cls._get_energy_source(node),

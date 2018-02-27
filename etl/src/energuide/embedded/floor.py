@@ -21,12 +21,12 @@ class Floor(_Floor):
         try:
             return Floor(
                 label=floor.get_text('Label'),
-                nominal_insulation=insulation.Insulation(float(floor.xpath('Construction/Type/@nominalInsulation')[0])),
-                effective_insulation=insulation.Insulation(float(floor.xpath('Construction/Type/@rValue')[0])),
-                floor_area=area.Area(float(floor.xpath('Measurements/@area')[0])),
-                floor_length=distance.Distance(float(floor.xpath('Measurements/@length')[0])),
+                nominal_insulation=insulation.Insulation(floor.get('Construction/Type/@nominalInsulation', float)),
+                effective_insulation=insulation.Insulation(floor.get('Construction/Type/@rValue', float)),
+                floor_area=area.Area(floor.get('Measurements/@area', float)),
+                floor_length=distance.Distance(floor.get('Measurements/@length', float)),
             )
-        except (ElementGetValueError, ValueError, IndexError) as exc:
+        except (ElementGetValueError) as exc:
             raise InvalidEmbeddedDataTypeError(Floor) from exc
 
     def to_dict(self) -> typing.Dict[str, typing.Any]:

@@ -290,15 +290,15 @@ class WaterHeating(_WaterHeating):
             tank_type = water_heating.get_text('TankType/English')
 
             water_heater_type = cls._TYPE_MAP[(energy_type, tank_type)]
-            volume = float(water_heating.xpath('TankVolume/@value')[0])
-            efficiency = float(water_heating.xpath('EnergyFactor/@value')[0])
+            volume = water_heating.get('TankVolume/@value', float)
+            efficiency = water_heating.get('EnergyFactor/@value', float)
 
             return WaterHeating(
                 water_heater_type=water_heater_type,
                 tank_volume=volume,
                 efficiency=efficiency,
             )
-        except (ElementGetValueError, AssertionError, KeyError, ValueError, IndexError) as exc:
+        except (ElementGetValueError, AssertionError, KeyError) as exc:
             raise InvalidEmbeddedDataTypeError(WaterHeating) from exc
 
     @classmethod
