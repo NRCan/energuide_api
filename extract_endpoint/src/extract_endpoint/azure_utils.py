@@ -23,3 +23,10 @@ def upload_bytes_to_azure(coords: StorageCoordinates, data: bytes, filename: str
                                           custom_domain=coords.domain)
     azure_service.create_blob_from_bytes(coords.container, filename, data)
     return filename in [blob.name for blob in azure_service.list_blobs(coords.container)]
+
+
+def download_string_from_azure(coords: StorageCoordinates, filename: str) -> str:
+    azure_service = blob.BlockBlobService(account_name=coords.account,
+                                          account_key=coords.key,
+                                          custom_domain=coords.domain)
+    return azure_service.get_blob_to_text(coords.container, filename).content
