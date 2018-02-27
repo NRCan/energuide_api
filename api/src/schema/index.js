@@ -30,7 +30,7 @@ const Schema = i18n => {
     }
 
     # ${i18n.t`An improvement that could improve the energy efficiency of the dwelling`}
-    type Upgrade {
+    type Upgrade @cacheControl(maxAge: 90) {
       # ${i18n.t`Part of the dwelling to be upgraded`}
       upgradeType: I18NString
       # ${i18n.t`Estimated cost of upgrade`}
@@ -88,7 +88,7 @@ const Schema = i18n => {
     }
 
     # ${i18n.t`A principal heating system is either the only source of heat for the house, or is used for at least 70% of the heating load`}
-    type Heating {
+    type Heating @cacheControl(maxAge: 90) {
       # ${i18n.t`Description of heating system`}
       label: I18NString
       # ${i18n.t`Type of heating system (en)`}
