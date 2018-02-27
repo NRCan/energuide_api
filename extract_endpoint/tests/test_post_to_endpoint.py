@@ -77,7 +77,7 @@ def sample_filename() -> str:
 
 @pytest.fixture
 def sample_timestamp() -> str:
-    return datetime.datetime(2018, 1, 1, 0, 0, 0).strftime("%Y-%m-%d %H:%M:%S")
+    return datetime.datetime(2013, 1, 1, 0, 0, 0).strftime("%Y-%m-%d %H:%M:%S")
 
 
 def check_file_in_azure(azure_service: blob.BlockBlobService,
@@ -148,3 +148,12 @@ def test_post_stream_stdin_no_filename(upload_url: str,
                                      filename=None,
                                      url=upload_url,
                                      timestamp=sample_timestamp)
+
+
+@pytest.mark.usefixtures('run_endpoint')
+def test_post_stream_empty_timestamp(upload_url: str, sample_stream: NamedStream, sample_filename: str) -> None:
+    post_return = post_to_endpoint.post_stream(stream=sample_stream,
+                                               filename=sample_filename,
+                                               url=upload_url,
+                                               timestamp='')
+    assert post_return.status_code == HTTPStatus.BAD_REQUEST

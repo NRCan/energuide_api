@@ -16,7 +16,10 @@ def main() -> None:
     pass
 
 
-def post_stream(stream: typing.IO[bytes], filename: typing.Optional[str], url: str, timestamp: str) -> requests.models.Response:
+def post_stream(stream: typing.IO[bytes],
+                filename: typing.Optional[str],
+                url: str,
+                timestamp: str) -> requests.models.Response:
     if filename is None and stream.name == '<stdin>':
         raise ValueError("Must supply a filename if reading from stdin")
     if filename is None:
