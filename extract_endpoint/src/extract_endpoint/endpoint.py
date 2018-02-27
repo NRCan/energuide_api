@@ -45,7 +45,7 @@ def robots() -> None:
 @App.route('/timestamp', methods=['GET'])
 def timestamp() -> str:
     try:
-        timestamp = azure_utils.download_string_from_azure(App.config['AZURE_COORDINATES'], TIMESTAMP_FILENAME)
+        timestamp = azure_utils.download_bytes_from_azure(App.config['AZURE_COORDINATES'], TIMESTAMP_FILENAME)
     except AzureMissingResourceHttpError:
         flask.abort(HTTPStatus.BAD_GATEWAY)
     return timestamp
@@ -79,7 +79,9 @@ def upload_file() -> typing.Tuple[str, int]:
 
     timestamp = flask.request.form.get('timestamp', None)
     if timestamp:
-        if not azure_utils.upload_string_to_azure(App.config['AZURE_COORDINATES'], timestamp, TIMESTAMP_FILENAME):
+        if not azure_utils.upload_bytes_to_azure(App.config['AZURE_COORDINATES'],
+                                                 timestamp.encode(),
+                                                 TIMESTAMP_FILENAME):
             flask.abort(HTTPStatus.BAD_GATEWAY)
 
     return 'success', HTTPStatus.CREATED

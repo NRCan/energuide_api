@@ -51,24 +51,15 @@ def test_upload_bytes(azure_emulator_coords: azure_utils.StorageCoordinates,
     check_file_in_azure(azure_service, azure_emulator_coords, sample_filename, sample_stream_content)
 
 
-def test_upload_string(azure_emulator_coords: azure_utils.StorageCoordinates,
-                       azure_service: blob.BlockBlobService,
-                       sample_stream_content: str,
-                       sample_filename: str) -> None:
+def test_download_bytes(azure_emulator_coords: azure_utils.StorageCoordinates,
+                        put_file_in_azure: str,
+                        sample_stream_content: str) -> None:
 
-    assert azure_utils.upload_string_to_azure(azure_emulator_coords, sample_stream_content, sample_filename)
-    check_file_in_azure(azure_service, azure_emulator_coords, sample_filename, sample_stream_content)
-
-
-def test_download_string(azure_emulator_coords: azure_utils.StorageCoordinates,
-                         put_file_in_azure: str,
-                         sample_stream_content: str) -> None:
-
-    actual_contents = azure_utils.download_string_from_azure(azure_emulator_coords, put_file_in_azure)
-    assert actual_contents == sample_stream_content
+    actual_contents = azure_utils.download_bytes_from_azure(azure_emulator_coords, put_file_in_azure)
+    assert actual_contents == sample_stream_content.encode()
 
 
 @pytest.mark.usefixtures('put_file_in_azure')
-def test_download_string_bad_filename(azure_emulator_coords: azure_utils.StorageCoordinates) -> None:
+def test_download_bytes_bad_filename(azure_emulator_coords: azure_utils.StorageCoordinates) -> None:
     with pytest.raises(AzureMissingResourceHttpError):
-        azure_utils.download_string_from_azure(azure_emulator_coords, 'bad_filename')
+        azure_utils.download_bytes_from_azure(azure_emulator_coords, 'bad_filename')
