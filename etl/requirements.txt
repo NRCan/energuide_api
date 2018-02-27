@@ -7,7 +7,7 @@ mypy==0.560
 click==6.7
 dnspython==1.15.0
 pymongo==3.6.0
-cerberus==1.1
+git+git://github.com/cds-snc/cerberus.git#egg=cerberus
 python-dateutil==2.6.1
 lxml==4.1.1
 coverage==4.5.1

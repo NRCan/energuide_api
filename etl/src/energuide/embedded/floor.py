@@ -26,7 +26,7 @@ class Floor(_Floor):
                 floor_area=area.Area(floor.get('Measurements/@area', float)),
                 floor_length=distance.Distance(floor.get('Measurements/@length', float)),
             )
-        except (ElementGetValueError, AssertionError) as exc:
+        except (ElementGetValueError) as exc:
             raise InvalidEmbeddedDataTypeError(Floor) from exc
 
     def to_dict(self) -> typing.Dict[str, typing.Any]:

@@ -15,6 +15,7 @@ from energuide.embedded import ventilation
 from energuide.embedded import water_heating
 from energuide.embedded import heated_floor_area
 from energuide.embedded import basement
+from energuide.embedded import upgrade
 from energuide.exceptions import InvalidGroupSizeError
 from energuide.exceptions import InvalidInputDataError
 
@@ -95,6 +96,7 @@ class _ParsedDwellingDataRow(typing.NamedTuple):
     heating_system: heating.Heating
     foundations: typing.List[basement.Basement]
     ers_rating: typing.Optional[int]
+    energy_upgrades: typing.List[upgrade.Upgrade]
 
 
 def _cast_nullable_string(value: str) -> typing.Optional[int]:
@@ -134,6 +136,7 @@ class ParsedDwellingDataRow(_ParsedDwellingDataRow):
         'slabs': _XML_LIST_SCHEMA,
 
         'codes': {'type': 'dict', 'required': True, 'schema': {'wall': _XML_LIST_SCHEMA, 'window': _XML_LIST_SCHEMA}},
+        'upgrades': _XML_LIST_SCHEMA,
     }
 
     @classmethod
@@ -179,6 +182,7 @@ class ParsedDwellingDataRow(_ParsedDwellingDataRow):
             heating_system=heating.Heating.from_data(parsed['heating_cooling']),
             foundations=foundations,
             ers_rating=parsed['ERSRATING'],
+            energy_upgrades=[upgrade.Upgrade.from_data(upgrade_node) for upgrade_node in parsed['upgrades']],
         )
 
 
@@ -198,7 +202,9 @@ class Evaluation:
                  water_heatings: typing.List[water_heating.WaterHeating],
                  ventilations: typing.List[ventilation.Ventilation],
                  foundations: typing.List[basement.Basement],
-                 ers_rating: typing.Optional[int]
+                 ers_rating: typing.Optional[int],
+                 energy_upgrades: typing.List[upgrade.Upgrade],
+                 heating_system: heating.Heating,
                 ) -> None:
         self._evaluation_type = evaluation_type
         self._entry_date = entry_date
@@ -214,6 +220,8 @@ class Evaluation:
         self._water_heatings = water_heatings
         self._foundations = foundations
         self._ers_rating = ers_rating
+        self._energy_upgrades = energy_upgrades
+        self._heating_system = heating_system
 
     @classmethod
     def from_data(cls, data: ParsedDwellingDataRow) -> 'Evaluation':
@@ -231,7 +239,9 @@ class Evaluation:
             ventilations=data.ventilations,
             water_heatings=data.water_heatings,
             foundations=data.foundations,
-            ers_rating=data.ers_rating
+            ers_rating=data.ers_rating,
+            energy_upgrades=data.energy_upgrades,
+            heating_system=data.heating_system,
         )
 
     @property
@@ -290,6 +300,14 @@ class Evaluation:
     def foundations(self) -> typing.List[basement.Basement]:
         return self._foundations
 
+    @property
+    def energy_upgrades(self) -> typing.List[upgrade.Upgrade]:
+        return self._energy_upgrades
+
+    @property
+    def heating_system(self) -> heating.Heating:
+        return self._heating_system
+
     def to_dict(self) -> typing.Dict[str, typing.Any]:
         return {
             'evaluationType': self.evaluation_type.value,
@@ -305,7 +323,9 @@ class Evaluation:
             'ventilations': [ventilation.to_dict() for ventilation in self.ventilations],
             'waterHeatings': [water_heating.to_dict() for water_heating in self.water_heatings],
             'foundations': [foundation.to_dict() for foundation in self.foundations],
-            'ersRating': self.ers_rating
+            'ersRating': self.ers_rating,
+            'energyUgrades': [upgrade.to_dict() for upgrade in self.energy_upgrades],
+            'heating': self.heating_system.to_dict(),
         }
 
 

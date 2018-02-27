@@ -11,6 +11,17 @@ const engine = new Engine({
     logging: {
       level: 'ERROR',
     },
+    stores: [
+      {
+        name: 'publicResponseCache',
+        inMemory: {
+          cacheSize: 10485760,
+        },
+      },
+    ],
+    queryCache: {
+      publicFullQueryStore: 'publicResponseCache',
+    },
   },
   graphqlPort: 3000,
   endpoint: '/graphql',

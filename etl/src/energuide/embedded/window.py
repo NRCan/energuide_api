@@ -36,7 +36,7 @@ class Window(_Window):
                 width=distance.Distance(window.get('Measurements/@width', float) / _MILLIMETRES_TO_METRES),
                 height=distance.Distance(window.get('Measurements/@height', float) / _MILLIMETRES_TO_METRES),
             )
-        except (ElementGetValueError, AssertionError) as exc:
+        except (ElementGetValueError) as exc:
             raise InvalidEmbeddedDataTypeError(Window) from exc
 
     @property

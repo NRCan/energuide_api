@@ -35,7 +35,7 @@ class Wall(_Wall):
                 perimeter=distance.Distance(wall.get('Measurements/@perimeter', float)),
                 height=distance.Distance(wall.get('Measurements/@height', float)),
             )
-        except (ElementGetValueError, AssertionError) as exc:
+        except (ElementGetValueError) as exc:
             raise InvalidEmbeddedDataTypeError(Wall) from exc
 
     @property

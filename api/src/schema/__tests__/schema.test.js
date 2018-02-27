@@ -121,6 +121,7 @@ describe('Schema', () => {
         'heatedFloorArea',
         'ventilations',
         'waterHeatings',
+        'energyUpgrades',
       ])
     })
   })
@@ -248,6 +249,17 @@ describe('Schema', () => {
         'lengthMetres',
         'lengthFeet',
       ])
+    })
+  })
+  describe('Upgrade', () => {
+    it('is defined', () => {
+      expect(typeMap).toHaveProperty('Upgrade')
+    })
+
+    it('has the expected fields', () => {
+      const { Upgrade } = typeMap
+      const fields = Object.keys(Upgrade.getFields())
+      expect(fields).toEqual(['upgradeType', 'cost', 'priority'])
     })
   })
 })

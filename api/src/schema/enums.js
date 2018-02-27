@@ -166,3 +166,27 @@ wallFields.forEach(attr => {
   )
   module.exports[generateName('wall', attr)] = attachToString(fn)
 })
+
+// The fields on the Ceiling type
+const ceilingFields = [
+  'label',
+  'typeEnglish',
+  'typeFrench',
+  'insulationNominalRsi',
+  'insulationNominalR',
+  'insulationEffectiveRsi',
+  'insulationEffectiveR',
+  'areaMetres',
+  'areaFeet',
+  'lengthMetres',
+  'lengthFeet',
+]
+
+ceilingFields.forEach(attr => {
+  // eslint-disable-next-line no-new-func
+  let fn = new Function(
+    'matcher',
+    `return {"evaluations.ceilings.${attr}": matcher}`,
+  )
+  module.exports[generateName('ceiling', attr)] = attachToString(fn)
+})

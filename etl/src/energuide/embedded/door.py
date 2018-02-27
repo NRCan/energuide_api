@@ -31,7 +31,7 @@ class Door(_Door):
                 height=distance.Distance(door.get('Measurements/@height', float)),
                 width=distance.Distance(door.get('Measurements/@width', float)),
             )
-        except (ElementGetValueError, AssertionError) as exc:
+        except (ElementGetValueError) as exc:
             raise InvalidEmbeddedDataTypeError(Door) from exc
 
     @property

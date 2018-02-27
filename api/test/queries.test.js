@@ -83,6 +83,30 @@ describe('queries', () => {
       })
     })
 
+    it('retrieves all top level keys of the upgrade data', async () => {
+      let response = await request(server)
+        .post('/graphql')
+        .set('Content-Type', 'application/json; charset=utf-8')
+        .send({
+          query: `{
+          dwelling(houseId: 189250) {
+            evaluations {
+              energyUpgrades {
+                upgradeType
+                cost
+                priority
+              }
+            }
+          }
+        }`,
+        })
+
+      let { dwelling: { evaluations } } = response.body.data
+      let [first] = evaluations
+      let [upgrade] = first.energyUpgrades
+      expect(upgrade).toEqual({"upgradeType":"CathedralCeilingsFlat","cost":0,"priority":1})
+    })
+
     it('retrieves all top level keys of the ceiling data', async () => {
       let response = await request(server)
         .post('/graphql')

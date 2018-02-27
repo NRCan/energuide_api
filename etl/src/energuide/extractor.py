@@ -52,7 +52,7 @@ _WINDOWS_LONG_SIZE = (2 ** 31) - 1
 
 
 def _validated(data: typing.Iterable[reader.InputData]) -> typing.Iterator[reader.InputData]:
-    validator = cerberus.Validator(_SCHEMA, allow_unknown=True, purge_unknown=True)
+    validator = cerberus.Validator(_SCHEMA, purge_unknown=True)
     for row in data:
         if not validator.validate(row):
             error_keys = ', '.join(validator.errors.keys())
@@ -93,6 +93,11 @@ def _extract_snippets(data: typing.Iterable[reader.InputData]) -> typing.Iterato
         if code_node:
             code_snippets = snippets.snip_codes(code_node[0])
             row = _safe_merge(row, code_snippets.to_dict())
+
+        upgrades_node = doc.xpath('EnergyUpgrades')
+        if upgrades_node:
+            energy_snippets = snippets.snip_energy_upgrades(upgrades_node[0])
+            row = _safe_merge(row, energy_snippets.to_dict())
 
         yield row
 

@@ -27,9 +27,21 @@ def code(doc: element.Element) -> element.Element:
     return code_node
 
 
+@pytest.fixture
+def energy_upgrades(doc: element.Element) -> element.Element:
+    energy_upgrades_node = doc.find('EnergyUpgrades')
+    assert energy_upgrades_node is not None
+    return energy_upgrades_node
+
+
 def test_house_snippet_to_dict(house: element.Element) -> None:
     output = snippets.snip_house(house).to_dict()
     assert len(output) == 12
+
+
+def test_energy_snippet_to_dict(energy_upgrades: element.Element) -> None:
+    output = snippets.snip_energy_upgrades(energy_upgrades).to_dict()
+    assert len(output) == 1
 
 
 def test_ceiling_snippet(house: element.Element) -> None:
@@ -234,4 +246,15 @@ def test_slab_snippet(house: element.Element) -> None:
         'slabs': {'type': 'list', 'required': True, 'schema': {'type': 'xml', 'coerce': 'parse_xml'}}
     }, allow_unknown=True)
     doc = {'slabs': output.crawlspaces}
+    assert checker.validate(doc)
+
+
+def test_upgrades_snippet(energy_upgrades: element.Element) -> None:
+    output = snippets.snip_energy_upgrades(energy_upgrades)
+    assert len(output.upgrades) == 12
+    checker = validator.DwellingValidator({
+        'upgrades': {'type': 'list', 'required': True, 'schema': {'type': 'xml', 'coerce': 'parse_xml'}}
+    }, allow_unknown=True)
+
+    doc = {'upgrades': output.upgrades}
     assert checker.validate(doc)

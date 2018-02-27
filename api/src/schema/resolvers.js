@@ -51,6 +51,17 @@ import {
   wallPerimeterFeet,
   wallHeightMetres,
   wallHeightFeet,
+  ceilingLabel,
+  ceilingTypeEnglish,
+  ceilingTypeFrench,
+  ceilingInsulationNominalRsi,
+  ceilingInsulationNominalR,
+  ceilingInsulationEffectiveRsi,
+  ceilingInsulationEffectiveR,
+  ceilingAreaMetres,
+  ceilingAreaFeet,
+  ceilingLengthMetres,
+  ceilingLengthFeet,
 } from './enums'
 /* eslint-enable import/named */
 
@@ -139,6 +150,11 @@ const Resolvers = i18n => {
         return result
       },
     },
+    Evaluation: {
+      energyUpgrades: async (root) => {
+        return root.energyUgrades
+      },
+    },
     Field: {
       dwellingHouseId: dwellingHouseId.toString(),
       dwellingYearBuilt: dwellingYearBuilt.toString(),
@@ -183,6 +199,17 @@ const Resolvers = i18n => {
       wallPerimeterFeet: wallPerimeterFeet.toString(),
       wallHeightMetres: wallHeightMetres.toString(),
       wallHeightFeet: wallHeightFeet.toString(),
+      ceilingLabel: ceilingLabel.toString(),
+      ceilingTypeEnglish: ceilingTypeEnglish.toString(),
+      ceilingTypeFrench: ceilingTypeFrench.toString(),
+      ceilingInsulationNominalRsi: ceilingInsulationNominalRsi.toString(),
+      ceilingInsulationNominalR: ceilingInsulationNominalR.toString(),
+      ceilingInsulationEffectiveRsi: ceilingInsulationEffectiveRsi.toString(),
+      ceilingInsulationEffectiveR: ceilingInsulationEffectiveR.toString(),
+      ceilingAreaMetres: ceilingAreaMetres.toString(),
+      ceilingAreaFeet: ceilingAreaFeet.toString(),
+      ceilingLengthMetres: ceilingLengthMetres.toString(),
+      ceilingLengthFeet: ceilingLengthFeet.toString(),
     },
     Comparator: {
       gt: '$gt',

@@ -34,7 +34,7 @@ class Ceiling(_Ceiling):
                 ceiling_area=area.Area(ceiling.get('Measurements/@area', float)),
                 ceiling_length=distance.Distance(ceiling.get('Measurements/@length', float)),
             )
-        except (ElementGetValueError, AssertionError) as exc:
+        except (ElementGetValueError) as exc:
             raise InvalidEmbeddedDataTypeError(Ceiling) from exc
 
     def to_dict(self) -> typing.Dict[str, typing.Any]:
