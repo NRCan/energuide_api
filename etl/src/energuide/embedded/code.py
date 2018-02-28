@@ -35,7 +35,7 @@ class WallCode(_WallCode):
 class _WindowCode(typing.NamedTuple):
     identifier: str
     label: str
-    glazing_type: bilingual.Bilingual
+    glazing_type: typing.Optional[bilingual.Bilingual]
     coating_tint: bilingual.Bilingual
     fill_type: typing.Optional[bilingual.Bilingual]
     spacer_type: typing.Optional[bilingual.Bilingual]
@@ -48,6 +48,9 @@ class WindowCode(_WindowCode):
     @classmethod
     def from_data(cls, window_code: element.Element) -> 'WindowCode':
 
+        glazing_type_english = window_code.findtext('Layers/GlazingTypes/English')
+        glazing_type_french = window_code.findtext('Layers/GlazingTypes/French')
+
         fill_type_english = window_code.findtext('Layers/FillType/English')
         fill_type_french = window_code.findtext('Layers/FillType/French')
 
@@ -59,9 +62,9 @@ class WindowCode(_WindowCode):
                 identifier=window_code.attrib['id'],
                 label=window_code.get_text('Label'),
                 glazing_type=bilingual.Bilingual(
-                    english=window_code.get_text('Layers/GlazingTypes/English'),
-                    french=window_code.get_text('Layers/GlazingTypes/French'),
-                ),
+                    english=glazing_type_english,
+                    french=glazing_type_french,
+                ) if glazing_type_english and glazing_type_french else None,
                 coating_tint=bilingual.Bilingual(
                     english=window_code.get_text('Layers/CoatingsTints/English'),
                     french=window_code.get_text('Layers/CoatingsTints/French'),

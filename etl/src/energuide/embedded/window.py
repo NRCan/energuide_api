@@ -48,8 +48,13 @@ class Window(_Window):
             'label': self.label,
             'insulationRsi': self.window_insulation.rsi,
             'insulationR': self.window_insulation.r_value,
-            'glazingTypesEnglish': self.window_code.glazing_type.english if self.window_code else None,
-            'glazingTypesFrench': self.window_code.glazing_type.french if self.window_code else None,
+
+            'glazingTypesEnglish': self.window_code.glazing_type.english
+            if self.window_code and self.window_code.glazing_type else None,
+
+            'glazingTypesFrench': self.window_code.glazing_type.french
+            if self.window_code and self.window_code.glazing_type else None,
+
             'coatingsTintsEnglish': self.window_code.coating_tint.english if self.window_code else None,
             'coatingsTintsFrench': self.window_code.coating_tint.french if self.window_code else None,
 
