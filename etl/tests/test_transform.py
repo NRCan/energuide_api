@@ -1,4 +1,5 @@
 import _pytest
+import pytest
 import pymongo
 from energuide import database
 from energuide import transform
@@ -14,6 +15,23 @@ def test_run_no_azure(database_coordinates: database.DatabaseCoordinates,
 
     transform.run(database_coordinates, database_name, collection, False, energuide_zip_fixture, append=False)
     assert mongo_client[database_name][collection].count() == 7
+
+
+@pytest.mark.usefixtures('put_sample_files_in_azure')
+def test_run_azure(database_coordinates: database.DatabaseCoordinates,
+                   mongo_client: pymongo.MongoClient,
+                   database_name: str,
+                   collection: str) -> None:
+
+    transform.run(database_coordinates, database_name, collection, True, None, append=False)
+    assert mongo_client[database_name][collection].count() == 7
+
+
+def test_run_no_azure_no_filename(database_coordinates: database.DatabaseCoordinates,
+                                  database_name: str,
+                                  collection: str) -> None:
+    with pytest.raises(ValueError):
+        transform.run(database_coordinates, database_name, collection, False, None, append=False)
 
 
 def test_bad_data(database_coordinates: database.DatabaseCoordinates,
