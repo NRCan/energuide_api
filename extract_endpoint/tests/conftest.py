@@ -1,3 +1,6 @@
+import io
+import zipfile
+import typing
 import pytest
 from azure.storage import blob
 from extract_endpoint import azure_utils
@@ -21,3 +24,31 @@ def azure_service(azure_emulator_coords) -> blob.BlockBlobService:
     azure_service.create_container(azure_emulator_coords.container)
     yield azure_service
     azure_service.delete_container(azure_emulator_coords.container)
+
+
+@pytest.fixture
+def sample_timestamp() -> str:
+    return "Tue 27 Feb 2018 11:19:17 EST"
+
+
+@pytest.fixture
+def sample_filenames() -> typing.Tuple[str, str]:
+    return ("sample_filename_1.txt", "sample_filename_2.txt")
+
+
+@pytest.fixture
+def sample_file_contents() -> typing.Tuple[str, str]:
+    return ("sample file contents 1", "sample file contents 2")
+
+
+@pytest.fixture
+def sample_zipfile(sample_filenames: typing.Tuple[str, str],
+                   sample_file_contents: typing.Tuple[str, str]) -> io.BytesIO:
+
+    file = io.BytesIO()
+    file_z = zipfile.ZipFile(file, 'w')
+    for name, contents in zip(sample_filenames, sample_file_contents):
+        file_z.writestr(name, contents)
+    file_z.close()
+    file.seek(0)
+    return file
