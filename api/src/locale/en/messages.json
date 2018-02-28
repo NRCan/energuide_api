@@ -1,4 +1,274 @@
 {
+  "Header insulation nominal RSI (R-value Systeme International)": {
+    "translation": "",
+    "origin": [
+      [
+        "src/schema/Header.js",
+        4
+      ]
+    ]
+  },
+  "Header insulation nominal R-value": {
+    "translation": "",
+    "origin": [
+      [
+        "src/schema/Header.js",
+        6
+      ]
+    ]
+  },
+  "Header insulation effective RSI (R-value Systeme International)": {
+    "translation": "",
+    "origin": [
+      [
+        "src/schema/Header.js",
+        8
+      ]
+    ]
+  },
+  "Header insulation effective R-value": {
+    "translation": "",
+    "origin": [
+      [
+        "src/schema/Header.js",
+        10
+      ]
+    ]
+  },
+  "Header area in square metres (m2)": {
+    "translation": "",
+    "origin": [
+      [
+        "src/schema/Header.js",
+        12
+      ]
+    ]
+  },
+  "Header area in square feet (ft2)": {
+    "translation": "",
+    "origin": [
+      [
+        "src/schema/Header.js",
+        14
+      ]
+    ]
+  },
+  "Header perimeter of the house in metres (m)": {
+    "translation": "",
+    "origin": [
+      [
+        "src/schema/Header.js",
+        16
+      ]
+    ]
+  },
+  "Header perimeter of the house in feet (ft)": {
+    "translation": "",
+    "origin": [
+      [
+        "src/schema/Header.js",
+        18
+      ]
+    ]
+  },
+  "Header height in metres (m)": {
+    "translation": "",
+    "origin": [
+      [
+        "src/schema/Header.js",
+        20
+      ]
+    ]
+  },
+  "Header height in feet (ft)": {
+    "translation": "",
+    "origin": [
+      [
+        "src/schema/Header.js",
+        22
+      ]
+    ]
+  },
+  "An improvement that could increase the energy efficiency of the dwelling": {
+    "translation": "",
+    "origin": [
+      [
+        "src/schema/index.js",
+        33
+      ]
+    ]
+  },
+  "Air flow rate in litres per second (L/s)": {
+    "translation": "",
+    "origin": [
+      [
+        "src/schema/index.js",
+        49
+      ]
+    ]
+  },
+  "Air flow rate in cubic feet per minute (f3/m)": {
+    "translation": "",
+    "origin": [
+      [
+        "src/schema/index.js",
+        51
+      ]
+    ]
+  },
+  "Water heaters heat the domestic water in a house": {
+    "translation": "",
+    "origin": [
+      [
+        "src/schema/index.js",
+        77
+      ]
+    ]
+  },
+  "Type of tank being used to heat the domestic water in the house (en)": {
+    "translation": "",
+    "origin": [
+      [
+        "src/schema/index.js",
+        79
+      ]
+    ]
+  },
+  "Type of tank being used to heat the domestic water in the house (fr)": {
+    "translation": "",
+    "origin": [
+      [
+        "src/schema/index.js",
+        81
+      ]
+    ]
+  },
+  "Capacity of the tank in litres (L)": {
+    "translation": "",
+    "origin": [
+      [
+        "src/schema/index.js",
+        83
+      ]
+    ]
+  },
+  "Capacity of the tank in gallons (Gal)": {
+    "translation": "",
+    "origin": [
+      [
+        "src/schema/index.js",
+        85
+      ]
+    ]
+  },
+  "Door U-factor in metric: watts per square metre per degree Celcius (W/m2C)": {
+    "translation": "",
+    "origin": [
+      [
+        "src/schema/index.js",
+        188
+      ]
+    ]
+  },
+  "Door U-factor in imperial: British Thermal Units per square feet per degree Fahrenheit (BTU/ft2F)": {
+    "translation": "",
+    "origin": [
+      [
+        "src/schema/index.js",
+        190
+      ]
+    ]
+  },
+  "Type of gas injected between the glass layers (en)": {
+    "translation": "",
+    "origin": [
+      [
+        "src/schema/index.js",
+        214
+      ]
+    ]
+  },
+  "Type of gas injected between the glass layers (fr)": {
+    "translation": "",
+    "origin": [
+      [
+        "src/schema/index.js",
+        216
+      ]
+    ]
+  },
+  "The Energyguide Rating calculated for this evaluation": {
+    "translation": "",
+    "origin": [
+      [
+        "src/schema/index.js",
+        300
+      ]
+    ]
+  },
+  "Filter results by the dwellings containing at least one ventilation system with a specific air flow rate in litres per second (L/s)": {
+    "translation": "",
+    "origin": [
+      [
+        "src/schema/index.js",
+        343
+      ]
+    ]
+  },
+  "Filter results by the dwellings containing at least one ventilation system with a specific air flow rate in cubic feet per minute (f3/m)": {
+    "translation": "",
+    "origin": [
+      [
+        "src/schema/index.js",
+        345
+      ]
+    ]
+  },
+  "Filter results by the dwellings containing at least one water heating system with a specific capacity in litres (L)": {
+    "translation": "",
+    "origin": [
+      [
+        "src/schema/index.js",
+        371
+      ]
+    ]
+  },
+  "Filter results by the dwellings containing at least one water heating system with a specific capacity in gallons (Gal)": {
+    "translation": "",
+    "origin": [
+      [
+        "src/schema/index.js",
+        373
+      ]
+    ]
+  },
+  "Cannot submit values for both 'next' and 'previous'.": {
+    "translation": "",
+    "origin": [
+      [
+        "src/schema/resolvers.js",
+        103
+      ]
+    ]
+  },
+  "Foundation Walls are below ground walls separating the interior heated space from the outside (interior partition walls are not considered walls)": {
+    "translation": "",
+    "origin": [
+      [
+        "src/schema/types/FoundationWall.js",
+        3
+      ]
+    ]
+  },
+  "The percentage of the total wall area this section accounts for": {
+    "translation": "",
+    "origin": [
+      [
+        "src/schema/types/FoundationWall.js",
+        21
+      ]
+    ]
+  },
   "An operator to describe how results will be filtered": {
     "translation": "",
     "origin": [
@@ -8,7 +278,7 @@
       ],
       [
         "src/schema/index.js",
-        26
+        27
       ]
     ]
   },
@@ -44,7 +314,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        22
+        23
       ]
     ]
   },
@@ -53,7 +323,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        24
+        25
       ]
     ]
   },
@@ -62,7 +332,1689 @@
     "origin": [
       [
         "src/schema/index.js",
-        28
+        29
+      ]
+    ]
+  },
+  "Part of the dwelling to be upgraded": {
+    "translation": "",
+    "origin": [
+      [
+        "src/schema/index.js",
+        35
+      ]
+    ]
+  },
+  "Estimated cost of upgrade": {
+    "translation": "",
+    "origin": [
+      [
+        "src/schema/index.js",
+        37
+      ]
+    ]
+  },
+  "Order of importance of upgrade recommendation (lower number means a higher priority)": {
+    "translation": "",
+    "origin": [
+      [
+        "src/schema/index.js",
+        39
+      ]
+    ]
+  },
+  "Ventilation systems draw exterior air into the house, exhaust interior air to the exterior, or both": {
+    "translation": "",
+    "origin": [
+      [
+        "src/schema/index.js",
+        43
+      ]
+    ]
+  },
+  "Ventilation type installed (en)": {
+    "translation": "",
+    "origin": [
+      [
+        "src/schema/index.js",
+        45
+      ]
+    ]
+  },
+  "Ventilation type installed (fr)": {
+    "translation": "",
+    "origin": [
+      [
+        "src/schema/index.js",
+        47
+      ]
+    ]
+  },
+  "Floors represents the usable area of the house": {
+    "translation": "",
+    "origin": [
+      [
+        "src/schema/index.js",
+        55
+      ]
+    ]
+  },
+  "Description of floor location": {
+    "translation": "",
+    "origin": [
+      [
+        "src/schema/index.js",
+        57
+      ]
+    ]
+  },
+  "Floor insulation nominal RSI (R-value Systeme International)": {
+    "translation": "",
+    "origin": [
+      [
+        "src/schema/index.js",
+        59
+      ]
+    ]
+  },
+  "Floor insulation nominal R-value": {
+    "translation": "",
+    "origin": [
+      [
+        "src/schema/index.js",
+        61
+      ]
+    ]
+  },
+  "Floor insulation effective RSI (R-value Systeme International)": {
+    "translation": "",
+    "origin": [
+      [
+        "src/schema/index.js",
+        63
+      ]
+    ]
+  },
+  "Floor insulation effective R-value": {
+    "translation": "",
+    "origin": [
+      [
+        "src/schema/index.js",
+        65
+      ]
+    ]
+  },
+  "Floor area of the house in square metres (m2)": {
+    "translation": "",
+    "origin": [
+      [
+        "src/schema/index.js",
+        67
+      ]
+    ]
+  },
+  "Floor area of the house in square feet (ft2)": {
+    "translation": "",
+    "origin": [
+      [
+        "src/schema/index.js",
+        69
+      ],
+      [
+        "src/schema/index.js",
+        73
+      ]
+    ]
+  },
+  "Floor length of the house in metres (m)": {
+    "translation": "",
+    "origin": [
+      [
+        "src/schema/index.js",
+        71
+      ]
+    ]
+  },
+  "Measures how effectively your water heater is burning fuel or turning fuel into heat": {
+    "translation": "",
+    "origin": [
+      [
+        "src/schema/index.js",
+        87
+      ]
+    ]
+  },
+  "A principal heating system is either the only source of heat for the house, or is used for at least 70% of the heating load": {
+    "translation": "",
+    "origin": [
+      [
+        "src/schema/index.js",
+        91
+      ]
+    ]
+  },
+  "Description of heating system": {
+    "translation": "",
+    "origin": [
+      [
+        "src/schema/index.js",
+        93
+      ]
+    ]
+  },
+  "Type of heating system (en)": {
+    "translation": "",
+    "origin": [
+      [
+        "src/schema/index.js",
+        95
+      ]
+    ]
+  },
+  "Type of heating system (fr)": {
+    "translation": "",
+    "origin": [
+      [
+        "src/schema/index.js",
+        97
+      ]
+    ]
+  },
+  "The source of fuel for the heating system (en)": {
+    "translation": "",
+    "origin": [
+      [
+        "src/schema/index.js",
+        99
+      ]
+    ]
+  },
+  "The source of fuel for the heating system (fr)": {
+    "translation": "",
+    "origin": [
+      [
+        "src/schema/index.js",
+        101
+      ]
+    ]
+  },
+  "Equipment type of heating system (en)": {
+    "translation": "",
+    "origin": [
+      [
+        "src/schema/index.js",
+        103
+      ]
+    ]
+  },
+  "Equipment type of heating system (fr)": {
+    "translation": "",
+    "origin": [
+      [
+        "src/schema/index.js",
+        105
+      ]
+    ]
+  },
+  "Output capacity of the heating system in kilowatt hours (kWh)": {
+    "translation": "",
+    "origin": [
+      [
+        "src/schema/index.js",
+        107
+      ]
+    ]
+  },
+  "Output capacity of the heating system in British Thermal Units per hour (BTU/h)": {
+    "translation": "",
+    "origin": [
+      [
+        "src/schema/index.js",
+        109
+      ]
+    ]
+  },
+  "Measures how effectively your heating system is burning fuel or turning fuel into heat": {
+    "translation": "",
+    "origin": [
+      [
+        "src/schema/index.js",
+        111
+      ]
+    ]
+  },
+  "Steady-state efficiency is the combustion efficiency of the equipment at peak performance. The Annual Fuel Utilization Efficiency (AFUE) is a measure of efficiency based on average usage, accounting for the fact that most heating systems rarely run long enough to reach peak performance.": {
+    "translation": "",
+    "origin": [
+      [
+        "src/schema/index.js",
+        113
+      ]
+    ]
+  },
+  "One page of results": {
+    "translation": "",
+    "origin": [
+      [
+        "src/schema/index.js",
+        118
+      ]
+    ]
+  },
+  "If true, a further page of results can be returned": {
+    "translation": "",
+    "origin": [
+      [
+        "src/schema/index.js",
+        120
+      ]
+    ]
+  },
+  "If true, a previous page of results can be returned": {
+    "translation": "",
+    "origin": [
+      [
+        "src/schema/index.js",
+        122
+      ]
+    ]
+  },
+  "Identifier used to return the next page of results": {
+    "translation": "",
+    "origin": [
+      [
+        "src/schema/index.js",
+        124
+      ]
+    ]
+  },
+  "Identifier cursor used to return the previous page of results": {
+    "translation": "",
+    "origin": [
+      [
+        "src/schema/index.js",
+        126
+      ]
+    ]
+  },
+  "A list of dwellings": {
+    "translation": "",
+    "origin": [
+      [
+        "src/schema/index.js",
+        128
+      ]
+    ]
+  },
+  "Heated floor areas represents the usable areas of a house that is conditioned to a specified temperature during the whole heating season": {
+    "translation": "",
+    "origin": [
+      [
+        "src/schema/index.js",
+        132
+      ]
+    ]
+  },
+  "Above-grade heated area of the house in square metres (m2), i.e. the ground floor": {
+    "translation": "",
+    "origin": [
+      [
+        "src/schema/index.js",
+        134
+      ]
+    ]
+  },
+  "Above-grade heated area of the house in square feet (ft2), i.e. the ground floor": {
+    "translation": "",
+    "origin": [
+      [
+        "src/schema/index.js",
+        136
+      ]
+    ]
+  },
+  "Below-grade heated area of the house in square metres (m2), i.e. the basement": {
+    "translation": "",
+    "origin": [
+      [
+        "src/schema/index.js",
+        138
+      ]
+    ]
+  },
+  "Below-grade heated area of the house in square feet (ft2), i.e. the basement": {
+    "translation": "",
+    "origin": [
+      [
+        "src/schema/index.js",
+        140
+      ]
+    ]
+  },
+  "Walls separate the interior heated space from the outside (interior partition walls are not considered walls)": {
+    "translation": "",
+    "origin": [
+      [
+        "src/schema/index.js",
+        144
+      ]
+    ]
+  },
+  "Description of wall location": {
+    "translation": "",
+    "origin": [
+      [
+        "src/schema/index.js",
+        146
+      ]
+    ]
+  },
+  "Wall construction being used (en)": {
+    "translation": "",
+    "origin": [
+      [
+        "src/schema/index.js",
+        148
+      ],
+      [
+        "src/schema/types/FoundationWall.js",
+        5
+      ]
+    ]
+  },
+  "Wall construction being used (fr)": {
+    "translation": "",
+    "origin": [
+      [
+        "src/schema/index.js",
+        150
+      ],
+      [
+        "src/schema/types/FoundationWall.js",
+        7
+      ]
+    ]
+  },
+  "Size of the component type (en)": {
+    "translation": "",
+    "origin": [
+      [
+        "src/schema/index.js",
+        152
+      ]
+    ]
+  },
+  "Size of the component type (fr)": {
+    "translation": "",
+    "origin": [
+      [
+        "src/schema/index.js",
+        154
+      ]
+    ]
+  },
+  "Wall insulation nominal RSI (R-value Systeme International)": {
+    "translation": "",
+    "origin": [
+      [
+        "src/schema/index.js",
+        156
+      ],
+      [
+        "src/schema/types/FoundationWall.js",
+        9
+      ]
+    ]
+  },
+  "Wall insulation nominal R-value": {
+    "translation": "",
+    "origin": [
+      [
+        "src/schema/index.js",
+        158
+      ],
+      [
+        "src/schema/index.js",
+        162
+      ],
+      [
+        "src/schema/types/FoundationWall.js",
+        11
+      ],
+      [
+        "src/schema/types/FoundationWall.js",
+        15
+      ]
+    ]
+  },
+  "Wall insulation effective RSI (R-value Systeme International)": {
+    "translation": "",
+    "origin": [
+      [
+        "src/schema/index.js",
+        160
+      ],
+      [
+        "src/schema/types/FoundationWall.js",
+        13
+      ]
+    ]
+  },
+  "Wall area of the house in square metres (m2)": {
+    "translation": "",
+    "origin": [
+      [
+        "src/schema/index.js",
+        164
+      ],
+      [
+        "src/schema/types/FoundationWall.js",
+        17
+      ]
+    ]
+  },
+  "Wall area of the house in square feet (ft2)": {
+    "translation": "",
+    "origin": [
+      [
+        "src/schema/index.js",
+        166
+      ],
+      [
+        "src/schema/types/FoundationWall.js",
+        19
+      ]
+    ]
+  },
+  "Wall perimeter of the house in metres (m)": {
+    "translation": "",
+    "origin": [
+      [
+        "src/schema/index.js",
+        168
+      ]
+    ]
+  },
+  "Wall perimeter of the house in feet (ft)": {
+    "translation": "",
+    "origin": [
+      [
+        "src/schema/index.js",
+        170
+      ]
+    ]
+  },
+  "Wall height of the house in metres (m)": {
+    "translation": "",
+    "origin": [
+      [
+        "src/schema/index.js",
+        172
+      ]
+    ]
+  },
+  "Wall height of the house in feet (ft)": {
+    "translation": "",
+    "origin": [
+      [
+        "src/schema/index.js",
+        174
+      ]
+    ]
+  },
+  "Doors are on outside walls, separating the interior heated space from the outside": {
+    "translation": "",
+    "origin": [
+      [
+        "src/schema/index.js",
+        178
+      ]
+    ]
+  },
+  "Describes the construction of the door (en)": {
+    "translation": "",
+    "origin": [
+      [
+        "src/schema/index.js",
+        180
+      ]
+    ]
+  },
+  "Describes the construction of the door (fr)": {
+    "translation": "",
+    "origin": [
+      [
+        "src/schema/index.js",
+        182
+      ]
+    ]
+  },
+  "Door RSI (R-value Systeme International)": {
+    "translation": "",
+    "origin": [
+      [
+        "src/schema/index.js",
+        184
+      ]
+    ]
+  },
+  "Door R-value": {
+    "translation": "",
+    "origin": [
+      [
+        "src/schema/index.js",
+        186
+      ]
+    ]
+  },
+  "Door area in square metres (m2)": {
+    "translation": "",
+    "origin": [
+      [
+        "src/schema/index.js",
+        192
+      ]
+    ]
+  },
+  "Door area in square feet (ft2)": {
+    "translation": "",
+    "origin": [
+      [
+        "src/schema/index.js",
+        194
+      ]
+    ]
+  },
+  "Windows separate the interior heated space from the outside": {
+    "translation": "",
+    "origin": [
+      [
+        "src/schema/index.js",
+        198
+      ]
+    ]
+  },
+  "Used to identify the window component in the house": {
+    "translation": "",
+    "origin": [
+      [
+        "src/schema/index.js",
+        200
+      ]
+    ]
+  },
+  "Window RSI (R-value Systeme International)": {
+    "translation": "",
+    "origin": [
+      [
+        "src/schema/index.js",
+        202
+      ]
+    ]
+  },
+  "Window R-value": {
+    "translation": "",
+    "origin": [
+      [
+        "src/schema/index.js",
+        204
+      ]
+    ]
+  },
+  "Number of panes of transparent material in a window (en)": {
+    "translation": "",
+    "origin": [
+      [
+        "src/schema/index.js",
+        206
+      ]
+    ]
+  },
+  "Number of panes of transparent material in a window (fr)": {
+    "translation": "",
+    "origin": [
+      [
+        "src/schema/index.js",
+        208
+      ]
+    ]
+  },
+  "Type of coating and tint on a window pane (en)": {
+    "translation": "",
+    "origin": [
+      [
+        "src/schema/index.js",
+        210
+      ]
+    ]
+  },
+  "Type of coating and tint on a window pane (fr)": {
+    "translation": "",
+    "origin": [
+      [
+        "src/schema/index.js",
+        212
+      ]
+    ]
+  },
+  "Spacer systems used between the glass layers (en)": {
+    "translation": "",
+    "origin": [
+      [
+        "src/schema/index.js",
+        218
+      ]
+    ]
+  },
+  "Spacer systems used between the glass layers (fr)": {
+    "translation": "",
+    "origin": [
+      [
+        "src/schema/index.js",
+        220
+      ]
+    ]
+  },
+  "Describes the construction of the window (en)": {
+    "translation": "",
+    "origin": [
+      [
+        "src/schema/index.js",
+        222
+      ]
+    ]
+  },
+  "Describes the construction of the window (fr)": {
+    "translation": "",
+    "origin": [
+      [
+        "src/schema/index.js",
+        224
+      ]
+    ]
+  },
+  "Material type of the window frame (en)": {
+    "translation": "",
+    "origin": [
+      [
+        "src/schema/index.js",
+        226
+      ]
+    ]
+  },
+  "Material type of the window frame (fr)": {
+    "translation": "",
+    "origin": [
+      [
+        "src/schema/index.js",
+        228
+      ]
+    ]
+  },
+  "Window area in square metres (m2)": {
+    "translation": "",
+    "origin": [
+      [
+        "src/schema/index.js",
+        230
+      ]
+    ]
+  },
+  "Window area in square feet (ft2)": {
+    "translation": "",
+    "origin": [
+      [
+        "src/schema/index.js",
+        232
+      ]
+    ]
+  },
+  "Window width in metres (m)": {
+    "translation": "",
+    "origin": [
+      [
+        "src/schema/index.js",
+        234
+      ]
+    ]
+  },
+  "Window width in feet (ft)": {
+    "translation": "",
+    "origin": [
+      [
+        "src/schema/index.js",
+        236
+      ]
+    ]
+  },
+  "Window height in metres (m)": {
+    "translation": "",
+    "origin": [
+      [
+        "src/schema/index.js",
+        238
+      ]
+    ]
+  },
+  "Window height in feet (ft)": {
+    "translation": "",
+    "origin": [
+      [
+        "src/schema/index.js",
+        240
+      ]
+    ]
+  },
+  "Ceilings are the upper interior surface of a room": {
+    "translation": "",
+    "origin": [
+      [
+        "src/schema/index.js",
+        244
+      ]
+    ]
+  },
+  "Used to identify the ceiling in the house": {
+    "translation": "",
+    "origin": [
+      [
+        "src/schema/index.js",
+        246
+      ]
+    ]
+  },
+  "Describes the construction of the ceiling (en)": {
+    "translation": "",
+    "origin": [
+      [
+        "src/schema/index.js",
+        248
+      ]
+    ]
+  },
+  "Describes the construction of the ceiling (fr)": {
+    "translation": "",
+    "origin": [
+      [
+        "src/schema/index.js",
+        250
+      ]
+    ]
+  },
+  "Ceiling insulation nominal RSI (R-value Systeme International)": {
+    "translation": "",
+    "origin": [
+      [
+        "src/schema/index.js",
+        252
+      ]
+    ]
+  },
+  "Ceiling insulation nominal R-value": {
+    "translation": "",
+    "origin": [
+      [
+        "src/schema/index.js",
+        254
+      ]
+    ]
+  },
+  "Ceiling insulation effective RSI (R-value Systeme International)": {
+    "translation": "",
+    "origin": [
+      [
+        "src/schema/index.js",
+        256
+      ]
+    ]
+  },
+  "Ceiling insulation effective R-value": {
+    "translation": "",
+    "origin": [
+      [
+        "src/schema/index.js",
+        258
+      ]
+    ]
+  },
+  "Ceiling area in square metres (m2)": {
+    "translation": "",
+    "origin": [
+      [
+        "src/schema/index.js",
+        260
+      ]
+    ]
+  },
+  "Ceiling area in square feet (ft2)": {
+    "translation": "",
+    "origin": [
+      [
+        "src/schema/index.js",
+        262
+      ]
+    ]
+  },
+  "Ceiling length in metres (m)": {
+    "translation": "",
+    "origin": [
+      [
+        "src/schema/index.js",
+        264
+      ]
+    ]
+  },
+  "Ceiling length in feet (ft)": {
+    "translation": "",
+    "origin": [
+      [
+        "src/schema/index.js",
+        266
+      ]
+    ]
+  },
+  "Detailed information about specific features of a given dwelling": {
+    "translation": "",
+    "origin": [
+      [
+        "src/schema/index.js",
+        270
+      ]
+    ]
+  },
+  "Evaluation type codes are used to define the type of evaluation performed and to distinguish the house type (i.e. newly built or existing)": {
+    "translation": "",
+    "origin": [
+      [
+        "src/schema/index.js",
+        272
+      ]
+    ]
+  },
+  "Date the evaluation was made": {
+    "translation": "",
+    "origin": [
+      [
+        "src/schema/index.js",
+        274
+      ]
+    ]
+  },
+  "Date the record was first created": {
+    "translation": "",
+    "origin": [
+      [
+        "src/schema/index.js",
+        276
+      ]
+    ]
+  },
+  "Date the record was last modified": {
+    "translation": "",
+    "origin": [
+      [
+        "src/schema/index.js",
+        278
+      ]
+    ]
+  },
+  "A list of ceiling data entries for a dwelling": {
+    "translation": "",
+    "origin": [
+      [
+        "src/schema/index.js",
+        280
+      ]
+    ]
+  },
+  "A list of wall data entries for a dwelling": {
+    "translation": "",
+    "origin": [
+      [
+        "src/schema/index.js",
+        282
+      ]
+    ]
+  },
+  "A list of floor data entries for a dwelling": {
+    "translation": "",
+    "origin": [
+      [
+        "src/schema/index.js",
+        284
+      ]
+    ]
+  },
+  "A list of door data entries for a dwelling": {
+    "translation": "",
+    "origin": [
+      [
+        "src/schema/index.js",
+        286
+      ]
+    ]
+  },
+  "A list of window data entries for a dwelling": {
+    "translation": "",
+    "origin": [
+      [
+        "src/schema/index.js",
+        288
+      ]
+    ]
+  },
+  "A heated floor area entry for a dwelling": {
+    "translation": "",
+    "origin": [
+      [
+        "src/schema/index.js",
+        290
+      ]
+    ]
+  },
+  "A list of ventilation data entries for a dwelling": {
+    "translation": "",
+    "origin": [
+      [
+        "src/schema/index.js",
+        292
+      ]
+    ]
+  },
+  "A list of water heater data entries for a dwelling": {
+    "translation": "",
+    "origin": [
+      [
+        "src/schema/index.js",
+        294
+      ]
+    ]
+  },
+  "A principal heating system for a dwelling": {
+    "translation": "",
+    "origin": [
+      [
+        "src/schema/index.js",
+        296
+      ]
+    ]
+  },
+  "A list of upgrades that would improve energy efficiency": {
+    "translation": "",
+    "origin": [
+      [
+        "src/schema/index.js",
+        298
+      ]
+    ]
+  },
+  "A residential building evaluted under the Energuide program": {
+    "translation": "",
+    "origin": [
+      [
+        "src/schema/index.js",
+        304
+      ]
+    ]
+  },
+  "Unique identification number for a dwelling": {
+    "translation": "",
+    "origin": [
+      [
+        "src/schema/index.js",
+        306
+      ]
+    ]
+  },
+  "Year of construction": {
+    "translation": "",
+    "origin": [
+      [
+        "src/schema/index.js",
+        308
+      ]
+    ]
+  },
+  "Name of city where dwelling is located": {
+    "translation": "",
+    "origin": [
+      [
+        "src/schema/index.js",
+        310
+      ]
+    ]
+  },
+  "Region of country for dwelling (province/territory)": {
+    "translation": "",
+    "origin": [
+      [
+        "src/schema/index.js",
+        312
+      ]
+    ]
+  },
+  "The first three characters of a Canadian postal code, which correspond to a geographical area defined by Canada Post": {
+    "translation": "",
+    "origin": [
+      [
+        "src/schema/index.js",
+        314
+      ]
+    ]
+  },
+  "A list of evaluations of specific features of the dwelling": {
+    "translation": "",
+    "origin": [
+      [
+        "src/schema/index.js",
+        316
+      ]
+    ]
+  },
+  "The root query type": {
+    "translation": "",
+    "origin": [
+      [
+        "src/schema/index.js",
+        320
+      ]
+    ]
+  },
+  "Details for a specific dwelling": {
+    "translation": "",
+    "origin": [
+      [
+        "src/schema/index.js",
+        322
+      ]
+    ]
+  },
+  "Details for all dwellings, optionally filtered by one or more values": {
+    "translation": "",
+    "origin": [
+      [
+        "src/schema/index.js",
+        324
+      ]
+    ]
+  },
+  "Filter results by the house ID of a dwelling": {
+    "translation": "",
+    "origin": [
+      [
+        "src/schema/index.js",
+        329
+      ]
+    ]
+  },
+  "Filter results by dwellings built in a specific year": {
+    "translation": "",
+    "origin": [
+      [
+        "src/schema/index.js",
+        331
+      ]
+    ]
+  },
+  "Filter results by the dwellings in a specific city": {
+    "translation": "",
+    "origin": [
+      [
+        "src/schema/index.js",
+        333
+      ]
+    ]
+  },
+  "Filter results by the dwellings in a specific region": {
+    "translation": "",
+    "origin": [
+      [
+        "src/schema/index.js",
+        335
+      ]
+    ]
+  },
+  "Filter results by the dwellings in a specific forward sortation area": {
+    "translation": "",
+    "origin": [
+      [
+        "src/schema/index.js",
+        337
+      ]
+    ]
+  },
+  "Filter results by the dwellings containing at least one ventilation system with a specific type (en)": {
+    "translation": "",
+    "origin": [
+      [
+        "src/schema/index.js",
+        339
+      ]
+    ]
+  },
+  "Filter results by the dwellings containing at least one ventilation system with a specific type (fr)": {
+    "translation": "",
+    "origin": [
+      [
+        "src/schema/index.js",
+        341
+      ]
+    ]
+  },
+  "Filter results by the dwellings containing at least one ventilation system with a specific efficiency rating": {
+    "translation": "",
+    "origin": [
+      [
+        "src/schema/index.js",
+        347
+      ]
+    ]
+  },
+  "Filter results by the dwellings containing at least one floor with a specific location": {
+    "translation": "",
+    "origin": [
+      [
+        "src/schema/index.js",
+        349
+      ]
+    ]
+  },
+  "Filter results by the dwellings containing at least one floor with a specific nominal RSI (R-value Systeme International)": {
+    "translation": "",
+    "origin": [
+      [
+        "src/schema/index.js",
+        351
+      ]
+    ]
+  },
+  "Filter results by the dwellings containing at least one floor with a specific nominal R-value": {
+    "translation": "",
+    "origin": [
+      [
+        "src/schema/index.js",
+        353
+      ]
+    ]
+  },
+  "Filter results by the dwellings containing at least one floor with a specific effective R-value": {
+    "translation": "",
+    "origin": [
+      [
+        "src/schema/index.js",
+        355
+      ],
+      [
+        "src/schema/index.js",
+        357
+      ]
+    ]
+  },
+  "Filter results by the dwellings containing at least one floor with a specific area in square metres (m2)": {
+    "translation": "",
+    "origin": [
+      [
+        "src/schema/index.js",
+        359
+      ]
+    ]
+  },
+  "Filter results by the dwellings containing at least one floor with a specific area in square feet (ft2)": {
+    "translation": "",
+    "origin": [
+      [
+        "src/schema/index.js",
+        361
+      ]
+    ]
+  },
+  "Filter results by the dwellings containing at least one floor with a specific length in metres (m)": {
+    "translation": "",
+    "origin": [
+      [
+        "src/schema/index.js",
+        363
+      ]
+    ]
+  },
+  "Filter results by the dwellings containing at least one floor with a specific length in feet (ft)": {
+    "translation": "",
+    "origin": [
+      [
+        "src/schema/index.js",
+        365
+      ]
+    ]
+  },
+  "Filter results by the dwellings containing at least one water heating system of a specific type (en)": {
+    "translation": "",
+    "origin": [
+      [
+        "src/schema/index.js",
+        367
+      ]
+    ]
+  },
+  "Filter results by the dwellings containing at least one water heating system of a specific type (fr)": {
+    "translation": "",
+    "origin": [
+      [
+        "src/schema/index.js",
+        369
+      ]
+    ]
+  },
+  "Filter results by the dwellings containing at least one water heating system with a specific efficiency rating": {
+    "translation": "",
+    "origin": [
+      [
+        "src/schema/index.js",
+        375
+      ]
+    ]
+  },
+  "Filter results by the dwellings containing a heating system with a specific description": {
+    "translation": "",
+    "origin": [
+      [
+        "src/schema/index.js",
+        377
+      ]
+    ]
+  },
+  "Filter results by the dwellings containing a heating system of a specific type (en)": {
+    "translation": "",
+    "origin": [
+      [
+        "src/schema/index.js",
+        379
+      ]
+    ]
+  },
+  "Filter results by the dwellings containing a heating system of a specific type (fr)": {
+    "translation": "",
+    "origin": [
+      [
+        "src/schema/index.js",
+        381
+      ]
+    ]
+  },
+  "Filter results by the dwellings containing a heating system with a specific fuel source (en)": {
+    "translation": "",
+    "origin": [
+      [
+        "src/schema/index.js",
+        383
+      ]
+    ]
+  },
+  "Filter results by the dwellings containing a heating system with a specific fuel source (fr)": {
+    "translation": "",
+    "origin": [
+      [
+        "src/schema/index.js",
+        385
+      ]
+    ]
+  },
+  "Filter results by the dwellings containing a heating system with a specific type of equipment (en)": {
+    "translation": "",
+    "origin": [
+      [
+        "src/schema/index.js",
+        387
+      ]
+    ]
+  },
+  "Filter results by the dwellings containing a heating system with a specific type of equipment (fr)": {
+    "translation": "",
+    "origin": [
+      [
+        "src/schema/index.js",
+        389
+      ]
+    ]
+  },
+  "Filter results by the dwellings containing a heating system with a specific output capacity in kilowatt hours (kWh)": {
+    "translation": "",
+    "origin": [
+      [
+        "src/schema/index.js",
+        391
+      ]
+    ]
+  },
+  "Filter results by the dwellings containing a heating system with a specific output capacity in British Thermal Units per hour (BTU/h)": {
+    "translation": "",
+    "origin": [
+      [
+        "src/schema/index.js",
+        393
+      ]
+    ]
+  },
+  "Filter results by the dwellings containing a heating system with a specific efficiency rating": {
+    "translation": "",
+    "origin": [
+      [
+        "src/schema/index.js",
+        395
+      ]
+    ]
+  },
+  "Filter results by the dwellings containing a heating system efficiency measurement that is either 'Steady State' or 'AFUE'": {
+    "translation": "",
+    "origin": [
+      [
+        "src/schema/index.js",
+        397
+      ]
+    ]
+  },
+  "Filter results by the dwellings containing an above-grade heated floor area with a specific area in square metres (m2)": {
+    "translation": "",
+    "origin": [
+      [
+        "src/schema/index.js",
+        399
+      ]
+    ]
+  },
+  "Filter results by the dwellings containing an above-grade heated floor area with a specific area in square feet (ft2)": {
+    "translation": "",
+    "origin": [
+      [
+        "src/schema/index.js",
+        401
+      ]
+    ]
+  },
+  "Filter results by the dwellings containing a below-grade heated floor area with a specific area in square metres (m2)": {
+    "translation": "",
+    "origin": [
+      [
+        "src/schema/index.js",
+        403
+      ]
+    ]
+  },
+  "Filter results by the dwellings containing a below-grade heated floor area with a specific area in square feet (ft2)": {
+    "translation": "",
+    "origin": [
+      [
+        "src/schema/index.js",
+        405
+      ]
+    ]
+  },
+  "Filter results by the dwellings containing at least one wall with a specific location": {
+    "translation": "",
+    "origin": [
+      [
+        "src/schema/index.js",
+        407
+      ]
+    ]
+  },
+  "Filter results by the dwellings containing at least one wall of a specific type (en)": {
+    "translation": "",
+    "origin": [
+      [
+        "src/schema/index.js",
+        409
+      ]
+    ]
+  },
+  "Filter results by the dwellings containing at least one wall of a specific type (fr)": {
+    "translation": "",
+    "origin": [
+      [
+        "src/schema/index.js",
+        411
+      ]
+    ]
+  },
+  "Filter results by the dwellings containing at least one wall with a component of a specific size (en)": {
+    "translation": "",
+    "origin": [
+      [
+        "src/schema/index.js",
+        413
+      ]
+    ]
+  },
+  "Filter results by the dwellings containing at least one wall with a component of a specific size (fr)": {
+    "translation": "",
+    "origin": [
+      [
+        "src/schema/index.js",
+        415
+      ]
+    ]
+  },
+  "Filter results by the dwellings containing at least one wall with a specific nominal RSI (R-value Systeme International)": {
+    "translation": "",
+    "origin": [
+      [
+        "src/schema/index.js",
+        417
+      ]
+    ]
+  },
+  "Filter results by the dwellings containing at least one wall with a specific nominal R-value": {
+    "translation": "",
+    "origin": [
+      [
+        "src/schema/index.js",
+        419
+      ]
+    ]
+  },
+  "Filter results by the dwellings containing at least one wall with a specific effective RSI (R-value Systeme International)": {
+    "translation": "",
+    "origin": [
+      [
+        "src/schema/index.js",
+        421
+      ]
+    ]
+  },
+  "Filter results by the dwellings containing at least one wall with a specific effective R-value": {
+    "translation": "",
+    "origin": [
+      [
+        "src/schema/index.js",
+        423
+      ]
+    ]
+  },
+  "Filter results by the dwellings containing at least one wall with a specific area in square metres (m2)": {
+    "translation": "",
+    "origin": [
+      [
+        "src/schema/index.js",
+        425
+      ]
+    ]
+  },
+  "Filter results by the dwellings containing at least one wall with a specific area in square feet (ft2)": {
+    "translation": "",
+    "origin": [
+      [
+        "src/schema/index.js",
+        427
+      ]
+    ]
+  },
+  "Filter results by the dwellings containing at least one wall with a specific perimeter in metres (m)": {
+    "translation": "",
+    "origin": [
+      [
+        "src/schema/index.js",
+        429
+      ]
+    ]
+  },
+  "Filter results by the dwellings containing at least one wall with a specific perimeter in feet (ft)": {
+    "translation": "",
+    "origin": [
+      [
+        "src/schema/index.js",
+        431
+      ]
+    ]
+  },
+  "Filter results by the dwellings containing at least one wall with a specific height in metres (m)": {
+    "translation": "",
+    "origin": [
+      [
+        "src/schema/index.js",
+        433
+      ]
+    ]
+  },
+  "Filter results by the dwellings containing at least one wall with a specific height in feet (ft)": {
+    "translation": "",
+    "origin": [
+      [
+        "src/schema/index.js",
+        435
+      ]
+    ]
+  },
+  "Filter results by the dwellings where at least one ceiling has a matching label": {
+    "translation": "",
+    "origin": [
+      [
+        "src/schema/index.js",
+        437
+      ]
+    ]
+  },
+  "Filter results by the dwellings where at least one ceiling has a matching type (en)": {
+    "translation": "",
+    "origin": [
+      [
+        "src/schema/index.js",
+        439
+      ]
+    ]
+  },
+  "Filter results by the dwellings where at least one ceiling has a matching type (fr)": {
+    "translation": "",
+    "origin": [
+      [
+        "src/schema/index.js",
+        441
+      ]
+    ]
+  },
+  "Filter results by the dwellings where at least one ceiling has a specific nominal RSI (R-value Systeme International)": {
+    "translation": "",
+    "origin": [
+      [
+        "src/schema/index.js",
+        443
+      ]
+    ]
+  },
+  "Filter results by the dwellings containing at least one ceiling with a specific nominal R-value": {
+    "translation": "",
+    "origin": [
+      [
+        "src/schema/index.js",
+        445
+      ]
+    ]
+  },
+  "Filter results by the dwellings containing at least one ceiling with a specific effective RSI (R-value Systeme International)": {
+    "translation": "",
+    "origin": [
+      [
+        "src/schema/index.js",
+        447
+      ]
+    ]
+  },
+  "Filter results by the dwellings containing at least one ceiling with a specific effective R-value": {
+    "translation": "",
+    "origin": [
+      [
+        "src/schema/index.js",
+        449
+      ]
+    ]
+  },
+  "Filter results by the dwellings containing at least one ceiling with a specific area in square metres (m2)": {
+    "translation": "",
+    "origin": [
+      [
+        "src/schema/index.js",
+        451
+      ]
+    ]
+  },
+  "Filter results by the dwellings containing at least one ceiling with a specific area in square feet (ft2)": {
+    "translation": "",
+    "origin": [
+      [
+        "src/schema/index.js",
+        453
+      ]
+    ]
+  },
+  "Filter results by the dwellings containing at least one ceiling with a specific length in metres (m)": {
+    "translation": "",
+    "origin": [
+      [
+        "src/schema/index.js",
+        455
+      ]
+    ]
+  },
+  "Filter results by the dwellings containing at least one ceiling with a specific length in feet (ft)": {
+    "translation": "",
+    "origin": [
+      [
+        "src/schema/index.js",
+        457
+      ]
+    ]
+  },
+  "The 'Int' scalar type represents non-fractional signed whole numeric values. Int can represent values between -(2^31) and 2^31 - 1.": {
+    "translation": "",
+    "origin": [
+      [
+        "src/schema/types/I18NInt.js",
+        5
+      ]
+    ]
+  },
+  "The 'Float' scalar type represents signed double-precision fractional values as specified by [IEEE 754](http://en.wikipedia.org/wiki/IEEE_floating_point).": {
+    "translation": "",
+    "origin": [
+      [
+        "src/schema/types/I18NFloat.js",
+        5
+      ]
+    ]
+  },
+  "The 'String' scalar type represents textual data, represented as UTF-8 character sequences. The String type is most often used by GraphQL to represent free-form human-readable text.": {
+    "translation": "",
+    "origin": [
+      [
+        "src/schema/types/I18NString.js",
+        5
+      ]
+    ]
+  },
+  "The 'Boolean' scalar type represents 'true' or 'false'.": {
+    "translation": "",
+    "origin": [
+      [
+        "src/schema/types/I18NBoolean.js",
+        5
       ]
     ]
   },
@@ -73,61 +2025,8 @@
         "src/schema/index.js",
         32
       ]
-    ]
-  },
-  "Part of the dwelling to be upgraded": {
-    "translation": "",
-    "origin": [
-      [
-        "src/schema/index.js",
-        34
-      ]
-    ]
-  },
-  "Estimated cost of upgrade": {
-    "translation": "",
-    "origin": [
-      [
-        "src/schema/index.js",
-        36
-      ]
-    ]
-  },
-  "Order of importance of upgrade recommendation (lower number means a higher priority)": {
-    "translation": "",
-    "origin": [
-      [
-        "src/schema/index.js",
-        38
-      ]
-    ]
-  },
-  "Ventilation systems draw exterior air into the house, exhaust interior air to the exterior, or both": {
-    "translation": "",
-    "origin": [
-      [
-        "src/schema/index.js",
-        42
-      ]
-    ]
-  },
-  "Ventilation type installed (en)": {
-    "translation": "",
-    "origin": [
-      [
-        "src/schema/index.js",
-        44
-      ]
-    ]
-  },
-  "Ventilation type installed (fr)": {
-    "translation": "",
-    "origin": [
-      [
-        "src/schema/index.js",
-        46
-      ]
-    ]
+    ],
+    "obsolete": true
   },
   "Air flow rate in Litres per Second (LpS)": {
     "translation": "",
@@ -136,7 +2035,8 @@
         "src/schema/index.js",
         48
       ]
-    ]
+    ],
+    "obsolete": true
   },
   "Air flow rate in Cubic feet per Minute (CfM)": {
     "translation": "",
@@ -145,88 +2045,8 @@
         "src/schema/index.js",
         50
       ]
-    ]
-  },
-  "Floors represents the usable area of the house": {
-    "translation": "",
-    "origin": [
-      [
-        "src/schema/index.js",
-        54
-      ]
-    ]
-  },
-  "Description of floor location": {
-    "translation": "",
-    "origin": [
-      [
-        "src/schema/index.js",
-        56
-      ]
-    ]
-  },
-  "Floor insulation nominal RSI (R-value Systeme International)": {
-    "translation": "",
-    "origin": [
-      [
-        "src/schema/index.js",
-        58
-      ]
-    ]
-  },
-  "Floor insulation nominal R-value": {
-    "translation": "",
-    "origin": [
-      [
-        "src/schema/index.js",
-        60
-      ]
-    ]
-  },
-  "Floor insulation effective RSI (R-value Systeme International)": {
-    "translation": "",
-    "origin": [
-      [
-        "src/schema/index.js",
-        62
-      ]
-    ]
-  },
-  "Floor insulation effective R-value": {
-    "translation": "",
-    "origin": [
-      [
-        "src/schema/index.js",
-        64
-      ]
-    ]
-  },
-  "Floor area of the house in square metres (m2)": {
-    "translation": "",
-    "origin": [
-      [
-        "src/schema/index.js",
-        66
-      ]
-    ]
-  },
-  "Floor area of the house in square feet (ft2)": {
-    "translation": "",
-    "origin": [
-      [
-        "src/schema/index.js",
-        68
-      ]
-    ]
-  },
-  "Floor length of the house in metres (m)": {
-    "translation": "",
-    "origin": [
-      [
-        "src/schema/index.js",
-        70
-      ]
-    ]
+    ],
+    "obsolete": true
   },
   "Floor area of the house in feet (ft)": {
     "translation": "",
@@ -235,7 +2055,8 @@
         "src/schema/index.js",
         72
       ]
-    ]
+    ],
+    "obsolete": true
   },
   "Water heaters heat the domestic hot water in a house": {
     "translation": "",
@@ -244,7 +2065,8 @@
         "src/schema/index.js",
         76
       ]
-    ]
+    ],
+    "obsolete": true
   },
   "Type of tank being used to heat the domestic hot water in the house (en)": {
     "translation": "",
@@ -253,7 +2075,8 @@
         "src/schema/index.js",
         78
       ]
-    ]
+    ],
+    "obsolete": true
   },
   "Type of tank being used to heat the domestic hot water in the house (fr)": {
     "translation": "",
@@ -262,7 +2085,8 @@
         "src/schema/index.js",
         80
       ]
-    ]
+    ],
+    "obsolete": true
   },
   "Volume of the tank capacity in Litres (L)": {
     "translation": "",
@@ -271,7 +2095,8 @@
         "src/schema/index.js",
         82
       ]
-    ]
+    ],
+    "obsolete": true
   },
   "Volume of the tank capacity in Gallons (G)": {
     "translation": "",
@@ -280,407 +2105,8 @@
         "src/schema/index.js",
         84
       ]
-    ]
-  },
-  "Measures how effectively your water heater is burning fuel or turning fuel into heat": {
-    "translation": "",
-    "origin": [
-      [
-        "src/schema/index.js",
-        86
-      ]
-    ]
-  },
-  "A principal heating system is either the only source of heat for the house, or is used for at least 70% of the heating load": {
-    "translation": "",
-    "origin": [
-      [
-        "src/schema/index.js",
-        90
-      ]
-    ]
-  },
-  "Description of heating system": {
-    "translation": "",
-    "origin": [
-      [
-        "src/schema/index.js",
-        92
-      ]
-    ]
-  },
-  "Type of heating system (en)": {
-    "translation": "",
-    "origin": [
-      [
-        "src/schema/index.js",
-        94
-      ]
-    ]
-  },
-  "Type of heating system (fr)": {
-    "translation": "",
-    "origin": [
-      [
-        "src/schema/index.js",
-        96
-      ]
-    ]
-  },
-  "The source of fuel for the heating system (en)": {
-    "translation": "",
-    "origin": [
-      [
-        "src/schema/index.js",
-        98
-      ]
-    ]
-  },
-  "The source of fuel for the heating system (fr)": {
-    "translation": "",
-    "origin": [
-      [
-        "src/schema/index.js",
-        100
-      ]
-    ]
-  },
-  "Equipment type of heating system (en)": {
-    "translation": "",
-    "origin": [
-      [
-        "src/schema/index.js",
-        102
-      ]
-    ]
-  },
-  "Equipment type of heating system (fr)": {
-    "translation": "",
-    "origin": [
-      [
-        "src/schema/index.js",
-        104
-      ]
-    ]
-  },
-  "Output capacity of the heating system in kilowatt hours (kWh)": {
-    "translation": "",
-    "origin": [
-      [
-        "src/schema/index.js",
-        106
-      ]
-    ]
-  },
-  "Output capacity of the heating system in British Thermal Units per hour (BTU/h)": {
-    "translation": "",
-    "origin": [
-      [
-        "src/schema/index.js",
-        108
-      ]
-    ]
-  },
-  "Measures how effectively your heating system is burning fuel or turning fuel into heat": {
-    "translation": "",
-    "origin": [
-      [
-        "src/schema/index.js",
-        110
-      ]
-    ]
-  },
-  "Steady-state efficiency is the combustion efficiency of the equipment at peak performance. The Annual Fuel Utilization Efficiency (AFUE) is a measure of efficiency based on average usage, accounting for the fact that most heating systems rarely run long enough to reach peak performance.": {
-    "translation": "",
-    "origin": [
-      [
-        "src/schema/index.js",
-        112
-      ]
-    ]
-  },
-  "One page of results": {
-    "translation": "",
-    "origin": [
-      [
-        "src/schema/index.js",
-        117
-      ]
-    ]
-  },
-  "If true, a further page of results can be returned": {
-    "translation": "",
-    "origin": [
-      [
-        "src/schema/index.js",
-        119
-      ]
-    ]
-  },
-  "If true, a previous page of results can be returned": {
-    "translation": "",
-    "origin": [
-      [
-        "src/schema/index.js",
-        121
-      ]
-    ]
-  },
-  "Identifier used to return the next page of results": {
-    "translation": "",
-    "origin": [
-      [
-        "src/schema/index.js",
-        123
-      ]
-    ]
-  },
-  "Identifier cursor used to return the previous page of results": {
-    "translation": "",
-    "origin": [
-      [
-        "src/schema/index.js",
-        125
-      ]
-    ]
-  },
-  "A list of dwellings": {
-    "translation": "",
-    "origin": [
-      [
-        "src/schema/index.js",
-        127
-      ]
-    ]
-  },
-  "Heated floor areas represents the usable areas of a house that is conditioned to a specified temperature during the whole heating season": {
-    "translation": "",
-    "origin": [
-      [
-        "src/schema/index.js",
-        131
-      ]
-    ]
-  },
-  "Above-grade heated area of the house in square metres (m2), i.e. the ground floor": {
-    "translation": "",
-    "origin": [
-      [
-        "src/schema/index.js",
-        133
-      ]
-    ]
-  },
-  "Above-grade heated area of the house in square feet (ft2), i.e. the ground floor": {
-    "translation": "",
-    "origin": [
-      [
-        "src/schema/index.js",
-        135
-      ]
-    ]
-  },
-  "Below-grade heated area of the house in square metres (m2), i.e. the basement": {
-    "translation": "",
-    "origin": [
-      [
-        "src/schema/index.js",
-        137
-      ]
-    ]
-  },
-  "Below-grade heated area of the house in square feet (ft2), i.e. the basement": {
-    "translation": "",
-    "origin": [
-      [
-        "src/schema/index.js",
-        139
-      ]
-    ]
-  },
-  "Walls separate the interior heated space from the outside (interior partition walls are not considered walls)": {
-    "translation": "",
-    "origin": [
-      [
-        "src/schema/index.js",
-        143
-      ]
-    ]
-  },
-  "Description of wall location": {
-    "translation": "",
-    "origin": [
-      [
-        "src/schema/index.js",
-        145
-      ]
-    ]
-  },
-  "Wall construction being used (en)": {
-    "translation": "",
-    "origin": [
-      [
-        "src/schema/index.js",
-        147
-      ]
-    ]
-  },
-  "Wall construction being used (fr)": {
-    "translation": "",
-    "origin": [
-      [
-        "src/schema/index.js",
-        149
-      ]
-    ]
-  },
-  "Size of the component type (en)": {
-    "translation": "",
-    "origin": [
-      [
-        "src/schema/index.js",
-        151
-      ]
-    ]
-  },
-  "Size of the component type (fr)": {
-    "translation": "",
-    "origin": [
-      [
-        "src/schema/index.js",
-        153
-      ]
-    ]
-  },
-  "Wall insulation nominal RSI (R-value Systeme International)": {
-    "translation": "",
-    "origin": [
-      [
-        "src/schema/index.js",
-        155
-      ]
-    ]
-  },
-  "Wall insulation nominal R-value": {
-    "translation": "",
-    "origin": [
-      [
-        "src/schema/index.js",
-        157
-      ],
-      [
-        "src/schema/index.js",
-        161
-      ]
-    ]
-  },
-  "Wall insulation effective RSI (R-value Systeme International)": {
-    "translation": "",
-    "origin": [
-      [
-        "src/schema/index.js",
-        159
-      ]
-    ]
-  },
-  "Wall area of the house in square metres (m2)": {
-    "translation": "",
-    "origin": [
-      [
-        "src/schema/index.js",
-        163
-      ]
-    ]
-  },
-  "Wall area of the house in square feet (ft2)": {
-    "translation": "",
-    "origin": [
-      [
-        "src/schema/index.js",
-        165
-      ]
-    ]
-  },
-  "Wall perimeter of the house in metres (m)": {
-    "translation": "",
-    "origin": [
-      [
-        "src/schema/index.js",
-        167
-      ]
-    ]
-  },
-  "Wall perimeter of the house in feet (ft)": {
-    "translation": "",
-    "origin": [
-      [
-        "src/schema/index.js",
-        169
-      ]
-    ]
-  },
-  "Wall height of the house in metres (m)": {
-    "translation": "",
-    "origin": [
-      [
-        "src/schema/index.js",
-        171
-      ]
-    ]
-  },
-  "Wall height of the house in feet (ft)": {
-    "translation": "",
-    "origin": [
-      [
-        "src/schema/index.js",
-        173
-      ]
-    ]
-  },
-  "Doors are on outside walls, separating the interior heated space from the outside": {
-    "translation": "",
-    "origin": [
-      [
-        "src/schema/index.js",
-        177
-      ]
-    ]
-  },
-  "Describes the construction of the door (en)": {
-    "translation": "",
-    "origin": [
-      [
-        "src/schema/index.js",
-        179
-      ]
-    ]
-  },
-  "Describes the construction of the door (fr)": {
-    "translation": "",
-    "origin": [
-      [
-        "src/schema/index.js",
-        181
-      ]
-    ]
-  },
-  "Door RSI (R-value Systeme International)": {
-    "translation": "",
-    "origin": [
-      [
-        "src/schema/index.js",
-        183
-      ]
-    ]
-  },
-  "Door R-value": {
-    "translation": "",
-    "origin": [
-      [
-        "src/schema/index.js",
-        185
-      ]
-    ]
+    ],
+    "obsolete": true
   },
   "Door U-factor in metric: Watts per square metre per degree Celcius (W/m2C)": {
     "translation": "",
@@ -689,7 +2115,8 @@
         "src/schema/index.js",
         187
       ]
-    ]
+    ],
+    "obsolete": true
   },
   "Door U-factor in imperial: British Thermal Units per square feet per degree Fahrenheit (BTU/ft2 F)": {
     "translation": "",
@@ -698,97 +2125,8 @@
         "src/schema/index.js",
         189
       ]
-    ]
-  },
-  "Door area in square metres (m2)": {
-    "translation": "",
-    "origin": [
-      [
-        "src/schema/index.js",
-        191
-      ]
-    ]
-  },
-  "Door area in square feet (ft2)": {
-    "translation": "",
-    "origin": [
-      [
-        "src/schema/index.js",
-        193
-      ]
-    ]
-  },
-  "Windows separate the interior heated space from the outside": {
-    "translation": "",
-    "origin": [
-      [
-        "src/schema/index.js",
-        197
-      ]
-    ]
-  },
-  "Used to identify the window component in the house": {
-    "translation": "",
-    "origin": [
-      [
-        "src/schema/index.js",
-        199
-      ]
-    ]
-  },
-  "Window RSI (R-value Systeme International)": {
-    "translation": "",
-    "origin": [
-      [
-        "src/schema/index.js",
-        201
-      ]
-    ]
-  },
-  "Window R-value": {
-    "translation": "",
-    "origin": [
-      [
-        "src/schema/index.js",
-        203
-      ]
-    ]
-  },
-  "Number of panes of transparent material in a window (en)": {
-    "translation": "",
-    "origin": [
-      [
-        "src/schema/index.js",
-        205
-      ]
-    ]
-  },
-  "Number of panes of transparent material in a window (fr)": {
-    "translation": "",
-    "origin": [
-      [
-        "src/schema/index.js",
-        207
-      ]
-    ]
-  },
-  "Type of coating and tint on a window pane (en)": {
-    "translation": "",
-    "origin": [
-      [
-        "src/schema/index.js",
-        209
-      ]
-    ]
-  },
-  "Type of coating and tint on a window pane (fr)": {
-    "translation": "",
-    "origin": [
-      [
-        "src/schema/index.js",
-        211
-      ]
-    ]
+    ],
+    "obsolete": true
   },
   "Type of gas (air, argon or krypton) injected between the glass layers (en)": {
     "translation": "",
@@ -797,7 +2135,8 @@
         "src/schema/index.js",
         213
       ]
-    ]
+    ],
+    "obsolete": true
   },
   "Type of gas (air, argon or krypton) injected between the glass layers (fr)": {
     "translation": "",
@@ -806,511 +2145,8 @@
         "src/schema/index.js",
         215
       ]
-    ]
-  },
-  "Spacer systems used between the glass layers (en)": {
-    "translation": "",
-    "origin": [
-      [
-        "src/schema/index.js",
-        217
-      ]
-    ]
-  },
-  "Spacer systems used between the glass layers (fr)": {
-    "translation": "",
-    "origin": [
-      [
-        "src/schema/index.js",
-        219
-      ]
-    ]
-  },
-  "Describes the construction of the window (en)": {
-    "translation": "",
-    "origin": [
-      [
-        "src/schema/index.js",
-        221
-      ]
-    ]
-  },
-  "Describes the construction of the window (fr)": {
-    "translation": "",
-    "origin": [
-      [
-        "src/schema/index.js",
-        223
-      ]
-    ]
-  },
-  "Material type of the window frame (en)": {
-    "translation": "",
-    "origin": [
-      [
-        "src/schema/index.js",
-        225
-      ]
-    ]
-  },
-  "Material type of the window frame (fr)": {
-    "translation": "",
-    "origin": [
-      [
-        "src/schema/index.js",
-        227
-      ]
-    ]
-  },
-  "Window area in square metres (m2)": {
-    "translation": "",
-    "origin": [
-      [
-        "src/schema/index.js",
-        229
-      ]
-    ]
-  },
-  "Window area in square feet (ft2)": {
-    "translation": "",
-    "origin": [
-      [
-        "src/schema/index.js",
-        231
-      ]
-    ]
-  },
-  "Window width in metres (m)": {
-    "translation": "",
-    "origin": [
-      [
-        "src/schema/index.js",
-        233
-      ]
-    ]
-  },
-  "Window width in feet (ft)": {
-    "translation": "",
-    "origin": [
-      [
-        "src/schema/index.js",
-        235
-      ]
-    ]
-  },
-  "Window height in metres (m)": {
-    "translation": "",
-    "origin": [
-      [
-        "src/schema/index.js",
-        237
-      ]
-    ]
-  },
-  "Window height in feet (ft)": {
-    "translation": "",
-    "origin": [
-      [
-        "src/schema/index.js",
-        239
-      ]
-    ]
-  },
-  "Ceilings are the upper interior surface of a room": {
-    "translation": "",
-    "origin": [
-      [
-        "src/schema/index.js",
-        243
-      ]
-    ]
-  },
-  "Used to identify the ceiling in the house": {
-    "translation": "",
-    "origin": [
-      [
-        "src/schema/index.js",
-        245
-      ]
-    ]
-  },
-  "Describes the construction of the ceiling (en)": {
-    "translation": "",
-    "origin": [
-      [
-        "src/schema/index.js",
-        247
-      ]
-    ]
-  },
-  "Describes the construction of the ceiling (fr)": {
-    "translation": "",
-    "origin": [
-      [
-        "src/schema/index.js",
-        249
-      ]
-    ]
-  },
-  "Ceiling insulation nominal RSI (R-value Systeme International)": {
-    "translation": "",
-    "origin": [
-      [
-        "src/schema/index.js",
-        251
-      ]
-    ]
-  },
-  "Ceiling insulation nominal R-value": {
-    "translation": "",
-    "origin": [
-      [
-        "src/schema/index.js",
-        253
-      ]
-    ]
-  },
-  "Ceiling insulation effective RSI (R-value Systeme International)": {
-    "translation": "",
-    "origin": [
-      [
-        "src/schema/index.js",
-        255
-      ]
-    ]
-  },
-  "Ceiling insulation effective R-value": {
-    "translation": "",
-    "origin": [
-      [
-        "src/schema/index.js",
-        257
-      ]
-    ]
-  },
-  "Ceiling area in square metres (m2)": {
-    "translation": "",
-    "origin": [
-      [
-        "src/schema/index.js",
-        259
-      ]
-    ]
-  },
-  "Ceiling area in square feet (ft2)": {
-    "translation": "",
-    "origin": [
-      [
-        "src/schema/index.js",
-        261
-      ]
-    ]
-  },
-  "Ceiling length in metres (m)": {
-    "translation": "",
-    "origin": [
-      [
-        "src/schema/index.js",
-        263
-      ]
-    ]
-  },
-  "Ceiling length in feet (ft)": {
-    "translation": "",
-    "origin": [
-      [
-        "src/schema/index.js",
-        265
-      ]
-    ]
-  },
-  "Detailed information about specific features of a given dwelling": {
-    "translation": "",
-    "origin": [
-      [
-        "src/schema/index.js",
-        269
-      ]
-    ]
-  },
-  "Evaluation type codes are used to define the type of evaluation performed and to distinguish the house type (i.e. newly built or existing)": {
-    "translation": "",
-    "origin": [
-      [
-        "src/schema/index.js",
-        271
-      ]
-    ]
-  },
-  "Date the evaluation was made": {
-    "translation": "",
-    "origin": [
-      [
-        "src/schema/index.js",
-        273
-      ]
-    ]
-  },
-  "Date the record was first created": {
-    "translation": "",
-    "origin": [
-      [
-        "src/schema/index.js",
-        275
-      ]
-    ]
-  },
-  "Date the record was last modified": {
-    "translation": "",
-    "origin": [
-      [
-        "src/schema/index.js",
-        277
-      ]
-    ]
-  },
-  "A list of ceiling data entries for a dwelling": {
-    "translation": "",
-    "origin": [
-      [
-        "src/schema/index.js",
-        279
-      ]
-    ]
-  },
-  "A list of wall data entries for a dwelling": {
-    "translation": "",
-    "origin": [
-      [
-        "src/schema/index.js",
-        281
-      ]
-    ]
-  },
-  "A list of floor data entries for a dwelling": {
-    "translation": "",
-    "origin": [
-      [
-        "src/schema/index.js",
-        283
-      ]
-    ]
-  },
-  "A list of door data entries for a dwelling": {
-    "translation": "",
-    "origin": [
-      [
-        "src/schema/index.js",
-        285
-      ]
-    ]
-  },
-  "A list of window data entries for a dwelling": {
-    "translation": "",
-    "origin": [
-      [
-        "src/schema/index.js",
-        287
-      ]
-    ]
-  },
-  "A heated floor area entry for a dwelling": {
-    "translation": "",
-    "origin": [
-      [
-        "src/schema/index.js",
-        289
-      ]
-    ]
-  },
-  "A list of ventilation data entries for a dwelling": {
-    "translation": "",
-    "origin": [
-      [
-        "src/schema/index.js",
-        291
-      ]
-    ]
-  },
-  "A list of water heater data entries for a dwelling": {
-    "translation": "",
-    "origin": [
-      [
-        "src/schema/index.js",
-        293
-      ]
-    ]
-  },
-  "A principal heating system for a dwelling": {
-    "translation": "",
-    "origin": [
-      [
-        "src/schema/index.js",
-        295
-      ]
-    ]
-  },
-  "A list of upgrades that would improve energy efficiency": {
-    "translation": "",
-    "origin": [
-      [
-        "src/schema/index.js",
-        297
-      ]
-    ]
-  },
-  "A residential building evaluted under the Energuide program": {
-    "translation": "",
-    "origin": [
-      [
-        "src/schema/index.js",
-        301
-      ]
-    ]
-  },
-  "Unique identification number for a dwelling": {
-    "translation": "",
-    "origin": [
-      [
-        "src/schema/index.js",
-        303
-      ]
-    ]
-  },
-  "Year of construction": {
-    "translation": "",
-    "origin": [
-      [
-        "src/schema/index.js",
-        305
-      ]
-    ]
-  },
-  "Name of city where dwelling is located": {
-    "translation": "",
-    "origin": [
-      [
-        "src/schema/index.js",
-        307
-      ]
-    ]
-  },
-  "Region of country for dwelling (province/territory)": {
-    "translation": "",
-    "origin": [
-      [
-        "src/schema/index.js",
-        309
-      ]
-    ]
-  },
-  "The first three characters of a Canadian postal code, which correspond to a geographical area defined by Canada Post": {
-    "translation": "",
-    "origin": [
-      [
-        "src/schema/index.js",
-        311
-      ]
-    ]
-  },
-  "A list of evaluations of specific features of the dwelling": {
-    "translation": "",
-    "origin": [
-      [
-        "src/schema/index.js",
-        313
-      ]
-    ]
-  },
-  "The root query type": {
-    "translation": "",
-    "origin": [
-      [
-        "src/schema/index.js",
-        317
-      ]
-    ]
-  },
-  "Details for a specific dwelling": {
-    "translation": "",
-    "origin": [
-      [
-        "src/schema/index.js",
-        319
-      ]
-    ]
-  },
-  "Details for all dwellings, optionally filtered by one or more values": {
-    "translation": "",
-    "origin": [
-      [
-        "src/schema/index.js",
-        321
-      ]
-    ]
-  },
-  "Filter results by the house ID of a dwelling": {
-    "translation": "",
-    "origin": [
-      [
-        "src/schema/index.js",
-        326
-      ]
-    ]
-  },
-  "Filter results by dwellings built in a specific year": {
-    "translation": "",
-    "origin": [
-      [
-        "src/schema/index.js",
-        328
-      ]
-    ]
-  },
-  "Filter results by the dwellings in a specific city": {
-    "translation": "",
-    "origin": [
-      [
-        "src/schema/index.js",
-        330
-      ]
-    ]
-  },
-  "Filter results by the dwellings in a specific region": {
-    "translation": "",
-    "origin": [
-      [
-        "src/schema/index.js",
-        332
-      ]
-    ]
-  },
-  "Filter results by the dwellings in a specific forward sortation area": {
-    "translation": "",
-    "origin": [
-      [
-        "src/schema/index.js",
-        334
-      ]
-    ]
-  },
-  "Filter results by the dwellings containing at least one ventilation system with a specific type (en)": {
-    "translation": "",
-    "origin": [
-      [
-        "src/schema/index.js",
-        336
-      ]
-    ]
-  },
-  "Filter results by the dwellings containing at least one ventilation system with a specific type (fr)": {
-    "translation": "",
-    "origin": [
-      [
-        "src/schema/index.js",
-        338
-      ]
-    ]
+    ],
+    "obsolete": true
   },
   "Filter results by the dwellings containing at least one ventilation system with a specific air flow rate in Litres per Second (LpS)": {
     "translation": "",
@@ -1319,7 +2155,8 @@
         "src/schema/index.js",
         340
       ]
-    ]
+    ],
+    "obsolete": true
   },
   "Filter results by the dwellings containing at least one ventilation system with a specific air flow rate in Cubic feet per Minute (CfM)": {
     "translation": "",
@@ -1328,110 +2165,8 @@
         "src/schema/index.js",
         342
       ]
-    ]
-  },
-  "Filter results by the dwellings containing at least one ventilation system with a specific efficiency rating": {
-    "translation": "",
-    "origin": [
-      [
-        "src/schema/index.js",
-        344
-      ]
-    ]
-  },
-  "Filter results by the dwellings containing at least one floor with a specific location": {
-    "translation": "",
-    "origin": [
-      [
-        "src/schema/index.js",
-        346
-      ]
-    ]
-  },
-  "Filter results by the dwellings containing at least one floor with a specific nominal RSI (R-value Systeme International)": {
-    "translation": "",
-    "origin": [
-      [
-        "src/schema/index.js",
-        348
-      ]
-    ]
-  },
-  "Filter results by the dwellings containing at least one floor with a specific nominal R-value": {
-    "translation": "",
-    "origin": [
-      [
-        "src/schema/index.js",
-        350
-      ]
-    ]
-  },
-  "Filter results by the dwellings containing at least one floor with a specific effective R-value": {
-    "translation": "",
-    "origin": [
-      [
-        "src/schema/index.js",
-        352
-      ],
-      [
-        "src/schema/index.js",
-        354
-      ]
-    ]
-  },
-  "Filter results by the dwellings containing at least one floor with a specific area in square metres (m2)": {
-    "translation": "",
-    "origin": [
-      [
-        "src/schema/index.js",
-        356
-      ]
-    ]
-  },
-  "Filter results by the dwellings containing at least one floor with a specific area in square feet (ft2)": {
-    "translation": "",
-    "origin": [
-      [
-        "src/schema/index.js",
-        358
-      ]
-    ]
-  },
-  "Filter results by the dwellings containing at least one floor with a specific length in metres (m)": {
-    "translation": "",
-    "origin": [
-      [
-        "src/schema/index.js",
-        360
-      ]
-    ]
-  },
-  "Filter results by the dwellings containing at least one floor with a specific length in feet (ft)": {
-    "translation": "",
-    "origin": [
-      [
-        "src/schema/index.js",
-        362
-      ]
-    ]
-  },
-  "Filter results by the dwellings containing at least one water heating system of a specific type (en)": {
-    "translation": "",
-    "origin": [
-      [
-        "src/schema/index.js",
-        364
-      ]
-    ]
-  },
-  "Filter results by the dwellings containing at least one water heating system of a specific type (fr)": {
-    "translation": "",
-    "origin": [
-      [
-        "src/schema/index.js",
-        366
-      ]
-    ]
+    ],
+    "obsolete": true
   },
   "Filter results by the dwellings containing at least one water heating system with a specific capacity in Litres (L)": {
     "translation": "",
@@ -1440,7 +2175,8 @@
         "src/schema/index.js",
         368
       ]
-    ]
+    ],
+    "obsolete": true
   },
   "Filter results by the dwellings containing at least one water heating system with a specific capacity in Gallons (g)": {
     "translation": "",
@@ -1449,420 +2185,7 @@
         "src/schema/index.js",
         370
       ]
-    ]
-  },
-  "Filter results by the dwellings containing at least one water heating system with a specific efficiency rating": {
-    "translation": "",
-    "origin": [
-      [
-        "src/schema/index.js",
-        372
-      ]
-    ]
-  },
-  "Filter results by the dwellings containing a heating system with a specific description": {
-    "translation": "",
-    "origin": [
-      [
-        "src/schema/index.js",
-        374
-      ]
-    ]
-  },
-  "Filter results by the dwellings containing a heating system of a specific type (en)": {
-    "translation": "",
-    "origin": [
-      [
-        "src/schema/index.js",
-        376
-      ]
-    ]
-  },
-  "Filter results by the dwellings containing a heating system of a specific type (fr)": {
-    "translation": "",
-    "origin": [
-      [
-        "src/schema/index.js",
-        378
-      ]
-    ]
-  },
-  "Filter results by the dwellings containing a heating system with a specific fuel source (en)": {
-    "translation": "",
-    "origin": [
-      [
-        "src/schema/index.js",
-        380
-      ]
-    ]
-  },
-  "Filter results by the dwellings containing a heating system with a specific fuel source (fr)": {
-    "translation": "",
-    "origin": [
-      [
-        "src/schema/index.js",
-        382
-      ]
-    ]
-  },
-  "Filter results by the dwellings containing a heating system with a specific type of equipment (en)": {
-    "translation": "",
-    "origin": [
-      [
-        "src/schema/index.js",
-        384
-      ]
-    ]
-  },
-  "Filter results by the dwellings containing a heating system with a specific type of equipment (fr)": {
-    "translation": "",
-    "origin": [
-      [
-        "src/schema/index.js",
-        386
-      ]
-    ]
-  },
-  "Filter results by the dwellings containing a heating system with a specific output capacity in kilowatt hours (kWh)": {
-    "translation": "",
-    "origin": [
-      [
-        "src/schema/index.js",
-        388
-      ]
-    ]
-  },
-  "Filter results by the dwellings containing a heating system with a specific output capacity in British Thermal Units per hour (BTU/h)": {
-    "translation": "",
-    "origin": [
-      [
-        "src/schema/index.js",
-        390
-      ]
-    ]
-  },
-  "Filter results by the dwellings containing a heating system with a specific efficiency rating": {
-    "translation": "",
-    "origin": [
-      [
-        "src/schema/index.js",
-        392
-      ]
-    ]
-  },
-  "Filter results by the dwellings containing a heating system efficiency measurement that is either 'Steady State' or 'AFUE'": {
-    "translation": "",
-    "origin": [
-      [
-        "src/schema/index.js",
-        394
-      ]
-    ]
-  },
-  "Filter results by the dwellings containing an above-grade heated floor area with a specific area in square metres (m2)": {
-    "translation": "",
-    "origin": [
-      [
-        "src/schema/index.js",
-        396
-      ]
-    ]
-  },
-  "Filter results by the dwellings containing an above-grade heated floor area with a specific area in square feet (ft2)": {
-    "translation": "",
-    "origin": [
-      [
-        "src/schema/index.js",
-        398
-      ]
-    ]
-  },
-  "Filter results by the dwellings containing a below-grade heated floor area with a specific area in square metres (m2)": {
-    "translation": "",
-    "origin": [
-      [
-        "src/schema/index.js",
-        400
-      ]
-    ]
-  },
-  "Filter results by the dwellings containing a below-grade heated floor area with a specific area in square feet (ft2)": {
-    "translation": "",
-    "origin": [
-      [
-        "src/schema/index.js",
-        402
-      ]
-    ]
-  },
-  "Filter results by the dwellings containing at least one wall with a specific location": {
-    "translation": "",
-    "origin": [
-      [
-        "src/schema/index.js",
-        404
-      ]
-    ]
-  },
-  "Filter results by the dwellings containing at least one wall of a specific type (en)": {
-    "translation": "",
-    "origin": [
-      [
-        "src/schema/index.js",
-        406
-      ]
-    ]
-  },
-  "Filter results by the dwellings containing at least one wall of a specific type (fr)": {
-    "translation": "",
-    "origin": [
-      [
-        "src/schema/index.js",
-        408
-      ]
-    ]
-  },
-  "Filter results by the dwellings containing at least one wall with a component of a specific size (en)": {
-    "translation": "",
-    "origin": [
-      [
-        "src/schema/index.js",
-        410
-      ]
-    ]
-  },
-  "Filter results by the dwellings containing at least one wall with a component of a specific size (fr)": {
-    "translation": "",
-    "origin": [
-      [
-        "src/schema/index.js",
-        412
-      ]
-    ]
-  },
-  "Filter results by the dwellings containing at least one wall with a specific nominal RSI (R-value Systeme International)": {
-    "translation": "",
-    "origin": [
-      [
-        "src/schema/index.js",
-        414
-      ]
-    ]
-  },
-  "Filter results by the dwellings containing at least one wall with a specific nominal R-value": {
-    "translation": "",
-    "origin": [
-      [
-        "src/schema/index.js",
-        416
-      ]
-    ]
-  },
-  "Filter results by the dwellings containing at least one wall with a specific effective RSI (R-value Systeme International)": {
-    "translation": "",
-    "origin": [
-      [
-        "src/schema/index.js",
-        418
-      ]
-    ]
-  },
-  "Filter results by the dwellings containing at least one wall with a specific effective R-value": {
-    "translation": "",
-    "origin": [
-      [
-        "src/schema/index.js",
-        420
-      ]
-    ]
-  },
-  "Filter results by the dwellings containing at least one wall with a specific area in square metres (m2)": {
-    "translation": "",
-    "origin": [
-      [
-        "src/schema/index.js",
-        422
-      ]
-    ]
-  },
-  "Filter results by the dwellings containing at least one wall with a specific area in square feet (ft2)": {
-    "translation": "",
-    "origin": [
-      [
-        "src/schema/index.js",
-        424
-      ]
-    ]
-  },
-  "Filter results by the dwellings containing at least one wall with a specific perimeter in metres (m)": {
-    "translation": "",
-    "origin": [
-      [
-        "src/schema/index.js",
-        426
-      ]
-    ]
-  },
-  "Filter results by the dwellings containing at least one wall with a specific perimeter in feet (ft)": {
-    "translation": "",
-    "origin": [
-      [
-        "src/schema/index.js",
-        428
-      ]
-    ]
-  },
-  "Filter results by the dwellings containing at least one wall with a specific height in metres (m)": {
-    "translation": "",
-    "origin": [
-      [
-        "src/schema/index.js",
-        430
-      ]
-    ]
-  },
-  "Filter results by the dwellings containing at least one wall with a specific height in feet (ft)": {
-    "translation": "",
-    "origin": [
-      [
-        "src/schema/index.js",
-        432
-      ]
-    ]
-  },
-  "Filter results by the dwellings where at least one ceiling has a matching label": {
-    "translation": "",
-    "origin": [
-      [
-        "src/schema/index.js",
-        434
-      ]
-    ]
-  },
-  "Filter results by the dwellings where at least one ceiling has a matching type (en)": {
-    "translation": "",
-    "origin": [
-      [
-        "src/schema/index.js",
-        436
-      ]
-    ]
-  },
-  "Filter results by the dwellings where at least one ceiling has a matching type (fr)": {
-    "translation": "",
-    "origin": [
-      [
-        "src/schema/index.js",
-        438
-      ]
-    ]
-  },
-  "Filter results by the dwellings where at least one ceiling has a specific nominal RSI (R-value Systeme International)": {
-    "translation": "",
-    "origin": [
-      [
-        "src/schema/index.js",
-        440
-      ]
-    ]
-  },
-  "Filter results by the dwellings containing at least one ceiling with a specific nominal R-value": {
-    "translation": "",
-    "origin": [
-      [
-        "src/schema/index.js",
-        442
-      ]
-    ]
-  },
-  "Filter results by the dwellings containing at least one ceiling with a specific effective RSI (R-value Systeme International)": {
-    "translation": "",
-    "origin": [
-      [
-        "src/schema/index.js",
-        444
-      ]
-    ]
-  },
-  "Filter results by the dwellings containing at least one ceiling with a specific effective R-value": {
-    "translation": "",
-    "origin": [
-      [
-        "src/schema/index.js",
-        446
-      ]
-    ]
-  },
-  "Filter results by the dwellings containing at least one ceiling with a specific area in square metres (m2)": {
-    "translation": "",
-    "origin": [
-      [
-        "src/schema/index.js",
-        448
-      ]
-    ]
-  },
-  "Filter results by the dwellings containing at least one ceiling with a specific area in square feet (ft2)": {
-    "translation": "",
-    "origin": [
-      [
-        "src/schema/index.js",
-        450
-      ]
-    ]
-  },
-  "Filter results by the dwellings containing at least one ceiling with a specific length in metres (m)": {
-    "translation": "",
-    "origin": [
-      [
-        "src/schema/index.js",
-        452
-      ]
-    ]
-  },
-  "Filter results by the dwellings containing at least one ceiling with a specific length in feet (ft)": {
-    "translation": "",
-    "origin": [
-      [
-        "src/schema/index.js",
-        454
-      ]
-    ]
-  },
-  "The 'Int' scalar type represents non-fractional signed whole numeric values. Int can represent values between -(2^31) and 2^31 - 1.": {
-    "translation": "",
-    "origin": [
-      [
-        "src/schema/resolvers.js",
-        85
-      ]
-    ]
-  },
-  "The 'Float' scalar type represents signed double-precision fractional values as specified by [IEEE 754](http://en.wikipedia.org/wiki/IEEE_floating_point).": {
-    "translation": "",
-    "origin": [
-      [
-        "src/schema/resolvers.js",
-        90
-      ]
-    ]
-  },
-  "The 'String' scalar type represents textual data, represented as UTF-8 character sequences. The String type is most often used by GraphQL to represent free-form human-readable text.": {
-    "translation": "",
-    "origin": [
-      [
-        "src/schema/resolvers.js",
-        96
-      ]
-    ]
-  },
-  "The 'Boolean' scalar type represents 'true' or 'false'.": {
-    "translation": "",
-    "origin": [
-      [
-        "src/schema/resolvers.js",
-        102
-      ]
-    ]
+    ],
+    "obsolete": true
   }
 }
