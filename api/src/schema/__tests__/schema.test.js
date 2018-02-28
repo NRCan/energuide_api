@@ -111,6 +111,7 @@ describe('Schema', () => {
       expect(fields).toEqual([
         'evaluationType',
         'entryDate',
+        'fileId',
         'creationDate',
         'modificationDate',
         'ceilings',
@@ -289,5 +290,4 @@ describe('Schema', () => {
       expect(fields).toEqual(['upgradeType', 'cost', 'priority'])
     })
   })
-
 })

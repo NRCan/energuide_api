@@ -273,6 +273,7 @@ const Schema = i18n => {
       evaluationType: I18NString
       # ${i18n.t`Date the evaluation was made`}
       entryDate: I18NString
+      fileId: I18NString
       # ${i18n.t`Date the record was first created`}
       creationDate: I18NString
       # ${i18n.t`Date the record was last modified`}
