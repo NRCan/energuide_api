@@ -91,16 +91,7 @@ BAD_WINDOW_CODE_XML = [
         </FrameMaterial>
     </Layers>
 </Code>
-    """,
-
-    # This XML block is missing all the tags under <Layers>
     """
-<Code id='Code 11'>
-    <Label>202002</Label>
-    <Layers>
-    </Layers>
-</Code>
-    """,
 ]
 
 

@@ -73,10 +73,18 @@ class Window(_Window):
             'spacerTypeFrench': self.window_code.spacer_type.french
             if self.window_code and self.window_code.spacer_type else None,
 
-            'typeEnglish': self.window_code.window_code_type.english if self.window_code else None,
-            'typeFrench': self.window_code.window_code_type.french if self.window_code else None,
-            'frameMaterialEnglish': self.window_code.frame_material.english if self.window_code else None,
-            'frameMaterialFrench': self.window_code.frame_material.french if self.window_code else None,
+            'typeEnglish': self.window_code.window_code_type.english
+            if self.window_code and self.window_code.window_code_type else None,
+
+            'typeFrench': self.window_code.window_code_type.french
+            if self.window_code and self.window_code.window_code_type else None,
+
+            'frameMaterialEnglish': self.window_code.frame_material.english
+            if self.window_code and self.window_code.frame_material else None,
+
+            'frameMaterialFrench': self.window_code.frame_material.french
+            if self.window_code and self.window_code.frame_material else None,
+
             'areaMetres': self._window_area.square_metres,
             'areaFeet': self._window_area.square_feet,
             'widthMetres': self.width.metres,

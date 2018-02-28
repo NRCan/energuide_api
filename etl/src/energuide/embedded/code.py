@@ -39,8 +39,8 @@ class _WindowCode(typing.NamedTuple):
     coating_tint: typing.Optional[bilingual.Bilingual]
     fill_type: typing.Optional[bilingual.Bilingual]
     spacer_type: typing.Optional[bilingual.Bilingual]
-    window_code_type: bilingual.Bilingual
-    frame_material: bilingual.Bilingual
+    window_code_type: typing.Optional[bilingual.Bilingual]
+    frame_material: typing.Optional[bilingual.Bilingual]
 
 
 class WindowCode(_WindowCode):
@@ -59,6 +59,12 @@ class WindowCode(_WindowCode):
 
         spacer_type_english = window_code.findtext('Layers/SpacerType/English')
         spacer_type_french = window_code.findtext('Layers/SpacerType/French')
+
+        window_code_type_english = window_code.findtext('Layers/Type/English')
+        window_code_type_french = window_code.findtext('Layers/Type/French')
+
+        frame_material_english = window_code.findtext('Layers/FrameMaterial/English')
+        frame_material_french = window_code.findtext('Layers/FrameMaterial/French')
 
         try:
             return WindowCode(
@@ -81,13 +87,13 @@ class WindowCode(_WindowCode):
                     french=spacer_type_french,
                 ) if spacer_type_english and spacer_type_french else None,
                 window_code_type=bilingual.Bilingual(
-                    english=window_code.get_text('Layers/Type/English'),
-                    french=window_code.get_text('Layers/Type/French'),
-                ),
+                    english=window_code_type_english,
+                    french=window_code_type_french,
+                ) if window_code_type_english and window_code_type_french else None,
                 frame_material=bilingual.Bilingual(
-                    english=window_code.get_text('Layers/FrameMaterial/English'),
-                    french=window_code.get_text('Layers/FrameMaterial/French'),
-                )
+                    english=frame_material_english,
+                    french=frame_material_french,
+                ) if frame_material_english and frame_material_french else None,
             )
         except (KeyError, ElementGetValueError) as exc:
             raise InvalidEmbeddedDataTypeError(WindowCode) from exc
