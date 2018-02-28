@@ -20,14 +20,14 @@ class _Window(typing.NamedTuple):
 
 class Window(_Window):
 
-    _CODE_TAG_TRANSLATIONS = {
-        code.WindowCodeTag.GLAZING_TYPE: 'glazingTypes',
-        code.WindowCodeTag.COATING_TINTS: 'coatingsTints',
-        code.WindowCodeTag.FILL_TYPE: 'fillType',
-        code.WindowCodeTag.SPACER_TYPE: 'spacerType',
-        code.WindowCodeTag.CODE_TYPE: 'type',
-        code.WindowCodeTag.FRAME_MATERIAL: 'frameMaterial',
-    }
+    _CODE_TAG_TRANSLATIONS = [
+        (code.WindowCodeTag.GLAZING_TYPE, 'glazingTypes'),
+        (code.WindowCodeTag.COATING_TINTS, 'coatingsTints'),
+        (code.WindowCodeTag.FILL_TYPE, 'fillType'),
+        (code.WindowCodeTag.SPACER_TYPE, 'spacerType'),
+        (code.WindowCodeTag.CODE_TYPE, 'type'),
+        (code.WindowCodeTag.FRAME_MATERIAL, 'frameMaterial'),
+    ]
 
     @classmethod
     def from_data(cls,
@@ -55,7 +55,7 @@ class Window(_Window):
     def to_dict(self) -> typing.Dict[str, typing.Any]:
         code_tags: typing.Dict[str, typing.Optional[str]] = dict(
             item
-            for tag_name in self._CODE_TAG_TRANSLATIONS.values()
+            for _, tag_name in self._CODE_TAG_TRANSLATIONS
             for item in {
                 f'{tag_name}English': None,
                 f'{tag_name}French': None,
@@ -63,7 +63,7 @@ class Window(_Window):
         )
 
         if self.window_code:
-            for tag_type, tag_name in self._CODE_TAG_TRANSLATIONS.items():
+            for tag_type, tag_name in self._CODE_TAG_TRANSLATIONS:
                 tag_value = self.window_code.tags.get(tag_type)
                 code_tags.update(
                     **{

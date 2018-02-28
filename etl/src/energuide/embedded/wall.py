@@ -18,10 +18,10 @@ class _Wall(typing.NamedTuple):
 
 class Wall(_Wall):
 
-    _CODE_TAG_TRANSLATIONS = {
-        code.WallCodeTag.STRUCTURE_TYPE: 'structureType',
-        code.WallCodeTag.COMPONENT_TYPE_SIZE: 'componentTypeSize',
-    }
+    _CODE_TAG_TRANSLATIONS = [
+        (code.WallCodeTag.STRUCTURE_TYPE, 'structureType'),
+        (code.WallCodeTag.COMPONENT_TYPE_SIZE, 'componentTypeSize')
+    ]
 
     @classmethod
     def from_data(cls,
@@ -50,7 +50,7 @@ class Wall(_Wall):
     def to_dict(self) -> typing.Dict[str, typing.Any]:
         code_tags: typing.Dict[str, typing.Optional[str]] = dict(
             item
-            for tag_name in self._CODE_TAG_TRANSLATIONS.values()
+            for _, tag_name in self._CODE_TAG_TRANSLATIONS
             for item in {
                 f'{tag_name}English': None,
                 f'{tag_name}French': None,
@@ -58,7 +58,7 @@ class Wall(_Wall):
         )
 
         if self.wall_code:
-            for tag_type, tag_name in self._CODE_TAG_TRANSLATIONS.items():
+            for tag_type, tag_name in self._CODE_TAG_TRANSLATIONS:
                 tag_value = self.wall_code.tags.get(tag_type)
                 code_tags.update(
                     **{
