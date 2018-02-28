@@ -66,16 +66,20 @@ class BasementHeader(_BasementHeader):
     @classmethod
     def from_data(cls, header: element.Element) -> 'BasementHeader':
         try:
-            return BasementHeader(
-                nominal_insulation=insulation.Insulation(
-                    header.get('Construction/Type/@nominalInsulation', float)
-                ),
-                effective_insulation=insulation.Insulation(header.get('Construction/Type/@rValue', float)),
-                height=distance.Distance(header.get('Measurements/@height', float)),
-                perimeter=distance.Distance(header.get('Measurements/@perimeter', float)),
-            )
+            nominal_insulation = header.get('Construction/Type/@nominalInsulation', float)
+            effective_insulation = header.get('Construction/Type/@rValue', float)
+            height = header.get('Measurements/@height', float)
+            width = header.get('Measurements/@perimeter', float)
         except ElementGetValueError as exc:
             raise InvalidEmbeddedDataTypeError(BasementHeader, 'Invalid/Missing attribute value') from exc
+
+        return BasementHeader(
+            nominal_insulation=insulation.Insulation(nominal_insulation),
+            effective_insulation=insulation.Insulation(effective_insulation),
+            height=distance.Distance(height),
+            perimeter=distance.Distance(width),
+        )
+
 
     @property
     def _header_area(self) -> area.Area:
@@ -128,11 +132,11 @@ class BasementFloor(_BasementFloor):
                    construction_type: str,
                    floor_type: FloorType) -> 'BasementFloor':
 
+        length: typing.Optional[float] = None
+        width: typing.Optional[float] = None
+
         try:
             rectangular = floor.get('Measurements/@isRectangular', str) == 'true'
-            length: typing.Optional[float] = None
-            width: typing.Optional[float] = None
-
             if rectangular:
                 length = floor.get('Measurements/@length', float)
                 width = floor.get('Measurements/@width', float)
@@ -142,31 +146,36 @@ class BasementFloor(_BasementFloor):
                 floor_area = floor.get('Measurements/@area', float)
                 perimeter = floor.get('Measurements/@perimeter', float)
 
-            nominal_insulation = floor.xpath(f'Construction/{construction_type}/@nominalInsulation')
-            effective_insulation = floor.xpath(f'Construction/{construction_type}/@rValue')
+            nominal_insulation_node = floor.xpath(f'Construction/{construction_type}/@nominalInsulation')
+            effective_insulation_node = floor.xpath(f'Construction/{construction_type}/@rValue')
 
-            return BasementFloor(
-                floor_type=floor_type,
-                rectangular=rectangular,
-                nominal_insulation=insulation.Insulation(float(nominal_insulation[0]))
-                if nominal_insulation else None,
+            nominal_insulation = float(nominal_insulation_node[0]) if nominal_insulation_node else None
 
-                effective_insulation=insulation.Insulation(float(effective_insulation[0]))
-                if effective_insulation else None,
-
-                length=distance.Distance(length)
-                if length is not None else None,
-
-                width=distance.Distance(width)
-                if width is not None else None,
-
-                perimeter=distance.Distance(perimeter),
-                floor_area=area.Area(floor_area),
-            )
-        except ElementGetValueError as exc:
-            raise InvalidEmbeddedDataTypeError(BasementFloor, 'Invalid/Missing attribute values') from exc
+            effective_insulation = float(effective_insulation_node[0]) if effective_insulation_node else None
         except ValueError as exc:
-            raise InvalidEmbeddedDataTypeError(BasementFloor, 'Invalid attribute values') from exc
+            raise InvalidEmbeddedDataTypeError(BasementFloor, 'Invalid insulation attribute values') from exc
+        except ElementGetValueError as exc:
+            raise InvalidEmbeddedDataTypeError(BasementFloor, 'Invalid attributes') from exc
+
+        return BasementFloor(
+            floor_type=floor_type,
+            rectangular=rectangular,
+            nominal_insulation=insulation.Insulation(nominal_insulation)
+            if nominal_insulation is not None else None,
+
+            effective_insulation=insulation.Insulation(effective_insulation)
+            if effective_insulation is not None else None,
+
+            length=distance.Distance(length)
+            if length is not None else None,
+
+            width=distance.Distance(width)
+            if width is not None else None,
+
+            perimeter=distance.Distance(perimeter),
+            floor_area=area.Area(floor_area),
+        )
+
 
     @classmethod
     def from_basement(cls, floor: typing.Optional[element.Element]) -> typing.List['BasementFloor']:
@@ -179,6 +188,7 @@ class BasementFloor(_BasementFloor):
     def from_crawlspace(cls, floor: typing.Optional[element.Element]) -> typing.List['BasementFloor']:
         if floor is None:
             return [cls._empty_floor(FloorType.SLAB), cls._empty_floor(FloorType.FLOOR_ABOVE_CRAWLSPACE)]
+
         return [
             cls._from_data(floor, 'AddedToSlab', FloorType.SLAB),
             cls._from_data(floor, 'FloorsAbove', FloorType.FLOOR_ABOVE_CRAWLSPACE),
@@ -235,21 +245,30 @@ class BasementWall(_BasementWall):
     }
 
     @classmethod
-    def _from_data(cls, wall: element.Element, wall_perimiter: float, wall_height: float, tag: WallType):
+    def _from_data(cls,
+                   wall: element.Element,
+                   wall_perimeter: float,
+                   wall_height: float,
+                   tag: WallType) -> 'BasementWall':
+
         try:
-            percentage = float(wall.attrib['percentage'])
-            return BasementWall(
-                wall_type=tag,
-                nominal_insulation=insulation.Insulation(float(wall.attrib['nominalRsi'])),
-                effective_insulation=insulation.Insulation(float(wall.attrib['rsi'])),
-                composite_percentage=percentage,
-                wall_area=area.Area(wall_perimiter * wall_height * (percentage / 100))
-            )
-        except (KeyError, ValueError) as exc:
-            raise InvalidEmbeddedDataTypeError(BasementWall, 'Invalid/Missing attribute value') from exc
+            percentage = wall.get('@percentage', float)
+            nominal_insulation = wall.get('@nominalRsi', float)
+            effective_insulation = wall.get('@rsi', float)
+        except ElementGetValueError as exc:
+            raise InvalidEmbeddedDataTypeError(BasementWall, 'Invalid attributes') from exc
+
+        return BasementWall(
+            wall_type=tag,
+            nominal_insulation=insulation.Insulation(nominal_insulation),
+            effective_insulation=insulation.Insulation(effective_insulation),
+            composite_percentage=percentage,
+            wall_area=area.Area(wall_perimeter * wall_height * (percentage / 100))
+        )
+
 
     @classmethod
-    def from_basement(cls, wall: element.Element, wall_perimiter: float) -> typing.List['BasementWall']:
+    def from_basement(cls, wall: element.Element, wall_perimeter: float) -> typing.List['BasementWall']:
         interior_wall_sections = wall.xpath('Construction/InteriorAddedInsulation/Composite/Section')
         exterior_wall_sections = wall.xpath('Construction/ExteriorAddedInsulation/Composite/Section')
         pony_wall_sections = wall.xpath('Construction/PonyWallType/Composite/Section')
@@ -257,32 +276,32 @@ class BasementWall(_BasementWall):
         try:
             wall_height = wall.get('Measurements/@height', float)
             pony_height = wall.get('Measurements/@ponyWallHeight', float)
-
-            walls = []
-            walls.extend([BasementWall._from_data(wall_section, wall_perimiter, wall_height, WallType.INTERIOR)
-                          for wall_section in interior_wall_sections])
-
-            walls.extend([BasementWall._from_data(wall_section, wall_perimiter, wall_height, WallType.EXTERIOR)
-                          for wall_section in exterior_wall_sections])
-
-            walls.extend([BasementWall._from_data(wall_section, wall_perimiter, pony_height, WallType.PONY)
-                          for wall_section in pony_wall_sections])
-
-            return walls
         except ElementGetValueError as exc:
             raise InvalidEmbeddedDataTypeError(BasementWall, 'Missing/invalid basement wall height') from exc
 
+        walls = []
+        walls.extend([BasementWall._from_data(wall_section, wall_perimeter, wall_height, WallType.INTERIOR)
+                      for wall_section in interior_wall_sections])
+
+        walls.extend([BasementWall._from_data(wall_section, wall_perimeter, wall_height, WallType.EXTERIOR)
+                      for wall_section in exterior_wall_sections])
+
+        walls.extend([BasementWall._from_data(wall_section, wall_perimeter, pony_height, WallType.PONY)
+                      for wall_section in pony_wall_sections])
+
+
+        return walls
+
     @classmethod
-    def from_crawlspace(cls, wall: element.Element, wall_perimiter: float) -> typing.List['BasementWall']:
+    def from_crawlspace(cls, wall: element.Element, wall_perimeter: float) -> typing.List['BasementWall']:
         try:
-            wall_sections = wall.xpath('Construction/Type/Composite/Section')
             wall_height = wall.get('Measurements/@height', float)
         except ElementGetValueError as exc:
             raise InvalidEmbeddedDataTypeError(BasementWall, 'Missing/invalid crawlspace wall height') from exc
 
-        return [BasementWall._from_data(wall_section, wall_perimiter, wall_height, WallType.NOT_APPLICABLE)
+        wall_sections = wall.xpath('Construction/Type/Composite/Section')
+        return [BasementWall._from_data(wall_section, wall_perimeter, wall_height, WallType.NOT_APPLICABLE)
                 for wall_section in wall_sections]
-
 
     def to_dict(self) -> typing.Dict[str, typing.Any]:
         wall_type = self._WALL_TYPE_TRANSLATION.get(self.wall_type)
@@ -361,7 +380,6 @@ class Basement(_Basement):
             wall_from_data = lambda *args: []
             header_from_data = lambda *args: None
 
-
         floor_nodes = basement.xpath('Floor')
         header_nodes = basement.xpath('Components/FloorHeader')
         wall_nodes = basement.xpath('Wall')
@@ -372,23 +390,21 @@ class Basement(_Basement):
 
         try:
             configuration_type = basement.get('Configuration/@type', str)
-            assert len(configuration_type) > 1
-        except AssertionError as exc:
-            raise InvalidEmbeddedDataTypeError(Basement, 'Missing configuration type') from exc
+            label = basement.get_text('Label')
         except ElementGetValueError as exc:
-            raise InvalidEmbeddedDataTypeError(Basement, 'Invalid configuration type') from exc
+            raise InvalidEmbeddedDataTypeError(Basement, 'Missing/invalid foundation attributes') from exc
 
-        try:
-            return Basement(
-                foundation_type=foundation_type,
-                label=basement.get_text('Label'),
-                configuration_type=configuration_type,
-                walls=walls,
-                floors=floors,
-                header=header,
-            )
-        except ElementGetValueError as exc:
-            raise InvalidEmbeddedDataTypeError(Basement, 'Could not find Label')
+        if not configuration_type:
+            raise InvalidEmbeddedDataTypeError(Basement, 'Empty configuration type')
+
+        return Basement(
+            foundation_type=foundation_type,
+            label=label,
+            configuration_type=configuration_type,
+            walls=walls,
+            floors=floors,
+            header=header,
+        )
 
     @staticmethod
     def _derive_foundation_type(tag: str) -> FoundationType:
