@@ -1,6 +1,6 @@
 {
   "An operator to describe how results will be filtered": {
-    "translation": "Un opérateur indiquant comment les résultats seront filtrés",
+    "translation": "Un opérateur indiquant comment les résultats seront triés",
     "origin": [
       [
         "src/schema/index.js",
@@ -13,7 +13,7 @@
     ]
   },
   "Greater than: returns true for results greater than the comparison value": {
-    "translation": "Supérieur à : renvoie vrai pour les résultats supérieurs à la valeur de comparaison",
+    "translation": "Supérieur à : génère 'True' pour les résultats supérieurs à la valeur de comparaison",
     "origin": [
       [
         "src/schema/index.js",
@@ -22,7 +22,7 @@
     ]
   },
   "Less than: returns true for results less than the comparison value": {
-    "translation": "Inférieur à : renvoie vrai pour les résultats inférieurs à la valeur de comparaison",
+    "translation": "Inférieur à : génère 'True' pour les résultats inférieurs à la valeur de comparaison",
     "origin": [
       [
         "src/schema/index.js",
@@ -31,7 +31,7 @@
     ]
   },
   "Equal to: returns true for results equal to the comparison value": {
-    "translation": "Égal à : renvoie vrai pour les résultats égaux à la valeur de comparaison",
+    "translation": "Égal à : génère 'True' pour les résultats égaux à la valeur de comparaison",
     "origin": [
       [
         "src/schema/index.js",
@@ -40,7 +40,7 @@
     ]
   },
   "Filters will return results only if they satisfy a condition": {
-    "translation": "Les filtres renverront les résultats uniquement s'ils satisfont à une condition",
+    "translation": "Le tri génèrera des résultats uniquement s'ils satisfont à une condition",
     "origin": [
       [
         "src/schema/index.js",
@@ -49,7 +49,7 @@
     ]
   },
   "Name of field results will be filtered by": {
-    "translation": "Noms des résultats de champs filtrés par",
+    "translation": "Noms des résultats de champs triés par",
     "origin": [
       [
         "src/schema/index.js",
@@ -66,8 +66,8 @@
       ]
     ]
   },
-  "An improvement that could improve the energy efficiency of the dwelling": {
-    "translation": "Une amélioration qui pourrait améliorer l'efficacité énergétique du logement",
+  "An improvement that could increase the energy efficiency of the dwelling": {
+    "translation": "Une amélioration qui pourrait augmenter l'efficacité énergétique du logement",
     "origin": [
       [
         "src/schema/index.js",
@@ -129,8 +129,8 @@
       ]
     ]
   },
-  "Air flow rate in litres per second (LpS)": {
-    "translation": "Débit d'air en litres par seconde (LpS)",
+  "Air flow rate in litres per second (L/s)": {
+    "translation": "Débit d'air en litres par seconde (L/s)",
     "origin": [
       [
         "src/schema/index.js",
@@ -138,8 +138,8 @@
       ]
     ]
   },
-  "Air flow rate in cubic feet per minute (CfM)": {
-    "translation": "Débit d'air en pieds cubes par minute (CfM)",
+  "Air flow rate in cubic feet per minute (f3/m)": {
+    "translation": "Débit d'air en pieds cubes par minute (pi3/m)",
     "origin": [
       [
         "src/schema/index.js",
@@ -157,7 +157,7 @@
     ]
   },
   "Description of floor location": {
-    "translation": "Description de l'emplacement au sol",
+    "translation": "Description de l'emplacement du plancher",
     "origin": [
       [
         "src/schema/index.js",
@@ -166,7 +166,7 @@
     ]
   },
   "Floor insulation nominal RSI (R-value Systeme International)": {
-    "translation": "Valeur nominale RSI (valeur R Système International) de l'isolation du plancher",
+    "translation": "Valeur nominale RSI (valeur R Système international) de l'isolation du plancher",
     "origin": [
       [
         "src/schema/index.js",
@@ -184,7 +184,7 @@
     ]
   },
   "Floor insulation effective RSI (R-value Systeme International)": {
-    "translation": "RSI (valeur R Systeme International) pour l'isolation efficace du plancher",
+    "translation": "RSI (valeur R Système international) pour l'isolation efficace du plancher",
     "origin": [
       [
         "src/schema/index.js",
@@ -220,7 +220,7 @@
     ]
   },
   "Floor length of the house in metres (m)": {
-    "translation": "Longueur de plancher de la maison en mètres (m)",
+    "translation": "Longueur du plancher de la maison en mètres (m)",
     "origin": [
       [
         "src/schema/index.js",
@@ -228,8 +228,8 @@
       ]
     ]
   },
-  "Floor area of the house in feet (ft)": {
-    "translation": "Superficie de plancher de la maison en pieds (pi)",
+  "Floor area of the house in square feet (ft2)": {
+    "translation": "Superficie de plancher de la maison en pieds carrés (pi2)",
     "origin": [
       [
         "src/schema/index.js",
@@ -237,8 +237,8 @@
       ]
     ]
   },
-  "Water heaters heat the domestic hot water in a house": {
-    "translation": "Les chauffe-eau chauffent l'eau chaude domestique dans une maison",
+  "Water heaters heat the domestic water in a house": {
+    "translation": "Les chauffe-eau chauffent l'eau domestique dans une maison",
     "origin": [
       [
         "src/schema/index.js",
@@ -246,8 +246,8 @@
       ]
     ]
   },
-  "Type of tank being used to heat the domestic hot water in the house (en)": {
-    "translation": "Type de réservoir utilisé pour chauffer l'eau chaude domestique de la maison (en)",
+  "Type of tank being used to heat the domestic water in the house (en)": {
+    "translation": "Type de réservoir utilisé pour chauffer l'eau domestique dans la maison (en)",
     "origin": [
       [
         "src/schema/index.js",
@@ -255,8 +255,8 @@
       ]
     ]
   },
-  "Type of tank being used to heat the domestic hot water in the house (fr)": {
-    "translation": "Type de réservoir utilisé pour chauffer l'eau chaude domestique de la maison",
+  "Type of tank being used to heat the domestic water in the house (fr)": {
+    "translation": "Type de réservoir utilisé pour chauffer l'eau domestique dans la maison",
     "origin": [
       [
         "src/schema/index.js",
@@ -273,8 +273,8 @@
       ]
     ]
   },
-  "Capacity of the tank in gallons (G)": {
-    "translation": "Capacité du réservoir en gallons (G)",
+  "Capacity of the tank in gallons (Gal)": {
+    "translation": "Capacité du réservoir en gallons (gal)",
     "origin": [
       [
         "src/schema/index.js",
@@ -454,7 +454,7 @@
     ]
   },
   "Heated floor areas represents the usable areas of a house that is conditioned to a specified temperature during the whole heating season": {
-    "translation": "Les superficies de plancher chauffé représentent les surfaces utilisables d'une maison gardée à une température spécifiée durant toute la saison de chauffage",
+    "translation": "Les superficies d'étage chauffé représentent les surfaces utilisables d'une maison tempérée à une température spécifiée durant toute la saison de chauffage",
     "origin": [
       [
         "src/schema/index.js",
@@ -463,7 +463,7 @@
     ]
   },
   "Above-grade heated area of the house in square metres (m2), i.e. the ground floor": {
-    "translation": "Superficie chauffée en surélévation de la maison en mètres carrés (m2), c'est-à-dire le rez-de-chaussée",
+    "translation": "Superficie chauffée d'un étage au-dessus du niveau du sol en mètres carrés (m2), c'est-à-dire le rez-de-chaussée",
     "origin": [
       [
         "src/schema/index.js",
@@ -472,7 +472,7 @@
     ]
   },
   "Above-grade heated area of the house in square feet (ft2), i.e. the ground floor": {
-    "translation": "Superficie chauffée en surélévation de la maison en pieds carrés (pi2), c'est-à-dire le rez-de-chaussée",
+    "translation": "Superficie chauffée d'un étage au-dessus du niveau du sol en pieds carrés (pi2), c'est-à-dire le rez-de-chaussée",
     "origin": [
       [
         "src/schema/index.js",
@@ -553,7 +553,7 @@
     ]
   },
   "Wall insulation nominal RSI (R-value Systeme International)": {
-    "translation": "Valeur nominale RSI (valeur R Système International) de l'isolation du mur",
+    "translation": "Valeur nominale RSI (valeur R Système international) de l'isolation du mur",
     "origin": [
       [
         "src/schema/index.js",
@@ -575,7 +575,7 @@
     ]
   },
   "Wall insulation effective RSI (R-value Systeme International)": {
-    "translation": "RSI (valeur R Système International) pour l'isolation efficace du mur",
+    "translation": "RSI (valeur R Système international) pour l'isolation efficace du mur",
     "origin": [
       [
         "src/schema/index.js",
@@ -665,7 +665,7 @@
     ]
   },
   "Door RSI (R-value Systeme International)": {
-    "translation": " RSI (valeur R Système International) de la porte",
+    "translation": " RSI (valeur R Système international) de la porte",
     "origin": [
       [
         "src/schema/index.js",
@@ -682,8 +682,8 @@
       ]
     ]
   },
-  "Door U-factor in metric: Watts per square metre per degree Celcius (W/m2C)": {
-    "translation": "Porte U-facteur en métrique: Watts par mètre carré par degré Celcius (W / m2C)",
+  "Door U-factor in metric: watts per square metre per degree Celcius (W/m2C)": {
+    "translation": "Facteur U de la porte en métriqu e: watts par mètre carré degré Celcius (W/m2C)",
     "origin": [
       [
         "src/schema/index.js",
@@ -691,7 +691,7 @@
       ]
     ]
   },
-  "Door U-factor in imperial: British Thermal Units per square feet per degree Fahrenheit (BTU/ft2 F)": {
+  "Door U-factor in imperial: British Thermal Units per square feet per degree Fahrenheit (BTU/ft2F)": {
     "translation": "Facteur U de la porte en unités impériales : unités thermiques britanniques par pied carré degré Fahrenheit (BTU/pi2F)",
     "origin": [
       [
@@ -737,7 +737,7 @@
     ]
   },
   "Window RSI (R-value Systeme International)": {
-    "translation": "RSI (valeur R Système International) de la fenêtre",
+    "translation": "RSI (valeur R Système international) de la fenêtre",
     "origin": [
       [
         "src/schema/index.js",
@@ -953,7 +953,7 @@
     ]
   },
   "Ceiling insulation nominal RSI (R-value Systeme International)": {
-    "translation": "Valeur nominale RSI (valeur R Système International) de l'isolation du plafond",
+    "translation": "Valeur nominale RSI (valeur R Système international) de l'isolation du plafond",
     "origin": [
       [
         "src/schema/index.js",
@@ -971,7 +971,7 @@
     ]
   },
   "Ceiling insulation effective RSI (R-value Systeme International)": {
-    "translation": "RSI (valeur R Système International) pour l'isolation efficace du plafond",
+    "translation": "RSI (valeur R Système international) pour l'isolation efficace du plafond",
     "origin": [
       [
         "src/schema/index.js",
@@ -1070,7 +1070,7 @@
     ]
   },
   "A list of ceiling data entries for a dwelling": {
-    "translation": "Une liste d'entrées de données pour le plafond du logement",
+    "translation": "Une liste de données pour chaque plafond du logement",
     "origin": [
       [
         "src/schema/index.js",
@@ -1079,7 +1079,7 @@
     ]
   },
   "A list of wall data entries for a dwelling": {
-    "translation": "Une liste des entrées de données pour les murs du logement",
+    "translation": "Une liste de données pour chaque mur du logement",
     "origin": [
       [
         "src/schema/index.js",
@@ -1088,7 +1088,7 @@
     ]
   },
   "A list of floor data entries for a dwelling": {
-    "translation": "Une liste d'entrées de données pour le plancher du logement",
+    "translation": "Une liste de données pour chaque étage du logement",
     "origin": [
       [
         "src/schema/index.js",
@@ -1097,7 +1097,7 @@
     ]
   },
   "A list of door data entries for a dwelling": {
-    "translation": "Une liste des entrées de données pour la porte du logement",
+    "translation": "Une liste de données pour chaque porte du logement",
     "origin": [
       [
         "src/schema/index.js",
@@ -1106,7 +1106,7 @@
     ]
   },
   "A list of window data entries for a dwelling": {
-    "translation": "Une liste des entrées de données pour les fenêtres du logement",
+    "translation": "Une liste de données pour chaque fenêtre du logement",
     "origin": [
       [
         "src/schema/index.js",
@@ -1115,7 +1115,7 @@
     ]
   },
   "A heated floor area entry for a dwelling": {
-    "translation": "Une entrée de superficie de plancher chauffé pour un logement",
+    "translation": "Superficie d'étage chauffé pour un logement",
     "origin": [
       [
         "src/schema/index.js",
@@ -1124,7 +1124,7 @@
     ]
   },
   "A list of ventilation data entries for a dwelling": {
-    "translation": "Une liste des entrées de données de ventilation pour un logement",
+    "translation": "Une liste de données pour chaque unité de ventilation pour un logement",
     "origin": [
       [
         "src/schema/index.js",
@@ -1133,7 +1133,7 @@
     ]
   },
   "A list of water heater data entries for a dwelling": {
-    "translation": "Une liste des entrées de données du chauffe-eau pour un logement",
+    "translation": "Une liste de données pour chaque chauffe-eau d'un logement",
     "origin": [
       [
         "src/schema/index.js",
@@ -1259,7 +1259,7 @@
     ]
   },
   "Filter results by dwellings built in a specific year": {
-    "translation": "Trier les résultats par logements construits au cours d'une année donnée",
+    "translation": "Trier les résultats par année de construction des logements",
     "origin": [
       [
         "src/schema/index.js",
@@ -1268,7 +1268,7 @@
     ]
   },
   "Filter results by the dwellings in a specific city": {
-    "translation": "Trier les résultats par logements dans une ville donnée",
+    "translation": "Trier les résultats par ville",
     "origin": [
       [
         "src/schema/index.js",
@@ -1277,7 +1277,7 @@
     ]
   },
   "Filter results by the dwellings in a specific region": {
-    "translation": "Trier les résultats par logement dans une région donnée",
+    "translation": "Trier les résultats par région",
     "origin": [
       [
         "src/schema/index.js",
@@ -1286,7 +1286,7 @@
     ]
   },
   "Filter results by the dwellings in a specific forward sortation area": {
-    "translation": "Trier les résultats par logement dans une zone de tri spécifique",
+    "translation": "Trier les résultats par région de tri d'acheminement",
     "origin": [
       [
         "src/schema/index.js",
@@ -1295,7 +1295,7 @@
     ]
   },
   "Filter results by the dwellings containing at least one ventilation system with a specific type (en)": {
-    "translation": "Trier les résultats par logements contenant au moins un système de ventilation avec un type spécifique (en)",
+    "translation": "Trier les résultats par type de système de ventilation (au moins un) (en)",
     "origin": [
       [
         "src/schema/index.js",
@@ -1304,7 +1304,7 @@
     ]
   },
   "Filter results by the dwellings containing at least one ventilation system with a specific type (fr)": {
-    "translation": "Trier les résultats par logements contenant au moins un système de ventilation avec un type spécifique (fr)",
+    "translation": "Trier les résultats par type de système de ventilation (au moins un) (fr)",
     "origin": [
       [
         "src/schema/index.js",
@@ -1313,7 +1313,7 @@
     ]
   },
   "Filter results by the dwellings containing at least one ventilation system with a specific air flow rate in litres per second (LpS)": {
-    "translation": "Trier les résultats par logements contenant au moins un système de ventilation avec un débit d'air spécifique en litres par seconde (LpS)",
+    "translation": "Trier les résultats par logements ayant au moins un système de ventilation avec un débit d'air spécifique en litres par seconde (LpS)",
     "origin": [
       [
         "src/schema/index.js",
@@ -1349,7 +1349,7 @@
     ]
   },
   "Filter results by the dwellings containing at least one floor with a specific nominal RSI (R-value Systeme International)": {
-    "translation": "Trier les résultats par logements ayant au moins un étage avec une RSI nominale spécifique (valeur R Système International)",
+    "translation": "Trier les résultats par logements ayant au moins un étage avec une RSI nominale spécifique (valeur R Système international)",
     "origin": [
       [
         "src/schema/index.js",
@@ -1398,7 +1398,7 @@
     ]
   },
   "Filter results by the dwellings containing at least one floor with a specific length in metres (m)": {
-    "translation": "Filtrer les résultats par logements ayant au moins un plancher avec une longueur spécifique en mètres (m)",
+    "translation": "Trier les résultats par logements ayant au moins un plancher avec une longueur spécifique en mètres (m)",
     "origin": [
       [
         "src/schema/index.js",
@@ -1442,8 +1442,8 @@
       ]
     ]
   },
-  "Filter results by the dwellings containing at least one water heating system with a specific capacity in gallons (g)": {
-    "translation": "Trier les résultats par logements contenant au moins un système de chauffage de l'eau d'une capacité spécifique en gallons (g)",
+  "Filter results by the dwellings containing at least one water heating system with a specific capacity in gallons (Gal)": {
+    "translation": "Trier les résultats par logements contenant au moins un système de chauffage de l'eau d'une capacité spécifique en gallons (gal)",
     "origin": [
       [
         "src/schema/index.js",
@@ -1551,7 +1551,7 @@
     ]
   },
   "Filter results by the dwellings containing a heating system efficiency measurement that is either 'Steady State' or 'AFUE'": {
-    "translation": "Trier les résultats par logements contenant une mesure d'efficacité du système de chauffage qui est soit 'Régime permanent' soit 'AFUE'",
+    "translation": "Trier les résultats par logements contenant une mesure d'efficacité du système de chauffage qui est soit 'Steady State' soit 'AFUE'",
     "origin": [
       [
         "src/schema/index.js",
@@ -1641,7 +1641,7 @@
     ]
   },
   "Filter results by the dwellings containing at least one wall with a specific nominal RSI (R-value Systeme International)": {
-    "translation": "Trier les résultats par logements ayant au moins un mur avec une RSI nominale spécifique (valeur R Système International)",
+    "translation": "Trier les résultats par logements ayant au moins un mur avec une RSI nominale spécifique (valeur R Système international)",
     "origin": [
       [
         "src/schema/index.js",
@@ -1659,7 +1659,7 @@
     ]
   },
   "Filter results by the dwellings containing at least one wall with a specific effective RSI (R-value Systeme International)": {
-    "translation": "Trier les résultats les logements ayant au moins un mur avec une RSI efficace spécifique (valeur R Système International)",
+    "translation": "Trier les résultats les logements ayant au moins un mur avec une RSI efficace spécifique (valeur R Système international)",
     "origin": [
       [
         "src/schema/index.js",
@@ -1704,7 +1704,7 @@
     ]
   },
   "Filter results by the dwellings containing at least one wall with a specific perimeter in feet (ft)": {
-    "translation": "Trier les résultats par logements ayant au moins un mur d'un périmètre spécifique en pieds (ft)",
+    "translation": "Trier les résultats par logements ayant au moins un mur d'un périmètre spécifique en pieds (pi)",
     "origin": [
       [
         "src/schema/index.js",
@@ -1758,7 +1758,7 @@
     ]
   },
   "Filter results by the dwellings where at least one ceiling has a specific nominal RSI (R-value Systeme International)": {
-    "translation": "Trier les résultats par logements où au moins un plafond a une RSI nominale spécifique (valeur R Système International)",
+    "translation": "Trier les résultats par logements où au moins un plafond a une RSI nominale spécifique (valeur R Système international)",
     "origin": [
       [
         "src/schema/index.js",
@@ -1776,7 +1776,7 @@
     ]
   },
   "Filter results by the dwellings containing at least one ceiling with a specific effective RSI (R-value Systeme International)": {
-    "translation": "Trier les résultats par logements ayant au moins un plafond d'une RSI efficace spécifique (valeur R Système International)",
+    "translation": "Trier les résultats par logements ayant au moins un plafond d'une RSI efficace spécifique (valeur R Système international)",
     "origin": [
       [
         "src/schema/index.js",
