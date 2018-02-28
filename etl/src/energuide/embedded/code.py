@@ -36,7 +36,7 @@ class _WindowCode(typing.NamedTuple):
     identifier: str
     label: str
     glazing_type: typing.Optional[bilingual.Bilingual]
-    coating_tint: bilingual.Bilingual
+    coating_tint: typing.Optional[bilingual.Bilingual]
     fill_type: typing.Optional[bilingual.Bilingual]
     spacer_type: typing.Optional[bilingual.Bilingual]
     window_code_type: bilingual.Bilingual
@@ -50,6 +50,9 @@ class WindowCode(_WindowCode):
 
         glazing_type_english = window_code.findtext('Layers/GlazingTypes/English')
         glazing_type_french = window_code.findtext('Layers/GlazingTypes/French')
+
+        coating_tint_english = window_code.findtext('Layers/CoatingsTints/English')
+        coating_tint_french = window_code.findtext('Layers/CoatingsTints/French')
 
         fill_type_english = window_code.findtext('Layers/FillType/English')
         fill_type_french = window_code.findtext('Layers/FillType/French')
@@ -66,9 +69,9 @@ class WindowCode(_WindowCode):
                     french=glazing_type_french,
                 ) if glazing_type_english and glazing_type_french else None,
                 coating_tint=bilingual.Bilingual(
-                    english=window_code.get_text('Layers/CoatingsTints/English'),
-                    french=window_code.get_text('Layers/CoatingsTints/French'),
-                ),
+                    english=coating_tint_english,
+                    french=coating_tint_french,
+                ) if coating_tint_english and coating_tint_french else None,
                 fill_type=bilingual.Bilingual(
                     english=fill_type_english,
                     french=fill_type_french,

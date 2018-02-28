@@ -55,8 +55,11 @@ class Window(_Window):
             'glazingTypesFrench': self.window_code.glazing_type.french
             if self.window_code and self.window_code.glazing_type else None,
 
-            'coatingsTintsEnglish': self.window_code.coating_tint.english if self.window_code else None,
-            'coatingsTintsFrench': self.window_code.coating_tint.french if self.window_code else None,
+            'coatingsTintsEnglish': self.window_code.coating_tint.english
+            if self.window_code and self.window_code.coating_tint else None,
+
+            'coatingsTintsFrench': self.window_code.coating_tint.french
+            if self.window_code and self.window_code.coating_tint else None,
 
             'fillTypeEnglish': self.window_code.fill_type.english
             if self.window_code and self.window_code.fill_type else None,
