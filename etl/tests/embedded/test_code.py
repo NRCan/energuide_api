@@ -43,19 +43,6 @@ BAD_WALL_CODE_XML = [
     </Layers>
 </Code>
     """,
-
-    # This XML block is missing the <StructureType> tag
-    """
-<Code id='Code 1'>
-    <Label>1201101121</Label>
-    <Layers>
-        <ComponentTypeSize>
-            <English>38x89 mm (2x4 in)</English>
-            <French>38x89 (2x4)</French>
-        </ComponentTypeSize>
-    </Layers>
-</Code>
-    """,
 ]
 
 
@@ -100,14 +87,16 @@ def wall_code() -> code.WallCode:
     return code.WallCode(
         identifier='Code 1',
         label='1201101121',
-        structure_type=bilingual.Bilingual(
-            english='Wood frame',
-            french='Ossature de bois',
-        ),
-        component_type_size=bilingual.Bilingual(
-            english='38x89 mm (2x4 in)',
-            french='38x89 (2x4)',
-        )
+        tags={
+            code.WallCodeTag.STRUCTURE_TYPE: bilingual.Bilingual(
+                english='Wood frame',
+                french='Ossature de bois',
+            ),
+            code.WallCodeTag.COMPONENT_TYPE_SIZE: bilingual.Bilingual(
+                english='38x89 mm (2x4 in)',
+                french='38x89 (2x4)',
+            )
+        },
     )
 
 
@@ -152,15 +141,17 @@ def window_code() -> code.WindowCode:
     return code.WindowCode(
         identifier='Code 11',
         label='202002',
-        glazing_type=bilingual.Bilingual(
-            english='Double/double with 1 coat',
-            french='Double/double, 1 couche',
-        ),
-        coating_tint=bilingual.Bilingual(english='Clear', french='Transparent'),
-        fill_type=bilingual.Bilingual(english='6 mm Air', french="6 mm d'air"),
-        spacer_type=bilingual.Bilingual(english='Metal', french='Métal'),
-        window_code_type=bilingual.Bilingual(english='Picture', french='Fixe'),
-        frame_material=bilingual.Bilingual(english='Wood', french='Bois'),
+        tags={
+            code.WindowCodeTag.GLAZING_TYPE: bilingual.Bilingual(
+                english='Double/double with 1 coat',
+                french='Double/double, 1 couche',
+            ),
+            code.WindowCodeTag.COATING_TINTS: bilingual.Bilingual(english='Clear', french='Transparent'),
+            code.WindowCodeTag.FILL_TYPE: bilingual.Bilingual(english='6 mm Air', french="6 mm d'air"),
+            code.WindowCodeTag.SPACER_TYPE: bilingual.Bilingual(english='Metal', french='Métal'),
+            code.WindowCodeTag.CODE_TYPE: bilingual.Bilingual(english='Picture', french='Fixe'),
+            code.WindowCodeTag.FRAME_MATERIAL: bilingual.Bilingual(english='Wood', french='Bois'),
+        }
     )
 
 

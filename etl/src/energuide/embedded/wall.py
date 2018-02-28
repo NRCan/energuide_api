@@ -18,6 +18,11 @@ class _Wall(typing.NamedTuple):
 
 class Wall(_Wall):
 
+    _CODE_TAG_TRANSLATIONS = {
+        code.WallCodeTag.STRUCTURE_TYPE: 'structureType',
+        code.WallCodeTag.COMPONENT_TYPE_SIZE: 'componentTypeSize',
+    }
+
     @classmethod
     def from_data(cls,
                   wall: element.Element,
@@ -43,12 +48,27 @@ class Wall(_Wall):
         return area.Area(self.perimeter.metres * self.height.metres)
 
     def to_dict(self) -> typing.Dict[str, typing.Any]:
+        code_tags: typing.Dict[str, typing.Optional[str]] = dict(
+            item
+            for tag_name in self._CODE_TAG_TRANSLATIONS.values()
+            for item in {
+                f'{tag_name}English': None,
+                f'{tag_name}French': None,
+            }.items()
+        )
+
+        if self.wall_code:
+            for tag_type, tag_name in self._CODE_TAG_TRANSLATIONS.items():
+                tag_value = self.wall_code.tags.get(tag_type)
+                code_tags.update(
+                    **{
+                        f'{tag_name}English': tag_value.english if tag_value else None,
+                        f'{tag_name}French': tag_value.french if tag_value else None,
+                    }
+                )
         return {
             'label': self.label,
-            'structureTypeEnglish': self.wall_code.structure_type.english if self.wall_code else None,
-            'structureTypeFrench': self.wall_code.structure_type.french if self.wall_code else None,
-            'componentTypeSizeEnglish': self.wall_code.component_type_size.english if self.wall_code else None,
-            'componentTypeSizeFrench': self.wall_code.component_type_size.french if self.wall_code else None,
+            **code_tags,
             'insulationNominalRsi': self.nominal_insulation.rsi,
             'insulationNominalR': self.nominal_insulation.r_value,
             'insulationEffectiveRsi': self.effective_insulation.rsi,
