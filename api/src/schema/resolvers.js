@@ -66,6 +66,14 @@ import {
   ceilingAreaFeet,
   ceilingLengthMetres,
   ceilingLengthFeet,
+  doorTypeEnglish,
+  doorTypeFrench,
+  doorInsulationRsi,
+  doorInsulationR,
+  doorUFactor,
+  doorUFactorImperial,
+  doorAreaMetres,
+  doorAreaFeet,
 } from './enums'
 /* eslint-enable import/named */
 
@@ -204,6 +212,14 @@ const Resolvers = i18n => {
       ceilingAreaFeet: ceilingAreaFeet.toString(),
       ceilingLengthMetres: ceilingLengthMetres.toString(),
       ceilingLengthFeet: ceilingLengthFeet.toString(),
+      doorTypeEnglish: doorTypeEnglish.toString(),
+      doorTypeFrench: doorTypeFrench.toString(),
+      doorInsulationRsi: doorInsulationRsi.toString(),
+      doorInsulationR: doorInsulationR.toString(),
+      doorUFactor: doorUFactor.toString(),
+      doorUFactorImperial: doorUFactorImperial.toString(),
+      doorAreaMetres: doorAreaMetres.toString(),
+      doorAreaFeet: doorAreaFeet.toString(),
     },
     Comparator: {
       gt: '$gt',

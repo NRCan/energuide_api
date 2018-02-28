@@ -456,6 +456,22 @@ const Schema = i18n => {
       ceilingLengthMetres
       # ${i18n.t`Filter results by the dwellings containing at least one ceiling with a specific length in feet (ft)`}
       ceilingLengthFeet
+      # ${i18n.t`Filter results by the dwellings containing at least one door with a specific type (en)`}
+      doorTypeEnglish
+      # ${i18n.t`Filter results by the dwellings containing at least one door with a specific type (fr)`}
+      doorTypeFrench
+      # ${i18n.t`Filter results by the dwellings where at least one door has a specific RSI (R-value Systeme International) value`}
+      doorInsulationRsi
+      # ${i18n.t`Filter results by the dwellings containing at least one door with a specific effective R-value`}
+      doorInsulationR
+      # ${i18n.t`Filter results for dwellings which have at least one door with a matching U-factor in metric: Watts per square metre per degree Celcius (W/m2C)`}
+      doorUFactor
+      # ${i18n.t`Filter results for dwellings which have at least one door with a matching U-factor in imperial: British Thermal Units per square feet per degree Fahrenheit (BTU/ft2 F)`}
+      doorUFactorImperial
+      # ${i18n.t`Filter results by dwellings where the area of the doors have certain value in square metres (m2)`}
+      doorAreaMetres
+      # ${i18n.t`Filter results by dwellings where the area of the doors have certain value in square feet (ft2)`}
+      doorAreaFeet
     }
   `,
   ]
