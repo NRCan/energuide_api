@@ -89,186 +89,6 @@
       ]
     ]
   },
-  "An improvement that could increase the energy efficiency of the dwelling": {
-    "translation": "",
-    "origin": [
-      [
-        "src/schema/index.js",
-        33
-      ]
-    ]
-  },
-  "Air flow rate in litres per second (L/s)": {
-    "translation": "",
-    "origin": [
-      [
-        "src/schema/index.js",
-        49
-      ]
-    ]
-  },
-  "Air flow rate in cubic feet per minute (f3/m)": {
-    "translation": "",
-    "origin": [
-      [
-        "src/schema/index.js",
-        51
-      ]
-    ]
-  },
-  "Water heaters heat the domestic water in a house": {
-    "translation": "",
-    "origin": [
-      [
-        "src/schema/index.js",
-        77
-      ]
-    ]
-  },
-  "Type of tank being used to heat the domestic water in the house (en)": {
-    "translation": "",
-    "origin": [
-      [
-        "src/schema/index.js",
-        79
-      ]
-    ]
-  },
-  "Type of tank being used to heat the domestic water in the house (fr)": {
-    "translation": "",
-    "origin": [
-      [
-        "src/schema/index.js",
-        81
-      ]
-    ]
-  },
-  "Capacity of the tank in litres (L)": {
-    "translation": "",
-    "origin": [
-      [
-        "src/schema/index.js",
-        83
-      ]
-    ]
-  },
-  "Capacity of the tank in gallons (Gal)": {
-    "translation": "",
-    "origin": [
-      [
-        "src/schema/index.js",
-        85
-      ]
-    ]
-  },
-  "Door U-factor in metric: watts per square metre per degree Celcius (W/m2C)": {
-    "translation": "",
-    "origin": [
-      [
-        "src/schema/index.js",
-        188
-      ]
-    ]
-  },
-  "Door U-factor in imperial: British Thermal Units per square feet per degree Fahrenheit (BTU/ft2F)": {
-    "translation": "",
-    "origin": [
-      [
-        "src/schema/index.js",
-        190
-      ]
-    ]
-  },
-  "Type of gas injected between the glass layers (en)": {
-    "translation": "",
-    "origin": [
-      [
-        "src/schema/index.js",
-        214
-      ]
-    ]
-  },
-  "Type of gas injected between the glass layers (fr)": {
-    "translation": "",
-    "origin": [
-      [
-        "src/schema/index.js",
-        216
-      ]
-    ]
-  },
-  "The Energyguide Rating calculated for this evaluation": {
-    "translation": "",
-    "origin": [
-      [
-        "src/schema/index.js",
-        300
-      ]
-    ]
-  },
-  "Filter results by the dwellings containing at least one ventilation system with a specific air flow rate in litres per second (L/s)": {
-    "translation": "",
-    "origin": [
-      [
-        "src/schema/index.js",
-        343
-      ]
-    ]
-  },
-  "Filter results by the dwellings containing at least one ventilation system with a specific air flow rate in cubic feet per minute (f3/m)": {
-    "translation": "",
-    "origin": [
-      [
-        "src/schema/index.js",
-        345
-      ]
-    ]
-  },
-  "Filter results by the dwellings containing at least one water heating system with a specific capacity in litres (L)": {
-    "translation": "",
-    "origin": [
-      [
-        "src/schema/index.js",
-        371
-      ]
-    ]
-  },
-  "Filter results by the dwellings containing at least one water heating system with a specific capacity in gallons (Gal)": {
-    "translation": "",
-    "origin": [
-      [
-        "src/schema/index.js",
-        373
-      ]
-    ]
-  },
-  "Cannot submit values for both 'next' and 'previous'.": {
-    "translation": "",
-    "origin": [
-      [
-        "src/schema/resolvers.js",
-        103
-      ]
-    ]
-  },
-  "Foundation Walls are below ground walls separating the interior heated space from the outside (interior partition walls are not considered walls)": {
-    "translation": "",
-    "origin": [
-      [
-        "src/schema/types/FoundationWall.js",
-        3
-      ]
-    ]
-  },
-  "The percentage of the total wall area this section accounts for": {
-    "translation": "",
-    "origin": [
-      [
-        "src/schema/types/FoundationWall.js",
-        21
-      ]
-    ]
-  },
   "An operator to describe how results will be filtered": {
     "translation": "",
     "origin": [
@@ -336,6 +156,15 @@
       ]
     ]
   },
+  "An improvement that could increase the energy efficiency of the dwelling": {
+    "translation": "",
+    "origin": [
+      [
+        "src/schema/index.js",
+        33
+      ]
+    ]
+  },
   "Part of the dwelling to be upgraded": {
     "translation": "",
     "origin": [
@@ -387,6 +216,24 @@
       [
         "src/schema/index.js",
         47
+      ]
+    ]
+  },
+  "Air flow rate in litres per second (L/s)": {
+    "translation": "",
+    "origin": [
+      [
+        "src/schema/index.js",
+        49
+      ]
+    ]
+  },
+  "Air flow rate in cubic feet per minute (f3/m)": {
+    "translation": "",
+    "origin": [
+      [
+        "src/schema/index.js",
+        51
       ]
     ]
   },
@@ -472,6 +319,51 @@
       [
         "src/schema/index.js",
         71
+      ]
+    ]
+  },
+  "Water heaters heat the domestic water in a house": {
+    "translation": "",
+    "origin": [
+      [
+        "src/schema/index.js",
+        77
+      ]
+    ]
+  },
+  "Type of tank being used to heat the domestic water in the house (en)": {
+    "translation": "",
+    "origin": [
+      [
+        "src/schema/index.js",
+        79
+      ]
+    ]
+  },
+  "Type of tank being used to heat the domestic water in the house (fr)": {
+    "translation": "",
+    "origin": [
+      [
+        "src/schema/index.js",
+        81
+      ]
+    ]
+  },
+  "Capacity of the tank in litres (L)": {
+    "translation": "",
+    "origin": [
+      [
+        "src/schema/index.js",
+        83
+      ]
+    ]
+  },
+  "Capacity of the tank in gallons (Gal)": {
+    "translation": "",
+    "origin": [
+      [
+        "src/schema/index.js",
+        85
       ]
     ]
   },
@@ -907,6 +799,24 @@
       ]
     ]
   },
+  "Door U-factor in metric: watts per square metre per degree Celcius (W/m2C)": {
+    "translation": "",
+    "origin": [
+      [
+        "src/schema/index.js",
+        188
+      ]
+    ]
+  },
+  "Door U-factor in imperial: British Thermal Units per square feet per degree Fahrenheit (BTU/ft2F)": {
+    "translation": "",
+    "origin": [
+      [
+        "src/schema/index.js",
+        190
+      ]
+    ]
+  },
   "Door area in square metres (m2)": {
     "translation": "",
     "origin": [
@@ -994,6 +904,24 @@
       [
         "src/schema/index.js",
         212
+      ]
+    ]
+  },
+  "Type of gas injected between the glass layers (en)": {
+    "translation": "",
+    "origin": [
+      [
+        "src/schema/index.js",
+        214
+      ]
+    ]
+  },
+  "Type of gas injected between the glass layers (fr)": {
+    "translation": "",
+    "origin": [
+      [
+        "src/schema/index.js",
+        216
       ]
     ]
   },
@@ -1348,6 +1276,15 @@
       ]
     ]
   },
+  "The Energyguide Rating calculated for this evaluation": {
+    "translation": "",
+    "origin": [
+      [
+        "src/schema/index.js",
+        300
+      ]
+    ]
+  },
   "A residential building evaluted under the Energuide program": {
     "translation": "",
     "origin": [
@@ -1501,6 +1438,24 @@
       ]
     ]
   },
+  "Filter results by the dwellings containing at least one ventilation system with a specific air flow rate in litres per second (L/s)": {
+    "translation": "",
+    "origin": [
+      [
+        "src/schema/index.js",
+        343
+      ]
+    ]
+  },
+  "Filter results by the dwellings containing at least one ventilation system with a specific air flow rate in cubic feet per minute (f3/m)": {
+    "translation": "",
+    "origin": [
+      [
+        "src/schema/index.js",
+        345
+      ]
+    ]
+  },
   "Filter results by the dwellings containing at least one ventilation system with a specific efficiency rating": {
     "translation": "",
     "origin": [
@@ -1601,6 +1556,24 @@
       [
         "src/schema/index.js",
         369
+      ]
+    ]
+  },
+  "Filter results by the dwellings containing at least one water heating system with a specific capacity in litres (L)": {
+    "translation": "",
+    "origin": [
+      [
+        "src/schema/index.js",
+        371
+      ]
+    ]
+  },
+  "Filter results by the dwellings containing at least one water heating system with a specific capacity in gallons (Gal)": {
+    "translation": "",
+    "origin": [
+      [
+        "src/schema/index.js",
+        373
       ]
     ]
   },
@@ -1982,11 +1955,38 @@
       ]
     ]
   },
-  "The 'Int' scalar type represents non-fractional signed whole numeric values. Int can represent values between -(2^31) and 2^31 - 1.": {
+  "Cannot submit values for both 'next' and 'previous'.": {
     "translation": "",
     "origin": [
       [
-        "src/schema/types/I18NInt.js",
+        "src/schema/resolvers.js",
+        103
+      ]
+    ]
+  },
+  "Foundation Walls are below-ground walls separating the interior heated space from the outside (interior partition walls are not considered walls)": {
+    "translation": "",
+    "origin": [
+      [
+        "src/schema/types/FoundationWall.js",
+        3
+      ]
+    ]
+  },
+  "The percentage of the total wall area this section accounts for": {
+    "translation": "",
+    "origin": [
+      [
+        "src/schema/types/FoundationWall.js",
+        21
+      ]
+    ]
+  },
+  "The 'Boolean' scalar type represents 'true' or 'false'.": {
+    "translation": "",
+    "origin": [
+      [
+        "src/schema/types/I18NBoolean.js",
         5
       ]
     ]
@@ -2000,6 +2000,15 @@
       ]
     ]
   },
+  "The 'Int' scalar type represents non-fractional signed whole numeric values. Int can represent values between -(2^31) and 2^31 - 1.": {
+    "translation": "",
+    "origin": [
+      [
+        "src/schema/types/I18NInt.js",
+        5
+      ]
+    ]
+  },
   "The 'String' scalar type represents textual data, represented as UTF-8 character sequences. The String type is most often used by GraphQL to represent free-form human-readable text.": {
     "translation": "",
     "origin": [
@@ -2009,14 +2018,15 @@
       ]
     ]
   },
-  "The 'Boolean' scalar type represents 'true' or 'false'.": {
+  "Foundation Walls are below ground walls separating the interior heated space from the outside (interior partition walls are not considered walls)": {
     "translation": "",
     "origin": [
       [
-        "src/schema/types/I18NBoolean.js",
-        5
+        "src/schema/types/FoundationWall.js",
+        3
       ]
-    ]
+    ],
+    "obsolete": true
   },
   "An improvement that could improve the energy efficiency of the dwelling": {
     "translation": "",

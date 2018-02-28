@@ -89,60 +89,6 @@
       ]
     ]
   },
-  "The Energyguide Rating calculated for this evaluation": {
-    "translation": "La cote Energyguide calculée pour cette évaluation",
-    "origin": [
-      [
-        "src/schema/index.js",
-        300
-      ]
-    ]
-  },
-  "Filter results by the dwellings containing at least one ventilation system with a specific air flow rate in litres per second (L/s)": {
-    "translation": "Trier les résultats par logements ayant au moins un système de ventilation avec un débit d'air spécifique en litres par seconde (L/s)",
-    "origin": [
-      [
-        "src/schema/index.js",
-        343
-      ]
-    ]
-  },
-  "Filter results by the dwellings containing at least one ventilation system with a specific air flow rate in cubic feet per minute (f3/m)": {
-    "translation": "Trier les résultats par logements contenant au moins un système de ventilation avec un débit d'air spécifique en pieds cubes par minute (pi3/m)",
-    "origin": [
-      [
-        "src/schema/index.js",
-        345
-      ]
-    ]
-  },
-  "Cannot submit values for both 'next' and 'previous'.": {
-    "translation": "Il faut pas soumettre des valeurs pour 'next' et 'previous' en même temps.",
-    "origin": [
-      [
-        "src/schema/resolvers.js",
-        103
-      ]
-    ]
-  },
-  "Foundation Walls are below ground walls separating the interior heated space from the outside (interior partition walls are not considered walls)": {
-    "translation": "Les murs de fondation sont des murs souterrains qui séparent l'espace intérieur chauffé de l'extérieur (les cloisons intérieures ne sont pas considérées comme des murs)",
-    "origin": [
-      [
-        "src/schema/types/FoundationWall.js",
-        3
-      ]
-    ]
-  },
-  "The percentage of the total wall area this section accounts for": {
-    "translation": "Le pourcentage de la superficie du mur totale de cette section représente",
-    "origin": [
-      [
-        "src/schema/types/FoundationWall.js",
-        21
-      ]
-    ]
-  },
   "An operator to describe how results will be filtered": {
     "translation": "Un opérateur indiquant comment les résultats seront triés",
     "origin": [
@@ -157,7 +103,7 @@
     ]
   },
   "Greater than: returns true for results greater than the comparison value": {
-    "translation": "Supérieur à : génère 'True' pour les résultats supérieurs à la valeur de comparaison",
+    "translation": "Supérieur à : génère 'true' pour les résultats supérieurs à la valeur de comparaison",
     "origin": [
       [
         "src/schema/index.js",
@@ -166,7 +112,7 @@
     ]
   },
   "Less than: returns true for results less than the comparison value": {
-    "translation": "Inférieur à : génère 'True' pour les résultats inférieurs à la valeur de comparaison",
+    "translation": "Inférieur à : génère 'true' pour les résultats inférieurs à la valeur de comparaison",
     "origin": [
       [
         "src/schema/index.js",
@@ -175,7 +121,7 @@
     ]
   },
   "Equal to: returns true for results equal to the comparison value": {
-    "translation": "Égal à : génère 'True' pour les résultats égaux à la valeur de comparaison",
+    "translation": "Égal à : génère 'true' pour les résultats égaux à la valeur de comparaison",
     "origin": [
       [
         "src/schema/index.js",
@@ -548,7 +494,7 @@
     ]
   },
   "If true, a further page of results can be returned": {
-    "translation": "Si vrai, une autre page de résultats peut être générée",
+    "translation": "Si it est 'true', une autre page de résultats peut être générée",
     "origin": [
       [
         "src/schema/index.js",
@@ -557,7 +503,7 @@
     ]
   },
   "If true, a previous page of results can be returned": {
-    "translation": "Si vrai, une page précédente de résultats peut être générée",
+    "translation": "Si il est 'true', une page précédente de résultats peut être générée",
     "origin": [
       [
         "src/schema/index.js",
@@ -1330,6 +1276,15 @@
       ]
     ]
   },
+  "The Energyguide Rating calculated for this evaluation": {
+    "translation": "La cote Energyguide calculée pour cette évaluation",
+    "origin": [
+      [
+        "src/schema/index.js",
+        300
+      ]
+    ]
+  },
   "A residential building evaluted under the Energuide program": {
     "translation": "Un immeuble résidentiel évalué dans le cadre du programme Énerguide",
     "origin": [
@@ -1480,6 +1435,24 @@
       [
         "src/schema/index.js",
         341
+      ]
+    ]
+  },
+  "Filter results by the dwellings containing at least one ventilation system with a specific air flow rate in litres per second (L/s)": {
+    "translation": "Trier les résultats par logements ayant au moins un système de ventilation avec un débit d'air spécifique en litres par seconde (L/s)",
+    "origin": [
+      [
+        "src/schema/index.js",
+        343
+      ]
+    ]
+  },
+  "Filter results by the dwellings containing at least one ventilation system with a specific air flow rate in cubic feet per minute (f3/m)": {
+    "translation": "Trier les résultats par logements contenant au moins un système de ventilation avec un débit d'air spécifique en pieds cubes par minute (pi3/m)",
+    "origin": [
+      [
+        "src/schema/index.js",
+        345
       ]
     ]
   },
@@ -1982,11 +1955,38 @@
       ]
     ]
   },
-  "The 'Int' scalar type represents non-fractional signed whole numeric values. Int can represent values between -(2^31) and 2^31 - 1.": {
-    "translation": "Le type scalaire 'Int' représente des valeurs numériques entières signées non fractionnaires. Int peut représenter des valeurs comprises entre -(2^31) et 2^31 - 1.",
+  "Cannot submit values for both 'next' and 'previous'.": {
+    "translation": "Il faut pas soumettre des valeurs pour 'next' et 'previous' en même temps.",
     "origin": [
       [
-        "src/schema/types/I18NInt.js",
+        "src/schema/resolvers.js",
+        103
+      ]
+    ]
+  },
+  "Foundation Walls are below-ground walls separating the interior heated space from the outside (interior partition walls are not considered walls)": {
+    "translation": "Les murs de fondation sont des murs souterrains qui séparent l'espace intérieur chauffé de l'extérieur (les cloisons intérieures ne sont pas considérées comme des murs)",
+    "origin": [
+      [
+        "src/schema/types/FoundationWall.js",
+        3
+      ]
+    ]
+  },
+  "The percentage of the total wall area this section accounts for": {
+    "translation": "Le pourcentage de la superficie du mur totale de cette section représente",
+    "origin": [
+      [
+        "src/schema/types/FoundationWall.js",
+        21
+      ]
+    ]
+  },
+  "The 'Boolean' scalar type represents 'true' or 'false'.": {
+    "translation": "Le type scalaire 'Booléen' représente vrai ('true') ou faux ('false').",
+    "origin": [
+      [
+        "src/schema/types/I18NBoolean.js",
         5
       ]
     ]
@@ -2000,20 +2000,20 @@
       ]
     ]
   },
+  "The 'Int' scalar type represents non-fractional signed whole numeric values. Int can represent values between -(2^31) and 2^31 - 1.": {
+    "translation": "Le type scalaire 'Int' représente des valeurs numériques entières signées non fractionnaires. Int peut représenter des valeurs comprises entre -(2^31) et 2^31 - 1.",
+    "origin": [
+      [
+        "src/schema/types/I18NInt.js",
+        5
+      ]
+    ]
+  },
   "The 'String' scalar type represents textual data, represented as UTF-8 character sequences. The String type is most often used by GraphQL to represent free-form human-readable text.": {
     "translation": "Le type scalaire 'String' représente des données textuelles, représentées par des séquences de caractères UTF-8. Le type String est le plus souvent utilisé par GraphQL pour représenter un texte lisible par un humain.",
     "origin": [
       [
         "src/schema/types/I18NString.js",
-        5
-      ]
-    ]
-  },
-  "The 'Boolean' scalar type represents 'true' or 'false'.": {
-    "translation": "Le type scalaire 'Booléen' représente 'vrai' ou 'faux'.",
-    "origin": [
-      [
-        "src/schema/types/I18NBoolean.js",
         5
       ]
     ]

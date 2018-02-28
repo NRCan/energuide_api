@@ -1,5 +1,5 @@
 {
-  "Foundation Walls are below ground walls separating the interior heated space from the outside (interior partition walls are not considered walls)": {
+  "Foundation Walls are below-ground walls separating the interior heated space from the outside (interior partition walls are not considered walls)": {
     "origin": [
       [
         "src/schema/types/FoundationWall.js",
