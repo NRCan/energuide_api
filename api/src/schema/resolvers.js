@@ -1,4 +1,6 @@
 import MongoPaging from 'mongo-cursor-pagination'
+import { GraphQLError } from 'graphql'
+
 /* eslint-disable import/named */
 import {
   dwellingHouseId,
@@ -94,7 +96,15 @@ const Resolvers = i18n => {
         // and is passed directly into library code to be decoded and used while
         // talking to the database.
         // ಠ_ಠ
-        const { filters, limit, next } = args
+        const { filters, limit, next, previous } = args
+
+        if (next && previous) {
+          throw new GraphQLError(
+            i18n.t`
+              Cannot submit values for both 'next' and 'previous'.
+            `,
+          )
+        }
 
         let query = {
           $and: [{}],
@@ -127,6 +137,7 @@ const Resolvers = i18n => {
         let result = await MongoPaging.find(client, {
           query,
           next,
+          previous,
           limit,
         })
 
