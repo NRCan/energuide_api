@@ -1,14 +1,14 @@
 import { createHeader } from '../Header'
-import { createI18NFloat } from '../types/I18NFloat'
+import { createI18NFloat } from '../I18NFloat'
 import { i18n, unpackCatalog } from 'lingui-i18n'
 import { makeExecutableSchema } from 'graphql-tools'
 
 i18n.load({
-  fr: unpackCatalog(require('../../locale/fr/messages.js')),
-  en: unpackCatalog(require('../../locale/en/messages.js')),
+  fr: unpackCatalog(require('../../../locale/fr/messages.js')),
+  en: unpackCatalog(require('../../../locale/en/messages.js')),
 })
 let schema
-describe('Schema', () => {
+describe('Schema Types', () => {
   describe('Header', () => {
     beforeEach(() => {
       const Header = createHeader(i18n)
