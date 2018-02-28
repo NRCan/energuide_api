@@ -125,7 +125,11 @@ describe('queries', () => {
       let { dwelling: { evaluations } } = response.body.data
       let [first] = evaluations
       let [upgrade] = first.energyUpgrades
-      expect(upgrade).toEqual({"upgradeType":"CathedralCeilingsFlat","cost":0,"priority":1})
+      expect(upgrade).toEqual({
+        upgradeType: 'CathedralCeilingsFlat',
+        cost: 0,
+        priority: 1,
+      })
     })
 
     it('retrieves all top level keys of the ceiling data', async () => {
@@ -562,49 +566,73 @@ describe('queries', () => {
         })
       })
 
-      it('uses limit and next to paginate results', async () => {
-        let response = await request(server)
+      const makeRequestForOnePage = function({
+        next = '',
+        previous = '',
+      } = {}) {
+        let query = `{
+          dwellings(
+           filters: [{field: dwellingForwardSortationArea comparator: eq value: "C1A"}]
+           limit: 1
+           ${next}
+           ${previous}
+          ) {
+            hasNext
+            next
+            hasPrevious
+            previous
+            results {
+              yearBuilt
+            }
+          }
+        }`
+
+        return request(server)
           .post('/graphql')
           .set('Content-Type', 'application/json; charset=utf-8')
           .send({
-            query: `{
-              dwellings(
-               filters: [{field: dwellingForwardSortationArea comparator: eq value: "C1A"}]
-               limit: 1
-              ) {
-                hasNext
-                next
-                results {
-                  yearBuilt
-                }
-              }
-            }`,
+            query,
           })
+      }
+
+      it('uses limit and next to paginate results', async () => {
+        let response = await makeRequestForOnePage()
 
         // use the value of "next" to fetch the next result
-        let response2 = await request(server)
-          .post('/graphql')
-          .set('Content-Type', 'application/json; charset=utf-8')
-          .send({
-            query: `{
-              dwellings(
-               filters: [{field: dwellingForwardSortationArea comparator: eq value: "C1A"}]
-               limit: 1
-               next: "${response.body.data.dwellings.next}"
-              ) {
-                hasNext
-                next
-                results {
-                  yearBuilt
-                }
-              }
-            }`,
-          })
+        let response2 = await makeRequestForOnePage({
+          next: `next: "${response.body.data.dwellings.next}"`,
+        })
 
         let { dwellings: first } = response.body.data
         let { dwellings: second } = response2.body.data
         expect(first.results[0].yearBuilt).toEqual(3000)
         expect(second.results[0].yearBuilt).toEqual(1900)
+
+        expect(first.hasNext).toEqual(true)
+        expect(second.hasNext).toEqual(false)
+      })
+
+      it('uses limit and previous to paginate results', async () => {
+        let response = await makeRequestForOnePage()
+
+        // use the value of "next" to fetch the next result
+        let response2 = await makeRequestForOnePage({
+          next: `next: "${response.body.data.dwellings.next}"`,
+        })
+
+        let response3 = await makeRequestForOnePage({
+          previous: `previous: "${response2.body.data.dwellings.previous}"`,
+        })
+
+        let { dwellings: first } = response.body.data
+        let { dwellings: second } = response2.body.data
+        let { dwellings: third } = response3.body.data
+        expect(first).toEqual(third)
+        expect(second.results[0].yearBuilt).toEqual(1900)
+
+        expect(first.hasPrevious).toEqual(false)
+        expect(second.hasPrevious).toEqual(true)
+        expect(third.hasPrevious).toEqual(false)
       })
     })
 

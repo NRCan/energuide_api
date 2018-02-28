@@ -322,7 +322,7 @@ const Schema = i18n => {
       # ${i18n.t`Details for a specific dwelling`}
       dwelling(houseId: I18NInt!): Dwelling
       # ${i18n.t`Details for all dwellings, optionally filtered by one or more values`}
-      dwellings(filters: [Filter!] limit: I18NInt, next: I18NString): PaginatedResultSet
+      dwellings(filters: [Filter!] limit: I18NInt next: I18NString previous: I18NString): PaginatedResultSet
     }
 
     enum Field {
