@@ -1,6 +1,6 @@
 export const createHeader = i18n => {
   const Header = `
-    type Header {
+    type Header @cacheControl(maxAge: 90) {
       # ${i18n.t`Header insulation nominal RSI (R-value Systeme International)`}
       insulationNominalRsi: I18NFloat
       # ${i18n.t`Header insulation nominal R-value`}
