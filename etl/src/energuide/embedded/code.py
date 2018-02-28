@@ -37,8 +37,8 @@ class _WindowCode(typing.NamedTuple):
     label: str
     glazing_type: bilingual.Bilingual
     coating_tint: bilingual.Bilingual
-    fill_type: bilingual.Bilingual
-    spacer_type: bilingual.Bilingual
+    fill_type: typing.Optional[bilingual.Bilingual]
+    spacer_type: typing.Optional[bilingual.Bilingual]
     window_code_type: bilingual.Bilingual
     frame_material: bilingual.Bilingual
 
@@ -47,6 +47,13 @@ class WindowCode(_WindowCode):
 
     @classmethod
     def from_data(cls, window_code: element.Element) -> 'WindowCode':
+
+        fill_type_english = window_code.findtext('Layers/FillType/English')
+        fill_type_french = window_code.findtext('Layers/FillType/French')
+
+        spacer_type_english = window_code.findtext('Layers/SpacerType/English')
+        spacer_type_french = window_code.findtext('Layers/SpacerType/French')
+
         try:
             return WindowCode(
                 identifier=window_code.attrib['id'],
@@ -60,13 +67,13 @@ class WindowCode(_WindowCode):
                     french=window_code.get_text('Layers/CoatingsTints/French'),
                 ),
                 fill_type=bilingual.Bilingual(
-                    english=window_code.get_text('Layers/FillType/English'),
-                    french=window_code.get_text('Layers/FillType/French'),
-                ),
+                    english=fill_type_english,
+                    french=fill_type_french,
+                ) if fill_type_english and fill_type_french else None,
                 spacer_type=bilingual.Bilingual(
-                    english=window_code.get_text('Layers/SpacerType/English'),
-                    french=window_code.get_text('Layers/SpacerType/French'),
-                ),
+                    english=spacer_type_english,
+                    french=spacer_type_french,
+                ) if spacer_type_english and spacer_type_french else None,
                 window_code_type=bilingual.Bilingual(
                     english=window_code.get_text('Layers/Type/English'),
                     french=window_code.get_text('Layers/Type/French'),

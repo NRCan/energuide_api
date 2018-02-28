@@ -52,10 +52,19 @@ class Window(_Window):
             'glazingTypesFrench': self.window_code.glazing_type.french if self.window_code else None,
             'coatingsTintsEnglish': self.window_code.coating_tint.english if self.window_code else None,
             'coatingsTintsFrench': self.window_code.coating_tint.french if self.window_code else None,
-            'fillTypeEnglish': self.window_code.fill_type.english if self.window_code else None,
-            'fillTypeFrench': self.window_code.fill_type.french if self.window_code else None,
-            'spacerTypeEnglish': self.window_code.spacer_type.english if self.window_code else None,
-            'spacerTypeFrench': self.window_code.spacer_type.french if self.window_code else None,
+
+            'fillTypeEnglish': self.window_code.fill_type.english
+            if self.window_code and self.window_code.fill_type else None,
+
+            'fillTypeFrench': self.window_code.fill_type.french
+            if self.window_code and self.window_code.fill_type else None,
+
+            'spacerTypeEnglish': self.window_code.spacer_type.english
+            if self.window_code and self.window_code.spacer_type else None,
+
+            'spacerTypeFrench': self.window_code.spacer_type.french
+            if self.window_code and self.window_code.spacer_type else None,
+
             'typeEnglish': self.window_code.window_code_type.english if self.window_code else None,
             'typeFrench': self.window_code.window_code_type.french if self.window_code else None,
             'frameMaterialEnglish': self.window_code.frame_material.english if self.window_code else None,
