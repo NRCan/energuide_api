@@ -63,7 +63,7 @@ def upload_file() -> typing.Tuple[str, int]:
         flask.abort(HTTPStatus.BAD_REQUEST)
     if 'file' not in flask.request.files:
         flask.abort(HTTPStatus.BAD_REQUEST)
-    if flask.request.form.get('timestamp', None) is None:
+    if 'timestamp' not in flask.request.form:
         flask.abort(HTTPStatus.BAD_REQUEST)
 
     file = flask.request.files['file']
@@ -79,7 +79,7 @@ def upload_file() -> typing.Tuple[str, int]:
     if not azure_utils.upload_bytes_to_azure(App.config['AZURE_COORDINATES'], file_contents, filename):
         flask.abort(HTTPStatus.BAD_GATEWAY)
 
-    timestamp = flask.request.form.get('timestamp', None)
+    timestamp = flask.request.form['timestamp']
 
     if not azure_utils.upload_bytes_to_azure(App.config['AZURE_COORDINATES'], timestamp.encode(), TIMESTAMP_FILENAME):
         flask.abort(HTTPStatus.BAD_GATEWAY)

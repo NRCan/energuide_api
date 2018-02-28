@@ -8,7 +8,7 @@ import pytest
 import _pytest
 import requests
 from azure.storage import blob
-from extract_endpoint import post_to_endpoint, azure_utils
+from extract_endpoint import post_to_endpoint, azure_utils, endpoint
 
 
 class NamedStream(io.BytesIO):
@@ -82,7 +82,7 @@ def sample_timestamp() -> str:
 
 @pytest.fixture
 def sample_timestamp_filename() -> str:
-    return "timestamp.txt"
+    return endpoint.TIMESTAMP_FILENAME
 
 
 def check_file_in_azure(azure_service: blob.BlockBlobService,
@@ -159,12 +159,3 @@ def test_post_stream_stdin_no_filename(upload_url: str,
                                      filename=None,
                                      url=upload_url,
                                      timestamp=sample_timestamp)
-
-
-@pytest.mark.usefixtures('run_endpoint')
-def test_post_stream_empty_timestamp(upload_url: str, sample_stream: NamedStream, sample_filename: str) -> None:
-    post_return = post_to_endpoint.post_stream(stream=sample_stream,
-                                               filename=sample_filename,
-                                               url=upload_url,
-                                               timestamp=None)
-    assert post_return.status_code == HTTPStatus.BAD_REQUEST
