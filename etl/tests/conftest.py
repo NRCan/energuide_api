@@ -1,10 +1,11 @@
 import os
 import random
 import typing
-
+import zipfile
 import py
 import pymongo
 import pytest
+from azure.storage import blob
 from energuide import database
 from energuide import extractor
 
@@ -83,3 +84,34 @@ def energuide_zip_fixture(tmpdir: py._path.local.LocalPath, energuide_fixture: s
 @pytest.fixture
 def sample_fixture() -> str:
     return os.path.join(os.path.dirname(__file__), 'sample.csv')
+
+
+@pytest.fixture
+def azure_container() -> str:
+    return 'test-container'
+
+
+@pytest.fixture
+def azure_service(azure_container: str) -> blob.BlockBlobService:
+    azure_service = blob.BlockBlobService(account_name='devstoreaccount1',
+                                          account_key='Eby8vdM02xNOcqFlqUwJPLlmEtlCDXJ1OUzFT50uSR'
+                                          + 'Z6IFsuFq2UVErCz4I6tq/K1SZFPTOtr/KBHBeksoGMGw==',
+                                          custom_domain='http://127.0.0.1:10000/devstoreaccount1')
+    azure_service.create_container(azure_container)
+    yield azure_service
+    azure_service.delete_container(azure_container)
+
+
+@pytest.fixture
+def put_sample_files_in_azure(azure_service: blob.BlockBlobService,
+                              azure_container: str,
+                              energuide_zip_fixture: str) -> typing.Generator:
+
+    file_z = zipfile.ZipFile(energuide_zip_fixture)
+    for json_file in [file_z.open(zipinfo) for zipinfo in file_z.infolist()]:
+        azure_service.create_blob_from_text(azure_container, json_file.name, json_file.read())
+
+    yield None
+
+    for json_file in [file_z.open(zipinfo) for zipinfo in file_z.infolist()]:
+        azure_service.delete_blob(azure_container, json_file.name)
