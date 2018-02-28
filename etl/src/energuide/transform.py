@@ -27,10 +27,18 @@ def _generate_dwellings(grouped: typing.Iterable[typing.List[reader.InputData]])
 def run(coords: database.DatabaseCoordinates,
         database_name: str,
         collection: str,
-        filename: str,
+        azure: bool,
+        filename: typing.Optional[str],
         append: bool) -> None:
 
-    raw_data = reader.read(filename)
+    if azure:
+        raw_data = reader.read_from_azure()
+    elif filename:
+        raw_data = reader.read(filename)
+    else:
+        raise ValueError("must supply a filename if not using Azure")
+
     grouped = reader.grouper(raw_data, dwelling.Dwelling.GROUPING_FIELD)
     dwellings = _generate_dwellings(grouped)
+
     database.load(coords, database_name, collection, dwellings, append)
