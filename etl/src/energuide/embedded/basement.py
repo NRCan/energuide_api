@@ -224,8 +224,25 @@ class BasementWall(_BasementWall):
     }
 
     @classmethod
-    def _from_data(cls, wall: element.Element, wall_perimiter: float, wall_height: float, tag: WallType):
-        percentage = float(wall.attrib['percentage'])
+    def _from_data(cls,
+                   wall: element.Element,
+                   wall_perimeter: float,
+                   wall_height: float,
+                   tag: WallType,
+                   backup_percentage: float) -> 'BasementWall':
+
+        maybe_percentage = wall.attrib.get('percentage')
+        if maybe_percentage is None:
+            percentage = backup_percentage
+        else:
+            percentage = float(maybe_percentage)
+
+        try:
+            nominal_insulation = wall.get('@nominalRsi', float)
+            effective_insulation = wall.get('@rsi', float)
+        except ElementGetValueError as exc:
+            raise InvalidEmbeddedDataTypeError(BasementWall, 'Invalid insulation attributes') from exc
+
         return BasementWall(
             wall_type=tag,
             nominal_insulation=insulation.Insulation(float(wall.attrib['nominalRsi'])),
@@ -244,22 +261,29 @@ class BasementWall(_BasementWall):
         pony_height = float(wall.xpath('Measurements/@ponyWallHeight')[0])
 
         walls = []
-        walls.extend([BasementWall._from_data(wall_section, wall_perimiter, wall_height, WallType.INTERIOR)
-                      for wall_section in interior_wall_sections])
+        sections = (interior_wall_sections, exterior_wall_sections, pony_wall_sections)
 
-        walls.extend([BasementWall._from_data(wall_section, wall_perimiter, wall_height, WallType.EXTERIOR)
-                      for wall_section in exterior_wall_sections])
+        parsers = (
+            lambda section, percentage: BasementWall._from_data(section, wall_perimeter, wall_height, WallType.INTERIOR, percentage),
+            lambda section, percentage: BasementWall._from_data(section, wall_perimeter, wall_height, WallType.EXTERIOR, percentage),
+            lambda section, percentage: BasementWall._from_data(section, wall_perimeter, pony_height, WallType.PONY, percentage)
+        )
 
-        walls.extend([BasementWall._from_data(wall_section, wall_perimiter, pony_height, WallType.PONY)
-                      for wall_section in pony_wall_sections])
+        for parser, wall_sections in zip(parsers, sections) :
+            percentages = [wall.attrib.get('percentage') for wall in wall_sections]
+            accounted_for = sum(float(percentage) for percentage in percentages if percentage is not None)
+
+            walls.extend([parser(wall, accounted_for) for wall in wall_sections])
 
         return walls
 
     @classmethod
     def from_crawlspace(cls, wall: element.Element, wall_perimiter: float) -> typing.List['BasementWall']:
         wall_sections = wall.xpath('Construction/Type/Composite/Section')
-        wall_height = float(wall.xpath('Measurements/@height')[0])
-        return [BasementWall._from_data(wall_section, wall_perimiter, wall_height, WallType.NOT_APPLICABLE)
+        percentages = [wall.attrib.get('percentage') for wall in wall_sections]
+        accounted_for = sum(float(percentage) for percentage in percentages if percentage is not None)
+
+        return [BasementWall._from_data(wall_section, wall_perimeter, wall_height, WallType.NOT_APPLICABLE, accounted_for)
                 for wall_section in wall_sections]
 
 

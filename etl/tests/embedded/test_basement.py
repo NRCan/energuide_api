@@ -665,3 +665,251 @@ def test_basement_to_dict(sample_basement_element: element.Element) -> None:
             'heightFeet': 0.7545932000000001,
         },
     }
+
+
+def bad_xml() -> typing.List[typing.Tuple[str, typing.Callable[[element.Element], typing.Any], type]]:
+    return [
+        (
+            # This XML block has non-numeric strings as attribute values
+            """
+            <Floor>
+                <Construction isBelowFrostline="data" hasIntegralFooting="data" heatedFloor="data">
+                    <AddedToSlab rValue="data" nominalInsulation="data">User specified</AddedToSlab>
+                    <FloorsAbove idref="data" rValue="data" nominalInsulation="data">4231000660</FloorsAbove>
+                </Construction>
+                <Measurements isRectangular="data" length="data" width="data"/>
+            </Floor>
+            """,
+            basement.BasementFloor.from_basement,
+            basement.BasementFloor,
+        ), (
+            # This XML block has non-numeric strings as attribute values
+            """
+            <Floor>
+                <Construction isBelowFrostline="data" hasIntegralFooting="data" heatedFloor="data">
+                    <AddedToSlab rValue="data" nominalInsulation="data">User specified</AddedToSlab>
+                    <FloorsAbove idref="data" rValue="data" nominalInsulation="data">4231000660</FloorsAbove>
+                </Construction>
+                <Measurements isRectangular="data" length="data" width="data"/>
+            </Floor>
+            """,
+            basement.BasementFloor.from_crawlspace,
+            basement.BasementFloor,
+        ), (
+            # This XML block is missing the attribute values of the Measurements tag
+            """
+            <Floor>
+                <Construction isBelowFrostline="true" hasIntegralFooting="false" heatedFloor="false">
+                    <AddedToSlab rValue="0.1" nominalInsulation="0.2">User specified</AddedToSlab>
+                    <FloorsAbove idref="Code 8" rValue="0.6894" nominalInsulation="0.2">4231000660</FloorsAbove>
+                </Construction>
+                <Measurements />
+            </Floor>
+            """,
+            basement.BasementFloor.from_basement,
+            basement.BasementFloor,
+        ), (
+            # This XML block is missing the attribute values of the Measurements tag
+            """
+            <Floor>
+                <Construction isBelowFrostline="true" hasIntegralFooting="false" heatedFloor="false">
+                    <AddedToSlab rValue="0.1" nominalInsulation="0.2">User specified</AddedToSlab>
+                    <FloorsAbove idref="Code 8" rValue="0.6894" nominalInsulation="0.2">4231000660</FloorsAbove>
+                </Construction>
+                <Measurements />
+            </Floor>
+            """,
+            basement.BasementFloor.from_crawlspace,
+            basement.BasementFloor,
+        ), (
+            # This XML block has non-numeric strings as attribute values
+            """
+            <Wall>
+                <Construction corners="data">
+                    <Type idref="data" nominalInsulation="data">
+                        <Description>1211100700</Description>
+                        <Composite>
+                            <Section rank="data" percentage="data" rsi="data" nominalRsi="data" />
+                        </Composite>
+                    </Type>
+                </Construction>
+                <Measurements height="data" depth="data" />
+                <RValues skirt="data" thermalBreak="data" />
+            </Wall>
+            """,
+            lambda node: basement.BasementWall.from_crawlspace(node, 0),
+            basement.BasementWall,
+        ), (
+
+            # This XML black is missing the insulation attribute of the Section tag
+            """
+            <Wall>
+                <Construction corners="1">
+                    <Type idref="Code 18" nominalInsulation="1.432">
+                        <Description>1211100700</Description>
+                        <Composite>
+                            <Section rank="1" />
+                        </Composite>
+                    </Type>
+                </Construction>
+                <Measurements height="1.0668" depth="0.4572" />
+                <RValues skirt="0" thermalBreak="0" />
+            </Wall>
+            """,
+            lambda node: basement.BasementWall.from_crawlspace(node, 0),
+            basement.BasementWall,
+        ), (
+            # This XML block is missing the height attribute of the Measurements tag
+            """
+            <Wall>
+                <Construction corners="1">
+                    <Type idref="Code 18" nominalInsulation="1.432">
+                        <Description>1211100700</Description>
+                        <Composite>
+                            <Section rank="1" percentage="100" rsi="1.7968" nominalRsi="1.432" />
+                        </Composite>
+                    </Type>
+                </Construction>
+                <Measurements />
+                <RValues skirt="0" thermalBreak="0" />
+            </Wall>
+            """,
+            lambda node: basement.BasementWall.from_crawlspace(node, 0),
+            basement.BasementWall,
+        ), (
+            # This XML block has non-numeric data as attribute values
+            """
+            <Wall hasPonyWall="data">
+                <Construction corners="data">
+                    <InteriorAddedInsulation idref="data" nominalInsulation="data">
+                        <Description>2101010</Description>s
+                        <Composite>
+                            <Section rank="data" percentage="data" rsi="data" nominalRsi="data" />
+                            <Section rank="data" percentage="data" rsi="data" nominalRsi="data" />
+                        </Composite>
+                    </InteriorAddedInsulation>
+                    <Lintels idref="data">Bsmnt Lintel</Lintels>
+                </Construction>
+                <Measurements height="data" depth="data" ponyWallHeight="data" />
+            </Wall>
+            """,
+            lambda node: basement.BasementWall.from_basement(node, 0),
+            basement.BasementWall,
+        ), (
+            # This XML block is missing the height and ponyWallHeight attributes of the Measurments node
+            """
+            <Wall hasPonyWall="true">
+                <Construction corners="4">
+                    <InteriorAddedInsulation idref="Code 17" nominalInsulation="1.4">
+                        <Description>2101010</Description>s
+                        <Composite>
+                            <Section rank="1" percentage="50" rsi="1.2" nominalRsi="1.3" />
+                        </Composite>
+                    </InteriorAddedInsulation>
+                    <Lintels idref="Code 10">Bsmnt Lintel</Lintels>
+                </Construction>
+                <Measurements />
+            </Wall>
+            """,
+            lambda node: basement.BasementWall.from_basement(node, 0),
+            basement.BasementWall,
+        ), (
+            # This XML block is missing the percentage of it's Section tags
+            """
+            <Wall hasPonyWall="true">
+                <Construction corners="4">
+                    <InteriorAddedInsulation idref="Code 17" nominalInsulation="1.4">
+                        <Description>2101010</Description>s
+                        <Composite>
+                            <Section rank="1" />
+                        </Composite>
+                    </InteriorAddedInsulation>
+                </Construction>
+                <Measurements height="2.4384" depth="1.8288" ponyWallHeight="0.9144" />
+            </Wall>
+            """,
+            lambda node: basement.BasementWall.from_basement(node, 0),
+            basement.BasementWall,
+        ), (
+            # This XML block has non-numeric strings as attribute values
+            """
+            <FloorHeader adjacentEnclosedSpace="data" id="data">
+                <Label>BW hdr-01</Label>
+                <Construction>
+                    <Type rValue="data" nominalInsulation="data">0000000000</Type>
+                </Construction>
+                <Measurements height="data" perimeter="data" />
+                <FacingDirection code="data">
+                    <English>N/A</English>
+                    <French>S/O</French>
+                </FacingDirection>
+            </FloorHeader>
+            """,
+            basement.BasementHeader.from_data,
+            basement.BasementHeader,
+        ), (
+            # This XML block is missing the insulation attributes of the Type tag
+            """
+            <FloorHeader adjacentEnclosedSpace="false" id="3">
+                <Label>BW hdr-01</Label>
+                <Construction>
+                    <Type >0000000000</Type>
+                </Construction>
+                <Measurements height="0.23" perimeter="34.7456" />
+                <FacingDirection code="1">
+                    <English>N/A</English>
+                    <French>S/O</French>
+                </FacingDirection>
+            </FloorHeader>
+            """,
+            basement.BasementHeader.from_data,
+            basement.BasementHeader,
+        ), (
+            # This XML block has an unknown foundation type tag
+            """
+            <SomeWeirdFoundation isExposedSurface="true" exposedSurfacePerimeter="34.7466" id="1">
+                <Label>Foundation - 2</Label>
+                <Configuration type="BBEN" subtype="1" overlap="0">BCIN_1</Configuration>
+            </SomeWeirdFoundation>
+            """,
+            basement.Basement.from_data,
+            basement.Basement,
+        ), (
+            # This XML block is missing the type attribute of teh Configuration tag
+            """
+            <Basement isExposedSurface="true" exposedSurfacePerimeter="34.7466" id="1">
+                <Label>Foundation - 2</Label>
+                <Configuration subtype="1" overlap="0">BCIN_1</Configuration>
+            </Basement>
+            """,
+            basement.Basement.from_data,
+            basement.Basement,
+        ), (
+            # This XML block is missing it's Label tag
+            """
+            <Crawlspace isExposedSurface="true" exposedSurfacePerimeter="9.144" id="29">
+                <Configuration type="SCN" subtype="1">SCN_1</Configuration>
+            </Crawlspace>
+            """,
+            basement.Basement.from_data,
+            basement.Basement,
+        ), (
+            # This XML block has an empty string as the type attribute of the Configuration tag
+            """
+            <Crawlspace isExposedSurface="true" exposedSurfacePerimeter="9.144" id="29">
+                <Label>Crawl</Label>
+                <Configuration type="" subtype="1">SCN_1</Configuration>
+            </Crawlspace>
+            """,
+            basement.Basement.from_data,
+            basement.Basement,
+        )
+    ]
+
+@pytest.mark.parametrize("bad_xml, parse_function, data_class", bad_xml())
+def test_bad_data(bad_xml, parse_function, data_class) -> None:
+    node = element.Element.from_string(bad_xml)
+    with pytest.raises(InvalidEmbeddedDataTypeError) as excinfo:
+        parse_function(node)
+
+    assert excinfo.value.data_class is data_class
