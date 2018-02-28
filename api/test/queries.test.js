@@ -598,7 +598,7 @@ describe('queries', () => {
       it('uses limit and next to paginate results', async () => {
         let response = await makeRequestForOnePage()
 
-        // use the value of "next" to fetch the next result
+        // use the value of "next" to fetch the next results
         let response2 = await makeRequestForOnePage({
           next: `next: "${response.body.data.dwellings.next}"`,
         })
@@ -608,18 +608,18 @@ describe('queries', () => {
         expect(first.results[0].yearBuilt).toEqual(3000)
         expect(second.results[0].yearBuilt).toEqual(1900)
 
-        expect(first.hasNext).toEqual(true)
-        expect(second.hasNext).toEqual(false)
+        expect(first.hasNext).toBe(true)
+        expect(second.hasNext).toBe(false)
       })
 
       it('uses limit and previous to paginate results', async () => {
         let response = await makeRequestForOnePage()
 
-        // use the value of "next" to fetch the next result
         let response2 = await makeRequestForOnePage({
           next: `next: "${response.body.data.dwellings.next}"`,
         })
 
+        // use the value of "previous" to fetch the previous results
         let response3 = await makeRequestForOnePage({
           previous: `previous: "${response2.body.data.dwellings.previous}"`,
         })
@@ -630,9 +630,29 @@ describe('queries', () => {
         expect(first).toEqual(third)
         expect(second.results[0].yearBuilt).toEqual(1900)
 
-        expect(first.hasPrevious).toEqual(false)
-        expect(second.hasPrevious).toEqual(true)
-        expect(third.hasPrevious).toEqual(false)
+        expect(first.hasPrevious).toBe(false)
+        expect(second.hasPrevious).toBe(true)
+        expect(third.hasPrevious).toBe(false)
+      })
+
+      it('Returns error key if values exist for both next and previous', async () => {
+        let response = await makeRequestForOnePage()
+
+        let response2 = await makeRequestForOnePage({
+          next: `next: "${response.body.data.dwellings.next}"`,
+          previous: `previous: "${response.body.data.dwellings.previous}"`,
+        })
+
+        let { dwellings: first } = response.body.data
+        expect(first.results[0].yearBuilt).toEqual(3000)
+
+        expect(response2.body.data.dwellings).toBe(null)
+        expect(response2.body.errors).not.toBe(null)
+        expect(response2.body.errors[0].message).toEqual(
+          "Cannot submit values for both 'next' and 'previous'.",
+        )
+        // returned status code is still 200
+        expect(response2.status).toBe(200)
       })
     })
 
