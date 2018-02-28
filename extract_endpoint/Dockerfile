@@ -1,6 +1,6 @@
 FROM python:3
 MAINTAINER Steven Zinck <steven.zinck@cds-snc.ca>
-LABEL Description="Python ETL" Vendor="Canadian Digital Service"
+LABEL Description="Python ETL Endpoint" Vendor="Canadian Digital Service"
 
 # Set version in .circlei/config.yml for docker build
 
