@@ -1,6 +1,6 @@
 {
   "Header insulation nominal RSI (R-value Systeme International)": {
-    "translation": "",
+    "translation": "Valeur nominale RSI (valeur R Système international) de l'isolation d'en-tête",
     "origin": [
       [
         "src/schema/Header.js",
@@ -9,7 +9,7 @@
     ]
   },
   "Header insulation nominal R-value": {
-    "translation": "",
+    "translation": "Valeur R nominale de l'isolation de l'en-tête",
     "origin": [
       [
         "src/schema/Header.js",
@@ -18,7 +18,7 @@
     ]
   },
   "Header insulation effective RSI (R-value Systeme International)": {
-    "translation": "",
+    "translation": "RSI (valeur R Système international) pour l'isolation efficace de l'en-tête",
     "origin": [
       [
         "src/schema/Header.js",
@@ -27,7 +27,7 @@
     ]
   },
   "Header insulation effective R-value": {
-    "translation": "",
+    "translation": "Valeur R pour l'isolation efficace d'en-tête",
     "origin": [
       [
         "src/schema/Header.js",
@@ -36,7 +36,7 @@
     ]
   },
   "Header area in square metres (m2)": {
-    "translation": "",
+    "translation": "Superficie d'en-tête en mètres carrés (m2)",
     "origin": [
       [
         "src/schema/Header.js",
@@ -45,7 +45,7 @@
     ]
   },
   "Header area in square feet (ft2)": {
-    "translation": "",
+    "translation": "Superficie d'en-tête en pieds carrés (ft2)",
     "origin": [
       [
         "src/schema/Header.js",
@@ -54,7 +54,7 @@
     ]
   },
   "Header perimeter of the house in metres (m)": {
-    "translation": "",
+    "translation": "Le périmètre d'en-tête de la maison en mètres (m)",
     "origin": [
       [
         "src/schema/Header.js",
@@ -63,7 +63,7 @@
     ]
   },
   "Header perimeter of the house in feet (ft)": {
-    "translation": "",
+    "translation": "Le périmètre d'en-tête de la maison en pieds (pi)",
     "origin": [
       [
         "src/schema/Header.js",
@@ -72,7 +72,7 @@
     ]
   },
   "Header height in metres (m)": {
-    "translation": "",
+    "translation": "Hauteur d'en-tête en mètres (m)",
     "origin": [
       [
         "src/schema/Header.js",
@@ -81,7 +81,7 @@
     ]
   },
   "Header height in feet (ft)": {
-    "translation": "",
+    "translation": "Hauteur d'en-tête en pieds (pi)",
     "origin": [
       [
         "src/schema/Header.js",
@@ -90,7 +90,7 @@
     ]
   },
   "The Energyguide Rating calculated for this evaluation": {
-    "translation": "",
+    "translation": "La cote Energyguide calculée pour cette évaluation",
     "origin": [
       [
         "src/schema/index.js",
@@ -117,7 +117,7 @@
     ]
   },
   "Cannot submit values for both 'next' and 'previous'.": {
-    "translation": "",
+    "translation": "Il faut pas soumettre des valeurs pour 'next' et 'previous' en même temps.",
     "origin": [
       [
         "src/schema/resolvers.js",
@@ -126,7 +126,7 @@
     ]
   },
   "Foundation Walls are below ground walls separating the interior heated space from the outside (interior partition walls are not considered walls)": {
-    "translation": "",
+    "translation": "Les murs de fondation sont des murs souterrains qui séparent l'espace intérieur chauffé de l'extérieur (les cloisons intérieures ne sont pas considérées comme des murs)",
     "origin": [
       [
         "src/schema/types/FoundationWall.js",
@@ -135,7 +135,7 @@
     ]
   },
   "The percentage of the total wall area this section accounts for": {
-    "translation": "",
+    "translation": "Le pourcentage de la superficie du mur totale de cette section représente",
     "origin": [
       [
         "src/schema/types/FoundationWall.js",
