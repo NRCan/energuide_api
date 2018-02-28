@@ -36,4 +36,5 @@ def post_stream(stream: typing.IO[bytes], filename: typing.Optional[str], url: s
 @click.option('--filename')
 @click.option('--url', default='http://127.0.0.1:5000/upload_file')
 def upload(stream: typing.IO[bytes], filename: typing.Optional[str], url: str) -> None:
-    click.echo(str(post_stream(stream=stream, filename=filename, url=url)))
+    post_return = post_stream(stream=stream, filename=filename, url=url)
+    click.echo(f"Response: {post_return.status_code}, {post_return.content}")

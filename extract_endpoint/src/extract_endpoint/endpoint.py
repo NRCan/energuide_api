@@ -69,7 +69,11 @@ def upload_file() -> typing.Tuple[str, int]:
     if flask.request.form['signature'] != signature:
         flask.abort(HTTPStatus.BAD_REQUEST)
 
-    file_z = zipfile.ZipFile(file)
+    try:
+        file_z = zipfile.ZipFile(file)
+    except zipfile.BadZipFile:
+        return "Bad Zipfile", HTTPStatus.BAD_REQUEST
+
     for json_file in [file_z.open(zipinfo) for zipinfo in file_z.infolist()]:
         if not azure_utils.upload_bytes_to_azure(App.config['AZURE_COORDINATES'], json_file.read(),
                                                  utils.secure_filename(json_file.name)):
