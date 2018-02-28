@@ -277,6 +277,7 @@ describe('Schema', () => {
       ])
     })
   })
+
   describe('Upgrade', () => {
     it('is defined', () => {
       expect(typeMap).toHaveProperty('Upgrade')
@@ -288,4 +289,5 @@ describe('Schema', () => {
       expect(fields).toEqual(['upgradeType', 'cost', 'priority'])
     })
   })
+
 })
