@@ -125,11 +125,10 @@ def test_purge_unknown(extra_filepath: str) -> None:
 def test_extract_missing(invalid_filepath: str) -> None:
     with pytest.raises(InvalidInputDataError) as ex:
         output = extractor.extract_data(invalid_filepath)
-        _ = dict(next(output))
+        dict(next(output))
 
     assert 'EVAL_ID' not in ex.exconly()
-
-    assert 'CLIENTADDR' in ex.exconly()
+    assert 'BUILDER' in ex.exconly()
 
 
 def test_empty_to_none(tmpdir: py._path.local.LocalPath) -> None:

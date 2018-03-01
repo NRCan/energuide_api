@@ -10,27 +10,7 @@ from energuide import snippets
 from energuide.exceptions import InvalidInputDataError
 
 
-DROP_FIELDS = ['ENTRYBY',
-               'CLIENTNAME',
-               'CLIENTADDR',
-               'CLIENTPCODE',
-               'TELEPHONE',
-               'MAIL_ADDR',
-               'MAIL_PCODE',
-               'TAXNUMBER',
-               'RAW_XML',
-               'INFO1',
-               'INFO2',
-               'INFO3',
-               'INFO4',
-               'INFO5',
-               'INFO6',
-               'INFO7',
-               'INFO8',
-               'INFO9',
-               'INFO10']
-
-KEEP_FIELDS = [
+REQUIRED_FIELDS = [
     'EVAL_ID',
     'EVAL_TYPE',
     'BUILDER',
@@ -42,14 +22,15 @@ KEEP_FIELDS = [
     'YEARBUILT',
     'CLIENTCITY',
     'HOUSEREGION',
+    'CLIENTPCODE',
+    'RAW_XML',
 ]
 
-REQUIRED_FIELDS = DROP_FIELDS + KEEP_FIELDS
-NULLABLE_FIELDS = ['MODIFICATIONDATE', 'ERSRATING'] + DROP_FIELDS
+NULLABLE_FIELDS = ['MODIFICATIONDATE', 'ERSRATING']
 
-_SCHEMA = {field: {'type': 'string', 'required': True} for field in REQUIRED_FIELDS}
+INPUT_SCHEMA = {field: {'type': 'string', 'required': True} for field in REQUIRED_FIELDS}
 for field in NULLABLE_FIELDS:
-    _SCHEMA[field] = {'type': 'string', 'required': True, 'nullable': True}
+    INPUT_SCHEMA[field] = {'type': 'string', 'required': True, 'nullable': True}
 
 _WINDOWS_LONG_SIZE = (2 ** 31) - 1
 
@@ -63,7 +44,7 @@ def _empty_to_none(data: typing.Iterable[reader.InputData]) -> typing.Iterator[r
 
 
 def _validated(data: typing.Iterable[reader.InputData]) -> typing.Iterator[reader.InputData]:
-    validator = cerberus.Validator(_SCHEMA, purge_unknown=True)
+    validator = cerberus.Validator(INPUT_SCHEMA, purge_unknown=True)
     for row in data:
         if not validator.validate(row):
             error_keys = ', '.join(validator.errors.keys())
@@ -113,20 +94,11 @@ def _extract_snippets(data: typing.Iterable[reader.InputData]) -> typing.Iterato
         yield row
 
 
-def _remove_pii_fields(data: typing.Iterable[reader.InputData]) -> typing.Iterator[reader.InputData]:
-    for row in data:
-        for key in DROP_FIELDS:
-            row.pop(key)
-        yield row
-
-
 def extract_data(input_path: str) -> typing.Iterator[reader.InputData]:
     data = _read_csv(input_path)
     patched = _empty_to_none(data)
     validated_data = _validated(patched)
-    data_with_snippets = _extract_snippets(validated_data)
-    safe_extract = _remove_pii_fields(data_with_snippets)
-    return safe_extract
+    return _extract_snippets(validated_data)
 
 
 def write_data(data: typing.Iterable[reader.InputData], output_path: str) -> None:
