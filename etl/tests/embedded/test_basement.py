@@ -743,14 +743,14 @@ def bad_xml() -> typing.List[typing.Tuple[str, typing.Callable[[element.Element]
             basement.BasementWall,
         ), (
 
-            # This XML black is missing the percentage attribute of the Section tag
+            # This XML black is missing the insulation attributes of the Section tag
             """
             <Wall>
                 <Construction corners="1">
                     <Type idref="Code 18" nominalInsulation="1.432">
                         <Description>1211100700</Description>
                         <Composite>
-                            <Section rank="1" rsi="1.7968" nominalRsi="1.432" />
+                            <Section rank="1" />
                         </Composite>
                     </Type>
                 </Construction>

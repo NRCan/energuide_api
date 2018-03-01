@@ -5,14 +5,8 @@ from energuide import bilingual
 from energuide.embedded import area
 from energuide.embedded import distance
 from energuide.embedded import insulation
-<<<<<<< HEAD
-from energuide.exceptions import InvalidEmbeddedDataTypeError
-from energuide.exceptions import ElementGetValueError
-=======
-from energuide.exceptions import InvalidInputDataError
 from energuide.exceptions import ElementGetValueError
 from energuide.exceptions import InvalidEmbeddedDataTypeError
->>>>>>> master
 
 
 class FoundationType(enum.Enum):
@@ -322,7 +316,11 @@ class BasementWall(_BasementWall):
     @classmethod
     def from_crawlspace(cls, wall: element.Element, wall_perimeter: float) -> typing.List['BasementWall']:
         wall_sections = wall.xpath('Construction/Type/Composite/Section')
-        wall_height = wall.get('Measurements/@height', float)
+
+        try:
+            wall_height = wall.get('Measurements/@height', float)
+        except ElementGetValueError as exc:
+            raise InvalidEmbeddedDataTypeError(BasementWall, 'Missing/invalid wall height') from exc
 
         percentages = [wall.attrib.get('percentage') for wall in wall_sections]
         accounted_for = sum(float(percentage) for percentage in percentages if percentage is not None)
