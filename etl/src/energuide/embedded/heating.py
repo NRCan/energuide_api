@@ -19,7 +19,6 @@ class EnergySource(enum.Enum):
     OIL = enum.auto()
     PROPANE = enum.auto()
     WOOD = enum.auto()
-    HARDWOOD = enum.auto()
 
 
 class _Heating(typing.NamedTuple):
