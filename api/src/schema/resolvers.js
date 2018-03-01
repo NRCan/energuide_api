@@ -173,11 +173,6 @@ const Resolvers = i18n => {
         return result
       },
     },
-    Evaluation: {
-      energyUpgrades: async root => {
-        return root.energyUgrades
-      },
-    },
     Field: {
       dwellingHouseId: dwellingHouseId.toString(),
       dwellingYearBuilt: dwellingYearBuilt.toString(),
