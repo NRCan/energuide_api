@@ -60,7 +60,7 @@ class Heating(_Heating):
         3: EnergySource.OIL,
         4: EnergySource.PROPANE,
         5: EnergySource.WOOD,
-        6: EnergySource.HARDWOOD,
+        6: EnergySource.WOOD,
     }
 
     _ENERGY_SOURCE_TRANSLATIONS = {
@@ -72,9 +72,7 @@ class Heating(_Heating):
         EnergySource.WOOD: bilingual.Bilingual(english='Wood Space Heating (Mixed Wood, Hardwood, '
                                                        'Soft Wood or Wood Pellets)',
                                                french='Chauffage au bois(Bois mélangé, Bois dur, Bois mou, '
-                                                      'Granules de bois)'),
-        EnergySource.HARDWOOD: bilingual.Bilingual(english='Hardwood',
-                                                   french='Bois dur'),
+                                                      'Granules de bois)')
     }
 
     @classmethod
