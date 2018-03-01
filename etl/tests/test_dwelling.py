@@ -514,7 +514,7 @@ def sample_input_d(ceiling_input: typing.List[str],
         'crawlspaces': crawlspace_input,
         'slabs': slab_input,
         'codes': raw_codes,
-        'ERSRATING': '567',
+        'ersRating': '567',
         'upgrades': upgrades_input,
     }
 
@@ -829,7 +829,7 @@ class TestParsedDwellingDataRow:
         assert 'EVAL_ID' not in ex.exconly()
 
     def test_missing_ers(self, sample_input_d: reader.InputData) -> None:
-        sample_input_d['ERSRATING'] = ''
+        sample_input_d['ersRating'] = ''
         output = dwelling.ParsedDwellingDataRow.from_row(sample_input_d)
         assert output.ers_rating is None
 
