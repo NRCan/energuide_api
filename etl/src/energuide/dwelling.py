@@ -334,7 +334,7 @@ class Evaluation:
             'waterHeatings': [water_heating.to_dict() for water_heating in self.water_heatings],
             'foundations': [foundation.to_dict() for foundation in self.foundations],
             'ersRating': self.ers_rating,
-            'energyUgrades': [upgrade.to_dict() for upgrade in self.energy_upgrades],
+            'energyUpgrades': [upgrade.to_dict() for upgrade in self.energy_upgrades],
             'heating': self.heating_system.to_dict(),
             'fileId': self.file_id,
         }
