@@ -345,6 +345,6 @@ workflows:
             - extract_endpoint
             - node_integration
       -
-        deploy:
+        deploy_api:
           requires:
             - yarn_build
