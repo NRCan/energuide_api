@@ -1956,7 +1956,7 @@
     ]
   },
   "Cannot submit values for both 'next' and 'previous'.": {
-    "translation": "Il faut pas soumettre des valeurs pour 'next' et 'previous' en même temps.",
+    "translation": "Ne pas soumettre des valeurs pour 'next' et 'previous' en même temps.",
     "origin": [
       [
         "src/schema/resolvers.js",
@@ -1974,7 +1974,7 @@
     ]
   },
   "The percentage of the total wall area this section accounts for": {
-    "translation": "Le pourcentage de la superficie du mur totale de cette section représente",
+    "translation": "Le pourcentage de la superficie de mur totale de cette section totalise",
     "origin": [
       [
         "src/schema/types/FoundationWall.js",
