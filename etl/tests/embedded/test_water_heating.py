@@ -220,18 +220,16 @@ BAD_XML_DATA = [
 ]
 
 
-def test_from_data_EF(sample_ef: element.Element) -> None:
+def test_from_data_ef(sample_ef: element.Element) -> None:
     output = water_heating.WaterHeating.from_data(sample_ef)[0]
     assert output.water_heater_type == water_heating.WaterHeaterType.ELECTRICITY_CONVENTIONAL_TANK
-    assert output.efficiency == 0.8217
-    assert output.efficiency_type == water_heating.EfficiencyType.ENERGY_FACTOR
+    assert output.efficiency_ef == 0.8217
 
 
 def test_from_data_percentage(sample_percentage: element.Element) -> None:
     output = water_heating.WaterHeating.from_data(sample_percentage)[0]
     assert output.water_heater_type == water_heating.WaterHeaterType.ELECTRICITY_CONVENTIONAL_TANK
-    assert output.efficiency == 98.0
-    assert output.efficiency_type == water_heating.EfficiencyType.PERCENTAGE
+    assert output.efficiency_percentage == 98.0
 
 
 @pytest.mark.parametrize("bad_xml", BAD_XML_DATA)
@@ -250,8 +248,8 @@ def test_to_dict(sample_ef: element.Element) -> None:
         'typeFrench': 'Réservoir électrique',
         'tankVolumeLitres': 189.3001,
         'tankVolumeGallon': 50.0077860172,
-        'efficiency': 0.8217,
-        'efficiencyUnits': 'EF',
+        'efficiencyEf': 0.8217,
+        'efficiencyPercentage': None,
     }
 
 
