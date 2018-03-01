@@ -73,7 +73,7 @@ class Heating(_Heating):
                                                        'Soft Wood or Wood Pellets)',
                                                french='Chauffage au bois(Bois mélangé, Bois dur, Bois mou, '
                                                       'Granules de bois)'),
-        EnergySource.HARDWOOD: bilingual.Bilingual(englis='Hardwood',
+        EnergySource.HARDWOOD: bilingual.Bilingual(english='Hardwood',
                                                    french='Bois dur'),
     }
 
