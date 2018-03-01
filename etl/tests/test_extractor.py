@@ -11,11 +11,11 @@ from energuide import reader
 from energuide.exceptions import InvalidInputDataError
 
 
-def _write_csv(filepath: str, data: typing.Dict[str, typing.Optional[str]]) -> None:
+def _write_csv(filepath: str, data: typing.Mapping[str, typing.Optional[str]]) -> None:
     with open(filepath, 'w') as file:
         writer = csv.DictWriter(file, fieldnames=list(data.keys()))
         writer.writeheader()
-        writer.writerow(data)
+        writer.writerow(dict(data))
 
 
 @pytest.fixture
