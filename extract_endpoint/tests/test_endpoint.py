@@ -1,6 +1,5 @@
 import io
 import base64
-import datetime
 from http import HTTPStatus
 import typing
 import pytest
@@ -36,31 +35,24 @@ def sample_secret_key() -> typing.Generator:
 
 
 @pytest.fixture
-def sample_timestamp() -> str:
-    return datetime.datetime(2018, 1, 1, 0, 0, 0).strftime("%Y-%m-%d %H:%M:%S")
-
-
-@pytest.fixture
-def sample_stream_content() -> str:
-    return "Sample stream content"
-
-
-@pytest.fixture
-def sample_stream(sample_stream_content: str) -> io.BytesIO:
-    return io.BytesIO(sample_stream_content.encode())
-
-
-@pytest.fixture
-def sample_signature(sample_salt: str, sample_secret_key: str, sample_stream: io.BytesIO) -> str:
+def sample_zipfile_signature(sample_salt: str, sample_secret_key: str, sample_zipfile: io.BytesIO) -> str:
     signature = crypt_utils.sign_string(salt=sample_salt, key=sample_secret_key,
-                                        data=base64.b64encode(sample_stream.read()).decode('utf-8'))
-    sample_stream.seek(0)
+                                        data=base64.b64encode(sample_zipfile.read()).decode('utf-8'))
+    sample_zipfile.seek(0)
     return signature
 
 
 @pytest.fixture
-def sample_filename() -> str:
-    return 'test_sample_blob_filename.txt'
+def sample_nonzipfile() -> io.BytesIO:
+    return io.BytesIO(b'Not a zipfile')
+
+
+@pytest.fixture
+def sample_nonzipfile_signature(sample_salt: str, sample_secret_key: str, sample_nonzipfile: io.BytesIO) -> str:
+    signature = crypt_utils.sign_string(salt=sample_salt, key=sample_secret_key,
+                                        data=base64.b64encode(sample_nonzipfile.read()).decode('utf-8'))
+    sample_nonzipfile.seek(0)
+    return signature
 
 
 @pytest.fixture
@@ -108,35 +100,33 @@ def check_file_in_azure(azure_service: blob.BlockBlobService,
     assert actual_blob.content == contents
 
 
-@pytest.mark.usefixtures('azure_service')
 def test_upload_with_timestamp(azure_emulator_coords: azure_utils.StorageCoordinates,
                                test_client: testing.FlaskClient,
                                azure_service: blob.BlockBlobService,
                                sample_timestamp: str,
                                sample_salt: str,
-                               sample_signature: str,
-                               sample_stream_content: str,
-                               sample_stream: io.BytesIO,
-                               sample_filename: str) -> None:
+                               sample_zipfile_signature: str,
+                               sample_file_contents: str,
+                               sample_filenames: str,
+                               sample_zipfile: io.BytesIO) -> None:
 
-    post_return = test_client.post('/upload_file', data=dict(salt=sample_salt, signature=sample_signature,
+    post_return = test_client.post('/upload_file', data=dict(salt=sample_salt, signature=sample_zipfile_signature,
                                                              timestamp=sample_timestamp,
-                                                             filename=sample_filename,
-                                                             file=(sample_stream, sample_filename)))
+                                                             file=(sample_zipfile, 'zipfile')))
     assert post_return.status_code == HTTPStatus.CREATED
     check_file_in_azure(azure_service, azure_emulator_coords, endpoint.TIMESTAMP_FILENAME, sample_timestamp)
-    check_file_in_azure(azure_service, azure_emulator_coords, sample_filename, sample_stream_content)
+    for name, contents in zip(sample_filenames, sample_file_contents):
+        check_file_in_azure(azure_service, azure_emulator_coords, name, contents)
 
 
+@pytest.mark.usefixtures('azure_service')
 def test_upload_without_timestamp(test_client: testing.FlaskClient,
                                   sample_salt: str,
-                                  sample_signature: str,
-                                  sample_stream: io.BytesIO,
-                                  sample_filename: str) -> None:
+                                  sample_zipfile_signature: str,
+                                  sample_zipfile: io.BytesIO) -> None:
 
-    post_return = test_client.post('/upload_file', data=dict(salt=sample_salt, signature=sample_signature,
-                                                             filename=sample_filename,
-                                                             file=(sample_stream, sample_filename)))
+    post_return = test_client.post('/upload_file', data=dict(salt=sample_salt, signature=sample_zipfile_signature,
+                                                             file=(sample_zipfile, 'zipfile')))
     assert post_return.status_code == HTTPStatus.BAD_REQUEST
 
 
@@ -144,69 +134,59 @@ def test_upload_without_timestamp(test_client: testing.FlaskClient,
 def test_upload_no_key_in_env(test_client: testing.FlaskClient,
                               sample_timestamp: str,
                               sample_salt: str,
-                              sample_signature: str,
-                              sample_stream: io.BytesIO,
-                              sample_filename: str) -> None:
+                              sample_zipfile_signature: str,
+                              sample_zipfile: io.BytesIO) -> None:
 
     endpoint.App.config['SECRET_KEY'] = endpoint.DEFAULT_ENDPOINT_SECRET_KEY
     with pytest.raises(ValueError):
-        test_client.post('/upload_file', data=dict(salt=sample_salt, signature=sample_signature,
-                                                   timestamp=sample_timestamp,
-                                                   filename=sample_filename,
-                                                   file=(sample_stream, sample_filename)))
+        test_client.post('/upload_file', data=dict(salt=sample_salt, signature=sample_zipfile_signature,
+                                                   timestamp=sample_timestamp, file=(sample_zipfile, 'zipfile')))
 
 
 @pytest.mark.usefixtures('azure_service')
 def test_upload_no_salt(test_client: testing.FlaskClient,
                         sample_timestamp: str,
-                        sample_signature: str,
-                        sample_stream: io.BytesIO,
-                        sample_filename: str) -> None:
+                        sample_zipfile_signature: str,
+                        sample_zipfile: io.BytesIO) -> None:
 
-    post_return = test_client.post('/upload_file', data=dict(signature=sample_signature,
+    post_return = test_client.post('/upload_file', data=dict(signature=sample_zipfile_signature,
                                                              timestamp=sample_timestamp,
-                                                             filename=sample_filename,
-                                                             file=(sample_stream, sample_filename)))
+                                                             file=(sample_zipfile, 'zipfile')))
     assert post_return.status_code == HTTPStatus.BAD_REQUEST
 
 
 @pytest.mark.usefixtures('azure_service')
 def test_upload_wrong_salt(test_client: testing.FlaskClient,
                            sample_timestamp: str,
-                           sample_signature: str,
-                           sample_stream: io.BytesIO,
-                           sample_filename: str) -> None:
+                           sample_zipfile_signature: str,
+                           sample_zipfile: io.BytesIO) -> None:
 
-    post_return = test_client.post('/upload_file', data=dict(salt='wrong salt', signature=sample_signature,
+    post_return = test_client.post('/upload_file', data=dict(salt='wrong salt', signature=sample_zipfile_signature,
                                                              timestamp=sample_timestamp,
-                                                             filename=sample_filename,
-                                                             file=(sample_stream, sample_filename)))
+                                                             file=(sample_zipfile, 'zipfile')))
     assert post_return.status_code == HTTPStatus.BAD_REQUEST
 
-@pytest.mark.usefixtures('sample_signature', 'azure_service')
+
+@pytest.mark.usefixtures('azure_service', 'sample_secret_key')
 def test_upload_no_signature(test_client: testing.FlaskClient,
                              sample_timestamp: str,
                              sample_salt: str,
-                             sample_stream: io.BytesIO,
-                             sample_filename: str) -> None:
+                             sample_zipfile: io.BytesIO) -> None:
 
-    post_return = test_client.post('/upload_file', data=dict(salt=sample_salt, filename=sample_filename,
-                                                             timestamp=sample_timestamp,
-                                                             file=(sample_stream, sample_filename)))
+    post_return = test_client.post('/upload_file', data=dict(salt=sample_salt, timestamp=sample_timestamp,
+                                                             file=(sample_zipfile, 'zipfile')))
     assert post_return.status_code == HTTPStatus.BAD_REQUEST
 
 
-@pytest.mark.usefixtures('sample_signature', 'azure_service')
+@pytest.mark.usefixtures('azure_service', 'sample_secret_key')
 def test_upload_wrong_signature(test_client: testing.FlaskClient,
                                 sample_timestamp: str,
                                 sample_salt: str,
-                                sample_stream: io.BytesIO,
-                                sample_filename: str) -> None:
+                                sample_zipfile: io.BytesIO) -> None:
 
     post_return = test_client.post('/upload_file', data=dict(salt=sample_salt, signature='wrong signature',
                                                              timestamp=sample_timestamp,
-                                                             filename=sample_filename,
-                                                             file=(sample_stream, sample_filename)))
+                                                             file=(sample_zipfile, 'zipfile')))
     assert post_return.status_code == HTTPStatus.BAD_REQUEST
 
 
@@ -214,21 +194,22 @@ def test_upload_wrong_signature(test_client: testing.FlaskClient,
 def test_upload_no_file(test_client: testing.FlaskClient,
                         sample_timestamp: str,
                         sample_salt: str,
-                        sample_signature: str) -> None:
+                        sample_zipfile_signature: str) -> None:
 
-    post_return = test_client.post('/upload_file', data=dict(salt=sample_salt, signature=sample_signature,
-                                                             timestamp=sample_timestamp, filename=sample_filename))
+    post_return = test_client.post('/upload_file', data=dict(salt=sample_salt, signature=sample_zipfile_signature,
+                                                             timestamp=sample_timestamp))
     assert post_return.status_code == HTTPStatus.BAD_REQUEST
 
 
 @pytest.mark.usefixtures('azure_service')
-def test_upload_no_filename(test_client: testing.FlaskClient,
-                            sample_timestamp: str,
-                            sample_salt: str,
-                            sample_signature: str,
-                            sample_stream: io.BytesIO) -> None:
+def test_upload_with_non_zipfile(test_client: testing.FlaskClient,
+                                 sample_timestamp: str,
+                                 sample_salt: str,
+                                 sample_nonzipfile_signature: str,
+                                 sample_nonzipfile: io.BytesIO) -> None:
 
-    post_return = test_client.post('/upload_file', data=dict(salt=sample_salt, signature=sample_signature,
+    post_return = test_client.post('/upload_file', data=dict(salt=sample_salt, signature=sample_nonzipfile_signature,
                                                              timestamp=sample_timestamp,
-                                                             filename=sample_filename, file=(sample_stream, '')))
+                                                             file=(sample_nonzipfile, 'zipfile')))
     assert post_return.status_code == HTTPStatus.BAD_REQUEST
+    assert b"Bad Zipfile" in post_return.data

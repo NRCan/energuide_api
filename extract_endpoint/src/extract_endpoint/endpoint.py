@@ -2,6 +2,7 @@ import os
 import base64
 import typing
 from http import HTTPStatus
+import zipfile
 import flask
 from werkzeug import utils
 from azure.common import AzureMissingResourceHttpError
@@ -59,25 +60,27 @@ def upload_file() -> typing.Tuple[str, int]:
         flask.abort(HTTPStatus.BAD_REQUEST)
     if 'salt' not in flask.request.form:
         flask.abort(HTTPStatus.BAD_REQUEST)
-    if flask.request.form.get('filename', '') == '':
-        flask.abort(HTTPStatus.BAD_REQUEST)
     if 'file' not in flask.request.files:
         flask.abort(HTTPStatus.BAD_REQUEST)
     if 'timestamp' not in flask.request.form:
         flask.abort(HTTPStatus.BAD_REQUEST)
 
     file = flask.request.files['file']
-    file_contents = file.read()
-    file_as_string = base64.b64encode(file_contents).decode('utf-8')
     signature = crypt_utils.sign_string(salt=flask.request.form['salt'], key=App.config['SECRET_KEY'],
-                                        data=file_as_string)
+                                        data=base64.b64encode(file.read()).decode('utf-8'))
+    file.seek(0)
     if flask.request.form['signature'] != signature:
         flask.abort(HTTPStatus.BAD_REQUEST)
 
-    filename = utils.secure_filename(flask.request.form['filename'])
+    try:
+        file_z = zipfile.ZipFile(file)
+    except zipfile.BadZipFile:
+        return "Bad Zipfile", HTTPStatus.BAD_REQUEST
 
-    if not azure_utils.upload_bytes_to_azure(App.config['AZURE_COORDINATES'], file_contents, filename):
-        flask.abort(HTTPStatus.BAD_GATEWAY)
+    for json_file in [file_z.open(zipinfo) for zipinfo in file_z.infolist()]:
+        if not azure_utils.upload_bytes_to_azure(App.config['AZURE_COORDINATES'], json_file.read(),
+                                                 utils.secure_filename(json_file.name)):
+            flask.abort(HTTPStatus.BAD_GATEWAY)
 
     timestamp = flask.request.form['timestamp']
 
