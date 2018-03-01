@@ -6,6 +6,8 @@ from energuide.embedded import area
 from energuide.embedded import distance
 from energuide.embedded import insulation
 from energuide.exceptions import InvalidInputDataError
+from energuide.exceptions import ElementGetValueError
+from energuide.exceptions import InvalidEmbeddedDataTypeError
 
 
 class FoundationType(enum.Enum):
@@ -245,8 +247,8 @@ class BasementWall(_BasementWall):
 
         return BasementWall(
             wall_type=tag,
-            nominal_insulation=insulation.Insulation(float(wall.attrib['nominalRsi'])),
-            effective_insulation=insulation.Insulation(float(wall.attrib['rsi'])),
+            nominal_insulation=insulation.Insulation(nominal_insulation),
+            effective_insulation=insulation.Insulation(effective_insulation),
             composite_percentage=percentage,
             wall_area=area.Area(wall_perimeter * wall_height * (percentage / 100))
         )
@@ -264,12 +266,30 @@ class BasementWall(_BasementWall):
         sections = (interior_wall_sections, exterior_wall_sections, pony_wall_sections)
 
         parsers = (
-            lambda section, percentage: BasementWall._from_data(section, wall_perimeter, wall_height, WallType.INTERIOR, percentage),
-            lambda section, percentage: BasementWall._from_data(section, wall_perimeter, wall_height, WallType.EXTERIOR, percentage),
-            lambda section, percentage: BasementWall._from_data(section, wall_perimeter, pony_height, WallType.PONY, percentage)
+            lambda section, percentage: BasementWall._from_data(
+                section,
+                wall_perimeter,
+                wall_height,
+                WallType.INTERIOR,
+                percentage
+            ),
+            lambda section, percentage: BasementWall._from_data(
+                section,
+                wall_perimeter,
+                wall_height,
+                WallType.EXTERIOR,
+                percentage
+            ),
+            lambda section, percentage: BasementWall._from_data(
+                section,
+                wall_perimeter,
+                pony_height,
+                WallType.PONY,
+                percentage
+            )
         )
 
-        for parser, wall_sections in zip(parsers, sections) :
+        for parser, wall_sections in zip(parsers, sections):
             percentages = [wall.attrib.get('percentage') for wall in wall_sections]
             accounted_for = sum(float(percentage) for percentage in percentages if percentage is not None)
 
@@ -285,8 +305,16 @@ class BasementWall(_BasementWall):
         percentages = [wall.attrib.get('percentage') for wall in wall_sections]
         accounted_for = sum(float(percentage) for percentage in percentages if percentage is not None)
 
-        return [BasementWall._from_data(wall_section, wall_perimeter, wall_height, WallType.NOT_APPLICABLE, accounted_for)
-                for wall_section in wall_sections]
+        return [
+            BasementWall._from_data(
+                wall_section,
+                wall_perimeter,
+                wall_height,
+                WallType.NOT_APPLICABLE,
+                accounted_for
+            )
+            for wall_section in wall_sections
+        ]
 
 
     def to_dict(self) -> typing.Dict[str, typing.Any]:
