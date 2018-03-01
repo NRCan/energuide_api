@@ -1,6 +1,96 @@
 {
+  "Header insulation nominal RSI (R-value Systeme International)": {
+    "translation": "Valeur nominale RSI (valeur R Système international) de l'isolation d'en-tête",
+    "origin": [
+      [
+        "src/schema/Header.js",
+        4
+      ]
+    ]
+  },
+  "Header insulation nominal R-value": {
+    "translation": "Valeur R nominale de l'isolation de l'en-tête",
+    "origin": [
+      [
+        "src/schema/Header.js",
+        6
+      ]
+    ]
+  },
+  "Header insulation effective RSI (R-value Systeme International)": {
+    "translation": "RSI (valeur R Système international) pour l'isolation efficace de l'en-tête",
+    "origin": [
+      [
+        "src/schema/Header.js",
+        8
+      ]
+    ]
+  },
+  "Header insulation effective R-value": {
+    "translation": "Valeur R pour l'isolation efficace d'en-tête",
+    "origin": [
+      [
+        "src/schema/Header.js",
+        10
+      ]
+    ]
+  },
+  "Header area in square metres (m2)": {
+    "translation": "Superficie d'en-tête en mètres carrés (m2)",
+    "origin": [
+      [
+        "src/schema/Header.js",
+        12
+      ]
+    ]
+  },
+  "Header area in square feet (ft2)": {
+    "translation": "Superficie d'en-tête en pieds carrés (ft2)",
+    "origin": [
+      [
+        "src/schema/Header.js",
+        14
+      ]
+    ]
+  },
+  "Header perimeter of the house in metres (m)": {
+    "translation": "Le périmètre d'en-tête de la maison en mètres (m)",
+    "origin": [
+      [
+        "src/schema/Header.js",
+        16
+      ]
+    ]
+  },
+  "Header perimeter of the house in feet (ft)": {
+    "translation": "Le périmètre d'en-tête de la maison en pieds (pi)",
+    "origin": [
+      [
+        "src/schema/Header.js",
+        18
+      ]
+    ]
+  },
+  "Header height in metres (m)": {
+    "translation": "Hauteur d'en-tête en mètres (m)",
+    "origin": [
+      [
+        "src/schema/Header.js",
+        20
+      ]
+    ]
+  },
+  "Header height in feet (ft)": {
+    "translation": "Hauteur d'en-tête en pieds (pi)",
+    "origin": [
+      [
+        "src/schema/Header.js",
+        22
+      ]
+    ]
+  },
   "An operator to describe how results will be filtered": {
-    "translation": "Un opérateur pour décrire comment les résultats seront filtrés",
+    "translation": "Un opérateur indiquant comment les résultats seront triés",
     "origin": [
       [
         "src/schema/index.js",
@@ -8,12 +98,12 @@
       ],
       [
         "src/schema/index.js",
-        26
+        27
       ]
     ]
   },
   "Greater than: returns true for results greater than the comparison value": {
-    "translation": "Supérieur à: renvoie vrai pour les résultats supérieurs à la valeur de comparaison",
+    "translation": "Supérieur à : génère 'true' pour les résultats supérieurs à la valeur de comparaison",
     "origin": [
       [
         "src/schema/index.js",
@@ -22,7 +112,7 @@
     ]
   },
   "Less than: returns true for results less than the comparison value": {
-    "translation": "Inférieur à: renvoie vrai pour les résultats inférieurs à la valeur de comparaison",
+    "translation": "Inférieur à : génère 'true' pour les résultats inférieurs à la valeur de comparaison",
     "origin": [
       [
         "src/schema/index.js",
@@ -31,7 +121,7 @@
     ]
   },
   "Equal to: returns true for results equal to the comparison value": {
-    "translation": "Egal à: renvoie vrai pour les résultats égaux à la valeur de comparaison",
+    "translation": "Égal à : génère 'true' pour les résultats égaux à la valeur de comparaison",
     "origin": [
       [
         "src/schema/index.js",
@@ -40,20 +130,20 @@
     ]
   },
   "Filters will return results only if they satisfy a condition": {
-    "translation": "Les filtres renverront les résultats uniquement s'ils satisfont une condition",
+    "translation": "Le tri génèrera des résultats uniquement s'ils satisfont à une condition",
     "origin": [
       [
         "src/schema/index.js",
-        22
+        23
       ]
     ]
   },
   "Name of field results will be filtered by": {
-    "translation": "Les noms des résultats du champ seront filtrés par",
+    "translation": "Noms des résultats de champs triés par",
     "origin": [
       [
         "src/schema/index.js",
-        24
+        25
       ]
     ]
   },
@@ -62,52 +152,52 @@
     "origin": [
       [
         "src/schema/index.js",
-        28
+        29
       ]
     ]
   },
-  "An improvement that could improve the energy efficiency of the dwelling": {
-    "translation": "Une amélioration qui pourrait améliorer l'efficacité énergétique du logement",
+  "An improvement that could increase the energy efficiency of the dwelling": {
+    "translation": "Une amélioration qui pourrait augmenter l'efficacité énergétique du logement",
     "origin": [
       [
         "src/schema/index.js",
-        32
+        33
       ]
     ]
   },
   "Part of the dwelling to be upgraded": {
-    "translation": "Une partie de l'habitation à améliorer",
+    "translation": "Partie du logement à améliorer",
     "origin": [
       [
         "src/schema/index.js",
-        34
+        35
       ]
     ]
   },
   "Estimated cost of upgrade": {
-    "translation": "Coût estimatif de la mise à niveau",
+    "translation": "Coût estimatif de l'amélioration",
     "origin": [
       [
         "src/schema/index.js",
-        36
+        37
       ]
     ]
   },
   "Order of importance of upgrade recommendation (lower number means a higher priority)": {
-    "translation": "Ordre d'importance de la recommandation de mise à niveau (nombre inférieur signifie une priorité plus élevée)",
+    "translation": "Ordre d'importance de l'amélioration recommandée (plus le chiffre est petit, plus la priorité est élevée)",
     "origin": [
       [
         "src/schema/index.js",
-        38
+        39
       ]
     ]
   },
   "Ventilation systems draw exterior air into the house, exhaust interior air to the exterior, or both": {
-    "translation": "Les systèmes de ventilation aspirent l'air extérieur dans la maison, évacuent l'air intérieur vers l'extérieur ou les deux",
+    "translation": "Les systèmes de ventilation aspirent l'air extérieur dans la maison, évacuent l'air intérieur vers l'extérieur ou les deux.",
     "origin": [
       [
         "src/schema/index.js",
-        42
+        43
       ]
     ]
   },
@@ -116,7 +206,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        44
+        45
       ]
     ]
   },
@@ -125,178 +215,173 @@
     "origin": [
       [
         "src/schema/index.js",
-        46
+        47
       ]
     ]
   },
-  "Air flow rate in Litres per Second (LpS)": {
-    "translation": "Débit d'air en litres par seconde (LpS)",
+  "Air flow rate in litres per second (L/s)": {
+    "translation": "Débit d'air en litres par seconde (L/s)",
     "origin": [
       [
         "src/schema/index.js",
-        48
+        49
       ]
     ]
   },
-  "Air flow rate in Cubic feet per Minute (CfM)": {
-    "translation": "Débit d'air en pieds cubes par minute (CfM)",
+  "Air flow rate in cubic feet per minute (f3/m)": {
+    "translation": "Débit d'air en pieds cubes par minute (pi3/m)",
     "origin": [
       [
         "src/schema/index.js",
-        50
+        51
       ]
     ]
   },
   "Floors represents the usable area of the house": {
-    "translation": "Les planchers représentent la surface utilisable de la maison",
+    "translation": "Les planchers représentent la superficie utilisable de la maison",
     "origin": [
       [
         "src/schema/index.js",
-        54
+        55
       ]
     ]
   },
   "Description of floor location": {
-    "translation": "Description de l'emplacement au sol",
+    "translation": "Description de l'emplacement du plancher",
     "origin": [
       [
         "src/schema/index.js",
-        56
+        57
       ]
     ]
   },
   "Floor insulation nominal RSI (R-value Systeme International)": {
-    "translation": "Isolation du sol nominale RSI (valeur R Systeme International)",
+    "translation": "Valeur nominale RSI (valeur R Système international) de l'isolation du plancher",
     "origin": [
       [
         "src/schema/index.js",
-        58
+        59
       ]
     ]
   },
   "Floor insulation nominal R-value": {
-    "translation": "Isolation du sol valeur R nominale",
+    "translation": "Valeur R nominale de l'isolation du plancher",
     "origin": [
       [
         "src/schema/index.js",
-        60
+        61
       ]
     ]
   },
   "Floor insulation effective RSI (R-value Systeme International)": {
-    "translation": "Isolation de sol efficace RSI (valeur R Systeme International)",
+    "translation": "RSI (valeur R Système international) pour l'isolation efficace du plancher",
     "origin": [
       [
         "src/schema/index.js",
-        62
+        63
       ]
     ]
   },
   "Floor insulation effective R-value": {
-    "translation": "Isolation du sol efficace R-value",
+    "translation": "Valeur R pour l'isolation efficace du plancher",
     "origin": [
       [
         "src/schema/index.js",
-        64
+        65
       ]
     ]
   },
   "Floor area of the house in square metres (m2)": {
-    "translation": "Surface de la maison en mètres carrés (m2)",
+    "translation": "Superficie de plancher de la maison en mètres carrés (m2)",
     "origin": [
       [
         "src/schema/index.js",
-        66
+        67
       ]
     ]
   },
   "Floor area of the house in square feet (ft2)": {
-    "translation": "Superficie de la maison en pieds carrés (pi2)",
+    "translation": "Superficie de plancher de la maison en pieds carrés (pi2)",
     "origin": [
       [
         "src/schema/index.js",
-        68
+        69
+      ],
+      [
+        "src/schema/index.js",
+        73
       ]
     ]
   },
   "Floor length of the house in metres (m)": {
-    "translation": "Longueur de plancher de la maison en mètres (m)",
+    "translation": "Longueur du plancher de la maison en mètres (m)",
     "origin": [
       [
         "src/schema/index.js",
-        70
+        71
       ]
     ]
   },
-  "Floor area of the house in feet (ft)": {
-    "translation": "Surface au sol de la maison en pieds (pi)",
+  "Water heaters heat the domestic water in a house": {
+    "translation": "Les chauffe-eau chauffent l'eau domestique dans une maison",
     "origin": [
       [
         "src/schema/index.js",
-        72
+        77
       ]
     ]
   },
-  "Water heaters heat the domestic hot water in a house": {
-    "translation": "Les chauffe-eau chauffent l'eau chaude domestique dans une maison",
+  "Type of tank being used to heat the domestic water in the house (en)": {
+    "translation": "Type de réservoir utilisé pour chauffer l'eau domestique dans la maison (en)",
     "origin": [
       [
         "src/schema/index.js",
-        76
+        79
       ]
     ]
   },
-  "Type of tank being used to heat the domestic hot water in the house (en)": {
-    "translation": "Type de réservoir utilisé pour chauffer l'eau chaude sanitaire de la maison (en)",
+  "Type of tank being used to heat the domestic water in the house (fr)": {
+    "translation": "Type de réservoir utilisé pour chauffer l'eau domestique dans la maison",
     "origin": [
       [
         "src/schema/index.js",
-        78
+        81
       ]
     ]
   },
-  "Type of tank being used to heat the domestic hot water in the house (fr)": {
-    "translation": "Type de réservoir utilisé pour chauffer l'eau chaude sanitaire de la maison",
+  "Capacity of the tank in litres (L)": {
+    "translation": "Capacité du réservoir en litres (L)",
     "origin": [
       [
         "src/schema/index.js",
-        80
+        83
       ]
     ]
   },
-  "Volume of the tank capacity in Litres (L)": {
-    "translation": "Volume de la capacité du réservoir en litres (L)",
+  "Capacity of the tank in gallons (Gal)": {
+    "translation": "Capacité du réservoir en gallons (gal)",
     "origin": [
       [
         "src/schema/index.js",
-        82
-      ]
-    ]
-  },
-  "Volume of the tank capacity in Gallons (G)": {
-    "translation": "Volume de la capacité du réservoir en gallons (G)",
-    "origin": [
-      [
-        "src/schema/index.js",
-        84
+        85
       ]
     ]
   },
   "Measures how effectively your water heater is burning fuel or turning fuel into heat": {
-    "translation": "Mesure l'efficacité avec laquelle votre chauffe-eau brûle du carburant ou transforme le combustible en chaleur",
+    "translation": "Mesure l'efficacité avec laquelle votre chauffe-eau consomme le combustible ou le transforme en chaleur",
     "origin": [
       [
         "src/schema/index.js",
-        86
+        87
       ]
     ]
   },
   "A principal heating system is either the only source of heat for the house, or is used for at least 70% of the heating load": {
-    "translation": "Un système de chauffage principal est soit la seule source de chaleur pour la maison, soit est utilisé pour au moins 70% de la charge de chauffage",
+    "translation": "Pour être désigné comme principal, un système de chauffage doit être la seule source de chaleur pour la maison, ou être utilisé pour au moins 70 % de la charge de chauffage",
     "origin": [
       [
         "src/schema/index.js",
-        90
+        91
       ]
     ]
   },
@@ -305,7 +390,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        92
+        93
       ]
     ]
   },
@@ -314,7 +399,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        94
+        95
       ]
     ]
   },
@@ -323,25 +408,25 @@
     "origin": [
       [
         "src/schema/index.js",
-        96
+        97
       ]
     ]
   },
   "The source of fuel for the heating system (en)": {
-    "translation": "La source de carburant pour le système de chauffage (en)",
+    "translation": "La source de combustible du système de chauffage (en)",
     "origin": [
       [
         "src/schema/index.js",
-        98
+        99
       ]
     ]
   },
   "The source of fuel for the heating system (fr)": {
-    "translation": "La source de carburant pour le système de chauffage",
+    "translation": "La source de combustible du système de chauffage",
     "origin": [
       [
         "src/schema/index.js",
-        100
+        101
       ]
     ]
   },
@@ -350,7 +435,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        102
+        103
       ]
     ]
   },
@@ -359,43 +444,43 @@
     "origin": [
       [
         "src/schema/index.js",
-        104
+        105
       ]
     ]
   },
   "Output capacity of the heating system in kilowatt hours (kWh)": {
-    "translation": "Capacité de production du système de chauffage en kilowattheures (kWh)",
+    "translation": "Puissance nette du système de chauffage en kilowattheures (kWh)",
     "origin": [
       [
         "src/schema/index.js",
-        106
+        107
       ]
     ]
   },
   "Output capacity of the heating system in British Thermal Units per hour (BTU/h)": {
-    "translation": "Capacité de production du système de chauffage dans les unités thermiques britanniques par heure (BTU / h)",
+    "translation": "Puissance nette du système de chauffage en unités thermiques britanniques par heure (BTU/h)",
     "origin": [
       [
         "src/schema/index.js",
-        108
+        109
       ]
     ]
   },
   "Measures how effectively your heating system is burning fuel or turning fuel into heat": {
-    "translation": "Mesure l'efficacité avec laquelle votre système de chauffage brûle du carburant ou transforme le combustible en chaleur",
+    "translation": "Mesure l'efficacité avec laquelle votre système de chauffage consomme le combustible ou le transforme en chaleur",
     "origin": [
       [
         "src/schema/index.js",
-        110
+        111
       ]
     ]
   },
   "Steady-state efficiency is the combustion efficiency of the equipment at peak performance. The Annual Fuel Utilization Efficiency (AFUE) is a measure of efficiency based on average usage, accounting for the fact that most heating systems rarely run long enough to reach peak performance.": {
-    "translation": "L'efficacité à l'état d'équilibre est l'efficacité de combustion de l'équipement aux performances de pointe. L'efficacité annuelle de l'utilisation du combustible (AFUE) est une mesure de l'efficacité basée sur l'utilisation moyenne, tenant compte du fait que la plupart des systèmes de chauffage fonctionnent rarement assez longtemps pour atteindre une performance maximale.",
+    "translation": "Le rendement en régime permanent est l'efficacité de combustion de l'équipement au rendement maximal. Le rendement énergétique annuel (norme AFUE) est une mesure de l'efficacité définie par l'utilisation moyenne, qui tient compte du fait que la plupart des systèmes de chauffage fonctionnent rarement assez longtemps pour atteindre le rendement maximal.",
     "origin": [
       [
         "src/schema/index.js",
-        112
+        113
       ]
     ]
   },
@@ -404,43 +489,43 @@
     "origin": [
       [
         "src/schema/index.js",
-        117
+        118
       ]
     ]
   },
   "If true, a further page of results can be returned": {
-    "translation": "Si vrai, une autre page de résultats peut être retournée",
+    "translation": "Si it est 'true', une autre page de résultats peut être générée",
     "origin": [
       [
         "src/schema/index.js",
-        119
+        120
       ]
     ]
   },
   "If true, a previous page of results can be returned": {
-    "translation": "Si vrai, une page précédente de résultats peut être retournée",
+    "translation": "Si il est 'true', une page précédente de résultats peut être générée",
     "origin": [
       [
         "src/schema/index.js",
-        121
+        122
       ]
     ]
   },
   "Identifier used to return the next page of results": {
-    "translation": "Identifiant utilisé pour retourner la page suivante des résultats",
+    "translation": "Identifiant utilisé pour générer la prochaine page de résultats",
     "origin": [
       [
         "src/schema/index.js",
-        123
+        124
       ]
     ]
   },
   "Identifier cursor used to return the previous page of results": {
-    "translation": "Curseur d'identification utilisé pour retourner la page précédente des résultats",
+    "translation": "Curseur d'identification utilisé pour générer la page précédente de résultats",
     "origin": [
       [
         "src/schema/index.js",
-        125
+        126
       ]
     ]
   },
@@ -449,52 +534,52 @@
     "origin": [
       [
         "src/schema/index.js",
-        127
+        128
       ]
     ]
   },
   "Heated floor areas represents the usable areas of a house that is conditioned to a specified temperature during the whole heating season": {
-    "translation": "Les surfaces de plancher chauffées représentent les surfaces utilisables d'une maison qui est conditionnée à une température spécifiée pendant toute la saison de chauffage",
+    "translation": "Les superficies d'étage chauffé représentent les surfaces utilisables d'une maison tempérée à une température spécifiée durant toute la saison de chauffage",
     "origin": [
       [
         "src/schema/index.js",
-        131
+        132
       ]
     ]
   },
   "Above-grade heated area of the house in square metres (m2), i.e. the ground floor": {
-    "translation": "Surface chauffée au-dessus de la surface de la maison en mètres carrés (m2), c.-à-d. Au rez-de-chaussée",
+    "translation": "Superficie chauffée d'un étage au-dessus du niveau du sol en mètres carrés (m2), c'est-à-dire le rez-de-chaussée",
     "origin": [
       [
         "src/schema/index.js",
-        133
+        134
       ]
     ]
   },
   "Above-grade heated area of the house in square feet (ft2), i.e. the ground floor": {
-    "translation": "Superficie chauffée de la maison en pieds carrés (pi2), c'est-à-dire au rez-de-chaussée",
+    "translation": "Superficie chauffée d'un étage au-dessus du niveau du sol en pieds carrés (pi2), c'est-à-dire le rez-de-chaussée",
     "origin": [
       [
         "src/schema/index.js",
-        135
+        136
       ]
     ]
   },
   "Below-grade heated area of the house in square metres (m2), i.e. the basement": {
-    "translation": "Sous-sol chauffé de la maison en mètres carrés (m2), c'est-à-dire le sous-sol",
+    "translation": "Superficie chauffée au-dessous du niveau du sol en mètres carrés (m2), c'est-à-dire le sous-sol",
     "origin": [
       [
         "src/schema/index.js",
-        137
+        138
       ]
     ]
   },
   "Below-grade heated area of the house in square feet (ft2), i.e. the basement": {
-    "translation": "Sous-sol chauffé de la maison en pieds carrés (pi2), c'est-à-dire le sous-sol",
+    "translation": "Superficie chauffée au-dessous du niveau du sol en pieds carrés (pi2), c'est-à-dire le sous-sol",
     "origin": [
       [
         "src/schema/index.js",
-        139
+        140
       ]
     ]
   },
@@ -503,7 +588,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        143
+        144
       ]
     ]
   },
@@ -512,7 +597,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        145
+        146
       ]
     ]
   },
@@ -521,83 +606,115 @@
     "origin": [
       [
         "src/schema/index.js",
-        147
+        148
+      ],
+      [
+        "src/schema/types/FoundationWall.js",
+        5
       ]
     ]
   },
   "Wall construction being used (fr)": {
-    "translation": "Construction de mur utilisée (pour)",
+    "translation": "Construction de mur utilisée (fr)",
     "origin": [
       [
         "src/schema/index.js",
-        149
+        150
+      ],
+      [
+        "src/schema/types/FoundationWall.js",
+        7
       ]
     ]
   },
   "Size of the component type (en)": {
-    "translation": "Taille du type de composant (en)",
+    "translation": "Taille du type de composante (en)",
     "origin": [
       [
         "src/schema/index.js",
-        151
+        152
       ]
     ]
   },
   "Size of the component type (fr)": {
-    "translation": "Taille du type de composant (fr)",
+    "translation": "Taille du type de composante (fr)",
     "origin": [
       [
         "src/schema/index.js",
-        153
+        154
       ]
     ]
   },
   "Wall insulation nominal RSI (R-value Systeme International)": {
-    "translation": "Isolation de paroi nominale RSI (valeur R Systeme International)",
+    "translation": "Valeur nominale RSI (valeur R Système international) de l'isolation du mur",
     "origin": [
       [
         "src/schema/index.js",
-        155
+        156
+      ],
+      [
+        "src/schema/types/FoundationWall.js",
+        9
       ]
     ]
   },
   "Wall insulation nominal R-value": {
-    "translation": "Isolation de paroi nominale R-value",
+    "translation": "Valeur nominale R de l'isolation du mur",
     "origin": [
       [
         "src/schema/index.js",
-        157
+        158
       ],
       [
         "src/schema/index.js",
-        161
+        162
+      ],
+      [
+        "src/schema/types/FoundationWall.js",
+        11
+      ],
+      [
+        "src/schema/types/FoundationWall.js",
+        15
       ]
     ]
   },
   "Wall insulation effective RSI (R-value Systeme International)": {
-    "translation": "Isolation des murs efficace RSI (valeur R Systeme International)",
+    "translation": "RSI (valeur R Système international) pour l'isolation efficace du mur",
     "origin": [
       [
         "src/schema/index.js",
-        159
+        160
+      ],
+      [
+        "src/schema/types/FoundationWall.js",
+        13
       ]
     ]
   },
   "Wall area of the house in square metres (m2)": {
-    "translation": "Surface du mur de la maison en mètres carrés (m2)",
+    "translation": "Superficie du mur de la maison en mètres carrés (m2)",
     "origin": [
       [
         "src/schema/index.js",
-        163
+        164
+      ],
+      [
+        "src/schema/types/FoundationWall.js",
+        17
       ]
     ]
   },
   "Wall area of the house in square feet (ft2)": {
-    "translation": "Surface du mur de la maison en pieds carrés (pi2)",
+    "translation": "Superficie du mur de la maison en pieds carrés (pi2)",
     "origin": [
       [
         "src/schema/index.js",
-        165
+        166
+      ],
+      [
+        "src/schema/types/FoundationWall.js",
+        19
       ]
     ]
   },
@@ -606,16 +723,16 @@
     "origin": [
       [
         "src/schema/index.js",
-        167
+        168
       ]
     ]
   },
   "Wall perimeter of the house in feet (ft)": {
-    "translation": "Mur du périmètre de la maison en pieds (pi)",
+    "translation": "Le périmètre du mur de la maison en pieds (pi)",
     "origin": [
       [
         "src/schema/index.js",
-        169
+        170
       ]
     ]
   },
@@ -624,7 +741,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        171
+        172
       ]
     ]
   },
@@ -633,16 +750,16 @@
     "origin": [
       [
         "src/schema/index.js",
-        173
+        174
       ]
     ]
   },
   "Doors are on outside walls, separating the interior heated space from the outside": {
-    "translation": "Les portes sont sur les murs extérieurs, séparant l'espace intérieur chauffé de l'extérieur",
+    "translation": "Les portes sont sur les murs extérieurs et séparent l'espace intérieur chauffé de l'extérieur",
     "origin": [
       [
         "src/schema/index.js",
-        177
+        178
       ]
     ]
   },
@@ -651,7 +768,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        179
+        180
       ]
     ]
   },
@@ -660,16 +777,16 @@
     "origin": [
       [
         "src/schema/index.js",
-        181
+        182
       ]
     ]
   },
   "Door RSI (R-value Systeme International)": {
-    "translation": "Door RSI (Valeur R Systeme International)",
+    "translation": " RSI (valeur R Système international) de la porte",
     "origin": [
       [
         "src/schema/index.js",
-        183
+        184
       ]
     ]
   },
@@ -678,43 +795,43 @@
     "origin": [
       [
         "src/schema/index.js",
-        185
+        186
       ]
     ]
   },
-  "Door U-factor in metric: Watts per square metre per degree Celcius (W/m2C)": {
-    "translation": "Porte U-facteur en métrique: Watts par mètre carré par degré Celcius (W / m2C)",
+  "Door U-factor in metric: watts per square metre per degree Celcius (W/m2C)": {
+    "translation": "Facteur U de la porte en métriqu e: watts par mètre carré degré Celcius (W/m2C)",
     "origin": [
       [
         "src/schema/index.js",
-        187
+        188
       ]
     ]
   },
-  "Door U-factor in imperial: British Thermal Units per square feet per degree Fahrenheit (BTU/ft2 F)": {
-    "translation": "Facteur U de la porte en impériale: unités thermiques britanniques par pied carré par degré Fahrenheit (BTU / pi2 F)",
+  "Door U-factor in imperial: British Thermal Units per square feet per degree Fahrenheit (BTU/ft2F)": {
+    "translation": "Facteur U de la porte en unités impériales : unités thermiques britanniques par pied carré degré Fahrenheit (BTU/pi2F)",
     "origin": [
       [
         "src/schema/index.js",
-        189
+        190
       ]
     ]
   },
   "Door area in square metres (m2)": {
-    "translation": "Surface de la porte en mètres carrés (m2)",
+    "translation": "Superficie de la porte en mètres carrés (m2)",
     "origin": [
       [
         "src/schema/index.js",
-        191
+        192
       ]
     ]
   },
   "Door area in square feet (ft2)": {
-    "translation": "Surface de la porte en pieds carrés (pi2)",
+    "translation": "Superficie de la porte en pieds carrés (pi2)",
     "origin": [
       [
         "src/schema/index.js",
-        193
+        194
       ]
     ]
   },
@@ -723,25 +840,25 @@
     "origin": [
       [
         "src/schema/index.js",
-        197
+        198
       ]
     ]
   },
   "Used to identify the window component in the house": {
-    "translation": "Utilisé pour identifier le composant de fenêtre dans la maison",
+    "translation": "Utilisé pour identifier la composante fenêtre dans la maison",
     "origin": [
       [
         "src/schema/index.js",
-        199
+        200
       ]
     ]
   },
   "Window RSI (R-value Systeme International)": {
-    "translation": "Fenêtre RSI (Valeur R Systeme International)",
+    "translation": "RSI (valeur R Système international) de la fenêtre",
     "origin": [
       [
         "src/schema/index.js",
-        201
+        202
       ]
     ]
   },
@@ -750,7 +867,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        203
+        204
       ]
     ]
   },
@@ -759,7 +876,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        205
+        206
       ]
     ]
   },
@@ -768,43 +885,43 @@
     "origin": [
       [
         "src/schema/index.js",
-        207
+        208
       ]
     ]
   },
   "Type of coating and tint on a window pane (en)": {
-    "translation": "Type de revêtement et teinte sur une vitre (en)",
+    "translation": "Type de pellicule et teinte sur une vitre (en)",
     "origin": [
       [
         "src/schema/index.js",
-        209
+        210
       ]
     ]
   },
   "Type of coating and tint on a window pane (fr)": {
-    "translation": "Type de revêtement et teinte sur une vitre (fr)",
+    "translation": "Type de pellicule et teinte sur une vitre (fr)",
     "origin": [
       [
         "src/schema/index.js",
-        211
+        212
       ]
     ]
   },
-  "Type of gas (air, argon or krypton) injected between the glass layers (en)": {
-    "translation": "Type de gaz (air, argon ou krypton) injecté entre les couches de verre (en)",
+  "Type of gas injected between the glass layers (en)": {
+    "translation": "Type de gaz injecté entre les couches de verre (en)",
     "origin": [
       [
         "src/schema/index.js",
-        213
+        214
       ]
     ]
   },
-  "Type of gas (air, argon or krypton) injected between the glass layers (fr)": {
-    "translation": "Type de gaz (air, argon ou krypton) injecté entre les couches de verre (fr)",
+  "Type of gas injected between the glass layers (fr)": {
+    "translation": "Type de gaz injecté entre les couches de verre (fr)",
     "origin": [
       [
         "src/schema/index.js",
-        215
+        216
       ]
     ]
   },
@@ -813,7 +930,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        217
+        218
       ]
     ]
   },
@@ -822,7 +939,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        219
+        220
       ]
     ]
   },
@@ -831,7 +948,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        221
+        222
       ]
     ]
   },
@@ -840,7 +957,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        223
+        224
       ]
     ]
   },
@@ -849,7 +966,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        225
+        226
       ]
     ]
   },
@@ -858,25 +975,25 @@
     "origin": [
       [
         "src/schema/index.js",
-        227
+        228
       ]
     ]
   },
   "Window area in square metres (m2)": {
-    "translation": "Surface de la fenêtre en mètres carrés (m2)",
+    "translation": "Superficie de la fenêtre en mètres carrés (m2)",
     "origin": [
       [
         "src/schema/index.js",
-        229
+        230
       ]
     ]
   },
   "Window area in square feet (ft2)": {
-    "translation": "Surface de la fenêtre en pieds carrés (pi2)",
+    "translation": "Superficie de la fenêtre en pieds carrés (pi2)",
     "origin": [
       [
         "src/schema/index.js",
-        231
+        232
       ]
     ]
   },
@@ -885,7 +1002,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        233
+        234
       ]
     ]
   },
@@ -894,7 +1011,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        235
+        236
       ]
     ]
   },
@@ -903,7 +1020,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        237
+        238
       ]
     ]
   },
@@ -912,16 +1029,16 @@
     "origin": [
       [
         "src/schema/index.js",
-        239
+        240
       ]
     ]
   },
   "Ceilings are the upper interior surface of a room": {
-    "translation": "Les plafonds sont la surface intérieure supérieure d'une pièce",
+    "translation": "Les plafonds correspondent à la surface intérieure supérieure d'une pièce",
     "origin": [
       [
         "src/schema/index.js",
-        243
+        244
       ]
     ]
   },
@@ -930,7 +1047,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        245
+        246
       ]
     ]
   },
@@ -939,7 +1056,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        247
+        248
       ]
     ]
   },
@@ -948,61 +1065,61 @@
     "origin": [
       [
         "src/schema/index.js",
-        249
+        250
       ]
     ]
   },
   "Ceiling insulation nominal RSI (R-value Systeme International)": {
-    "translation": "Isolation de plafond nominale RSI (valeur R Systeme International)",
+    "translation": "Valeur nominale RSI (valeur R Système international) de l'isolation du plafond",
     "origin": [
       [
         "src/schema/index.js",
-        251
+        252
       ]
     ]
   },
   "Ceiling insulation nominal R-value": {
-    "translation": "Isolation au plafond nominale R-value",
+    "translation": "Valeur nominale R de l'isolation au plafond",
     "origin": [
       [
         "src/schema/index.js",
-        253
+        254
       ]
     ]
   },
   "Ceiling insulation effective RSI (R-value Systeme International)": {
-    "translation": "Isolation au plafond efficace RSI (valeur R Systeme International)",
+    "translation": "RSI (valeur R Système international) pour l'isolation efficace du plafond",
     "origin": [
       [
         "src/schema/index.js",
-        255
+        256
       ]
     ]
   },
   "Ceiling insulation effective R-value": {
-    "translation": "Isolation au plafond efficace R-value",
+    "translation": "Valeur R pour l'isolation efficace du plafond",
     "origin": [
       [
         "src/schema/index.js",
-        257
+        258
       ]
     ]
   },
   "Ceiling area in square metres (m2)": {
-    "translation": "Surface de plafond en mètres carrés (m2)",
+    "translation": "Superficie du plafond en mètres carrés (m2)",
     "origin": [
       [
         "src/schema/index.js",
-        259
+        260
       ]
     ]
   },
   "Ceiling area in square feet (ft2)": {
-    "translation": "Surface de plafond en pieds carrés (pi2)",
+    "translation": "Superficie du plafond en pieds carrés (pi2)",
     "origin": [
       [
         "src/schema/index.js",
-        261
+        262
       ]
     ]
   },
@@ -1011,7 +1128,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        263
+        264
       ]
     ]
   },
@@ -1020,7 +1137,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        265
+        266
       ]
     ]
   },
@@ -1029,115 +1146,115 @@
     "origin": [
       [
         "src/schema/index.js",
-        269
+        270
       ]
     ]
   },
   "Evaluation type codes are used to define the type of evaluation performed and to distinguish the house type (i.e. newly built or existing)": {
-    "translation": "Des codes de type d'évaluation sont utilisés pour définir le type d'évaluation effectuée et pour distinguer le type de maison (c'est-à-dire nouvellement construit ou existant)",
+    "translation": "Les codes de types d'évaluation sont utilisés pour définir le type d'évaluation effectuée et pour distinguer le type d'habitation (c'est-à-dire nouvelle construction ou existante",
     "origin": [
       [
         "src/schema/index.js",
-        271
+        272
       ]
     ]
   },
   "Date the evaluation was made": {
-    "translation": "Date à laquelle l'évaluation a été faite",
+    "translation": "Date de l'évaluation",
     "origin": [
       [
         "src/schema/index.js",
-        273
+        274
       ]
     ]
   },
   "Date the record was first created": {
-    "translation": "Date à laquelle l'enregistrement a été créé",
+    "translation": "Date de création du dossier",
     "origin": [
       [
         "src/schema/index.js",
-        275
+        276
       ]
     ]
   },
   "Date the record was last modified": {
-    "translation": "Date de la dernière modification de l'enregistrement",
+    "translation": "Dernière modification du dossier",
     "origin": [
       [
         "src/schema/index.js",
-        277
+        278
       ]
     ]
   },
   "A list of ceiling data entries for a dwelling": {
-    "translation": "Une liste d'entrées de données de plafond pour un logement",
+    "translation": "Une liste de données pour chaque plafond du logement",
     "origin": [
       [
         "src/schema/index.js",
-        279
+        280
       ]
     ]
   },
   "A list of wall data entries for a dwelling": {
-    "translation": "Une liste des entrées de données murales pour un logement",
+    "translation": "Une liste de données pour chaque mur du logement",
     "origin": [
       [
         "src/schema/index.js",
-        281
+        282
       ]
     ]
   },
   "A list of floor data entries for a dwelling": {
-    "translation": "Une liste d'entrées de données de plancher pour un logement",
+    "translation": "Une liste de données pour chaque étage du logement",
     "origin": [
       [
         "src/schema/index.js",
-        283
+        284
       ]
     ]
   },
   "A list of door data entries for a dwelling": {
-    "translation": "Une liste des entrées de données de porte pour un logement",
+    "translation": "Une liste de données pour chaque porte du logement",
     "origin": [
       [
         "src/schema/index.js",
-        285
+        286
       ]
     ]
   },
   "A list of window data entries for a dwelling": {
-    "translation": "Une liste des entrées de données de fenêtre pour un logement",
+    "translation": "Une liste de données pour chaque fenêtre du logement",
     "origin": [
       [
         "src/schema/index.js",
-        287
+        288
       ]
     ]
   },
   "A heated floor area entry for a dwelling": {
-    "translation": "Une entrée de plancher chauffant pour un logement",
+    "translation": "Superficie d'étage chauffé pour un logement",
     "origin": [
       [
         "src/schema/index.js",
-        289
+        290
       ]
     ]
   },
   "A list of ventilation data entries for a dwelling": {
-    "translation": "Une liste des entrées de données de ventilation pour un logement",
+    "translation": "Une liste de données pour chaque unité de ventilation pour un logement",
     "origin": [
       [
         "src/schema/index.js",
-        291
+        292
       ]
     ]
   },
   "A list of water heater data entries for a dwelling": {
-    "translation": "Une liste des entrées de données du chauffe-eau pour un logement",
+    "translation": "Une liste de données pour chaque chauffe-eau d'un logement",
     "origin": [
       [
         "src/schema/index.js",
-        293
+        294
       ]
     ]
   },
@@ -1146,34 +1263,43 @@
     "origin": [
       [
         "src/schema/index.js",
-        295
+        296
       ]
     ]
   },
   "A list of upgrades that would improve energy efficiency": {
-    "translation": "Une liste de mises à niveau qui amélioreraient l'efficacité énergétique",
+    "translation": "Une liste d'améliorations qui augmentent l'efficacité énergétique",
     "origin": [
       [
         "src/schema/index.js",
-        297
+        298
+      ]
+    ]
+  },
+  "The Energyguide Rating calculated for this evaluation": {
+    "translation": "La cote Energyguide calculée pour cette évaluation",
+    "origin": [
+      [
+        "src/schema/index.js",
+        300
       ]
     ]
   },
   "A residential building evaluted under the Energuide program": {
-    "translation": "Un immeuble résidentiel évalué dans le cadre du programme Energuide",
+    "translation": "Un immeuble résidentiel évalué dans le cadre du programme Énerguide",
     "origin": [
       [
         "src/schema/index.js",
-        301
+        304
       ]
     ]
   },
   "Unique identification number for a dwelling": {
-    "translation": "Numéro d'identification unique pour un logement",
+    "translation": "Numéro d'identification unique d'un logement",
     "origin": [
       [
         "src/schema/index.js",
-        303
+        306
       ]
     ]
   },
@@ -1182,7 +1308,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        305
+        308
       ]
     ]
   },
@@ -1191,16 +1317,16 @@
     "origin": [
       [
         "src/schema/index.js",
-        307
+        310
       ]
     ]
   },
   "Region of country for dwelling (province/territory)": {
-    "translation": "Région du pays d'habitation (province / territoire)",
+    "translation": "Région du pays où se trouve le logement (province ou territoire)",
     "origin": [
       [
         "src/schema/index.js",
-        309
+        312
       ]
     ]
   },
@@ -1209,16 +1335,16 @@
     "origin": [
       [
         "src/schema/index.js",
-        311
+        314
       ]
     ]
   },
   "A list of evaluations of specific features of the dwelling": {
-    "translation": "Une liste d'évaluations des caractéristiques spécifiques du logement",
+    "translation": "Une liste d'évaluation des caractéristiques spécifiques du logement",
     "origin": [
       [
         "src/schema/index.js",
-        313
+        316
       ]
     ]
   },
@@ -1227,605 +1353,650 @@
     "origin": [
       [
         "src/schema/index.js",
-        317
+        320
       ]
     ]
   },
   "Details for a specific dwelling": {
-    "translation": "Détails pour un logement spécifique",
+    "translation": "Détails pour un logement donné",
     "origin": [
       [
         "src/schema/index.js",
-        319
+        322
       ]
     ]
   },
   "Details for all dwellings, optionally filtered by one or more values": {
-    "translation": "Détails pour tous les logements, éventuellement filtrés par une ou plusieurs valeurs",
+    "translation": "Détails pour tous les logements, pouvant être triés par une ou plusieurs valeurs",
     "origin": [
       [
         "src/schema/index.js",
-        321
+        324
       ]
     ]
   },
   "Filter results by the house ID of a dwelling": {
-    "translation": "Filtrer les résultats par l'ID de maison d'un logement",
+    "translation": "Trier les résultats par l'ID de maison d'un logement",
     "origin": [
       [
         "src/schema/index.js",
-        326
+        329
       ]
     ]
   },
   "Filter results by dwellings built in a specific year": {
-    "translation": "Filtrer les résultats par logements construits dans une année spécifique",
+    "translation": "Trier les résultats par année de construction des logements",
     "origin": [
       [
         "src/schema/index.js",
-        328
+        331
       ]
     ]
   },
   "Filter results by the dwellings in a specific city": {
-    "translation": "Filtrer les résultats par logements dans une ville spécifique",
+    "translation": "Trier les résultats par ville",
     "origin": [
       [
         "src/schema/index.js",
-        330
+        333
       ]
     ]
   },
   "Filter results by the dwellings in a specific region": {
-    "translation": "Filtrer les résultats par habitation dans une région spécifique",
+    "translation": "Trier les résultats par région",
     "origin": [
       [
         "src/schema/index.js",
-        332
+        335
       ]
     ]
   },
   "Filter results by the dwellings in a specific forward sortation area": {
-    "translation": "Filtrer les résultats par habitation dans une zone de tri spécifique",
+    "translation": "Trier les résultats par région de tri d'acheminement",
     "origin": [
       [
         "src/schema/index.js",
-        334
+        337
       ]
     ]
   },
   "Filter results by the dwellings containing at least one ventilation system with a specific type (en)": {
-    "translation": "Filtrer les résultats par les logements contenant au moins un système de ventilation avec un type spécifique (en)",
+    "translation": "Trier les résultats par type de système de ventilation (au moins un) (en)",
     "origin": [
       [
         "src/schema/index.js",
-        336
+        339
       ]
     ]
   },
   "Filter results by the dwellings containing at least one ventilation system with a specific type (fr)": {
-    "translation": "Filtrer les résultats par les logements contenant au moins un système de ventilation avec un type spécifique (fr)",
+    "translation": "Trier les résultats par type de système de ventilation (au moins un) (fr)",
     "origin": [
       [
         "src/schema/index.js",
-        338
+        341
       ]
     ]
   },
-  "Filter results by the dwellings containing at least one ventilation system with a specific air flow rate in Litres per Second (LpS)": {
-    "translation": "Filtrer les résultats par les logements contenant au moins un système de ventilation avec un débit d'air spécifique en litres par seconde (LpS)",
+  "Filter results by the dwellings containing at least one ventilation system with a specific air flow rate in litres per second (L/s)": {
+    "translation": "Trier les résultats par logements ayant au moins un système de ventilation avec un débit d'air spécifique en litres par seconde (L/s)",
     "origin": [
       [
         "src/schema/index.js",
-        340
+        343
       ]
     ]
   },
-  "Filter results by the dwellings containing at least one ventilation system with a specific air flow rate in Cubic feet per Minute (CfM)": {
-    "translation": "Filtrer les résultats par les logements contenant au moins un système de ventilation avec un débit d'air spécifique en pieds cubes par minute (CfM)",
+  "Filter results by the dwellings containing at least one ventilation system with a specific air flow rate in cubic feet per minute (f3/m)": {
+    "translation": "Trier les résultats par logements contenant au moins un système de ventilation avec un débit d'air spécifique en pieds cubes par minute (pi3/m)",
     "origin": [
       [
         "src/schema/index.js",
-        342
+        345
       ]
     ]
   },
   "Filter results by the dwellings containing at least one ventilation system with a specific efficiency rating": {
-    "translation": "Filtrer les résultats par les logements contenant au moins un système de ventilation avec une cote d'efficacité spécifique",
+    "translation": "Trier les résultats par logements contenant au moins un système de ventilation avec une cote d'efficacité spécifique",
     "origin": [
       [
         "src/schema/index.js",
-        344
+        347
       ]
     ]
   },
   "Filter results by the dwellings containing at least one floor with a specific location": {
-    "translation": "Filtrer les résultats par les logements contenant au moins un étage avec un emplacement spécifique",
+    "translation": "Trier les résultats par logements ayant au moins un étage avec un emplacement spécifique",
     "origin": [
       [
         "src/schema/index.js",
-        346
+        349
       ]
     ]
   },
   "Filter results by the dwellings containing at least one floor with a specific nominal RSI (R-value Systeme International)": {
-    "translation": "Filtrer les résultats par les logements contenant au moins un étage avec un RSI nominal spécifique (valeur R Systeme International)",
+    "translation": "Trier les résultats par logements ayant au moins un étage avec une RSI nominale spécifique (valeur R Système international)",
     "origin": [
       [
         "src/schema/index.js",
-        348
+        351
       ]
     ]
   },
   "Filter results by the dwellings containing at least one floor with a specific nominal R-value": {
-    "translation": "Filtrer les résultats par les logements contenant au moins un étage avec une valeur R nominale spécifique",
+    "translation": "Trier les résultats par logements ayant au moins un étage avec une valeur R nominale spécifique",
     "origin": [
       [
         "src/schema/index.js",
-        350
+        353
       ]
     ]
   },
   "Filter results by the dwellings containing at least one floor with a specific effective R-value": {
-    "translation": "Filtrer les résultats par les logements contenant au moins un étage avec une valeur R efficace spécifique",
+    "translation": "Trier les résultats par logements ayant au moins un étage avec une valeur R efficace spécifique",
     "origin": [
       [
         "src/schema/index.js",
-        352
+        355
       ],
       [
         "src/schema/index.js",
-        354
+        357
       ]
     ]
   },
   "Filter results by the dwellings containing at least one floor with a specific area in square metres (m2)": {
-    "translation": "Filtrer les résultats par les logements contenant au moins un étage avec une surface spécifique en mètres carrés (m2)",
+    "translation": "Trier les résultats par logements ayant au moins un étage avec une superficie spécifique en mètres carrés (m2)",
     "origin": [
       [
         "src/schema/index.js",
-        356
+        359
       ]
     ]
   },
   "Filter results by the dwellings containing at least one floor with a specific area in square feet (ft2)": {
-    "translation": "Filtrer les résultats par les logements contenant au moins un étage avec une surface spécifique en pieds carrés (pi2)",
+    "translation": "Trier les résultats par logements ayant au moins un étage avec une superficie spécifique en pieds carrés (pi2)",
     "origin": [
       [
         "src/schema/index.js",
-        358
+        361
       ]
     ]
   },
   "Filter results by the dwellings containing at least one floor with a specific length in metres (m)": {
-    "translation": "Filtrer les résultats par les logements contenant au moins un étage avec une longueur spécifique en mètres (m)",
+    "translation": "Trier les résultats par logements ayant au moins un plancher avec une longueur spécifique en mètres (m)",
     "origin": [
       [
         "src/schema/index.js",
-        360
+        363
       ]
     ]
   },
   "Filter results by the dwellings containing at least one floor with a specific length in feet (ft)": {
-    "translation": "Filtrer les résultats par les logements contenant au moins un étage avec une longueur spécifique en pieds (pi)",
+    "translation": "Trier les résultats par logements ayant au moins un plancher avec une longueur spécifique en pieds (pi)",
     "origin": [
       [
         "src/schema/index.js",
-        362
+        365
       ]
     ]
   },
   "Filter results by the dwellings containing at least one water heating system of a specific type (en)": {
-    "translation": "Filtrer les résultats par les logements contenant au moins un système de chauffage de l'eau d'un type spécifique (en)",
+    "translation": "Trier les résultats par logements contenant au moins un système de chauffage de l'eau d'un type spécifique (en)",
     "origin": [
       [
         "src/schema/index.js",
-        364
+        367
       ]
     ]
   },
   "Filter results by the dwellings containing at least one water heating system of a specific type (fr)": {
-    "translation": "Filtrer les résultats par les logements contenant au moins un système de chauffage de l'eau d'un type spécifique (fr)",
+    "translation": "Trier les résultats par logements contenant au moins un système de chauffage de l'eau d'un type spécifique (fr)",
     "origin": [
       [
         "src/schema/index.js",
-        366
+        369
       ]
     ]
   },
-  "Filter results by the dwellings containing at least one water heating system with a specific capacity in Litres (L)": {
-    "translation": "Filtrer les résultats par les logements contenant au moins un système de chauffage de l'eau d'une capacité spécifique en Litres (L)",
+  "Filter results by the dwellings containing at least one water heating system with a specific capacity in litres (L)": {
+    "translation": "Trier les résultats par logements contenant au moins un système de chauffage de l'eau d'une capacité spécifique en litres (L)",
     "origin": [
       [
         "src/schema/index.js",
-        368
+        371
       ]
     ]
   },
-  "Filter results by the dwellings containing at least one water heating system with a specific capacity in Gallons (g)": {
-    "translation": "Filtrer les résultats par les logements contenant au moins un système de chauffage de l'eau d'une capacité spécifique en gallons (g)",
+  "Filter results by the dwellings containing at least one water heating system with a specific capacity in gallons (Gal)": {
+    "translation": "Trier les résultats par logements contenant au moins un système de chauffage de l'eau d'une capacité spécifique en gallons (gal)",
     "origin": [
       [
         "src/schema/index.js",
-        370
+        373
       ]
     ]
   },
   "Filter results by the dwellings containing at least one water heating system with a specific efficiency rating": {
-    "translation": "Filtrer les résultats par les logements contenant au moins un système de chauffage de l'eau avec une cote d'efficacité spécifique",
+    "translation": "Trier les résultats par logements contenant au moins un système de chauffage de l'eau avec une cote d'efficacité spécifique",
     "origin": [
       [
         "src/schema/index.js",
-        372
+        375
       ]
     ]
   },
   "Filter results by the dwellings containing a heating system with a specific description": {
-    "translation": "Filtrer les résultats par les logements contenant un système de chauffage avec une description spécifique",
+    "translation": "Trier les résultats par logements contenant un système de chauffage avec une description spécifique",
     "origin": [
       [
         "src/schema/index.js",
-        374
+        377
       ]
     ]
   },
   "Filter results by the dwellings containing a heating system of a specific type (en)": {
-    "translation": "Filtrer les résultats par les logements contenant un système de chauffage d'un type spécifique (en)",
+    "translation": "Trier les résultats par logements contenant un système de chauffage d'un type spécifique (en)",
     "origin": [
       [
         "src/schema/index.js",
-        376
+        379
       ]
     ]
   },
   "Filter results by the dwellings containing a heating system of a specific type (fr)": {
-    "translation": "Filtrer les résultats par les logements contenant un système de chauffage d'un type spécifique (fr)",
+    "translation": "Trier les résultats par logements contenant un système de chauffage d'un type spécifique (fr)",
     "origin": [
       [
         "src/schema/index.js",
-        378
+        381
       ]
     ]
   },
   "Filter results by the dwellings containing a heating system with a specific fuel source (en)": {
-    "translation": "Filtrer les résultats par les logements contenant un système de chauffage avec une source de carburant spécifique (en)",
+    "translation": "Trier les résultats par logements contenant un système de chauffage avec une source de combustible spécifique (en)",
     "origin": [
       [
         "src/schema/index.js",
-        380
+        383
       ]
     ]
   },
   "Filter results by the dwellings containing a heating system with a specific fuel source (fr)": {
-    "translation": "Filtrer les résultats par les logements contenant un système de chauffage avec une source de carburant spécifique",
+    "translation": "Trier les résultats par logements contenant un système de chauffage avec une source de combustible spécifique",
     "origin": [
       [
         "src/schema/index.js",
-        382
+        385
       ]
     ]
   },
   "Filter results by the dwellings containing a heating system with a specific type of equipment (en)": {
-    "translation": "Filtrer les résultats par les logements contenant un système de chauffage avec un type spécifique d'équipement (en)",
+    "translation": "Trier les résultats par logements contenant un système de chauffage avec un type d'équipement spécifique (en)",
     "origin": [
       [
         "src/schema/index.js",
-        384
+        387
       ]
     ]
   },
   "Filter results by the dwellings containing a heating system with a specific type of equipment (fr)": {
-    "translation": "Filtrer les résultats par les logements contenant un système de chauffage avec un type d'équipement spécifique",
+    "translation": "Trier les résultats par logements contenant un système de chauffage avec un type d'équipement spécifique",
     "origin": [
       [
         "src/schema/index.js",
-        386
+        389
       ]
     ]
   },
   "Filter results by the dwellings containing a heating system with a specific output capacity in kilowatt hours (kWh)": {
-    "translation": "Filtrer les résultats par les logements contenant un système de chauffage ayant une capacité de production spécifique en kilowattheures (kWh)",
+    "translation": "Trier les résultats par logements contenant un système de chauffage ayant une puissance nette spécifique en kilowattheures (kWh)",
     "origin": [
       [
         "src/schema/index.js",
-        388
+        391
       ]
     ]
   },
   "Filter results by the dwellings containing a heating system with a specific output capacity in British Thermal Units per hour (BTU/h)": {
-    "translation": "Filtrer les résultats par les logements contenant un système de chauffage avec une capacité de production spécifique en unités thermiques britanniques par heure (BTU / h)",
+    "translation": "Trier les résultats par logements contenant un système de chauffage ayant une puissance nette spécifique en unités thermiques britanniques par heure (BTU/h)",
     "origin": [
       [
         "src/schema/index.js",
-        390
+        393
       ]
     ]
   },
   "Filter results by the dwellings containing a heating system with a specific efficiency rating": {
-    "translation": "Filtrer les résultats par les logements contenant un système de chauffage avec une cote d'efficacité spécifique",
+    "translation": "Trier les résultats par logements contenant un système de chauffage avec une cote d'efficacité spécifique",
     "origin": [
       [
         "src/schema/index.js",
-        392
+        395
       ]
     ]
   },
   "Filter results by the dwellings containing a heating system efficiency measurement that is either 'Steady State' or 'AFUE'": {
-    "translation": "Filtrer les résultats par les logements contenant une mesure d'efficacité du système de chauffage qui est soit 'Steady State' soit 'AFUE'",
+    "translation": "Trier les résultats par logements contenant une mesure d'efficacité du système de chauffage qui est soit 'Steady State' soit 'AFUE'",
     "origin": [
       [
         "src/schema/index.js",
-        394
+        397
       ]
     ]
   },
   "Filter results by the dwellings containing an above-grade heated floor area with a specific area in square metres (m2)": {
-    "translation": "Filtrer les résultats pour les habitations contenant une surface de plancher chauffant au-dessus du niveau du sol avec une surface spécifique en mètres carrés (m2)",
+    "translation": "Trier les résultats par logements ayant une surface de plancher chauffé au-dessus du niveau du sol d'une superficie spécifique en mètres carrés (m2)",
     "origin": [
       [
         "src/schema/index.js",
-        396
+        399
       ]
     ]
   },
   "Filter results by the dwellings containing an above-grade heated floor area with a specific area in square feet (ft2)": {
-    "translation": "Filtrer les résultats en fonction des habitations contenant une surface de plancher chauffant au-dessus du niveau du sol avec une surface spécifique en pieds carrés (pi2)",
+    "translation": "Trier les résultats par logements ayant une surface de plancher chauffé au-dessus du niveau du sol d'une superficie spécifique en pieds carrés (pi2)",
     "origin": [
       [
         "src/schema/index.js",
-        398
+        401
       ]
     ]
   },
   "Filter results by the dwellings containing a below-grade heated floor area with a specific area in square metres (m2)": {
-    "translation": "Filtrer les résultats par les logements contenant une surface de plancher chauffant de qualité inférieure avec une surface spécifique en mètres carrés (m2)",
+    "translation": "Trier les résultats par logements ayant une surface de plancher chauffé au-dessous du niveau du sol d'une superficie spécifique en mètres carrés (m2)",
     "origin": [
       [
         "src/schema/index.js",
-        400
+        403
       ]
     ]
   },
   "Filter results by the dwellings containing a below-grade heated floor area with a specific area in square feet (ft2)": {
-    "translation": "Filtrer les résultats en fonction des habitations contenant une surface de plancher chauffant de qualité inférieure avec une surface spécifique en pieds carrés (pi2)",
+    "translation": "Trier les résultats par logements ayant une surface de plancher chauffé au-dessous du niveau du sol d'une surface spécifique en pieds carrés (pi2)",
     "origin": [
       [
         "src/schema/index.js",
-        402
+        405
       ]
     ]
   },
   "Filter results by the dwellings containing at least one wall with a specific location": {
-    "translation": "Filtrer les résultats par les logements contenant au moins un mur avec un emplacement spécifique",
+    "translation": "Trier les résultats par logements ayant au moins un mur avec un emplacement spécifique",
     "origin": [
       [
         "src/schema/index.js",
-        404
+        407
       ]
     ]
   },
   "Filter results by the dwellings containing at least one wall of a specific type (en)": {
-    "translation": "Filtrer les résultats par les logements contenant au moins une paroi d'un type spécifique (en)",
+    "translation": "Trier les résultats par logements ayant au moins un mur d'un type spécifique (en)",
     "origin": [
       [
         "src/schema/index.js",
-        406
+        409
       ]
     ]
   },
   "Filter results by the dwellings containing at least one wall of a specific type (fr)": {
-    "translation": "Filtrer les résultats par les logements contenant au moins une paroi d'un type spécifique (fr)",
+    "translation": "Trier les résultats par logements ayant au moins un mur d'un type spécifique (fr)",
     "origin": [
       [
         "src/schema/index.js",
-        408
+        411
       ]
     ]
   },
   "Filter results by the dwellings containing at least one wall with a component of a specific size (en)": {
-    "translation": "Filtrer les résultats par les logements contenant au moins un mur avec un composant d'une taille spécifique (en)",
+    "translation": "Trier les résultats par logements ayant au moins un mur avec une composante d'une taille spécifique (en)",
     "origin": [
       [
         "src/schema/index.js",
-        410
+        413
       ]
     ]
   },
   "Filter results by the dwellings containing at least one wall with a component of a specific size (fr)": {
-    "translation": "Filtrer les résultats par les logements contenant au moins un mur avec un composant d'une taille spécifique",
+    "translation": "Trier les résultats par logements ayant au moins un mur avec une composante d'une taille spécifique",
     "origin": [
       [
         "src/schema/index.js",
-        412
+        415
       ]
     ]
   },
   "Filter results by the dwellings containing at least one wall with a specific nominal RSI (R-value Systeme International)": {
-    "translation": "Filtrer les résultats par les logements contenant au moins un mur avec un RSI nominal spécifique (valeur R Systeme International)",
+    "translation": "Trier les résultats par logements ayant au moins un mur avec une RSI nominale spécifique (valeur R Système international)",
     "origin": [
       [
         "src/schema/index.js",
-        414
+        417
       ]
     ]
   },
   "Filter results by the dwellings containing at least one wall with a specific nominal R-value": {
-    "translation": "Filtrer les résultats par les logements contenant au moins un mur avec une valeur R nominale spécifique",
+    "translation": "Trier les résultats par logements ayant au moins un mur avec une valeur R nominale spécifique",
     "origin": [
       [
         "src/schema/index.js",
-        416
+        419
       ]
     ]
   },
   "Filter results by the dwellings containing at least one wall with a specific effective RSI (R-value Systeme International)": {
-    "translation": "Filtrer les résultats par les logements contenant au moins un mur avec un RSI efficace spécifique (valeur R Systeme International)",
+    "translation": "Trier les résultats les logements ayant au moins un mur avec une RSI efficace spécifique (valeur R Système international)",
     "origin": [
       [
         "src/schema/index.js",
-        418
+        421
       ]
     ]
   },
   "Filter results by the dwellings containing at least one wall with a specific effective R-value": {
-    "translation": "Filtrer les résultats par les logements contenant au moins un mur avec une valeur R effective spécifique",
+    "translation": "Trier les résultats par logements ayant au moins un mur avec une valeur R efficace spécifique",
     "origin": [
       [
         "src/schema/index.js",
-        420
+        423
       ]
     ]
   },
   "Filter results by the dwellings containing at least one wall with a specific area in square metres (m2)": {
-    "translation": "Filtrer les résultats par les logements contenant au moins un mur avec une surface spécifique en mètres carrés (m2)",
+    "translation": "Trier les résultats par logements ayant au moins un mur d'une superficie spécifique en mètres carrés (m2)",
     "origin": [
       [
         "src/schema/index.js",
-        422
+        425
       ]
     ]
   },
   "Filter results by the dwellings containing at least one wall with a specific area in square feet (ft2)": {
-    "translation": "Filtrer les résultats par les logements contenant au moins un mur avec une surface spécifique en pieds carrés (ft2)",
+    "translation": "Trier les résultats par logements ayant au moins un mur d'une superficie spécifique en pieds carrés (pi2)",
     "origin": [
       [
         "src/schema/index.js",
-        424
+        427
       ]
     ]
   },
   "Filter results by the dwellings containing at least one wall with a specific perimeter in metres (m)": {
-    "translation": "Filtrer les résultats par les logements contenant au moins un mur avec un périmètre spécifique en mètres (m)",
+    "translation": "Trier les résultats par logements ayant au moins un mur d'un périmètre spécifique en mètres (m)",
     "origin": [
       [
         "src/schema/index.js",
-        426
+        429
       ]
     ]
   },
   "Filter results by the dwellings containing at least one wall with a specific perimeter in feet (ft)": {
-    "translation": "Filtrer les résultats par les logements contenant au moins un mur avec un périmètre spécifique en pieds (ft)",
+    "translation": "Trier les résultats par logements ayant au moins un mur d'un périmètre spécifique en pieds (pi)",
     "origin": [
       [
         "src/schema/index.js",
-        428
+        431
       ]
     ]
   },
   "Filter results by the dwellings containing at least one wall with a specific height in metres (m)": {
-    "translation": "Filtrer les résultats par les logements contenant au moins un mur avec une hauteur spécifique en mètres (m)",
+    "translation": "Trier les résultats par logements ayant au moins un mur d'une hauteur spécifique en mètres (m)",
     "origin": [
       [
         "src/schema/index.js",
-        430
+        433
       ]
     ]
   },
   "Filter results by the dwellings containing at least one wall with a specific height in feet (ft)": {
-    "translation": "Filtrer les résultats par les logements contenant au moins un mur avec une hauteur spécifique en pieds (ft)",
+    "translation": "Trier les résultats par logements ayant au moins un mur d'une hauteur spécifique en pieds (pi)",
     "origin": [
       [
         "src/schema/index.js",
-        432
+        435
       ]
     ]
   },
   "Filter results by the dwellings where at least one ceiling has a matching label": {
-    "translation": "Filtrer les résultats par les logements où au moins un plafond a une étiquette correspondante",
+    "translation": "Trier les résultats par logements où au moins un plafond a une étiquette correspondante",
     "origin": [
       [
         "src/schema/index.js",
-        434
+        437
       ]
     ]
   },
   "Filter results by the dwellings where at least one ceiling has a matching type (en)": {
-    "translation": "Filtrer les résultats par les logements où au moins un plafond a un type correspondant (en)",
+    "translation": "Trier les résultats par logements où au moins un plafond a un type correspondant (en)",
     "origin": [
       [
         "src/schema/index.js",
-        436
+        439
       ]
     ]
   },
   "Filter results by the dwellings where at least one ceiling has a matching type (fr)": {
-    "translation": "Filtrer les résultats par les logements où au moins un plafond a un type correspondant",
+    "translation": "Trier les résultats par logements où au moins un plafond a un type correspondant",
     "origin": [
       [
         "src/schema/index.js",
-        438
+        441
       ]
     ]
   },
   "Filter results by the dwellings where at least one ceiling has a specific nominal RSI (R-value Systeme International)": {
-    "translation": "Filtrer les résultats par habitation où au moins un plafond a un RSI nominal spécifique (valeur R Systeme International)",
+    "translation": "Trier les résultats par logements où au moins un plafond a une RSI nominale spécifique (valeur R Système international)",
     "origin": [
       [
         "src/schema/index.js",
-        440
+        443
       ]
     ]
   },
   "Filter results by the dwellings containing at least one ceiling with a specific nominal R-value": {
-    "translation": "Filtrer les résultats par les logements contenant au moins un plafond avec une valeur R nominale spécifique",
+    "translation": "Trier les résultats par logements ayant au moins un plafond d'une valeur R nominale spécifique",
     "origin": [
       [
         "src/schema/index.js",
-        442
+        445
       ]
     ]
   },
   "Filter results by the dwellings containing at least one ceiling with a specific effective RSI (R-value Systeme International)": {
-    "translation": "Filtrer les résultats par les logements contenant au moins un plafond avec un RSI effectif spécifique (valeur R Systeme International)",
+    "translation": "Trier les résultats par logements ayant au moins un plafond d'une RSI efficace spécifique (valeur R Système international)",
     "origin": [
       [
         "src/schema/index.js",
-        444
+        447
       ]
     ]
   },
   "Filter results by the dwellings containing at least one ceiling with a specific effective R-value": {
-    "translation": "Filtrer les résultats par les logements contenant au moins un plafond avec une valeur R effective spécifique",
+    "translation": "Trier les résultats par logements ayant au moins un plafond d'un valeur R efficace spécifique",
     "origin": [
       [
         "src/schema/index.js",
-        446
+        449
       ]
     ]
   },
   "Filter results by the dwellings containing at least one ceiling with a specific area in square metres (m2)": {
-    "translation": "Filtrer les résultats par les logements contenant au moins un plafond avec une surface spécifique en mètres carrés (m2)",
+    "translation": "Trier les résultats par logements ayant au moins un plafond d'une superficie spécifique en mètres carrés (m2)",
     "origin": [
       [
         "src/schema/index.js",
-        448
+        451
       ]
     ]
   },
   "Filter results by the dwellings containing at least one ceiling with a specific area in square feet (ft2)": {
-    "translation": "Filtrer les résultats par les logements contenant au moins un plafond avec une surface spécifique en pieds carrés (pi2)",
+    "translation": "Trier les résultats par logements ayant au moins un plafond d'une superficie spécifique en pieds carrés (pi2)",
     "origin": [
       [
         "src/schema/index.js",
-        450
+        453
       ]
     ]
   },
   "Filter results by the dwellings containing at least one ceiling with a specific length in metres (m)": {
-    "translation": "Filtrer les résultats par les logements contenant au moins un plafond avec une longueur spécifique en mètres (m)",
+    "translation": "Trier les résultats par logements ayant au moins un plafond d'une longueur spécifique en mètres (m)",
     "origin": [
       [
         "src/schema/index.js",
-        452
+        455
       ]
     ]
   },
   "Filter results by the dwellings containing at least one ceiling with a specific length in feet (ft)": {
-    "translation": "Filtrer les résultats par les logements contenant au moins un plafond avec une longueur spécifique en pieds (pi)",
+    "translation": "Trier les résultats par logements ayant au moins un plafond d'une longueur spécifique en pieds (pi)",
     "origin": [
       [
         "src/schema/index.js",
-        454
+        457
+      ]
+    ]
+  },
+  "Cannot submit values for both 'next' and 'previous'.": {
+    "translation": "Il faut pas soumettre des valeurs pour 'next' et 'previous' en même temps.",
+    "origin": [
+      [
+        "src/schema/resolvers.js",
+        103
+      ]
+    ]
+  },
+  "Foundation Walls are below-ground walls separating the interior heated space from the outside (interior partition walls are not considered walls)": {
+    "translation": "Les murs de fondation sont des murs souterrains qui séparent l'espace intérieur chauffé de l'extérieur (les cloisons intérieures ne sont pas considérées comme des murs)",
+    "origin": [
+      [
+        "src/schema/types/FoundationWall.js",
+        3
+      ]
+    ]
+  },
+  "The percentage of the total wall area this section accounts for": {
+    "translation": "Le pourcentage de la superficie du mur totale de cette section représente",
+    "origin": [
+      [
+        "src/schema/types/FoundationWall.js",
+        21
+      ]
+    ]
+  },
+  "The 'Boolean' scalar type represents 'true' or 'false'.": {
+    "translation": "Le type scalaire 'Booléen' représente vrai ('true') ou faux ('false').",
+    "origin": [
+      [
+        "src/schema/types/I18NBoolean.js",
+        5
+      ]
+    ]
+  },
+  "The 'Float' scalar type represents signed double-precision fractional values as specified by [IEEE 754](http://en.wikipedia.org/wiki/IEEE_floating_point).": {
+    "translation": "Le type scalaire 'Float' représente les valeurs fractionnelles signées à double précision spécifiées par [IEEE 754](https://fr.wikipedia.org/wiki/IEEE_754).",
+    "origin": [
+      [
+        "src/schema/types/I18NFloat.js",
+        5
       ]
     ]
   },
@@ -1833,17 +2004,8 @@
     "translation": "Le type scalaire 'Int' représente des valeurs numériques entières signées non fractionnaires. Int peut représenter des valeurs comprises entre -(2^31) et 2^31 - 1.",
     "origin": [
       [
-        "src/schema/resolvers.js",
-        85
-      ]
-    ]
-  },
-  "The 'Float' scalar type represents signed double-precision fractional values as specified by [IEEE 754](http://en.wikipedia.org/wiki/IEEE_floating_point).": {
-    "translation": "Le type scalaire 'Float' représente les valeurs fractionnelles dédicacées à double précision spécifiées par [IEEE 754](http://en.wikipedia.org/wiki/IEEE_floating_point).",
-    "origin": [
-      [
-        "src/schema/resolvers.js",
-        90
+        "src/schema/types/I18NInt.js",
+        5
       ]
     ]
   },
@@ -1851,17 +2013,8 @@
     "translation": "Le type scalaire 'String' représente des données textuelles, représentées par des séquences de caractères UTF-8. Le type String est le plus souvent utilisé par GraphQL pour représenter un texte lisible par un humain.",
     "origin": [
       [
-        "src/schema/resolvers.js",
-        96
-      ]
-    ]
-  },
-  "The 'Boolean' scalar type represents 'true' or 'false'.": {
-    "translation": "Le type scalaire 'Booléen' représente 'vrai' ou 'faux'.",
-    "origin": [
-      [
-        "src/schema/resolvers.js",
-        102
+        "src/schema/types/I18NString.js",
+        5
       ]
     ]
   }

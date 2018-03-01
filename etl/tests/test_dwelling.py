@@ -500,6 +500,7 @@ def sample_input_d(ceiling_input: typing.List[str],
         'forwardSortationArea': 'K1P',
         'HOUSEREGION': 'Ontario',
         'YEARBUILT': '2000',
+        'BUILDER': '4K13D01404',
         'ceilings': ceiling_input,
         'floors': floor_input,
         'walls': wall_input,
@@ -622,6 +623,7 @@ class TestParsedDwellingDataRow:
             region=dwelling.Region.ONTARIO,
             forward_sortation_area='K1P',
             ers_rating=567,
+            file_id='4K13D01404',
             ceilings=[
                 ceiling.Ceiling(
                     label='Main attic',

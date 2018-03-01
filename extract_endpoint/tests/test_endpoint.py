@@ -119,21 +119,15 @@ def test_upload_with_timestamp(azure_emulator_coords: azure_utils.StorageCoordin
         check_file_in_azure(azure_service, azure_emulator_coords, name, contents)
 
 
-def test_upload_without_timestamp(azure_emulator_coords: azure_utils.StorageCoordinates,
-                                  test_client: testing.FlaskClient,
-                                  azure_service: blob.BlockBlobService,
+@pytest.mark.usefixtures('azure_service')
+def test_upload_without_timestamp(test_client: testing.FlaskClient,
                                   sample_salt: str,
                                   sample_zipfile_signature: str,
-                                  sample_file_contents: str,
-                                  sample_filenames: str,
                                   sample_zipfile: io.BytesIO) -> None:
+
     post_return = test_client.post('/upload_file', data=dict(salt=sample_salt, signature=sample_zipfile_signature,
                                                              file=(sample_zipfile, 'zipfile')))
-    assert post_return.status_code == HTTPStatus.CREATED
-    assert endpoint.TIMESTAMP_FILENAME not in \
-           [blob.name for blob in azure_service.list_blobs(azure_emulator_coords.container)]
-    for name, contents in zip(sample_filenames, sample_file_contents):
-        check_file_in_azure(azure_service, azure_emulator_coords, name, contents)
+    assert post_return.status_code == HTTPStatus.BAD_REQUEST
 
 
 @pytest.mark.usefixtures('azure_service')
@@ -148,11 +142,13 @@ def test_upload_no_key_in_env(test_client: testing.FlaskClient,
         test_client.post('/upload_file', data=dict(salt=sample_salt, signature=sample_zipfile_signature,
                                                    timestamp=sample_timestamp, file=(sample_zipfile, 'zipfile')))
 
+
 @pytest.mark.usefixtures('azure_service')
 def test_upload_no_salt(test_client: testing.FlaskClient,
                         sample_timestamp: str,
                         sample_zipfile_signature: str,
                         sample_zipfile: io.BytesIO) -> None:
+
     post_return = test_client.post('/upload_file', data=dict(signature=sample_zipfile_signature,
                                                              timestamp=sample_timestamp,
                                                              file=(sample_zipfile, 'zipfile')))

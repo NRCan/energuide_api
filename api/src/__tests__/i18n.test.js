@@ -78,6 +78,7 @@ describe('configuration', () => {
       let response = await makeRequest({ typeName: 'Evaluation', lang: 'fr' })
 
       let { __type: { description } } = response.body.data
+
       expect(description).toEqual(
         "Informations détaillées sur les caractéristiques spécifiques d'un logement donné",
       )

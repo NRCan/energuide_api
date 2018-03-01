@@ -35,8 +35,8 @@ function Server(context = {}, ...middlewares) {
       }),
     )
   server.get('/graphiql', graphiqlExpress({ endpointURL: '/graphql' }))
-  server.get('/', function (req, res) {
-    res.redirect('/graphiql');
+  server.get('/', function(req, res) {
+    res.redirect('/graphiql')
   })
   return server
 }

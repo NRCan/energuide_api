@@ -2,8 +2,8 @@ import { Resolvers } from './resolvers'
 import { makeExecutableSchema } from 'graphql-tools'
 
 const Schema = i18n => {
-  const typeDefs = `
-
+  const typeDefs = [
+    `
     scalar I18NInt
     scalar I18NFloat
     scalar I18NString
@@ -19,6 +19,7 @@ const Schema = i18n => {
       eq
     }
 
+
     # ${i18n.t`Filters will return results only if they satisfy a condition`}
     input Filter {
       # ${i18n.t`Name of field results will be filtered by`}
@@ -29,8 +30,8 @@ const Schema = i18n => {
       value: I18NString!
     }
 
-    # ${i18n.t`An improvement that could improve the energy efficiency of the dwelling`}
-    type Upgrade {
+    # ${i18n.t`An improvement that could increase the energy efficiency of the dwelling`}
+    type Upgrade @cacheControl(maxAge: 90) {
       # ${i18n.t`Part of the dwelling to be upgraded`}
       upgradeType: I18NString
       # ${i18n.t`Estimated cost of upgrade`}
@@ -45,9 +46,9 @@ const Schema = i18n => {
       typeEnglish: I18NString
       # ${i18n.t`Ventilation type installed (fr)`}
       typeFrench: I18NString
-      # ${i18n.t`Air flow rate in Litres per Second (LpS)`}
+      # ${i18n.t`Air flow rate in litres per second (L/s)`}
       airFlowRateLps: I18NFloat
-      # ${i18n.t`Air flow rate in Cubic feet per Minute (CfM)`}
+      # ${i18n.t`Air flow rate in cubic feet per minute (f3/m)`}
       airFlowRateCfm: I18NFloat
     }
 
@@ -69,26 +70,26 @@ const Schema = i18n => {
       areaFeet: I18NFloat
       # ${i18n.t`Floor length of the house in metres (m)`}
       lengthMetres: I18NFloat
-      # ${i18n.t`Floor area of the house in feet (ft)`}
+      # ${i18n.t`Floor area of the house in square feet (ft2)`}
       lengthFeet: I18NFloat
     }
 
-    # ${i18n.t`Water heaters heat the domestic hot water in a house`}
+    # ${i18n.t`Water heaters heat the domestic water in a house`}
     type WaterHeater @cacheControl(maxAge: 90) {
-      # ${i18n.t`Type of tank being used to heat the domestic hot water in the house (en)`}
+      # ${i18n.t`Type of tank being used to heat the domestic water in the house (en)`}
       typeEnglish: I18NString
-      # ${i18n.t`Type of tank being used to heat the domestic hot water in the house (fr)`}
+      # ${i18n.t`Type of tank being used to heat the domestic water in the house (fr)`}
       typeFrench: I18NString
-      # ${i18n.t`Volume of the tank capacity in Litres (L)`}
+      # ${i18n.t`Capacity of the tank in litres (L)`}
       tankVolumeLitres: I18NFloat
-      # ${i18n.t`Volume of the tank capacity in Gallons (G)`}
+      # ${i18n.t`Capacity of the tank in gallons (Gal)`}
       tankVolumeGallon: I18NFloat
       # ${i18n.t`Measures how effectively your water heater is burning fuel or turning fuel into heat`}
       efficiency: I18NFloat
     }
 
     # ${i18n.t`A principal heating system is either the only source of heat for the house, or is used for at least 70% of the heating load`}
-    type Heating {
+    type Heating @cacheControl(maxAge: 90) {
       # ${i18n.t`Description of heating system`}
       label: I18NString
       # ${i18n.t`Type of heating system (en)`}
@@ -184,9 +185,9 @@ const Schema = i18n => {
       insulationRsi: I18NFloat
       # ${i18n.t`Door R-value`}
       insulationR: I18NFloat
-      # ${i18n.t`Door U-factor in metric: Watts per square metre per degree Celcius (W/m2C)`}
+      # ${i18n.t`Door U-factor in metric: watts per square metre per degree Celcius (W/m2C)`}
       uFactor: I18NFloat
-      # ${i18n.t`Door U-factor in imperial: British Thermal Units per square feet per degree Fahrenheit (BTU/ft2 F)`}
+      # ${i18n.t`Door U-factor in imperial: British Thermal Units per square feet per degree Fahrenheit (BTU/ft2F)`}
       uFactorImperial: I18NFloat
       # ${i18n.t`Door area in square metres (m2)`}
       areaMetres: I18NFloat
@@ -210,9 +211,9 @@ const Schema = i18n => {
       coatingsTintsEnglish: I18NString
       # ${i18n.t`Type of coating and tint on a window pane (fr)`}
       coatingsTintsFrench: I18NString
-      # ${i18n.t`Type of gas (air, argon or krypton) injected between the glass layers (en)`}
+      # ${i18n.t`Type of gas injected between the glass layers (en)`}
       fillTypeEnglish: I18NString
-      # ${i18n.t`Type of gas (air, argon or krypton) injected between the glass layers (fr)`}
+      # ${i18n.t`Type of gas injected between the glass layers (fr)`}
       fillTypeFrench: I18NString
       # ${i18n.t`Spacer systems used between the glass layers (en)`}
       spacerTypeEnglish: I18NString
@@ -272,6 +273,7 @@ const Schema = i18n => {
       evaluationType: I18NString
       # ${i18n.t`Date the evaluation was made`}
       entryDate: I18NString
+      fileId: I18NString
       # ${i18n.t`Date the record was first created`}
       creationDate: I18NString
       # ${i18n.t`Date the record was last modified`}
@@ -321,7 +323,7 @@ const Schema = i18n => {
       # ${i18n.t`Details for a specific dwelling`}
       dwelling(houseId: I18NInt!): Dwelling
       # ${i18n.t`Details for all dwellings, optionally filtered by one or more values`}
-      dwellings(filters: [Filter!] limit: I18NInt, next: I18NString): PaginatedResultSet
+      dwellings(filters: [Filter!] limit: I18NInt next: I18NString previous: I18NString): PaginatedResultSet
     }
 
     enum Field {
@@ -339,9 +341,9 @@ const Schema = i18n => {
       ventilationTypeEnglish
       # ${i18n.t`Filter results by the dwellings containing at least one ventilation system with a specific type (fr)`}
       ventilationTypeFrench
-      # ${i18n.t`Filter results by the dwellings containing at least one ventilation system with a specific air flow rate in Litres per Second (LpS)`}
+      # ${i18n.t`Filter results by the dwellings containing at least one ventilation system with a specific air flow rate in litres per second (L/s)`}
       ventilationAirFlowRateLps
-      # ${i18n.t`Filter results by the dwellings containing at least one ventilation system with a specific air flow rate in Cubic feet per Minute (CfM)`}
+      # ${i18n.t`Filter results by the dwellings containing at least one ventilation system with a specific air flow rate in cubic feet per minute (f3/m)`}
       ventilationAirFlowRateCfm
       # ${i18n.t`Filter results by the dwellings containing at least one ventilation system with a specific efficiency rating`}
       ventilationEfficiency
@@ -367,9 +369,9 @@ const Schema = i18n => {
       waterHeatingTypeEnglish
       # ${i18n.t`Filter results by the dwellings containing at least one water heating system of a specific type (fr)`}
       waterHeatingTypeFrench
-      # ${i18n.t`Filter results by the dwellings containing at least one water heating system with a specific capacity in Litres (L)`}
+      # ${i18n.t`Filter results by the dwellings containing at least one water heating system with a specific capacity in litres (L)`}
       waterHeatingTankVolumeLitres
-      # ${i18n.t`Filter results by the dwellings containing at least one water heating system with a specific capacity in Gallons (g)`}
+      # ${i18n.t`Filter results by the dwellings containing at least one water heating system with a specific capacity in gallons (Gal)`}
       waterHeatingTankVolumeGallon
       # ${i18n.t`Filter results by the dwellings containing at least one water heating system with a specific efficiency rating`}
       waterHeatingEfficiency
@@ -455,8 +457,25 @@ const Schema = i18n => {
       ceilingLengthMetres
       # ${i18n.t`Filter results by the dwellings containing at least one ceiling with a specific length in feet (ft)`}
       ceilingLengthFeet
+      # ${i18n.t`Filter results by the dwellings containing at least one door with a specific type (en)`}
+      doorTypeEnglish
+      # ${i18n.t`Filter results by the dwellings containing at least one door with a specific type (fr)`}
+      doorTypeFrench
+      # ${i18n.t`Filter results by the dwellings where at least one door has a specific RSI (R-value Systeme International) value`}
+      doorInsulationRsi
+      # ${i18n.t`Filter results by the dwellings containing at least one door with a specific effective R-value`}
+      doorInsulationR
+      # ${i18n.t`Filter results for dwellings which have at least one door with a matching U-factor in metric: Watts per square metre per degree Celcius (W/m2C)`}
+      doorUFactor
+      # ${i18n.t`Filter results for dwellings which have at least one door with a matching U-factor in imperial: British Thermal Units per square feet per degree Fahrenheit (BTU/ft2 F)`}
+      doorUFactorImperial
+      # ${i18n.t`Filter results by dwellings where the area of the doors have certain value in square metres (m2)`}
+      doorAreaMetres
+      # ${i18n.t`Filter results by dwellings where the area of the doors have certain value in square feet (ft2)`}
+      doorAreaFeet
     }
-  `
+  `,
+  ]
 
   return makeExecutableSchema({ typeDefs, resolvers: new Resolvers(i18n) })
 }

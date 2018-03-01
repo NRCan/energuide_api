@@ -7,7 +7,7 @@ import pytest
 import _pytest
 import requests
 from azure.storage import blob
-from extract_endpoint import post_to_endpoint, azure_utils
+from extract_endpoint import post_to_endpoint, azure_utils, endpoint
 
 
 class NamedStream(io.BytesIO):
@@ -74,6 +74,11 @@ def sample_filename() -> str:
     return "sample_filename.txt"
 
 
+@pytest.fixture
+def sample_timestamp_filename() -> str:
+    return endpoint.TIMESTAMP_FILENAME
+
+
 def check_file_in_azure(azure_service: blob.BlockBlobService,
                         azure_emulator_coords: azure_utils.StorageCoordinates,
                         filename: str,
@@ -88,14 +93,15 @@ def check_file_in_azure(azure_service: blob.BlockBlobService,
 def test_post_stream(azure_service: blob.BlockBlobService,
                      azure_emulator_coords: azure_utils.StorageCoordinates,
                      upload_url: str,
-                     # sample_timestamp: str,
+                     sample_timestamp: str,
                      sample_file_contents: str,
                      sample_filenames: str,
                      sample_zipfile: io.BytesIO) -> None:
 
-    post_return = post_to_endpoint.post_stream(stream=sample_zipfile, filename="filename", url=upload_url)
+    post_return = post_to_endpoint.post_stream(stream=sample_zipfile, filename="filename",
+                                               timestamp=sample_timestamp, url=upload_url)
     assert post_return.status_code == HTTPStatus.CREATED
-    # check_file_in_azure(azure_service, azure_emulator_coords, endpoint.TIMESTAMP_FILENAME, sample_timestamp)
+    check_file_in_azure(azure_service, azure_emulator_coords, endpoint.TIMESTAMP_FILENAME, sample_timestamp)
     for name, contents in zip(sample_filenames, sample_file_contents):
         check_file_in_azure(azure_service, azure_emulator_coords, name, contents)
 
@@ -104,12 +110,13 @@ def test_post_stream(azure_service: blob.BlockBlobService,
 def test_post_stream_stdin(azure_service: blob.BlockBlobService,
                            azure_emulator_coords: azure_utils.StorageCoordinates,
                            upload_url: str,
-                           # sample_timestamp: str,
+                           sample_timestamp: str,
                            sample_file_contents: str,
                            sample_filenames: str,
                            sample_zipfile: io.BytesIO) -> None:
-    post_return = post_to_endpoint.post_stream(stream=sample_zipfile, filename="filename", url=upload_url)
+    post_return = post_to_endpoint.post_stream(stream=sample_zipfile, filename="filename",
+                                               timestamp=sample_timestamp, url=upload_url)
     assert post_return.status_code == HTTPStatus.CREATED
-    # check_file_in_azure(azure_service, azure_emulator_coords, endpoint.TIMESTAMP_FILENAME, sample_timestamp)
+    check_file_in_azure(azure_service, azure_emulator_coords, endpoint.TIMESTAMP_FILENAME, sample_timestamp)
     for name, contents in zip(sample_filenames, sample_file_contents):
         check_file_in_azure(azure_service, azure_emulator_coords, name, contents)

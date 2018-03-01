@@ -1,0 +1,78 @@
+{
+  "Foundation Walls are below-ground walls separating the interior heated space from the outside (interior partition walls are not considered walls)": {
+    "origin": [
+      [
+        "src/schema/types/FoundationWall.js",
+        3
+      ]
+    ]
+  },
+  "Wall construction being used (en)": {
+    "origin": [
+      [
+        "src/schema/types/FoundationWall.js",
+        5
+      ]
+    ]
+  },
+  "Wall construction being used (fr)": {
+    "origin": [
+      [
+        "src/schema/types/FoundationWall.js",
+        7
+      ]
+    ]
+  },
+  "Wall insulation nominal RSI (R-value Systeme International)": {
+    "origin": [
+      [
+        "src/schema/types/FoundationWall.js",
+        9
+      ]
+    ]
+  },
+  "Wall insulation nominal R-value": {
+    "origin": [
+      [
+        "src/schema/types/FoundationWall.js",
+        11
+      ],
+      [
+        "src/schema/types/FoundationWall.js",
+        15
+      ]
+    ]
+  },
+  "Wall insulation effective RSI (R-value Systeme International)": {
+    "origin": [
+      [
+        "src/schema/types/FoundationWall.js",
+        13
+      ]
+    ]
+  },
+  "Wall area of the house in square metres (m2)": {
+    "origin": [
+      [
+        "src/schema/types/FoundationWall.js",
+        17
+      ]
+    ]
+  },
+  "Wall area of the house in square feet (ft2)": {
+    "origin": [
+      [
+        "src/schema/types/FoundationWall.js",
+        19
+      ]
+    ]
+  },
+  "The percentage of the total wall area this section accounts for": {
+    "origin": [
+      [
+        "src/schema/types/FoundationWall.js",
+        21
+      ]
+    ]
+  }
+}

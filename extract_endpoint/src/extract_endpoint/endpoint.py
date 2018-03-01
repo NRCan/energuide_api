@@ -62,6 +62,8 @@ def upload_file() -> typing.Tuple[str, int]:
         flask.abort(HTTPStatus.BAD_REQUEST)
     if 'file' not in flask.request.files:
         flask.abort(HTTPStatus.BAD_REQUEST)
+    if 'timestamp' not in flask.request.form:
+        flask.abort(HTTPStatus.BAD_REQUEST)
 
     file = flask.request.files['file']
     signature = crypt_utils.sign_string(salt=flask.request.form['salt'], key=App.config['SECRET_KEY'],
@@ -79,12 +81,10 @@ def upload_file() -> typing.Tuple[str, int]:
                                                  utils.secure_filename(json_file.name)):
             flask.abort(HTTPStatus.BAD_GATEWAY)
 
-    timestamp = flask.request.form.get('timestamp', None)
-    if timestamp:
-        if not azure_utils.upload_bytes_to_azure(App.config['AZURE_COORDINATES'],
-                                                 timestamp.encode(),
-                                                 TIMESTAMP_FILENAME):
-            flask.abort(HTTPStatus.BAD_GATEWAY)
+    timestamp = flask.request.form['timestamp']
+
+    if not azure_utils.upload_bytes_to_azure(App.config['AZURE_COORDINATES'], timestamp.encode(), TIMESTAMP_FILENAME):
+        flask.abort(HTTPStatus.BAD_GATEWAY)
 
     return 'success', HTTPStatus.CREATED
 

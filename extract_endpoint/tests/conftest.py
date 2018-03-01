@@ -1,4 +1,5 @@
 import io
+import datetime
 import zipfile
 import typing
 import pytest
@@ -28,7 +29,7 @@ def azure_service(azure_emulator_coords) -> blob.BlockBlobService:
 
 @pytest.fixture
 def sample_timestamp() -> str:
-    return "Tue 27 Feb 2018 11:19:17 EST"
+    return datetime.datetime(2018, 1, 1, 0, 0, 0).strftime("%Y-%m-%d %H:%M:%S")
 
 
 @pytest.fixture

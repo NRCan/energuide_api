@@ -111,6 +111,7 @@ describe('Schema', () => {
       expect(fields).toEqual([
         'evaluationType',
         'entryDate',
+        'fileId',
         'creationDate',
         'modificationDate',
         'ceilings',
@@ -277,6 +278,7 @@ describe('Schema', () => {
       ])
     })
   })
+
   describe('Upgrade', () => {
     it('is defined', () => {
       expect(typeMap).toHaveProperty('Upgrade')
