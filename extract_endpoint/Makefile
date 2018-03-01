@@ -19,7 +19,6 @@ test_python: virtualenv is_azurite_running
 	${VIRTUALENV_ROOT}/bin/pytest tests
 	${VIRTUALENV_ROOT}/bin/pylint src tests
 	${VIRTUALENV_ROOT}/bin/mypy src tests --ignore-missing-imports
-	rm -rf tests/azure_emulator
 
 .PHONY: start_azurite
 start_azurite:
