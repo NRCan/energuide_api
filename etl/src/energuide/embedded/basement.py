@@ -166,12 +166,8 @@ class BasementFloor(_BasementFloor):
             effective_insulation=insulation.Insulation(effective_insulation)
             if effective_insulation is not None else None,
 
-            length=distance.Distance(length)
-            if length is not None else None,
-
-            width=distance.Distance(width)
-            if width is not None else None,
-
+            length=distance.Distance(length) if length is not None else None,
+            width=distance.Distance(width) if width is not None else None,
             perimeter=distance.Distance(perimeter),
             floor_area=area.Area(floor_area),
         )
