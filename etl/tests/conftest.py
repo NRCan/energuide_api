@@ -114,10 +114,12 @@ def put_sample_files_in_azure(azure_service: blob.BlockBlobService,
                               energuide_zip_fixture: str) -> typing.Generator:
 
     file_z = zipfile.ZipFile(energuide_zip_fixture)
+    azure_service.create_blob_from_text(azure_container, 'timestamp.txt', 'Wednesday')
     for json_file in [file_z.open(zipinfo) for zipinfo in file_z.infolist()]:
         azure_service.create_blob_from_bytes(azure_container, json_file.name, json_file.read())
 
     yield None
 
+    azure_service.delete_blob(azure_container, 'timestamp.txt')
     for json_file in [file_z.open(zipinfo) for zipinfo in file_z.infolist()]:
         azure_service.delete_blob(azure_container, json_file.name)

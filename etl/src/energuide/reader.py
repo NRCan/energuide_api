@@ -29,7 +29,8 @@ def read_from_azure() -> typing.Iterator[InputData]:
                                           account_key=EXTRACT_ENDPOINT_STORAGE_KEY,
                                           custom_domain=EXTRACT_ENDPOINT_STORAGE_DOMAIN)
     # itertools.groupby() needs its input sorted by the groupby key. We are assuming that that key is the filename
-    files = sorted([blob.name for blob in azure_service.list_blobs(EXTRACT_ENDPOINT_CONTAINER)])
+    files = sorted([blob.name for blob in azure_service.list_blobs(EXTRACT_ENDPOINT_CONTAINER)
+                    if 'timestamp' not in blob.name])
     for file in files:
         content = azure_service. get_blob_to_bytes(EXTRACT_ENDPOINT_CONTAINER, file).content
         house = json.loads(content)
