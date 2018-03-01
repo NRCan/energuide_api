@@ -65,12 +65,12 @@ class EnergyUpgradesSnippet(_EnergyUpgradesSnippet):
         }
 
 
-class _TsvSnippet(typing.NamedTuple):
+class _OtherDataSnippet(typing.NamedTuple):
     forward_sortation_area: typing.Optional[str]
     ers_rating: typing.Optional[str]
 
 
-class TsvSnippet(_TsvSnippet):
+class OtherDataSnippet(_OtherDataSnippet):
 
     def to_dict(self) -> typing.Dict[str, typing.Any]:
         return {
@@ -92,11 +92,11 @@ def _get_nullable_fields(root: element.Element, path: str) -> typing.Optional[st
     return data
 
 
-def snip_tsv(root: element.Element) -> TsvSnippet:
+def snip_other_data(root: element.Element) -> OtherDataSnippet:
     postal_code = _get_nullable_fields(root, 'ProgramInformation/Client/StreetAddress/PostalCode/text()')
-    return TsvSnippet(
+    return OtherDataSnippet(
         forward_sortation_area=postal_code[0:3] if postal_code else None,
-        ers_rating=_get_nullable_fields(root, 'AllResults/Results/Tsv/ERSRATING/text()'),
+        ers_rating=_get_nullable_fields(root, 'Program/Results/Tsv/ERSRating/@value'),
     )
 
 

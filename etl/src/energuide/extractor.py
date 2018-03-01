@@ -86,7 +86,7 @@ def _extract_snippets(data: typing.Iterable[reader.InputData]) -> typing.Iterato
             energy_snippets = snippets.snip_energy_upgrades(upgrades_node[0])
             row = _safe_merge(row, energy_snippets.to_dict())
 
-        tsv_fields = snippets.snip_tsv(doc)
+        tsv_fields = snippets.snip_other_data(doc)
         row = _safe_merge(row, tsv_fields.to_dict())
         yield row
 

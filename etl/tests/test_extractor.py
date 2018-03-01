@@ -146,13 +146,13 @@ def test_extract_with_tsv_snippets(tmpdir: py._path.local.LocalPath, base_data: 
             </StreetAddress>
         </Client>
     </ProgramInformation>
-    <AllResults>
+    <Program>
         <Results>
             <Tsv>
-                <ERSRATING>257</ERSRATING>
+                <ERSRating value='257' />
             </Tsv>
         </Results>
-    </AllResults>
+    </Program>
 </HouseFile>
     """
     base_data['RAW_XML'] = xml_data
