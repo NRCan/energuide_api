@@ -1,0 +1,10 @@
+{
+  "The 'Float' scalar type represents signed double-precision fractional values as specified by [IEEE 754](http://en.wikipedia.org/wiki/IEEE_floating_point).": {
+    "origin": [
+      [
+        "src/schema/types/I18NFloat.js",
+        5
+      ]
+    ]
+  }
+}

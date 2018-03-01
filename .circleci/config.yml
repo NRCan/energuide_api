@@ -1,319 +1,329 @@
-# Javascript Node CircleCI 2.0 configuration file
-#
-# Check https://circleci.com/docs/2.0/language-javascript/ for more details
-#
 version: 2
 jobs:
-  node:
+  deploy_api:
     docker:
-      # specify the version you desire here
-      - image: circleci/node:8.9.4
-      - image: mongo:3.6.2
-
-      # Specify service dependencies here if necessary
-      # CircleCI maintains a library of pre-built images
-      # documented at https://circleci.com/docs/2.0/circleci-images/
-      # - image: circleci/mongo:3.4.4
-
-    working_directory: ~/repo/api
-
+      -
+        image: docker
+    environment:
+      -
+        VERSION: "0.1.2"
     steps:
-      - checkout:
+      -
+        checkout:
           path: ~/repo
-
-      # Download and cache dependencies
-      - restore_cache:
-          keys:
-          - v1-dependencies-{{ checksum "package.json" }}
-          # fallback to using the latest cache if no exact match is found
-          - v1-dependencies-
-
-      - run: yarn install
-
-      - save_cache:
-          paths:
-            - node_modules
-          key: v1-dependencies-{{ checksum "package.json" }}
-
-      - run:
-          name: Running tests & linter
+      -
+        attach_workspace:
+          at: /tmp/workspace
+      - setup_remote_docker
+      -
+        run:
           command: |
-            yarn test
-            yarn lint
-
-      - run:
-          name: Report failing Master
+              mkdir ~/repo/api/dist
+              cp -pr /tmp/workspace/dist/* ~/repo/api/dist
+              cp -pr /tmp/workspace/node_modules ~/repo/api/node_modules
+              chmod 755 ~/repo/api/node_modules
+              chmod 755 ~/repo/api/dist
+              docker login -u "$DOCKER_USERNAME" -p "$DOCKER_PASSWORD"
+              docker build --build-arg VERSION="${VERSION}" -t "${DOCKER_REGISTRY}"/"${NAMESPACE}"/"${CIRCLE_PROJECT_REPONAME}":"${VERSION}" -t "${DOCKER_REGISTRY}"/"${NAMESPACE}"/"${CIRCLE_PROJECT_REPONAME}":"latest" .
+              docker push "${DOCKER_REGISTRY}"/"${NAMESPACE}"/"${CIRCLE_PROJECT_REPONAME}":"${VERSION}"
+              docker push "${DOCKER_REGISTRY}"/"${NAMESPACE}"/"${CIRCLE_PROJECT_REPONAME}":"latest"
+          name: "Build and Deploy Docker Image"
+      -
+        run:
           command: ~/repo/scripts/notify_failure.sh
+          name: "Report failing Master"
           when: on_fail
+    working_directory: ~/repo/api
+  deploy_endpoint:
+    docker:
+      -
+        image: docker
+    environment:
+      -
+        VERSION: "0.1.3"
+    steps:
+      -
+        checkout:
+          path: ~/repo
+      - setup_remote_docker
+      -
+        run:
+          command: |
+              docker login -u "$DOCKER_USERNAME" -p "$DOCKER_PASSWORD"
+              docker build --build-arg VERSION="${VERSION}" -t "${DOCKER_REGISTRY}"/"${NAMESPACE}"/"nrcan_endpoint":"${VERSION}" -t "${DOCKER_REGISTRY}"/"${NAMESPACE}"/"nrcan_endpoint":"latest" .
+              docker push "${DOCKER_REGISTRY}"/"${NAMESPACE}"/"nrcan_endpoint":"${VERSION}"
+              docker push "${DOCKER_REGISTRY}"/"${NAMESPACE}"/"nrcan_endpoint":"latest"
+          name: "Build and Deploy ETL Docker Image"
+    working_directory: ~/repo/extract_endpoint
   etl:
     docker:
-      - image: circleci/python:3.6.1
-      - image: arafato/azurite
+      -
+        image: "circleci/python:3.6.1"
+      -
+        image: "arafato/azurite"
         environment:
           executable=blob
-      - image: mongo:3.6.2
-
-    working_directory: ~/repo/etl
-
+      -
+        image: "mongo:3.6.2"
     steps:
-      - checkout:
+      -
+        checkout:
           path: ~/repo
-
-      # Download and cache dependencies
-      - restore_cache:
-          key: deps1-{{ .Branch }}-{{ checksum "requirements.txt" }}
-
-      - run:
-          name: Installing dependencies
+      -
+        restore_cache:
+          key: "deps1-{{ .Branch }}-{{ checksum \"requirements.txt\" }}"
+      -
+        run:
           command: |
-            python3 -m venv ~/.venv
-            . ~/.venv/bin/activate
-            pip install -r requirements.txt
-            pip install -e .
-
-      - save_cache:
-          key: deps1-{{ .Branch }}-{{ checksum "requirements.txt" }}
+              python3 -m venv ~/.venv
+              . ~/.venv/bin/activate
+              pip install -r requirements.txt
+              pip install -e .
+          name: "Installing dependencies"
+      -
+        save_cache:
+          key: "deps1-{{ .Branch }}-{{ checksum \"requirements.txt\" }}"
           paths:
-            - "~/.venv"
-      - run:
-          name: Running tests
+            - ~/.venv
+      -
+        run:
           command: |
-            . ~/.venv/bin/activate
-            pylint src tests
-            mypy src tests
-            pytest --cov=energuide tests
-            percent=$(coverage report | tail -n 1 | sed "s/TOTAL[[:blank:]]*[0-9]*[[:blank:]]*[0-9]*[[:blank:]]*//" | rev | cut -c 2- | rev)
-            echo Test coverage is $percent%
-            if (( $percent < 80 ));
-            then
-              echo Failing build due to less than 80% test coverage
-              exit 1
-            fi
-      - run:
-          name: Report failing Master
+              . ~/.venv/bin/activate
+              pylint src tests
+              mypy src tests
+              pytest --cov=energuide tests
+              percent=$(coverage report | tail -n 1 | sed "s/TOTAL[[:blank:]]*[0-9]*[[:blank:]]*[0-9]*[[:blank:]]*//" | rev | cut -c 2- | rev)
+              echo Test coverage is $percent%
+              if (( $percent < 80 ));
+              then
+                echo Failing build due to less than 80% test coverage
+                exit 1
+              fi
+          name: "Running tests"
+      -
+        run:
           command: ~/repo/scripts/notify_failure.sh
+          name: "Report failing Master"
           when: on_fail
-
+    working_directory: ~/repo/etl
   extract_endpoint:
     docker:
-      - image: circleci/python:3.6.1
-      - image: arafato/azurite
-        environment:
-          executable=blob
-
+      -
+        image: "circleci/python:3.6.1"
+      -
+        environment: executable=blob
+        image: arafato/azurite
+    steps:
+      -
+        checkout:
+          path: ~/repo
+      -
+        restore_cache:
+          key: "deps2-{{ .Branch }}-{{ checksum \"requirements.txt\" }}"
+      -
+        run:
+          command: |
+              sudo apt-get update
+              echo "deb [arch=amd64] https://packages.microsoft.com/repos/azure-cli/ wheezy main" | sudo tee /etc/apt/sources.list.d/azure-cli.list
+              sudo apt-key adv --keyserver packages.microsoft.com --recv-keys 52E16F86FEE04B979B07E28DB02C46DF417A0893
+              sudo apt-get install apt-transport-https
+              sudo apt-get update && sudo apt-get install azure-cli
+          name: "Install packages"
+      -
+        run:
+          command: |
+              python3 -m venv ~/.venv
+              . ~/.venv/bin/activate
+              pip install -r requirements.txt
+              pip install -e .
+          name: "Installing dependencies"
+      -
+        save_cache:
+          key: "deps2-{{ .Branch }}-{{ checksum \"requirements.txt\" }}"
+          paths:
+            - ~/.venv
+      -
+        run:
+          command: |
+              . ~/.venv/bin/activate
+              pylint src tests
+              mypy src tests
+              pytest tests
+          name: "Running tests"
+      -
+        run:
+          command: ~/repo/scripts/notify_failure.sh
+          name: "Report failing Master"
+          when: on_fail
     working_directory: ~/repo/extract_endpoint
-
-    steps:
-      - checkout:
-          path: ~/repo
-
-      # Download and cache dependencies
-      - restore_cache:
-          key: deps2-{{ .Branch }}-{{ checksum "requirements.txt" }}
-
-      - run:
-          name: Install packages
-          command: |
-            sudo apt-get update
-            echo "deb [arch=amd64] https://packages.microsoft.com/repos/azure-cli/ wheezy main" | sudo tee /etc/apt/sources.list.d/azure-cli.list
-            sudo apt-key adv --keyserver packages.microsoft.com --recv-keys 52E16F86FEE04B979B07E28DB02C46DF417A0893
-            sudo apt-get install apt-transport-https
-            sudo apt-get update && sudo apt-get install azure-cli
-
-      - run:
-          name: Installing dependencies
-          command: |
-            python3 -m venv ~/.venv
-            . ~/.venv/bin/activate
-            pip install -r requirements.txt
-            pip install -e .
-
-      - save_cache:
-          key: deps2-{{ .Branch }}-{{ checksum "requirements.txt" }}
-          paths:
-            - "~/.venv"
-      - run:
-          name: Running tests
-          command: |
-            . ~/.venv/bin/activate
-            pylint src tests
-            mypy src tests
-            pytest tests
-      - run:
-          name: Report failing Master
-          command: ~/repo/scripts/notify_failure.sh
-          when: on_fail
-
-  python_integration:
+  node:
     docker:
-      - image: circleci/python:3.6.1
-      - image: mongo:3.6.2
-
-    working_directory: ~/repo/etl
-
+      -
+        image: "circleci/node:8.9.4"
+      -
+        image: "mongo:3.6.2"
     steps:
-      - checkout:
+      -
+        checkout:
           path: ~/repo
-
-      # Download and cache dependencies
-      - restore_cache:
-          key: deps1-{{ .Branch }}-{{ checksum "requirements.txt" }}
-
-      - run:
-          name: Installing packages
-          command: |
-            sudo apt-get install apt-transport-https
-            sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv 2930ADAE8CAF5059EE73BB4B58712A2291FA4AD5
-            echo "deb http://repo.mongodb.org/apt/debian jessie/mongodb-org/3.6 main" | sudo tee /etc/apt/sources.list.d/mongodb-org-3.6.list
-            sudo apt-get update
-            sudo apt-get install -y mongodb-org-tools=3.6.2
-
-      - run:
-          name: Installing dependencies
-          command: |
-            python3 -m venv ~/.venv
-            . ~/.venv/bin/activate
-            pip install -r requirements.txt
-            pip install -e .
-
-      - save_cache:
-          key: deps1-{{ .Branch }}-{{ checksum "requirements.txt" }}
-          paths:
-            - "~/.venv"
-
-      - run:
-          name: Loading data
-          command: |
-            . ~/.venv/bin/activate
-            energuide extract --infile tests/randomized_energuide_data.csv --outfile tests/randomized_energuide_data.zip
-            energuide load  --db_name energuide --collection dwellings --filename tests/randomized_energuide_data.zip
-
-      - run: mkdir -p workspace
-      - run:
-          name: Exporting database
-          command: |
-            mongoexport --db energuide --collection dwellings --out workspace/mongo_dump
-
-
-      - persist_to_workspace:
-          root: workspace
-          paths:
-            - mongo_dump
-
-      - run:
-          name: Report failing Master
-          command: ~/repo/scripts/notify_failure.sh
-          when: on_fail
-
-  node_integration:
-    docker:
-      # specify the version you desire here
-      - image: circleci/node:8.9.4
-      - image: mongo:3.6.2
-
-      # Specify service dependencies here if necessary
-      # CircleCI maintains a library of pre-built images
-      # documented at https://circleci.com/docs/2.0/circleci-images/
-      # - image: circleci/mongo:3.4.4
-
-    working_directory: ~/repo/api
-
-    steps:
-      - checkout:
-          path: ~/repo
-      - attach_workspace:
-          # Must be absolute path or relative path from working_directory
-          at: /tmp/workspace
-
-      # Download and cache dependencies
-      - restore_cache:
+      -
+        restore_cache:
           keys:
-          - v1-dependencies-{{ checksum "package.json" }}
-          # fallback to using the latest cache if no exact match is found
-          - v1-dependencies-
-
-      - run:
-          name: Installing packages
-          command: |
-            sudo apt-get install apt-transport-https
-            sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv 2930ADAE8CAF5059EE73BB4B58712A2291FA4AD5
-            echo "deb http://repo.mongodb.org/apt/debian jessie/mongodb-org/3.6 main" | sudo tee /etc/apt/sources.list.d/mongodb-org-3.6.list
-            sudo apt-get update
-            sudo apt-get install -y mongodb-org-tools=3.6.2
-
-      - run: yarn install
-
-      - save_cache:
+            - "v1-dependencies-{{ checksum \"package.json\" }}"
+            - v1-dependencies-
+      -
+        run: "yarn install"
+      -
+        save_cache:
+          key: "v1-dependencies-{{ checksum \"package.json\" }}"
           paths:
             - node_modules
-          key: v1-dependencies-{{ checksum "package.json" }}
-
-      - run:
-          name: Importing database
+      -
+        run:
           command: |
-            mongoimport --db energuide --collection dwellings --file /tmp/workspace/mongo_dump
-
-      - run:
-          name: Running integration tests
-          command: |
-            yarn integration
-
-      - run:
-          name: Report failing Master
+              yarn test
+              yarn lint
+          name: "Running tests & linter"
+      -
+        run:
           command: ~/repo/scripts/notify_failure.sh
+          name: "Report failing Master"
           when: on_fail
-
-  yarn_build:
     working_directory: ~/repo/api
+  node_integration:
     docker:
-      - image: circleci/node:8.9.4
+      -
+        image: "circleci/node:8.9.4"
+      -
+        image: "mongo:3.6.2"
     steps:
-      - checkout:
+      -
+        checkout:
           path: ~/repo
-      - run:
-          name: "Yarn Build"
+      -
+        attach_workspace:
+          at: /tmp/workspace
+      -
+        restore_cache:
+          keys:
+            - "v1-dependencies-{{ checksum \"package.json\" }}"
+            - v1-dependencies-
+      -
+        run:
           command: |
-            echo 'export PATH=/home/circleci/repo/api/node_modules/.bin:$PATH' >> $BASH_ENV
-            yarn install
-            yarn build
-      - persist_to_workspace:
-          root: /home/circleci/repo/api
+              sudo apt-get install apt-transport-https
+              sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv 2930ADAE8CAF5059EE73BB4B58712A2291FA4AD5
+              echo "deb http://repo.mongodb.org/apt/debian jessie/mongodb-org/3.6 main" | sudo tee /etc/apt/sources.list.d/mongodb-org-3.6.list
+              sudo apt-get update
+              sudo apt-get install -y mongodb-org-tools=3.6.2
+          name: "Installing packages"
+      -
+        run: "yarn install"
+      -
+        save_cache:
+          key: "v1-dependencies-{{ checksum \"package.json\" }}"
+          paths:
+            - node_modules
+      -
+        run:
+          command: "mongoimport --db energuide --collection dwellings --file /tmp/workspace/mongo_dump\n"
+          name: "Importing database"
+      -
+        run:
+          command: "yarn integration\n"
+          name: "Running integration tests"
+      -
+        run:
+          command: ~/repo/scripts/notify_failure.sh
+          name: "Report failing Master"
+          when: on_fail
+    working_directory: ~/repo/api
+  python_integration:
+    docker:
+      -
+        image: "circleci/python:3.6.1"
+      -
+        image: "mongo:3.6.2"
+    steps:
+      -
+        checkout:
+          path: ~/repo
+      -
+        restore_cache:
+          key: "deps1-{{ .Branch }}-{{ checksum \"requirements.txt\" }}"
+      -
+        run:
+          command: |
+              sudo apt-get install apt-transport-https
+              sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv 2930ADAE8CAF5059EE73BB4B58712A2291FA4AD5
+              echo "deb http://repo.mongodb.org/apt/debian jessie/mongodb-org/3.6 main" | sudo tee /etc/apt/sources.list.d/mongodb-org-3.6.list
+              sudo apt-get update
+              sudo apt-get install -y mongodb-org-tools=3.6.2
+          name: "Installing packages"
+      -
+        run:
+          command: |
+              python3 -m venv ~/.venv
+              . ~/.venv/bin/activate
+              pip install -r requirements.txt
+              pip install -e .
+          name: "Installing dependencies"
+      -
+        save_cache:
+          key: "deps1-{{ .Branch }}-{{ checksum \"requirements.txt\" }}"
+          paths:
+            - ~/.venv
+      -
+        run:
+          command: |
+              . ~/.venv/bin/activate
+              energuide extract --infile tests/randomized_energuide_data.csv --outfile tests/randomized_energuide_data.zip
+              energuide load  --db_name energuide --collection dwellings --filename tests/randomized_energuide_data.zip
+          name: "Loading data"
+      -
+        run: "mkdir -p workspace"
+      -
+        run:
+          command: "mongoexport --db energuide --collection dwellings --out workspace/mongo_dump\n"
+          name: "Exporting database"
+      -
+        persist_to_workspace:
+          paths:
+            - mongo_dump
+          root: workspace
+      -
+        run:
+          command: ~/repo/scripts/notify_failure.sh
+          name: "Report failing Master"
+          when: on_fail
+    working_directory: ~/repo/etl
+  yarn_build:
+    docker:
+      -
+        image: "circleci/node:8.9.4"
+    steps:
+      -
+        checkout:
+          path: ~/repo
+      -
+        run:
+          command: |
+              echo 'export PATH=/home/circleci/repo/api/node_modules/.bin:$PATH' >> $BASH_ENV
+              yarn install
+              yarn build
+          name: "Yarn Build"
+      -
+        persist_to_workspace:
           paths:
             - dist
             - node_modules
-      - run:
-          name: Report failing Master
+          root: /home/circleci/repo/api
+      -
+        run:
           command: ~/repo/scripts/notify_failure.sh
+          name: "Report failing Master"
           when: on_fail
-  deploy:
-    environment:
-      - VERSION: "0.1.2"
     working_directory: ~/repo/api
-    docker:
-      - image: docker
-    steps:
-      - checkout:
-          path:  ~/repo
-      - attach_workspace:
-          at: /tmp/workspace
-      - setup_remote_docker
-      - run:
-          name: "Build and Deploy Docker Image"
-          command: |
-            mkdir ~/repo/api/dist
-            cp -pr /tmp/workspace/dist/* ~/repo/api/dist
-            cp -pr /tmp/workspace/node_modules ~/repo/api/node_modules
-            chmod 755 ~/repo/api/node_modules
-            chmod 755 ~/repo/api/dist
-            docker login -u "$DOCKER_USERNAME" -p "$DOCKER_PASSWORD"
-            docker build --build-arg VERSION="${VERSION}" -t "${DOCKER_REGISTRY}"/"${NAMESPACE}"/"${CIRCLE_PROJECT_REPONAME}":"${VERSION}" -t "${DOCKER_REGISTRY}"/"${NAMESPACE}"/"${CIRCLE_PROJECT_REPONAME}":"latest" .
-            docker push "${DOCKER_REGISTRY}"/"${NAMESPACE}"/"${CIRCLE_PROJECT_REPONAME}":"${VERSION}"
-            docker push "${DOCKER_REGISTRY}"/"${NAMESPACE}"/"${CIRCLE_PROJECT_REPONAME}":"latest"
-      - run:
-          name: Report failing Master
-          command: ~/repo/scripts/notify_failure.sh
-          when: on_fail
-
 workflows:
   version: 2
   node_and_python:
@@ -322,19 +332,23 @@ workflows:
       - etl
       - extract_endpoint
       - python_integration
-      - node_integration:
+      - deploy_endpoint
+      -
+        node_integration:
           requires:
             - python_integration
-      - yarn_build:
+      -
+        yarn_build:
+          filters:
+            branches:
+              only:
+                - master
           requires:
             - node
             - etl
             - extract_endpoint
             - node_integration
-          filters:
-            branches:
-              only:
-                - master
-      - deploy:
+      -
+        deploy_api:
           requires:
             - yarn_build
