@@ -588,28 +588,35 @@ class TestParsedDwellingDataRow:
         wall_code = code.WallCode(
             identifier='Code 1',
             label='1201101121',
-            structure_type=bilingual.Bilingual(
-                english='Wood frame',
-                french='Ossature de bois',
-            ),
-            component_type_size=bilingual.Bilingual(
-                english='38x89 mm (2x4 in)',
-                french='38x89 (2x4)',
-            )
+            tags={
+                code.WallCodeTag.STRUCTURE_TYPE: bilingual.Bilingual(
+                    english='Wood frame',
+                    french='Ossature de bois',
+                ),
+                code.WallCodeTag.COMPONENT_TYPE_SIZE: bilingual.Bilingual(
+                    english='38x89 mm (2x4 in)',
+                    french='38x89 (2x4)',
+                )
+            },
         )
 
         window_code = code.WindowCode(
             identifier='Code 12',
             label='234002',
-            glazing_type=bilingual.Bilingual(
-                english='Double/double with 1 coat',
-                french='Double/double, 1 couche',
-            ),
-            coating_tint=bilingual.Bilingual(english='Low-E .20 (hard1)', french='Faible E .20 (Dur 1)'),
-            fill_type=bilingual.Bilingual(english='9 mm Argon', french="9 mm d'argon"),
-            spacer_type=bilingual.Bilingual(english='Metal', french='Métal'),
-            window_code_type=bilingual.Bilingual(english='Picture', french='Fixe'),
-            frame_material=bilingual.Bilingual(english='Wood', french='Bois'),
+            tags={
+                code.WindowCodeTag.GLAZING_TYPE: bilingual.Bilingual(
+                    english='Double/double with 1 coat',
+                    french='Double/double, 1 couche',
+                ),
+                code.WindowCodeTag.COATING_TINTS: bilingual.Bilingual(
+                    english='Low-E .20 (hard1)',
+                    french='Faible E .20 (Dur 1)'
+                ),
+                code.WindowCodeTag.FILL_TYPE: bilingual.Bilingual(english='9 mm Argon', french="9 mm d'argon"),
+                code.WindowCodeTag.SPACER_TYPE: bilingual.Bilingual(english='Metal', french='Métal'),
+                code.WindowCodeTag.CODE_TYPE: bilingual.Bilingual(english='Picture', french='Fixe'),
+                code.WindowCodeTag.FRAME_MATERIAL: bilingual.Bilingual(english='Wood', french='Bois'),
+            }
         )
 
         assert output == dwelling.ParsedDwellingDataRow(

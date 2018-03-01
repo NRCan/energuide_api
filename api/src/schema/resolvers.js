@@ -1,4 +1,6 @@
 import MongoPaging from 'mongo-cursor-pagination'
+import { GraphQLError } from 'graphql'
+
 /* eslint-disable import/named */
 import {
   dwellingHouseId,
@@ -66,6 +68,14 @@ import {
   ceilingAreaFeet,
   ceilingLengthMetres,
   ceilingLengthFeet,
+  doorTypeEnglish,
+  doorTypeFrench,
+  doorInsulationRsi,
+  doorInsulationR,
+  doorUFactor,
+  doorUFactorImperial,
+  doorAreaMetres,
+  doorAreaFeet,
 } from './enums'
 /* eslint-enable import/named */
 
@@ -94,7 +104,15 @@ const Resolvers = i18n => {
         // and is passed directly into library code to be decoded and used while
         // talking to the database.
         // ಠ_ಠ
-        const { filters, limit, next } = args
+        const { filters, limit, next, previous } = args
+
+        if (next && previous) {
+          throw new GraphQLError(
+            i18n.t`
+              Cannot submit values for both 'next' and 'previous'.
+            `,
+          )
+        }
 
         let query = {
           $and: [{}],
@@ -127,6 +145,7 @@ const Resolvers = i18n => {
         let result = await MongoPaging.find(client, {
           query,
           next,
+          previous,
           limit,
         })
 
@@ -204,6 +223,14 @@ const Resolvers = i18n => {
       ceilingAreaFeet: ceilingAreaFeet.toString(),
       ceilingLengthMetres: ceilingLengthMetres.toString(),
       ceilingLengthFeet: ceilingLengthFeet.toString(),
+      doorTypeEnglish: doorTypeEnglish.toString(),
+      doorTypeFrench: doorTypeFrench.toString(),
+      doorInsulationRsi: doorInsulationRsi.toString(),
+      doorInsulationR: doorInsulationR.toString(),
+      doorUFactor: doorUFactor.toString(),
+      doorUFactorImperial: doorUFactorImperial.toString(),
+      doorAreaMetres: doorAreaMetres.toString(),
+      doorAreaFeet: doorAreaFeet.toString(),
     },
     Comparator: {
       gt: '$gt',

@@ -1,0 +1,10 @@
+{
+  "The 'Boolean' scalar type represents 'true' or 'false'.": {
+    "origin": [
+      [
+        "src/schema/types/I18NBoolean.js",
+        5
+      ]
+    ]
+  }
+}
