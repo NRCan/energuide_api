@@ -329,6 +329,12 @@ workflows:
       - extract_endpoint
       - python_integration
       - deploy_endpoint
+          filters:
+            branches:
+              only:
+                - master
+          requires:
+            - extract_endpoint
       -
         node_integration:
           requires:
