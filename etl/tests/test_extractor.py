@@ -19,15 +19,15 @@ def _write_csv(filepath: str, data: typing.Mapping[str, typing.Optional[str]]) -
 
 
 @pytest.fixture
-def base_data() -> typing.Dict[str, typing.Optional[str]]:
+def base_data() -> typing.Dict[str, str]:
     return {
         'EVAL_ID': '123',
         'EVAL_TYPE': 'D',
-        'CLIENTPCODE': 'M5E 1W5',
-        'RAW_XML': '<tag>thing</tag>',
+        'RAW_XML': """
+<HouseFile>
+</HouseFile>
+        """,
         'BUILDER': '4K13D01404',
-        'DHWHPCOP': '0',
-        'ERSRATING': '200',
         'ENTRYDATE': '2012-02-25',
         'CREATIONDATE': '2012-06-08 09:26:10',
         'MODIFICATIONDATE': '2012-06-09 09:26:10',
@@ -38,7 +38,7 @@ def base_data() -> typing.Dict[str, typing.Optional[str]]:
 
 
 @pytest.fixture
-def extra_data() -> typing.Dict[str, typing.Optional[str]]:
+def extra_data() -> typing.Dict[str, str]:
     data = base_data()
     data['other_1'] = 'foo'
     data['other_2'] = 'bar'
@@ -46,7 +46,7 @@ def extra_data() -> typing.Dict[str, typing.Optional[str]]:
 
 
 @pytest.fixture
-def missing_data() -> typing.Dict[str, typing.Optional[str]]:
+def missing_data() -> typing.Dict[str, str]:
     data = base_data()
     data.pop('BUILDER')
     return data
@@ -55,7 +55,7 @@ def missing_data() -> typing.Dict[str, typing.Optional[str]]:
 @pytest.fixture
 def nullable_data() -> typing.Dict[str, typing.Optional[str]]:
     data = base_data()
-    data['ERSRATING'] = None
+    data['MODIFICATIONDATE'] = None
     return data
 
 
@@ -104,15 +104,10 @@ def test_extract_missing(missing_filepath: str) -> None:
 
 def test_empty_to_none(tmpdir: py._path.local.LocalPath, nullable_data: typing.Dict[str, typing.Optional[str]]) -> None:
     filepath = os.path.join(tmpdir, 'sample.csv')
-
-    with open(filepath, 'w') as file:
-        writer = csv.DictWriter(file, fieldnames=list(nullable_data.keys()))
-        writer.writeheader()
-        writer.writerow(nullable_data)
-
+    _write_csv(filepath, nullable_data)
     output = extractor.extract_data(filepath)
     row = next(output)
-    assert row['ERSRATING'] is None
+    assert row['MODIFICATIONDATE'] is None
 
 
 def test_extract_with_snippets(tmpdir: py._path.local.LocalPath, base_data: typing.Dict[str, str]) -> None:
@@ -139,6 +134,38 @@ def test_extract_with_snippets(tmpdir: py._path.local.LocalPath, base_data: typi
 
     output = list(extractor.extract_data(str(input_file)))
     assert output[0]['ceilings']
+
+
+def test_extract_with_tsv_snippets(tmpdir: py._path.local.LocalPath, base_data: typing.Dict[str, str]) -> None:
+    xml_data = """
+<HouseFile>
+    <ProgramInformation>
+        <Client>
+            <StreetAddress>
+                <PostalCode>H0H 0H0</PostalCode>
+            </StreetAddress>
+        </Client>
+    </ProgramInformation>
+    <AllResults>
+        <Results>
+            <Tsv>
+                <ERSRATING>257</ERSRATING>
+            </Tsv>
+        </Results>
+    </AllResults>
+</HouseFile>
+    """
+    base_data['RAW_XML'] = xml_data
+
+    input_file = tmpdir.join('input.csv')
+    with open(input_file, 'w') as csvfile:
+        writer = csv.DictWriter(csvfile, fieldnames=list(base_data.keys()))
+        writer.writeheader()
+        writer.writerow(base_data)
+
+    output = list(extractor.extract_data(str(input_file)))
+    assert output[0]['ersRating'] == '257'
+    assert output[0]['forwardSortationArea'] == 'H0H'
 
 
 def test_write_data(tmpdir: py._path.local.LocalPath) -> None:

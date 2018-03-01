@@ -14,19 +14,16 @@ REQUIRED_FIELDS = [
     'EVAL_ID',
     'EVAL_TYPE',
     'BUILDER',
-    'DHWHPCOP',
-    'ERSRATING',
     'ENTRYDATE',
     'CREATIONDATE',
     'MODIFICATIONDATE',
     'YEARBUILT',
     'CLIENTCITY',
     'HOUSEREGION',
-    'CLIENTPCODE',
     'RAW_XML',
 ]
 
-NULLABLE_FIELDS = ['MODIFICATIONDATE', 'ERSRATING']
+NULLABLE_FIELDS = ['MODIFICATIONDATE']
 
 INPUT_SCHEMA = {field: {'type': 'string', 'required': True} for field in REQUIRED_FIELDS}
 for field in NULLABLE_FIELDS:
@@ -73,8 +70,6 @@ def _safe_merge(data: reader.InputData, extra: reader.InputData) -> reader.Input
 
 def _extract_snippets(data: typing.Iterable[reader.InputData]) -> typing.Iterator[reader.InputData]:
     for row in data:
-        row['forwardSortationArea'] = row['CLIENTPCODE'][:3]
-
         doc = element.Element.from_string(row['RAW_XML'])
         house_node = doc.xpath('House')
         if house_node:
@@ -91,6 +86,8 @@ def _extract_snippets(data: typing.Iterable[reader.InputData]) -> typing.Iterato
             energy_snippets = snippets.snip_energy_upgrades(upgrades_node[0])
             row = _safe_merge(row, energy_snippets.to_dict())
 
+        tsv_fields = snippets.snip_tsv(doc)
+        row = _safe_merge(row, tsv_fields.to_dict())
         yield row
 
 

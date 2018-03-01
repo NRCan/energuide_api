@@ -101,7 +101,7 @@ class _ParsedDwellingDataRow(typing.NamedTuple):
 
 
 def _cast_nullable_string(value: str) -> typing.Optional[int]:
-    if value == '':
+    if not value:
         return None
     return int(value)
 
@@ -121,7 +121,7 @@ class ParsedDwellingDataRow(_ParsedDwellingDataRow):
         'CLIENTCITY': {'type': 'string', 'required': True},
         'forwardSortationArea': {'type': 'string', 'required': True, 'regex': '[A-Z][0-9][A-Z]'},
         'HOUSEREGION': {'type': 'string', 'required': True},
-        'ERSRATING': {'type': 'integer', 'nullable': True, 'coerce': _cast_nullable_string},
+        'ersRating': {'type': 'integer', 'nullable': True, 'coerce': _cast_nullable_string},
         'BUILDER': {'type': 'string', 'required': True},
 
         'ceilings': _XML_LIST_SCHEMA,
@@ -183,7 +183,7 @@ class ParsedDwellingDataRow(_ParsedDwellingDataRow):
                           for ventilation_node in parsed['ventilations']],
             heating_system=heating.Heating.from_data(parsed['heating_cooling']),
             foundations=foundations,
-            ers_rating=parsed['ERSRATING'],
+            ers_rating=parsed['ersRating'],
             energy_upgrades=[upgrade.Upgrade.from_data(upgrade_node) for upgrade_node in parsed['upgrades']],
             file_id=parsed['BUILDER'],
         )
