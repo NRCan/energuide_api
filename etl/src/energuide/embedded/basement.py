@@ -248,11 +248,11 @@ class BasementWall(_BasementWall):
             nominal_insulation=insulation.Insulation(float(wall.attrib['nominalRsi'])),
             effective_insulation=insulation.Insulation(float(wall.attrib['rsi'])),
             composite_percentage=percentage,
-            wall_area=area.Area(wall_perimiter * wall_height * (percentage / 100))
+            wall_area=area.Area(wall_perimeter * wall_height * (percentage / 100))
         )
 
     @classmethod
-    def from_basement(cls, wall: element.Element, wall_perimiter: float) -> typing.List['BasementWall']:
+    def from_basement(cls, wall: element.Element, wall_perimeter: float) -> typing.List['BasementWall']:
         interior_wall_sections = wall.xpath('Construction/InteriorAddedInsulation/Composite/Section')
         exterior_wall_sections = wall.xpath('Construction/ExteriorAddedInsulation/Composite/Section')
         pony_wall_sections = wall.xpath('Construction/PonyWallType/Composite/Section')
@@ -278,8 +278,10 @@ class BasementWall(_BasementWall):
         return walls
 
     @classmethod
-    def from_crawlspace(cls, wall: element.Element, wall_perimiter: float) -> typing.List['BasementWall']:
+    def from_crawlspace(cls, wall: element.Element, wall_perimeter: float) -> typing.List['BasementWall']:
         wall_sections = wall.xpath('Construction/Type/Composite/Section')
+        wall_height = wall.get('Measurements/@height', float)
+
         percentages = [wall.attrib.get('percentage') for wall in wall_sections]
         accounted_for = sum(float(percentage) for percentage in percentages if percentage is not None)
 
