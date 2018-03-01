@@ -11,32 +11,23 @@ from energuide import reader
 from energuide.exceptions import InvalidInputDataError
 
 
-def data1() -> typing.Dict[str, typing.Optional[str]]:
+def _write_csv(filepath: str, data: typing.Dict[str, typing.Optional[str]]) -> None:
+    with open(filepath, 'w') as file:
+        writer = csv.DictWriter(file, fieldnames=list(data.keys()))
+        writer.writeheader()
+        writer.writerow(data)
+
+
+@pytest.fixture
+def base_data() -> typing.Dict[str, typing.Optional[str]]:
     return {
         'EVAL_ID': '123',
         'EVAL_TYPE': 'D',
-        'ENTRYBY': 'Fred Johnson',
-        'CLIENTADDR': '123 Main st.',
         'CLIENTPCODE': 'M5E 1W5',
-        'CLIENTNAME': 'John Fredson',
-        'TELEPHONE': '999 999 9999',
-        'MAIL_ADDR': '123 Main st.',
-        'MAIL_PCODE': 'M5E 1W5',
-        'TAXNUMBER': '999999999999',
         'RAW_XML': '<tag>thing</tag>',
         'BUILDER': '4K13D01404',
         'DHWHPCOP': '0',
         'ERSRATING': '200',
-        'INFO1': '',
-        'INFO2': '',
-        'INFO3': '',
-        'INFO4': '',
-        'INFO5': '',
-        'INFO6': '',
-        'INFO7': '',
-        'INFO8': '',
-        'INFO9': '',
-        'INFO10': '',
         'ENTRYDATE': '2012-02-25',
         'CREATIONDATE': '2012-06-08 09:26:10',
         'MODIFICATIONDATE': '2012-06-09 09:26:10',
@@ -46,105 +37,85 @@ def data1() -> typing.Dict[str, typing.Optional[str]]:
     }
 
 
-def data2() -> typing.Dict[str, typing.Optional[str]]:
-    data = data1()
+@pytest.fixture
+def extra_data() -> typing.Dict[str, typing.Optional[str]]:
+    data = base_data()
     data['other_1'] = 'foo'
     data['other_2'] = 'bar'
     return data
 
 
-def data3() -> typing.Dict[str, typing.Optional[str]]:
-    data = data1()
-    data['ERSRATING'] = ''
+@pytest.fixture
+def missing_data() -> typing.Dict[str, typing.Optional[str]]:
+    data = base_data()
+    data.pop('BUILDER')
     return data
-
-
-def data4() -> typing.Dict[str, typing.Optional[str]]:
-    data = data1()
-    data['UNKNOWN'] = 'value'
-    return data
-
-
-@pytest.fixture(params=[data1(), data2(), data3()])
-def data_dict(request: _pytest.fixtures.SubRequest) -> typing.Dict[str, str]:
-    return request.param
 
 
 @pytest.fixture
-def valid_filepath(tmpdir: py._path.local.LocalPath, data_dict: typing.Dict[str, str]) -> str:
-    filepath = os.path.join(tmpdir, 'sample.csv')
-    with open(filepath, 'w') as file:
-        writer = csv.DictWriter(file, fieldnames=list(data_dict.keys()))
-        writer.writeheader()
-        writer.writerow(data_dict)
+def nullable_data() -> typing.Dict[str, typing.Optional[str]]:
+    data = base_data()
+    data['ERSRATING'] = None
+    return data
 
+
+@pytest.fixture(params=[base_data(), extra_data()])
+def valid_filepath(tmpdir: py._path.local.LocalPath, request: _pytest.fixtures.SubRequest) -> str:
+    data_dict = typing.cast(typing.Dict[str, str], request.param)
+    filepath = os.path.join(tmpdir, 'sample.csv')
+    _write_csv(filepath, data_dict)
     return filepath
 
 
 @pytest.fixture
-def invalid_filepath(tmpdir: py._path.local.LocalPath) -> str:
+def missing_filepath(tmpdir: py._path.local.LocalPath, missing_data: typing.Dict[str, str]) -> str:
     filepath = os.path.join(tmpdir, 'sample.csv')
-    data = {'EVAL_ID': 'foo', 'EVAL_TYPE': 'bar'}
-    with open(filepath, 'w') as file:
-        writer = csv.DictWriter(file, fieldnames=list(data.keys()))
-        writer.writeheader()
-        writer.writerow(data)
-
+    _write_csv(filepath, missing_data)
     return filepath
 
 
 @pytest.fixture
-def extra_filepath(tmpdir: py._path.local.LocalPath) -> str:
+def extra_filepath(tmpdir: py._path.local.LocalPath, extra_data: typing.Dict[str, str]) -> str:
     filepath = os.path.join(tmpdir, 'sample.csv')
-
-    data = data4()
-    with open(filepath, 'w') as file:
-        writer = csv.DictWriter(file, fieldnames=list(data.keys()))
-        writer.writeheader()
-        writer.writerow(data)
-
+    _write_csv(filepath, extra_data)
     return filepath
 
 
 def test_extract_valid(valid_filepath: str) -> None:
     output = extractor.extract_data(valid_filepath)
     item = dict(next(output))
-
     assert 'EVAL_ID' in item
-
-    assert 'CLIENTADDR' not in item
 
 
 def test_purge_unknown(extra_filepath: str) -> None:
     output = extractor.extract_data(extra_filepath)
     item = dict(next(output))
+    assert 'other_1' not in item
 
-    assert 'UNKNOWN' not in item
 
-
-def test_extract_missing(invalid_filepath: str) -> None:
+def test_extract_missing(missing_filepath: str) -> None:
     with pytest.raises(InvalidInputDataError) as ex:
-        output = extractor.extract_data(invalid_filepath)
+        output = extractor.extract_data(missing_filepath)
         dict(next(output))
 
     assert 'EVAL_ID' not in ex.exconly()
     assert 'BUILDER' in ex.exconly()
 
 
-def test_empty_to_none(tmpdir: py._path.local.LocalPath) -> None:
+def test_empty_to_none(tmpdir: py._path.local.LocalPath, nullable_data: typing.Dict[str, typing.Optional[str]]) -> None:
     filepath = os.path.join(tmpdir, 'sample.csv')
-    data = data3()
+
     with open(filepath, 'w') as file:
-        writer = csv.DictWriter(file, fieldnames=list(data.keys()))
+        writer = csv.DictWriter(file, fieldnames=list(nullable_data.keys()))
         writer.writeheader()
-        writer.writerow(data)
+        writer.writerow(nullable_data)
 
     output = extractor.extract_data(filepath)
     row = next(output)
     assert row['ERSRATING'] is None
 
 
-def test_extract_with_snippets(tmpdir: py._path.local.LocalPath) -> None:
+def test_extract_with_snippets(tmpdir: py._path.local.LocalPath, base_data: typing.Dict[str, str]) -> None:
     xml_data = """
 <HouseFile><House><Components><Ceiling>
     <Label>Attic</Label>
@@ -158,14 +129,13 @@ def test_extract_with_snippets(tmpdir: py._path.local.LocalPath) -> None:
 </Ceiling></Components></House></HouseFile>
     """
 
-    data = data1()
-    data['RAW_XML'] = xml_data
+    base_data['RAW_XML'] = xml_data
 
     input_file = tmpdir.join('input.csv')
     with open(input_file, 'w') as csvfile:
-        writer = csv.DictWriter(csvfile, fieldnames=list(data.keys()))
+        writer = csv.DictWriter(csvfile, fieldnames=list(base_data.keys()))
         writer.writeheader()
-        writer.writerow(data)
+        writer.writerow(base_data)
 
     output = list(extractor.extract_data(str(input_file)))
     assert output[0]['ceilings']
