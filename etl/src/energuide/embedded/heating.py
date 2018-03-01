@@ -54,10 +54,12 @@ class Heating(_Heating):
     }
 
     _ENERGY_SOURCE_CODES = {
+        1: EnergySource.ELECTRIC,
         2: EnergySource.NATURAL_GAS,
         3: EnergySource.OIL,
         4: EnergySource.PROPANE,
         5: EnergySource.WOOD,
+        6: EnergySource.WOOD,
     }
 
     _ENERGY_SOURCE_TRANSLATIONS = {
