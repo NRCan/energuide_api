@@ -19,6 +19,7 @@ class EnergySource(enum.Enum):
     OIL = enum.auto()
     PROPANE = enum.auto()
     WOOD = enum.auto()
+    HARDWOOD = enum.auto()
 
 
 class _Heating(typing.NamedTuple):
@@ -54,11 +55,12 @@ class Heating(_Heating):
     }
 
     _ENERGY_SOURCE_CODES = {
-        1: EnergySource.ELECTRIC
+        1: EnergySource.ELECTRIC,
         2: EnergySource.NATURAL_GAS,
         3: EnergySource.OIL,
         4: EnergySource.PROPANE,
         5: EnergySource.WOOD,
+        6: EnergySource.HARDWOOD,
     }
 
     _ENERGY_SOURCE_TRANSLATIONS = {
@@ -71,6 +73,8 @@ class Heating(_Heating):
                                                        'Soft Wood or Wood Pellets)',
                                                french='Chauffage au bois(Bois mélangé, Bois dur, Bois mou, '
                                                       'Granules de bois)'),
+        EnergySource.HARDWOOD: bilingual.Bilingual(englis='Hardwood',
+                                                   french='Bois dur'),
     }
 
     @classmethod
