@@ -78,8 +78,3 @@ def energuide_zip_fixture(tmpdir: py._path.local.LocalPath, energuide_fixture: s
     data = extractor.extract_data(energuide_fixture)
     extractor.write_data(data, outfile)
     return outfile
-
-
-@pytest.fixture
-def sample_fixture() -> str:
-    return os.path.join(os.path.dirname(__file__), 'sample.csv')
