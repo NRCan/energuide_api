@@ -320,8 +320,8 @@ jobs:
           name: "Report failing Master"
           when: on_fail
     working_directory: ~/repo/api
-version: 2
 workflows:
+  version: 2
   node_and_python:
     jobs:
       - node
