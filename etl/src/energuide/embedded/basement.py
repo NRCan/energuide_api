@@ -293,7 +293,7 @@ class BasementWall(_BasementWall):
             percentages = [wall.attrib.get('percentage') for wall in wall_sections]
             accounted_for = sum(float(percentage) for percentage in percentages if percentage is not None)
 
-            walls.extend([parser(wall, accounted_for) for wall in wall_sections])
+            walls.extend([parser(wall, 100-accounted_for) for wall in wall_sections])
 
         return walls
 
@@ -311,7 +311,7 @@ class BasementWall(_BasementWall):
                 wall_perimeter,
                 wall_height,
                 WallType.NOT_APPLICABLE,
-                accounted_for
+                100-accounted_for
             )
             for wall_section in wall_sections
         ]
