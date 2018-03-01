@@ -234,10 +234,7 @@ class BasementWall(_BasementWall):
                    backup_percentage: float) -> 'BasementWall':
 
         maybe_percentage = wall.attrib.get('percentage')
-        if maybe_percentage is None:
-            percentage = backup_percentage
-        else:
-            percentage = float(maybe_percentage)
+        percentage = float(maybe_percentage) if maybe_percentage else backup_percentage
 
         try:
             nominal_insulation = wall.get('@nominalRsi', float)
