@@ -82,7 +82,7 @@ class Heating(_Heating):
         capacity: typing.Optional[float]
         if units == 'kW':
             capacity = capacity_value
-        elif units == 'btu/hr':
+        elif units == 'btu/hr' or units == 'btu/h':
             capacity = capacity_value / cls._KWH_TO_BTU
         else:
             raise InvalidEmbeddedDataTypeError(
