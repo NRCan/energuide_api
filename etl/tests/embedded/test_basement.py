@@ -41,7 +41,7 @@ def sample_basement_wall_raw() -> str:
             <Description>2101010</Description>s
             <Composite>
                 <Section rank="1" percentage="50" rsi="1.2" nominalRsi="1.3" />
-                <Section rank="2" percentage="50" rsi="1.5" nominalRsi="1.7" />
+                <Section rank="2" rsi="1.5" nominalRsi="1.7" />
             </Composite>
         </InteriorAddedInsulation>
         <ExteriorAddedInsulation nominalInsulation="0">
