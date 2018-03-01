@@ -704,6 +704,7 @@ class TestParsedDwellingDataRow:
                     water_heater_type=water_heating.WaterHeaterType.ELECTRICITY_CONVENTIONAL_TANK,
                     tank_volume=189.3001,
                     efficiency=0.8217,
+                    efficiency_type=water_heating.EfficiencyType.ENERGY_FACTOR,
                 )
             ],
             heating_system=heating.Heating(

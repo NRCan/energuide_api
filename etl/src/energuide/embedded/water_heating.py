@@ -46,10 +46,16 @@ class WaterHeaterType(enum.Enum):
     CSA_DHW = enum.auto()
 
 
+class EfficiencyType(enum.Enum):
+    PERCENTAGE = enum.auto()
+    ENERGY_FACTOR = enum.auto()
+
+
 class _WaterHeating(typing.NamedTuple):
     water_heater_type: WaterHeaterType
     tank_volume: float
     efficiency: float
+    efficiency_type: EfficiencyType
 
 
 class WaterHeating(_WaterHeating):
@@ -281,6 +287,13 @@ class WaterHeating(_WaterHeating):
         ),
     }
 
+
+    _EFFICIENCY_TYPE_TRANSLATION = {
+        EfficiencyType.PERCENTAGE: '%',
+        EfficiencyType.ENERGY_FACTOR: 'EF',
+    }
+
+
     @classmethod
     def _from_data(cls, water_heating: element.Element) -> 'WaterHeating':
         try:
@@ -291,12 +304,19 @@ class WaterHeating(_WaterHeating):
 
             water_heater_type = cls._TYPE_MAP[(energy_type, tank_type)]
             volume = water_heating.get('TankVolume/@value', float)
-            efficiency = water_heating.get('EnergyFactor/@value', float)
+
+            try:
+                efficiency = water_heating.get('EnergyFactor/@value', float)
+                efficiency_type = EfficiencyType.ENERGY_FACTOR
+            except ElementGetValueError:
+                efficiency = water_heating.get('EnergyFactor/@thermalEfficiency', float)
+                efficiency_type = EfficiencyType.PERCENTAGE
 
             return WaterHeating(
                 water_heater_type=water_heater_type,
                 tank_volume=volume,
                 efficiency=efficiency,
+                efficiency_type=efficiency_type,
             )
         except (ElementGetValueError, AssertionError, KeyError) as exc:
             raise InvalidEmbeddedDataTypeError(WaterHeating) from exc
@@ -314,10 +334,13 @@ class WaterHeating(_WaterHeating):
 
     def to_dict(self) -> typing.Dict[str, typing.Union[str, float]]:
         translation = self._WATER_HEATER_TYPE_TRANSLATION[self.water_heater_type]
+        unit = self._EFFICIENCY_TYPE_TRANSLATION[self.efficiency_type]
+
         return {
             'typeEnglish': translation.english,
             'typeFrench': translation.french,
             'tankVolumeLitres': self.tank_volume,
             'tankVolumeGallon': self.tank_volume_gallon,
             'efficiency': self.efficiency,
+            'efficiencyUnits': unit,
         }
