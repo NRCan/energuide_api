@@ -6,7 +6,7 @@ import py
 import pymongo
 import pytest
 from azure.storage import blob
-from energuide import database
+from energuide import database, reader
 from energuide import extractor
 
 
@@ -93,6 +93,12 @@ def azure_container() -> str:
 
 @pytest.fixture
 def azure_service(azure_container: str) -> blob.BlockBlobService:
+    reader.EXTRACT_ENDPOINT_STORAGE_ACCOUNT = 'devstoreaccount1'
+    reader.EXTRACT_ENDPOINT_STORAGE_KEY = 'Eby8vdM02xNOcqFlqUwJPLlmEtlCDXJ1OUzFT50uSR' \
+                                          + 'Z6IFsuFq2UVErCz4I6tq/K1SZFPTOtr/KBHBeksoGMGw=='
+    reader.EXTRACT_ENDPOINT_STORAGE_DOMAIN = 'http://127.0.0.1:10000/devstoreaccount1'
+    reader.EXTRACT_ENDPOINT_CONTAINER = azure_container
+
     azure_service = blob.BlockBlobService(account_name='devstoreaccount1',
                                           account_key='Eby8vdM02xNOcqFlqUwJPLlmEtlCDXJ1OUzFT50uSR'
                                           + 'Z6IFsuFq2UVErCz4I6tq/K1SZFPTOtr/KBHBeksoGMGw==',
@@ -109,7 +115,7 @@ def put_sample_files_in_azure(azure_service: blob.BlockBlobService,
 
     file_z = zipfile.ZipFile(energuide_zip_fixture)
     for json_file in [file_z.open(zipinfo) for zipinfo in file_z.infolist()]:
-        azure_service.create_blob_from_text(azure_container, json_file.name, json_file.read())
+        azure_service.create_blob_from_bytes(azure_container, json_file.name, json_file.read())
 
     yield None
 
