@@ -6,7 +6,8 @@ import zipfile
 import flask
 from werkzeug import utils
 from azure.common import AzureMissingResourceHttpError
-from extract_endpoint import azure_utils, crypt_utils
+from extract_endpoint import azure_utils
+from extract_endpoint import crypt_utils
 
 
 DEFAULT_ENDPOINT_SECRET_KEY = 'no key'
@@ -67,6 +68,7 @@ def upload_file() -> typing.Tuple[str, int]:
     file = flask.request.files['file']
     signature = crypt_utils.sign_string(salt=flask.request.form['salt'], key=App.config['SECRET_KEY'],
                                         data=base64.b64encode(file.read()).decode('utf-8'))
+    file.seek(0)
     if flask.request.form['signature'] != signature:
         flask.abort(HTTPStatus.BAD_REQUEST)
 
