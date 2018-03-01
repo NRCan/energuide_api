@@ -60,6 +60,7 @@ describe('queries', () => {
               creationDate
               modificationDate
               ersRating
+              fileId
             }
           }
         }`,
@@ -73,6 +74,7 @@ describe('queries', () => {
         ersRating: 120,
         evaluationType: 'E',
         modificationDate: '2012-06-09T11:20:20',
+        fileId: '3C10E11075',
       })
     })
 
