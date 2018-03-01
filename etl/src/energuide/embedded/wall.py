@@ -51,10 +51,10 @@ class Wall(_Wall):
         code_tags: typing.Dict[str, typing.Optional[str]] = dict(
             item
             for _, tag_name in self._CODE_TAG_TRANSLATIONS
-            for item in {
-                f'{tag_name}English': None,
-                f'{tag_name}French': None,
-            }.items()
+            for item in [
+                (f'{tag_name}English', None),
+                (f'{tag_name}French', None),
+            ]
         )
 
         if self.wall_code:
