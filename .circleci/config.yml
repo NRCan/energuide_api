@@ -328,7 +328,7 @@ workflows:
       - etl
       - extract_endpoint
       - python_integration
-      - deploy_endpoint
+      - deploy_endpoint:
           filters:
             branches:
               only:
