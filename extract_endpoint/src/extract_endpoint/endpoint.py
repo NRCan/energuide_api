@@ -6,8 +6,7 @@ import zipfile
 import flask
 from werkzeug import utils
 from azure.common import AzureMissingResourceHttpError
-from extract_endpoint import azure_utils
-from extract_endpoint import crypt_utils
+from extract_endpoint import azure_utils, crypt_utils
 
 
 DEFAULT_ENDPOINT_SECRET_KEY = 'no key'

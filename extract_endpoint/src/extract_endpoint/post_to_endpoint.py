@@ -29,7 +29,6 @@ def post_stream(stream: typing.IO[bytes],
     signature = crypt_utils.sign_string(salt=salt,
                                         key=os.environ.get('ENDPOINT_SECRET_KEY', DEFAULT_ENDPOINT_SECRET_KEY),
                                         data=base64.b64encode(data).decode('utf-8'))
-
     return requests.post(url=url,
                          files={'file': data},
                          data={'salt': salt, 'signature': signature, 'filename': filename, 'timestamp': timestamp})
