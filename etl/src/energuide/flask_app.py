@@ -44,6 +44,8 @@ def trigger(filename: str,
     mongo_client: pymongo.MongoClient
     with database.mongo_client(coords) as mongo_client:
         records_created = mongo_client[database_name][collection].count()
+    if records_created == 0:
+        return 'error, no records created', HTTPStatus.BAD_GATEWAY
     return f'success, {records_created} created', HTTPStatus.CREATED
 
 
