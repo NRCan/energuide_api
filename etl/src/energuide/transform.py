@@ -4,7 +4,6 @@ import os
 import typing
 import zipfile
 from azure.storage import blob
-from energuide import database
 from energuide import dwelling
 from energuide import logging
 from energuide.exceptions import InvalidEmbeddedDataTypeError
@@ -82,13 +81,3 @@ def transform(azure: bool, filename: typing.Optional[str]) -> typing.Iterator[dw
         output = _generate_dwellings(row_group)
         if output:
             yield output
-
-
-def run(coords: database.DatabaseCoordinates,
-        database_name: str,
-        collection: str,
-        azure: bool,
-        filename: typing.Optional[str],
-        append: bool) -> None:
-    dwellings = transform(azure, filename)
-    database.load(coords, database_name, collection, dwellings, append)

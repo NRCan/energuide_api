@@ -48,7 +48,8 @@ def load(username: str,
     else:
         LOGGER.error('Must supply a filename or use azure')
         raise ValueError('Must supply a filename or use azure')
-    transform.run(coords, db_name, collection, azure, filename, append)
+    data = transform.transform(azure, filename)
+    database.load(coords, db_name, collection, data, append)
     LOGGER.info(f'Finished loading data')
 
 
