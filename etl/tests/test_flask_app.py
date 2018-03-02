@@ -65,15 +65,15 @@ def test_robots(test_client: testing.FlaskClient) -> None:
     assert get_return.status_code == HTTPStatus.NOT_FOUND
 
 
-def test_trigger_tl(test_client: testing.FlaskClient,
-                    energuide_zip_fixture: str,
-                    mongo_client: pymongo.MongoClient,
-                    database_name: str,
-                    collection: str,
-                    sample_salt: str,
-                    sample_signature: str) -> None:
+def test_run_tl(test_client: testing.FlaskClient,
+                 energuide_zip_fixture: str,
+                 mongo_client: pymongo.MongoClient,
+                 database_name: str,
+                 collection: str,
+                 sample_salt: str,
+                 sample_signature: str) -> None:
 
-    post_return = test_client.post('/trigger_tl',
+    post_return = test_client.post('/run_tl',
                                    data=dict(filename=energuide_zip_fixture,
                                              salt=sample_salt,
                                              signature=sample_signature))
@@ -81,22 +81,22 @@ def test_trigger_tl(test_client: testing.FlaskClient,
     assert mongo_client[database_name][collection].count() == 7
 
 
-def test_trigger_no_salt(test_client: testing.FlaskClient, energuide_zip_fixture: str, sample_signature: str) -> None:
-    post_return = test_client.post('/trigger_tl',
+def test_run_tl_no_salt(test_client: testing.FlaskClient, energuide_zip_fixture: str, sample_signature: str) -> None:
+    post_return = test_client.post('/run_tl',
                                    data=dict(filename=energuide_zip_fixture,
                                              signature=sample_signature))
     assert post_return.status_code == HTTPStatus.BAD_REQUEST
     assert b'no salt' in post_return.data
 
 
-def test_trigger_no_signature(test_client: testing.FlaskClient, energuide_zip_fixture: str, sample_salt: str) -> None:
-    post_return = test_client.post('/trigger_tl', data=dict(filename=energuide_zip_fixture, salt=sample_salt))
+def test_run_tl_no_signature(test_client: testing.FlaskClient, energuide_zip_fixture: str, sample_salt: str) -> None:
+    post_return = test_client.post('/run_tl', data=dict(filename=energuide_zip_fixture, salt=sample_salt))
     assert post_return.status_code == HTTPStatus.BAD_REQUEST
     assert b'no signature' in post_return.data
 
 
-def test_trigger_bad_signature(test_client: testing.FlaskClient, energuide_zip_fixture: str, sample_salt: str) -> None:
-    post_return = test_client.post('/trigger_tl',
+def test_run_tl_bad_signature(test_client: testing.FlaskClient, energuide_zip_fixture: str, sample_salt: str) -> None:
+    post_return = test_client.post('/run_tl',
                                    data=dict(filename=energuide_zip_fixture,
                                              salt=sample_salt,
                                              signature='bad signature'))
@@ -104,7 +104,7 @@ def test_trigger_bad_signature(test_client: testing.FlaskClient, energuide_zip_f
     assert b'bad signature' in post_return.data
 
 
-def test_trigger_no_filename(test_client: testing.FlaskClient, sample_salt: str, sample_signature: str) -> None:
-    post_return = test_client.post('/trigger_tl', data=dict(salt=sample_salt, signature=sample_signature))
+def test_run_tl_no_filename(test_client: testing.FlaskClient, sample_salt: str, sample_signature: str) -> None:
+    post_return = test_client.post('/run_tl', data=dict(salt=sample_salt, signature=sample_signature))
     assert post_return.status_code == HTTPStatus.BAD_REQUEST
     assert b'no filename' in post_return.data
