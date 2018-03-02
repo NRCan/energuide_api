@@ -126,6 +126,7 @@ def put_sample_files_in_azure(azure_service: blob.BlockBlobService,
         azure_service.delete_blob(azure_container, json_file.name)
 
 
+@pytest.fixture
 def skip_if_azure_simulator_not_running() -> None:
     if 'CIRCLECI' in os.environ:
         return

@@ -17,7 +17,7 @@ def test_run_no_azure(database_coordinates: database.DatabaseCoordinates,
     assert mongo_client[database_name][collection].count() == 7
 
 
-@pytest.mark.usefixtures('put_sample_files_in_azure')
+@pytest.mark.usefixtures('skip_if_azure_simulator_not_running', 'put_sample_files_in_azure')
 def test_run_azure(database_coordinates: database.DatabaseCoordinates,
                    mongo_client: pymongo.MongoClient,
                    database_name: str,
