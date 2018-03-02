@@ -93,4 +93,4 @@ def is_azurite_running() -> None:
         return
     else:
         sock.close()
-        pytest.skip()
+        pytest.skip("Azure simulator not running, test skipped")
