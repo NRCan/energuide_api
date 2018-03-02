@@ -91,5 +91,3 @@ def is_azurite_running() -> None:
     else:
         sock.close()
         pytest.skip()
-
-
