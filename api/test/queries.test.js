@@ -998,5 +998,173 @@ describe('queries', () => {
         })
       })
     })
+
+    describe('date filters', () => {
+      const makeRequestForDateRange = function({
+        startDate = 'startDate: "2012-10-01"',
+        endDate = '',
+      } = {}) {
+        // default creationDate is "2012-10-01T15:08:41"
+        let query = `{
+          dwellings(
+           filters: [{field: dwellingForwardSortationArea comparator: eq value: "C1A"}]
+           dateRange: {
+             field: evaluationCreationDate
+             ${startDate}
+             ${endDate}
+           }
+          ) {
+            results {
+              evaluations {
+                creationDate
+                fileId
+              }
+            }
+          }
+        }`
+
+        return request(server)
+          .post('/graphql')
+          .set('Content-Type', 'application/json; charset=utf-8')
+          .send({
+            query,
+          })
+      }
+
+      function expectEvaluationIsReturned(_response) {
+        let {
+          creationDate,
+          fileId,
+        } = _response.body.data.dwellings.results[0].evaluations[0]
+        expect(creationDate).toEqual('2012-10-01T15:08:41')
+        expect(fileId).toEqual('3C10E11075')
+      }
+
+      function expectEvaluationIsNotReturned(_response) {
+        expect(_response.body.data.dwellings.results).toEqual([])
+        expect(_response.body.errors).toBe(undefined)
+      }
+
+      const validStartDates = ['2012-01-01', '2012-09-30', '2012-10-01']
+      validStartDates.forEach(_startDate => {
+        it(`will return results for a startDate earlier than or equal to 2012-10-01: ${_startDate}`, async () => {
+          let response = await makeRequestForDateRange({
+            startDate: `startDate: "${_startDate}"`,
+          })
+
+          expectEvaluationIsReturned(response)
+        })
+      })
+
+      it(`will not return results for a startDate later than 2012-10-01`, async () => {
+        let response = await makeRequestForDateRange({
+          startDate: 'startDate: "2012-10-02"',
+        })
+
+        expectEvaluationIsNotReturned(response)
+      })
+
+      const validEndDates = ['2013-01-01', '2012-10-02']
+      validEndDates.forEach(_endDate => {
+        it(`will return results for a endDate later than 2012-10-01: ${_endDate}`, async () => {
+          let response = await makeRequestForDateRange({
+            startDate: '',
+            endDate: `endDate: "${_endDate}"`,
+          })
+
+          expectEvaluationIsReturned(response)
+        })
+      })
+
+      /*
+      Because we are doing string comparisons in the database,
+      "2012-10-01" <= "2012-10-01T15:08:41" is true, but
+      "2012-10-01" >= "2012-10-01T15:08:41" is false
+      */
+      const invalidEndDates = ['2012-10-01', '2012-09-30', '2012-01-01']
+      invalidEndDates.forEach(_endDate => {
+        it(`will not return results for a endDate earlier than or equal to 2012-10-01: ${_endDate}`, async () => {
+          let response = await makeRequestForDateRange({
+            startDate: '',
+            endDate: `endDate: "${_endDate}"`,
+          })
+
+          expectEvaluationIsNotReturned(response)
+        })
+      })
+
+      it(`will return results if both a valid startDate and endDate are submitted`, async () => {
+        let response = await makeRequestForDateRange({
+          startDate: 'startDate: "2012-10-01"',
+          endDate: 'endDate: "2012-10-02"',
+        })
+
+        expectEvaluationIsReturned(response)
+      })
+
+      it(`will return an error if the startDate and the endDate are equal to each other`, async () => {
+        let response = await makeRequestForDateRange({
+          startDate: 'startDate: "2012-10-01"',
+          endDate: 'endDate: "2012-10-01"',
+        })
+
+        expect(response.body.data.dwellings).toBe(null)
+        expect(response.body.errors[0].message).toEqual(
+          "The 'endDate' cannot be equal to or earlier than the 'startDate'.",
+        )
+        // status code is 200 for errors we throw manually
+        expect(response.status).toBe(200)
+      })
+
+      it(`will return an error if the startDate comes after the endDate`, async () => {
+        let response = await makeRequestForDateRange({
+          startDate: 'startDate: "2012-10-02"',
+          endDate: 'endDate: "2012-10-01"',
+        })
+
+        expect(response.body.data.dwellings).toBe(null)
+        expect(response.body.errors[0].message).toEqual(
+          "The 'endDate' cannot be equal to or earlier than the 'startDate'.",
+        )
+        // status code is 200 for errors we throw manually
+        expect(response.status).toBe(200)
+      })
+
+      it(`will return an error if neither a startDate or endDate is submitted`, async () => {
+        let response = await makeRequestForDateRange({
+          startDate: '',
+          endDate: '',
+        })
+
+        expect(response.body.data.dwellings).toBe(null)
+        expect(response.body.errors[0].message).toEqual(
+          "A 'dateRange' must include a 'startDate' or an 'endDate'.",
+        )
+        // status code is 200 for errors we throw manually
+        expect(response.status).toBe(200)
+      })
+
+      const invalidDates = [
+        'not a date',
+        1,
+        true,
+        '2012-10-01T15:08:41', // timestamp is not a valid YYYY-MM-DD string
+        '2012/10/01', // slashes used instead of dashes
+        '2012-09-31', // September 31st isn't a date
+        '2012-31-12', // Month and day are reversed
+      ]
+      invalidDates.forEach(_invalidDate => {
+        it(`will throw a validation error if an invalid date is submitted: ${_invalidDate}`, async () => {
+          let response = await makeRequestForDateRange({
+            startDate: `startDate: "${_invalidDate}"`,
+          })
+
+          expect(response.body.errors[0].message).toContain(
+            'Expected type Date',
+          )
+          expect(response.status).toBe(400)
+        })
+      })
+    })
   })
 })
