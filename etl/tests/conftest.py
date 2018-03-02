@@ -2,6 +2,7 @@ import os
 import random
 import typing
 import zipfile
+import socket
 import py
 import pymongo
 import pytest
@@ -123,3 +124,17 @@ def put_sample_files_in_azure(azure_service: blob.BlockBlobService,
     azure_service.delete_blob(azure_container, 'timestamp.txt')
     for json_file in [file_z.open(zipinfo) for zipinfo in file_z.infolist()]:
         azure_service.delete_blob(azure_container, json_file.name)
+
+
+def skip_if_azure_simulator_not_running() -> None:
+    if 'CIRCLECI' in os.environ:
+        return
+
+    sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    try:
+        sock.bind(("127.0.0.1", 10000))
+    except socket.error:
+        return
+    else:
+        sock.close()
+        pytest.skip("Azure simulator not running, test skipped")
