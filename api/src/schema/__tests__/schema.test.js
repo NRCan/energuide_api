@@ -124,6 +124,7 @@ describe('Schema', () => {
         'waterHeatings',
         'heating',
         'energyUpgrades',
+        'foundations',
         'ersRating',
       ])
     })
