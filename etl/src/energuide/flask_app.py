@@ -39,6 +39,7 @@ def trigger(filename: str,
                   database_name=database_name,
                   collection=collection,
                   filename=filename,
+                  azure=False,
                   append=False)
 
     mongo_client: pymongo.MongoClient
@@ -82,7 +83,10 @@ def trigger_tl() -> typing.Tuple[str, int]:
     salt = flask.request.form['salt']
     signature = flask.request.form['signature']
 
-    salt_signature = hashlib.sha3_256((salt + App.config['SECRET_KEY']).encode()).hexdigest()
+    hasher = hashlib.new('sha3_256')
+    hasher.update((salt + App.config['SECRET_KEY']).encode())
+    salt_signature = hasher.hexdigest()
+
     if salt_signature != signature:
         return 'bad signature', HTTPStatus.BAD_REQUEST
 
