@@ -82,7 +82,7 @@ def trigger_tl() -> typing.Tuple[str, int]:
     salt = flask.request.form['salt']
     signature = flask.request.form['signature']
 
-    salt_signature = hashlib.sha256((salt + App.config['SECRET_KEY']).encode()).hexdigest()
+    salt_signature = hashlib.sha3_256((salt + App.config['SECRET_KEY']).encode()).hexdigest()
     if salt_signature != signature:
         return 'bad signature', HTTPStatus.BAD_REQUEST
 

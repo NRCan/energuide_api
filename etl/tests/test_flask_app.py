@@ -28,7 +28,7 @@ def sample_secret_key() -> typing.Generator:
 
 @pytest.fixture
 def sample_signature(sample_salt: str, sample_secret_key: str) -> str:
-    return hashlib.sha256((sample_salt + sample_secret_key).encode()).hexdigest()
+    return hashlib.sha3_256((sample_salt + sample_secret_key).encode()).hexdigest()
 
 
 @pytest.fixture()
