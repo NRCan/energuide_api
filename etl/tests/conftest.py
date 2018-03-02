@@ -83,6 +83,9 @@ def energuide_zip_fixture(tmpdir: py._path.local.LocalPath, energuide_fixture: s
 
 @pytest.fixture
 def is_azurite_running() -> None:
+    if 'CIRCLECI' in os.environ:
+        return
+
     sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     try:
         sock.bind(("127.0.0.1", 10000))
