@@ -581,6 +581,24 @@ const Schema = i18n => {
       foundationFloorLengthMetres
       # ${i18n.t`Filter for dwellings where the foundation floor has a specific length in feet (ft)`}
       foundationFloorLengthFeet
+      # ${i18n.t`Filter results for dwellings whose foundation wall has a specific type (en)`}
+      foundationWallWallTypeEnglish
+      # ${i18n.t`Filter results for dwellings whose foundation wall has a specific type (fr)`}
+      foundationWallWallTypeFrench
+      # ${i18n.t`Filter results for dwellings with a specific foundation wall insulation nominal RSI (R-value Systeme International)`}
+      foundationWallInsulationNominalRsi
+      # ${i18n.t`Filter results for dwellings with a specific foundation wall insulation nominal R-value`}
+      foundationWallInsulationNominalR
+      # ${i18n.t`Filter results for dwellings with a specific foundation wall insulation effective RSI (R-value Systeme International)`}
+      foundationWallInsulationEffectiveRsi
+      # ${i18n.t`Filter results for dwellings with a specific foundation wall insulation effective R-value`}
+      foundationWallInsulationEffectiveR
+      # ${i18n.t`Filter results for dwellings with a section of it's foundation wall with a specific percentage of the overall amount`}
+      foundationWallPercentage
+      # ${i18n.t`Filter results for dwellings with a foundation wall has specific area in square metres (m2)`}
+      foundationWallAreaMetres
+      # ${i18n.t`Filter results for dwellings with a foundation wall has specific area in square feet (ft)`}
+      foundationWallAreaFeet
     }
   `,
 

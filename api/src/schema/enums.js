@@ -378,3 +378,38 @@ foundationFloorFields.forEach(attr => {
   )
   module.exports[generateName('foundationFloor', attr)] = attachToString(fn)
 })
+
+const foundationWallFields = [
+  'wallTypeEnglish',
+  'wallTypeFrench',
+  'insulationNominalRsi',
+  'insulationNominalR',
+  'insulationEffectiveRsi',
+  'insulationEffectiveR',
+  'percentage',
+  'areaMetres',
+  'areaFeet',
+]
+
+foundationWallFields.forEach(attr => {
+  // eslint-disable-next-line no-new-func
+  let fn = new Function(
+    'matcher',
+    `
+    return {
+      evaluations: {
+        $elemMatch: {
+          foundations: {
+            $elemMatch:{
+              walls: {
+                $elemMatch: { ${attr}: matcher }
+              },
+            },
+          },
+        },
+      },
+    }
+  `,
+  )
+  module.exports[generateName('foundationWall', attr)] = attachToString(fn)
+})
