@@ -1,5 +1,6 @@
 import MongoPaging from 'mongo-cursor-pagination'
 import { GraphQLError } from 'graphql'
+import { GraphQLDate } from 'graphql-iso-date'
 
 /* eslint-disable import/named */
 import {
@@ -8,6 +9,9 @@ import {
   dwellingCity,
   dwellingRegion,
   dwellingForwardSortationArea,
+  evaluationEntryDate,
+  evaluationCreationDate,
+  evaluationModificationDate,
   ventilationTypeEnglish,
   ventilationTypeFrench,
   ventilationAirFlowRateLps,
@@ -117,6 +121,7 @@ const Resolvers = i18n => {
     I18NString: createI18NString(i18n),
     I18NFloat: createI18NFloat(i18n),
     I18NBoolean: createI18NBoolean(i18n),
+    GraphQLDate: GraphQLDate,
     Query: {
       dwelling: async (root, { houseId }, { client }) => {
         let query = {
@@ -131,7 +136,7 @@ const Resolvers = i18n => {
         // and is passed directly into library code to be decoded and used while
         // talking to the database.
         // ಠ_ಠ
-        const { filters, limit, next, previous } = args
+        const { filters, dateRange, limit, next, previous } = args
 
         if (next && previous) {
           throw new GraphQLError(
@@ -143,6 +148,43 @@ const Resolvers = i18n => {
 
         let query = {
           $and: [{}],
+        }
+
+        if (dateRange) {
+          // ISO string format looks like "2012-10-01T15:08:41.000Z"
+          const startDateQuery = dateRange.startDate
+            ? { $gte: dateRange.startDate.toISOString().split('T')[0] }
+            : {}
+          const endDateQuery = dateRange.endDate
+            ? { $lte: dateRange.endDate.toISOString().split('T')[0] }
+            : {}
+
+          const dateQuery = Object.assign({}, startDateQuery, endDateQuery)
+
+          if (Object.keys(dateQuery).length === 0) {
+            throw new GraphQLError(
+              i18n.t`
+                A 'dateRange' must include a 'startDate' or an 'endDate'.
+                `,
+            )
+          }
+
+          if (
+            dateQuery['$gte'] &&
+            dateQuery['$lte'] &&
+            dateQuery['$gte'] >= dateQuery['$lte']
+          ) {
+            throw new GraphQLError(
+              i18n.t`
+                The 'endDate' cannot be equal to or earlier than the 'startDate'.
+                `,
+            )
+          }
+
+          // eslint-disable-next-line security/detect-eval-with-expression
+          let queryGenerator = eval(dateRange.field) // eslint-disable-line no-eval
+          let attrQuery = queryGenerator(dateQuery)
+          query['$and'].push(attrQuery)
         }
 
         if (filters && filters.length > 0) {
@@ -178,6 +220,11 @@ const Resolvers = i18n => {
 
         return result
       },
+    },
+    DateField: {
+      evaluationEntryDate: evaluationEntryDate.toString(),
+      evaluationCreationDate: evaluationCreationDate.toString(),
+      evaluationModificationDate: evaluationModificationDate.toString(),
     },
     Field: {
       dwellingHouseId: dwellingHouseId.toString(),

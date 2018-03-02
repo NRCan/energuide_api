@@ -1,5 +1,6 @@
 import { Resolvers } from './resolvers'
 import { makeExecutableSchema } from 'graphql-tools'
+
 import { createFoundation } from './types/Foundation'
 import { createFoundationFloor } from './types/FoundationFloor'
 import { createFoundationWall } from './types/FoundationWall'
@@ -12,6 +13,7 @@ const Schema = i18n => {
     scalar I18NFloat
     scalar I18NString
     scalar I18NBoolean
+    scalar GraphQLDate
 
     # ${i18n.t`An operator to describe how results will be filtered`}
     enum Comparator {
@@ -32,6 +34,16 @@ const Schema = i18n => {
       comparator: Comparator!
       # ${i18n.t`Results will be compared to this value`}
       value: I18NString!
+    }
+
+    # ${i18n.t`Filter by dwellings containing evaluations that were entered, created, or modified between a range of dates`}
+    input DateRange {
+      # ${i18n.t`Name of the date field results will be filtered by`}
+      field: DateField!
+      # ${i18n.t`Evaluation dates must be equal to or later than this value`}
+      startDate: GraphQLDate
+      # ${i18n.t`Evaluation dates must be equal to or earlier than this value`}
+      endDate: GraphQLDate
     }
 
     # ${i18n.t`An improvement that could increase the energy efficiency of the dwelling`}
@@ -329,7 +341,17 @@ const Schema = i18n => {
       # ${i18n.t`Details for a specific dwelling`}
       dwelling(houseId: I18NInt!): Dwelling
       # ${i18n.t`Details for all dwellings, optionally filtered by one or more values`}
-      dwellings(filters: [Filter!] limit: I18NInt next: I18NString previous: I18NString): PaginatedResultSet
+      dwellings(filters: [Filter!] dateRange: DateRange limit: I18NInt next: I18NString previous: I18NString): PaginatedResultSet
+    }
+
+    # ${i18n.t`An ISO date value, formatted 'YYYY-MM-DD'`}
+    enum DateField {
+      # ${i18n.t`Filter results by the dwellings containing at least one evaluation with a specific entry date`}
+      evaluationEntryDate
+      # ${i18n.t`Filter results by the dwellings containing at least one evaluation with a specific record creation date`}
+      evaluationCreationDate
+      # ${i18n.t`Filter results by the dwellings containing at least one evaluation with a specific record modification date`}
+      evaluationModificationDate
     }
 
     enum Field {

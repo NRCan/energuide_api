@@ -24,6 +24,15 @@ dwellingFields.forEach(attr => {
   module.exports[generateName('dwelling', attr)] = attachToString(fn)
 })
 
+// The fields on the dwelling type
+const evaluationDateFields = ['entryDate', 'creationDate', 'modificationDate']
+
+evaluationDateFields.forEach(attr => {
+  // eslint-disable-next-line no-new-func
+  let fn = new Function('matcher', `return {"evaluations.${attr}": matcher}`)
+  module.exports[generateName('evaluation', attr)] = attachToString(fn)
+})
+
 // The fields on the ventilation type
 const ventilationFields = [
   'typeEnglish',
