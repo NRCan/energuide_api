@@ -31,6 +31,7 @@ def test_read(energuide_zip_fixture: str) -> None:
     output = list(reader.read(energuide_zip_fixture))
     assert len(output) == 14
 
+
 @pytest.mark.usefixtures('skip_if_azure_simulator_not_running', 'put_sample_files_in_azure')
 def test_read_from_azure() -> None:
     output = list(reader.read_from_azure())

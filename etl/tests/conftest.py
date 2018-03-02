@@ -7,7 +7,8 @@ import py
 import pymongo
 import pytest
 from azure.storage import blob
-from energuide import database, reader
+from energuide import database
+from energuide import reader
 from energuide import extractor
 
 
