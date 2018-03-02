@@ -128,6 +128,16 @@ describe('Enum values', () => {
     foundationConfigurationType: { testValue: 'BCIN' },
     foundationMaterialEnglish: { testValue: 'concrete' },
     foundationMaterialFrench: { testValue: 'béton' },
+    foundationHeaderInsulationNominalRsi: { testValue: 3.3615 },
+    foundationHeaderInsulationNominalR: { testValue: 19.0874822073255 },
+    foundationHeaderInsulationEffectiveRsi: { testValue: 2.6892 },
+    foundationHeaderInsulationEffectiveR: { testValue: 15.2699857658604 },
+    foundationHeaderAreaMetres: { testValue: 7.991488000000001 },
+    foundationHeaderAreaFeet: { testValue: 86.01966643346914 },
+    foundationHeaderPerimeterMetres: { testValue: 34.7456 },
+    foundationHeaderPerimeterFeet: { testValue: 113.99475430400001 },
+    foundationHeaderHeightMetres: { testValue: 0.23 },
+    foundationHeaderHeightFeet: { testValue: 0.7545932000000001 },
   }
 
   Object.keys(testData).forEach(functionName => {

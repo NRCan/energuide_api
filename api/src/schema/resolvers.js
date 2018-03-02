@@ -103,6 +103,16 @@ import {
   foundationConfigurationType,
   foundationMaterialEnglish,
   foundationMaterialFrench,
+  foundationHeaderInsulationNominalRsi,
+  foundationHeaderInsulationNominalR,
+  foundationHeaderInsulationEffectiveRsi,
+  foundationHeaderInsulationEffectiveR,
+  foundationHeaderAreaMetres,
+  foundationHeaderAreaFeet,
+  foundationHeaderPerimeterMetres,
+  foundationHeaderPerimeterFeet,
+  foundationHeaderHeightMetres,
+  foundationHeaderHeightFeet,
 } from './enums'
 /* eslint-enable import/named */
 
@@ -280,6 +290,16 @@ const Resolvers = i18n => {
       foundationConfigurationType: foundationConfigurationType.toString(),
       foundationMaterialEnglish: foundationMaterialEnglish.toString(),
       foundationMaterialFrench: foundationMaterialFrench.toString(),
+      foundationHeaderInsulationNominalRsi: foundationHeaderInsulationNominalRsi.toString(),
+      foundationHeaderInsulationNominalR: foundationHeaderInsulationNominalR.toString(),
+      foundationHeaderInsulationEffectiveRsi: foundationHeaderInsulationEffectiveRsi.toString(),
+      foundationHeaderInsulationEffectiveR: foundationHeaderInsulationEffectiveR.toString(),
+      foundationHeaderAreaMetres: foundationHeaderAreaMetres.toString(),
+      foundationHeaderAreaFeet: foundationHeaderAreaFeet.toString(),
+      foundationHeaderPerimeterMetres: foundationHeaderPerimeterMetres.toString(),
+      foundationHeaderPerimeterFeet: foundationHeaderPerimeterFeet.toString(),
+      foundationHeaderHeightMetres: foundationHeaderHeightMetres.toString(),
+      foundationHeaderHeightFeet: foundationHeaderHeightFeet.toString(),
     },
     Comparator: {
       gt: '$gt',

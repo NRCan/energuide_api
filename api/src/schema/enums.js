@@ -317,3 +317,26 @@ foundationFields.forEach(attr => {
   )
   module.exports[generateName('foundation', attr)] = attachToString(fn)
 })
+
+// The fields on the Foundation Header type
+const headerFields = [
+  'insulationNominalRsi',
+  'insulationNominalR',
+  'insulationEffectiveRsi',
+  'insulationEffectiveR',
+  'areaMetres',
+  'areaFeet',
+  'perimeterMetres',
+  'perimeterFeet',
+  'heightMetres',
+  'heightFeet',
+]
+
+headerFields.forEach(attr => {
+  // eslint-disable-next-line no-new-func
+  let fn = new Function(
+    'matcher',
+    `return { "evaluations.foundations.header.${attr}": matcher }`,
+  )
+  module.exports[generateName('foundationHeader', attr)] = attachToString(fn)
+})

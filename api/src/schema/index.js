@@ -533,6 +533,26 @@ const Schema = i18n => {
       foundationMaterialEnglish
       # ${i18n.t`Filter results for dwellings whose foundation was constructed with a specific material (en)`}
       foundationMaterialFrench
+      # ${i18n.t`Filter results for dwellings wiht a matching foundation header insulation nominal RSI (R-value Systeme International)`}
+      foundationHeaderInsulationNominalRsi
+      # ${i18n.t`Filter results for dwellings with a matching foundation header insulation nominal R-value`}
+      foundationHeaderInsulationNominalR
+      # ${i18n.t`Filter results for dwellings with a matching foundation header insulation effective RSI (R-value Systeme International)`}
+      foundationHeaderInsulationEffectiveRsi
+      # ${i18n.t`Filter results for dwellings with a matching foundationn header insulation effective R-value`}
+      foundationHeaderInsulationEffectiveR
+      # ${i18n.t`Filter results for dwellings with a matching foundation header area in square metres (m2)`}
+      foundationHeaderAreaMetres
+      # ${i18n.t`Filter results for dwellings with a matching foundation header area in square feet (ft2)`}
+      foundationHeaderAreaFeet
+      # ${i18n.t`Filter results for dwellings with a matching foundation header perimeter in metres (m)`}
+      foundationHeaderPerimeterMetres
+      # ${i18n.t`Filter results for dwellings with a matching foundation header perimeter in feet (ft)`}
+      foundationHeaderPerimeterFeet
+      # ${i18n.t`Filter results for dwellings with a matching foundation header height in metres (m)`}
+      foundationHeaderHeightMetres
+      # ${i18n.t`Filter results for dwellings with a matching header height in feet (ft)`}
+      foundationHeaderHeightFeet
     }
   `,
 
