@@ -20,6 +20,15 @@ class _Window(typing.NamedTuple):
 
 class Window(_Window):
 
+    _CODE_TAG_TRANSLATIONS = [
+        (code.WindowCodeTag.GLAZING_TYPE, 'glazingTypes'),
+        (code.WindowCodeTag.COATING_TINTS, 'coatingsTints'),
+        (code.WindowCodeTag.FILL_TYPE, 'fillType'),
+        (code.WindowCodeTag.SPACER_TYPE, 'spacerType'),
+        (code.WindowCodeTag.CODE_TYPE, 'type'),
+        (code.WindowCodeTag.FRAME_MATERIAL, 'frameMaterial'),
+    ]
+
     @classmethod
     def from_data(cls,
                   window: element.Element,
@@ -44,22 +53,30 @@ class Window(_Window):
         return area.Area(self.width.metres * self.height.metres)
 
     def to_dict(self) -> typing.Dict[str, typing.Any]:
+        code_tags: typing.Dict[str, typing.Optional[str]] = dict(
+            item
+            for _, tag_name in self._CODE_TAG_TRANSLATIONS
+            for item in [
+                (f'{tag_name}English', None),
+                (f'{tag_name}French', None),
+            ]
+        )
+
+        if self.window_code:
+            for tag_type, tag_name in self._CODE_TAG_TRANSLATIONS:
+                tag_value = self.window_code.tags.get(tag_type)
+                code_tags.update(
+                    **{
+                        f'{tag_name}English': tag_value.english if tag_value else None,
+                        f'{tag_name}French': tag_value.french if tag_value else None,
+                    }
+                )
+
         return {
             'label': self.label,
             'insulationRsi': self.window_insulation.rsi,
             'insulationR': self.window_insulation.r_value,
-            'glazingTypesEnglish': self.window_code.glazing_type.english if self.window_code else None,
-            'glazingTypesFrench': self.window_code.glazing_type.french if self.window_code else None,
-            'coatingsTintsEnglish': self.window_code.coating_tint.english if self.window_code else None,
-            'coatingsTintsFrench': self.window_code.coating_tint.french if self.window_code else None,
-            'fillTypeEnglish': self.window_code.fill_type.english if self.window_code else None,
-            'fillTypeFrench': self.window_code.fill_type.french if self.window_code else None,
-            'spacerTypeEnglish': self.window_code.spacer_type.english if self.window_code else None,
-            'spacerTypeFrench': self.window_code.spacer_type.french if self.window_code else None,
-            'typeEnglish': self.window_code.window_code_type.english if self.window_code else None,
-            'typeFrench': self.window_code.window_code_type.french if self.window_code else None,
-            'frameMaterialEnglish': self.window_code.frame_material.english if self.window_code else None,
-            'frameMaterialFrench': self.window_code.frame_material.french if self.window_code else None,
+            **code_tags,
             'areaMetres': self._window_area.square_metres,
             'areaFeet': self._window_area.square_feet,
             'widthMetres': self.width.metres,

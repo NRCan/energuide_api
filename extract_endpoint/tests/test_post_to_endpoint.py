@@ -1,7 +1,6 @@
 import io
 import subprocess
 import typing
-import datetime
 from http import HTTPStatus
 import psutil
 import pytest
@@ -76,11 +75,6 @@ def sample_filename() -> str:
 
 
 @pytest.fixture
-def sample_timestamp() -> str:
-    return datetime.datetime(2013, 1, 1, 0, 0, 0).strftime("%Y-%m-%d %H:%M:%S")
-
-
-@pytest.fixture
 def sample_timestamp_filename() -> str:
     return endpoint.TIMESTAMP_FILENAME
 
@@ -99,63 +93,30 @@ def check_file_in_azure(azure_service: blob.BlockBlobService,
 def test_post_stream(azure_service: blob.BlockBlobService,
                      azure_emulator_coords: azure_utils.StorageCoordinates,
                      upload_url: str,
-                     sample_stream: NamedStream,
-                     sample_stream_content: str,
-                     sample_filename: str,
                      sample_timestamp: str,
-                     sample_timestamp_filename: str) -> None:
+                     sample_file_contents: str,
+                     sample_filenames: str,
+                     sample_zipfile: io.BytesIO) -> None:
 
-    post_return = post_to_endpoint.post_stream(stream=sample_stream,
-                                               filename=sample_filename,
-                                               url=upload_url,
-                                               timestamp=sample_timestamp)
+    post_return = post_to_endpoint.post_stream(stream=sample_zipfile, filename="filename",
+                                               timestamp=sample_timestamp, url=upload_url)
     assert post_return.status_code == HTTPStatus.CREATED
-    check_file_in_azure(azure_service, azure_emulator_coords, sample_filename, sample_stream_content)
-    check_file_in_azure(azure_service, azure_emulator_coords, sample_timestamp_filename, sample_timestamp)
+    check_file_in_azure(azure_service, azure_emulator_coords, endpoint.TIMESTAMP_FILENAME, sample_timestamp)
+    for name, contents in zip(sample_filenames, sample_file_contents):
+        check_file_in_azure(azure_service, azure_emulator_coords, name, contents)
 
 
 @pytest.mark.usefixtures('run_endpoint')
 def test_post_stream_stdin(azure_service: blob.BlockBlobService,
                            azure_emulator_coords: azure_utils.StorageCoordinates,
                            upload_url: str,
-                           sample_stream_stdin: NamedStream,
-                           sample_stream_content: str,
-                           sample_filename: str,
                            sample_timestamp: str,
-                           sample_timestamp_filename: str) -> None:
-    post_return = post_to_endpoint.post_stream(stream=sample_stream_stdin,
-                                               filename=sample_filename,
-                                               url=upload_url,
-                                               timestamp=sample_timestamp)
+                           sample_file_contents: str,
+                           sample_filenames: str,
+                           sample_zipfile: io.BytesIO) -> None:
+    post_return = post_to_endpoint.post_stream(stream=sample_zipfile, filename="filename",
+                                               timestamp=sample_timestamp, url=upload_url)
     assert post_return.status_code == HTTPStatus.CREATED
-    check_file_in_azure(azure_service, azure_emulator_coords, sample_filename, sample_stream_content)
-    check_file_in_azure(azure_service, azure_emulator_coords, sample_timestamp_filename, sample_timestamp)
-
-
-@pytest.mark.usefixtures('run_endpoint')
-def test_post_stream_no_filename(azure_service: blob.BlockBlobService,
-                                 azure_emulator_coords: azure_utils.StorageCoordinates,
-                                 upload_url: str,
-                                 sample_stream: NamedStream,
-                                 sample_stream_content: str,
-                                 sample_filename: str,
-                                 sample_timestamp: str,
-                                 sample_timestamp_filename: str) -> None:
-    post_return = post_to_endpoint.post_stream(stream=sample_stream,
-                                               filename=None,
-                                               url=upload_url,
-                                               timestamp=sample_timestamp)
-    assert post_return.status_code == HTTPStatus.CREATED
-    check_file_in_azure(azure_service, azure_emulator_coords, sample_filename, sample_stream_content)
-    check_file_in_azure(azure_service, azure_emulator_coords, sample_timestamp_filename, sample_timestamp)
-
-
-@pytest.mark.usefixtures('run_endpoint')
-def test_post_stream_stdin_no_filename(upload_url: str,
-                                       sample_stream_stdin: NamedStream,
-                                       sample_timestamp: str) -> None:
-    with pytest.raises(ValueError):
-        post_to_endpoint.post_stream(stream=sample_stream_stdin,
-                                     filename=None,
-                                     url=upload_url,
-                                     timestamp=sample_timestamp)
+    check_file_in_azure(azure_service, azure_emulator_coords, endpoint.TIMESTAMP_FILENAME, sample_timestamp)
+    for name, contents in zip(sample_filenames, sample_file_contents):
+        check_file_in_azure(azure_service, azure_emulator_coords, name, contents)

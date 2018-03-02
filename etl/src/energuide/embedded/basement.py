@@ -6,6 +6,8 @@ from energuide.embedded import area
 from energuide.embedded import distance
 from energuide.embedded import insulation
 from energuide.exceptions import InvalidInputDataError
+from energuide.exceptions import ElementGetValueError
+from energuide.exceptions import InvalidEmbeddedDataTypeError
 
 
 class FoundationType(enum.Enum):
@@ -224,18 +226,32 @@ class BasementWall(_BasementWall):
     }
 
     @classmethod
-    def _from_data(cls, wall: element.Element, wall_perimiter: float, wall_height: float, tag: WallType):
-        percentage = float(wall.attrib['percentage'])
+    def _from_data(cls,
+                   wall: element.Element,
+                   wall_perimeter: float,
+                   wall_height: float,
+                   tag: WallType,
+                   backup_percentage: float) -> 'BasementWall':
+
+        maybe_percentage = wall.attrib.get('percentage')
+        percentage = float(maybe_percentage) if maybe_percentage else backup_percentage
+
+        try:
+            nominal_insulation = wall.get('@nominalRsi', float)
+            effective_insulation = wall.get('@rsi', float)
+        except ElementGetValueError as exc:
+            raise InvalidEmbeddedDataTypeError(BasementWall, 'Invalid insulation attributes') from exc
+
         return BasementWall(
             wall_type=tag,
-            nominal_insulation=insulation.Insulation(float(wall.attrib['nominalRsi'])),
-            effective_insulation=insulation.Insulation(float(wall.attrib['rsi'])),
+            nominal_insulation=insulation.Insulation(nominal_insulation),
+            effective_insulation=insulation.Insulation(effective_insulation),
             composite_percentage=percentage,
-            wall_area=area.Area(wall_perimiter * wall_height * (percentage / 100))
+            wall_area=area.Area(wall_perimeter * wall_height * (percentage / 100))
         )
 
     @classmethod
-    def from_basement(cls, wall: element.Element, wall_perimiter: float) -> typing.List['BasementWall']:
+    def from_basement(cls, wall: element.Element, wall_perimeter: float) -> typing.List['BasementWall']:
         interior_wall_sections = wall.xpath('Construction/InteriorAddedInsulation/Composite/Section')
         exterior_wall_sections = wall.xpath('Construction/ExteriorAddedInsulation/Composite/Section')
         pony_wall_sections = wall.xpath('Construction/PonyWallType/Composite/Section')
@@ -244,23 +260,58 @@ class BasementWall(_BasementWall):
         pony_height = float(wall.xpath('Measurements/@ponyWallHeight')[0])
 
         walls = []
-        walls.extend([BasementWall._from_data(wall_section, wall_perimiter, wall_height, WallType.INTERIOR)
-                      for wall_section in interior_wall_sections])
+        sections = (interior_wall_sections, exterior_wall_sections, pony_wall_sections)
 
-        walls.extend([BasementWall._from_data(wall_section, wall_perimiter, wall_height, WallType.EXTERIOR)
-                      for wall_section in exterior_wall_sections])
+        parsers = (
+            lambda section, percentage: BasementWall._from_data(
+                section,
+                wall_perimeter,
+                wall_height,
+                WallType.INTERIOR,
+                percentage
+            ),
+            lambda section, percentage: BasementWall._from_data(
+                section,
+                wall_perimeter,
+                wall_height,
+                WallType.EXTERIOR,
+                percentage
+            ),
+            lambda section, percentage: BasementWall._from_data(
+                section,
+                wall_perimeter,
+                pony_height,
+                WallType.PONY,
+                percentage
+            )
+        )
 
-        walls.extend([BasementWall._from_data(wall_section, wall_perimiter, pony_height, WallType.PONY)
-                      for wall_section in pony_wall_sections])
+        for parser, wall_sections in zip(parsers, sections):
+            percentages = [wall.attrib.get('percentage') for wall in wall_sections]
+            accounted_for = sum(float(percentage) for percentage in percentages if percentage is not None)
+
+            walls.extend([parser(wall, 100-accounted_for) for wall in wall_sections])
 
         return walls
 
     @classmethod
-    def from_crawlspace(cls, wall: element.Element, wall_perimiter: float) -> typing.List['BasementWall']:
+    def from_crawlspace(cls, wall: element.Element, wall_perimeter: float) -> typing.List['BasementWall']:
         wall_sections = wall.xpath('Construction/Type/Composite/Section')
-        wall_height = float(wall.xpath('Measurements/@height')[0])
-        return [BasementWall._from_data(wall_section, wall_perimiter, wall_height, WallType.NOT_APPLICABLE)
-                for wall_section in wall_sections]
+        wall_height = wall.get('Measurements/@height', float)
+
+        percentages = [wall.attrib.get('percentage') for wall in wall_sections]
+        accounted_for = sum(float(percentage) for percentage in percentages if percentage is not None)
+
+        return [
+            BasementWall._from_data(
+                wall_section,
+                wall_perimeter,
+                wall_height,
+                WallType.NOT_APPLICABLE,
+                100-accounted_for
+            )
+            for wall_section in wall_sections
+        ]
 
 
     def to_dict(self) -> typing.Dict[str, typing.Any]:
@@ -393,7 +444,7 @@ class Basement(_Basement):
             'configurationType': self.configuration_type,
             'materialEnglish': material.english if material else None,
             'materialFrench': material.french if material else None,
-            'wall': [wall.to_dict() for wall in self.walls],
+            'walls': [wall.to_dict() for wall in self.walls],
             'floors': [floor.to_dict() for floor in self.floors],
             'header': self.header.to_dict() if self.header is not None else None,
         }

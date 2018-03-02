@@ -61,14 +61,16 @@ def sample_wall_code() -> typing.Dict[str, code.WallCode]:
     return {'Code 1': code.WallCode(
         identifier='Code 1',
         label='1201101121',
-        structure_type=bilingual.Bilingual(
-            english='Wood frame',
-            french='Ossature de bois',
-        ),
-        component_type_size=bilingual.Bilingual(
-            english='38x89 mm (2x4 in)',
-            french='38x89 (2x4)',
-        )
+        tags={
+            code.WallCodeTag.STRUCTURE_TYPE: bilingual.Bilingual(
+                english='Wood frame',
+                french='Ossature de bois',
+            ),
+            code.WallCodeTag.COMPONENT_TYPE_SIZE: bilingual.Bilingual(
+                english='38x89 mm (2x4 in)',
+                french='38x89 (2x4)',
+            )
+        },
     )}
 
 

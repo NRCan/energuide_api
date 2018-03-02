@@ -29,7 +29,6 @@ def post_stream(stream: typing.IO[bytes],
     signature = crypt_utils.sign_string(salt=salt,
                                         key=os.environ.get('ENDPOINT_SECRET_KEY', DEFAULT_ENDPOINT_SECRET_KEY),
                                         data=base64.b64encode(data).decode('utf-8'))
-
     return requests.post(url=url,
                          files={'file': data},
                          data={'salt': salt, 'signature': signature, 'filename': filename, 'timestamp': timestamp})
@@ -41,4 +40,5 @@ def post_stream(stream: typing.IO[bytes],
 @click.option('--filename')
 @click.option('--url', default='http://127.0.0.1:5000/upload_file')
 def upload(stream: typing.IO[bytes], timestamp: str, filename: typing.Optional[str], url: str) -> None:
-    click.echo(str(post_stream(stream=stream, timestamp=timestamp, filename=filename, url=url)))
+    post_return = post_stream(stream=stream, timestamp=timestamp, filename=filename, url=url)
+    click.echo(f"Response: {post_return.status_code}, {post_return.content}")

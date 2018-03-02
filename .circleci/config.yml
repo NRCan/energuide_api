@@ -60,6 +60,10 @@ jobs:
       -
         image: "circleci/python:3.6.1"
       -
+        image: "arafato/azurite"
+        environment:
+          executable=blob
+      -
         image: "mongo:3.6.2"
     steps:
       -

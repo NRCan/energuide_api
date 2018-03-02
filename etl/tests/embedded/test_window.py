@@ -63,15 +63,17 @@ def sample_window_code() -> typing.Dict[str, code.WindowCode]:
     return {'Code 11': code.WindowCode(
         identifier='Code 11',
         label='202002',
-        glazing_type=bilingual.Bilingual(
-            english='Double/double with 1 coat',
-            french='Double/double, 1 couche',
-        ),
-        coating_tint=bilingual.Bilingual(english='Clear', french='Transparent'),
-        fill_type=bilingual.Bilingual(english='6 mm Air', french="6 mm d'air"),
-        spacer_type=bilingual.Bilingual(english='Metal', french='Métal'),
-        window_code_type=bilingual.Bilingual(english='Picture', french='Fixe'),
-        frame_material=bilingual.Bilingual(english='Wood', french='Bois'),
+        tags={
+            code.WindowCodeTag.GLAZING_TYPE: bilingual.Bilingual(
+                english='Double/double with 1 coat',
+                french='Double/double, 1 couche',
+            ),
+            code.WindowCodeTag.COATING_TINTS: bilingual.Bilingual(english='Clear', french='Transparent'),
+            code.WindowCodeTag.FILL_TYPE: bilingual.Bilingual(english='6 mm Air', french="6 mm d'air"),
+            code.WindowCodeTag.SPACER_TYPE: bilingual.Bilingual(english='Metal', french='Métal'),
+            code.WindowCodeTag.CODE_TYPE: bilingual.Bilingual(english='Picture', french='Fixe'),
+            code.WindowCodeTag.FRAME_MATERIAL: bilingual.Bilingual(english='Wood', french='Bois'),
+        }
     )}
 
 

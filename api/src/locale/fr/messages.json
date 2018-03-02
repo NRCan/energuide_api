@@ -1,6 +1,6 @@
 {
   "Header insulation nominal RSI (R-value Systeme International)": {
-    "translation": "Valeur nominale RSI (valeur R Système international) de l'isolation d'en-tête",
+    "translation": "Valeur nominale RSI (valeur R Système international) de l'isolation du linterau",
     "origin": [
       [
         "src/schema/Header.js",
@@ -9,7 +9,7 @@
     ]
   },
   "Header insulation nominal R-value": {
-    "translation": "Valeur R nominale de l'isolation de l'en-tête",
+    "translation": "Valeur R nominale de l'isolation du linteau",
     "origin": [
       [
         "src/schema/Header.js",
@@ -18,7 +18,7 @@
     ]
   },
   "Header insulation effective RSI (R-value Systeme International)": {
-    "translation": "RSI (valeur R Système international) pour l'isolation efficace de l'en-tête",
+    "translation": "RSI (valeur R Système international) pour l'isolation efficace du linteau",
     "origin": [
       [
         "src/schema/Header.js",
@@ -27,7 +27,7 @@
     ]
   },
   "Header insulation effective R-value": {
-    "translation": "Valeur R pour l'isolation efficace d'en-tête",
+    "translation": "Valeur R pour l'isolation efficace du linteau",
     "origin": [
       [
         "src/schema/Header.js",
@@ -36,7 +36,7 @@
     ]
   },
   "Header area in square metres (m2)": {
-    "translation": "Superficie d'en-tête en mètres carrés (m2)",
+    "translation": "Superficie du linteau en mètres carrés (m2)",
     "origin": [
       [
         "src/schema/Header.js",
@@ -45,7 +45,7 @@
     ]
   },
   "Header area in square feet (ft2)": {
-    "translation": "Superficie d'en-tête en pieds carrés (ft2)",
+    "translation": "Superficie du linteau en pieds carrés (pi2)",
     "origin": [
       [
         "src/schema/Header.js",
@@ -54,7 +54,7 @@
     ]
   },
   "Header perimeter of the house in metres (m)": {
-    "translation": "Le périmètre d'en-tête de la maison en mètres (m)",
+    "translation": "Le périmètre du linteau de la maison en mètres (m)",
     "origin": [
       [
         "src/schema/Header.js",
@@ -63,7 +63,7 @@
     ]
   },
   "Header perimeter of the house in feet (ft)": {
-    "translation": "Le périmètre d'en-tête de la maison en pieds (pi)",
+    "translation": "Le périmètre du linteau de la maison en pieds (pi)",
     "origin": [
       [
         "src/schema/Header.js",
@@ -72,7 +72,7 @@
     ]
   },
   "Header height in metres (m)": {
-    "translation": "Hauteur d'en-tête en mètres (m)",
+    "translation": "Hauteur du linteau en mètres (m)",
     "origin": [
       [
         "src/schema/Header.js",
@@ -81,7 +81,7 @@
     ]
   },
   "Header height in feet (ft)": {
-    "translation": "Hauteur d'en-tête en pieds (pi)",
+    "translation": "Hauteur du linteau en pieds (pi)",
     "origin": [
       [
         "src/schema/Header.js",
@@ -139,7 +139,7 @@
     ]
   },
   "Name of field results will be filtered by": {
-    "translation": "Noms des résultats de champs triés par",
+    "translation": "Noms des résultats 'champs' triés par",
     "origin": [
       [
         "src/schema/index.js",
@@ -377,7 +377,7 @@
     ]
   },
   "A principal heating system is either the only source of heat for the house, or is used for at least 70% of the heating load": {
-    "translation": "Pour être désigné comme principal, un système de chauffage doit être la seule source de chaleur pour la maison, ou être utilisé pour au moins 70 % de la charge de chauffage",
+    "translation": "Pour être désigné comme principal, un système de chauffage doit être la seule source de chaleur pour la maison, ou produire au moins 70 % de la charge de chauffage",
     "origin": [
       [
         "src/schema/index.js",
@@ -476,7 +476,7 @@
     ]
   },
   "Steady-state efficiency is the combustion efficiency of the equipment at peak performance. The Annual Fuel Utilization Efficiency (AFUE) is a measure of efficiency based on average usage, accounting for the fact that most heating systems rarely run long enough to reach peak performance.": {
-    "translation": "Le rendement en régime permanent est l'efficacité de combustion de l'équipement au rendement maximal. Le rendement énergétique annuel (norme AFUE) est une mesure de l'efficacité définie par l'utilisation moyenne, qui tient compte du fait que la plupart des systèmes de chauffage fonctionnent rarement assez longtemps pour atteindre le rendement maximal.",
+    "translation": "Le rendement en régime permanent (Steady-State) est l'efficacité de combustion de l'équipement au rendement maximal. Le rendement énergétique annuel (norme AFUE) est une mesure de l'efficacité définie par l'utilisation moyenne, qui tient compte du fait que la plupart des systèmes de chauffage fonctionnent rarement assez longtemps pour atteindre le rendement maximal.",
     "origin": [
       [
         "src/schema/index.js",
@@ -494,7 +494,7 @@
     ]
   },
   "If true, a further page of results can be returned": {
-    "translation": "Si it est 'true', une autre page de résultats peut être générée",
+    "translation": "Si 'true', une autre page de résultats peut être générée",
     "origin": [
       [
         "src/schema/index.js",
@@ -503,7 +503,7 @@
     ]
   },
   "If true, a previous page of results can be returned": {
-    "translation": "Si il est 'true', une page précédente de résultats peut être générée",
+    "translation": "Si true', une page précédente de résultats peut être générée",
     "origin": [
       [
         "src/schema/index.js",
@@ -539,7 +539,7 @@
     ]
   },
   "Heated floor areas represents the usable areas of a house that is conditioned to a specified temperature during the whole heating season": {
-    "translation": "Les superficies d'étage chauffé représentent les surfaces utilisables d'une maison tempérée à une température spécifiée durant toute la saison de chauffage",
+    "translation": "Les superficies de plancher chauffé représentent les surfaces utilisables d'une maison tempérée à une température donnée durant toute la saison de chauffage",
     "origin": [
       [
         "src/schema/index.js",
@@ -548,7 +548,7 @@
     ]
   },
   "Above-grade heated area of the house in square metres (m2), i.e. the ground floor": {
-    "translation": "Superficie chauffée d'un étage au-dessus du niveau du sol en mètres carrés (m2), c'est-à-dire le rez-de-chaussée",
+    "translation": "Superficie chauffée d'un plancher au-dessus du niveau du sol en mètres carrés (m2), c'est-à-dire le rez-de-chaussée",
     "origin": [
       [
         "src/schema/index.js",
@@ -557,7 +557,7 @@
     ]
   },
   "Above-grade heated area of the house in square feet (ft2), i.e. the ground floor": {
-    "translation": "Superficie chauffée d'un étage au-dessus du niveau du sol en pieds carrés (pi2), c'est-à-dire le rez-de-chaussée",
+    "translation": "Superficie chauffée d'un plancher au-dessus du niveau du sol en pieds carrés (pi2), c'est-à-dire le rez-de-chaussée",
     "origin": [
       [
         "src/schema/index.js",
@@ -602,7 +602,7 @@
     ]
   },
   "Wall construction being used (en)": {
-    "translation": "Construction de mur utilisée (en)",
+    "translation": "Construction d'un mur utilisée (en)",
     "origin": [
       [
         "src/schema/index.js",
@@ -615,7 +615,7 @@
     ]
   },
   "Wall construction being used (fr)": {
-    "translation": "Construction de mur utilisée (fr)",
+    "translation": "Construction d'un mur utilisée (fr)",
     "origin": [
       [
         "src/schema/index.js",
@@ -800,7 +800,7 @@
     ]
   },
   "Door U-factor in metric: watts per square metre per degree Celcius (W/m2C)": {
-    "translation": "Facteur U de la porte en métriqu e: watts par mètre carré degré Celcius (W/m2C)",
+    "translation": "Facteur U de la porte en métrique: watts par mètre carré degré Celcius (W/m2C)",
     "origin": [
       [
         "src/schema/index.js",
@@ -1205,7 +1205,7 @@
     ]
   },
   "A list of floor data entries for a dwelling": {
-    "translation": "Une liste de données pour chaque étage du logement",
+    "translation": "Une liste de données pour chaque plancher du logement",
     "origin": [
       [
         "src/schema/index.js",
@@ -1232,7 +1232,7 @@
     ]
   },
   "A heated floor area entry for a dwelling": {
-    "translation": "Superficie d'étage chauffé pour un logement",
+    "translation": "Superficie du plancher chauffé pour un logement",
     "origin": [
       [
         "src/schema/index.js",
@@ -1276,8 +1276,8 @@
       ]
     ]
   },
-  "The Energyguide Rating calculated for this evaluation": {
-    "translation": "La cote Energyguide calculée pour cette évaluation",
+  "The EnerGuide Rating calculated for this evaluation": {
+    "translation": "La cote EnerGuide calculée pour cette évaluation",
     "origin": [
       [
         "src/schema/index.js",
@@ -1286,7 +1286,7 @@
     ]
   },
   "A residential building evaluted under the Energuide program": {
-    "translation": "Un immeuble résidentiel évalué dans le cadre du programme Énerguide",
+    "translation": "Un immeuble résidentiel évalué dans le cadre du programme ÉnerGuide",
     "origin": [
       [
         "src/schema/index.js",
@@ -1385,7 +1385,7 @@
     ]
   },
   "Filter results by dwellings built in a specific year": {
-    "translation": "Trier les résultats par année de construction des logements",
+    "translation": "Trier les résultats par année de construction",
     "origin": [
       [
         "src/schema/index.js",
@@ -1466,7 +1466,7 @@
     ]
   },
   "Filter results by the dwellings containing at least one floor with a specific location": {
-    "translation": "Trier les résultats par logements ayant au moins un étage avec un emplacement spécifique",
+    "translation": "Trier les résultats par logements ayant au moins un plancher avec un emplacement spécifique",
     "origin": [
       [
         "src/schema/index.js",
@@ -1475,7 +1475,7 @@
     ]
   },
   "Filter results by the dwellings containing at least one floor with a specific nominal RSI (R-value Systeme International)": {
-    "translation": "Trier les résultats par logements ayant au moins un étage avec une RSI nominale spécifique (valeur R Système international)",
+    "translation": "Trier les résultats par logements ayant au moins un plancher avec une RSI nominale spécifique (valeur R Système international)",
     "origin": [
       [
         "src/schema/index.js",
@@ -1484,7 +1484,7 @@
     ]
   },
   "Filter results by the dwellings containing at least one floor with a specific nominal R-value": {
-    "translation": "Trier les résultats par logements ayant au moins un étage avec une valeur R nominale spécifique",
+    "translation": "Trier les résultats par logements ayant au moins un plancher avec une valeur R nominale spécifique",
     "origin": [
       [
         "src/schema/index.js",
@@ -1493,7 +1493,7 @@
     ]
   },
   "Filter results by the dwellings containing at least one floor with a specific effective R-value": {
-    "translation": "Trier les résultats par logements ayant au moins un étage avec une valeur R efficace spécifique",
+    "translation": "Trier les résultats par logements ayant au moins un plancher avec une valeur R efficace spécifique",
     "origin": [
       [
         "src/schema/index.js",
@@ -1506,7 +1506,7 @@
     ]
   },
   "Filter results by the dwellings containing at least one floor with a specific area in square metres (m2)": {
-    "translation": "Trier les résultats par logements ayant au moins un étage avec une superficie spécifique en mètres carrés (m2)",
+    "translation": "Trier les résultats par logements ayant au moins un plancher avec une superficie spécifique en mètres carrés (m2)",
     "origin": [
       [
         "src/schema/index.js",
@@ -1515,7 +1515,7 @@
     ]
   },
   "Filter results by the dwellings containing at least one floor with a specific area in square feet (ft2)": {
-    "translation": "Trier les résultats par logements ayant au moins un étage avec une superficie spécifique en pieds carrés (pi2)",
+    "translation": "Trier les résultats par logements ayant au moins un plancher avec une superficie spécifique en pieds carrés (pi2)",
     "origin": [
       [
         "src/schema/index.js",
@@ -1956,7 +1956,7 @@
     ]
   },
   "Cannot submit values for both 'next' and 'previous'.": {
-    "translation": "Il faut pas soumettre des valeurs pour 'next' et 'previous' en même temps.",
+    "translation": "Ne pas soumettre des valeurs pour 'next' et 'previous' en même temps.",
     "origin": [
       [
         "src/schema/resolvers.js",
@@ -1974,7 +1974,7 @@
     ]
   },
   "The percentage of the total wall area this section accounts for": {
-    "translation": "Le pourcentage de la superficie du mur totale de cette section représente",
+    "translation": "Le pourcentage de la superficie de mur totale de cette section totalise",
     "origin": [
       [
         "src/schema/types/FoundationWall.js",

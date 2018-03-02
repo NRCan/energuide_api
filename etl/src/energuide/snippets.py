@@ -1,5 +1,6 @@
 import typing
 from energuide import element
+from energuide.exceptions import ElementGetValueError
 
 
 class _Codes(typing.NamedTuple):
@@ -64,8 +65,39 @@ class EnergyUpgradesSnippet(_EnergyUpgradesSnippet):
         }
 
 
+class _OtherDataSnippet(typing.NamedTuple):
+    forward_sortation_area: typing.Optional[str]
+    ers_rating: typing.Optional[str]
+
+
+class OtherDataSnippet(_OtherDataSnippet):
+
+    def to_dict(self) -> typing.Dict[str, typing.Any]:
+        return {
+            'forwardSortationArea': self.forward_sortation_area,
+            'ersRating': self.ers_rating,
+        }
+
+
 def _extract_nodes(node: element.Element, path: str) -> typing.List[element.Element]:
     return node.xpath(path)
+
+
+def _get_nullable_fields(root: element.Element, path: str) -> typing.Optional[str]:
+    data: typing.Optional[str]
+    try:
+        data = root.get(path, str)
+    except ElementGetValueError:
+        data = None
+    return data
+
+
+def snip_other_data(root: element.Element) -> OtherDataSnippet:
+    postal_code = _get_nullable_fields(root, 'ProgramInformation/Client/StreetAddress/PostalCode/text()')
+    return OtherDataSnippet(
+        forward_sortation_area=postal_code[0:3] if postal_code else None,
+        ers_rating=_get_nullable_fields(root, 'Program/Results/Tsv/ERSRating/@value'),
+    )
 
 
 def snip_house(house: element.Element) -> HouseSnippet:

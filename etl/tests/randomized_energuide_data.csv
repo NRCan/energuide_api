@@ -30907,7 +30907,7 @@ EVAL_ID,IDNUMBER,PARTNER,EVALUATOR,PREVIOUSFILEID,STATUS,CREATIONDATE,MODIFICATI
                 <Street>98SSD00812 Test Street</Street>
                 <City>Calgary</City>
                 <Province>ALBERTA</Province>
-                <PostalCode>T1L 1C1</PostalCode>
+                <PostalCode>C1A 1C1</PostalCode>
             </StreetAddress>
             <MailingAddress>
                 <Name />
@@ -33258,7 +33258,7 @@ EVAL_ID,IDNUMBER,PARTNER,EVALUATOR,PREVIOUSFILEID,STATUS,CREATIONDATE,MODIFICATI
                 <NUMSOLSYS value=""1"" />
                 <TOTCSIA value=""0"" />
                 <LARGESTCSIA value=""0"" />
-                <ERSRating value=""295"" />
+                <ERSRating value=""120"" />
                 <UGRERSRating value=""295"" />
                 <ERSEnergyIntensity value=""0.25"" />
                 <UGRERSEnergyIntensity value=""0.25"" />

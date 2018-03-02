@@ -8,6 +8,7 @@ dist
 **/.mypy_cache/
 etl/env
 extract_endpoint/env
+extract_endpoint/tests/azure_emulator
 .python-version
 .env
 .idea
