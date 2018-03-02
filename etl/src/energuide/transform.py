@@ -2,12 +2,12 @@ import typing
 from energuide import database
 from energuide import reader
 from energuide import dwelling
-from energuide import energuide_logging
+from energuide import logger
 from energuide.exceptions import InvalidEmbeddedDataTypeError
 from energuide.exceptions import EnerguideError
 
 
-LOGGER = energuide_logging.get_logger(__name__)
+LOGGER = logger.get_logger(__name__)
 
 
 def _generate_dwellings(grouped: typing.Iterable[typing.List[reader.InputData]]) -> typing.Iterator[dwelling.Dwelling]:
