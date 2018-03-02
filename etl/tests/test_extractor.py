@@ -7,7 +7,6 @@ import _pytest.fixtures
 import py._path.local
 import pytest
 from energuide import extractor
-from energuide.exceptions import InvalidInputDataError
 
 
 def _write_csv(filepath: str, data: typing.Mapping[str, typing.Optional[str]]) -> None:
@@ -81,24 +80,23 @@ def extra_filepath(tmpdir: py._path.local.LocalPath, extra_data: typing.Dict[str
 
 
 def test_extract_valid(valid_filepath: str) -> None:
-    output = extractor.extract_data(valid_filepath)
-    item = dict(next(output))
+    output = next(extractor.extract_data(valid_filepath))
+    assert output
+    item = dict(output)
     assert 'EVAL_ID' in item
 
 
 def test_purge_unknown(extra_filepath: str) -> None:
-    output = extractor.extract_data(extra_filepath)
-    item = dict(next(output))
+    output = next(extractor.extract_data(extra_filepath))
+    assert output
+    item = dict(output)
     assert 'other_1' not in item
 
 
 def test_extract_missing(missing_filepath: str) -> None:
-    with pytest.raises(InvalidInputDataError) as ex:
-        output = extractor.extract_data(missing_filepath)
-        dict(next(output))
-
-    assert 'EVAL_ID' not in ex.exconly()
-    assert 'BUILDER' in ex.exconly()
+    output = extractor.extract_data(missing_filepath)
+    result = [x for x in output]
+    assert result == [None]
 
 
 def test_empty_to_none(tmpdir: py._path.local.LocalPath, nullable_data: typing.Dict[str, typing.Optional[str]]) -> None:
@@ -106,6 +104,7 @@ def test_empty_to_none(tmpdir: py._path.local.LocalPath, nullable_data: typing.D
     _write_csv(filepath, nullable_data)
     output = extractor.extract_data(filepath)
     row = next(output)
+    assert row
     assert row['MODIFICATIONDATE'] is None
 
 
@@ -131,8 +130,9 @@ def test_extract_with_snippets(tmpdir: py._path.local.LocalPath, base_data: typi
         writer.writeheader()
         writer.writerow(base_data)
 
-    output = list(extractor.extract_data(str(input_file)))
-    assert output[0]['ceilings']
+    output = next(extractor.extract_data(str(input_file)))
+    assert output
+    assert output['ceilings']
 
 
 def test_extract_with_tsv_snippets(tmpdir: py._path.local.LocalPath, base_data: typing.Dict[str, str]) -> None:
@@ -162,9 +162,10 @@ def test_extract_with_tsv_snippets(tmpdir: py._path.local.LocalPath, base_data: 
         writer.writeheader()
         writer.writerow(base_data)
 
-    output = list(extractor.extract_data(str(input_file)))
-    assert output[0]['ersRating'] == '257'
-    assert output[0]['forwardSortationArea'] == 'H0H'
+    output = next(extractor.extract_data(str(input_file)))
+    assert output
+    assert output['ersRating'] == '257'
+    assert output['forwardSortationArea'] == 'H0H'
 
 
 def test_write_data(tmpdir: py._path.local.LocalPath) -> None:
@@ -175,7 +176,8 @@ def test_write_data(tmpdir: py._path.local.LocalPath) -> None:
         {'bar': 2, 'baz': 3, 'BUILDER': '4K13D01404'},
     ]
 
-    extractor.write_data(data, output_path)
+    result = extractor.write_data(data, output_path)
+    assert result == (2, 0)
 
     with zipfile.ZipFile(output_path, 'r') as output_file:
         files = [output_file.read('4K02E90020'), output_file.read('4K13D01404')]
