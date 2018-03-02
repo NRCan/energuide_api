@@ -444,7 +444,7 @@ class Basement(_Basement):
             'configurationType': self.configuration_type,
             'materialEnglish': material.english if material else None,
             'materialFrench': material.french if material else None,
-            'wall': [wall.to_dict() for wall in self.walls],
+            'walls': [wall.to_dict() for wall in self.walls],
             'floors': [floor.to_dict() for floor in self.floors],
             'header': self.header.to_dict() if self.header is not None else None,
         }
