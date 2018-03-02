@@ -97,6 +97,12 @@ import {
   windowWidthFeet,
   windowHeightMetres,
   windowHeightFeet,
+  foundationFoundationTypeEnglish,
+  foundationFoundationTypeFrench,
+  foundationLabel,
+  foundationConfigurationType,
+  foundationMaterialEnglish,
+  foundationMaterialFrench,
 } from './enums'
 /* eslint-enable import/named */
 
@@ -268,6 +274,12 @@ const Resolvers = i18n => {
       windowWidthFeet: windowWidthFeet.toString(),
       windowHeightMetres: windowHeightMetres.toString(),
       windowHeightFeet: windowHeightFeet.toString(),
+      foundationFoundationTypeEnglish: foundationFoundationTypeEnglish.toString(),
+      foundationFoundationTypeFrench: foundationFoundationTypeFrench.toString(),
+      foundationLabel: foundationLabel.toString(),
+      foundationConfigurationType: foundationConfigurationType.toString(),
+      foundationMaterialEnglish: foundationMaterialEnglish.toString(),
+      foundationMaterialFrench: foundationMaterialFrench.toString(),
     },
     Comparator: {
       gt: '$gt',

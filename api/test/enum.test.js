@@ -122,6 +122,12 @@ describe('Enum values', () => {
     windowWidthFeet: { testValue: 3.5259036561359998 },
     windowHeightMetres: { testValue: 1.2199246000000001 },
     windowHeightFeet: { testValue: 4.002377424664 },
+    foundationFoundationTypeEnglish: { testValue: 'Basement' },
+    foundationFoundationTypeFrench: { testValue: 'Sous-sol' },
+    foundationLabel: { testValue: 'Foundation - 1' },
+    foundationConfigurationType: { testValue: 'BCIN' },
+    foundationMaterialEnglish: { testValue: 'concrete' },
+    foundationMaterialFrench: { testValue: 'béton' },
   }
 
   Object.keys(testData).forEach(functionName => {

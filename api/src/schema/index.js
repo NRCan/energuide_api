@@ -513,14 +513,26 @@ const Schema = i18n => {
       windowAreaMetres
       # ${i18n.t`Filter results for dwellings with a window matching a specific area in square feet (ft2)`}
       windowAreaFeet
-      # ${i18n.t`Filter resutls for dwellings with a window matching a specific width in metres (m)`}
+      # ${i18n.t`Filter results for dwellings with a window matching a specific width in metres (m)`}
       windowWidthMetres
-      # ${i18n.t`Filter resutls for dwellings with a window matching a specific width in feet (ft)`}
+      # ${i18n.t`Filter results for dwellings with a window matching a specific width in feet (ft)`}
       windowWidthFeet
-      # ${i18n.t`Filter resutls for dwellings with a window matching a specific height in metres (m)`}
+      # ${i18n.t`Filter results for dwellings with a window matching a specific height in metres (m)`}
       windowHeightMetres
-      # ${i18n.t`Filter resutls for dwellings with a window matching a specific height in feet (ft)`}
+      # ${i18n.t`Filter results for dwellings with a window matching a specific height in feet (ft)`}
       windowHeightFeet
+      # ${i18n.t`Filter results for dwellings with matching foundation type (en)`}
+      foundationFoundationTypeEnglish
+      # ${i18n.t`Filter results for dwellings with matching foundation type (fr)`}
+      foundationFoundationTypeFrench
+      # ${i18n.t`Filter results for dwellings with a specific foundation label`}
+      foundationLabel
+      # ${i18n.t`Filter results for dwellings with a specific foundation configuration`}
+      foundationConfigurationType
+      # ${i18n.t`Filter results for dwellings whose foundation was constructed with a specific material (en)`}
+      foundationMaterialEnglish
+      # ${i18n.t`Filter results for dwellings whose foundation was constructed with a specific material (en)`}
+      foundationMaterialFrench
     }
   `,
 

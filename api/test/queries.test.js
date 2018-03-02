@@ -37,6 +37,7 @@ describe('queries', () => {
         }`,
         })
 
+      expect(response.body).not.toHaveProperty('errors')
       let { evaluations } = response.body.data
       expect(evaluations).toEqual({
         city: 'Charlottetown',
