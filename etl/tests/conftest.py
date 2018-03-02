@@ -1,6 +1,7 @@
 import os
 import random
 import typing
+import socket
 
 import py
 import pymongo
@@ -78,3 +79,17 @@ def energuide_zip_fixture(tmpdir: py._path.local.LocalPath, energuide_fixture: s
     data = extractor.extract_data(energuide_fixture)
     extractor.write_data(data, outfile)
     return outfile
+
+
+@pytest.fixture
+def is_azurite_running() -> None:
+    sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    try:
+        sock.bind(("127.0.0.1", 10000))
+    except socket.error:
+        return
+    else:
+        sock.close()
+        pytest.skip()
+
+
