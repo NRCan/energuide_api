@@ -7,7 +7,6 @@ import _pytest.fixtures
 import py._path.local
 import pytest
 from energuide import extractor
-from energuide import reader
 from energuide.exceptions import InvalidInputDataError
 
 
@@ -187,7 +186,7 @@ def test_write_data(tmpdir: py._path.local.LocalPath) -> None:
 def test_write_bad_data(tmpdir: py._path.local.LocalPath) -> None:
     output_path = f'{tmpdir}/output.zip'
 
-    data: typing.List[reader.InputData] = [
+    data: typing.List[typing.Dict[str, typing.Any]] = [
         {'foo': 1, 'BUILDER': '4K02E90020'},
         {'bar': 2, 'baz': 3},
     ]

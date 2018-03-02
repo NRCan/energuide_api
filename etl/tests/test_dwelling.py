@@ -4,7 +4,6 @@ import typing
 import pytest
 from energuide import bilingual
 from energuide import dwelling
-from energuide import reader
 from energuide.embedded import area
 from energuide.embedded import ceiling
 from energuide.embedded import code
@@ -488,7 +487,7 @@ def sample_input_d(ceiling_input: typing.List[str],
                    crawlspace_input: typing.List[str],
                    slab_input: typing.List[str],
                    upgrades_input: typing.List[str],
-                   raw_codes: typing.Dict[str, typing.List[str]]) -> reader.InputData:
+                   raw_codes: typing.Dict[str, typing.List[str]]) -> typing.Dict[str, typing.Any]:
 
     return {
         'EVAL_ID': '123',
@@ -520,19 +519,19 @@ def sample_input_d(ceiling_input: typing.List[str],
 
 
 @pytest.fixture
-def sample_input_e(sample_input_d: reader.InputData) -> reader.InputData:
+def sample_input_e(sample_input_d: typing.Dict[str, typing.Any]) -> typing.Dict[str, typing.Any]:
     output = copy.deepcopy(sample_input_d)
     output['EVAL_TYPE'] = 'E'
     return output
 
 
 @pytest.fixture
-def sample_parsed_d(sample_input_d: reader.InputData) -> dwelling.ParsedDwellingDataRow:
+def sample_parsed_d(sample_input_d: typing.Dict[str, typing.Any]) -> dwelling.ParsedDwellingDataRow:
     return dwelling.ParsedDwellingDataRow.from_row(sample_input_d)
 
 
 @pytest.fixture
-def sample_parsed_e(sample_input_e: reader.InputData) -> dwelling.ParsedDwellingDataRow:
+def sample_parsed_e(sample_input_e: typing.Dict[str, typing.Any]) -> dwelling.ParsedDwellingDataRow:
     return dwelling.ParsedDwellingDataRow.from_row(sample_input_e)
 
 
@@ -582,7 +581,7 @@ class TestRegion:
 
 class TestParsedDwellingDataRow:
 
-    def test_from_row(self, sample_input_d: reader.InputData) -> None:
+    def test_from_row(self, sample_input_d: typing.Dict[str, typing.Any]) -> None:
         output = dwelling.ParsedDwellingDataRow.from_row(sample_input_d)
 
         wall_code = code.WallCode(
@@ -814,7 +813,7 @@ class TestParsedDwellingDataRow:
             ]
         )
 
-    def test_bad_postal_code(self, sample_input_d: reader.InputData) -> None:
+    def test_bad_postal_code(self, sample_input_d: typing.Dict[str, typing.Any]) -> None:
         sample_input_d['forwardSortationArea'] = 'K16'
         with pytest.raises(InvalidInputDataError):
             dwelling.ParsedDwellingDataRow.from_row(sample_input_d)
@@ -828,7 +827,7 @@ class TestParsedDwellingDataRow:
         assert 'EVAL_TYPE' in ex.exconly()
         assert 'EVAL_ID' not in ex.exconly()
 
-    def test_missing_ers(self, sample_input_d: reader.InputData) -> None:
+    def test_missing_ers(self, sample_input_d: typing.Dict[str, typing.Any]) -> None:
         sample_input_d['ersRating'] = ''
         output = dwelling.ParsedDwellingDataRow.from_row(sample_input_d)
         assert output.ers_rating is None
@@ -861,26 +860,26 @@ class TestDwelling:
 
     @pytest.fixture
     def sample(self,
-               sample_input_d: reader.InputData,
-               sample_input_e: reader.InputData,
-              ) -> typing.List[reader.InputData]:
+               sample_input_d: typing.Dict[str, typing.Any],
+               sample_input_e: typing.Dict[str, typing.Any],
+              ) -> typing.List[typing.Dict[str, typing.Any]]:
         return [sample_input_d, sample_input_e].copy()
 
-    def test_house_id(self, sample: typing.List[reader.InputData]) -> None:
+    def test_house_id(self, sample: typing.List[typing.Dict[str, typing.Any]]) -> None:
         output = dwelling.Dwelling.from_group(sample)
         assert output.house_id == 123
 
-    def test_year_built(self, sample: typing.List[reader.InputData]) -> None:
+    def test_year_built(self, sample: typing.List[typing.Dict[str, typing.Any]]) -> None:
         output = dwelling.Dwelling.from_group(sample)
         assert output.year_built == 2000
 
-    def test_address_data(self, sample: typing.List[reader.InputData]) -> None:
+    def test_address_data(self, sample: typing.List[typing.Dict[str, typing.Any]]) -> None:
         output = dwelling.Dwelling.from_group(sample)
         assert output.city == 'Ottawa'
         assert output.region == dwelling.Region.ONTARIO
         assert output.forward_sortation_area == 'K1P'
 
-    def test_evaluations(self, sample: typing.List[reader.InputData]) -> None:
+    def test_evaluations(self, sample: typing.List[typing.Dict[str, typing.Any]]) -> None:
         output = dwelling.Dwelling.from_group(sample)
         assert len(output.evaluations) == 2
 
@@ -889,7 +888,7 @@ class TestDwelling:
         with pytest.raises(InvalidGroupSizeError):
             dwelling.Dwelling.from_group(data)
 
-    def test_to_dict(self, sample: typing.List[reader.InputData]) -> None:
+    def test_to_dict(self, sample: typing.List[typing.Dict[str, typing.Any]]) -> None:
         output = dwelling.Dwelling.from_group(sample).to_dict()
         assert output['houseId'] == 123
         assert len(output['evaluations']) == 2

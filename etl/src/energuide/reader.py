@@ -5,8 +5,6 @@ import typing
 import zipfile
 from azure.storage import blob
 
-InputData = typing.Dict[str, typing.Any]
-
 
 EXTRACT_ENDPOINT_STORAGE_ACCOUNT = os.environ.get('EXTRACT_ENDPOINT_STORAGE_ACCOUNT', '')
 EXTRACT_ENDPOINT_STORAGE_KEY = os.environ.get('EXTRACT_ENDPOINT_STORAGE_KEY', '')
@@ -14,7 +12,7 @@ EXTRACT_ENDPOINT_CONTAINER = os.environ.get('EXTRACT_ENDPOINT_CONTAINER', '')
 EXTRACT_ENDPOINT_STORAGE_DOMAIN = os.environ.get('EXTRACT_ENDPOINT_STORAGE_DOMAIN', None)
 
 
-def read(filename: str) -> typing.Iterator[InputData]:
+def read(filename: str) -> typing.Iterator[typing.Dict[str, typing.Any]]:
     with zipfile.ZipFile(filename) as zip_input:
         files = zip_input.namelist()
         for file in files:
@@ -23,7 +21,7 @@ def read(filename: str) -> typing.Iterator[InputData]:
             yield house
 
 
-def read_from_azure() -> typing.Iterator[InputData]:
+def read_from_azure() -> typing.Iterator[typing.Dict[str, typing.Any]]:
     azure_service = blob.BlockBlobService(account_name=EXTRACT_ENDPOINT_STORAGE_ACCOUNT,
                                           account_key=EXTRACT_ENDPOINT_STORAGE_KEY,
                                           custom_domain=EXTRACT_ENDPOINT_STORAGE_DOMAIN)
@@ -37,8 +35,8 @@ def read_from_azure() -> typing.Iterator[InputData]:
         yield house
 
 
-def grouper(raw: typing.Iterable[InputData],
-            grouping_field: str) -> typing.Iterator[typing.List[InputData]]:
+def grouper(raw: typing.Iterable[typing.Dict[str, typing.Any]],
+            grouping_field: str) -> typing.Iterator[typing.List[typing.Dict[str, typing.Any]]]:
 
     for group in itertools.groupby(raw, lambda y: y.get(grouping_field)):
         yield [x for x in group[1]]
