@@ -1,6 +1,7 @@
 import os
 import typing
 from http import HTTPStatus
+import hashlib
 import flask
 import pymongo
 from energuide import transform
@@ -46,6 +47,21 @@ def trigger(filename: str,
     return f'success, {records_created} created', HTTPStatus.CREATED
 
 
+@App.route('/', methods=['GET'])
+def frontend() -> str:
+    return ''
+
+
+@App.route('/test_alive', methods=['GET'])
+def test_alive() -> str:
+    return 'Alive!'
+
+
+@App.route('/robots933456.txt', methods=['GET'])
+def robots() -> None:
+    flask.abort(HTTPStatus.NOT_FOUND)
+
+
 @App.route('/trigger_tl_get', methods=['GET'])
 def trigger_tl_get() -> typing.Tuple[str, int]:
     return trigger('extract_out.zip', DATABASE_COORDS, DATABASE_NAME, COLLECTION)
@@ -55,8 +71,20 @@ def trigger_tl_get() -> typing.Tuple[str, int]:
 def trigger_tl() -> typing.Tuple[str, int]:
     if 'filename' not in flask.request.form:
         return 'no filename', HTTPStatus.BAD_REQUEST
+    if 'salt' not in flask.request.form:
+        return 'no salt', HTTPStatus.BAD_REQUEST
+    if 'signature' not in flask.request.form:
+        return 'no signature', HTTPStatus.BAD_REQUEST
 
-    return trigger(flask.request.form['filename'], DATABASE_COORDS, DATABASE_NAME, COLLECTION)
+    filename = flask.request.form['filename']
+    salt = flask.request.form['salt']
+    signature = flask.request.form['signature']
+
+    salt_signature = hashlib.sha256((salt + App.config['SECRET_KEY']).encode()).hexdigest()
+    if salt_signature != signature:
+        return 'bad signature', HTTPStatus.BAD_REQUEST
+
+    return trigger(filename, DATABASE_COORDS, DATABASE_NAME, COLLECTION)
 
 
 if __name__ == "__main__":
