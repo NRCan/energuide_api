@@ -5,7 +5,7 @@ from energuide import reader
 _GROUP_KEY = 'EVAL_ID'
 
 @pytest.fixture
-def sample() -> typing.List[reader.InputData]:
+def sample() -> typing.List[typing.Dict[str, typing.Any]]:
     return [
         {
             _GROUP_KEY: 1,
@@ -20,7 +20,7 @@ def sample() -> typing.List[reader.InputData]:
     ]
 
 
-def test_grouper(sample: typing.List[reader.InputData]) -> None:
+def test_grouper(sample: typing.List[typing.Dict[str, typing.Any]]) -> None:
     output = list(reader.grouper(sample, _GROUP_KEY))
 
     assert output[0] == sample[0:2]

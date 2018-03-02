@@ -2,7 +2,6 @@ import datetime
 import enum
 import typing
 from dateutil import parser
-from energuide import reader
 from energuide import validator
 from energuide.embedded import ceiling
 from energuide.embedded import code
@@ -142,7 +141,7 @@ class ParsedDwellingDataRow(_ParsedDwellingDataRow):
     }
 
     @classmethod
-    def from_row(cls, row: reader.InputData) -> 'ParsedDwellingDataRow':
+    def from_row(cls, row: typing.Dict[str, typing.Any]) -> 'ParsedDwellingDataRow':
         checker = validator.DwellingValidator(cls._SCHEMA, allow_unknown=True, ignore_none_values=True)
         if not checker.validate(row):
             error_keys = ', '.join(checker.errors.keys())
@@ -374,7 +373,7 @@ class Dwelling:
             raise InvalidGroupSizeError(f'Invalid group size "{len(data)}". Groups must be size 2')
 
     @classmethod
-    def from_group(cls, data: typing.List[reader.InputData]) -> 'Dwelling':
+    def from_group(cls, data: typing.List[typing.Dict[str, typing.Any]]) -> 'Dwelling':
         parsed_data = [ParsedDwellingDataRow.from_row(row) for row in data]
         return cls._from_parsed_group(parsed_data)
 

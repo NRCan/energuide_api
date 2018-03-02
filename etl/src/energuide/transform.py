@@ -10,7 +10,8 @@ from energuide.exceptions import EnerguideError
 LOGGER = logging.get_logger(__name__)
 
 
-def _generate_dwellings(grouped: typing.Iterable[typing.List[reader.InputData]]) -> typing.Iterator[dwelling.Dwelling]:
+def _generate_dwellings(grouped: typing.Iterable[typing.List[typing.Dict[str, typing.Any]]]
+                       ) -> typing.Iterator[dwelling.Dwelling]:
     for group in grouped:
         try:
             dwell = dwelling.Dwelling.from_group(group)
