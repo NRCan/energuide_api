@@ -244,3 +244,47 @@ doorsFields.forEach(attr => {
   )
   module.exports[generateName('door', attr)] = attachToString(fn)
 })
+
+// The fields on the Window type
+const windowFields = [
+  'label',
+  'insulationRsi',
+  'insulationR',
+  'glazingTypesEnglish',
+  'glazingTypesFrench',
+  'coatingsTintsEnglish',
+  'coatingsTintsFrench',
+  'fillTypeEnglish',
+  'fillTypeFrench',
+  'spacerTypeEnglish',
+  'spacerTypeFrench',
+  'typeEnglish',
+  'typeFrench',
+  'frameMaterialEnglish',
+  'frameMaterialFrench',
+  'areaMetres',
+  'areaFeet',
+  'widthMetres',
+  'widthFeet',
+  'heightMetres',
+  'heightFeet',
+]
+
+windowFields.forEach(attr => {
+  // eslint-disable-next-line no-new-func
+  let fn = new Function(
+    'matcher',
+    `
+  return {
+    evaluations: {
+      $elemMatch: {
+        windows: {
+          $elemMatch:{ ${attr}: matcher },
+        },
+      },
+    },
+  }
+  `,
+  )
+  module.exports[generateName('window', attr)] = attachToString(fn)
+})

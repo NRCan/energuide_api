@@ -44,6 +44,17 @@ def test_energy_snippet_to_dict(energy_upgrades: element.Element) -> None:
     assert len(output) == 1
 
 
+def test_other_data_snippet_to_dict() -> None:
+    data = snippets.OtherDataSnippet(
+        forward_sortation_area='H0H',
+        ers_rating='267',
+    )
+    assert data.to_dict() == {
+        'forwardSortationArea': 'H0H',
+        'ersRating': '267',
+    }
+
+
 def test_ceiling_snippet(house: element.Element) -> None:
     output = snippets.snip_house(house)
     assert len(output.ceilings) == 2
@@ -258,3 +269,11 @@ def test_upgrades_snippet(energy_upgrades: element.Element) -> None:
 
     doc = {'upgrades': output.upgrades}
     assert checker.validate(doc)
+
+
+def test_other_data_snippet(doc: element.Element) -> None:
+    output = snippets.snip_other_data(doc)
+    assert output == snippets.OtherDataSnippet(
+        forward_sortation_area='H0H',
+        ers_rating='267',
+    )
