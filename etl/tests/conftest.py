@@ -82,7 +82,7 @@ def energuide_zip_fixture(tmpdir: py._path.local.LocalPath, energuide_fixture: s
 
 
 @pytest.fixture
-def is_azurite_running() -> None:
+def skip_if_azure_simulator_not_running() -> None:
     if 'CIRCLECI' in os.environ:
         return
 
