@@ -47,14 +47,11 @@ def robots() -> None:
 
 @App.route('/run_tl', methods=['POST'])
 def run_tl() -> typing.Tuple[str, int]:
-    if 'filename' not in flask.request.form:
-        return 'no filename', HTTPStatus.BAD_REQUEST
     if 'salt' not in flask.request.form:
         return 'no salt', HTTPStatus.BAD_REQUEST
     if 'signature' not in flask.request.form:
         return 'no signature', HTTPStatus.BAD_REQUEST
 
-    filename = flask.request.form['filename']
     salt = flask.request.form['salt']
     signature = flask.request.form['signature']
 
@@ -68,8 +65,8 @@ def run_tl() -> typing.Tuple[str, int]:
     transform.run(DATABASE_COORDS,
                   database_name=DATABASE_NAME,
                   collection=COLLECTION,
-                  filename=filename,
-                  azure=False,
+                  filename=None,
+                  azure=True,
                   append=False)
 
     mongo_client: pymongo.MongoClient
