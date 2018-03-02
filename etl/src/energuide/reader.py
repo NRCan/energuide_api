@@ -24,7 +24,6 @@ def read(filename: str) -> typing.Iterator[InputData]:
 
 
 def read_from_azure() -> typing.Iterator[InputData]:
-
     azure_service = blob.BlockBlobService(account_name=EXTRACT_ENDPOINT_STORAGE_ACCOUNT,
                                           account_key=EXTRACT_ENDPOINT_STORAGE_KEY,
                                           custom_domain=EXTRACT_ENDPOINT_STORAGE_DOMAIN)
