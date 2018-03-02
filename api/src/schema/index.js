@@ -553,6 +553,34 @@ const Schema = i18n => {
       foundationHeaderHeightMetres
       # ${i18n.t`Filter results for dwellings with a matching header height in feet (ft)`}
       foundationHeaderHeightFeet
+      # ${i18n.t`Filter for dwellings with a matching type of foundation floor type (en)`}
+      foundationFloorFloorTypeEnglish
+      # ${i18n.t`Filter for dwellings with a matching type of foundation floor type (fr)`}
+      foundationFloorFloorTypeFrench
+      # ${i18n.t`Filter for dwellings where the foundation floor has a matching insulation nominal RSI (R-value Systeme International)`}
+      foundationFloorInsulationNominalRsi
+      # ${i18n.t`Filter for dwellings with a matching insulation nominal R-value on the foundation floor`}
+      foundationFloorInsulationNominalR
+      # ${i18n.t`Filter for dwellings with a matching insulation effective RSI (R-value Systeme International) for the foundation floor`}
+      foundationFloorInsulationEffectiveRsi
+      # ${i18n.t`Filter for dwellings with a matching insulation effective R-value for the foundation floor`}
+      foundationFloorInsulationEffectiveR
+      # ${i18n.t`Filter for dwellings where the foundation floor has a matching area in square metres (m2)`}
+      foundationFloorAreaMetres
+      # ${i18n.t`Filter for dwellings where the foundation floor has a matching area in square feet (ft)`}
+      foundationFloorAreaFeet
+      # ${i18n.t`Filter for dwellings where the foundation floor has a specific perimeter in metres (m)`}
+      foundationFloorPerimeterMetres
+      # ${i18n.t`Filter for dwellings where the foundation floor has a specific perimeter in feet (ft)`}
+      foundationFloorPerimeterFeet
+      # ${i18n.t`Filter for dwellings where the foundation floor has a specific width in metres (m)`}
+      foundationFloorWidthMetres
+      # ${i18n.t`Filter for dwellings where the foundation floor has a specific width in feet (ft)`}
+      foundationFloorWidthFeet
+      # ${i18n.t`Filter for dwellings where the foundation floor has a specific length in metres (m)`}
+      foundationFloorLengthMetres
+      # ${i18n.t`Filter for dwellings where the foundation floor has a specific length in feet (ft)`}
+      foundationFloorLengthFeet
     }
   `,
 
