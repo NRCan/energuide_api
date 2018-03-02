@@ -499,7 +499,7 @@ def test_slab_to_dict(sample_slab_element: element.Element) -> None:
         'configurationType': 'SCN',
         'materialEnglish': 'concrete',
         'materialFrench': 'béton',
-        'wall': [],
+        'walls': [],
         'floors': [{
             'floorTypeEnglish': 'Slab',
             'floorTypeFrench': 'Dalle',
@@ -529,7 +529,7 @@ def test_crawlspace_to_dict(sample_crawlspace_element: element.Element) -> None:
         'configurationType': 'SCN',
         'materialEnglish': 'concrete',
         'materialFrench': 'béton',
-        'wall': [{
+        'walls': [{
             'wallTypeEnglish': 'Wall',
             'wallTypeFrench': 'Mur',
             'insulationNominalRsi': 1.432,
@@ -595,7 +595,7 @@ def test_basement_to_dict(sample_basement_element: element.Element) -> None:
         'configurationType': 'BBEN',
         'materialEnglish': 'concrete and wood',
         'materialFrench': 'béton et bois',
-        'wall': [{
+        'walls': [{
             'wallTypeEnglish': 'Interior',
             'wallTypeFrench': 'Intérieur',
             'insulationNominalRsi': 1.3,
