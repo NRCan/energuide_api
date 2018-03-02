@@ -1,5 +1,9 @@
 import { Resolvers } from './resolvers'
 import { makeExecutableSchema } from 'graphql-tools'
+import { createFoundation } from './types/Foundation'
+import { createFoundationFloor } from './types/FoundationFloor'
+import { createFoundationWall } from './types/FoundationWall'
+import { createHeader } from './types/Header'
 
 const Schema = i18n => {
   const typeDefs = [
@@ -298,6 +302,8 @@ const Schema = i18n => {
       heating: Heating
       # ${i18n.t`A list of upgrades that would improve energy efficiency`}
       energyUpgrades: [Upgrade]
+      # ${i18n.t`The details of the foundation`}
+      foundations: [Foundation]
       # ${i18n.t`The Energyguide Rating calculated for this evaluation`}
       ersRating: I18NString
     }
@@ -517,6 +523,11 @@ const Schema = i18n => {
       windowHeightFeet
     }
   `,
+
+    createFoundation(i18n),
+    createFoundationFloor(i18n),
+    createFoundationWall(i18n),
+    createHeader(i18n),
   ]
 
   return makeExecutableSchema({ typeDefs, resolvers: new Resolvers(i18n) })
