@@ -25,7 +25,6 @@ const Schema = i18n => {
       eq
     }
 
-
     # ${i18n.t`Filters will return results only if they satisfy a condition`}
     input Filter {
       # ${i18n.t`Name of field results will be filtered by`}
@@ -365,6 +364,12 @@ const Schema = i18n => {
       dwellingRegion
       # ${i18n.t`Filter results by the dwellings in a specific forward sortation area`}
       dwellingForwardSortationArea
+      # ${i18n.t`Filter results by the dwellings containing at least one evaluation with a specific evaluation type code`}
+      evaluationEvaluationType
+      # ${i18n.t`Filter results by the dwellings containing at least one evaluation with a specific evaluation ID`}
+      evaluationFileId
+      # ${i18n.t`Filter results by the dwellings containing at least one evaluation with a specific ERS rating`}
+      evaluationErsRating
       # ${i18n.t`Filter results by the dwellings containing at least one ventilation system with a specific type (en)`}
       ventilationTypeEnglish
       # ${i18n.t`Filter results by the dwellings containing at least one ventilation system with a specific type (fr)`}
