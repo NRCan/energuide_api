@@ -1,6 +1,5 @@
 import MongoPaging from 'mongo-cursor-pagination'
 import { GraphQLError } from 'graphql'
-import { GraphQLDate } from 'graphql-iso-date'
 
 /* eslint-disable import/named */
 import {
@@ -147,6 +146,7 @@ import { createI18NFloat } from './types/I18NFloat'
 import { createI18NInt } from './types/I18NInt'
 import { createI18NString } from './types/I18NString'
 import { createI18NBoolean } from './types/I18NBoolean'
+import { createI18NDate } from './types/I18NDate'
 
 const Resolvers = i18n => {
   return {
@@ -154,7 +154,7 @@ const Resolvers = i18n => {
     I18NString: createI18NString(i18n),
     I18NFloat: createI18NFloat(i18n),
     I18NBoolean: createI18NBoolean(i18n),
-    GraphQLDate: GraphQLDate,
+    I18NDate: createI18NDate(i18n),
     Query: {
       dwelling: async (root, { houseId }, { client }) => {
         let query = {
