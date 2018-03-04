@@ -6,12 +6,6 @@ import zipfile
 from azure.storage import blob
 
 
-EXTRACT_ENDPOINT_STORAGE_ACCOUNT = os.environ.get('EXTRACT_ENDPOINT_STORAGE_ACCOUNT', '')
-EXTRACT_ENDPOINT_STORAGE_KEY = os.environ.get('EXTRACT_ENDPOINT_STORAGE_KEY', '')
-EXTRACT_ENDPOINT_CONTAINER = os.environ.get('EXTRACT_ENDPOINT_CONTAINER', '')
-EXTRACT_ENDPOINT_STORAGE_DOMAIN = os.environ.get('EXTRACT_ENDPOINT_STORAGE_DOMAIN', None)
-
-
 def read(filename: str) -> typing.Iterator[typing.Dict[str, typing.Any]]:
     with zipfile.ZipFile(filename) as zip_input:
         files = zip_input.namelist()
@@ -22,14 +16,19 @@ def read(filename: str) -> typing.Iterator[typing.Dict[str, typing.Any]]:
 
 
 def read_from_azure() -> typing.Iterator[typing.Dict[str, typing.Any]]:
-    azure_service = blob.BlockBlobService(account_name=EXTRACT_ENDPOINT_STORAGE_ACCOUNT,
-                                          account_key=EXTRACT_ENDPOINT_STORAGE_KEY,
-                                          custom_domain=EXTRACT_ENDPOINT_STORAGE_DOMAIN)
+    account = os.environ.get('EXTRACT_ENDPOINT_STORAGE_ACCOUNT', '')
+    key = os.environ.get('EXTRACT_ENDPOINT_STORAGE_KEY', '')
+    container = os.environ.get('EXTRACT_ENDPOINT_CONTAINER', '')
+    domain = os.environ.get('EXTRACT_ENDPOINT_STORAGE_DOMAIN', None)
+
+    azure_service = blob.BlockBlobService(account_name=account,
+                                          account_key=key,
+                                          custom_domain=domain)
     # itertools.groupby() needs its input sorted by the groupby key. We are assuming that that key is the filename
-    files = sorted([blob.name for blob in azure_service.list_blobs(EXTRACT_ENDPOINT_CONTAINER)
-                    if 'timestamp' not in blob.name])
+    files = sorted([blob_.name for blob_ in azure_service.list_blobs(container)
+                    if 'timestamp' not in blob_.name])
     for file in files:
-        content = azure_service. get_blob_to_bytes(EXTRACT_ENDPOINT_CONTAINER, file).content
+        content = azure_service. get_blob_to_bytes(container, file).content
         house = json.loads(content)
         house['jsonFileName'] = file
         yield house

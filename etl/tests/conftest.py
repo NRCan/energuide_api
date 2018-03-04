@@ -1,15 +1,29 @@
 import os
 import random
+import socket
 import typing
 import zipfile
-import socket
 import py
+import _pytest.monkeypatch
 import pymongo
 import pytest
 from azure.storage import blob
 from energuide import database
-from energuide import reader
 from energuide import extractor
+
+
+def azure_emulator_is_running() -> bool:
+    if 'CIRCLECI' in os.environ:
+        return True
+
+    sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    try:
+        sock.bind(("127.0.0.1", 10000))
+    except socket.error:
+        return True
+    else:
+        sock.close()
+        return False
 
 
 @pytest.fixture
@@ -89,54 +103,40 @@ def sample_fixture() -> str:
 
 
 @pytest.fixture
-def azure_container() -> str:
+def azure_container_name() -> str:
     return 'test-container'
 
 
 @pytest.fixture
-def azure_service(azure_container: str) -> blob.BlockBlobService:
-    reader.EXTRACT_ENDPOINT_STORAGE_ACCOUNT = 'devstoreaccount1'
-    reader.EXTRACT_ENDPOINT_STORAGE_KEY = 'Eby8vdM02xNOcqFlqUwJPLlmEtlCDXJ1OUzFT50uSR' \
-                                          + 'Z6IFsuFq2UVErCz4I6tq/K1SZFPTOtr/KBHBeksoGMGw=='
-    reader.EXTRACT_ENDPOINT_STORAGE_DOMAIN = 'http://127.0.0.1:10000/devstoreaccount1'
-    reader.EXTRACT_ENDPOINT_CONTAINER = azure_container
+def azure_service(azure_container_name: str,
+                  monkeypatch: _pytest.monkeypatch.MonkeyPatch) -> typing.Iterator[blob.BlockBlobService]:
+    if not azure_emulator_is_running():
+        pytest.skip("Azure emulator is not running.")
 
-    azure_service = blob.BlockBlobService(account_name='devstoreaccount1',
-                                          account_key='Eby8vdM02xNOcqFlqUwJPLlmEtlCDXJ1OUzFT50uSR'
-                                          + 'Z6IFsuFq2UVErCz4I6tq/K1SZFPTOtr/KBHBeksoGMGw==',
-                                          custom_domain='http://127.0.0.1:10000/devstoreaccount1')
-    azure_service.create_container(azure_container)
+    account = 'devstoreaccount1'
+    key = 'Eby8vdM02xNOcqFlqUwJPLlmEtlCDXJ1OUzFT50uSRZ6IFsuFq2UVErCz4I6tq/K1SZFPTOtr/KBHBeksoGMGw=='
+    domain = 'http://127.0.0.1:10000/devstoreaccount1'
+    monkeypatch.setenv('EXTRACT_ENDPOINT_STORAGE_ACCOUNT', account)
+    monkeypatch.setenv('EXTRACT_ENDPOINT_STORAGE_KEY', key)
+    monkeypatch.setenv('EXTRACT_ENDPOINT_STORAGE_DOMAIN', domain)
+    monkeypatch.setenv('EXTRACT_ENDPOINT_CONTAINER', azure_container_name)
+
+    azure_service = blob.BlockBlobService(account_name=account,
+                                          account_key=key,
+                                          custom_domain=domain)
+    azure_service.create_container(azure_container_name)
     yield azure_service
-    azure_service.delete_container(azure_container)
+    azure_service.delete_container(azure_container_name)
 
 
 @pytest.fixture
-def put_sample_files_in_azure(azure_service: blob.BlockBlobService,
-                              azure_container: str,
-                              energuide_zip_fixture: str) -> typing.Generator:
+def populated_azure_service(azure_service: blob.BlockBlobService,
+                            azure_container_name: str,
+                            energuide_zip_fixture: str) -> blob.BlockBlobService:
 
     file_z = zipfile.ZipFile(energuide_zip_fixture)
-    azure_service.create_blob_from_text(azure_container, 'timestamp.txt', 'Wednesday')
+    azure_service.create_blob_from_text(azure_container_name, 'timestamp.txt', 'Wednesday')
     for json_file in [file_z.open(zipinfo) for zipinfo in file_z.infolist()]:
-        azure_service.create_blob_from_bytes(azure_container, json_file.name, json_file.read())
+        azure_service.create_blob_from_bytes(azure_container_name, json_file.name, json_file.read())
 
-    yield None
-
-    azure_service.delete_blob(azure_container, 'timestamp.txt')
-    for json_file in [file_z.open(zipinfo) for zipinfo in file_z.infolist()]:
-        azure_service.delete_blob(azure_container, json_file.name)
-
-
-@pytest.fixture
-def skip_if_azure_simulator_not_running() -> None:
-    if 'CIRCLECI' in os.environ:
-        return
-
-    sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-    try:
-        sock.bind(("127.0.0.1", 10000))
-    except socket.error:
-        return
-    else:
-        sock.close()
-        pytest.skip("Azure simulator not running, test skipped")
+    return azure_service
