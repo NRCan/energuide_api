@@ -1,12 +1,11 @@
 import io
-import base64
+import hashlib
 from http import HTTPStatus
 import typing
 import pytest
 from flask import testing
 from azure.storage import blob
 from extract_endpoint import azure_utils
-from extract_endpoint import crypt_utils
 from extract_endpoint import endpoint
 
 
@@ -36,9 +35,11 @@ def sample_secret_key() -> typing.Generator:
 
 @pytest.fixture
 def sample_zipfile_signature(sample_salt: str, sample_secret_key: str, sample_zipfile: io.BytesIO) -> str:
-    signature = crypt_utils.sign_string(salt=sample_salt, key=sample_secret_key,
-                                        data=base64.b64encode(sample_zipfile.read()).decode('utf-8'))
+    hasher = hashlib.new('sha3_256')
+    hasher.update((sample_salt + sample_secret_key).encode())
+    hasher.update(sample_zipfile.read())
     sample_zipfile.seek(0)
+    signature = hasher.hexdigest()
     return signature
 
 
@@ -49,9 +50,11 @@ def sample_nonzipfile() -> io.BytesIO:
 
 @pytest.fixture
 def sample_nonzipfile_signature(sample_salt: str, sample_secret_key: str, sample_nonzipfile: io.BytesIO) -> str:
-    signature = crypt_utils.sign_string(salt=sample_salt, key=sample_secret_key,
-                                        data=base64.b64encode(sample_nonzipfile.read()).decode('utf-8'))
+    hasher = hashlib.new('sha3_256')
+    hasher.update((sample_salt + sample_secret_key).encode())
+    hasher.update(sample_nonzipfile.read())
     sample_nonzipfile.seek(0)
+    signature = hasher.hexdigest()
     return signature
 
 
