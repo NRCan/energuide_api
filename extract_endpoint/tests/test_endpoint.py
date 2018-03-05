@@ -1,5 +1,7 @@
 import io
 import base64
+import hashlib
+import requests
 from http import HTTPStatus
 import typing
 import pytest
@@ -14,11 +16,9 @@ endpoint.App.testing = True
 
 
 @pytest.fixture
-def test_client(azure_emulator_coords: azure_utils.StorageCoordinates) -> testing.FlaskClient:
-    original_coordinates = endpoint.App.config['AZURE_COORDINATES']
-    endpoint.App.config['AZURE_COORDINATES'] = azure_emulator_coords
-    yield endpoint.App.test_client()
-    endpoint.App.config['AZURE_COORDINATES'] = original_coordinates
+def test_client(monkeypatch, azure_emulator_coords: azure_utils.StorageCoordinates) -> testing.FlaskClient:
+    monkeypatch.setitem(endpoint.App.config, 'AZURE_COORDINATES', azure_emulator_coords)
+    return endpoint.App.test_client()
 
 
 @pytest.fixture
@@ -27,11 +27,16 @@ def sample_salt() -> str:
 
 
 @pytest.fixture
-def sample_secret_key() -> typing.Generator:
-    original_secret_key = endpoint.App.config['SECRET_KEY']
-    endpoint.App.config['SECRET_KEY'] = 'sample secret key'
-    yield endpoint.App.config['SECRET_KEY']
-    endpoint.App.config['SECRET_KEY'] = original_secret_key
+def sample_secret_key(monkeypatch) -> str:
+    monkeypatch.setitem(endpoint.App.config, 'SECRET_KEY', 'sample secret key')
+    return endpoint.App.config['SECRET_KEY']
+
+
+@pytest.fixture
+def sample_salt_signature(sample_salt: str, sample_secret_key: str) -> str:
+    hasher = hashlib.new('sha3_256')
+    hasher.update((sample_salt + sample_secret_key).encode())
+    return hasher.hexdigest()
 
 
 @pytest.fixture
@@ -63,6 +68,62 @@ def upload_timestamp_file(azure_emulator_coords: azure_utils.StorageCoordinates,
     azure_service.create_blob_from_text(azure_emulator_coords.container, endpoint.TIMESTAMP_FILENAME, sample_timestamp)
     yield
     azure_service.delete_blob(azure_emulator_coords.container, endpoint.TIMESTAMP_FILENAME)
+
+
+@pytest.fixture
+def sample_trigger_tl_url(monkeypatch) -> str:
+    url = 'http:trigger.url/trigger_tl'
+    monkeypatch.setenv('TRIGGER_URL', url)
+    return url
+
+
+@pytest.fixture
+def mocked_tl_app(monkeypatch, sample_secret_key: str, sample_trigger_tl_url: str):
+    def mocked_post(url: str, data: typing.Dict[str, str]):
+        mock = type('MockedReq', (), {})()
+
+        if url != sample_trigger_tl_url:
+            mock.status_code = HTTPStatus.NOT_FOUND
+            mock.content = 'not trigger url'
+
+        if 'salt' not in data or 'signature' not in data:
+            mock.status_code = HTTPStatus.BAD_REQUEST
+            mock.content = 'missing salt or sig'
+        else:
+            salt = data['salt']
+            signature = data['signature']
+            hasher = hashlib.new('sha3_256')
+            hasher.update((salt + sample_secret_key).encode())
+            expected_signature = hasher.hexdigest()
+
+            if expected_signature == signature:
+                mock.status_code = HTTPStatus.CREATED
+                mock.content = 'success'
+            else:
+                mock.content = 'failed'
+                mock.status_code = HTTPStatus.BAD_REQUEST
+        return mock
+
+    monkeypatch.setattr(requests, 'post', mocked_post)
+
+
+@pytest.mark.usefixtures('mocked_tl_app')
+def test_trigger(sample_salt: str, sample_salt_signature: str) -> None:
+    return_val = endpoint.trigger('http://url', sample_salt, sample_salt_signature)
+    assert return_val[1] == HTTPStatus.CREATED
+
+
+@pytest.mark.usefixtures('mocked_tl_app')
+def test_trigger_no_salt() -> None:
+    return_val = endpoint.trigger('http://url')
+    assert return_val[1] == HTTPStatus.CREATED
+
+
+@pytest.mark.usefixtures('mocked_tl_app')
+def test_trigger_tl(test_client: testing.FlaskClient, sample_salt: str, sample_salt_signature: str) -> None:
+
+    return_val = test_client.post('/trigger_tl', data=dict(salt=sample_salt, signature=sample_salt_signature))
+    assert return_val.status_code == HTTPStatus.CREATED
 
 
 def test_frontend(test_client: testing.FlaskClient) -> None:
@@ -100,6 +161,7 @@ def check_file_in_azure(azure_service: blob.BlockBlobService,
     assert actual_blob.content == contents
 
 
+@pytest.mark.usefixtures('mocked_tl_app')
 def test_upload_with_timestamp(azure_emulator_coords: azure_utils.StorageCoordinates,
                                test_client: testing.FlaskClient,
                                azure_service: blob.BlockBlobService,
@@ -119,7 +181,7 @@ def test_upload_with_timestamp(azure_emulator_coords: azure_utils.StorageCoordin
         check_file_in_azure(azure_service, azure_emulator_coords, name, contents)
 
 
-@pytest.mark.usefixtures('azure_service')
+@pytest.mark.usefixtures('azure_service', 'mocked_tl_app')
 def test_upload_without_timestamp(test_client: testing.FlaskClient,
                                   sample_salt: str,
                                   sample_zipfile_signature: str,
@@ -130,7 +192,7 @@ def test_upload_without_timestamp(test_client: testing.FlaskClient,
     assert post_return.status_code == HTTPStatus.BAD_REQUEST
 
 
-@pytest.mark.usefixtures('azure_service')
+@pytest.mark.usefixtures('azure_service', 'mocked_tl_app')
 def test_upload_no_key_in_env(test_client: testing.FlaskClient,
                               sample_timestamp: str,
                               sample_salt: str,
@@ -143,7 +205,7 @@ def test_upload_no_key_in_env(test_client: testing.FlaskClient,
                                                    timestamp=sample_timestamp, file=(sample_zipfile, 'zipfile')))
 
 
-@pytest.mark.usefixtures('azure_service')
+@pytest.mark.usefixtures('azure_service', 'mocked_tl_app')
 def test_upload_no_salt(test_client: testing.FlaskClient,
                         sample_timestamp: str,
                         sample_zipfile_signature: str,
@@ -155,7 +217,7 @@ def test_upload_no_salt(test_client: testing.FlaskClient,
     assert post_return.status_code == HTTPStatus.BAD_REQUEST
 
 
-@pytest.mark.usefixtures('azure_service')
+@pytest.mark.usefixtures('azure_service', 'mocked_tl_app')
 def test_upload_wrong_salt(test_client: testing.FlaskClient,
                            sample_timestamp: str,
                            sample_zipfile_signature: str,
@@ -167,7 +229,7 @@ def test_upload_wrong_salt(test_client: testing.FlaskClient,
     assert post_return.status_code == HTTPStatus.BAD_REQUEST
 
 
-@pytest.mark.usefixtures('azure_service', 'sample_secret_key')
+@pytest.mark.usefixtures('azure_service', 'sample_secret_key', 'mocked_tl_app')
 def test_upload_no_signature(test_client: testing.FlaskClient,
                              sample_timestamp: str,
                              sample_salt: str,
@@ -178,7 +240,7 @@ def test_upload_no_signature(test_client: testing.FlaskClient,
     assert post_return.status_code == HTTPStatus.BAD_REQUEST
 
 
-@pytest.mark.usefixtures('azure_service', 'sample_secret_key')
+@pytest.mark.usefixtures('azure_service', 'sample_secret_key', 'mocked_tl_app')
 def test_upload_wrong_signature(test_client: testing.FlaskClient,
                                 sample_timestamp: str,
                                 sample_salt: str,
@@ -190,7 +252,7 @@ def test_upload_wrong_signature(test_client: testing.FlaskClient,
     assert post_return.status_code == HTTPStatus.BAD_REQUEST
 
 
-@pytest.mark.usefixtures('azure_service')
+@pytest.mark.usefixtures('azure_service', 'mocked_tl_app')
 def test_upload_no_file(test_client: testing.FlaskClient,
                         sample_timestamp: str,
                         sample_salt: str,
@@ -201,7 +263,7 @@ def test_upload_no_file(test_client: testing.FlaskClient,
     assert post_return.status_code == HTTPStatus.BAD_REQUEST
 
 
-@pytest.mark.usefixtures('azure_service')
+@pytest.mark.usefixtures('azure_service', 'mocked_tl_app')
 def test_upload_with_non_zipfile(test_client: testing.FlaskClient,
                                  sample_timestamp: str,
                                  sample_salt: str,

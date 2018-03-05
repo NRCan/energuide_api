@@ -1,5 +1,8 @@
 import os
 import base64
+import hashlib
+import secrets
+import requests
 import typing
 from http import HTTPStatus
 import zipfile
@@ -52,6 +55,29 @@ def timestamp() -> str:
     return timestamp
 
 
+def trigger(trigger_url: str =os.environ.get('TRIGGER_URL'),
+            salt: typing.Optional[str] =None,
+            signature: typing.Optional[str] =None,
+            ) -> typing.Tuple[str, int]:
+    if salt is None:
+        salt = secrets.token_hex(16)
+        hasher = hashlib.new('sha3_256')
+        hasher.update((salt + App.config['SECRET_KEY']).encode())
+        signature = hasher.hexdigest()
+    post_return = requests.post(trigger_url, data=dict(salt=salt, signature=signature))
+    return post_return.content, post_return.status_code
+
+
+@App.route('/trigger_tl', methods=['POST'])
+def trigger_tl() -> typing.Tuple[str, int]:
+    if 'salt' not in flask.request.form:
+        return 'no salt', HTTPStatus.BAD_REQUEST
+    if 'signature' not in flask.request.form:
+        return 'no signature', HTTPStatus.BAD_REQUEST
+    return trigger(salt=flask.request.form['salt'],
+                   signature=flask.request.form['signature'])
+
+
 @App.route('/upload_file', methods=['POST'])
 def upload_file() -> typing.Tuple[str, int]:
     if App.config['SECRET_KEY'] == DEFAULT_ENDPOINT_SECRET_KEY:
@@ -87,7 +113,7 @@ def upload_file() -> typing.Tuple[str, int]:
     if not azure_utils.upload_bytes_to_azure(App.config['AZURE_COORDINATES'], timestamp.encode(), TIMESTAMP_FILENAME):
         flask.abort(HTTPStatus.BAD_GATEWAY)
 
-    return 'success', HTTPStatus.CREATED
+    return trigger()
 
 
 if __name__ == "__main__":
