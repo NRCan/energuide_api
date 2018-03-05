@@ -25,7 +25,7 @@ describe('Enum values', () => {
     client.close()
   })
 
-  const testData = {
+  const testFields = {
     dwellingHouseId: { testValue: 189250 },
     dwellingYearBuilt: { testValue: 1900 },
     dwellingCity: { testValue: 'Charlottetown' },
@@ -164,17 +164,17 @@ describe('Enum values', () => {
     foundationWallAreaFeet: { testValue: 938.2023632203881 },
   }
 
-  Object.keys(testData).forEach(functionName => {
+  Object.keys(testFields).forEach(functionName => {
     describe(functionName, () => {
       it('returns a query object capable of returning data', async () => {
-        let { testValue } = testData[functionName] // eslint-disable-line
+        let { testValue } = testFields[functionName] // eslint-disable-line
         let query = enumFunctions[functionName](testValue) //eslint-disable-line
         let result = await collection.findOne(query)
         expect(result).not.toBe(null)
       })
 
       it(`${functionName} is included in the filter field enum`, async () => {
-        let { testValue } = testData[functionName] // eslint-disable-line
+        let { testValue } = testFields[functionName] // eslint-disable-line
         let server = new Server({
           client: collection,
         })
@@ -196,6 +196,23 @@ describe('Enum values', () => {
                }`,
           })
         expect(response.body).not.toHaveProperty('errors')
+      })
+    })
+  })
+
+  const testDates = {
+    evaluationEntryDate: { testValue: '2011-11-18' },
+    evaluationCreationDate: { testValue: '2012-10-01T15:08:41' },
+    evaluationModificationDate: { testValue: '2012-06-09T11:20:20' },
+  }
+
+  Object.keys(testDates).forEach(functionName => {
+    describe(functionName, () => {
+      it('returns a query object capable of returning data', async () => {
+        let { testValue } = testDates[functionName] // eslint-disable-line
+        let query = enumFunctions[functionName](testValue) //eslint-disable-line
+        let result = await collection.findOne(query)
+        expect(result).not.toBe(null)
       })
     })
   })
