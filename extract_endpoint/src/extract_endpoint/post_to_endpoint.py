@@ -1,10 +1,9 @@
 import os
-import base64
+import hashlib
 import secrets
 import typing
 import requests
 import click
-from extract_endpoint import crypt_utils
 
 
 DEFAULT_ENDPOINT_SECRET_KEY = 'no key'
@@ -26,9 +25,12 @@ def post_stream(stream: typing.IO[bytes],
 
     data = stream.read()
     salt = secrets.token_hex(16)
-    signature = crypt_utils.sign_string(salt=salt,
-                                        key=os.environ.get('ENDPOINT_SECRET_KEY', DEFAULT_ENDPOINT_SECRET_KEY),
-                                        data=base64.b64encode(data).decode('utf-8'))
+
+    hasher = hashlib.new('sha3_256')
+    hasher.update((salt + os.environ.get('ENDPOINT_SECRET_KEY', DEFAULT_ENDPOINT_SECRET_KEY)).encode())
+    hasher.update(data)
+    signature = hasher.hexdigest()
+
     return requests.post(url=url,
                          files={'file': data},
                          data={'salt': salt, 'signature': signature, 'filename': filename, 'timestamp': timestamp})
