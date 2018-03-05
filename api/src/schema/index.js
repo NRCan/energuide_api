@@ -1,5 +1,9 @@
 import { Resolvers } from './resolvers'
 import { makeExecutableSchema } from 'graphql-tools'
+import { createFoundation } from './types/Foundation'
+import { createFoundationFloor } from './types/FoundationFloor'
+import { createFoundationWall } from './types/FoundationWall'
+import { createHeader } from './types/Header'
 
 const Schema = i18n => {
   const typeDefs = [
@@ -298,6 +302,8 @@ const Schema = i18n => {
       heating: Heating
       # ${i18n.t`A list of upgrades that would improve energy efficiency`}
       energyUpgrades: [Upgrade]
+      # ${i18n.t`The details of the foundation`}
+      foundations: [Foundation]
       # ${i18n.t`The Energyguide Rating calculated for this evaluation`}
       ersRating: I18NString
     }
@@ -507,16 +513,53 @@ const Schema = i18n => {
       windowAreaMetres
       # ${i18n.t`Filter results for dwellings with a window matching a specific area in square feet (ft2)`}
       windowAreaFeet
-      # ${i18n.t`Filter resutls for dwellings with a window matching a specific width in metres (m)`}
+      # ${i18n.t`Filter results for dwellings with a window matching a specific width in metres (m)`}
       windowWidthMetres
-      # ${i18n.t`Filter resutls for dwellings with a window matching a specific width in feet (ft)`}
+      # ${i18n.t`Filter results for dwellings with a window matching a specific width in feet (ft)`}
       windowWidthFeet
-      # ${i18n.t`Filter resutls for dwellings with a window matching a specific height in metres (m)`}
+      # ${i18n.t`Filter results for dwellings with a window matching a specific height in metres (m)`}
       windowHeightMetres
-      # ${i18n.t`Filter resutls for dwellings with a window matching a specific height in feet (ft)`}
+      # ${i18n.t`Filter results for dwellings with a window matching a specific height in feet (ft)`}
       windowHeightFeet
+      # ${i18n.t`Filter results for dwellings with matching foundation type (en)`}
+      foundationFoundationTypeEnglish
+      # ${i18n.t`Filter results for dwellings with matching foundation type (fr)`}
+      foundationFoundationTypeFrench
+      # ${i18n.t`Filter results for dwellings with a specific foundation label`}
+      foundationLabel
+      # ${i18n.t`Filter results for dwellings with a specific foundation configuration`}
+      foundationConfigurationType
+      # ${i18n.t`Filter results for dwellings whose foundation was constructed with a specific material (en)`}
+      foundationMaterialEnglish
+      # ${i18n.t`Filter results for dwellings whose foundation was constructed with a specific material (en)`}
+      foundationMaterialFrench
+      # ${i18n.t`Filter results for dwellings wiht a matching foundation header insulation nominal RSI (R-value Systeme International)`}
+      foundationHeaderInsulationNominalRsi
+      # ${i18n.t`Filter results for dwellings with a matching foundation header insulation nominal R-value`}
+      foundationHeaderInsulationNominalR
+      # ${i18n.t`Filter results for dwellings with a matching foundation header insulation effective RSI (R-value Systeme International)`}
+      foundationHeaderInsulationEffectiveRsi
+      # ${i18n.t`Filter results for dwellings with a matching foundationn header insulation effective R-value`}
+      foundationHeaderInsulationEffectiveR
+      # ${i18n.t`Filter results for dwellings with a matching foundation header area in square metres (m2)`}
+      foundationHeaderAreaMetres
+      # ${i18n.t`Filter results for dwellings with a matching foundation header area in square feet (ft2)`}
+      foundationHeaderAreaFeet
+      # ${i18n.t`Filter results for dwellings with a matching foundation header perimeter in metres (m)`}
+      foundationHeaderPerimeterMetres
+      # ${i18n.t`Filter results for dwellings with a matching foundation header perimeter in feet (ft)`}
+      foundationHeaderPerimeterFeet
+      # ${i18n.t`Filter results for dwellings with a matching foundation header height in metres (m)`}
+      foundationHeaderHeightMetres
+      # ${i18n.t`Filter results for dwellings with a matching header height in feet (ft)`}
+      foundationHeaderHeightFeet
     }
   `,
+
+    createFoundation(i18n),
+    createFoundationFloor(i18n),
+    createFoundationWall(i18n),
+    createHeader(i18n),
   ]
 
   return makeExecutableSchema({ typeDefs, resolvers: new Resolvers(i18n) })

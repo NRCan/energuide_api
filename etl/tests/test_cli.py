@@ -79,15 +79,32 @@ def invalid_filepath(tmpdir: py._path.local.LocalPath) -> str:
     return filepath
 
 
-def test_load(energuide_zip_fixture: str,
-              database_name: str,
-              collection: str,
-              mongo_client: pymongo.MongoClient) -> None:
+def test_load_filename(energuide_zip_fixture: str,
+                       database_name: str,
+                       collection: str,
+                       mongo_client: pymongo.MongoClient) -> None:
     runner = testing.CliRunner()
     result = runner.invoke(cli.main, args=[
         'load',
         '--db_name', database_name,
         '--filename', energuide_zip_fixture,
+    ])
+
+    assert result.exit_code == 0
+
+    coll = mongo_client.get_database(database_name).get_collection(collection)
+    assert coll.count() == 7
+
+
+@pytest.mark.usefixtures('populated_azure_service')
+def test_load_azure(database_name: str,
+                    collection: str,
+                    mongo_client: pymongo.MongoClient) -> None:
+    runner = testing.CliRunner()
+    result = runner.invoke(cli.main, args=[
+        'load',
+        '--db_name', database_name,
+        '--azure',
     ])
 
     assert result.exit_code == 0

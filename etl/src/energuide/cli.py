@@ -1,3 +1,4 @@
+import typing
 import click
 from energuide import database
 from energuide import transform
@@ -22,7 +23,8 @@ def main() -> None:
 @click.option('--collection',
               envvar=database.EnvVariables.collection.value,
               default=database.EnvDefaults.collection.value)
-@click.option('--filename', type=click.Path(exists=True), required=True)
+@click.option('--azure', is_flag=True, help='Download data from Azure')
+@click.option('--filename', type=click.Path(exists=True), required=False)
 @click.option('-a', '--append', is_flag=True, help='Append data instead of overwriting')
 def load(username: str,
          password: str,
@@ -30,7 +32,8 @@ def load(username: str,
          port: int,
          db_name: str,
          collection: str,
-         filename: str,
+         azure: bool,
+         filename: typing.Optional[str],
          append: bool) -> None:
     coords = database.DatabaseCoordinates(
         username=username,
@@ -38,9 +41,14 @@ def load(username: str,
         host=host,
         port=port
     )
-
-    LOGGER.info(f'Loading data from {filename} into {db_name}.{collection}')
-    transform.run(coords, db_name, collection, filename, append)
+    if azure:
+        LOGGER.info(f'Loading data from Azure into {db_name}.{collection}')
+    elif filename:
+        LOGGER.info(f'Loading data from {filename} into {db_name}.{collection}')
+    else:
+        LOGGER.error('Must supply a filename or use azure')
+        raise ValueError('Must supply a filename or use azure')
+    transform.run(coords, db_name, collection, azure, filename, append)
     LOGGER.info(f'Finished loading data')
 
 
