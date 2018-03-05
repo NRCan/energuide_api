@@ -153,6 +153,15 @@ describe('Enum values', () => {
     // foundationFloorWidthFeet: { testValue: null },
     // foundationFloorLengthMetres: { testValue: null },
     // foundationFloorLengthFeet: { testValue: null },
+    foundationWallWallTypeEnglish: { testValue: 'Interior' },
+    foundationWallWallTypeFrench: { testValue: 'Intérieur' },
+    foundationWallInsulationNominalRsi: { testValue: 2.175 },
+    foundationWallInsulationNominalR: { testValue: 12.350222757974999 },
+    foundationWallInsulationEffectiveRsi: { testValue: 1.74 },
+    foundationWallInsulationEffectiveR: { testValue: 9.88017820638 },
+    foundationWallPercentage: { testValue: 100 },
+    foundationWallAreaMetres: { testValue: 87.1618461 },
+    foundationWallAreaFeet: { testValue: 938.2023632203881 },
   }
 
   Object.keys(testData).forEach(functionName => {

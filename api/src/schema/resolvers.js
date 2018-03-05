@@ -127,6 +127,15 @@ import {
   foundationFloorWidthFeet,
   foundationFloorLengthMetres,
   foundationFloorLengthFeet,
+  foundationWallWallTypeEnglish,
+  foundationWallWallTypeFrench,
+  foundationWallInsulationNominalRsi,
+  foundationWallInsulationNominalR,
+  foundationWallInsulationEffectiveRsi,
+  foundationWallInsulationEffectiveR,
+  foundationWallPercentage,
+  foundationWallAreaMetres,
+  foundationWallAreaFeet,
 } from './enums'
 /* eslint-enable import/named */
 
@@ -328,6 +337,15 @@ const Resolvers = i18n => {
       foundationFloorWidthFeet: foundationFloorWidthFeet.toString(),
       foundationFloorLengthMetres: foundationFloorLengthMetres.toString(),
       foundationFloorLengthFeet: foundationFloorLengthFeet.toString(),
+      foundationWallWallTypeEnglish: foundationWallWallTypeEnglish.toString(),
+      foundationWallWallTypeFrench: foundationWallWallTypeFrench.toString(),
+      foundationWallInsulationNominalRsi: foundationWallInsulationNominalRsi.toString(),
+      foundationWallInsulationNominalR: foundationWallInsulationNominalR.toString(),
+      foundationWallInsulationEffectiveRsi: foundationWallInsulationEffectiveRsi.toString(),
+      foundationWallInsulationEffectiveR: foundationWallInsulationEffectiveR.toString(),
+      foundationWallPercentage: foundationWallPercentage.toString(),
+      foundationWallAreaMetres: foundationWallAreaMetres.toString(),
+      foundationWallAreaFeet: foundationWallAreaFeet.toString(),
     },
     Comparator: {
       gt: '$gt',
