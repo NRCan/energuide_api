@@ -567,7 +567,7 @@ const Schema = i18n => {
       foundationFloorInsulationEffectiveR
       # ${i18n.t`Filter for dwellings where the foundation floor has a matching area in square metres (m2)`}
       foundationFloorAreaMetres
-      # ${i18n.t`Filter for dwellings where the foundation floor has a matching area in square feet (ft)`}
+      # ${i18n.t`Filter for dwellings where the foundation floor has a matching area in square feet (ft2)`}
       foundationFloorAreaFeet
       # ${i18n.t`Filter for dwellings where the foundation floor has a specific perimeter in metres (m)`}
       foundationFloorPerimeterMetres
