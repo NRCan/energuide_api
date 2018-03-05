@@ -138,6 +138,21 @@ describe('Enum values', () => {
     foundationHeaderPerimeterFeet: { testValue: 113.99475430400001 },
     foundationHeaderHeightMetres: { testValue: 0.23 },
     foundationHeaderHeightFeet: { testValue: 0.7545932000000001 },
+    foundationFloorFloorTypeEnglish: { testValue: 'Slab' },
+    foundationFloorFloorTypeFrench: { testValue: 'Dalle' },
+    foundationFloorAreaMetres: { testValue: 72.6432 },
+    foundationFloorAreaFeet: { testValue: 781.9249472263218 },
+    foundationFloorPerimeterMetres: { testValue: 34.7466 },
+    foundationFloorPerimeterFeet: { testValue: 113.998035144 },
+    // TODO: Uncomment and add appropriate values when issue #315 is resloved
+    // foundationFloorInsulationNominalRsi: { testValue: null },
+    // foundationFloorInsulationNominalR: { testValue: null },
+    // foundationFloorInsulationEffectiveRsi: { testValue: null },
+    // foundationFloorInsulationEffectiveR: { testValue: null },
+    // foundationFloorWidthMetres: { testValue: null },
+    // foundationFloorWidthFeet: { testValue: null },
+    // foundationFloorLengthMetres: { testValue: null },
+    // foundationFloorLengthFeet: { testValue: null },
   }
 
   Object.keys(testData).forEach(functionName => {

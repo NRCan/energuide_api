@@ -533,26 +533,54 @@ const Schema = i18n => {
       foundationMaterialEnglish
       # ${i18n.t`Filter results for dwellings whose foundation was constructed with a specific material (en)`}
       foundationMaterialFrench
-      # ${i18n.t`Filter results for dwellings wiht a matching foundation header insulation nominal RSI (R-value Systeme International)`}
+      # ${i18n.t`Filter results for dwellings wiht a specific foundation header insulation nominal RSI (R-value Systeme International)`}
       foundationHeaderInsulationNominalRsi
-      # ${i18n.t`Filter results for dwellings with a matching foundation header insulation nominal R-value`}
+      # ${i18n.t`Filter results for dwellings with a specific foundation header insulation nominal R-value`}
       foundationHeaderInsulationNominalR
-      # ${i18n.t`Filter results for dwellings with a matching foundation header insulation effective RSI (R-value Systeme International)`}
+      # ${i18n.t`Filter results for dwellings with a specific foundation header insulation effective RSI (R-value Systeme International)`}
       foundationHeaderInsulationEffectiveRsi
-      # ${i18n.t`Filter results for dwellings with a matching foundationn header insulation effective R-value`}
+      # ${i18n.t`Filter results for dwellings with a specific foundationn header insulation effective R-value`}
       foundationHeaderInsulationEffectiveR
-      # ${i18n.t`Filter results for dwellings with a matching foundation header area in square metres (m2)`}
+      # ${i18n.t`Filter results for dwellings with a specific foundation header area in square metres (m2)`}
       foundationHeaderAreaMetres
-      # ${i18n.t`Filter results for dwellings with a matching foundation header area in square feet (ft2)`}
+      # ${i18n.t`Filter results for dwellings with a specific foundation header area in square feet (ft2)`}
       foundationHeaderAreaFeet
-      # ${i18n.t`Filter results for dwellings with a matching foundation header perimeter in metres (m)`}
+      # ${i18n.t`Filter results for dwellings with a specific foundation header perimeter in metres (m)`}
       foundationHeaderPerimeterMetres
-      # ${i18n.t`Filter results for dwellings with a matching foundation header perimeter in feet (ft)`}
+      # ${i18n.t`Filter results for dwellings with a specific foundation header perimeter in feet (ft)`}
       foundationHeaderPerimeterFeet
-      # ${i18n.t`Filter results for dwellings with a matching foundation header height in metres (m)`}
+      # ${i18n.t`Filter results for dwellings with a specific foundation header height in metres (m)`}
       foundationHeaderHeightMetres
-      # ${i18n.t`Filter results for dwellings with a matching header height in feet (ft)`}
+      # ${i18n.t`Filter results for dwellings with a specific header height in feet (ft)`}
       foundationHeaderHeightFeet
+      # ${i18n.t`Filter for dwellings with a specific type of foundation floor type (en)`}
+      foundationFloorFloorTypeEnglish
+      # ${i18n.t`Filter for dwellings with a specific type of foundation floor type (fr)`}
+      foundationFloorFloorTypeFrench
+      # ${i18n.t`Filter for dwellings where the foundation floor has a specific insulation nominal RSI (R-value Systeme International)`}
+      foundationFloorInsulationNominalRsi
+      # ${i18n.t`Filter for dwellings with a specific insulation nominal R-value on the foundation floor`}
+      foundationFloorInsulationNominalR
+      # ${i18n.t`Filter for dwellings with a specific insulation effective RSI (R-value Systeme International) for the foundation floor`}
+      foundationFloorInsulationEffectiveRsi
+      # ${i18n.t`Filter for dwellings with a specific insulation effective R-value for the foundation floor`}
+      foundationFloorInsulationEffectiveR
+      # ${i18n.t`Filter for dwellings where the foundation floor has a specific area in square metres (m2)`}
+      foundationFloorAreaMetres
+      # ${i18n.t`Filter for dwellings where the foundation floor has a specific area in square feet (ft2)`}
+      foundationFloorAreaFeet
+      # ${i18n.t`Filter for dwellings where the foundation floor has a specific perimeter in metres (m)`}
+      foundationFloorPerimeterMetres
+      # ${i18n.t`Filter for dwellings where the foundation floor has a specific perimeter in feet (ft)`}
+      foundationFloorPerimeterFeet
+      # ${i18n.t`Filter for dwellings where the foundation floor has a specific width in metres (m)`}
+      foundationFloorWidthMetres
+      # ${i18n.t`Filter for dwellings where the foundation floor has a specific width in feet (ft)`}
+      foundationFloorWidthFeet
+      # ${i18n.t`Filter for dwellings where the foundation floor has a specific length in metres (m)`}
+      foundationFloorLengthMetres
+      # ${i18n.t`Filter for dwellings where the foundation floor has a specific length in feet (ft)`}
+      foundationFloorLengthFeet
     }
   `,
 
