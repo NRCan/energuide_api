@@ -96,7 +96,7 @@ def test_load_filename(energuide_zip_fixture: str,
     assert coll.count() == 7
 
 
-@pytest.mark.usefixtures('skip_if_azure_simulator_not_running', 'put_sample_files_in_azure')
+@pytest.mark.usefixtures('populated_azure_service')
 def test_load_azure(database_name: str,
                     collection: str,
                     mongo_client: pymongo.MongoClient) -> None:

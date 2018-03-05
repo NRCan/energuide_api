@@ -4,6 +4,7 @@ from energuide import reader
 
 _GROUP_KEY = 'EVAL_ID'
 
+
 @pytest.fixture
 def sample() -> typing.List[typing.Dict[str, typing.Any]]:
     return [
@@ -32,7 +33,7 @@ def test_read(energuide_zip_fixture: str) -> None:
     assert len(output) == 14
 
 
-@pytest.mark.usefixtures('skip_if_azure_simulator_not_running', 'put_sample_files_in_azure')
+@pytest.mark.usefixtures('populated_azure_service')
 def test_read_from_azure() -> None:
     output = list(reader.read_from_azure())
     assert len(output) == 14
