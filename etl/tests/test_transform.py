@@ -11,8 +11,8 @@ def local_reader(energuide_zip_fixture: str) -> transform.LocalExtractReader:
 
 
 @pytest.fixture
-def azure_reader(populated_azure_service: transform.AzureCoordinates) -> transform.AzureExtractReader:
-    return transform.AzureExtractReader(populated_azure_service)
+def azure_reader(populated_azure_emulator: transform.AzureCoordinates) -> transform.AzureExtractReader:
+    return transform.AzureExtractReader(populated_azure_emulator)
 
 
 def test_reader(local_reader: transform.LocalExtractReader) -> None:

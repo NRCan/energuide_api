@@ -126,7 +126,7 @@ def azure_coordinates(monkeypatch: _pytest.monkeypatch.MonkeyPatch) -> transform
 
 
 @pytest.fixture
-def azure_service(azure_coordinates: transform.AzureCoordinates) -> typing.Iterator[transform.AzureCoordinates]:
+def azure_emulator(azure_coordinates: transform.AzureCoordinates) -> typing.Iterator[transform.AzureCoordinates]:
     service = _get_blob_service(azure_coordinates)
     service.create_container(azure_coordinates.container)
     yield azure_coordinates
@@ -134,14 +134,14 @@ def azure_service(azure_coordinates: transform.AzureCoordinates) -> typing.Itera
 
 
 @pytest.fixture
-def populated_azure_service(azure_service: transform.AzureCoordinates,
-                            energuide_zip_fixture: str) -> transform.AzureCoordinates:
+def populated_azure_emulator(azure_emulator: transform.AzureCoordinates,
+                             energuide_zip_fixture: str) -> transform.AzureCoordinates:
 
     file_z = zipfile.ZipFile(energuide_zip_fixture)
-    service = _get_blob_service(azure_service)
+    service = _get_blob_service(azure_emulator)
 
-    service.create_blob_from_text(azure_service.container, 'timestamp.txt', 'Wednesday')
+    service.create_blob_from_text(azure_emulator.container, 'timestamp.txt', 'Wednesday')
     for json_file in [file_z.open(zipinfo) for zipinfo in file_z.infolist()]:
-        service.create_blob_from_bytes(azure_service.container, json_file.name, json_file.read())
+        service.create_blob_from_bytes(azure_emulator.container, json_file.name, json_file.read())
 
-    return azure_service
+    return azure_emulator
