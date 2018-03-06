@@ -6,6 +6,7 @@ import {
   GraphQLString,
   GraphQLBoolean,
 } from 'graphql'
+import { GraphQLDate } from 'graphql-iso-date'
 
 let mockServer = new Server({
   client: jest.fn(),
@@ -69,6 +70,17 @@ describe('configuration', () => {
       let { __type: { description } } = response.body.data
       expect(description).toEqual(
         replaceBackTicksWithSingleQuotes(GraphQLBoolean.description),
+      )
+    })
+  })
+
+  describe('graphql iso date field', () => {
+    it('GraphQLDate returns the same description as I18NDate', async () => {
+      let response = await makeRequest({ typeName: 'I18NDate' })
+
+      let { __type: { description } } = response.body.data
+      expect(description).toEqual(
+        replaceBackTicksWithSingleQuotes(GraphQLDate.description),
       )
     })
   })
