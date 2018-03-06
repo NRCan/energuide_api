@@ -28,14 +28,15 @@ def upload_url(endpoint_host: str) -> str:
     return f'http://{endpoint_host}/upload_file'
 
 
-@pytest.fixture(scope='session')
+@pytest.fixture()
 def run_endpoint(azure_emulator_coords: azure_utils.StorageCoordinates,
+                 sample_secret_key: str,
                  request: _pytest.fixtures.SubRequest,
                  endpoint_host: str) -> typing.Generator:
 
     monkeysession = _pytest.monkeypatch.MonkeyPatch()
     request.addfinalizer(monkeysession.undo)
-    monkeysession.setenv('ENDPOINT_SECRET_KEY', 'secret_key')
+    monkeysession.setenv('ENDPOINT_SECRET_KEY', sample_secret_key)
     monkeysession.setenv('EXTRACT_ENDPOINT_STORAGE_ACCOUNT', azure_emulator_coords.account)
     monkeysession.setenv('EXTRACT_ENDPOINT_STORAGE_KEY', azure_emulator_coords.key)
     monkeysession.setenv('EXTRACT_ENDPOINT_CONTAINER', azure_emulator_coords.container)
@@ -89,7 +90,7 @@ def check_file_in_azure(azure_service: blob.BlockBlobService,
     assert actual_blob.content == contents
 
 
-@pytest.mark.usefixtures('run_endpoint')
+@pytest.mark.usefixtures('mocked_tl_app', 'run_endpoint')
 def test_post_stream(azure_service: blob.BlockBlobService,
                      azure_emulator_coords: azure_utils.StorageCoordinates,
                      upload_url: str,

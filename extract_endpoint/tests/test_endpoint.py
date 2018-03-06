@@ -26,12 +26,6 @@ def sample_salt() -> str:
 
 
 @pytest.fixture
-def sample_secret_key(monkeypatch) -> str:
-    monkeypatch.setitem(endpoint.App.config, 'SECRET_KEY', 'sample secret key')
-    return endpoint.App.config['SECRET_KEY']
-
-
-@pytest.fixture
 def sample_salt_signature(sample_salt: str, sample_secret_key: str) -> str:
     hasher = hashlib.new('sha3_256')
     hasher.update((sample_salt + sample_secret_key).encode())
@@ -72,19 +66,19 @@ def upload_timestamp_file(azure_emulator_coords: azure_utils.StorageCoordinates,
 @pytest.mark.usefixtures('mocked_tl_app')
 def test_trigger(sample_salt: str, sample_salt_signature: str) -> None:
     return_val = endpoint.trigger(dict(salt=sample_salt, signature=sample_salt_signature))
-    assert return_val.status_code == HTTPStatus.CREATED
+    assert return_val == HTTPStatus.CREATED
 
 
 @pytest.mark.usefixtures('mocked_tl_app')
 def test_trigger_no_data() -> None:
     return_val = endpoint.trigger()
-    assert return_val.status_code == HTTPStatus.CREATED
+    assert return_val  == HTTPStatus.CREATED
 
 
 @pytest.mark.usefixtures('mocked_tl_app')
 def test_trigger_bad_data() -> None:
     return_val = endpoint.trigger(dict(salt='bad salt', signature='bad signature'))
-    assert return_val.status_code == HTTPStatus.BAD_REQUEST
+    assert return_val == HTTPStatus.BAD_REQUEST
 
 
 @pytest.mark.usefixtures('mocked_tl_app')

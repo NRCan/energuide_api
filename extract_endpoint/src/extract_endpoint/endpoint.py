@@ -3,7 +3,6 @@ import base64
 import hashlib
 import secrets
 import typing
-# import typing_extensions
 from http import HTTPStatus
 import zipfile
 import requests
@@ -56,46 +55,11 @@ def timestamp() -> str:
     return timestamp
 
 
-# class TriggerProtocol(typing_extensions.Protocol):
-#
-#     def send_to_trigger(self) -> requests.Response:
-#         pass
-#
-#
-# class ReadSendToTrigger:
-#     def send_to_trigger(self, data:typing.Dict[str, str]) -> requests.Response:
-#         return requests.post(os.environ['TRIGGER_URL'], data=data)
-#
-#
-# class MockSendToTrigger:
-#     def send_to_trigger(self, data:typing.Dict[str, str]) -> requests.Response:
-#         response = requests.Response()
-#         if 'salt' not in data:
-#             response.status_code = HTTPStatus.BAD_REQUEST
-#             response._content = b'no salt'
-#             return response
-#         if 'signature' not in data:
-#             response.status_code = HTTPStatus.BAD_REQUEST
-#             response._content = b'no signature'
-#             return response
-#
-#         hasher = hashlib.new('sha3_256')
-#         hasher.update((data['salt'] + App.config['SECRET_KEY']).encode())
-#         actual_signature = hasher.hexdigest()
-#         if data['signature'] != actual_signature:
-#             response.status_code = HTTPStatus.BAD_REQUEST
-#             response._content = b'bad signature'
-#         else:
-#             response.status_code = HTTPStatus.CREATED
-#             response._content = b'success'
-#         return response
+def send_to_trigger(data: typing.Dict[str, str]) -> int:
+    return requests.post(os.environ['TRIGGER_URL'], data=data).status_code
 
 
-def send_to_trigger(data: typing.Dict[str, str]) -> requests.Response:
-    return requests.post(os.environ['TRIGGER_URL'], data=data)
-
-
-def trigger(data: typing.Optional[typing.Dict[str, str]] = None) -> requests.Response:
+def trigger(data: typing.Optional[typing.Dict[str, str]] = None) -> int:
     if data is None:
         salt = secrets.token_hex(16)
         hasher = hashlib.new('sha3_256')
@@ -107,8 +71,7 @@ def trigger(data: typing.Optional[typing.Dict[str, str]] = None) -> requests.Res
 
 @App.route('/trigger_tl', methods=['POST'])
 def trigger_tl() -> typing.Tuple[bytes, int]:
-    trigger_response = trigger(data=flask.request.form)
-    return b'', trigger_response.status_code
+    return b'', trigger(data=flask.request.form)
 
 
 @App.route('/upload_file', methods=['POST'])
@@ -146,8 +109,7 @@ def upload_file() -> typing.Tuple[bytes, int]:
     if not azure_utils.upload_bytes_to_azure(App.config['AZURE_COORDINATES'], timestamp.encode(), TIMESTAMP_FILENAME):
         flask.abort(HTTPStatus.BAD_GATEWAY)
 
-    trigger_response = trigger()
-    return b'', trigger_response.status_code
+    return b'', trigger()
 
 
 if __name__ == "__main__":
