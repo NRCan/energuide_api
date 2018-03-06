@@ -36,7 +36,6 @@ def run_endpoint(azure_emulator_coords: azure_utils.StorageCoordinates,
 
     monkeysession = _pytest.monkeypatch.MonkeyPatch()
     request.addfinalizer(monkeysession.undo)
-    monkeysession.setenv('MOCK_ENDPOINT_TRIGGER', 1)
     monkeysession.setenv('ENDPOINT_SECRET_KEY', sample_secret_key)
     monkeysession.setenv('EXTRACT_ENDPOINT_STORAGE_ACCOUNT', azure_emulator_coords.account)
     monkeysession.setenv('EXTRACT_ENDPOINT_STORAGE_KEY', azure_emulator_coords.key)

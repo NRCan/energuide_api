@@ -1,10 +1,7 @@
 import io
 import datetime
-from http import HTTPStatus
-import hashlib
 import zipfile
 import typing
-import requests
 import pytest
 from azure.storage import blob
 from extract_endpoint import azure_utils, endpoint
@@ -62,4 +59,3 @@ def sample_zipfile(sample_filenames: typing.Tuple[str, str],
 def sample_secret_key(monkeypatch) -> str:
     monkeypatch.setitem(endpoint.App.config, 'SECRET_KEY', 'sample secret key')
     return endpoint.App.config['SECRET_KEY']
-

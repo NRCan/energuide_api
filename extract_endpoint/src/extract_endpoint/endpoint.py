@@ -31,6 +31,10 @@ App.config.update(dict(
 ))
 
 
+def _is_prod() -> bool:
+    return bool(os.environ.get('PROD'))
+
+
 @App.route('/', methods=['GET'])
 def frontend() -> str:
     return ''
@@ -56,7 +60,9 @@ def timestamp() -> str:
 
 
 def send_to_trigger(data: typing.Dict[str, str]) -> int:
-    if os.environ.get('MOCK_ENDPOINT_TRIGGER', None):
+    if _is_prod():
+        return requests.post(os.environ.get('TRIGGER_URL', ''), data=data).status_code
+    else:
         if 'salt' not in data:
             return HTTPStatus.BAD_REQUEST
         if 'signature' not in data:
@@ -66,10 +72,7 @@ def send_to_trigger(data: typing.Dict[str, str]) -> int:
         actual_signature = hasher.hexdigest()
         if data['signature'] != actual_signature:
             return HTTPStatus.BAD_REQUEST
-        else:
-            return HTTPStatus.CREATED
-    else:
-        return requests.post(os.environ['TRIGGER_URL'], data=data).status_code
+        return HTTPStatus.CREATED
 
 
 def trigger(data: typing.Optional[typing.Dict[str, str]] = None) -> int:
@@ -82,7 +85,7 @@ def trigger(data: typing.Optional[typing.Dict[str, str]] = None) -> int:
     return send_to_trigger(data)
 
 
-@App.route('/trigger_tl', methods=['POST'])
+@App.route('/run_tl', methods=['POST'])
 def trigger_tl() -> typing.Tuple[bytes, int]:
     return b'', trigger(data=flask.request.form)
 
