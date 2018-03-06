@@ -42,14 +42,19 @@ def load(username: str,
         host=host,
         port=port
     )
+
+    reader: transform.ExtractProtocol
     if azure:
         LOGGER.info(f'Loading data from Azure into {db_name}.{collection}')
+        azure_coords = transform.AzureCoordinates.from_env()
+        reader = transform.AzureExtractReader(azure_coords)
     elif filename:
         LOGGER.info(f'Loading data from {filename} into {db_name}.{collection}')
+        reader = transform.LocalExtractReader(filename)
     else:
         LOGGER.error('Must supply a filename or use azure')
         raise ValueError('Must supply a filename or use azure')
-    data = transform.transform(azure, filename)
+    data = transform.transform(reader)
     database.load(coords, db_name, collection, data, append)
     LOGGER.info(f'Finished loading data')
 

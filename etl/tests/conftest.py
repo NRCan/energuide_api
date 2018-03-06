@@ -10,6 +10,7 @@ import pytest
 from azure.storage import blob
 from energuide import database
 from energuide import extractor
+from energuide import transform
 
 
 def azure_emulator_is_running() -> bool:
@@ -102,41 +103,45 @@ def sample_fixture() -> str:
     return os.path.join(os.path.dirname(__file__), 'sample.csv')
 
 
-@pytest.fixture
-def azure_container_name() -> str:
-    return 'test-container'
+def _get_blob_service(coords: transform.AzureCoordinates)-> blob.BlockBlobService:
+    return blob.BlockBlobService(account_name=coords.account,
+                                 account_key=coords.key,
+                                 custom_domain=coords.domain)
 
 
 @pytest.fixture
-def azure_service(azure_container_name: str,
-                  monkeypatch: _pytest.monkeypatch.MonkeyPatch) -> typing.Iterator[blob.BlockBlobService]:
+def azure_coordinates(monkeypatch: _pytest.monkeypatch.MonkeyPatch) -> transform.AzureCoordinates:
     if not azure_emulator_is_running():
         pytest.skip("Azure emulator is not running.")
 
     account = 'devstoreaccount1'
     key = 'Eby8vdM02xNOcqFlqUwJPLlmEtlCDXJ1OUzFT50uSRZ6IFsuFq2UVErCz4I6tq/K1SZFPTOtr/KBHBeksoGMGw=='
     domain = 'http://127.0.0.1:10000/devstoreaccount1'
+    container_name = 'test-container'
     monkeypatch.setenv('EXTRACT_ENDPOINT_STORAGE_ACCOUNT', account)
     monkeypatch.setenv('EXTRACT_ENDPOINT_STORAGE_KEY', key)
     monkeypatch.setenv('EXTRACT_ENDPOINT_STORAGE_DOMAIN', domain)
-    monkeypatch.setenv('EXTRACT_ENDPOINT_CONTAINER', azure_container_name)
-
-    azure_service = blob.BlockBlobService(account_name=account,
-                                          account_key=key,
-                                          custom_domain=domain)
-    azure_service.create_container(azure_container_name)
-    yield azure_service
-    azure_service.delete_container(azure_container_name)
+    monkeypatch.setenv('EXTRACT_ENDPOINT_CONTAINER', container_name)
+    return transform.AzureCoordinates(key=key, account=account, container=container_name, domain=domain)
 
 
 @pytest.fixture
-def populated_azure_service(azure_service: blob.BlockBlobService,
-                            azure_container_name: str,
-                            energuide_zip_fixture: str) -> blob.BlockBlobService:
+def azure_emulator(azure_coordinates: transform.AzureCoordinates) -> typing.Iterator[transform.AzureCoordinates]:
+    service = _get_blob_service(azure_coordinates)
+    service.create_container(azure_coordinates.container)
+    yield azure_coordinates
+    service.delete_container(azure_coordinates.container)
+
+
+@pytest.fixture
+def populated_azure_emulator(azure_emulator: transform.AzureCoordinates,
+                             energuide_zip_fixture: str) -> transform.AzureCoordinates:
 
     file_z = zipfile.ZipFile(energuide_zip_fixture)
-    azure_service.create_blob_from_text(azure_container_name, 'timestamp.txt', 'Wednesday')
-    for json_file in [file_z.open(zipinfo) for zipinfo in file_z.infolist()]:
-        azure_service.create_blob_from_bytes(azure_container_name, json_file.name, json_file.read())
+    service = _get_blob_service(azure_emulator)
 
-    return azure_service
+    service.create_blob_from_text(azure_emulator.container, 'timestamp.txt', 'Wednesday')
+    for json_file in [file_z.open(zipinfo) for zipinfo in file_z.infolist()]:
+        service.create_blob_from_bytes(azure_emulator.container, json_file.name, json_file.read())
+
+    return azure_emulator
