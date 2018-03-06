@@ -95,12 +95,6 @@ def _extract_snippets(row: typing.Dict[str, typing.Any]) -> typing.Dict[str, typ
     return row
 
 
-def _extract_row(row: typing.Dict[str, typing.Any], validator: cerberus.Validator) -> typing.Dict[str, typing.Any]:
-    patched = _empty_to_none(row)
-    validated_data = _validated(patched, validator)
-    return _extract_snippets(validated_data)
-
-
 def extract_data(input_path: str) -> typing.Iterator[typing.Optional[typing.Dict[str, typing.Any]]]:
     validator = cerberus.Validator(INPUT_SCHEMA, purge_unknown=True)
     for data in _read_csv(input_path):
