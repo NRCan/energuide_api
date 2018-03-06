@@ -16,12 +16,7 @@ def main() -> None:
 
 def post_stream(stream: typing.IO[bytes],
                 timestamp: str,
-                filename: typing.Optional[str],
                 url: str) -> requests.models.Response:
-    if filename is None and stream.name == '<stdin>':
-        raise ValueError("Must supply a filename if reading from stdin")
-    if filename is None:
-        filename = stream.name
 
     data = stream.read()
     salt = secrets.token_hex(16)
@@ -33,14 +28,13 @@ def post_stream(stream: typing.IO[bytes],
 
     return requests.post(url=url,
                          files={'file': data},
-                         data={'salt': salt, 'signature': signature, 'filename': filename, 'timestamp': timestamp})
+                         data={'salt': salt, 'signature': signature, 'timestamp': timestamp})
 
 
 @main.command()
 @click.argument('stream', type=click.File('rb'))
 @click.argument('timestamp')
-@click.option('--filename')
 @click.option('--url', default='http://127.0.0.1:5000/upload_file')
-def upload(stream: typing.IO[bytes], timestamp: str, filename: typing.Optional[str], url: str) -> None:
-    post_return = post_stream(stream=stream, timestamp=timestamp, filename=filename, url=url)
+def upload(stream: typing.IO[bytes], timestamp: str, url: str) -> None:
+    post_return = post_stream(stream=stream, timestamp=timestamp, url=url)
     click.echo(f"Response: {post_return.status_code}, {post_return.content}")
