@@ -84,12 +84,12 @@ def trigger(data: typing.Optional[typing.Dict[str, str]] = None) -> int:
 
 
 @App.route('/trigger_tl', methods=['POST'])
-def trigger_tl() -> typing.Tuple[bytes, int]:
-    return b'', trigger(data=flask.request.form)
+def trigger_tl() -> typing.Tuple[str, int]:
+    return '', trigger(data=flask.request.form)
 
 
 @App.route('/upload_file', methods=['POST'])
-def upload_file() -> typing.Tuple[bytes, int]:
+def upload_file() -> typing.Tuple[str, int]:
     if App.config['SECRET_KEY'] == DEFAULT_ENDPOINT_SECRET_KEY:
         raise ValueError("Need to define environment variable ENDPOINT_SECRET_KEY")
     if 'signature' not in flask.request.form:
@@ -115,7 +115,7 @@ def upload_file() -> typing.Tuple[bytes, int]:
     try:
         file_z = zipfile.ZipFile(file)
     except zipfile.BadZipFile:
-        return b"Bad Zipfile", HTTPStatus.BAD_REQUEST
+        return "Bad Zipfile", HTTPStatus.BAD_REQUEST
 
     for json_file in [file_z.open(zipinfo) for zipinfo in file_z.infolist()]:
         if not azure_utils.upload_bytes_to_azure(App.config['AZURE_COORDINATES'], json_file.read(),
@@ -127,7 +127,7 @@ def upload_file() -> typing.Tuple[bytes, int]:
     if not azure_utils.upload_bytes_to_azure(App.config['AZURE_COORDINATES'], timestamp.encode(), TIMESTAMP_FILENAME):
         flask.abort(HTTPStatus.BAD_GATEWAY)
 
-    return b'', trigger()
+    return '', trigger()
 
 
 if __name__ == "__main__":

@@ -5,10 +5,11 @@ import typing
 import pytest
 import py
 from azure.storage import blob
-from extract_endpoint import azure_utils, endpoint
+from extract_endpoint import azure_utils
+from extract_endpoint import endpoint
 
 
-@pytest.fixture(scope='session')
+@pytest.fixture()
 def azure_emulator_coords() -> azure_utils.StorageCoordinates:
     return azure_utils.StorageCoordinates(
         account='devstoreaccount1',
