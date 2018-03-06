@@ -1067,7 +1067,7 @@
       ]
     ]
   },
-  "The Energyguide Rating calculated for this evaluation": {
+  "The EnerGuide Rating calculated for this evaluation": {
     "origin": [
       [
         "src/schema/index.js",
@@ -1759,7 +1759,7 @@
       ]
     ]
   },
-  "Filter results for dwellings which have at least one door with a matching U-factor in metric: Watts per square metre per degree Celcius (W/m2C)": {
+  "Filter results for dwellings which have at least one door with a matching U-factor in metric: watts per square metre per degree Celcius (W/m2C)": {
     "origin": [
       [
         "src/schema/index.js",
@@ -1767,7 +1767,7 @@
       ]
     ]
   },
-  "Filter results for dwellings which have at least one door with a matching U-factor in imperial: British Thermal Units per square feet per degree Fahrenheit (BTU/ft2 F)": {
+  "Filter results for dwellings which have at least one door with a matching U-factor in imperial: British Thermal Units per square feet per degree Fahrenheit (BTU/ft2F)": {
     "origin": [
       [
         "src/schema/index.js",
