@@ -134,7 +134,6 @@ def test_post_stream_cli_no_timestamp(sample_zipfile_fixture: str, upload_url: s
     assert result.exit_code != 0
 
 
-@pytest.mark.usefixtures('run_endpoint')
 def test_post_stream_cli_no_url(azure_service: blob.BlockBlobService,
                                 azure_emulator_coords: azure_utils.StorageCoordinates,
                                 sample_timestamp: str,
