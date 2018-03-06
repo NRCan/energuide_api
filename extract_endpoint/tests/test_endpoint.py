@@ -93,16 +93,6 @@ def test_timestamp_no_file(test_client: testing.FlaskClient) -> None:
     assert get_return.status_code == HTTPStatus.BAD_GATEWAY
 
 
-def check_file_in_azure(azure_service: blob.BlockBlobService,
-                        azure_emulator_coords: azure_utils.StorageCoordinates,
-                        filename: str,
-                        contents: str) -> None:
-
-    assert filename in [blob.name for blob in azure_service.list_blobs(azure_emulator_coords.container)]
-    actual_blob = azure_service.get_blob_to_text(azure_emulator_coords.container, filename)
-    assert actual_blob.content == contents
-
-
 def test_upload_no_key_in_env(test_client: testing.FlaskClient,
                               sample_timestamp: str,
                               sample_salt: str,
@@ -137,6 +127,7 @@ def test_upload_wrong_salt(test_client: testing.FlaskClient,
     assert post_return.status_code == HTTPStatus.BAD_REQUEST
 
 
+@pytest.mark.usefixtures('sample_secret_key')
 def test_upload_no_signature(test_client: testing.FlaskClient,
                              sample_timestamp: str,
                              sample_salt: str,
@@ -147,6 +138,7 @@ def test_upload_no_signature(test_client: testing.FlaskClient,
     assert post_return.status_code == HTTPStatus.BAD_REQUEST
 
 
+@pytest.mark.usefixtures('sample_secret_key')
 def test_upload_wrong_signature(test_client: testing.FlaskClient,
                                 sample_timestamp: str,
                                 sample_salt: str,
