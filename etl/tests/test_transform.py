@@ -24,6 +24,10 @@ def test_reader(local_reader: transform.LocalExtractReader) -> None:
     assert len(unique_builders) == 14
 
 
+def test_reader_num_rows(local_reader: transform.LocalExtractReader) -> None:
+    assert local_reader.num_rows() == 14
+
+
 def test_azure_reader(azure_reader: transform.AzureExtractReader) -> None:
     output = list(azure_reader.extracted_rows())
     output = sorted(output, key=lambda row: row['BUILDER'])
@@ -31,6 +35,10 @@ def test_azure_reader(azure_reader: transform.AzureExtractReader) -> None:
     assert len(output) == 14
     assert output[0]['BUILDER'] == '11W2D00606'
     assert len(unique_builders) == 14
+
+
+def test_azure_reader_num_rows(azure_reader: transform.AzureExtractReader) -> None:
+    assert azure_reader.num_rows() == 14
 
 
 def test_azure_coordinates_from_env(monkeypatch: _pytest.monkeypatch.MonkeyPatch) -> None:
