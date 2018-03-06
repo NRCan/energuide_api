@@ -25,7 +25,7 @@ describe('Enum values', () => {
     client.close()
   })
 
-  const testData = {
+  const testFields = {
     dwellingHouseId: { testValue: 189250 },
     dwellingYearBuilt: { testValue: 1900 },
     dwellingCity: { testValue: 'Charlottetown' },
@@ -122,19 +122,59 @@ describe('Enum values', () => {
     windowWidthFeet: { testValue: 3.5259036561359998 },
     windowHeightMetres: { testValue: 1.2199246000000001 },
     windowHeightFeet: { testValue: 4.002377424664 },
+    foundationFoundationTypeEnglish: { testValue: 'Basement' },
+    foundationFoundationTypeFrench: { testValue: 'Sous-sol' },
+    foundationLabel: { testValue: 'Foundation - 1' },
+    foundationConfigurationType: { testValue: 'BCIN' },
+    foundationMaterialEnglish: { testValue: 'concrete' },
+    foundationMaterialFrench: { testValue: 'béton' },
+    foundationHeaderInsulationNominalRsi: { testValue: 3.3615 },
+    foundationHeaderInsulationNominalR: { testValue: 19.0874822073255 },
+    foundationHeaderInsulationEffectiveRsi: { testValue: 2.6892 },
+    foundationHeaderInsulationEffectiveR: { testValue: 15.2699857658604 },
+    foundationHeaderAreaMetres: { testValue: 7.991488000000001 },
+    foundationHeaderAreaFeet: { testValue: 86.01966643346914 },
+    foundationHeaderPerimeterMetres: { testValue: 34.7456 },
+    foundationHeaderPerimeterFeet: { testValue: 113.99475430400001 },
+    foundationHeaderHeightMetres: { testValue: 0.23 },
+    foundationHeaderHeightFeet: { testValue: 0.7545932000000001 },
+    foundationFloorFloorTypeEnglish: { testValue: 'Slab' },
+    foundationFloorFloorTypeFrench: { testValue: 'Dalle' },
+    foundationFloorAreaMetres: { testValue: 72.6432 },
+    foundationFloorAreaFeet: { testValue: 781.9249472263218 },
+    foundationFloorPerimeterMetres: { testValue: 34.7466 },
+    foundationFloorPerimeterFeet: { testValue: 113.998035144 },
+    // TODO: Uncomment and add appropriate values when issue #315 is resloved
+    // foundationFloorInsulationNominalRsi: { testValue: null },
+    // foundationFloorInsulationNominalR: { testValue: null },
+    // foundationFloorInsulationEffectiveRsi: { testValue: null },
+    // foundationFloorInsulationEffectiveR: { testValue: null },
+    // foundationFloorWidthMetres: { testValue: null },
+    // foundationFloorWidthFeet: { testValue: null },
+    // foundationFloorLengthMetres: { testValue: null },
+    // foundationFloorLengthFeet: { testValue: null },
+    foundationWallWallTypeEnglish: { testValue: 'Interior' },
+    foundationWallWallTypeFrench: { testValue: 'Intérieur' },
+    foundationWallInsulationNominalRsi: { testValue: 2.175 },
+    foundationWallInsulationNominalR: { testValue: 12.350222757974999 },
+    foundationWallInsulationEffectiveRsi: { testValue: 1.74 },
+    foundationWallInsulationEffectiveR: { testValue: 9.88017820638 },
+    foundationWallPercentage: { testValue: 100 },
+    foundationWallAreaMetres: { testValue: 87.1618461 },
+    foundationWallAreaFeet: { testValue: 938.2023632203881 },
   }
 
-  Object.keys(testData).forEach(functionName => {
+  Object.keys(testFields).forEach(functionName => {
     describe(functionName, () => {
       it('returns a query object capable of returning data', async () => {
-        let { testValue } = testData[functionName] // eslint-disable-line
+        let { testValue } = testFields[functionName] // eslint-disable-line
         let query = enumFunctions[functionName](testValue) //eslint-disable-line
         let result = await collection.findOne(query)
         expect(result).not.toBe(null)
       })
 
       it(`${functionName} is included in the filter field enum`, async () => {
-        let { testValue } = testData[functionName] // eslint-disable-line
+        let { testValue } = testFields[functionName] // eslint-disable-line
         let server = new Server({
           client: collection,
         })
@@ -156,6 +196,23 @@ describe('Enum values', () => {
                }`,
           })
         expect(response.body).not.toHaveProperty('errors')
+      })
+    })
+  })
+
+  const testDates = {
+    evaluationEntryDate: { testValue: '2011-11-18' },
+    evaluationCreationDate: { testValue: '2012-10-01T15:08:41' },
+    evaluationModificationDate: { testValue: '2012-06-09T11:20:20' },
+  }
+
+  Object.keys(testDates).forEach(functionName => {
+    describe(functionName, () => {
+      it('returns a query object capable of returning data', async () => {
+        let { testValue } = testDates[functionName] // eslint-disable-line
+        let query = enumFunctions[functionName](testValue) //eslint-disable-line
+        let result = await collection.findOne(query)
+        expect(result).not.toBe(null)
       })
     })
   })

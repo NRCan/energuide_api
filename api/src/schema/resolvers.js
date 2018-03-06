@@ -1,5 +1,6 @@
 import MongoPaging from 'mongo-cursor-pagination'
 import { GraphQLError } from 'graphql'
+import { GraphQLDate } from 'graphql-iso-date'
 
 /* eslint-disable import/named */
 import {
@@ -8,6 +9,9 @@ import {
   dwellingCity,
   dwellingRegion,
   dwellingForwardSortationArea,
+  evaluationEntryDate,
+  evaluationCreationDate,
+  evaluationModificationDate,
   ventilationTypeEnglish,
   ventilationTypeFrench,
   ventilationAirFlowRateLps,
@@ -97,6 +101,45 @@ import {
   windowWidthFeet,
   windowHeightMetres,
   windowHeightFeet,
+  foundationFoundationTypeEnglish,
+  foundationFoundationTypeFrench,
+  foundationLabel,
+  foundationConfigurationType,
+  foundationMaterialEnglish,
+  foundationMaterialFrench,
+  foundationHeaderInsulationNominalRsi,
+  foundationHeaderInsulationNominalR,
+  foundationHeaderInsulationEffectiveRsi,
+  foundationHeaderInsulationEffectiveR,
+  foundationHeaderAreaMetres,
+  foundationHeaderAreaFeet,
+  foundationHeaderPerimeterMetres,
+  foundationHeaderPerimeterFeet,
+  foundationHeaderHeightMetres,
+  foundationHeaderHeightFeet,
+  foundationFloorFloorTypeEnglish,
+  foundationFloorFloorTypeFrench,
+  foundationFloorInsulationNominalRsi,
+  foundationFloorInsulationNominalR,
+  foundationFloorInsulationEffectiveRsi,
+  foundationFloorInsulationEffectiveR,
+  foundationFloorAreaMetres,
+  foundationFloorAreaFeet,
+  foundationFloorPerimeterMetres,
+  foundationFloorPerimeterFeet,
+  foundationFloorWidthMetres,
+  foundationFloorWidthFeet,
+  foundationFloorLengthMetres,
+  foundationFloorLengthFeet,
+  foundationWallWallTypeEnglish,
+  foundationWallWallTypeFrench,
+  foundationWallInsulationNominalRsi,
+  foundationWallInsulationNominalR,
+  foundationWallInsulationEffectiveRsi,
+  foundationWallInsulationEffectiveR,
+  foundationWallPercentage,
+  foundationWallAreaMetres,
+  foundationWallAreaFeet,
 } from './enums'
 /* eslint-enable import/named */
 
@@ -111,6 +154,7 @@ const Resolvers = i18n => {
     I18NString: createI18NString(i18n),
     I18NFloat: createI18NFloat(i18n),
     I18NBoolean: createI18NBoolean(i18n),
+    GraphQLDate: GraphQLDate,
     Query: {
       dwelling: async (root, { houseId }, { client }) => {
         let query = {
@@ -125,7 +169,7 @@ const Resolvers = i18n => {
         // and is passed directly into library code to be decoded and used while
         // talking to the database.
         // ಠ_ಠ
-        const { filters, limit, next, previous } = args
+        const { filters, dateRange, limit, next, previous } = args
 
         if (next && previous) {
           throw new GraphQLError(
@@ -137,6 +181,43 @@ const Resolvers = i18n => {
 
         let query = {
           $and: [{}],
+        }
+
+        if (dateRange) {
+          // ISO string format looks like "2012-10-01T15:08:41.000Z"
+          const startDateQuery = dateRange.startDate
+            ? { $gte: dateRange.startDate.toISOString().split('T')[0] }
+            : {}
+          const endDateQuery = dateRange.endDate
+            ? { $lte: dateRange.endDate.toISOString().split('T')[0] }
+            : {}
+
+          const dateQuery = Object.assign({}, startDateQuery, endDateQuery)
+
+          if (Object.keys(dateQuery).length === 0) {
+            throw new GraphQLError(
+              i18n.t`
+                A 'dateRange' must include a 'startDate' or an 'endDate'.
+                `,
+            )
+          }
+
+          if (
+            dateQuery['$gte'] &&
+            dateQuery['$lte'] &&
+            dateQuery['$gte'] >= dateQuery['$lte']
+          ) {
+            throw new GraphQLError(
+              i18n.t`
+                The 'endDate' cannot be equal to or earlier than the 'startDate'.
+                `,
+            )
+          }
+
+          // eslint-disable-next-line security/detect-eval-with-expression
+          let queryGenerator = eval(dateRange.field) // eslint-disable-line no-eval
+          let attrQuery = queryGenerator(dateQuery)
+          query['$and'].push(attrQuery)
         }
 
         if (filters && filters.length > 0) {
@@ -172,6 +253,11 @@ const Resolvers = i18n => {
 
         return result
       },
+    },
+    DateField: {
+      evaluationEntryDate: evaluationEntryDate.toString(),
+      evaluationCreationDate: evaluationCreationDate.toString(),
+      evaluationModificationDate: evaluationModificationDate.toString(),
     },
     Field: {
       dwellingHouseId: dwellingHouseId.toString(),
@@ -268,6 +354,45 @@ const Resolvers = i18n => {
       windowWidthFeet: windowWidthFeet.toString(),
       windowHeightMetres: windowHeightMetres.toString(),
       windowHeightFeet: windowHeightFeet.toString(),
+      foundationFoundationTypeEnglish: foundationFoundationTypeEnglish.toString(),
+      foundationFoundationTypeFrench: foundationFoundationTypeFrench.toString(),
+      foundationLabel: foundationLabel.toString(),
+      foundationConfigurationType: foundationConfigurationType.toString(),
+      foundationMaterialEnglish: foundationMaterialEnglish.toString(),
+      foundationMaterialFrench: foundationMaterialFrench.toString(),
+      foundationHeaderInsulationNominalRsi: foundationHeaderInsulationNominalRsi.toString(),
+      foundationHeaderInsulationNominalR: foundationHeaderInsulationNominalR.toString(),
+      foundationHeaderInsulationEffectiveRsi: foundationHeaderInsulationEffectiveRsi.toString(),
+      foundationHeaderInsulationEffectiveR: foundationHeaderInsulationEffectiveR.toString(),
+      foundationHeaderAreaMetres: foundationHeaderAreaMetres.toString(),
+      foundationHeaderAreaFeet: foundationHeaderAreaFeet.toString(),
+      foundationHeaderPerimeterMetres: foundationHeaderPerimeterMetres.toString(),
+      foundationHeaderPerimeterFeet: foundationHeaderPerimeterFeet.toString(),
+      foundationHeaderHeightMetres: foundationHeaderHeightMetres.toString(),
+      foundationHeaderHeightFeet: foundationHeaderHeightFeet.toString(),
+      foundationFloorFloorTypeEnglish: foundationFloorFloorTypeEnglish.toString(),
+      foundationFloorFloorTypeFrench: foundationFloorFloorTypeFrench.toString(),
+      foundationFloorInsulationNominalRsi: foundationFloorInsulationNominalRsi.toString(),
+      foundationFloorInsulationNominalR: foundationFloorInsulationNominalR.toString(),
+      foundationFloorInsulationEffectiveRsi: foundationFloorInsulationEffectiveRsi.toString(),
+      foundationFloorInsulationEffectiveR: foundationFloorInsulationEffectiveR.toString(),
+      foundationFloorAreaMetres: foundationFloorAreaMetres.toString(),
+      foundationFloorAreaFeet: foundationFloorAreaFeet.toString(),
+      foundationFloorPerimeterMetres: foundationFloorPerimeterMetres.toString(),
+      foundationFloorPerimeterFeet: foundationFloorPerimeterFeet.toString(),
+      foundationFloorWidthMetres: foundationFloorWidthMetres.toString(),
+      foundationFloorWidthFeet: foundationFloorWidthFeet.toString(),
+      foundationFloorLengthMetres: foundationFloorLengthMetres.toString(),
+      foundationFloorLengthFeet: foundationFloorLengthFeet.toString(),
+      foundationWallWallTypeEnglish: foundationWallWallTypeEnglish.toString(),
+      foundationWallWallTypeFrench: foundationWallWallTypeFrench.toString(),
+      foundationWallInsulationNominalRsi: foundationWallInsulationNominalRsi.toString(),
+      foundationWallInsulationNominalR: foundationWallInsulationNominalR.toString(),
+      foundationWallInsulationEffectiveRsi: foundationWallInsulationEffectiveRsi.toString(),
+      foundationWallInsulationEffectiveR: foundationWallInsulationEffectiveR.toString(),
+      foundationWallPercentage: foundationWallPercentage.toString(),
+      foundationWallAreaMetres: foundationWallAreaMetres.toString(),
+      foundationWallAreaFeet: foundationWallAreaFeet.toString(),
     },
     Comparator: {
       gt: '$gt',

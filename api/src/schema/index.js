@@ -1,6 +1,11 @@
 import { Resolvers } from './resolvers'
 import { makeExecutableSchema } from 'graphql-tools'
 
+import { createFoundation } from './types/Foundation'
+import { createFoundationFloor } from './types/FoundationFloor'
+import { createFoundationWall } from './types/FoundationWall'
+import { createHeader } from './types/Header'
+
 const Schema = i18n => {
   const typeDefs = [
     `
@@ -8,6 +13,7 @@ const Schema = i18n => {
     scalar I18NFloat
     scalar I18NString
     scalar I18NBoolean
+    scalar GraphQLDate
 
     # ${i18n.t`An operator to describe how results will be filtered`}
     enum Comparator {
@@ -28,6 +34,16 @@ const Schema = i18n => {
       comparator: Comparator!
       # ${i18n.t`Results will be compared to this value`}
       value: I18NString!
+    }
+
+    # ${i18n.t`Filter by dwellings containing evaluations that were entered, created, or modified between a range of dates`}
+    input DateRange {
+      # ${i18n.t`Name of the date field results will be filtered by`}
+      field: DateField!
+      # ${i18n.t`Evaluation dates must be equal to or later than this value`}
+      startDate: GraphQLDate
+      # ${i18n.t`Evaluation dates must be equal to or earlier than this value`}
+      endDate: GraphQLDate
     }
 
     # ${i18n.t`An improvement that could increase the energy efficiency of the dwelling`}
@@ -298,6 +314,8 @@ const Schema = i18n => {
       heating: Heating
       # ${i18n.t`A list of upgrades that would improve energy efficiency`}
       energyUpgrades: [Upgrade]
+      # ${i18n.t`The details of the foundation`}
+      foundations: [Foundation]
       # ${i18n.t`The Energyguide Rating calculated for this evaluation`}
       ersRating: I18NString
     }
@@ -323,7 +341,17 @@ const Schema = i18n => {
       # ${i18n.t`Details for a specific dwelling`}
       dwelling(houseId: I18NInt!): Dwelling
       # ${i18n.t`Details for all dwellings, optionally filtered by one or more values`}
-      dwellings(filters: [Filter!] limit: I18NInt next: I18NString previous: I18NString): PaginatedResultSet
+      dwellings(filters: [Filter!] dateRange: DateRange limit: I18NInt next: I18NString previous: I18NString): PaginatedResultSet
+    }
+
+    # ${i18n.t`An ISO date value, formatted 'YYYY-MM-DD'`}
+    enum DateField {
+      # ${i18n.t`Filter results by the dwellings containing at least one evaluation with a specific entry date`}
+      evaluationEntryDate
+      # ${i18n.t`Filter results by the dwellings containing at least one evaluation with a specific record creation date`}
+      evaluationCreationDate
+      # ${i18n.t`Filter results by the dwellings containing at least one evaluation with a specific record modification date`}
+      evaluationModificationDate
     }
 
     enum Field {
@@ -507,16 +535,99 @@ const Schema = i18n => {
       windowAreaMetres
       # ${i18n.t`Filter results for dwellings with a window matching a specific area in square feet (ft2)`}
       windowAreaFeet
-      # ${i18n.t`Filter resutls for dwellings with a window matching a specific width in metres (m)`}
+      # ${i18n.t`Filter results for dwellings with a window matching a specific width in metres (m)`}
       windowWidthMetres
-      # ${i18n.t`Filter resutls for dwellings with a window matching a specific width in feet (ft)`}
+      # ${i18n.t`Filter results for dwellings with a window matching a specific width in feet (ft)`}
       windowWidthFeet
-      # ${i18n.t`Filter resutls for dwellings with a window matching a specific height in metres (m)`}
+      # ${i18n.t`Filter results for dwellings with a window matching a specific height in metres (m)`}
       windowHeightMetres
-      # ${i18n.t`Filter resutls for dwellings with a window matching a specific height in feet (ft)`}
+      # ${i18n.t`Filter results for dwellings with a window matching a specific height in feet (ft)`}
       windowHeightFeet
+      # ${i18n.t`Filter results for dwellings with matching foundation type (en)`}
+      foundationFoundationTypeEnglish
+      # ${i18n.t`Filter results for dwellings with matching foundation type (fr)`}
+      foundationFoundationTypeFrench
+      # ${i18n.t`Filter results for dwellings with a specific foundation label`}
+      foundationLabel
+      # ${i18n.t`Filter results for dwellings with a specific foundation configuration`}
+      foundationConfigurationType
+      # ${i18n.t`Filter results for dwellings whose foundation was constructed with a specific material (en)`}
+      foundationMaterialEnglish
+      # ${i18n.t`Filter results for dwellings whose foundation was constructed with a specific material (en)`}
+      foundationMaterialFrench
+      # ${i18n.t`Filter results for dwellings wiht a specific foundation header insulation nominal RSI (R-value Systeme International)`}
+      foundationHeaderInsulationNominalRsi
+      # ${i18n.t`Filter results for dwellings with a specific foundation header insulation nominal R-value`}
+      foundationHeaderInsulationNominalR
+      # ${i18n.t`Filter results for dwellings with a specific foundation header insulation effective RSI (R-value Systeme International)`}
+      foundationHeaderInsulationEffectiveRsi
+      # ${i18n.t`Filter results for dwellings with a specific foundationn header insulation effective R-value`}
+      foundationHeaderInsulationEffectiveR
+      # ${i18n.t`Filter results for dwellings with a specific foundation header area in square metres (m2)`}
+      foundationHeaderAreaMetres
+      # ${i18n.t`Filter results for dwellings with a specific foundation header area in square feet (ft2)`}
+      foundationHeaderAreaFeet
+      # ${i18n.t`Filter results for dwellings with a specific foundation header perimeter in metres (m)`}
+      foundationHeaderPerimeterMetres
+      # ${i18n.t`Filter results for dwellings with a specific foundation header perimeter in feet (ft)`}
+      foundationHeaderPerimeterFeet
+      # ${i18n.t`Filter results for dwellings with a specific foundation header height in metres (m)`}
+      foundationHeaderHeightMetres
+      # ${i18n.t`Filter results for dwellings with a specific header height in feet (ft)`}
+      foundationHeaderHeightFeet
+      # ${i18n.t`Filter for dwellings with a specific type of foundation floor type (en)`}
+      foundationFloorFloorTypeEnglish
+      # ${i18n.t`Filter for dwellings with a specific type of foundation floor type (fr)`}
+      foundationFloorFloorTypeFrench
+      # ${i18n.t`Filter for dwellings where the foundation floor has a specific insulation nominal RSI (R-value Systeme International)`}
+      foundationFloorInsulationNominalRsi
+      # ${i18n.t`Filter for dwellings with a specific insulation nominal R-value on the foundation floor`}
+      foundationFloorInsulationNominalR
+      # ${i18n.t`Filter for dwellings with a specific insulation effective RSI (R-value Systeme International) for the foundation floor`}
+      foundationFloorInsulationEffectiveRsi
+      # ${i18n.t`Filter for dwellings with a specific insulation effective R-value for the foundation floor`}
+      foundationFloorInsulationEffectiveR
+      # ${i18n.t`Filter for dwellings where the foundation floor has a specific area in square metres (m2)`}
+      foundationFloorAreaMetres
+      # ${i18n.t`Filter for dwellings where the foundation floor has a specific area in square feet (ft2)`}
+      foundationFloorAreaFeet
+      # ${i18n.t`Filter for dwellings where the foundation floor has a specific perimeter in metres (m)`}
+      foundationFloorPerimeterMetres
+      # ${i18n.t`Filter for dwellings where the foundation floor has a specific perimeter in feet (ft)`}
+      foundationFloorPerimeterFeet
+      # ${i18n.t`Filter for dwellings where the foundation floor has a specific width in metres (m)`}
+      foundationFloorWidthMetres
+      # ${i18n.t`Filter for dwellings where the foundation floor has a specific width in feet (ft)`}
+      foundationFloorWidthFeet
+      # ${i18n.t`Filter for dwellings where the foundation floor has a specific length in metres (m)`}
+      foundationFloorLengthMetres
+      # ${i18n.t`Filter for dwellings where the foundation floor has a specific length in feet (ft)`}
+      foundationFloorLengthFeet
+      # ${i18n.t`Filter results for dwellings whose foundation wall has a specific type (en)`}
+      foundationWallWallTypeEnglish
+      # ${i18n.t`Filter results for dwellings whose foundation wall has a specific type (fr)`}
+      foundationWallWallTypeFrench
+      # ${i18n.t`Filter results for dwellings with a specific foundation wall insulation nominal RSI (R-value Systeme International)`}
+      foundationWallInsulationNominalRsi
+      # ${i18n.t`Filter results for dwellings with a specific foundation wall insulation nominal R-value`}
+      foundationWallInsulationNominalR
+      # ${i18n.t`Filter results for dwellings with a specific foundation wall insulation effective RSI (R-value Systeme International)`}
+      foundationWallInsulationEffectiveRsi
+      # ${i18n.t`Filter results for dwellings with a specific foundation wall insulation effective R-value`}
+      foundationWallInsulationEffectiveR
+      # ${i18n.t`Filter results for dwellings with a section of it's foundation wall with a specific percentage of the overall amount`}
+      foundationWallPercentage
+      # ${i18n.t`Filter results for dwellings with a foundation wall has specific area in square metres (m2)`}
+      foundationWallAreaMetres
+      # ${i18n.t`Filter results for dwellings with a foundation wall has specific area in square feet (ft)`}
+      foundationWallAreaFeet
     }
   `,
+
+    createFoundation(i18n),
+    createFoundationFloor(i18n),
+    createFoundationWall(i18n),
+    createHeader(i18n),
   ]
 
   return makeExecutableSchema({ typeDefs, resolvers: new Resolvers(i18n) })

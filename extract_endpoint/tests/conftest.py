@@ -3,6 +3,7 @@ import datetime
 import zipfile
 import typing
 import pytest
+import py
 from azure.storage import blob
 from extract_endpoint import azure_utils
 
@@ -52,4 +53,16 @@ def sample_zipfile(sample_filenames: typing.Tuple[str, str],
         file_z.writestr(name, contents)
     file_z.close()
     file.seek(0)
+    return file
+
+
+@pytest.fixture
+def sample_zipfile_fixture(tmpdir: py._path.local.LocalPath,
+                           sample_filenames: typing.Tuple[str, str],
+                           sample_file_contents: typing.Tuple[str, str]) -> str:
+    file = f'{tmpdir}/sample_zipfile.zip'
+    file_z = zipfile.ZipFile(file, 'w')
+    for name, contents in zip(sample_filenames, sample_file_contents):
+        file_z.writestr(name, contents)
+    file_z.close()
     return file

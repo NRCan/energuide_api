@@ -96,7 +96,7 @@ def test_load_filename(energuide_zip_fixture: str,
     assert coll.count() == 7
 
 
-@pytest.mark.usefixtures('skip_if_azure_simulator_not_running', 'put_sample_files_in_azure')
+@pytest.mark.usefixtures('populated_azure_emulator')
 def test_load_azure(database_name: str,
                     collection: str,
                     mongo_client: pymongo.MongoClient) -> None:
@@ -163,7 +163,7 @@ def test_extract_invalid(invalid_filepath: str, tmpdir: py._path.local.LocalPath
         '--outfile', outfile
     ])
 
-    assert result.exit_code != 0
+    assert result.exit_code == 0
 
     with zipfile.ZipFile(outfile, 'r') as output:
         assert not output.namelist()

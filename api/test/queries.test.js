@@ -37,6 +37,7 @@ describe('queries', () => {
         }`,
         })
 
+      expect(response.body).not.toHaveProperty('errors')
       let { evaluations } = response.body.data
       expect(evaluations).toEqual({
         city: 'Charlottetown',
@@ -78,7 +79,7 @@ describe('queries', () => {
       })
     })
 
-    it('retrieves all top level keys of the upgrade data', async () => {
+    it('retrieves all top level keys of the foundation', async () => {
       let response = await request(server)
         .post('/graphql')
         .set('Content-Type', 'application/json; charset=utf-8')
@@ -86,23 +87,173 @@ describe('queries', () => {
           query: `{
           dwelling(houseId: 189250) {
             evaluations {
-              energyUpgrades {
-                upgradeType
-                cost
-                priority
+              foundations {
+                foundationTypeEnglish
+                foundationTypeFrench
+                label
+                configurationType
+                materialEnglish
+                materialFrench
               }
             }
           }
         }`,
         })
 
+      expect(response.body).not.toHaveProperty('errors')
       let { dwelling: { evaluations } } = response.body.data
       let [first] = evaluations
-      let [upgrade] = first.energyUpgrades
-      expect(upgrade).toEqual({
-        upgradeType: 'CathedralCeilingsFlat',
-        cost: 0,
-        priority: 1,
+      let [foundation] = first.foundations
+      expect(foundation).toEqual({
+        configurationType: 'BCIN',
+        foundationTypeEnglish: 'Basement',
+        foundationTypeFrench: 'Sous-sol',
+        label: 'Foundation - 1',
+        materialEnglish: 'concrete',
+        materialFrench: 'béton',
+      })
+    })
+
+    it('retrieves all top level keys of the foundation header', async () => {
+      let response = await request(server)
+        .post('/graphql')
+        .set('Content-Type', 'application/json; charset=utf-8')
+        .send({
+          query: `{
+          dwelling(houseId: 189250) {
+            evaluations {
+              foundations {
+                header {
+                  insulationNominalRsi
+                  insulationNominalR
+                  insulationEffectiveRsi
+                  insulationEffectiveR
+                  areaMetres
+                  areaFeet
+                  perimeterMetres
+                  perimeterFeet
+                  heightMetres
+                  heightFeet
+                }
+              }
+            }
+          }
+        }`,
+        })
+
+      expect(response.body).not.toHaveProperty('errors')
+      let { dwelling: { evaluations } } = response.body.data
+      let [first] = evaluations
+      let [foundation] = first.foundations
+      expect(foundation.header).toEqual({
+        areaFeet: 86.01966643346914,
+        areaMetres: 7.991488000000001,
+        heightFeet: 0.7545932000000001,
+        heightMetres: 0.23,
+        insulationEffectiveR: 15.2699857658604,
+        insulationEffectiveRsi: 2.6892,
+        insulationNominalR: 19.0874822073255,
+        insulationNominalRsi: 3.3615,
+        perimeterFeet: 113.99475430400001,
+        perimeterMetres: 34.7456,
+      })
+    })
+
+    it('retrieves all top level keys of the foundation floor', async () => {
+      let response = await request(server)
+        .post('/graphql')
+        .set('Content-Type', 'application/json; charset=utf-8')
+        .send({
+          query: `{
+          dwelling(houseId: 189250) {
+            evaluations {
+              foundations {
+                floors {
+                  floorTypeEnglish
+                  floorTypeFrench
+                  insulationNominalRsi
+                  insulationNominalR
+                  insulationEffectiveRsi
+                  insulationEffectiveR
+                  areaMetres
+                  areaFeet
+                  perimeterMetres
+                  perimeterFeet
+                  heightMetres
+                  heightFeet
+                  lengthMetres
+                  lengthFeet
+                }
+              }
+            }
+          }
+        }`,
+        })
+
+      expect(response.body).not.toHaveProperty('errors')
+      let { dwelling: { evaluations } } = response.body.data
+      let [first] = evaluations
+      let [foundation] = first.foundations
+      let [floor] = foundation.floors
+      expect(floor).toEqual({
+        areaFeet: 781.9249472263218,
+        areaMetres: 72.6432,
+        floorTypeEnglish: 'Slab',
+        floorTypeFrench: 'Dalle',
+        heightFeet: null,
+        heightMetres: null,
+        insulationEffectiveR: null,
+        insulationEffectiveRsi: null,
+        insulationNominalR: null,
+        insulationNominalRsi: null,
+        lengthFeet: null,
+        lengthMetres: null,
+        perimeterFeet: 113.998035144,
+        perimeterMetres: 34.7466,
+      })
+    })
+
+    it('retrieves all top level keys of the foundation wall', async () => {
+      let response = await request(server)
+        .post('/graphql')
+        .set('Content-Type', 'application/json; charset=utf-8')
+        .send({
+          query: `{
+          dwelling(houseId: 189250) {
+            evaluations {
+              foundations {
+                walls {
+                  wallTypeEnglish
+                  wallTypeFrench
+                  insulationNominalRsi
+                  insulationNominalR
+                  insulationEffectiveRsi
+                  insulationEffectiveR
+                  areaMetres
+                  areaFeet
+                  percentage
+                }
+              }
+            }
+          }
+        }`,
+        })
+
+      expect(response.body).not.toHaveProperty('errors')
+      let { dwelling: { evaluations } } = response.body.data
+      let [first] = evaluations
+      let [foundation] = first.foundations
+      let [wall] = foundation.walls
+      expect(wall).toEqual({
+        areaFeet: 938.2023632203881,
+        areaMetres: 87.1618461,
+        insulationEffectiveR: 9.88017820638,
+        insulationEffectiveRsi: 1.74,
+        insulationNominalR: 12.350222757974999,
+        insulationNominalRsi: 2.175,
+        percentage: 100,
+        wallTypeEnglish: 'Interior',
+        wallTypeFrench: 'Intérieur',
       })
     })
 
@@ -124,6 +275,7 @@ describe('queries', () => {
         }`,
         })
 
+      expect(response.body).not.toHaveProperty('errors')
       let { dwelling: { evaluations } } = response.body.data
       let [first] = evaluations
       let [upgrade] = first.energyUpgrades
@@ -843,6 +995,174 @@ describe('queries', () => {
             })
           let { dwellings: { results: [first] } } = response.body.data
           expect(first.city).toEqual('Charlottetown')
+        })
+      })
+    })
+
+    describe('date filters', () => {
+      const makeRequestForDateRange = function({
+        startDate = 'startDate: "2012-10-01"',
+        endDate = '',
+      } = {}) {
+        // default creationDate is "2012-10-01T15:08:41"
+        let query = `{
+          dwellings(
+           filters: [{field: dwellingForwardSortationArea comparator: eq value: "C1A"}]
+           dateRange: {
+             field: evaluationCreationDate
+             ${startDate}
+             ${endDate}
+           }
+          ) {
+            results {
+              evaluations {
+                creationDate
+                fileId
+              }
+            }
+          }
+        }`
+
+        return request(server)
+          .post('/graphql')
+          .set('Content-Type', 'application/json; charset=utf-8')
+          .send({
+            query,
+          })
+      }
+
+      function expectEvaluationIsReturned(_response) {
+        let {
+          creationDate,
+          fileId,
+        } = _response.body.data.dwellings.results[0].evaluations[0]
+        expect(creationDate).toEqual('2012-10-01T15:08:41')
+        expect(fileId).toEqual('3C10E11075')
+      }
+
+      function expectEvaluationIsNotReturned(_response) {
+        expect(_response.body.data.dwellings.results).toEqual([])
+        expect(_response.body.errors).toBe(undefined)
+      }
+
+      const validStartDates = ['2012-01-01', '2012-09-30', '2012-10-01']
+      validStartDates.forEach(_startDate => {
+        it(`will return results for a startDate earlier than or equal to 2012-10-01: ${_startDate}`, async () => {
+          let response = await makeRequestForDateRange({
+            startDate: `startDate: "${_startDate}"`,
+          })
+
+          expectEvaluationIsReturned(response)
+        })
+      })
+
+      it(`will not return results for a startDate later than 2012-10-01`, async () => {
+        let response = await makeRequestForDateRange({
+          startDate: 'startDate: "2012-10-02"',
+        })
+
+        expectEvaluationIsNotReturned(response)
+      })
+
+      const validEndDates = ['2013-01-01', '2012-10-02']
+      validEndDates.forEach(_endDate => {
+        it(`will return results for a endDate later than 2012-10-01: ${_endDate}`, async () => {
+          let response = await makeRequestForDateRange({
+            startDate: '',
+            endDate: `endDate: "${_endDate}"`,
+          })
+
+          expectEvaluationIsReturned(response)
+        })
+      })
+
+      /*
+      Because we are doing string comparisons in the database,
+      "2012-10-01" <= "2012-10-01T15:08:41" is true, but
+      "2012-10-01" >= "2012-10-01T15:08:41" is false
+      */
+      const invalidEndDates = ['2012-10-01', '2012-09-30', '2012-01-01']
+      invalidEndDates.forEach(_endDate => {
+        it(`will not return results for a endDate earlier than or equal to 2012-10-01: ${_endDate}`, async () => {
+          let response = await makeRequestForDateRange({
+            startDate: '',
+            endDate: `endDate: "${_endDate}"`,
+          })
+
+          expectEvaluationIsNotReturned(response)
+        })
+      })
+
+      it(`will return results if both a valid startDate and endDate are submitted`, async () => {
+        let response = await makeRequestForDateRange({
+          startDate: 'startDate: "2012-10-01"',
+          endDate: 'endDate: "2012-10-02"',
+        })
+
+        expectEvaluationIsReturned(response)
+      })
+
+      it(`will return an error if the startDate and the endDate are equal to each other`, async () => {
+        let response = await makeRequestForDateRange({
+          startDate: 'startDate: "2012-10-01"',
+          endDate: 'endDate: "2012-10-01"',
+        })
+
+        expect(response.body.data.dwellings).toBe(null)
+        expect(response.body.errors[0].message).toEqual(
+          "The 'endDate' cannot be equal to or earlier than the 'startDate'.",
+        )
+        // status code is 200 for errors we throw manually
+        expect(response.status).toBe(200)
+      })
+
+      it(`will return an error if the startDate comes after the endDate`, async () => {
+        let response = await makeRequestForDateRange({
+          startDate: 'startDate: "2012-10-02"',
+          endDate: 'endDate: "2012-10-01"',
+        })
+
+        expect(response.body.data.dwellings).toBe(null)
+        expect(response.body.errors[0].message).toEqual(
+          "The 'endDate' cannot be equal to or earlier than the 'startDate'.",
+        )
+        // status code is 200 for errors we throw manually
+        expect(response.status).toBe(200)
+      })
+
+      it(`will return an error if neither a startDate or endDate is submitted`, async () => {
+        let response = await makeRequestForDateRange({
+          startDate: '',
+          endDate: '',
+        })
+
+        expect(response.body.data.dwellings).toBe(null)
+        expect(response.body.errors[0].message).toEqual(
+          "A 'dateRange' must include a 'startDate' or an 'endDate'.",
+        )
+        // status code is 200 for errors we throw manually
+        expect(response.status).toBe(200)
+      })
+
+      const invalidDates = [
+        'not a date',
+        1,
+        true,
+        '2012-10-01T15:08:41', // timestamp is not a valid YYYY-MM-DD string
+        '2012/10/01', // slashes used instead of dashes
+        '2012-09-31', // September 31st isn't a date
+        '2012-31-12', // Month and day are reversed
+      ]
+      invalidDates.forEach(_invalidDate => {
+        it(`will throw a validation error if an invalid date is submitted: ${_invalidDate}`, async () => {
+          let response = await makeRequestForDateRange({
+            startDate: `startDate: "${_invalidDate}"`,
+          })
+
+          expect(response.body.errors[0].message).toContain(
+            'Expected type Date',
+          )
+          expect(response.status).toBe(400)
         })
       })
     })

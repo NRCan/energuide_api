@@ -12,7 +12,6 @@
     "build": "babel src --copy-files --out-dir dist",
     "dockerize": "yarn build && docker build -t cdssnc/nrcan_api .",
     "dbg": "node --inspect-brk node_modules/jest/bin/jest.js",
-    "extract": "lingui extract",
     "extract": "./node_modules/lingui-cli/dist/lingui.js extract",
     "compile": "./node_modules/lingui-cli/dist/lingui.js compile",
     "lint": "eslint src/** test/** --ignore-pattern src/locale",
@@ -33,6 +32,7 @@
     "express": "^4.16.2",
     "express-request-language": "^1.1.15",
     "graphql": "^0.13.1",
+    "graphql-iso-date": "^3.5.0",
     "lingui-i18n": "^1.3.3",
     "mongo-cursor-pagination": "^6.2.0",
     "mongodb": "^3.0.2"
