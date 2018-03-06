@@ -1,0 +1,122 @@
+{
+  "A floor below ground that represents the usable area of the house": {
+    "origin": [
+      [
+        "src/schema/types/FoundationFloor.js",
+        3
+      ]
+    ]
+  },
+  "Type of foundation floor (en)": {
+    "origin": [
+      [
+        "src/schema/types/FoundationFloor.js",
+        5
+      ]
+    ]
+  },
+  "Type of foundation floor (fr)": {
+    "origin": [
+      [
+        "src/schema/types/FoundationFloor.js",
+        7
+      ]
+    ]
+  },
+  "The insulation nominal RSI (R-value Systeme International) of the foundation floor": {
+    "origin": [
+      [
+        "src/schema/types/FoundationFloor.js",
+        9
+      ]
+    ]
+  },
+  "The insulation nominal R-value of the foundation floor": {
+    "origin": [
+      [
+        "src/schema/types/FoundationFloor.js",
+        11
+      ]
+    ]
+  },
+  "The insulation effective RSI (R-value Systeme International) of the foundation floor": {
+    "origin": [
+      [
+        "src/schema/types/FoundationFloor.js",
+        13
+      ]
+    ]
+  },
+  "The insulation effective R-value of the foundation floor": {
+    "origin": [
+      [
+        "src/schema/types/FoundationFloor.js",
+        15
+      ]
+    ]
+  },
+  "The area in square metres (m2) of the foundation floor": {
+    "origin": [
+      [
+        "src/schema/types/FoundationFloor.js",
+        17
+      ]
+    ]
+  },
+  "The area in square feet (ft2) of the foundation floor": {
+    "origin": [
+      [
+        "src/schema/types/FoundationFloor.js",
+        19
+      ]
+    ]
+  },
+  "The perimeter of the foundation floor in metres (m)": {
+    "origin": [
+      [
+        "src/schema/types/FoundationFloor.js",
+        21
+      ]
+    ]
+  },
+  "The perimeter of the foundation floor in feet (ft)": {
+    "origin": [
+      [
+        "src/schema/types/FoundationFloor.js",
+        23
+      ]
+    ]
+  },
+  "The width in metres (m) of the foundation floor": {
+    "origin": [
+      [
+        "src/schema/types/FoundationFloor.js",
+        25
+      ]
+    ]
+  },
+  "The width in feet (ft) of the foundation floor": {
+    "origin": [
+      [
+        "src/schema/types/FoundationFloor.js",
+        27
+      ]
+    ]
+  },
+  "The length in metres (m) of the foundation floor": {
+    "origin": [
+      [
+        "src/schema/types/FoundationFloor.js",
+        29
+      ]
+    ]
+  },
+  "The length in feet (ft) of the foundation floor": {
+    "origin": [
+      [
+        "src/schema/types/FoundationFloor.js",
+        31
+      ]
+    ]
+  }
+}

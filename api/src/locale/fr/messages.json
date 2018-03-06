@@ -1,9 +1,989 @@
 {
+  "Filter by dwellings containing evaluations that were entered, created, or modified between a range of dates": {
+    "translation": "",
+    "origin": [
+      [
+        "src/schema/index.js",
+        38
+      ]
+    ]
+  },
+  "Name of the date field results will be filtered by": {
+    "translation": "",
+    "origin": [
+      [
+        "src/schema/index.js",
+        40
+      ]
+    ]
+  },
+  "Evaluation dates must be equal to or later than this value": {
+    "translation": "",
+    "origin": [
+      [
+        "src/schema/index.js",
+        42
+      ]
+    ]
+  },
+  "Evaluation dates must be equal to or earlier than this value": {
+    "translation": "",
+    "origin": [
+      [
+        "src/schema/index.js",
+        44
+      ]
+    ]
+  },
+  "The details of the foundation": {
+    "translation": "",
+    "origin": [
+      [
+        "src/schema/index.js",
+        316
+      ]
+    ]
+  },
+  "The Energyguide Rating calculated for this evaluation": {
+    "translation": "",
+    "origin": [
+      [
+        "src/schema/index.js",
+        318
+      ]
+    ]
+  },
+  "An ISO date value, formatted 'YYYY-MM-DD'": {
+    "translation": "",
+    "origin": [
+      [
+        "src/schema/index.js",
+        346
+      ]
+    ]
+  },
+  "Filter results by the dwellings containing at least one evaluation with a specific entry date": {
+    "translation": "",
+    "origin": [
+      [
+        "src/schema/index.js",
+        348
+      ]
+    ]
+  },
+  "Filter results by the dwellings containing at least one evaluation with a specific record creation date": {
+    "translation": "",
+    "origin": [
+      [
+        "src/schema/index.js",
+        350
+      ]
+    ]
+  },
+  "Filter results by the dwellings containing at least one evaluation with a specific record modification date": {
+    "translation": "",
+    "origin": [
+      [
+        "src/schema/index.js",
+        352
+      ]
+    ]
+  },
+  "Filter results by the dwellings containing at least one evaluation with a specific evaluation type code": {
+    "translation": "",
+    "origin": [
+      [
+        "src/schema/index.js",
+        367
+      ]
+    ]
+  },
+  "Filter results by the dwellings containing at least one evaluation with a specific evaluation ID": {
+    "translation": "",
+    "origin": [
+      [
+        "src/schema/index.js",
+        369
+      ]
+    ]
+  },
+  "Filter results by the dwellings containing at least one evaluation with a specific ERS rating": {
+    "translation": "",
+    "origin": [
+      [
+        "src/schema/index.js",
+        371
+      ]
+    ]
+  },
+  "Filter results by the dwellings containing at least one door with a specific type (en)": {
+    "translation": "",
+    "origin": [
+      [
+        "src/schema/index.js",
+        493
+      ]
+    ]
+  },
+  "Filter results by the dwellings containing at least one door with a specific type (fr)": {
+    "translation": "",
+    "origin": [
+      [
+        "src/schema/index.js",
+        495
+      ]
+    ]
+  },
+  "Filter results by the dwellings where at least one door has a specific RSI (R-value Systeme International) value": {
+    "translation": "",
+    "origin": [
+      [
+        "src/schema/index.js",
+        497
+      ]
+    ]
+  },
+  "Filter results by the dwellings containing at least one door with a specific effective R-value": {
+    "translation": "",
+    "origin": [
+      [
+        "src/schema/index.js",
+        499
+      ]
+    ]
+  },
+  "Filter results for dwellings which have at least one door with a matching U-factor in metric: Watts per square metre per degree Celcius (W/m2C)": {
+    "translation": "",
+    "origin": [
+      [
+        "src/schema/index.js",
+        501
+      ]
+    ]
+  },
+  "Filter results for dwellings which have at least one door with a matching U-factor in imperial: British Thermal Units per square feet per degree Fahrenheit (BTU/ft2 F)": {
+    "translation": "",
+    "origin": [
+      [
+        "src/schema/index.js",
+        503
+      ]
+    ]
+  },
+  "Filter results by dwellings where the area of the doors have certain value in square metres (m2)": {
+    "translation": "",
+    "origin": [
+      [
+        "src/schema/index.js",
+        505
+      ]
+    ]
+  },
+  "Filter results by dwellings where the area of the doors have certain value in square feet (ft2)": {
+    "translation": "",
+    "origin": [
+      [
+        "src/schema/index.js",
+        507
+      ]
+    ]
+  },
+  "Filter results by dwellings have window with a matching label": {
+    "translation": "",
+    "origin": [
+      [
+        "src/schema/index.js",
+        509
+      ]
+    ]
+  },
+  "Filter results by dwellings with a specific window RSI (R-value Systeme International)": {
+    "translation": "",
+    "origin": [
+      [
+        "src/schema/index.js",
+        511
+      ]
+    ]
+  },
+  "Filter results by dwellings with a specific window R-value": {
+    "translation": "",
+    "origin": [
+      [
+        "src/schema/index.js",
+        513
+      ]
+    ]
+  },
+  "Filter results by dwellings with a matching number of panes of transparent material in a window (en)": {
+    "translation": "",
+    "origin": [
+      [
+        "src/schema/index.js",
+        515
+      ]
+    ]
+  },
+  "Filter results by dwellings with a matching number of panes of transparent material in a window (fr)": {
+    "translation": "",
+    "origin": [
+      [
+        "src/schema/index.js",
+        517
+      ]
+    ]
+  },
+  "Filter results for dwellings with a specific type of coating and tint on a window pane (en)": {
+    "translation": "",
+    "origin": [
+      [
+        "src/schema/index.js",
+        519
+      ]
+    ]
+  },
+  "Filter results for dwellings with a specific type of coating and tint on a window pane (fr)": {
+    "translation": "",
+    "origin": [
+      [
+        "src/schema/index.js",
+        521
+      ]
+    ]
+  },
+  "Filter results for dwellings with windows containing a specific type of gas injected between the glass layers (en)": {
+    "translation": "",
+    "origin": [
+      [
+        "src/schema/index.js",
+        523
+      ]
+    ]
+  },
+  "Filter results for dwellings with windows containing a specific type of gas injected between the glass layers (fr)": {
+    "translation": "",
+    "origin": [
+      [
+        "src/schema/index.js",
+        525
+      ]
+    ]
+  },
+  "Filter results for dwellings with a specific spacer system used between the glass layers (en)": {
+    "translation": "",
+    "origin": [
+      [
+        "src/schema/index.js",
+        527
+      ]
+    ]
+  },
+  "Filter results for dwellings with a specific spacer system used between the glass layers (fr)": {
+    "translation": "",
+    "origin": [
+      [
+        "src/schema/index.js",
+        529
+      ]
+    ]
+  },
+  "Filter results for dwellings with a particular type of window construction (en)": {
+    "translation": "",
+    "origin": [
+      [
+        "src/schema/index.js",
+        531
+      ]
+    ]
+  },
+  "Filter results for dwellings with a particular type of window construction (fr)": {
+    "translation": "",
+    "origin": [
+      [
+        "src/schema/index.js",
+        533
+      ]
+    ]
+  },
+  "Filter results for dwellings with window frames matching a specific material (en)": {
+    "translation": "",
+    "origin": [
+      [
+        "src/schema/index.js",
+        535
+      ]
+    ]
+  },
+  "Filter results for dwellings with window frames matching a specific material (fr)": {
+    "translation": "",
+    "origin": [
+      [
+        "src/schema/index.js",
+        537
+      ]
+    ]
+  },
+  "Filter results for dwellings with a window matching a specific area in square metres (m2)": {
+    "translation": "",
+    "origin": [
+      [
+        "src/schema/index.js",
+        539
+      ]
+    ]
+  },
+  "Filter results for dwellings with a window matching a specific area in square feet (ft2)": {
+    "translation": "",
+    "origin": [
+      [
+        "src/schema/index.js",
+        541
+      ]
+    ]
+  },
+  "Filter results for dwellings with a window matching a specific width in metres (m)": {
+    "translation": "",
+    "origin": [
+      [
+        "src/schema/index.js",
+        543
+      ]
+    ]
+  },
+  "Filter results for dwellings with a window matching a specific width in feet (ft)": {
+    "translation": "",
+    "origin": [
+      [
+        "src/schema/index.js",
+        545
+      ]
+    ]
+  },
+  "Filter results for dwellings with a window matching a specific height in metres (m)": {
+    "translation": "",
+    "origin": [
+      [
+        "src/schema/index.js",
+        547
+      ]
+    ]
+  },
+  "Filter results for dwellings with a window matching a specific height in feet (ft)": {
+    "translation": "",
+    "origin": [
+      [
+        "src/schema/index.js",
+        549
+      ]
+    ]
+  },
+  "Filter results for dwellings with matching foundation type (en)": {
+    "translation": "",
+    "origin": [
+      [
+        "src/schema/index.js",
+        551
+      ]
+    ]
+  },
+  "Filter results for dwellings with matching foundation type (fr)": {
+    "translation": "",
+    "origin": [
+      [
+        "src/schema/index.js",
+        553
+      ]
+    ]
+  },
+  "Filter results for dwellings with a specific foundation label": {
+    "translation": "",
+    "origin": [
+      [
+        "src/schema/index.js",
+        555
+      ]
+    ]
+  },
+  "Filter results for dwellings with a specific foundation configuration": {
+    "translation": "",
+    "origin": [
+      [
+        "src/schema/index.js",
+        557
+      ]
+    ]
+  },
+  "Filter results for dwellings whose foundation was constructed with a specific material (en)": {
+    "translation": "",
+    "origin": [
+      [
+        "src/schema/index.js",
+        559
+      ],
+      [
+        "src/schema/index.js",
+        561
+      ]
+    ]
+  },
+  "Filter results for dwellings wiht a specific foundation header insulation nominal RSI (R-value Systeme International)": {
+    "translation": "",
+    "origin": [
+      [
+        "src/schema/index.js",
+        563
+      ]
+    ]
+  },
+  "Filter results for dwellings with a specific foundation header insulation nominal R-value": {
+    "translation": "",
+    "origin": [
+      [
+        "src/schema/index.js",
+        565
+      ]
+    ]
+  },
+  "Filter results for dwellings with a specific foundation header insulation effective RSI (R-value Systeme International)": {
+    "translation": "",
+    "origin": [
+      [
+        "src/schema/index.js",
+        567
+      ]
+    ]
+  },
+  "Filter results for dwellings with a specific foundationn header insulation effective R-value": {
+    "translation": "",
+    "origin": [
+      [
+        "src/schema/index.js",
+        569
+      ]
+    ]
+  },
+  "Filter results for dwellings with a specific foundation header area in square metres (m2)": {
+    "translation": "",
+    "origin": [
+      [
+        "src/schema/index.js",
+        571
+      ]
+    ]
+  },
+  "Filter results for dwellings with a specific foundation header area in square feet (ft2)": {
+    "translation": "",
+    "origin": [
+      [
+        "src/schema/index.js",
+        573
+      ]
+    ]
+  },
+  "Filter results for dwellings with a specific foundation header perimeter in metres (m)": {
+    "translation": "",
+    "origin": [
+      [
+        "src/schema/index.js",
+        575
+      ]
+    ]
+  },
+  "Filter results for dwellings with a specific foundation header perimeter in feet (ft)": {
+    "translation": "",
+    "origin": [
+      [
+        "src/schema/index.js",
+        577
+      ]
+    ]
+  },
+  "Filter results for dwellings with a specific foundation header height in metres (m)": {
+    "translation": "",
+    "origin": [
+      [
+        "src/schema/index.js",
+        579
+      ]
+    ]
+  },
+  "Filter results for dwellings with a specific header height in feet (ft)": {
+    "translation": "",
+    "origin": [
+      [
+        "src/schema/index.js",
+        581
+      ]
+    ]
+  },
+  "Filter for dwellings with a specific type of foundation floor type (en)": {
+    "translation": "",
+    "origin": [
+      [
+        "src/schema/index.js",
+        583
+      ]
+    ]
+  },
+  "Filter for dwellings with a specific type of foundation floor type (fr)": {
+    "translation": "",
+    "origin": [
+      [
+        "src/schema/index.js",
+        585
+      ]
+    ]
+  },
+  "Filter for dwellings where the foundation floor has a specific insulation nominal RSI (R-value Systeme International)": {
+    "translation": "",
+    "origin": [
+      [
+        "src/schema/index.js",
+        587
+      ]
+    ]
+  },
+  "Filter for dwellings with a specific insulation nominal R-value on the foundation floor": {
+    "translation": "",
+    "origin": [
+      [
+        "src/schema/index.js",
+        589
+      ]
+    ]
+  },
+  "Filter for dwellings with a specific insulation effective RSI (R-value Systeme International) for the foundation floor": {
+    "translation": "",
+    "origin": [
+      [
+        "src/schema/index.js",
+        591
+      ]
+    ]
+  },
+  "Filter for dwellings with a specific insulation effective R-value for the foundation floor": {
+    "translation": "",
+    "origin": [
+      [
+        "src/schema/index.js",
+        593
+      ]
+    ]
+  },
+  "Filter for dwellings where the foundation floor has a specific area in square metres (m2)": {
+    "translation": "",
+    "origin": [
+      [
+        "src/schema/index.js",
+        595
+      ]
+    ]
+  },
+  "Filter for dwellings where the foundation floor has a specific area in square feet (ft2)": {
+    "translation": "",
+    "origin": [
+      [
+        "src/schema/index.js",
+        597
+      ]
+    ]
+  },
+  "Filter for dwellings where the foundation floor has a specific perimeter in metres (m)": {
+    "translation": "",
+    "origin": [
+      [
+        "src/schema/index.js",
+        599
+      ]
+    ]
+  },
+  "Filter for dwellings where the foundation floor has a specific perimeter in feet (ft)": {
+    "translation": "",
+    "origin": [
+      [
+        "src/schema/index.js",
+        601
+      ]
+    ]
+  },
+  "Filter for dwellings where the foundation floor has a specific width in metres (m)": {
+    "translation": "",
+    "origin": [
+      [
+        "src/schema/index.js",
+        603
+      ]
+    ]
+  },
+  "Filter for dwellings where the foundation floor has a specific width in feet (ft)": {
+    "translation": "",
+    "origin": [
+      [
+        "src/schema/index.js",
+        605
+      ]
+    ]
+  },
+  "Filter for dwellings where the foundation floor has a specific length in metres (m)": {
+    "translation": "",
+    "origin": [
+      [
+        "src/schema/index.js",
+        607
+      ]
+    ]
+  },
+  "Filter for dwellings where the foundation floor has a specific length in feet (ft)": {
+    "translation": "",
+    "origin": [
+      [
+        "src/schema/index.js",
+        609
+      ]
+    ]
+  },
+  "Filter results for dwellings whose foundation wall has a specific type (en)": {
+    "translation": "",
+    "origin": [
+      [
+        "src/schema/index.js",
+        611
+      ]
+    ]
+  },
+  "Filter results for dwellings whose foundation wall has a specific type (fr)": {
+    "translation": "",
+    "origin": [
+      [
+        "src/schema/index.js",
+        613
+      ]
+    ]
+  },
+  "Filter results for dwellings with a specific foundation wall insulation nominal RSI (R-value Systeme International)": {
+    "translation": "",
+    "origin": [
+      [
+        "src/schema/index.js",
+        615
+      ]
+    ]
+  },
+  "Filter results for dwellings with a specific foundation wall insulation nominal R-value": {
+    "translation": "",
+    "origin": [
+      [
+        "src/schema/index.js",
+        617
+      ]
+    ]
+  },
+  "Filter results for dwellings with a specific foundation wall insulation effective RSI (R-value Systeme International)": {
+    "translation": "",
+    "origin": [
+      [
+        "src/schema/index.js",
+        619
+      ]
+    ]
+  },
+  "Filter results for dwellings with a specific foundation wall insulation effective R-value": {
+    "translation": "",
+    "origin": [
+      [
+        "src/schema/index.js",
+        621
+      ]
+    ]
+  },
+  "Filter results for dwellings with a section of it's foundation wall with a specific percentage of the overall amount": {
+    "translation": "",
+    "origin": [
+      [
+        "src/schema/index.js",
+        623
+      ]
+    ]
+  },
+  "Filter results for dwellings with a foundation wall has specific area in square metres (m2)": {
+    "translation": "",
+    "origin": [
+      [
+        "src/schema/index.js",
+        625
+      ]
+    ]
+  },
+  "Filter results for dwellings with a foundation wall has specific area in square feet (ft)": {
+    "translation": "",
+    "origin": [
+      [
+        "src/schema/index.js",
+        627
+      ]
+    ]
+  },
+  "A 'dateRange' must include a 'startDate' or an 'endDate'.": {
+    "translation": "",
+    "origin": [
+      [
+        "src/schema/resolvers.js",
+        202
+      ]
+    ]
+  },
+  "The 'endDate' cannot be equal to or earlier than the 'startDate'.": {
+    "translation": "",
+    "origin": [
+      [
+        "src/schema/resolvers.js",
+        214
+      ]
+    ]
+  },
+  "The lowest load-bearing part of a dwelling": {
+    "translation": "",
+    "origin": [
+      [
+        "src/schema/types/Foundation.js",
+        3
+      ]
+    ]
+  },
+  "The type of foundation (en)": {
+    "translation": "",
+    "origin": [
+      [
+        "src/schema/types/Foundation.js",
+        5
+      ]
+    ]
+  },
+  "The type of foundation (fr)": {
+    "translation": "",
+    "origin": [
+      [
+        "src/schema/types/Foundation.js",
+        7
+      ]
+    ]
+  },
+  "A descriptive label for the foundation": {
+    "translation": "",
+    "origin": [
+      [
+        "src/schema/types/Foundation.js",
+        9
+      ]
+    ]
+  },
+  "The type of configuration for the foundation": {
+    "translation": "",
+    "origin": [
+      [
+        "src/schema/types/Foundation.js",
+        11
+      ]
+    ]
+  },
+  "The material used in the construction of this foundation (en)": {
+    "translation": "",
+    "origin": [
+      [
+        "src/schema/types/Foundation.js",
+        13
+      ]
+    ]
+  },
+  "The material used in the construction of this foundation (fr)": {
+    "translation": "",
+    "origin": [
+      [
+        "src/schema/types/Foundation.js",
+        15
+      ]
+    ]
+  },
+  "The details of the floors associated with this foundation": {
+    "translation": "",
+    "origin": [
+      [
+        "src/schema/types/Foundation.js",
+        17
+      ]
+    ]
+  },
+  "The details of the walls associated with this foundation": {
+    "translation": "",
+    "origin": [
+      [
+        "src/schema/types/Foundation.js",
+        19
+      ]
+    ]
+  },
+  "The details of the foundationn header": {
+    "translation": "",
+    "origin": [
+      [
+        "src/schema/types/Foundation.js",
+        21
+      ]
+    ]
+  },
+  "A floor below ground that represents the usable area of the house": {
+    "translation": "",
+    "origin": [
+      [
+        "src/schema/types/FoundationFloor.js",
+        3
+      ]
+    ]
+  },
+  "Type of foundation floor (en)": {
+    "translation": "",
+    "origin": [
+      [
+        "src/schema/types/FoundationFloor.js",
+        5
+      ]
+    ]
+  },
+  "Type of foundation floor (fr)": {
+    "translation": "",
+    "origin": [
+      [
+        "src/schema/types/FoundationFloor.js",
+        7
+      ]
+    ]
+  },
+  "The insulation nominal RSI (R-value Systeme International) of the foundation floor": {
+    "translation": "",
+    "origin": [
+      [
+        "src/schema/types/FoundationFloor.js",
+        9
+      ]
+    ]
+  },
+  "The insulation nominal R-value of the foundation floor": {
+    "translation": "",
+    "origin": [
+      [
+        "src/schema/types/FoundationFloor.js",
+        11
+      ]
+    ]
+  },
+  "The insulation effective RSI (R-value Systeme International) of the foundation floor": {
+    "translation": "",
+    "origin": [
+      [
+        "src/schema/types/FoundationFloor.js",
+        13
+      ]
+    ]
+  },
+  "The insulation effective R-value of the foundation floor": {
+    "translation": "",
+    "origin": [
+      [
+        "src/schema/types/FoundationFloor.js",
+        15
+      ]
+    ]
+  },
+  "The area in square metres (m2) of the foundation floor": {
+    "translation": "",
+    "origin": [
+      [
+        "src/schema/types/FoundationFloor.js",
+        17
+      ]
+    ]
+  },
+  "The area in square feet (ft2) of the foundation floor": {
+    "translation": "",
+    "origin": [
+      [
+        "src/schema/types/FoundationFloor.js",
+        19
+      ]
+    ]
+  },
+  "The perimeter of the foundation floor in metres (m)": {
+    "translation": "",
+    "origin": [
+      [
+        "src/schema/types/FoundationFloor.js",
+        21
+      ]
+    ]
+  },
+  "The perimeter of the foundation floor in feet (ft)": {
+    "translation": "",
+    "origin": [
+      [
+        "src/schema/types/FoundationFloor.js",
+        23
+      ]
+    ]
+  },
+  "The width in metres (m) of the foundation floor": {
+    "translation": "",
+    "origin": [
+      [
+        "src/schema/types/FoundationFloor.js",
+        25
+      ]
+    ]
+  },
+  "The width in feet (ft) of the foundation floor": {
+    "translation": "",
+    "origin": [
+      [
+        "src/schema/types/FoundationFloor.js",
+        27
+      ]
+    ]
+  },
+  "The length in metres (m) of the foundation floor": {
+    "translation": "",
+    "origin": [
+      [
+        "src/schema/types/FoundationFloor.js",
+        29
+      ]
+    ]
+  },
+  "The length in feet (ft) of the foundation floor": {
+    "translation": "",
+    "origin": [
+      [
+        "src/schema/types/FoundationFloor.js",
+        31
+      ]
+    ]
+  },
+  "'A date string, such as 2007-12-03, compliant with the 'full-date' format outlined in section 5.6 of the RFC 3339 profile of the ISO 8601 standard for representation of dates and times using the Gregorian calendar.'": {
+    "translation": "",
+    "origin": [
+      [
+        "src/schema/types/I18NDate.js",
+        5
+      ]
+    ]
+  },
   "Header insulation nominal RSI (R-value Systeme International)": {
     "translation": "Valeur nominale RSI (valeur R Système international) de l'isolation du linterau",
     "origin": [
       [
         "src/schema/Header.js",
+        4
+      ],
+      [
+        "src/schema/types/Header.js",
         4
       ]
     ]
@@ -14,6 +994,10 @@
       [
         "src/schema/Header.js",
         6
+      ],
+      [
+        "src/schema/types/Header.js",
+        6
       ]
     ]
   },
@@ -22,6 +1006,10 @@
     "origin": [
       [
         "src/schema/Header.js",
+        8
+      ],
+      [
+        "src/schema/types/Header.js",
         8
       ]
     ]
@@ -32,6 +1020,10 @@
       [
         "src/schema/Header.js",
         10
+      ],
+      [
+        "src/schema/types/Header.js",
+        10
       ]
     ]
   },
@@ -40,6 +1032,10 @@
     "origin": [
       [
         "src/schema/Header.js",
+        12
+      ],
+      [
+        "src/schema/types/Header.js",
         12
       ]
     ]
@@ -50,6 +1046,10 @@
       [
         "src/schema/Header.js",
         14
+      ],
+      [
+        "src/schema/types/Header.js",
+        14
       ]
     ]
   },
@@ -58,6 +1058,10 @@
     "origin": [
       [
         "src/schema/Header.js",
+        16
+      ],
+      [
+        "src/schema/types/Header.js",
         16
       ]
     ]
@@ -68,6 +1072,10 @@
       [
         "src/schema/Header.js",
         18
+      ],
+      [
+        "src/schema/types/Header.js",
+        18
       ]
     ]
   },
@@ -76,6 +1084,10 @@
     "origin": [
       [
         "src/schema/Header.js",
+        20
+      ],
+      [
+        "src/schema/types/Header.js",
         20
       ]
     ]
@@ -86,6 +1098,10 @@
       [
         "src/schema/Header.js",
         22
+      ],
+      [
+        "src/schema/types/Header.js",
+        22
       ]
     ]
   },
@@ -94,11 +1110,11 @@
     "origin": [
       [
         "src/schema/index.js",
-        12
+        18
       ],
       [
         "src/schema/index.js",
-        27
+        32
       ]
     ]
   },
@@ -107,7 +1123,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        14
+        20
       ]
     ]
   },
@@ -116,7 +1132,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        16
+        22
       ]
     ]
   },
@@ -125,7 +1141,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        18
+        24
       ]
     ]
   },
@@ -134,7 +1150,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        23
+        28
       ]
     ]
   },
@@ -143,7 +1159,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        25
+        30
       ]
     ]
   },
@@ -152,7 +1168,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        29
+        34
       ]
     ]
   },
@@ -161,7 +1177,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        33
+        48
       ]
     ]
   },
@@ -170,7 +1186,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        35
+        50
       ]
     ]
   },
@@ -179,7 +1195,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        37
+        52
       ]
     ]
   },
@@ -188,7 +1204,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        39
+        54
       ]
     ]
   },
@@ -197,7 +1213,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        43
+        58
       ]
     ]
   },
@@ -206,7 +1222,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        45
+        60
       ]
     ]
   },
@@ -215,7 +1231,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        47
+        62
       ]
     ]
   },
@@ -224,7 +1240,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        49
+        64
       ]
     ]
   },
@@ -233,7 +1249,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        51
+        66
       ]
     ]
   },
@@ -242,7 +1258,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        55
+        70
       ]
     ]
   },
@@ -251,7 +1267,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        57
+        72
       ]
     ]
   },
@@ -260,7 +1276,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        59
+        74
       ]
     ]
   },
@@ -269,7 +1285,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        61
+        76
       ]
     ]
   },
@@ -278,7 +1294,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        63
+        78
       ]
     ]
   },
@@ -287,7 +1303,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        65
+        80
       ]
     ]
   },
@@ -296,7 +1312,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        67
+        82
       ]
     ]
   },
@@ -305,11 +1321,11 @@
     "origin": [
       [
         "src/schema/index.js",
-        69
+        84
       ],
       [
         "src/schema/index.js",
-        73
+        88
       ]
     ]
   },
@@ -318,7 +1334,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        71
+        86
       ]
     ]
   },
@@ -327,7 +1343,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        77
+        92
       ]
     ]
   },
@@ -336,7 +1352,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        79
+        94
       ]
     ]
   },
@@ -345,7 +1361,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        81
+        96
       ]
     ]
   },
@@ -354,7 +1370,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        83
+        98
       ]
     ]
   },
@@ -363,7 +1379,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        85
+        100
       ]
     ]
   },
@@ -372,7 +1388,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        87
+        102
       ]
     ]
   },
@@ -381,7 +1397,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        91
+        106
       ]
     ]
   },
@@ -390,7 +1406,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        93
+        108
       ]
     ]
   },
@@ -399,7 +1415,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        95
+        110
       ]
     ]
   },
@@ -408,7 +1424,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        97
+        112
       ]
     ]
   },
@@ -417,7 +1433,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        99
+        114
       ]
     ]
   },
@@ -426,7 +1442,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        101
+        116
       ]
     ]
   },
@@ -435,7 +1451,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        103
+        118
       ]
     ]
   },
@@ -444,7 +1460,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        105
+        120
       ]
     ]
   },
@@ -453,7 +1469,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        107
+        122
       ]
     ]
   },
@@ -462,7 +1478,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        109
+        124
       ]
     ]
   },
@@ -471,7 +1487,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        111
+        126
       ]
     ]
   },
@@ -480,7 +1496,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        113
+        128
       ]
     ]
   },
@@ -489,7 +1505,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        118
+        133
       ]
     ]
   },
@@ -498,7 +1514,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        120
+        135
       ]
     ]
   },
@@ -507,7 +1523,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        122
+        137
       ]
     ]
   },
@@ -516,7 +1532,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        124
+        139
       ]
     ]
   },
@@ -525,7 +1541,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        126
+        141
       ]
     ]
   },
@@ -534,7 +1550,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        128
+        143
       ]
     ]
   },
@@ -543,7 +1559,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        132
+        147
       ]
     ]
   },
@@ -552,7 +1568,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        134
+        149
       ]
     ]
   },
@@ -561,7 +1577,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        136
+        151
       ]
     ]
   },
@@ -570,7 +1586,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        138
+        153
       ]
     ]
   },
@@ -579,7 +1595,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        140
+        155
       ]
     ]
   },
@@ -588,7 +1604,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        144
+        159
       ]
     ]
   },
@@ -597,7 +1613,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        146
+        161
       ]
     ]
   },
@@ -606,7 +1622,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        148
+        163
       ],
       [
         "src/schema/types/FoundationWall.js",
@@ -619,7 +1635,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        150
+        165
       ],
       [
         "src/schema/types/FoundationWall.js",
@@ -632,7 +1648,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        152
+        167
       ]
     ]
   },
@@ -641,7 +1657,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        154
+        169
       ]
     ]
   },
@@ -650,7 +1666,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        156
+        171
       ],
       [
         "src/schema/types/FoundationWall.js",
@@ -663,11 +1679,11 @@
     "origin": [
       [
         "src/schema/index.js",
-        158
+        173
       ],
       [
         "src/schema/index.js",
-        162
+        177
       ],
       [
         "src/schema/types/FoundationWall.js",
@@ -684,7 +1700,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        160
+        175
       ],
       [
         "src/schema/types/FoundationWall.js",
@@ -697,7 +1713,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        164
+        179
       ],
       [
         "src/schema/types/FoundationWall.js",
@@ -710,7 +1726,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        166
+        181
       ],
       [
         "src/schema/types/FoundationWall.js",
@@ -723,7 +1739,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        168
+        183
       ]
     ]
   },
@@ -732,7 +1748,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        170
+        185
       ]
     ]
   },
@@ -741,7 +1757,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        172
+        187
       ]
     ]
   },
@@ -750,7 +1766,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        174
+        189
       ]
     ]
   },
@@ -759,7 +1775,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        178
+        193
       ]
     ]
   },
@@ -768,7 +1784,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        180
+        195
       ]
     ]
   },
@@ -777,7 +1793,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        182
+        197
       ]
     ]
   },
@@ -786,7 +1802,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        184
+        199
       ]
     ]
   },
@@ -795,7 +1811,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        186
+        201
       ]
     ]
   },
@@ -804,7 +1820,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        188
+        203
       ]
     ]
   },
@@ -813,7 +1829,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        190
+        205
       ]
     ]
   },
@@ -822,7 +1838,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        192
+        207
       ]
     ]
   },
@@ -831,7 +1847,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        194
+        209
       ]
     ]
   },
@@ -840,7 +1856,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        198
+        213
       ]
     ]
   },
@@ -849,7 +1865,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        200
+        215
       ]
     ]
   },
@@ -858,7 +1874,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        202
+        217
       ]
     ]
   },
@@ -867,7 +1883,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        204
+        219
       ]
     ]
   },
@@ -876,7 +1892,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        206
+        221
       ]
     ]
   },
@@ -885,7 +1901,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        208
+        223
       ]
     ]
   },
@@ -894,7 +1910,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        210
+        225
       ]
     ]
   },
@@ -903,7 +1919,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        212
+        227
       ]
     ]
   },
@@ -912,7 +1928,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        214
+        229
       ]
     ]
   },
@@ -921,7 +1937,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        216
+        231
       ]
     ]
   },
@@ -930,7 +1946,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        218
+        233
       ]
     ]
   },
@@ -939,7 +1955,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        220
+        235
       ]
     ]
   },
@@ -948,7 +1964,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        222
+        237
       ]
     ]
   },
@@ -957,7 +1973,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        224
+        239
       ]
     ]
   },
@@ -966,7 +1982,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        226
+        241
       ]
     ]
   },
@@ -975,7 +1991,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        228
+        243
       ]
     ]
   },
@@ -984,7 +2000,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        230
+        245
       ]
     ]
   },
@@ -993,7 +2009,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        232
+        247
       ]
     ]
   },
@@ -1002,7 +2018,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        234
+        249
       ]
     ]
   },
@@ -1011,7 +2027,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        236
+        251
       ]
     ]
   },
@@ -1020,7 +2036,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        238
+        253
       ]
     ]
   },
@@ -1029,7 +2045,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        240
+        255
       ]
     ]
   },
@@ -1038,7 +2054,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        244
+        259
       ]
     ]
   },
@@ -1047,7 +2063,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        246
+        261
       ]
     ]
   },
@@ -1056,7 +2072,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        248
+        263
       ]
     ]
   },
@@ -1065,7 +2081,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        250
+        265
       ]
     ]
   },
@@ -1074,7 +2090,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        252
+        267
       ]
     ]
   },
@@ -1083,7 +2099,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        254
+        269
       ]
     ]
   },
@@ -1092,7 +2108,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        256
+        271
       ]
     ]
   },
@@ -1101,7 +2117,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        258
+        273
       ]
     ]
   },
@@ -1110,7 +2126,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        260
+        275
       ]
     ]
   },
@@ -1119,7 +2135,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        262
+        277
       ]
     ]
   },
@@ -1128,7 +2144,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        264
+        279
       ]
     ]
   },
@@ -1137,7 +2153,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        266
+        281
       ]
     ]
   },
@@ -1146,7 +2162,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        270
+        285
       ]
     ]
   },
@@ -1155,7 +2171,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        272
+        287
       ]
     ]
   },
@@ -1164,7 +2180,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        274
+        289
       ]
     ]
   },
@@ -1173,7 +2189,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        276
+        292
       ]
     ]
   },
@@ -1182,7 +2198,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        278
+        294
       ]
     ]
   },
@@ -1191,7 +2207,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        280
+        296
       ]
     ]
   },
@@ -1200,7 +2216,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        282
+        298
       ]
     ]
   },
@@ -1209,7 +2225,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        284
+        300
       ]
     ]
   },
@@ -1218,7 +2234,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        286
+        302
       ]
     ]
   },
@@ -1227,7 +2243,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        288
+        304
       ]
     ]
   },
@@ -1236,7 +2252,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        290
+        306
       ]
     ]
   },
@@ -1245,7 +2261,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        292
+        308
       ]
     ]
   },
@@ -1254,7 +2270,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        294
+        310
       ]
     ]
   },
@@ -1263,7 +2279,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        296
+        312
       ]
     ]
   },
@@ -1272,16 +2288,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        298
-      ]
-    ]
-  },
-  "The EnerGuide Rating calculated for this evaluation": {
-    "translation": "La cote EnerGuide calculée pour cette évaluation",
-    "origin": [
-      [
-        "src/schema/index.js",
-        300
+        314
       ]
     ]
   },
@@ -1290,7 +2297,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        304
+        322
       ]
     ]
   },
@@ -1299,7 +2306,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        306
+        324
       ]
     ]
   },
@@ -1308,7 +2315,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        308
+        326
       ]
     ]
   },
@@ -1317,7 +2324,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        310
+        328
       ]
     ]
   },
@@ -1326,7 +2333,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        312
+        330
       ]
     ]
   },
@@ -1335,7 +2342,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        314
+        332
       ]
     ]
   },
@@ -1344,7 +2351,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        316
+        334
       ]
     ]
   },
@@ -1353,7 +2360,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        320
+        338
       ]
     ]
   },
@@ -1362,7 +2369,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        322
+        340
       ]
     ]
   },
@@ -1371,7 +2378,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        324
+        342
       ]
     ]
   },
@@ -1380,7 +2387,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        329
+        357
       ]
     ]
   },
@@ -1389,7 +2396,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        331
+        359
       ]
     ]
   },
@@ -1398,7 +2405,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        333
+        361
       ]
     ]
   },
@@ -1407,7 +2414,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        335
+        363
       ]
     ]
   },
@@ -1416,7 +2423,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        337
+        365
       ]
     ]
   },
@@ -1425,7 +2432,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        339
+        373
       ]
     ]
   },
@@ -1434,7 +2441,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        341
+        375
       ]
     ]
   },
@@ -1443,7 +2450,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        343
+        377
       ]
     ]
   },
@@ -1452,7 +2459,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        345
+        379
       ]
     ]
   },
@@ -1461,7 +2468,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        347
+        381
       ]
     ]
   },
@@ -1470,7 +2477,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        349
+        383
       ]
     ]
   },
@@ -1479,7 +2486,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        351
+        385
       ]
     ]
   },
@@ -1488,7 +2495,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        353
+        387
       ]
     ]
   },
@@ -1497,11 +2504,11 @@
     "origin": [
       [
         "src/schema/index.js",
-        355
+        389
       ],
       [
         "src/schema/index.js",
-        357
+        391
       ]
     ]
   },
@@ -1510,7 +2517,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        359
+        393
       ]
     ]
   },
@@ -1519,7 +2526,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        361
+        395
       ]
     ]
   },
@@ -1528,7 +2535,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        363
+        397
       ]
     ]
   },
@@ -1537,7 +2544,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        365
+        399
       ]
     ]
   },
@@ -1546,7 +2553,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        367
+        401
       ]
     ]
   },
@@ -1555,7 +2562,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        369
+        403
       ]
     ]
   },
@@ -1564,7 +2571,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        371
+        405
       ]
     ]
   },
@@ -1573,7 +2580,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        373
+        407
       ]
     ]
   },
@@ -1582,7 +2589,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        375
+        409
       ]
     ]
   },
@@ -1591,7 +2598,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        377
+        411
       ]
     ]
   },
@@ -1600,7 +2607,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        379
+        413
       ]
     ]
   },
@@ -1609,7 +2616,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        381
+        415
       ]
     ]
   },
@@ -1618,7 +2625,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        383
+        417
       ]
     ]
   },
@@ -1627,7 +2634,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        385
+        419
       ]
     ]
   },
@@ -1636,7 +2643,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        387
+        421
       ]
     ]
   },
@@ -1645,7 +2652,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        389
+        423
       ]
     ]
   },
@@ -1654,7 +2661,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        391
+        425
       ]
     ]
   },
@@ -1663,7 +2670,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        393
+        427
       ]
     ]
   },
@@ -1672,7 +2679,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        395
+        429
       ]
     ]
   },
@@ -1681,7 +2688,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        397
+        431
       ]
     ]
   },
@@ -1690,7 +2697,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        399
+        433
       ]
     ]
   },
@@ -1699,7 +2706,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        401
+        435
       ]
     ]
   },
@@ -1708,7 +2715,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        403
+        437
       ]
     ]
   },
@@ -1717,7 +2724,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        405
+        439
       ]
     ]
   },
@@ -1726,7 +2733,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        407
+        441
       ]
     ]
   },
@@ -1735,7 +2742,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        409
+        443
       ]
     ]
   },
@@ -1744,7 +2751,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        411
+        445
       ]
     ]
   },
@@ -1753,7 +2760,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        413
+        447
       ]
     ]
   },
@@ -1762,7 +2769,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        415
+        449
       ]
     ]
   },
@@ -1771,7 +2778,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        417
+        451
       ]
     ]
   },
@@ -1780,7 +2787,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        419
+        453
       ]
     ]
   },
@@ -1789,7 +2796,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        421
+        455
       ]
     ]
   },
@@ -1798,7 +2805,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        423
+        457
       ]
     ]
   },
@@ -1807,7 +2814,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        425
+        459
       ]
     ]
   },
@@ -1816,7 +2823,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        427
+        461
       ]
     ]
   },
@@ -1825,7 +2832,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        429
+        463
       ]
     ]
   },
@@ -1834,7 +2841,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        431
+        465
       ]
     ]
   },
@@ -1843,7 +2850,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        433
+        467
       ]
     ]
   },
@@ -1852,7 +2859,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        435
+        469
       ]
     ]
   },
@@ -1861,7 +2868,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        437
+        471
       ]
     ]
   },
@@ -1870,7 +2877,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        439
+        473
       ]
     ]
   },
@@ -1879,7 +2886,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        441
+        475
       ]
     ]
   },
@@ -1888,7 +2895,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        443
+        477
       ]
     ]
   },
@@ -1897,7 +2904,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        445
+        479
       ]
     ]
   },
@@ -1906,7 +2913,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        447
+        481
       ]
     ]
   },
@@ -1915,7 +2922,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        449
+        483
       ]
     ]
   },
@@ -1924,7 +2931,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        451
+        485
       ]
     ]
   },
@@ -1933,7 +2940,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        453
+        487
       ]
     ]
   },
@@ -1942,7 +2949,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        455
+        489
       ]
     ]
   },
@@ -1951,7 +2958,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        457
+        491
       ]
     ]
   },
@@ -1960,7 +2967,7 @@
     "origin": [
       [
         "src/schema/resolvers.js",
-        103
+        179
       ]
     ]
   },
@@ -2017,5 +3024,15 @@
         5
       ]
     ]
+  },
+  "The EnerGuide Rating calculated for this evaluation": {
+    "translation": "La cote EnerGuide calculée pour cette évaluation",
+    "origin": [
+      [
+        "src/schema/index.js",
+        300
+      ]
+    ],
+    "obsolete": true
   }
 }

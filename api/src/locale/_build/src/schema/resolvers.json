@@ -3,7 +3,23 @@
     "origin": [
       [
         "src/schema/resolvers.js",
-        103
+        179
+      ]
+    ]
+  },
+  "A 'dateRange' must include a 'startDate' or an 'endDate'.": {
+    "origin": [
+      [
+        "src/schema/resolvers.js",
+        202
+      ]
+    ]
+  },
+  "The 'endDate' cannot be equal to or earlier than the 'startDate'.": {
+    "origin": [
+      [
+        "src/schema/resolvers.js",
+        214
       ]
     ]
   }

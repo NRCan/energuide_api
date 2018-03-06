@@ -1,0 +1,82 @@
+{
+  "Header insulation nominal RSI (R-value Systeme International)": {
+    "origin": [
+      [
+        "src/schema/types/Header.js",
+        4
+      ]
+    ]
+  },
+  "Header insulation nominal R-value": {
+    "origin": [
+      [
+        "src/schema/types/Header.js",
+        6
+      ]
+    ]
+  },
+  "Header insulation effective RSI (R-value Systeme International)": {
+    "origin": [
+      [
+        "src/schema/types/Header.js",
+        8
+      ]
+    ]
+  },
+  "Header insulation effective R-value": {
+    "origin": [
+      [
+        "src/schema/types/Header.js",
+        10
+      ]
+    ]
+  },
+  "Header area in square metres (m2)": {
+    "origin": [
+      [
+        "src/schema/types/Header.js",
+        12
+      ]
+    ]
+  },
+  "Header area in square feet (ft2)": {
+    "origin": [
+      [
+        "src/schema/types/Header.js",
+        14
+      ]
+    ]
+  },
+  "Header perimeter of the house in metres (m)": {
+    "origin": [
+      [
+        "src/schema/types/Header.js",
+        16
+      ]
+    ]
+  },
+  "Header perimeter of the house in feet (ft)": {
+    "origin": [
+      [
+        "src/schema/types/Header.js",
+        18
+      ]
+    ]
+  },
+  "Header height in metres (m)": {
+    "origin": [
+      [
+        "src/schema/types/Header.js",
+        20
+      ]
+    ]
+  },
+  "Header height in feet (ft)": {
+    "origin": [
+      [
+        "src/schema/types/Header.js",
+        22
+      ]
+    ]
+  }
+}
