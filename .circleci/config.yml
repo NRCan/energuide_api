@@ -59,7 +59,7 @@ jobs:
               docker push "${DOCKER_REGISTRY}/${NAMESPACE}/nrcan_etl:${CIRCLE_SHA1}"
               docker push "${DOCKER_REGISTRY}/${NAMESPACE}/nrcan_etl:latest"
           name: "Build and Deploy ETL Docker Image"
-    working_directory: ~/repo/extract_etl
+    working_directory: ~/repo/etl
 
   etl: 
     docker: 
