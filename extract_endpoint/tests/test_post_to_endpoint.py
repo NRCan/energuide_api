@@ -29,19 +29,17 @@ def upload_url(endpoint_host: str) -> str:
 
 
 @pytest.fixture()
-def run_endpoint(azure_emulator_coords: azure_utils.StorageCoordinates,
+def run_endpoint(monkeypatch: _pytest.monkeypatch.MonkeyPatch,
+                 azure_emulator_coords: azure_utils.StorageCoordinates,
                  sample_secret_key: str,
-                 request: _pytest.fixtures.SubRequest,
                  endpoint_host: str) -> typing.Generator:
 
-    monkeysession = _pytest.monkeypatch.MonkeyPatch()
-    request.addfinalizer(monkeysession.undo)
-    monkeysession.setenv('MOCK_TL_APP', 1)
-    monkeysession.setenv('ENDPOINT_SECRET_KEY', sample_secret_key)
-    monkeysession.setenv('EXTRACT_ENDPOINT_STORAGE_ACCOUNT', azure_emulator_coords.account)
-    monkeysession.setenv('EXTRACT_ENDPOINT_STORAGE_KEY', azure_emulator_coords.key)
-    monkeysession.setenv('EXTRACT_ENDPOINT_CONTAINER', azure_emulator_coords.container)
-    monkeysession.setenv('EXTRACT_ENDPOINT_STORAGE_DOMAIN', azure_emulator_coords.domain)
+    monkeypatch.setenv('MOCK_TL_APP', 1)
+    monkeypatch.setenv('ENDPOINT_SECRET_KEY', sample_secret_key)
+    monkeypatch.setenv('EXTRACT_ENDPOINT_STORAGE_ACCOUNT', azure_emulator_coords.account)
+    monkeypatch.setenv('EXTRACT_ENDPOINT_STORAGE_KEY', azure_emulator_coords.key)
+    monkeypatch.setenv('EXTRACT_ENDPOINT_CONTAINER', azure_emulator_coords.container)
+    monkeypatch.setenv('EXTRACT_ENDPOINT_STORAGE_DOMAIN', azure_emulator_coords.domain)
 
     proc = psutil.Popen(['python', 'src/extract_endpoint/endpoint.py'], stderr=subprocess.PIPE, stdout=subprocess.PIPE)
     while True:

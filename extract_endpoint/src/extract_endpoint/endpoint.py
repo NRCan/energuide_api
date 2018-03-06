@@ -85,7 +85,7 @@ def trigger(data: typing.Optional[typing.Dict[str, str]] = None) -> int:
     return send_to_trigger(data)
 
 
-@App.route('/run_tl', methods=['POST'])
+@App.route('/trigger_tl', methods=['POST'])
 def trigger_tl() -> typing.Tuple[bytes, int]:
     return b'', trigger(data=flask.request.form)
 

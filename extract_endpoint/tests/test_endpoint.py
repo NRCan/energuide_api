@@ -86,7 +86,7 @@ def test_trigger_bad_data(monkeypatch: _pytest.monkeypatch.MonkeyPatch) -> None:
 
 
 def test_trigger_route(test_client: testing.FlaskClient, sample_salt: str, sample_salt_signature: str) -> None:
-    return_val = test_client.post('/run_tl', data=dict(salt=sample_salt, signature=sample_salt_signature))
+    return_val = test_client.post('/trigger_tl', data=dict(salt=sample_salt, signature=sample_salt_signature))
     assert return_val.status_code == HTTPStatus.CREATED
 
 
