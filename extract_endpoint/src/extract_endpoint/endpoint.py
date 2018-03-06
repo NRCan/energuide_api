@@ -31,8 +31,8 @@ App.config.update(dict(
 ))
 
 
-def _is_prod() -> bool:
-    return bool(os.environ.get('PROD'))
+def _mock_tl_app() -> bool:
+    return bool(os.environ.get('MOCK_TL_APP'))
 
 
 @App.route('/', methods=['GET'])
@@ -60,9 +60,7 @@ def timestamp() -> str:
 
 
 def send_to_trigger(data: typing.Dict[str, str]) -> int:
-    if _is_prod():
-        return requests.post(os.environ.get('TRIGGER_URL', ''), data=data).status_code
-    else:
+    if _mock_tl_app():
         if 'salt' not in data:
             return HTTPStatus.BAD_REQUEST
         if 'signature' not in data:
@@ -73,6 +71,8 @@ def send_to_trigger(data: typing.Dict[str, str]) -> int:
         if data['signature'] != actual_signature:
             return HTTPStatus.BAD_REQUEST
         return HTTPStatus.CREATED
+    else:
+        return requests.post(os.environ.get('TRIGGER_URL', ''), data=data).status_code
 
 
 def trigger(data: typing.Optional[typing.Dict[str, str]] = None) -> int:

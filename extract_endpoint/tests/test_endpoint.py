@@ -4,6 +4,7 @@ import hashlib
 from http import HTTPStatus
 import typing
 import pytest
+import _pytest
 from flask import testing
 from azure.storage import blob
 from extract_endpoint import azure_utils
@@ -15,8 +16,11 @@ endpoint.App.testing = True
 
 
 @pytest.fixture
-def test_client(monkeypatch, azure_emulator_coords: azure_utils.StorageCoordinates) -> testing.FlaskClient:
+def test_client(monkeypatch: _pytest.monkeypatch.MonkeyPatch,
+                azure_emulator_coords: azure_utils.StorageCoordinates) -> testing.FlaskClient:
+
     monkeypatch.setitem(endpoint.App.config, 'AZURE_COORDINATES', azure_emulator_coords)
+    monkeypatch.setenv('MOCK_TL_APP', 1)
     return endpoint.App.test_client()
 
 
@@ -63,17 +67,20 @@ def upload_timestamp_file(azure_emulator_coords: azure_utils.StorageCoordinates,
     azure_service.delete_blob(azure_emulator_coords.container, endpoint.TIMESTAMP_FILENAME)
 
 
-def test_trigger(sample_salt: str, sample_salt_signature: str) -> None:
+def test_trigger(monkeypatch: _pytest.monkeypatch.MonkeyPatch, sample_salt: str, sample_salt_signature: str) -> None:
+    monkeypatch.setenv('MOCK_TL_APP', 1)
     return_val = endpoint.trigger(dict(salt=sample_salt, signature=sample_salt_signature))
     assert return_val == HTTPStatus.CREATED
 
 
-def test_trigger_no_data() -> None:
+def test_trigger_no_data(monkeypatch: _pytest.monkeypatch.MonkeyPatch) -> None:
+    monkeypatch.setenv('MOCK_TL_APP', 1)
     return_val = endpoint.trigger()
     assert return_val == HTTPStatus.CREATED
 
 
-def test_trigger_bad_data() -> None:
+def test_trigger_bad_data(monkeypatch: _pytest.monkeypatch.MonkeyPatch) -> None:
+    monkeypatch.setenv('MOCK_TL_APP', 1)
     return_val = endpoint.trigger(dict(salt='bad salt', signature='bad signature'))
     assert return_val == HTTPStatus.BAD_REQUEST
 
