@@ -55,7 +55,7 @@
       ]
     ]
   },
-  "The area in square metres (m2) of the foundation floor": {
+  "The area of the foundation floor in square metres (m2)": {
     "origin": [
       [
         "src/schema/types/FoundationFloor.js",
@@ -63,7 +63,7 @@
       ]
     ]
   },
-  "The area in square feet (ft2) of the foundation floor": {
+  "The area of the foundation floor in square feet (ft2)": {
     "origin": [
       [
         "src/schema/types/FoundationFloor.js",
@@ -87,7 +87,7 @@
       ]
     ]
   },
-  "The width in metres (m) of the foundation floor": {
+  "The width of the foundation floor in metres (m)": {
     "origin": [
       [
         "src/schema/types/FoundationFloor.js",
@@ -95,7 +95,7 @@
       ]
     ]
   },
-  "The width in feet (ft) of the foundation floor": {
+  "The width of the foundation floor in feet (ft)": {
     "origin": [
       [
         "src/schema/types/FoundationFloor.js",
@@ -103,7 +103,7 @@
       ]
     ]
   },
-  "The length in metres (m) of the foundation floor": {
+  "The length of the foundation floor in metres (m)": {
     "origin": [
       [
         "src/schema/types/FoundationFloor.js",
@@ -111,7 +111,7 @@
       ]
     ]
   },
-  "The length in feet (ft) of the foundation floor": {
+  "The length of the foundation floor in feet (ft)": {
     "origin": [
       [
         "src/schema/types/FoundationFloor.js",

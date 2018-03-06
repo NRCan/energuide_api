@@ -1,6 +1,15 @@
 {
+  "Filter results for dwellings which have at least one door with a matching U-factor in imperial: British Thermal Units per square feet per degree Fahrenheit (BTU/ft2F)": {
+    "translation": "Résultats des filtres pour les habitations ayant au moins une porte avec un facteur U en unités impériales : unités thermiques britanniques par pied carré degré Fahrenheit (BTU/pi2F)",
+    "origin": [
+      [
+        "src/schema/index.js",
+        503
+      ]
+    ]
+  },
   "Filter by dwellings containing evaluations that were entered, created, or modified between a range of dates": {
-    "translation": "",
+    "translation": "Trier les résultats par logements contenant des évaluations entrées, créées ou modifiées entre une plage de dates",
     "origin": [
       [
         "src/schema/index.js",
@@ -9,7 +18,7 @@
     ]
   },
   "Name of the date field results will be filtered by": {
-    "translation": "",
+    "translation": "Le nom du champ de date des résultats pouvant être triés par",
     "origin": [
       [
         "src/schema/index.js",
@@ -18,7 +27,7 @@
     ]
   },
   "Evaluation dates must be equal to or later than this value": {
-    "translation": "",
+    "translation": "Les dates d'évaluation doivent être égales ou supérieures à cette valeur",
     "origin": [
       [
         "src/schema/index.js",
@@ -27,7 +36,7 @@
     ]
   },
   "Evaluation dates must be equal to or earlier than this value": {
-    "translation": "",
+    "translation": "Les dates d'évaluation doivent être égales ou antérieures à cette valeur",
     "origin": [
       [
         "src/schema/index.js",
@@ -36,7 +45,7 @@
     ]
   },
   "The details of the foundation": {
-    "translation": "",
+    "translation": "Les détails de la fondation",
     "origin": [
       [
         "src/schema/index.js",
@@ -44,8 +53,8 @@
       ]
     ]
   },
-  "The Energyguide Rating calculated for this evaluation": {
-    "translation": "",
+  "The EnerGuide Rating calculated for this evaluation": {
+    "translation": "La cote EnerGuide calculée pour cette évaluation",
     "origin": [
       [
         "src/schema/index.js",
@@ -54,7 +63,7 @@
     ]
   },
   "An ISO date value, formatted 'YYYY-MM-DD'": {
-    "translation": "",
+    "translation": "Une valeur de date ISO, formatée \"AAAA-MM-JJ\"",
     "origin": [
       [
         "src/schema/index.js",
@@ -63,7 +72,7 @@
     ]
   },
   "Filter results by the dwellings containing at least one evaluation with a specific entry date": {
-    "translation": "",
+    "translation": "Trier les résultats par les logements contenant au moins une évaluation avec une date d'entrée spécifique",
     "origin": [
       [
         "src/schema/index.js",
@@ -72,7 +81,7 @@
     ]
   },
   "Filter results by the dwellings containing at least one evaluation with a specific record creation date": {
-    "translation": "",
+    "translation": "Trier les résultats par les logements contenant au moins une évaluation avec une date de création d'enregistrement spécifique",
     "origin": [
       [
         "src/schema/index.js",
@@ -81,7 +90,7 @@
     ]
   },
   "Filter results by the dwellings containing at least one evaluation with a specific record modification date": {
-    "translation": "",
+    "translation": "Trier les résultats par les logements contenant au moins une évaluation avec une date de modification d'enregistrement spécifique",
     "origin": [
       [
         "src/schema/index.js",
@@ -90,7 +99,7 @@
     ]
   },
   "Filter results by the dwellings containing at least one evaluation with a specific evaluation type code": {
-    "translation": "",
+    "translation": "Trier les résultats par les logements contenant au moins une évaluation avec un code de type d'évaluation spécifique",
     "origin": [
       [
         "src/schema/index.js",
@@ -99,7 +108,7 @@
     ]
   },
   "Filter results by the dwellings containing at least one evaluation with a specific evaluation ID": {
-    "translation": "",
+    "translation": "Trier les résultats par les logements contenant au moins une évaluation avec un ID d'évaluation spécifique",
     "origin": [
       [
         "src/schema/index.js",
@@ -108,7 +117,7 @@
     ]
   },
   "Filter results by the dwellings containing at least one evaluation with a specific ERS rating": {
-    "translation": "",
+    "translation": "Trier les résultats des logements contenant au moins une évaluation avec un classement ERS spécifique",
     "origin": [
       [
         "src/schema/index.js",
@@ -117,7 +126,7 @@
     ]
   },
   "Filter results by the dwellings containing at least one door with a specific type (en)": {
-    "translation": "",
+    "translation": "Trier les résultats par les logements contenant au moins une porte avec un type spécifique (en)",
     "origin": [
       [
         "src/schema/index.js",
@@ -126,7 +135,7 @@
     ]
   },
   "Filter results by the dwellings containing at least one door with a specific type (fr)": {
-    "translation": "",
+    "translation": "Trier les résultats par les logements contenant au moins une porte avec un type spécifique (fr)",
     "origin": [
       [
         "src/schema/index.js",
@@ -135,7 +144,7 @@
     ]
   },
   "Filter results by the dwellings where at least one door has a specific RSI (R-value Systeme International) value": {
-    "translation": "",
+    "translation": "Trier les résultats par les logements où au moins une porte avec une RSI nominale spécifique (valeur R Système international)",
     "origin": [
       [
         "src/schema/index.js",
@@ -144,7 +153,7 @@
     ]
   },
   "Filter results by the dwellings containing at least one door with a specific effective R-value": {
-    "translation": "",
+    "translation": "Trier les résultats par les logements contenant au moins une porte avec une valeur R efficace spécifique",
     "origin": [
       [
         "src/schema/index.js",
@@ -152,8 +161,8 @@
       ]
     ]
   },
-  "Filter results for dwellings which have at least one door with a matching U-factor in metric: Watts per square metre per degree Celcius (W/m2C)": {
-    "translation": "",
+  "Filter results for dwellings which have at least one door with a matching U-factor in metric: watts per square metre per degree Celcius (W/m2C)": {
+    "translation": "Résultats des filtres pour les habitations ayant au moins une porte avec un facteur U en métrique: watts par mètre carré degré Celcius (W/m2C)",
     "origin": [
       [
         "src/schema/index.js",
@@ -161,17 +170,17 @@
       ]
     ]
   },
-  "Filter results for dwellings which have at least one door with a matching U-factor in imperial: British Thermal Units per square feet per degree Fahrenheit (BTU/ft2 F)": {
-    "translation": "",
+  "Door U-factor in imperial: British Thermal Units per square feet per degree Fahrenheit (BTU/ft2F)": {
+    "translation": "Facteur U de la porte en unités impériales : unités thermiques britanniques par pied carré degré Fahrenheit (BTU/pi2F)",
     "origin": [
       [
         "src/schema/index.js",
-        503
+        205
       ]
     ]
   },
   "Filter results by dwellings where the area of the doors have certain value in square metres (m2)": {
-    "translation": "",
+    "translation": "Trier les résultats par logements où la superficie des portes a une valeur spécifique en mètres carrés (m2)",
     "origin": [
       [
         "src/schema/index.js",
@@ -180,7 +189,7 @@
     ]
   },
   "Filter results by dwellings where the area of the doors have certain value in square feet (ft2)": {
-    "translation": "",
+    "translation": "Trier les résultats par habitation où la superficie des portes a une valeur spécifique en pieds carrés (pi2)",
     "origin": [
       [
         "src/schema/index.js",
@@ -189,7 +198,7 @@
     ]
   },
   "Filter results by dwellings have window with a matching label": {
-    "translation": "",
+    "translation": "Trier les résultats par logement ont une fenêtre avec une étiquette correspondante",
     "origin": [
       [
         "src/schema/index.js",
@@ -198,7 +207,7 @@
     ]
   },
   "Filter results by dwellings with a specific window RSI (R-value Systeme International)": {
-    "translation": "",
+    "translation": "Trier les résultats par logements avec une fenêtre avec une RSI spécifique (valeur R Système international)",
     "origin": [
       [
         "src/schema/index.js",
@@ -207,7 +216,7 @@
     ]
   },
   "Filter results by dwellings with a specific window R-value": {
-    "translation": "",
+    "translation": "Trier les résultats par logements avec une fenêtre `avec une valeur R nominale spécifique",
     "origin": [
       [
         "src/schema/index.js",
@@ -216,7 +225,7 @@
     ]
   },
   "Filter results by dwellings with a matching number of panes of transparent material in a window (en)": {
-    "translation": "",
+    "translation": "Trier les résultats par logements avec un nombre correspondant de panneaux de matériau transparent dans une fenêtre (en)",
     "origin": [
       [
         "src/schema/index.js",
@@ -225,7 +234,7 @@
     ]
   },
   "Filter results by dwellings with a matching number of panes of transparent material in a window (fr)": {
-    "translation": "",
+    "translation": "Trier les résultats par logements avec un nombre correspondant de panneaux de matériau transparent dans une fenêtre",
     "origin": [
       [
         "src/schema/index.js",
@@ -234,7 +243,7 @@
     ]
   },
   "Filter results for dwellings with a specific type of coating and tint on a window pane (en)": {
-    "translation": "",
+    "translation": "Trier les résultats pour les habitations avec un type spécifique de pellicule et teinte sur une vitre (en)",
     "origin": [
       [
         "src/schema/index.js",
@@ -243,7 +252,7 @@
     ]
   },
   "Filter results for dwellings with a specific type of coating and tint on a window pane (fr)": {
-    "translation": "",
+    "translation": "Trier les résultats pour les logements avec un type spécifique de pellicule et teinte sur une vitre (fr)",
     "origin": [
       [
         "src/schema/index.js",
@@ -252,7 +261,7 @@
     ]
   },
   "Filter results for dwellings with windows containing a specific type of gas injected between the glass layers (en)": {
-    "translation": "",
+    "translation": "Résultats des filtres pour les habitations avec des fenêtres contenant un type spécifique de gaz injecté entre les couches de verre (en)",
     "origin": [
       [
         "src/schema/index.js",
@@ -261,7 +270,7 @@
     ]
   },
   "Filter results for dwellings with windows containing a specific type of gas injected between the glass layers (fr)": {
-    "translation": "",
+    "translation": "Trier les résultats pour les habitations avec des fenêtres contenant un type spécifique de gaz injecté entre les couches de verre (fr)",
     "origin": [
       [
         "src/schema/index.js",
@@ -270,7 +279,7 @@
     ]
   },
   "Filter results for dwellings with a specific spacer system used between the glass layers (en)": {
-    "translation": "",
+    "translation": "Trier les résultats pour les habitations avec un système d'espacement spécifique utilisé entre les couches de verre (en)",
     "origin": [
       [
         "src/schema/index.js",
@@ -279,7 +288,7 @@
     ]
   },
   "Filter results for dwellings with a specific spacer system used between the glass layers (fr)": {
-    "translation": "",
+    "translation": "Trier les résultats pour les habitations avec un système d'espacement spécifique utilisé entre les couches de verre (fr)",
     "origin": [
       [
         "src/schema/index.js",
@@ -288,7 +297,7 @@
     ]
   },
   "Filter results for dwellings with a particular type of window construction (en)": {
-    "translation": "",
+    "translation": "Trier les résultats pour les habitations avec un type particulier de construction de fenêtres (en)",
     "origin": [
       [
         "src/schema/index.js",
@@ -297,7 +306,7 @@
     ]
   },
   "Filter results for dwellings with a particular type of window construction (fr)": {
-    "translation": "",
+    "translation": "Trier les résultats pour les habitations avec un type particulier de construction de fenêtres (fr)",
     "origin": [
       [
         "src/schema/index.js",
@@ -306,7 +315,7 @@
     ]
   },
   "Filter results for dwellings with window frames matching a specific material (en)": {
-    "translation": "",
+    "translation": "Trier les résultats pour les logements avec des cadres de fenêtre correspondant à un matériau spécifique (en)",
     "origin": [
       [
         "src/schema/index.js",
@@ -315,7 +324,7 @@
     ]
   },
   "Filter results for dwellings with window frames matching a specific material (fr)": {
-    "translation": "",
+    "translation": "Trier les résultats pour les logements avec des cadres de fenêtre correspondant à un matériau spécifique",
     "origin": [
       [
         "src/schema/index.js",
@@ -324,7 +333,7 @@
     ]
   },
   "Filter results for dwellings with a window matching a specific area in square metres (m2)": {
-    "translation": "",
+    "translation": "Trier les résultats pour les logements avec une fenêtre correspondant à une superficie spécifique en mètres carrés (m2)",
     "origin": [
       [
         "src/schema/index.js",
@@ -333,7 +342,7 @@
     ]
   },
   "Filter results for dwellings with a window matching a specific area in square feet (ft2)": {
-    "translation": "",
+    "translation": "Trier les résultats pour les logements avec une fenêtre correspondant à une superficie spécifique en pieds carrés (ft2)",
     "origin": [
       [
         "src/schema/index.js",
@@ -342,7 +351,7 @@
     ]
   },
   "Filter results for dwellings with a window matching a specific width in metres (m)": {
-    "translation": "",
+    "translation": "Trier les résultats pour les logements avec une fenêtre correspondant à une largeur spécifique en mètres (m)",
     "origin": [
       [
         "src/schema/index.js",
@@ -351,7 +360,7 @@
     ]
   },
   "Filter results for dwellings with a window matching a specific width in feet (ft)": {
-    "translation": "",
+    "translation": "Trier les résultats pour les logements avec une fenêtre correspondant à une largeur spécifique en pieds (ft)",
     "origin": [
       [
         "src/schema/index.js",
@@ -360,7 +369,7 @@
     ]
   },
   "Filter results for dwellings with a window matching a specific height in metres (m)": {
-    "translation": "",
+    "translation": "Trier les résultats pour les logements avec une fenêtre correspondant à une hauteur spécifique en mètres (m)",
     "origin": [
       [
         "src/schema/index.js",
@@ -369,7 +378,7 @@
     ]
   },
   "Filter results for dwellings with a window matching a specific height in feet (ft)": {
-    "translation": "",
+    "translation": "Trier les résultats pour les logements avec une fenêtre correspondant à une hauteur spécifique en pieds (ft)",
     "origin": [
       [
         "src/schema/index.js",
@@ -378,7 +387,7 @@
     ]
   },
   "Filter results for dwellings with matching foundation type (en)": {
-    "translation": "",
+    "translation": "Trier les résultats pour les logements avec le type de fondation correspondant (en)",
     "origin": [
       [
         "src/schema/index.js",
@@ -387,7 +396,7 @@
     ]
   },
   "Filter results for dwellings with matching foundation type (fr)": {
-    "translation": "",
+    "translation": "Trier les résultats pour les logements avec le type de fondation correspondant (fr)",
     "origin": [
       [
         "src/schema/index.js",
@@ -396,7 +405,7 @@
     ]
   },
   "Filter results for dwellings with a specific foundation label": {
-    "translation": "",
+    "translation": "Trier les résultats pour les logements avec une étiquette de fondation spécifique",
     "origin": [
       [
         "src/schema/index.js",
@@ -405,7 +414,7 @@
     ]
   },
   "Filter results for dwellings with a specific foundation configuration": {
-    "translation": "",
+    "translation": "Trier les résultats pour les logements avec une configuration de fondation spécifique",
     "origin": [
       [
         "src/schema/index.js",
@@ -414,7 +423,7 @@
     ]
   },
   "Filter results for dwellings whose foundation was constructed with a specific material (en)": {
-    "translation": "",
+    "translation": "Trier les résultats pour les logements dont la fondation a été construite avec un matériau spécifique (en)",
     "origin": [
       [
         "src/schema/index.js",
@@ -427,7 +436,7 @@
     ]
   },
   "Filter results for dwellings wiht a specific foundation header insulation nominal RSI (R-value Systeme International)": {
-    "translation": "",
+    "translation": "Trier des filtres pour les habitations avec un isolant de tête de fondation avec une RSI nominale spécifique (valeur R Système international)",
     "origin": [
       [
         "src/schema/index.js",
@@ -436,7 +445,7 @@
     ]
   },
   "Filter results for dwellings with a specific foundation header insulation nominal R-value": {
-    "translation": "",
+    "translation": "Résultats des filtres pour les habitations avec une valeur nominale R de l'isolation de la tête de fondation spécifique",
     "origin": [
       [
         "src/schema/index.js",
@@ -445,7 +454,7 @@
     ]
   },
   "Filter results for dwellings with a specific foundation header insulation effective RSI (R-value Systeme International)": {
-    "translation": "",
+    "translation": "Trier les résultats pour les habitations avec un isolation du linteau de fondation avec une RSI efficace spécifique (valeur R Système international)",
     "origin": [
       [
         "src/schema/index.js",
@@ -454,7 +463,7 @@
     ]
   },
   "Filter results for dwellings with a specific foundationn header insulation effective R-value": {
-    "translation": "",
+    "translation": "Trier les résultats pour les logements avec une valeur spécifique de valeur efficace de l'isolation du linteau de fondation",
     "origin": [
       [
         "src/schema/index.js",
@@ -463,7 +472,7 @@
     ]
   },
   "Filter results for dwellings with a specific foundation header area in square metres (m2)": {
-    "translation": "",
+    "translation": "Trier les résultats pour les logements avec une superficie du linteau de fondation spécifique en mètres carrés (m2)",
     "origin": [
       [
         "src/schema/index.js",
@@ -472,7 +481,7 @@
     ]
   },
   "Filter results for dwellings with a specific foundation header area in square feet (ft2)": {
-    "translation": "",
+    "translation": "Trier les résultats pour les logements avec une superficie du linteau de fondation spécifique en pieds carrés (ft2)",
     "origin": [
       [
         "src/schema/index.js",
@@ -481,7 +490,7 @@
     ]
   },
   "Filter results for dwellings with a specific foundation header perimeter in metres (m)": {
-    "translation": "",
+    "translation": "Trier les résultats pour les logements avec un périmètre du linteau de fondation spécifique en mètres (m)",
     "origin": [
       [
         "src/schema/index.js",
@@ -490,7 +499,7 @@
     ]
   },
   "Filter results for dwellings with a specific foundation header perimeter in feet (ft)": {
-    "translation": "",
+    "translation": "Trier les résultats pour les logements avec un périmètre du linteau de fondation spécifique en pieds (ft)",
     "origin": [
       [
         "src/schema/index.js",
@@ -499,7 +508,7 @@
     ]
   },
   "Filter results for dwellings with a specific foundation header height in metres (m)": {
-    "translation": "",
+    "translation": "Trier les résultats pour les logements avec une hauteur du linteau de fondation spécifique en mètres (m)",
     "origin": [
       [
         "src/schema/index.js",
@@ -508,7 +517,7 @@
     ]
   },
   "Filter results for dwellings with a specific header height in feet (ft)": {
-    "translation": "",
+    "translation": "Trier les résultats pour les logements avec une hauteur du linteau spécifique en pieds (ft)",
     "origin": [
       [
         "src/schema/index.js",
@@ -517,7 +526,7 @@
     ]
   },
   "Filter for dwellings with a specific type of foundation floor type (en)": {
-    "translation": "",
+    "translation": "Trier les résultats par logements ayant au moins un plancher de fondation avec un type spécifique (en)",
     "origin": [
       [
         "src/schema/index.js",
@@ -526,7 +535,7 @@
     ]
   },
   "Filter for dwellings with a specific type of foundation floor type (fr)": {
-    "translation": "",
+    "translation": "Trier les résultats par logements ayant au moins un plancher de fondation avec un type spécifique (fr)",
     "origin": [
       [
         "src/schema/index.js",
@@ -535,7 +544,7 @@
     ]
   },
   "Filter for dwellings where the foundation floor has a specific insulation nominal RSI (R-value Systeme International)": {
-    "translation": "",
+    "translation": "Trier les résultats par logements ayant au moins un plancher de fondation avec une RSI nominale spécifique (valeur R Système International)",
     "origin": [
       [
         "src/schema/index.js",
@@ -544,7 +553,7 @@
     ]
   },
   "Filter for dwellings with a specific insulation nominal R-value on the foundation floor": {
-    "translation": "",
+    "translation": "Trier les résultats par logements ayant au moins un plancher de fondation avec une valeur R nominale spécifique",
     "origin": [
       [
         "src/schema/index.js",
@@ -553,7 +562,7 @@
     ]
   },
   "Filter for dwellings with a specific insulation effective RSI (R-value Systeme International) for the foundation floor": {
-    "translation": "",
+    "translation": "Trier les résultats par logements ayant au moins un plancher de fondation avec une RSI efficace spécifique (valeur R Système International)",
     "origin": [
       [
         "src/schema/index.js",
@@ -562,7 +571,7 @@
     ]
   },
   "Filter for dwellings with a specific insulation effective R-value for the foundation floor": {
-    "translation": "",
+    "translation": "Trier les résultats par logements ayant au moins un plancher de fondation avec une valeur R efficace spécifique",
     "origin": [
       [
         "src/schema/index.js",
@@ -571,7 +580,7 @@
     ]
   },
   "Filter for dwellings where the foundation floor has a specific area in square metres (m2)": {
-    "translation": "",
+    "translation": "Trier les résultats par logements ayant au moins un plancher de fondation a une superficie spécifique en mètres carrés (m2)",
     "origin": [
       [
         "src/schema/index.js",
@@ -580,7 +589,7 @@
     ]
   },
   "Filter for dwellings where the foundation floor has a specific area in square feet (ft2)": {
-    "translation": "",
+    "translation": "Trier les résultats par logements ayant au moins un plancher de fondation a une superficie spécifique en pieds carrés (pi2)",
     "origin": [
       [
         "src/schema/index.js",
@@ -589,7 +598,7 @@
     ]
   },
   "Filter for dwellings where the foundation floor has a specific perimeter in metres (m)": {
-    "translation": "",
+    "translation": "Trier les résultats par logements ayant au moins un plancher de fondation a un périmètre spécifique en mètres (m)",
     "origin": [
       [
         "src/schema/index.js",
@@ -598,7 +607,7 @@
     ]
   },
   "Filter for dwellings where the foundation floor has a specific perimeter in feet (ft)": {
-    "translation": "",
+    "translation": "Trier les résultats par logements ayant au moins un plancher de fondation a un périmètre spécifique en pieds (ft)",
     "origin": [
       [
         "src/schema/index.js",
@@ -607,7 +616,7 @@
     ]
   },
   "Filter for dwellings where the foundation floor has a specific width in metres (m)": {
-    "translation": "",
+    "translation": "Trier les résultats par logements ayant au moins un plancher de fondation a une largeur spécifique en mètres (m)",
     "origin": [
       [
         "src/schema/index.js",
@@ -616,7 +625,7 @@
     ]
   },
   "Filter for dwellings where the foundation floor has a specific width in feet (ft)": {
-    "translation": "",
+    "translation": "Trier les résultats par logements ayant au moins un plancher de fondation a une largeur spécifique en pieds (pi)",
     "origin": [
       [
         "src/schema/index.js",
@@ -625,7 +634,7 @@
     ]
   },
   "Filter for dwellings where the foundation floor has a specific length in metres (m)": {
-    "translation": "",
+    "translation": "Trier les résultats par logements ayant au moins un plancher de fondation a une longueur spécifique en mètres (m)",
     "origin": [
       [
         "src/schema/index.js",
@@ -634,7 +643,7 @@
     ]
   },
   "Filter for dwellings where the foundation floor has a specific length in feet (ft)": {
-    "translation": "",
+    "translation": "Trier les résultats par logements ayant au moins un plancher de fondation a une longueur spécifique en pieds (pi)",
     "origin": [
       [
         "src/schema/index.js",
@@ -643,7 +652,7 @@
     ]
   },
   "Filter results for dwellings whose foundation wall has a specific type (en)": {
-    "translation": "",
+    "translation": "Trier les résultats par logements dont le mur de fondation a un type spécifique (en)",
     "origin": [
       [
         "src/schema/index.js",
@@ -652,7 +661,7 @@
     ]
   },
   "Filter results for dwellings whose foundation wall has a specific type (fr)": {
-    "translation": "",
+    "translation": "Trier les résultats par logements ayant au moins un mur de fondation a un type spécifique",
     "origin": [
       [
         "src/schema/index.js",
@@ -661,7 +670,7 @@
     ]
   },
   "Filter results for dwellings with a specific foundation wall insulation nominal RSI (R-value Systeme International)": {
-    "translation": "",
+    "translation": "Trier les résultats par logements ayant au moins un mur de fondation a une RSI nominal spécifique (valeur R Système International)",
     "origin": [
       [
         "src/schema/index.js",
@@ -670,7 +679,7 @@
     ]
   },
   "Filter results for dwellings with a specific foundation wall insulation nominal R-value": {
-    "translation": "",
+    "translation": "Trier les résultats par logements ayant au moins un mur de fondation a une valeur R nominale spécifique",
     "origin": [
       [
         "src/schema/index.js",
@@ -679,7 +688,7 @@
     ]
   },
   "Filter results for dwellings with a specific foundation wall insulation effective RSI (R-value Systeme International)": {
-    "translation": "",
+    "translation": "Trier les résultats par logements ayant au moins un de fondation a une RSI efficace spécifique (valeur R Système International)",
     "origin": [
       [
         "src/schema/index.js",
@@ -688,7 +697,7 @@
     ]
   },
   "Filter results for dwellings with a specific foundation wall insulation effective R-value": {
-    "translation": "",
+    "translation": "Trier les résultats par logements ayant au moins un mur de fondation a une valeur R efficace spécifique",
     "origin": [
       [
         "src/schema/index.js",
@@ -696,8 +705,8 @@
       ]
     ]
   },
-  "Filter results for dwellings with a section of it's foundation wall with a specific percentage of the overall amount": {
-    "translation": "",
+  "Filter results for dwellings with a section of its foundation wall with a specific percentage of the overall amount": {
+    "translation": "Filtrer les résultats par logements avec une section de son mur de fondation avec un pourcentage spécifique de la quantité totale",
     "origin": [
       [
         "src/schema/index.js",
@@ -706,7 +715,7 @@
     ]
   },
   "Filter results for dwellings with a foundation wall has specific area in square metres (m2)": {
-    "translation": "",
+    "translation": "Filtrer les résultats par logements ayant au moins un mur de fondation ont une surface spécifique en mètres carrés (m2)",
     "origin": [
       [
         "src/schema/index.js",
@@ -715,7 +724,7 @@
     ]
   },
   "Filter results for dwellings with a foundation wall has specific area in square feet (ft)": {
-    "translation": "",
+    "translation": "Filtrer les résultats par logements ayant au moins un mur de fondation ont une surface spécifique en pieds carrés (pi)",
     "origin": [
       [
         "src/schema/index.js",
@@ -724,7 +733,7 @@
     ]
   },
   "A 'dateRange' must include a 'startDate' or an 'endDate'.": {
-    "translation": "",
+    "translation": "Un 'dateRange' doit inclure un 'startDate' ou un 'endDate'.",
     "origin": [
       [
         "src/schema/resolvers.js",
@@ -733,7 +742,7 @@
     ]
   },
   "The 'endDate' cannot be equal to or earlier than the 'startDate'.": {
-    "translation": "",
+    "translation": "Le 'endDate' ne peut pas être égal ou plus tôt que le 'startDate'.",
     "origin": [
       [
         "src/schema/resolvers.js",
@@ -742,7 +751,7 @@
     ]
   },
   "The lowest load-bearing part of a dwelling": {
-    "translation": "",
+    "translation": "La partie portante la plus basse d'un logement",
     "origin": [
       [
         "src/schema/types/Foundation.js",
@@ -751,7 +760,7 @@
     ]
   },
   "The type of foundation (en)": {
-    "translation": "",
+    "translation": "Le type de fondation (en)",
     "origin": [
       [
         "src/schema/types/Foundation.js",
@@ -760,7 +769,7 @@
     ]
   },
   "The type of foundation (fr)": {
-    "translation": "",
+    "translation": "Le type de fondation",
     "origin": [
       [
         "src/schema/types/Foundation.js",
@@ -769,7 +778,7 @@
     ]
   },
   "A descriptive label for the foundation": {
-    "translation": "",
+    "translation": "Un label descriptif pour la fondation",
     "origin": [
       [
         "src/schema/types/Foundation.js",
@@ -778,7 +787,7 @@
     ]
   },
   "The type of configuration for the foundation": {
-    "translation": "",
+    "translation": "Le type de configuration pour la fondation",
     "origin": [
       [
         "src/schema/types/Foundation.js",
@@ -787,7 +796,7 @@
     ]
   },
   "The material used in the construction of this foundation (en)": {
-    "translation": "",
+    "translation": "Le matériau utilisé dans la construction de cette fondation (en)",
     "origin": [
       [
         "src/schema/types/Foundation.js",
@@ -796,7 +805,7 @@
     ]
   },
   "The material used in the construction of this foundation (fr)": {
-    "translation": "",
+    "translation": "Le matériau utilisé dans la construction de cette fondation",
     "origin": [
       [
         "src/schema/types/Foundation.js",
@@ -805,7 +814,7 @@
     ]
   },
   "The details of the floors associated with this foundation": {
-    "translation": "",
+    "translation": "Les détails des planchers associés à cette fondation",
     "origin": [
       [
         "src/schema/types/Foundation.js",
@@ -814,7 +823,7 @@
     ]
   },
   "The details of the walls associated with this foundation": {
-    "translation": "",
+    "translation": "Les détails des murs associés à cette fondation",
     "origin": [
       [
         "src/schema/types/Foundation.js",
@@ -823,7 +832,7 @@
     ]
   },
   "The details of the foundationn header": {
-    "translation": "",
+    "translation": "Les détails de linteau de la fondation",
     "origin": [
       [
         "src/schema/types/Foundation.js",
@@ -832,7 +841,7 @@
     ]
   },
   "A floor below ground that represents the usable area of the house": {
-    "translation": "",
+    "translation": "Un plancher sous terre qui représente la surface utilisable de la maison",
     "origin": [
       [
         "src/schema/types/FoundationFloor.js",
@@ -841,7 +850,7 @@
     ]
   },
   "Type of foundation floor (en)": {
-    "translation": "",
+    "translation": "Type de plancher de fondation (en)",
     "origin": [
       [
         "src/schema/types/FoundationFloor.js",
@@ -850,7 +859,7 @@
     ]
   },
   "Type of foundation floor (fr)": {
-    "translation": "",
+    "translation": "Type de plancher de fondation",
     "origin": [
       [
         "src/schema/types/FoundationFloor.js",
@@ -859,7 +868,7 @@
     ]
   },
   "The insulation nominal RSI (R-value Systeme International) of the foundation floor": {
-    "translation": "",
+    "translation": "Valeur nominale RSI (valeur R Système international) de l'isolation du plancherIsolation nominale RSI (valeur R Systeme International) du sol de la fondation",
     "origin": [
       [
         "src/schema/types/FoundationFloor.js",
@@ -868,7 +877,7 @@
     ]
   },
   "The insulation nominal R-value of the foundation floor": {
-    "translation": "",
+    "translation": "Valeur R nominale de l'isolation du plancher",
     "origin": [
       [
         "src/schema/types/FoundationFloor.js",
@@ -877,7 +886,7 @@
     ]
   },
   "The insulation effective RSI (R-value Systeme International) of the foundation floor": {
-    "translation": "",
+    "translation": "Valeur efficace RSI (valeur R Système international) de l'isolation du plancher de la fondation",
     "origin": [
       [
         "src/schema/types/FoundationFloor.js",
@@ -886,7 +895,7 @@
     ]
   },
   "The insulation effective R-value of the foundation floor": {
-    "translation": "",
+    "translation": "Valeur R efficace de l'isolation du plancher",
     "origin": [
       [
         "src/schema/types/FoundationFloor.js",
@@ -894,8 +903,8 @@
       ]
     ]
   },
-  "The area in square metres (m2) of the foundation floor": {
-    "translation": "",
+  "The area of the foundation floor in square metres (m2)": {
+    "translation": "Superficie du plancher de la fondation en mètres carrés (m2)",
     "origin": [
       [
         "src/schema/types/FoundationFloor.js",
@@ -903,8 +912,8 @@
       ]
     ]
   },
-  "The area in square feet (ft2) of the foundation floor": {
-    "translation": "",
+  "The area of the foundation floor in square feet (ft2)": {
+    "translation": "Superficie du plancher de la fondation en pieds carrés (pi2)",
     "origin": [
       [
         "src/schema/types/FoundationFloor.js",
@@ -913,7 +922,7 @@
     ]
   },
   "The perimeter of the foundation floor in metres (m)": {
-    "translation": "",
+    "translation": "Périmètre du plancher de la fondation en mètres (m)",
     "origin": [
       [
         "src/schema/types/FoundationFloor.js",
@@ -922,7 +931,7 @@
     ]
   },
   "The perimeter of the foundation floor in feet (ft)": {
-    "translation": "",
+    "translation": "Périmètre du plancer de fondation en pieds (pi)",
     "origin": [
       [
         "src/schema/types/FoundationFloor.js",
@@ -930,8 +939,8 @@
       ]
     ]
   },
-  "The width in metres (m) of the foundation floor": {
-    "translation": "",
+  "The width of the foundation floor in metres (m)": {
+    "translation": "Largeur du plancher de fondation en mètres (m)",
     "origin": [
       [
         "src/schema/types/FoundationFloor.js",
@@ -939,8 +948,8 @@
       ]
     ]
   },
-  "The width in feet (ft) of the foundation floor": {
-    "translation": "",
+  "The width of the foundation floor in feet (ft)": {
+    "translation": "Largeur du plancher de la fondation en pieds (pi)",
     "origin": [
       [
         "src/schema/types/FoundationFloor.js",
@@ -948,8 +957,8 @@
       ]
     ]
   },
-  "The length in metres (m) of the foundation floor": {
-    "translation": "",
+  "The length of the foundation floor in metres (m)": {
+    "translation": "Longueur du plancher de la fondation en mètres (m)",
     "origin": [
       [
         "src/schema/types/FoundationFloor.js",
@@ -957,8 +966,8 @@
       ]
     ]
   },
-  "The length in feet (ft) of the foundation floor": {
-    "translation": "",
+  "The length of the foundation floor in feet (ft)": {
+    "translation": "Longueur du plancher de la fondation en pieds (pi)",
     "origin": [
       [
         "src/schema/types/FoundationFloor.js",
@@ -966,8 +975,8 @@
       ]
     ]
   },
-  "'A date string, such as 2007-12-03, compliant with the 'full-date' format outlined in section 5.6 of the RFC 3339 profile of the ISO 8601 standard for representation of dates and times using the Gregorian calendar.'": {
-    "translation": "",
+  "A date string, such as 2007-12-03, compliant with the 'full-date' format outlined in section 5.6 of the RFC 3339 profile of the ISO 8601 standard for representation of dates and times using the Gregorian calendar.": {
+    "translation": "Une chaîne de date, telle que 2007-12-03, conforme au format' full-date 'décrit dans la section 5.6 du profil RFC 3339 de la norme ISO 8601 pour la représentation des dates et des heures en utilisant le calendrier grégorien.",
     "origin": [
       [
         "src/schema/types/I18NDate.js",
@@ -976,7 +985,7 @@
     ]
   },
   "Header insulation nominal RSI (R-value Systeme International)": {
-    "translation": "Valeur nominale RSI (valeur R Système international) de l'isolation du linterau",
+    "translation": "Valeur nominale RSI (valeur R Système international) de l'isolation du linteau",
     "origin": [
       [
         "src/schema/Header.js",
@@ -1821,15 +1830,6 @@
       [
         "src/schema/index.js",
         203
-      ]
-    ]
-  },
-  "Door U-factor in imperial: British Thermal Units per square feet per degree Fahrenheit (BTU/ft2F)": {
-    "translation": "Facteur U de la porte en unités impériales : unités thermiques britanniques par pied carré degré Fahrenheit (BTU/pi2F)",
-    "origin": [
-      [
-        "src/schema/index.js",
-        205
       ]
     ]
   },
@@ -3024,15 +3024,5 @@
         5
       ]
     ]
-  },
-  "The EnerGuide Rating calculated for this evaluation": {
-    "translation": "La cote EnerGuide calculée pour cette évaluation",
-    "origin": [
-      [
-        "src/schema/index.js",
-        300
-      ]
-    ],
-    "obsolete": true
   }
 }

@@ -2243,7 +2243,7 @@
       ]
     ]
   },
-  "Filter results for dwellings with a section of it's foundation wall with a specific percentage of the overall amount": {
+  "Filter results for dwellings with a section of its foundation wall with a specific percentage of the overall amount": {
     "origin": [
       [
         "src/schema/index.js",
