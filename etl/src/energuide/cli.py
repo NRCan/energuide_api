@@ -64,11 +64,12 @@ def load(username: str,
 @main.command()
 @click.option('--infile', required=True)
 @click.option('--outfile', required=True)
-def extract(infile: str, outfile: str) -> None:
+@click.option('--progress/--no-progress', default=True)
+def extract(infile: str, outfile: str, progress: bool) -> None:
     LOGGER.info(f'Extracting data from {infile} into {outfile}')
     if os.path.exists(outfile):
         LOGGER.warning(f'Warning: file {outfile} exists. Overwriting.')
-    extracted = extractor.extract_data(infile)
+    extracted = extractor.extract_data(infile, show_progress=progress)
     records_written, records_failed = extractor.write_data(extracted, outfile)
     LOGGER.info(f'Finished extracting data into {outfile}. '
                 f'Successfully written: {records_written}. Failed: {records_failed}')
