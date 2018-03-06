@@ -11,10 +11,10 @@ from energuide import database
 App = flask.Flask(__name__)
 
 
-DEFAULT_ETL_SECRET_KEY = 'no key'
+DEFAULT_SECRET_KEY = 'no key'
 
 App.config.update(dict(
-    SECRET_KEY=os.environ.get('ETL_SECRET_KEY', DEFAULT_ETL_SECRET_KEY),
+    SECRET_KEY=os.environ.get('SECRET_KEY', DEFAULT_SECRET_KEY),
 ))
 
 
@@ -54,19 +54,19 @@ def run_tl() -> typing.Tuple[str, int]:
 
     salt = flask.request.form['salt']
     signature = flask.request.form['signature']
-
     hasher = hashlib.new('sha3_256')
     hasher.update((salt + App.config['SECRET_KEY']).encode())
     salt_signature = hasher.hexdigest()
-
     if salt_signature != signature:
         return 'bad signature', HTTPStatus.BAD_REQUEST
 
-    transform.run(DATABASE_COORDS,
+    azure_coords = transform.AzureCoordinates.from_env()
+    reader = transform.AzureExtractReader(azure_coords)
+    data = transform.transform(reader)
+    database.load(DATABASE_COORDS,
                   database_name=DATABASE_NAME,
-                  collection=COLLECTION,
-                  filename=None,
-                  azure=True,
+                  collection_name=COLLECTION,
+                  data=data,
                   append=False)
 
     mongo_client: pymongo.MongoClient

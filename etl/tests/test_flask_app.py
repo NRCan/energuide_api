@@ -1,11 +1,10 @@
 from http import HTTPStatus
 import hashlib
-import typing
+import _pytest
 import pymongo
 import pytest
 from flask import testing
 from energuide import flask_app
-from energuide import database
 
 
 flask_app.App.testing = True
@@ -17,13 +16,9 @@ def sample_salt() -> str:
 
 
 @pytest.fixture
-def sample_secret_key() -> typing.Generator:
-    orig_secret_key = flask_app.App.config['SECRET_KEY']
-    flask_app.App.config['SECRET_KEY'] = 'sample secret key'
-
-    yield flask_app.App.config['SECRET_KEY']
-
-    flask_app.App.config['SECRET_KEY'] = orig_secret_key
+def sample_secret_key(monkeypatch: _pytest.monkeypatch.MonkeyPatch) -> str:
+    monkeypatch.setitem(flask_app.App.config, 'SECRET_KEY', 'sample secret key')
+    return flask_app.App.config['SECRET_KEY']
 
 
 @pytest.fixture
@@ -34,21 +29,9 @@ def sample_signature(sample_salt: str, sample_secret_key: str) -> str:
 
 
 @pytest.fixture()
-def test_client(database_coordinates: database.DatabaseCoordinates,
-                database_name: str,
-                collection: str) -> testing.FlaskClient:
-    orig_database_coords = flask_app.DATABASE_COORDS
-    orig_database_name = flask_app.DATABASE_NAME
-    orig_collection = flask_app.COLLECTION
-    flask_app.DATABASE_COORDS = database_coordinates
-    flask_app.DATABASE_NAME = database_name
-    flask_app.COLLECTION = collection
-
-    yield flask_app.App.test_client()
-
-    flask_app.DATABASE_COORDS = orig_database_coords
-    flask_app.DATABASE_NAME = orig_database_name
-    flask_app.COLLECTION = orig_collection
+def test_client(monkeypatch: _pytest.monkeypatch.MonkeyPatch, database_name: str) -> testing.FlaskClient:
+    monkeypatch.setattr(flask_app, 'DATABASE_NAME', database_name)
+    return flask_app.App.test_client()
 
 
 def test_frontend(test_client: testing.FlaskClient) -> None:
@@ -65,7 +48,7 @@ def test_robots(test_client: testing.FlaskClient) -> None:
     assert get_return.status_code == HTTPStatus.NOT_FOUND
 
 
-@pytest.mark.usefixtures('skip_if_azure_simulator_not_running', 'put_sample_files_in_azure')
+@pytest.mark.usefixtures('populated_azure_emulator')
 def test_run_tl(test_client: testing.FlaskClient,
                 mongo_client: pymongo.MongoClient,
                 database_name: str,
