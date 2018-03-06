@@ -2,10 +2,11 @@ import os
 import base64
 import hashlib
 import secrets
-import requests
 import typing
+# import typing_extensions
 from http import HTTPStatus
 import zipfile
+import requests
 import flask
 from werkzeug import utils
 from azure.common import AzureMissingResourceHttpError
@@ -55,31 +56,63 @@ def timestamp() -> str:
     return timestamp
 
 
-def trigger(trigger_url: str =os.environ.get('TRIGGER_URL'),
-            salt: typing.Optional[str] =None,
-            signature: typing.Optional[str] =None,
-            ) -> typing.Tuple[str, int]:
-    if salt is None:
+# class TriggerProtocol(typing_extensions.Protocol):
+#
+#     def send_to_trigger(self) -> requests.Response:
+#         pass
+#
+#
+# class ReadSendToTrigger:
+#     def send_to_trigger(self, data:typing.Dict[str, str]) -> requests.Response:
+#         return requests.post(os.environ['TRIGGER_URL'], data=data)
+#
+#
+# class MockSendToTrigger:
+#     def send_to_trigger(self, data:typing.Dict[str, str]) -> requests.Response:
+#         response = requests.Response()
+#         if 'salt' not in data:
+#             response.status_code = HTTPStatus.BAD_REQUEST
+#             response._content = b'no salt'
+#             return response
+#         if 'signature' not in data:
+#             response.status_code = HTTPStatus.BAD_REQUEST
+#             response._content = b'no signature'
+#             return response
+#
+#         hasher = hashlib.new('sha3_256')
+#         hasher.update((data['salt'] + App.config['SECRET_KEY']).encode())
+#         actual_signature = hasher.hexdigest()
+#         if data['signature'] != actual_signature:
+#             response.status_code = HTTPStatus.BAD_REQUEST
+#             response._content = b'bad signature'
+#         else:
+#             response.status_code = HTTPStatus.CREATED
+#             response._content = b'success'
+#         return response
+
+
+def send_to_trigger(data: typing.Dict[str, str]) -> requests.Response:
+    return requests.post(os.environ['TRIGGER_URL'], data=data)
+
+
+def trigger(data: typing.Optional[typing.Dict[str, str]] = None) -> requests.Response:
+    if data is None:
         salt = secrets.token_hex(16)
         hasher = hashlib.new('sha3_256')
         hasher.update((salt + App.config['SECRET_KEY']).encode())
         signature = hasher.hexdigest()
-    post_return = requests.post(trigger_url, data=dict(salt=salt, signature=signature))
-    return post_return.content, post_return.status_code
+        data = dict(salt=salt, signature=signature)
+    return send_to_trigger(data)
 
 
 @App.route('/trigger_tl', methods=['POST'])
-def trigger_tl() -> typing.Tuple[str, int]:
-    if 'salt' not in flask.request.form:
-        return 'no salt', HTTPStatus.BAD_REQUEST
-    if 'signature' not in flask.request.form:
-        return 'no signature', HTTPStatus.BAD_REQUEST
-    return trigger(salt=flask.request.form['salt'],
-                   signature=flask.request.form['signature'])
+def trigger_tl() -> typing.Tuple[bytes, int]:
+    trigger_response = trigger(data=flask.request.form)
+    return b'', trigger_response.status_code
 
 
 @App.route('/upload_file', methods=['POST'])
-def upload_file() -> typing.Tuple[str, int]:
+def upload_file() -> typing.Tuple[bytes, int]:
     if App.config['SECRET_KEY'] == DEFAULT_ENDPOINT_SECRET_KEY:
         raise ValueError("Need to define environment variable ENDPOINT_SECRET_KEY")
     if 'signature' not in flask.request.form:
@@ -101,7 +134,7 @@ def upload_file() -> typing.Tuple[str, int]:
     try:
         file_z = zipfile.ZipFile(file)
     except zipfile.BadZipFile:
-        return "Bad Zipfile", HTTPStatus.BAD_REQUEST
+        return b"Bad Zipfile", HTTPStatus.BAD_REQUEST
 
     for json_file in [file_z.open(zipinfo) for zipinfo in file_z.infolist()]:
         if not azure_utils.upload_bytes_to_azure(App.config['AZURE_COORDINATES'], json_file.read(),
@@ -113,7 +146,8 @@ def upload_file() -> typing.Tuple[str, int]:
     if not azure_utils.upload_bytes_to_azure(App.config['AZURE_COORDINATES'], timestamp.encode(), TIMESTAMP_FILENAME):
         flask.abort(HTTPStatus.BAD_GATEWAY)
 
-    return trigger()
+    trigger_response = trigger()
+    return b'', trigger_response.status_code
 
 
 if __name__ == "__main__":

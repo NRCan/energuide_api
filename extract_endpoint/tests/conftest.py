@@ -1,10 +1,13 @@
 import io
 import datetime
+from http import HTTPStatus
+import hashlib
 import zipfile
 import typing
+import requests
 import pytest
 from azure.storage import blob
-from extract_endpoint import azure_utils
+from extract_endpoint import azure_utils, endpoint
 
 
 @pytest.fixture(scope='session')
@@ -53,3 +56,24 @@ def sample_zipfile(sample_filenames: typing.Tuple[str, str],
     file_z.close()
     file.seek(0)
     return file
+
+
+@pytest.fixture
+def mocked_tl_app(monkeypatch, sample_secret_key: str):
+    def mock_send_to_trigger(data: typing.Dict[str, str]) -> requests.Response:
+        response = requests.Response()
+        if 'salt' not in data:
+            response.status_code = HTTPStatus.BAD_REQUEST
+            return response
+        if 'signature' not in data:
+            response.status_code = HTTPStatus.BAD_REQUEST
+            return response
+        hasher = hashlib.new('sha3_256')
+        hasher.update((data['salt'] + sample_secret_key).encode())
+        actual_signature = hasher.hexdigest()
+        if data['signature'] != actual_signature:
+            response.status_code = HTTPStatus.BAD_REQUEST
+        else:
+            response.status_code = HTTPStatus.CREATED
+        return response
+    monkeypatch.setattr(endpoint, 'send_to_trigger', mock_send_to_trigger)

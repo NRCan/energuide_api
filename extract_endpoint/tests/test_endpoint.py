@@ -1,7 +1,6 @@
 import io
 import base64
 import hashlib
-import requests
 from http import HTTPStatus
 import typing
 import pytest
@@ -70,58 +69,26 @@ def upload_timestamp_file(azure_emulator_coords: azure_utils.StorageCoordinates,
     azure_service.delete_blob(azure_emulator_coords.container, endpoint.TIMESTAMP_FILENAME)
 
 
-@pytest.fixture
-def sample_trigger_tl_url(monkeypatch) -> str:
-    url = 'http:trigger.url/trigger_tl'
-    monkeypatch.setenv('TRIGGER_URL', url)
-    return url
-
-
-@pytest.fixture
-def mocked_tl_app(monkeypatch, sample_secret_key: str, sample_trigger_tl_url: str):
-    def mocked_post(url: str, data: typing.Dict[str, str]):
-        mock = type('MockedReq', (), {})()
-
-        if url != sample_trigger_tl_url:
-            mock.status_code = HTTPStatus.NOT_FOUND
-            mock.content = 'not trigger url'
-
-        if 'salt' not in data or 'signature' not in data:
-            mock.status_code = HTTPStatus.BAD_REQUEST
-            mock.content = 'missing salt or sig'
-        else:
-            salt = data['salt']
-            signature = data['signature']
-            hasher = hashlib.new('sha3_256')
-            hasher.update((salt + sample_secret_key).encode())
-            expected_signature = hasher.hexdigest()
-
-            if expected_signature == signature:
-                mock.status_code = HTTPStatus.CREATED
-                mock.content = 'success'
-            else:
-                mock.content = 'failed'
-                mock.status_code = HTTPStatus.BAD_REQUEST
-        return mock
-
-    monkeypatch.setattr(requests, 'post', mocked_post)
-
-
 @pytest.mark.usefixtures('mocked_tl_app')
 def test_trigger(sample_salt: str, sample_salt_signature: str) -> None:
-    return_val = endpoint.trigger('http://url', sample_salt, sample_salt_signature)
-    assert return_val[1] == HTTPStatus.CREATED
+    return_val = endpoint.trigger(dict(salt=sample_salt, signature=sample_salt_signature))
+    assert return_val.status_code == HTTPStatus.CREATED
 
 
 @pytest.mark.usefixtures('mocked_tl_app')
-def test_trigger_no_salt() -> None:
-    return_val = endpoint.trigger('http://url')
-    assert return_val[1] == HTTPStatus.CREATED
+def test_trigger_no_data() -> None:
+    return_val = endpoint.trigger()
+    assert return_val.status_code == HTTPStatus.CREATED
 
 
 @pytest.mark.usefixtures('mocked_tl_app')
-def test_trigger_tl(test_client: testing.FlaskClient, sample_salt: str, sample_salt_signature: str) -> None:
+def test_trigger_bad_data() -> None:
+    return_val = endpoint.trigger(dict(salt='bad salt', signature='bad signature'))
+    assert return_val.status_code == HTTPStatus.BAD_REQUEST
 
+
+@pytest.mark.usefixtures('mocked_tl_app')
+def test_trigger_route(test_client: testing.FlaskClient, sample_salt: str, sample_salt_signature: str) -> None:
     return_val = test_client.post('/trigger_tl', data=dict(salt=sample_salt, signature=sample_salt_signature))
     assert return_val.status_code == HTTPStatus.CREATED
 
