@@ -36,6 +36,7 @@ def run_endpoint(azure_emulator_coords: azure_utils.StorageCoordinates,
 
     monkeysession = _pytest.monkeypatch.MonkeyPatch()
     request.addfinalizer(monkeysession.undo)
+    monkeysession.setenv('MOCK_ENDPOINT_TRIGGER', 1)
     monkeysession.setenv('ENDPOINT_SECRET_KEY', sample_secret_key)
     monkeysession.setenv('EXTRACT_ENDPOINT_STORAGE_ACCOUNT', azure_emulator_coords.account)
     monkeysession.setenv('EXTRACT_ENDPOINT_STORAGE_KEY', azure_emulator_coords.key)
@@ -90,7 +91,7 @@ def check_file_in_azure(azure_service: blob.BlockBlobService,
     assert actual_blob.content == contents
 
 
-@pytest.mark.usefixtures('mocked_tl_app', 'run_endpoint')
+@pytest.mark.usefixtures('run_endpoint')
 def test_post_stream(azure_service: blob.BlockBlobService,
                      azure_emulator_coords: azure_utils.StorageCoordinates,
                      upload_url: str,

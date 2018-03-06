@@ -56,7 +56,20 @@ def timestamp() -> str:
 
 
 def send_to_trigger(data: typing.Dict[str, str]) -> int:
-    return requests.post(os.environ['TRIGGER_URL'], data=data).status_code
+    if os.environ.get('MOCK_ENDPOINT_TRIGGER', None):
+        if 'salt' not in data:
+            return HTTPStatus.BAD_REQUEST
+        if 'signature' not in data:
+            return HTTPStatus.BAD_REQUEST
+        hasher = hashlib.new('sha3_256')
+        hasher.update((data['salt'] + App.config['SECRET_KEY']).encode())
+        actual_signature = hasher.hexdigest()
+        if data['signature'] != actual_signature:
+            return HTTPStatus.BAD_REQUEST
+        else:
+            return HTTPStatus.CREATED
+    else:
+        return requests.post(os.environ['TRIGGER_URL'], data=data).status_code
 
 
 def trigger(data: typing.Optional[typing.Dict[str, str]] = None) -> int:

@@ -63,19 +63,3 @@ def sample_secret_key(monkeypatch) -> str:
     monkeypatch.setitem(endpoint.App.config, 'SECRET_KEY', 'sample secret key')
     return endpoint.App.config['SECRET_KEY']
 
-
-@pytest.fixture
-def mocked_tl_app(monkeypatch, sample_secret_key: str):
-    def mock_send_to_trigger(data: typing.Dict[str, str]) -> int:
-        if 'salt' not in data:
-            return HTTPStatus.BAD_REQUEST
-        if 'signature' not in data:
-            return HTTPStatus.BAD_REQUEST
-        hasher = hashlib.new('sha3_256')
-        hasher.update((data['salt'] + sample_secret_key).encode())
-        actual_signature = hasher.hexdigest()
-        if data['signature'] != actual_signature:
-            return HTTPStatus.BAD_REQUEST
-        else:
-            return HTTPStatus.CREATED
-    monkeypatch.setattr(endpoint, 'send_to_trigger', mock_send_to_trigger)
