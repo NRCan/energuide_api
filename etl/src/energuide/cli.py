@@ -27,6 +27,7 @@ def main() -> None:
 @click.option('--azure', is_flag=True, help='Download data from Azure')
 @click.option('--filename', type=click.Path(exists=True), required=False)
 @click.option('-a', '--append', is_flag=True, help='Append data instead of overwriting')
+@click.option('--progress/--no-progress', default=True)
 def load(username: str,
          password: str,
          host: str,
@@ -35,7 +36,8 @@ def load(username: str,
          collection: str,
          azure: bool,
          filename: typing.Optional[str],
-         append: bool) -> None:
+         append: bool,
+         progress: bool) -> None:
     coords = database.DatabaseCoordinates(
         username=username,
         password=password,
@@ -54,7 +56,7 @@ def load(username: str,
     else:
         LOGGER.error('Must supply a filename or use azure')
         raise ValueError('Must supply a filename or use azure')
-    data = transform.transform(reader)
+    data = transform.transform(reader, progress)
     database.load(coords, db_name, collection, data, append)
     LOGGER.info(f'Finished loading data')
 
