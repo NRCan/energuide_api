@@ -1,11 +1,11 @@
 import io
 import subprocess
 import typing
-from http import HTTPStatus
 import psutil
 import pytest
 import _pytest
 import requests
+from click import testing # type: ignore
 from azure.storage import blob
 from extract_endpoint import post_to_endpoint, azure_utils, endpoint
 
@@ -90,33 +90,65 @@ def check_file_in_azure(azure_service: blob.BlockBlobService,
 
 
 @pytest.mark.usefixtures('run_endpoint')
-def test_post_stream(azure_service: blob.BlockBlobService,
-                     azure_emulator_coords: azure_utils.StorageCoordinates,
-                     upload_url: str,
-                     sample_timestamp: str,
-                     sample_file_contents: str,
-                     sample_filenames: str,
-                     sample_zipfile: io.BytesIO) -> None:
+def test_post_stream_cli(azure_service: blob.BlockBlobService,
+                         azure_emulator_coords: azure_utils.StorageCoordinates,
+                         sample_timestamp: str,
+                         sample_file_contents: str,
+                         sample_filenames: str,
+                         sample_zipfile_fixture: str,
+                         upload_url: str) -> None:
 
-    post_return = post_to_endpoint.post_stream(stream=sample_zipfile, filename="filename",
-                                               timestamp=sample_timestamp, url=upload_url)
-    assert post_return.status_code == HTTPStatus.CREATED
+    runner = testing.CliRunner()
+    result = runner.invoke(post_to_endpoint.main, args=[
+        'upload',
+        sample_zipfile_fixture,
+        sample_timestamp,
+        '--url', upload_url
+    ])
+    assert result.exit_code == 0
     check_file_in_azure(azure_service, azure_emulator_coords, endpoint.TIMESTAMP_FILENAME, sample_timestamp)
     for name, contents in zip(sample_filenames, sample_file_contents):
         check_file_in_azure(azure_service, azure_emulator_coords, name, contents)
 
 
+def test_post_stream_cli_no_stream(upload_url: str, sample_timestamp: str) -> None:
+
+    runner = testing.CliRunner()
+    result = runner.invoke(post_to_endpoint.main, args=[
+        'upload',
+        None,
+        sample_timestamp,
+        '--url', upload_url
+    ])
+    assert result.exit_code != 0
+
+
+def test_post_stream_cli_no_timestamp(sample_zipfile_fixture: str, upload_url: str) -> None:
+    runner = testing.CliRunner()
+    result = runner.invoke(post_to_endpoint.main, args=[
+        'upload',
+        sample_zipfile_fixture,
+        None,
+        '--url', upload_url
+    ])
+    assert result.exit_code != 0
+
+
 @pytest.mark.usefixtures('run_endpoint')
-def test_post_stream_stdin(azure_service: blob.BlockBlobService,
-                           azure_emulator_coords: azure_utils.StorageCoordinates,
-                           upload_url: str,
-                           sample_timestamp: str,
-                           sample_file_contents: str,
-                           sample_filenames: str,
-                           sample_zipfile: io.BytesIO) -> None:
-    post_return = post_to_endpoint.post_stream(stream=sample_zipfile, filename="filename",
-                                               timestamp=sample_timestamp, url=upload_url)
-    assert post_return.status_code == HTTPStatus.CREATED
+def test_post_stream_cli_no_url(azure_service: blob.BlockBlobService,
+                                azure_emulator_coords: azure_utils.StorageCoordinates,
+                                sample_timestamp: str,
+                                sample_file_contents: str,
+                                sample_filenames: str,
+                                sample_zipfile_fixture: str) -> None:
+    runner = testing.CliRunner()
+    result = runner.invoke(post_to_endpoint.main, args=[
+        'upload',
+        sample_zipfile_fixture,
+        sample_timestamp,
+        '--url', None
+    ])
+    assert result.exit_code == 0
     check_file_in_azure(azure_service, azure_emulator_coords, endpoint.TIMESTAMP_FILENAME, sample_timestamp)
     for name, contents in zip(sample_filenames, sample_file_contents):
         check_file_in_azure(azure_service, azure_emulator_coords, name, contents)

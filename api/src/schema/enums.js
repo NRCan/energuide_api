@@ -24,6 +24,22 @@ dwellingFields.forEach(attr => {
   module.exports[generateName('dwelling', attr)] = attachToString(fn)
 })
 
+// The fields on the evaluation type
+const evaluationFields = ['evaluationType', 'fileId', 'ersRating']
+// The date-specific fields on the evaluation type
+const evaluationDateFields = ['entryDate', 'creationDate', 'modificationDate']
+
+/*
+  Since our date fields are just represented as strings in the database, we
+  are using identical logic to match on them as we do when we match on our
+  other string fields.
+*/
+evaluationFields.concat(evaluationDateFields).forEach(attr => {
+  // eslint-disable-next-line no-new-func
+  let fn = new Function('matcher', `return {"evaluations.${attr}": matcher}`)
+  module.exports[generateName('evaluation', attr)] = attachToString(fn)
+})
+
 // The fields on the ventilation type
 const ventilationFields = [
   'typeEnglish',
@@ -318,7 +334,6 @@ foundationFields.forEach(attr => {
   module.exports[generateName('foundation', attr)] = attachToString(fn)
 })
 
-// The fields on the Foundation Header type
 const headerFields = [
   'insulationNominalRsi',
   'insulationNominalR',
@@ -339,4 +354,78 @@ headerFields.forEach(attr => {
     `return { "evaluations.foundations.header.${attr}": matcher }`,
   )
   module.exports[generateName('foundationHeader', attr)] = attachToString(fn)
+})
+
+// The fields on the Foundation Floor type
+const foundationFloorFields = [
+  'floorTypeEnglish',
+  'floorTypeFrench',
+  'insulationNominalRsi',
+  'insulationNominalR',
+  'insulationEffectiveRsi',
+  'insulationEffectiveR',
+  'areaMetres',
+  'areaFeet',
+  'perimeterMetres',
+  'perimeterFeet',
+  'widthMetres',
+  'widthFeet',
+  'lengthMetres',
+  'lengthFeet',
+]
+
+foundationFloorFields.forEach(attr => {
+  // eslint-disable-next-line no-new-func
+  let fn = new Function(
+    'matcher',
+    `
+      return {
+        evaluations: {
+          $elemMatch: {
+            foundations: {
+              $elemMatch: {
+                floors: { $elemMatch: { ${attr}: matcher } },
+              },
+            },
+          },
+        },
+      }
+  `,
+  )
+  module.exports[generateName('foundationFloor', attr)] = attachToString(fn)
+})
+
+const foundationWallFields = [
+  'wallTypeEnglish',
+  'wallTypeFrench',
+  'insulationNominalRsi',
+  'insulationNominalR',
+  'insulationEffectiveRsi',
+  'insulationEffectiveR',
+  'percentage',
+  'areaMetres',
+  'areaFeet',
+]
+
+foundationWallFields.forEach(attr => {
+  // eslint-disable-next-line no-new-func
+  let fn = new Function(
+    'matcher',
+    `
+    return {
+      evaluations: {
+        $elemMatch: {
+          foundations: {
+            $elemMatch:{
+              walls: {
+                $elemMatch: { ${attr}: matcher }
+              },
+            },
+          },
+        },
+      },
+    }
+  `,
+  )
+  module.exports[generateName('foundationWall', attr)] = attachToString(fn)
 })
