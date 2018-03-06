@@ -163,7 +163,7 @@ def test_extract_invalid(invalid_filepath: str, tmpdir: py._path.local.LocalPath
         '--outfile', outfile
     ])
 
-    assert result.exit_code != 0
+    assert result.exit_code == 0
 
     with zipfile.ZipFile(outfile, 'r') as output:
         assert not output.namelist()

@@ -1,4 +1,5 @@
 import typing
+import os
 import click
 from energuide import database
 from energuide import transform
@@ -57,6 +58,9 @@ def load(username: str,
 @click.option('--outfile', required=True)
 def extract(infile: str, outfile: str) -> None:
     LOGGER.info(f'Extracting data from {infile} into {outfile}')
+    if os.path.exists(outfile):
+        LOGGER.warning(f'Warning: file {outfile} exists. Overwriting.')
     extracted = extractor.extract_data(infile)
-    extractor.write_data(extracted, outfile)
-    LOGGER.info(f'Finished extracting data into {outfile}')
+    records_written, records_failed = extractor.write_data(extracted, outfile)
+    LOGGER.info(f'Finished extracting data into {outfile}. '
+                f'Successfully written: {records_written}. Failed: {records_failed}')
