@@ -234,7 +234,7 @@ jobs:
       - persist_to_workspace:
           paths:
             - mongo_dump
-           root: workspace
+          root: workspace
           command: ~/repo/scripts/notify_failure.sh
           name: "Report failing Master"
           when: on_fail
