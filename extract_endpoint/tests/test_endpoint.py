@@ -93,6 +93,29 @@ def test_timestamp_no_file(test_client: testing.FlaskClient) -> None:
     assert get_return.status_code == HTTPStatus.BAD_GATEWAY
 
 
+@pytest.mark.usefixtures('azure_service')
+def test_upload_with_timestamp(test_client: testing.FlaskClient,
+                               sample_timestamp: str,
+                               sample_salt: str,
+                               sample_zipfile_signature: str,
+                               sample_zipfile: io.BytesIO) -> None:
+
+    post_return = test_client.post('/upload_file', data=dict(salt=sample_salt, signature=sample_zipfile_signature,
+                                                             timestamp=sample_timestamp,
+                                                             file=(sample_zipfile, 'zipfile')))
+    assert post_return.status_code == HTTPStatus.CREATED
+
+
+def test_upload_without_timestamp(test_client: testing.FlaskClient,
+                                  sample_salt: str,
+                                  sample_zipfile_signature: str,
+                                  sample_zipfile: io.BytesIO) -> None:
+
+    post_return = test_client.post('/upload_file', data=dict(salt=sample_salt, signature=sample_zipfile_signature,
+                                                             file=(sample_zipfile, 'zipfile')))
+    assert post_return.status_code == HTTPStatus.BAD_REQUEST
+
+
 def test_upload_no_key_in_env(test_client: testing.FlaskClient,
                               sample_timestamp: str,
                               sample_salt: str,
