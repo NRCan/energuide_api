@@ -9,7 +9,7 @@
     "test": "jest src",
     "integration": "jest test/",
     "start": "node dist/index.js",
-    "build": "babel src --copy-files --out-dir dist",
+    "build": "yarn compile && babel src --copy-files --out-dir dist",
     "dockerize": "yarn build && docker build -t cdssnc/nrcan_api .",
     "dbg": "node --inspect-brk node_modules/jest/bin/jest.js",
     "extract": "./node_modules/lingui-cli/dist/lingui.js extract",
