@@ -1,7 +1,7 @@
 {
   "name": "nrcan_api",
   "version": "1.0.0",
-  "description": "The NRCAN Engerguide API",
+  "description": "The NRCAN EnerGuide API",
   "main": "index.js",
   "author": "Mike Williamson <mike.williamson@tbs-sct.gc.ca>",
   "license": "MIT",
