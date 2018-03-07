@@ -30,7 +30,7 @@ App.config.update(dict(
 
 
 def _trigger_url() -> str:
-    return os.environ.get('TRIGGER_URL', 'http://0.0.0.0:5010/run_tl')
+    return os.environ.get('TRIGGER_ADDRESS', 'http://0.0.0.0:5010') + '/run_tl'
 
 
 @App.route('/', methods=['GET'])

@@ -85,8 +85,8 @@ def mocked_tl_app(monkeypatch, sample_secret_key: str):
 
 
 def test_trigger_url(monkeypatch: _pytest.monkeypatch.MonkeyPatch) -> None:
-    monkeypatch.setenv('TRIGGER_URL', 'trigger')
-    assert endpoint._trigger_url() == 'trigger'
+    monkeypatch.setenv('TRIGGER_ADDRESS', 'https://www.nrcan.ca:4000')
+    assert endpoint._trigger_url() == 'https://www.nrcan.ca:4000/run_tl'
 
 
 @pytest.mark.usefixtures('mocked_tl_app')
