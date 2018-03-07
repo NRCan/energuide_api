@@ -6,7 +6,7 @@ import requests
 import click
 
 
-DEFAULT_ENDPOINT_SECRET_KEY = 'no key'
+DEFAULT_ETL_SECRET_KEY = 'no key'
 
 
 @click.group()
@@ -22,7 +22,7 @@ def post_stream(stream: typing.IO[bytes],
     salt = secrets.token_hex(16)
 
     hasher = hashlib.new('sha3_256')
-    hasher.update((salt + os.environ.get('ENDPOINT_SECRET_KEY', DEFAULT_ENDPOINT_SECRET_KEY)).encode())
+    hasher.update((salt + os.environ.get('ETL_SECRET_KEY', DEFAULT_ETL_SECRET_KEY)).encode())
     hasher.update(data)
     signature = hasher.hexdigest()
 

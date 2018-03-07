@@ -11,7 +11,7 @@ from azure.common import AzureMissingResourceHttpError
 from extract_endpoint import azure_utils
 
 
-DEFAULT_ENDPOINT_SECRET_KEY = 'no key'
+DEFAULT_ETL_SECRET_KEY = 'no key'
 
 
 TIMESTAMP_FILENAME = 'timestamp.txt'
@@ -19,7 +19,7 @@ TIMESTAMP_FILENAME = 'timestamp.txt'
 
 App = flask.Flask(__name__)
 App.config.update(dict(
-    SECRET_KEY=os.environ.get('ENDPOINT_SECRET_KEY', DEFAULT_ENDPOINT_SECRET_KEY),
+    SECRET_KEY=os.environ.get('ETL_SECRET_KEY', DEFAULT_ETL_SECRET_KEY),
     AZURE_COORDINATES=azure_utils.StorageCoordinates(
         account=os.environ.get(azure_utils.EnvVariables.account.value, ''),
         key=os.environ.get(azure_utils.EnvVariables.key.value, ''),
@@ -30,7 +30,7 @@ App.config.update(dict(
 
 
 def _trigger_url() -> str:
-    return os.environ.get('TRIGGER_URL')
+    return os.environ.get('TRIGGER_URL', 'http://0.0.0.0:5010/run_tl')
 
 
 def _mock_tl_app() -> bool:
@@ -94,8 +94,8 @@ def trigger_tl() -> typing.Tuple[str, int]:
 
 @App.route('/upload_file', methods=['POST'])
 def upload_file() -> typing.Tuple[str, int]:
-    if App.config['SECRET_KEY'] == DEFAULT_ENDPOINT_SECRET_KEY:
-        raise ValueError("Need to define environment variable ENDPOINT_SECRET_KEY")
+    if App.config['SECRET_KEY'] == DEFAULT_ETL_SECRET_KEY:
+        raise ValueError("Need to define environment variable ETL_SECRET_KEY")
     if 'signature' not in flask.request.form:
         flask.abort(HTTPStatus.BAD_REQUEST)
     if 'salt' not in flask.request.form:

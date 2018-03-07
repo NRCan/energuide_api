@@ -175,7 +175,7 @@ def test_upload_no_key_in_env(test_client: testing.FlaskClient,
                               sample_zipfile_signature: str,
                               sample_zipfile: io.BytesIO) -> None:
 
-    endpoint.App.config['SECRET_KEY'] = endpoint.DEFAULT_ENDPOINT_SECRET_KEY
+    endpoint.App.config['SECRET_KEY'] = endpoint.DEFAULT_ETL_SECRET_KEY
     with pytest.raises(ValueError):
         test_client.post('/upload_file', data=dict(salt=sample_salt, signature=sample_zipfile_signature,
                                                    timestamp=sample_timestamp, file=(sample_zipfile, 'zipfile')))
