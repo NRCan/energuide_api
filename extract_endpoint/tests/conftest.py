@@ -3,6 +3,7 @@ import datetime
 import zipfile
 import typing
 import pytest
+import _pytest
 import py
 from azure.storage import blob
 from extract_endpoint import azure_utils
@@ -58,7 +59,7 @@ def sample_zipfile(sample_filenames: typing.Tuple[str, str],
 
 
 @pytest.fixture
-def sample_secret_key(monkeypatch) -> str:
+def sample_secret_key(monkeypatch: _pytest.monkeypatch.MonkeyPatch) -> str:
     monkeypatch.setitem(endpoint.App.config, 'SECRET_KEY', 'sample secret key')
     return endpoint.App.config['SECRET_KEY']
 

@@ -69,7 +69,7 @@ def upload_timestamp_file(azure_emulator_coords: azure_utils.StorageCoordinates,
 
 
 @pytest.fixture
-def mocked_tl_app(monkeypatch, sample_secret_key: str):
+def mocked_tl_app(monkeypatch: _pytest.monkeypatch.MonkeyPatch, sample_secret_key: str):
     def mock_send_to_trigger(data: typing.Dict[str, str]) -> int:
         if 'salt' not in data:
             return HTTPStatus.BAD_REQUEST
