@@ -4,8 +4,8 @@ from http import HTTPStatus
 import hashlib
 import flask
 import pymongo
-from energuide import transform
 from energuide import database
+from energuide import cli
 
 
 App = flask.Flask(__name__)
@@ -60,14 +60,15 @@ def run_tl() -> typing.Tuple[str, int]:
     if salt_signature != signature:
         return 'bad signature', HTTPStatus.BAD_REQUEST
 
-    azure_coords = transform.AzureCoordinates.from_env()
-    reader = transform.AzureExtractReader(azure_coords)
-    data = transform.transform(reader)
-    database.load(DATABASE_COORDS,
-                  database_name=DATABASE_NAME,
-                  collection_name=COLLECTION,
-                  data=data,
-                  append=False)
+    cli.load.callback(username=DATABASE_COORDS.username,
+                      password=DATABASE_COORDS.password,
+                      host=DATABASE_COORDS.host,
+                      port=DATABASE_COORDS.port,
+                      db_name=DATABASE_NAME,
+                      collection=COLLECTION,
+                      azure=True,
+                      filename=None,
+                      append=False)
 
     mongo_client: pymongo.MongoClient
     with database.mongo_client(DATABASE_COORDS) as mongo_client:
