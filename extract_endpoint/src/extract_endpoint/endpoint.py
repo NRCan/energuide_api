@@ -33,10 +33,6 @@ def _trigger_url() -> str:
     return os.environ.get('TRIGGER_URL', 'http://0.0.0.0:5010/run_tl')
 
 
-def _mock_tl_app() -> bool:
-    return bool(os.environ.get('MOCK_TL_APP'))
-
-
 @App.route('/', methods=['GET'])
 def frontend() -> str:
     return ''
@@ -62,19 +58,7 @@ def timestamp() -> str:
 
 
 def send_to_trigger(data: typing.Dict[str, str]) -> int:
-    if _mock_tl_app():
-        if 'salt' not in data:
-            return HTTPStatus.BAD_REQUEST
-        if 'signature' not in data:
-            return HTTPStatus.BAD_REQUEST
-        hasher = hashlib.new('sha3_256')
-        hasher.update((data['salt'] + App.config['SECRET_KEY']).encode())
-        actual_signature = hasher.hexdigest()
-        if data['signature'] != actual_signature:
-            return HTTPStatus.BAD_REQUEST
-        return HTTPStatus.CREATED
-    else:
-        return requests.post(_trigger_url(), data=data).status_code
+    return requests.post(_trigger_url(), data=data).status_code
 
 
 def trigger(data: typing.Optional[typing.Dict[str, str]] = None) -> int:
