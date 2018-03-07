@@ -6,6 +6,10 @@ import flask
 import pymongo
 from energuide import database
 from energuide import cli
+from energuide import logger
+
+
+LOGGER = logger.get_logger(__name__)
 
 
 App = flask.Flask(__name__)
@@ -48,8 +52,10 @@ def robots() -> None:
 @App.route('/run_tl', methods=['POST'])
 def run_tl() -> typing.Tuple[str, int]:
     if 'salt' not in flask.request.form:
+        LOGGER.warning("request missing salt")
         return 'no salt', HTTPStatus.BAD_REQUEST
     if 'signature' not in flask.request.form:
+        LOGGER.warning("request missing signature")
         return 'no signature', HTTPStatus.BAD_REQUEST
 
     salt = flask.request.form['salt']
@@ -58,6 +64,7 @@ def run_tl() -> typing.Tuple[str, int]:
     hasher.update((salt + App.config['SECRET_KEY']).encode())
     salt_signature = hasher.hexdigest()
     if salt_signature != signature:
+        LOGGER.warning("request contained incorrect signature")
         return 'bad signature', HTTPStatus.BAD_REQUEST
 
     cli.load.callback(username=DATABASE_COORDS.username,
@@ -74,7 +81,9 @@ def run_tl() -> typing.Tuple[str, int]:
     with database.mongo_client(DATABASE_COORDS) as mongo_client:
         records_created = mongo_client[DATABASE_NAME][COLLECTION].count()
     if records_created == 0:
+        LOGGER.warning('error, no records created')
         return 'error, no records created', HTTPStatus.BAD_GATEWAY
+    LOGGER.info(f'success, {records_created} created')
     return f'success, {records_created} created', HTTPStatus.CREATED
 
 
