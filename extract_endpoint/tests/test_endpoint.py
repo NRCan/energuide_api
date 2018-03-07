@@ -138,34 +138,17 @@ def test_timestamp_no_file(test_client: testing.FlaskClient) -> None:
     assert get_return.status_code == HTTPStatus.BAD_GATEWAY
 
 
-def check_file_in_azure(azure_service: blob.BlockBlobService,
-                        azure_emulator_coords: azure_utils.StorageCoordinates,
-                        filename: str,
-                        contents: str) -> None:
-
-    assert filename in [blob.name for blob in azure_service.list_blobs(azure_emulator_coords.container)]
-    actual_blob = azure_service.get_blob_to_text(azure_emulator_coords.container, filename)
-    assert actual_blob.content == contents
-
-
-@pytest.mark.usefixtures('mocked_tl_app')
-def test_upload_with_timestamp(azure_emulator_coords: azure_utils.StorageCoordinates,
-                               test_client: testing.FlaskClient,
-                               azure_service: blob.BlockBlobService,
+@pytest.mark.usefixtures('azure_service', 'mocked_tl_app')
+def test_upload_with_timestamp(test_client: testing.FlaskClient,
                                sample_timestamp: str,
                                sample_salt: str,
                                sample_zipfile_signature: str,
-                               sample_file_contents: str,
-                               sample_filenames: str,
                                sample_zipfile: io.BytesIO) -> None:
 
     post_return = test_client.post('/upload_file', data=dict(salt=sample_salt, signature=sample_zipfile_signature,
                                                              timestamp=sample_timestamp,
                                                              file=(sample_zipfile, 'zipfile')))
     assert post_return.status_code == HTTPStatus.CREATED
-    check_file_in_azure(azure_service, azure_emulator_coords, endpoint.TIMESTAMP_FILENAME, sample_timestamp)
-    for name, contents in zip(sample_filenames, sample_file_contents):
-        check_file_in_azure(azure_service, azure_emulator_coords, name, contents)
 
 
 def test_upload_without_timestamp(test_client: testing.FlaskClient,
