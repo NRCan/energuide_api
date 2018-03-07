@@ -69,6 +69,17 @@ def upload_timestamp_file(azure_emulator_coords: azure_utils.StorageCoordinates,
     azure_service.delete_blob(azure_emulator_coords.container, endpoint.TIMESTAMP_FILENAME)
 
 
+def test_trigger_url(monkeypatch: _pytest.monkeypatch.MonkeyPatch) -> None:
+    monkeypatch.setenv('TRIGGER_URL', 'trigger')
+    assert endpoint._trigger_url() == 'trigger'
+
+
+def test_mock_tl_app(monkeypatch: _pytest.monkeypatch.MonkeyPatch) -> None:
+    assert not endpoint._mock_tl_app()
+    monkeypatch.setenv('MOCK_TL_APP', '1')
+    assert endpoint._mock_tl_app()
+
+
 def test_trigger(monkeypatch: _pytest.monkeypatch.MonkeyPatch, sample_salt: str, sample_salt_signature: str) -> None:
     monkeypatch.setenv('MOCK_TL_APP', 1)
     return_val = endpoint.trigger(dict(salt=sample_salt, signature=sample_salt_signature))

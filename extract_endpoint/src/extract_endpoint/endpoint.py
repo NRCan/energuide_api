@@ -29,6 +29,10 @@ App.config.update(dict(
 ))
 
 
+def _trigger_url() -> str:
+    return os.environ.get('TRIGGER_URL')
+
+
 def _mock_tl_app() -> bool:
     return bool(os.environ.get('MOCK_TL_APP'))
 
@@ -70,7 +74,7 @@ def send_to_trigger(data: typing.Dict[str, str]) -> int:
             return HTTPStatus.BAD_REQUEST
         return HTTPStatus.CREATED
     else:
-        return requests.post(os.environ.get('TRIGGER_URL', ''), data=data).status_code
+        return requests.post(_trigger_url(), data=data).status_code
 
 
 def trigger(data: typing.Optional[typing.Dict[str, str]] = None) -> int:
