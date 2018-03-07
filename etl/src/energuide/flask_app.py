@@ -11,10 +11,10 @@ from energuide import database
 App = flask.Flask(__name__)
 
 
-DEFAULT_SECRET_KEY = 'no key'
+DEFAULT_ETL_SECRET_KEY = 'no key'
 
 App.config.update(dict(
-    SECRET_KEY=os.environ.get('SECRET_KEY', DEFAULT_SECRET_KEY),
+    SECRET_KEY=os.environ.get('ETL_SECRET_KEY', DEFAULT_ETL_SECRET_KEY),
 ))
 
 
@@ -78,4 +78,4 @@ def run_tl() -> typing.Tuple[str, int]:
 
 
 if __name__ == "__main__":
-    App.run(host='0.0.0.0')
+    App.run(host='0.0.0.0', port=5010)
