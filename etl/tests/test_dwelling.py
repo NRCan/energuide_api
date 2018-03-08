@@ -526,6 +526,17 @@ def sample_input_e(sample_input_d: typing.Dict[str, typing.Any]) -> typing.Dict[
 
 
 @pytest.fixture
+def sample_input_missing(sample_input_d: typing.Dict[str, typing.Any]) -> typing.Dict[str, typing.Any]:
+    output = copy.deepcopy(sample_input_d)
+    output['MODIFICATIONDATE'] = None
+    output['ersRating'] = None
+    output['heatedFloorArea'] = None
+    output['heating_cooling'] = None
+    output['waterHeatings'] = None
+    return output
+
+
+@pytest.fixture
 def sample_parsed_d(sample_input_d: typing.Dict[str, typing.Any]) -> dwelling.ParsedDwellingDataRow:
     return dwelling.ParsedDwellingDataRow.from_row(sample_input_d)
 
@@ -812,6 +823,11 @@ class TestParsedDwellingDataRow:
                 ),
             ]
         )
+
+    def test_null_fields_are_accepted(self, sample_input_missing: typing.Dict[str, typing.Any]) -> None:
+        output = dwelling.ParsedDwellingDataRow.from_row(sample_input_missing)
+
+        assert output.modification_date == output.ers_rating == output.heating_system == output.heated_floor == None
 
     def test_bad_postal_code(self, sample_input_d: typing.Dict[str, typing.Any]) -> None:
         sample_input_d['forwardSortationArea'] = 'K16'
