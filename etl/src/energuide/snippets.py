@@ -10,7 +10,7 @@ class _Codes(typing.NamedTuple):
 
 class Codes(_Codes):
 
-    EMPTY_SNIPPET = {
+    EMPTY_SNIPPET: typing.Dict[str, typing.Dict[str, typing.List[str]]] = {
         'codes': {
             'wall': [],
             'window': [],
@@ -43,7 +43,7 @@ class _HouseSnippet(typing.NamedTuple):
 
 class HouseSnippet(_HouseSnippet):
 
-    EMPTY_SNIPPET = {
+    EMPTY_SNIPPET: typing.Dict[str, typing.Union[typing.List[str], typing.Optional[str]]] = {
         'ceilings': [],
         'floors': [],
         'walls': [],
@@ -81,7 +81,7 @@ class _EnergyUpgradesSnippet(typing.NamedTuple):
 
 class EnergyUpgradesSnippet(_EnergyUpgradesSnippet):
 
-    EMPTY_SNIPPET = {
+    EMPTY_SNIPPET: typing.Dict[str, typing.List[str]] = {
         'upgrades': [],
     }
 
