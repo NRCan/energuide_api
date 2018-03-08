@@ -1,5 +1,6 @@
 from http import HTTPStatus
 import hashlib
+import time
 import _pytest
 import pymongo
 import pytest
@@ -34,6 +35,20 @@ def test_client(monkeypatch: _pytest.monkeypatch.MonkeyPatch, database_name: str
     return flask_app.App.test_client()
 
 
+def test_threadrunner() -> None:
+
+    def sleeper() -> None:
+        time.sleep(0.5)
+
+    assert not flask_app.ThreadRunner.is_thread_running()
+    flask_app.ThreadRunner.start_new_thread(sleeper)
+    assert flask_app.ThreadRunner.is_thread_running()
+    time.sleep(0.4)
+    assert flask_app.ThreadRunner.is_thread_running()
+    time.sleep(0.2)
+    assert not flask_app.ThreadRunner.is_thread_running()
+
+
 def test_frontend(test_client: testing.FlaskClient) -> None:
     assert test_client.get('/').status_code == HTTPStatus.OK
 
@@ -48,6 +63,7 @@ def test_robots(test_client: testing.FlaskClient) -> None:
     assert get_return.status_code == HTTPStatus.NOT_FOUND
 
 
+@pytest.mark.timeout(10)
 @pytest.mark.usefixtures('populated_azure_emulator')
 def test_run_tl(test_client: testing.FlaskClient,
                 mongo_client: pymongo.MongoClient,
@@ -57,8 +73,23 @@ def test_run_tl(test_client: testing.FlaskClient,
                 sample_signature: str) -> None:
 
     post_return = test_client.post('/run_tl', data=dict(salt=sample_salt, signature=sample_signature))
-    assert post_return.status_code == HTTPStatus.CREATED
+    assert post_return.status_code == HTTPStatus.OK
+    while flask_app.ThreadRunner.is_thread_running():
+        time.sleep(0.1)
     assert mongo_client[database_name][collection].count() == 7
+
+
+@pytest.mark.timeout(10)
+@pytest.mark.usefixtures('populated_azure_emulator')
+def test_run_tl_busy(test_client: testing.FlaskClient,
+                     sample_salt: str,
+                     sample_signature: str) -> None:
+
+    test_client.post('/run_tl', data=dict(salt=sample_salt, signature=sample_signature))
+    post_return = test_client.post('/run_tl', data=dict(salt=sample_salt, signature=sample_signature))
+    assert post_return.status_code == HTTPStatus.TOO_MANY_REQUESTS
+    while flask_app.ThreadRunner.is_thread_running():
+        time.sleep(0.1)
 
 
 def test_run_tl_no_salt(test_client: testing.FlaskClient, energuide_zip_fixture: str, sample_signature: str) -> None:
