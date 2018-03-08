@@ -4,10 +4,10 @@ import click
 from energuide import database
 from energuide import transform
 from energuide import extractor
-from energuide import logging
+from energuide import logger
 
 
-LOGGER = logging.get_logger(__name__)
+LOGGER = logger.get_logger(__name__)
 
 
 @click.group()
