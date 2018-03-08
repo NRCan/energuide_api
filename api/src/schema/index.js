@@ -13,7 +13,7 @@ const Schema = i18n => {
     scalar I18NFloat
     scalar I18NString
     scalar I18NBoolean
-    scalar GraphQLDate
+    scalar I18NDate
 
     # ${i18n.t`An operator to describe how results will be filtered`}
     enum Comparator {
@@ -24,7 +24,6 @@ const Schema = i18n => {
       # ${i18n.t`Equal to: returns true for results equal to the comparison value`}
       eq
     }
-
 
     # ${i18n.t`Filters will return results only if they satisfy a condition`}
     input Filter {
@@ -41,9 +40,9 @@ const Schema = i18n => {
       # ${i18n.t`Name of the date field results will be filtered by`}
       field: DateField!
       # ${i18n.t`Evaluation dates must be equal to or later than this value`}
-      startDate: GraphQLDate
+      startDate: I18NDate
       # ${i18n.t`Evaluation dates must be equal to or earlier than this value`}
-      endDate: GraphQLDate
+      endDate: I18NDate
     }
 
     # ${i18n.t`An improvement that could increase the energy efficiency of the dwelling`}
@@ -316,7 +315,7 @@ const Schema = i18n => {
       energyUpgrades: [Upgrade]
       # ${i18n.t`The details of the foundation`}
       foundations: [Foundation]
-      # ${i18n.t`The Energyguide Rating calculated for this evaluation`}
+      # ${i18n.t`The EnerGuide Rating calculated for this evaluation`}
       ersRating: I18NString
     }
 
@@ -365,6 +364,12 @@ const Schema = i18n => {
       dwellingRegion
       # ${i18n.t`Filter results by the dwellings in a specific forward sortation area`}
       dwellingForwardSortationArea
+      # ${i18n.t`Filter results by the dwellings containing at least one evaluation with a specific evaluation type code`}
+      evaluationEvaluationType
+      # ${i18n.t`Filter results by the dwellings containing at least one evaluation with a specific evaluation ID`}
+      evaluationFileId
+      # ${i18n.t`Filter results by the dwellings containing at least one evaluation with a specific ERS rating`}
+      evaluationErsRating
       # ${i18n.t`Filter results by the dwellings containing at least one ventilation system with a specific type (en)`}
       ventilationTypeEnglish
       # ${i18n.t`Filter results by the dwellings containing at least one ventilation system with a specific type (fr)`}
@@ -493,9 +498,9 @@ const Schema = i18n => {
       doorInsulationRsi
       # ${i18n.t`Filter results by the dwellings containing at least one door with a specific effective R-value`}
       doorInsulationR
-      # ${i18n.t`Filter results for dwellings which have at least one door with a matching U-factor in metric: Watts per square metre per degree Celcius (W/m2C)`}
+      # ${i18n.t`Filter results for dwellings which have at least one door with a matching U-factor in metric: watts per square metre per degree Celcius (W/m2C)`}
       doorUFactor
-      # ${i18n.t`Filter results for dwellings which have at least one door with a matching U-factor in imperial: British Thermal Units per square feet per degree Fahrenheit (BTU/ft2 F)`}
+      # ${i18n.t`Filter results for dwellings which have at least one door with a matching U-factor in imperial: British Thermal Units per square feet per degree Fahrenheit (BTU/ft2F)`}
       doorUFactorImperial
       # ${i18n.t`Filter results by dwellings where the area of the doors have certain value in square metres (m2)`}
       doorAreaMetres
@@ -615,7 +620,7 @@ const Schema = i18n => {
       foundationWallInsulationEffectiveRsi
       # ${i18n.t`Filter results for dwellings with a specific foundation wall insulation effective R-value`}
       foundationWallInsulationEffectiveR
-      # ${i18n.t`Filter results for dwellings with a section of it's foundation wall with a specific percentage of the overall amount`}
+      # ${i18n.t`Filter results for dwellings with a section of its foundation wall with a specific percentage of the overall amount`}
       foundationWallPercentage
       # ${i18n.t`Filter results for dwellings with a foundation wall has specific area in square metres (m2)`}
       foundationWallAreaMetres
