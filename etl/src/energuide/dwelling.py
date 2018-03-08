@@ -79,7 +79,7 @@ class _ParsedDwellingDataRow(typing.NamedTuple):
     eval_type: EvaluationType
     entry_date: datetime.date
     creation_date: datetime.datetime
-    modification_date: datetime.datetime
+    modification_date: typing.Optional[datetime.datetime]
     year_built: int
     city: str
     region: Region
@@ -90,10 +90,10 @@ class _ParsedDwellingDataRow(typing.NamedTuple):
     walls: typing.List[wall.Wall]
     doors: typing.List[door.Door]
     windows: typing.List[window.Window]
-    heated_floor: heated_floor_area.HeatedFloorArea
+    heated_floor: typing.Optional[heated_floor_area.HeatedFloorArea]
     water_heatings: typing.List[water_heating.WaterHeating]
     ventilations: typing.List[ventilation.Ventilation]
-    heating_system: heating.Heating
+    heating_system: typing.Optional[heating.Heating]
     foundations: typing.List[basement.Basement]
     ers_rating: typing.Optional[int]
     energy_upgrades: typing.List[upgrade.Upgrade]
@@ -107,7 +107,7 @@ def _cast_nullable_string(value: str) -> typing.Optional[int]:
 
 class ParsedDwellingDataRow(_ParsedDwellingDataRow):
 
-    _XML_SCHEMA = {'type': 'xml', 'required': True, 'coerce': 'parse_xml'}
+    _XML_SCHEMA = {'type': 'xml', 'nullable': True, 'required': True, 'coerce': 'parse_xml'}
     _XML_LIST_SCHEMA = {'type': 'list', 'required': True, 'schema': _XML_SCHEMA}
 
     _SCHEMA = {
@@ -115,7 +115,7 @@ class ParsedDwellingDataRow(_ParsedDwellingDataRow):
         'EVAL_TYPE': {'type': 'string', 'required': True, 'allowed': [eval_type.value for eval_type in EvaluationType]},
         'ENTRYDATE': {'type': 'date', 'required': True, 'coerce': parser.parse},
         'CREATIONDATE': {'type': 'datetime', 'required': True, 'coerce': parser.parse},
-        'MODIFICATIONDATE': {'type': 'datetime', 'required': True, 'coerce': parser.parse},
+        'MODIFICATIONDATE': {'type': 'datetime', 'nullable': True, 'required': True, 'coerce': parser.parse},
         'YEARBUILT': {'type': 'integer', 'required': True, 'coerce': int},
         'CLIENTCITY': {'type': 'string', 'required': True},
         'forwardSortationArea': {'type': 'string', 'required': True, 'regex': '[A-Z][0-9][A-Z]'},
@@ -142,7 +142,7 @@ class ParsedDwellingDataRow(_ParsedDwellingDataRow):
 
     @classmethod
     def from_row(cls, row: typing.Dict[str, typing.Any]) -> 'ParsedDwellingDataRow':
-        checker = validator.DwellingValidator(cls._SCHEMA, allow_unknown=True, ignore_none_values=True)
+        checker = validator.DwellingValidator(cls._SCHEMA, allow_unknown=True)
         if not checker.validate(row):
             error_keys = ', '.join(checker.errors.keys())
             raise InvalidInputDataError(f'Validator failed on keys: {error_keys}')
@@ -176,11 +176,15 @@ class ParsedDwellingDataRow(_ParsedDwellingDataRow):
             walls=[wall.Wall.from_data(wall_node, codes.wall) for wall_node in parsed['walls']],
             doors=[door.Door.from_data(door_node) for door_node in parsed['doors']],
             windows=[window.Window.from_data(window_node, codes.window) for window_node in parsed['windows']],
-            heated_floor=heated_floor_area.HeatedFloorArea.from_data(parsed['heatedFloorArea']),
+            heated_floor=heated_floor_area.HeatedFloorArea.from_data(parsed['heatedFloorArea'])
+            if parsed['heatedFloorArea'] is not None else None,
+
             water_heatings=water_heating.WaterHeating.from_data(parsed['waterHeatings']),
             ventilations=[ventilation.Ventilation.from_data(ventilation_node)
                           for ventilation_node in parsed['ventilations']],
-            heating_system=heating.Heating.from_data(parsed['heating_cooling']),
+            heating_system=heating.Heating.from_data(parsed['heating_cooling'])
+            if parsed['heating_cooling'] is not None else None,
+
             foundations=foundations,
             ers_rating=parsed['ersRating'],
             energy_upgrades=[upgrade.Upgrade.from_data(upgrade_node) for upgrade_node in parsed['upgrades']],
@@ -194,19 +198,19 @@ class Evaluation:
                  evaluation_type: EvaluationType,
                  entry_date: datetime.date,
                  creation_date: datetime.datetime,
-                 modification_date: datetime.datetime,
+                 modification_date: typing.Optional[datetime.datetime],
                  ceilings: typing.List[ceiling.Ceiling],
                  floors: typing.List[floor.Floor],
                  walls: typing.List[wall.Wall],
                  doors: typing.List[door.Door],
                  windows: typing.List[window.Window],
-                 heated_floor_area: heated_floor_area.HeatedFloorArea,
+                 heated_floor_area: typing.Optional[heated_floor_area.HeatedFloorArea],
                  water_heatings: typing.List[water_heating.WaterHeating],
                  ventilations: typing.List[ventilation.Ventilation],
                  foundations: typing.List[basement.Basement],
                  ers_rating: typing.Optional[int],
                  energy_upgrades: typing.List[upgrade.Upgrade],
-                 heating_system: heating.Heating,
+                 heating_system: typing.Optional[heating.Heating],
                  file_id: str,
                 ) -> None:
         self._evaluation_type = evaluation_type
@@ -266,7 +270,7 @@ class Evaluation:
         return self._creation_date
 
     @property
-    def modification_date(self) -> datetime.datetime:
+    def modification_date(self) -> typing.Optional[datetime.datetime]:
         return self._modification_date
 
     @property
@@ -294,7 +298,7 @@ class Evaluation:
         return self._windows
 
     @property
-    def heated_floor(self) -> heated_floor_area.HeatedFloorArea:
+    def heated_floor(self) -> typing.Optional[heated_floor_area.HeatedFloorArea]:
         return self._heated_floor_area
 
     @property
@@ -314,7 +318,7 @@ class Evaluation:
         return self._energy_upgrades
 
     @property
-    def heating_system(self) -> heating.Heating:
+    def heating_system(self) -> typing.Optional[heating.Heating]:
         return self._heating_system
 
     def to_dict(self) -> typing.Dict[str, typing.Any]:
@@ -322,19 +326,19 @@ class Evaluation:
             'evaluationType': self.evaluation_type.value,
             'entryDate': self.entry_date.isoformat(),
             'creationDate': self.creation_date.isoformat(),
-            'modificationDate': self.modification_date.isoformat(),
+            'modificationDate': self.modification_date.isoformat() if self.modification_date is not None else None,
             'ceilings': [ceiling.to_dict() for ceiling in self.ceilings],
             'floors': [floor.to_dict() for floor in self.floors],
             'walls': [wall.to_dict() for wall in self.walls],
             'doors': [door.to_dict() for door in self.doors],
             'windows': [window.to_dict() for window in self.windows],
-            'heatedFloorArea': self.heated_floor.to_dict(),
+            'heatedFloorArea': self.heated_floor.to_dict() if self.heated_floor is not None else None,
             'ventilations': [ventilation.to_dict() for ventilation in self.ventilations],
             'waterHeatings': [water_heating.to_dict() for water_heating in self.water_heatings],
             'foundations': [foundation.to_dict() for foundation in self.foundations],
             'ersRating': self.ers_rating,
             'energyUpgrades': [upgrade.to_dict() for upgrade in self.energy_upgrades],
-            'heating': self.heating_system.to_dict(),
+            'heating': self.heating_system.to_dict() if self.heating_system is not None else None,
             'fileId': self.file_id,
         }
 
