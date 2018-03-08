@@ -173,15 +173,15 @@ def test_write_data(tmpdir: py._path.local.LocalPath) -> None:
     output_path = f'{tmpdir}/output.zip'
 
     data = [
-        {'foo': 1, 'BUILDER': '4K02E90020'},
-        {'bar': 2, 'baz': 3, 'BUILDER': '4K13D01404'},
+        {'foo': 1, 'BUILDER': '4K02E90020', 'EVAL_ID': '12149'},
+        {'bar': 2, 'baz': 3, 'BUILDER': '4K13D01404', 'EVAL_ID': '12148'},
     ]
 
     result = extractor.write_data(data, output_path)
     assert result == (2, 0)
 
     with zipfile.ZipFile(output_path, 'r') as output_file:
-        files = [output_file.read('4K02E90020'), output_file.read('4K13D01404')]
+        files = [output_file.read('12149-4K02E90020'), output_file.read('12148-4K13D01404')]
 
     assert [json.loads(file) for file in files] == data
 
@@ -190,7 +190,7 @@ def test_write_bad_data(tmpdir: py._path.local.LocalPath) -> None:
     output_path = f'{tmpdir}/output.zip'
 
     data: typing.List[typing.Dict[str, typing.Any]] = [
-        {'foo': 1, 'BUILDER': '4K02E90020'},
+        {'foo': 1, 'BUILDER': '4K02E90020', 'EVAL_ID': '12148'},
         {'bar': 2, 'baz': 3},
     ]
 

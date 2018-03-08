@@ -127,7 +127,8 @@ def write_data(data: typing.Iterable[typing.Optional[typing.Dict[str, typing.Any
                 records_failed += 1
             else:
                 blob_id: str = blob['BUILDER']
-                output_zip.writestr(blob_id, json.dumps(blob))
+                eval_id: str = blob['EVAL_ID']
+                output_zip.writestr(f'{eval_id}-{blob_id}', json.dumps(blob))
                 records_written += 1
 
     return records_written, records_failed
