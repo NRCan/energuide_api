@@ -1,7 +1,7 @@
 {
   "name": "nrcan_api",
   "version": "1.0.0",
-  "description": "The NRCAN Engerguide API",
+  "description": "The NRCAN EnerGuide API",
   "main": "index.js",
   "author": "Mike Williamson <mike.williamson@tbs-sct.gc.ca>",
   "license": "MIT",
@@ -9,7 +9,7 @@
     "test": "jest src",
     "integration": "jest test/",
     "start": "node dist/index.js",
-    "build": "babel src --copy-files --out-dir dist",
+    "build": "yarn compile && babel src --copy-files --out-dir dist",
     "dockerize": "yarn build && docker build -t cdssnc/nrcan_api .",
     "dbg": "node --inspect-brk node_modules/jest/bin/jest.js",
     "extract": "./node_modules/lingui-cli/dist/lingui.js extract",

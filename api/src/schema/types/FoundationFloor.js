@@ -14,21 +14,21 @@ export const createFoundationFloor = i18n => {
       insulationEffectiveRsi: I18NFloat
       # ${i18n.t`The insulation effective R-value of the foundation floor`}
       insulationEffectiveR: I18NFloat
-      # ${i18n.t`The area in square metres (m2) of the foundation floor`}
+      # ${i18n.t`The area of the foundation floor in square metres (m2)`}
       areaMetres: I18NFloat
-      # ${i18n.t`The area in square feet (ft2) of the foundation floor`}
+      # ${i18n.t`The area of the foundation floor in square feet (ft2)`}
       areaFeet: I18NFloat
       # ${i18n.t`The perimeter of the foundation floor in metres (m)`}
       perimeterMetres: I18NFloat
       # ${i18n.t`The perimeter of the foundation floor in feet (ft)`}
       perimeterFeet: I18NFloat
-      # ${i18n.t`The width in metres (m) of the foundation floor`}
+      # ${i18n.t`The width of the foundation floor in metres (m)`}
       heightMetres: I18NFloat
-      # ${i18n.t`The width in feet (ft) of the foundation floor`}
+      # ${i18n.t`The width of the foundation floor in feet (ft)`}
       heightFeet: I18NFloat
-      # ${i18n.t`The length in metres (m) of the foundation floor`}
+      # ${i18n.t`The length of the foundation floor in metres (m)`}
       lengthMetres: I18NFloat
-      # ${i18n.t`The length in feet (ft) of the foundation floor`}
+      # ${i18n.t`The length of the foundation floor in feet (ft)`}
       lengthFeet: I18NFloat
     }
   `

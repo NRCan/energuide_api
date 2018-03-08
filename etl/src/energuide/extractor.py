@@ -6,8 +6,12 @@ import zipfile
 import cerberus
 from tqdm import tqdm
 from energuide import element
+from energuide import logging
 from energuide import snippets
-from energuide.exceptions import InvalidInputDataError
+from energuide.exceptions import InvalidInputDataError, EnerguideError
+
+
+LOGGER = logging.get_logger(__name__)
 
 
 REQUIRED_FIELDS = [
@@ -46,7 +50,7 @@ def _validated(row: typing.Dict[str, typing.Any], validator: cerberus.Validator)
     return validator.document
 
 
-def _read_csv(filepath: str) -> typing.Iterator[typing.Dict[str, typing.Any]]:
+def _read_csv(filepath: str, show_progress: bool) -> typing.Iterator[typing.Dict[str, typing.Any]]:
     try:
         csv.field_size_limit(sys.maxsize)
     except OverflowError:
@@ -55,7 +59,8 @@ def _read_csv(filepath: str) -> typing.Iterator[typing.Dict[str, typing.Any]]:
     with open(filepath, 'r', encoding='utf-8', newline='') as file:
         total_lines = sum(1 for _ in file)
 
-    with tqdm(open(filepath, 'r', encoding='utf-8', newline=''), total=total_lines, unit=' lines') as file:
+    with tqdm(open(filepath, 'r', encoding='utf-8', newline=''),
+              total=total_lines, unit=' lines', disable=not show_progress) as file:
         csv_reader = csv.DictReader(file)
         for row in csv_reader:
             yield row
@@ -91,18 +96,32 @@ def _extract_snippets(row: typing.Dict[str, typing.Any]) -> typing.Dict[str, typ
     return row
 
 
-def extract_data(input_path: str) -> typing.Iterator[typing.Dict[str, typing.Any]]:
+def extract_data(input_path: str,
+                 show_progress: bool = False) -> typing.Iterator[typing.Optional[typing.Dict[str, typing.Any]]]:
     validator = cerberus.Validator(INPUT_SCHEMA, purge_unknown=True)
+    rows = _read_csv(input_path, show_progress)
 
-    for data in _read_csv(input_path):
-        patched = _empty_to_none(data)
-        validated_data = _validated(patched, validator)
-        yield _extract_snippets(validated_data)
+    for row in rows:
+        try:
+            patched = _empty_to_none(row)
+            validated_data = _validated(patched, validator)
+            result = _extract_snippets(validated_data)
+            yield result
+        except EnerguideError as ex:
+            LOGGER.error(f"Error extracting data from row {row.get('BUILDER', 'Unknown ID')}. Details: {ex}")
+            yield None
 
 
-def write_data(data: typing.Iterable[typing.Dict[str, typing.Any]], output_path: str) -> None:
+def write_data(data: typing.Iterable[typing.Optional[typing.Dict[str, typing.Any]]],
+               output_path: str) -> typing.Tuple[int, int]:
+    records_written, records_failed = 0, 0
     with zipfile.ZipFile(output_path, mode='w') as output_zip:
         for blob in data:
-            blob_id = blob.get('BUILDER')
-            if blob_id:
+            if blob is None or not blob.get('BUILDER'):
+                records_failed += 1
+            else:
+                blob_id: str = blob['BUILDER']
                 output_zip.writestr(blob_id, json.dumps(blob))
+                records_written += 1
+
+    return records_written, records_failed

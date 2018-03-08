@@ -1,4 +1,5 @@
 import typing
+import os
 import click
 from energuide import database
 from energuide import transform
@@ -26,6 +27,7 @@ def main() -> None:
 @click.option('--azure', is_flag=True, help='Download data from Azure')
 @click.option('--filename', type=click.Path(exists=True), required=False)
 @click.option('-a', '--append', is_flag=True, help='Append data instead of overwriting')
+@click.option('--progress/--no-progress', default=True)
 def load(username: str,
          password: str,
          host: str,
@@ -34,29 +36,40 @@ def load(username: str,
          collection: str,
          azure: bool,
          filename: typing.Optional[str],
-         append: bool) -> None:
+         append: bool,
+         progress: bool) -> None:
     coords = database.DatabaseCoordinates(
         username=username,
         password=password,
         host=host,
         port=port
     )
+
+    reader: transform.ExtractProtocol
     if azure:
         LOGGER.info(f'Loading data from Azure into {db_name}.{collection}')
+        azure_coords = transform.AzureCoordinates.from_env()
+        reader = transform.AzureExtractReader(azure_coords)
     elif filename:
         LOGGER.info(f'Loading data from {filename} into {db_name}.{collection}')
+        reader = transform.LocalExtractReader(filename)
     else:
         LOGGER.error('Must supply a filename or use azure')
         raise ValueError('Must supply a filename or use azure')
-    transform.run(coords, db_name, collection, azure, filename, append)
+    data = transform.transform(reader, progress)
+    database.load(coords, db_name, collection, data, append)
     LOGGER.info(f'Finished loading data')
 
 
 @main.command()
 @click.option('--infile', required=True)
 @click.option('--outfile', required=True)
-def extract(infile: str, outfile: str) -> None:
+@click.option('--progress/--no-progress', default=True)
+def extract(infile: str, outfile: str, progress: bool) -> None:
     LOGGER.info(f'Extracting data from {infile} into {outfile}')
-    extracted = extractor.extract_data(infile)
-    extractor.write_data(extracted, outfile)
-    LOGGER.info(f'Finished extracting data into {outfile}')
+    if os.path.exists(outfile):
+        LOGGER.warning(f'Warning: file {outfile} exists. Overwriting.')
+    extracted = extractor.extract_data(infile, show_progress=progress)
+    records_written, records_failed = extractor.write_data(extracted, outfile)
+    LOGGER.info(f'Finished extracting data into {outfile}. '
+                f'Successfully written: {records_written}. Failed: {records_failed}')

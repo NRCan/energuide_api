@@ -1,54 +1,66 @@
 import _pytest
 import pytest
-import pymongo
-from energuide import database
 from energuide import transform
 from energuide.embedded import ceiling
 from energuide.exceptions import InvalidEmbeddedDataTypeError
 
 
-def test_run_no_azure(database_coordinates: database.DatabaseCoordinates,
-                      mongo_client: pymongo.MongoClient,
-                      database_name: str,
-                      collection: str,
-                      energuide_zip_fixture: str) -> None:
-
-    transform.run(database_coordinates, database_name, collection, False, energuide_zip_fixture, append=False)
-    assert mongo_client[database_name][collection].count() == 7
+@pytest.fixture
+def local_reader(energuide_zip_fixture: str) -> transform.LocalExtractReader:
+    return transform.LocalExtractReader(energuide_zip_fixture)
 
 
-def test_transform_no_azure(energuide_zip_fixture: str) -> None:
-    output = list(transform.transform(False, energuide_zip_fixture))
-    assert len(output) == 7
+@pytest.fixture
+def azure_reader(populated_azure_emulator: transform.AzureCoordinates) -> transform.AzureExtractReader:
+    return transform.AzureExtractReader(populated_azure_emulator)
 
 
-@pytest.mark.usefixtures('populated_azure_service')
-def test_run_azure(database_coordinates: database.DatabaseCoordinates,
-                   mongo_client: pymongo.MongoClient,
-                   database_name: str,
-                   collection: str) -> None:
-
-    transform.run(database_coordinates, database_name, collection, True, None, append=False)
-    assert mongo_client[database_name][collection].count() == 7
-
-
-@pytest.mark.usefixtures('populated_azure_service')
-def test_transform_azure() -> None:
-
-    output = list(transform.transform(True, None))
-    assert len(output) == 7
+def test_reader(local_reader: transform.LocalExtractReader) -> None:
+    output = list(local_reader.extracted_rows())
+    output = sorted(output, key=lambda row: row['BUILDER'])
+    unique_builders = {row['BUILDER'] for row in output}
+    assert len(output) == 14
+    assert output[0]['BUILDER'] == '11W2D00606'
+    assert len(unique_builders) == 14
 
 
-def test_transform_no_azure_no_filename() -> None:
-    with pytest.raises(ValueError):
-        list(transform.transform(False, None))
+def test_reader_num_rows(local_reader: transform.LocalExtractReader) -> None:
+    assert local_reader.num_rows() == 14
 
 
-def test_bad_data(database_coordinates: database.DatabaseCoordinates,
-                  mongo_client: pymongo.MongoClient,
-                  database_name: str,
-                  collection: str,
-                  energuide_zip_fixture: str,
+def test_azure_reader(azure_reader: transform.AzureExtractReader) -> None:
+    output = list(azure_reader.extracted_rows())
+    output = sorted(output, key=lambda row: row['BUILDER'])
+    unique_builders = {row['BUILDER'] for row in output}
+    assert len(output) == 14
+    assert output[0]['BUILDER'] == '11W2D00606'
+    assert len(unique_builders) == 14
+
+
+def test_azure_reader_num_rows(azure_reader: transform.AzureExtractReader) -> None:
+    assert azure_reader.num_rows() == 14
+
+
+def test_azure_coordinates_from_env(monkeypatch: _pytest.monkeypatch.MonkeyPatch) -> None:
+    monkeypatch.setenv('EXTRACT_ENDPOINT_STORAGE_ACCOUNT', 'foo')
+    monkeypatch.setenv('EXTRACT_ENDPOINT_STORAGE_KEY', 'bar')
+    monkeypatch.setenv('EXTRACT_ENDPOINT_STORAGE_DOMAIN', 'baz')
+    monkeypatch.setenv('EXTRACT_ENDPOINT_CONTAINER', 'qux')
+    coords = transform.AzureCoordinates.from_env()
+    assert coords == transform.AzureCoordinates(
+        account='foo',
+        key='bar',
+        domain='baz',
+        container='qux'
+    )
+
+
+def test_transform(local_reader: transform.LocalExtractReader) -> None:
+    output = transform.transform(local_reader)
+    assert len(list(output)) == 7
+
+
+def test_bad_data(local_reader: transform.LocalExtractReader,
                   monkeypatch: _pytest.monkeypatch.MonkeyPatch,
                   capsys: _pytest.capture.CaptureFixture) -> None:
 
@@ -57,8 +69,8 @@ def test_bad_data(database_coordinates: database.DatabaseCoordinates,
 
     monkeypatch.setattr(ceiling.Ceiling, 'from_data', raise_error)
 
-    transform.run(database_coordinates, database_name, collection, False, energuide_zip_fixture, append=False)
-    assert mongo_client[database_name][collection].count() == 0
+    output = list(transform.transform(local_reader))
+    assert not output
 
     _, err = capsys.readouterr()
     assert all('Ceiling' in line for line in err.split()[1:-1])
