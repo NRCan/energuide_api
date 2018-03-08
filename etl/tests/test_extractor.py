@@ -133,6 +133,7 @@ def test_extract_with_snippets(tmpdir: py._path.local.LocalPath, base_data: typi
     output = next(extractor.extract_data(str(input_file)))
     assert output
     assert output['ceilings']
+    assert output['upgrades'] == []
 
 
 def test_extract_with_tsv_snippets(tmpdir: py._path.local.LocalPath, base_data: typing.Dict[str, str]) -> None:
