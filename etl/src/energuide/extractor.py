@@ -6,12 +6,12 @@ import zipfile
 import cerberus
 from tqdm import tqdm
 from energuide import element
-from energuide import logger
+from energuide import logging
 from energuide import snippets
 from energuide.exceptions import InvalidInputDataError, EnerguideError
 
 
-LOGGER = logger.get_logger(__name__)
+LOGGER = logging.get_logger(__name__)
 
 
 REQUIRED_FIELDS = [
