@@ -7,12 +7,12 @@ from tqdm import tqdm
 import typing_extensions
 from azure.storage import blob
 from energuide import dwelling
-from energuide import logging
+from energuide import logger
 from energuide.exceptions import InvalidEmbeddedDataTypeError
 from energuide.exceptions import EnerguideError
 
 
-LOGGER = logging.get_logger(__name__)
+LOGGER = logger.get_logger(__name__)
 
 
 class _AzureCoordinates(typing.NamedTuple):
