@@ -107,7 +107,8 @@ def _cast_nullable_string(value: str) -> typing.Optional[int]:
 
 class ParsedDwellingDataRow(_ParsedDwellingDataRow):
 
-    _XML_SCHEMA = {'type': 'xml', 'nullable': True, 'required': True, 'coerce': 'parse_xml'}
+    _XML_SCHEMA = {'type': 'xml', 'required': True, 'coerce': 'parse_xml'}
+    _NULLABLE_XML_SCHEMA = {'type': 'xml', 'nullable': True, 'required': True, 'coerce': 'parse_xml'}
     _XML_LIST_SCHEMA = {'type': 'list', 'required': True, 'schema': _XML_SCHEMA}
 
     _SCHEMA = {
@@ -128,10 +129,10 @@ class ParsedDwellingDataRow(_ParsedDwellingDataRow):
         'walls': _XML_LIST_SCHEMA,
         'doors': _XML_LIST_SCHEMA,
         'windows': _XML_LIST_SCHEMA,
-        'heatedFloorArea': _XML_SCHEMA,
-        'heating_cooling': _XML_SCHEMA,
+        'heatedFloorArea': _NULLABLE_XML_SCHEMA,
+        'heating_cooling': _NULLABLE_XML_SCHEMA,
         'ventilations': _XML_LIST_SCHEMA,
-        'waterHeatings': _XML_SCHEMA,
+        'waterHeatings': _NULLABLE_XML_SCHEMA,
         'basements': _XML_LIST_SCHEMA,
         'crawlspaces': _XML_LIST_SCHEMA,
         'slabs': _XML_LIST_SCHEMA,
@@ -179,7 +180,9 @@ class ParsedDwellingDataRow(_ParsedDwellingDataRow):
             heated_floor=heated_floor_area.HeatedFloorArea.from_data(parsed['heatedFloorArea'])
             if parsed['heatedFloorArea'] is not None else None,
 
-            water_heatings=water_heating.WaterHeating.from_data(parsed['waterHeatings']),
+            water_heatings=water_heating.WaterHeating.from_data(parsed['waterHeatings'])
+            if parsed['waterHeatings'] is not None else [],
+
             ventilations=[ventilation.Ventilation.from_data(ventilation_node)
                           for ventilation_node in parsed['ventilations']],
             heating_system=heating.Heating.from_data(parsed['heating_cooling'])

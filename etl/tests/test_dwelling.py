@@ -532,6 +532,7 @@ def sample_input_missing(sample_input_d: typing.Dict[str, typing.Any]) -> typing
     output['ersRating'] = None
     output['heatedFloorArea'] = None
     output['heating_cooling'] = None
+    output['waterHeatings'] = None
     return output
 
 
