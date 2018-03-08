@@ -75,7 +75,8 @@ def run_tl() -> typing.Tuple[str, int]:
                       collection=COLLECTION,
                       azure=True,
                       filename=None,
-                      append=False)
+                      append=False,
+                      progress=False)
 
     mongo_client: pymongo.MongoClient
     with database.mongo_client(DATABASE_COORDS) as mongo_client:
