@@ -332,7 +332,16 @@ workflows:
       - etl
       - extract_endpoint
       - python_integration
-      - deploy_endpoint
+      - deploy_endpoint:
+          filters:
+            branches:
+              only:
+                - master
+          requires:
+            - extract_endpoint
+            - python_integration
+            - etl
+            - node
       -
         node_integration:
           requires:
