@@ -250,7 +250,6 @@ workflows:
       - etl
       - extract_endpoint
       - python_integration
-      - deploy_endpoint
       - node_integration
       - deploy_endpoint:
           filters:
@@ -259,7 +258,7 @@ workflows:
                 - master
           requires:
             - extract_endpoint
-            - python_integration
+            - node_integration
             - etl
             - node
       - node_integration:
@@ -274,7 +273,6 @@ workflows:
             - etl
             - extract_endpoint
             - node_integration
-            - python_integration
           filters:
             branches:
               only:
@@ -285,19 +283,7 @@ workflows:
             - etl
             - extract_endpoint
             - node_integration
-            - python_integration
           filters:
             branches:
              only:
                - master
-      - deploy_endpoint:
-          requires:
-            - node
-            - etl
-            - extract_endpoint
-            - node_integration
-            - python_integration
-          filters:
-            branches:
-              only:
-                - master
