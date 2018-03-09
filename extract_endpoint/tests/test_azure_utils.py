@@ -82,20 +82,19 @@ def test_download_bytes(azure_storage: azure_utils.AzureStorage,
     assert actual_contents == sample_stream_content.encode()
 
 
-def test_local_storage_upload(mock_storage: azure_utils.MockStorage,
-                              sample_data: bytes,
-                              sample_filename: str) -> None:
+def test_mock_storage_upload(mock_storage: azure_utils.MockStorage,
+                             sample_data: bytes,
+                             sample_filename: str) -> None:
 
     azure_utils.upload_bytes_to_azure(mock_storage, sample_data, sample_filename)
     assert mock_storage.upload_run_count == 1
 
 
-def test_local_storage_download(mock_storage: azure_utils.MockStorage,
-                                sample_filename: str) -> None:
+def test_mock_storage_download(mock_storage: azure_utils.MockStorage,
+                               sample_filename: str) -> None:
 
     azure_utils.download_bytes_from_azure(mock_storage, sample_filename)
     assert mock_storage.download_run_count == 1
-
 
 
 @pytest.mark.usefixtures('put_file_in_azure')

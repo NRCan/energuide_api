@@ -22,7 +22,7 @@ class StorageProtocol(typing_extensions.Protocol):
     def upload(self, data: bytes, filename: str) -> bool:
         pass
 
-    def download(self, filename: str) -> str:
+    def download(self, filename: str) -> bytes:
         pass
 
 
@@ -42,14 +42,12 @@ class MockStorage:
     def upload(self, data: bytes, filename: str) -> bool:
         if data and filename:
             self._upload_run_count += 1
-            return True
-        return False
+        return True
 
-    def download(self, filename: str) -> str:
+    def download(self, filename: str) -> bytes:
         if filename:
             self._download_run_count += 1
-            return filename
-        return 'bad_file_name'
+        return filename.encode()
 
 
 class AzureStorage:
@@ -63,7 +61,7 @@ class AzureStorage:
         self._azure_service.create_blob_from_bytes(self._coords.container, filename, data)
         return filename in [blob.name for blob in self._azure_service.list_blobs(self._coords.container)]
 
-    def download(self, filename: str) -> str:
+    def download(self, filename: str) -> bytes:
         return self._azure_service.get_blob_to_bytes(self._coords.container, filename).content
 
 
@@ -72,6 +70,6 @@ def upload_bytes_to_azure(storage: StorageProtocol, data: bytes, filename: str) 
     return result
 
 
-def download_bytes_from_azure(storage: StorageProtocol, filename: str) -> str:
+def download_bytes_from_azure(storage: StorageProtocol, filename: str) -> bytes:
     result = storage.download(filename)
     return result

@@ -43,7 +43,7 @@ def robots() -> None:
 
 
 @App.route('/timestamp', methods=['GET'])
-def timestamp() -> str:
+def timestamp() -> bytes:
     azure_service = azure_utils.AzureStorage(App.config['AZURE_COORDINATES'])
 
     try:
