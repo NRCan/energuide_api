@@ -53,6 +53,9 @@ jobs:
   etl:
     docker:
       - image: "circleci/python:3.6.1"
+      - image: "arafato/azureit"
+        environment:
+          executable=blob
       - image: "mongo:3.6.2"
     steps:
       - checkout:
