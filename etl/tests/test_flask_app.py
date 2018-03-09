@@ -44,15 +44,16 @@ def thread_runner() -> typing.Generator:
 
 
 def test_threadrunner(thread_runner: flask_app.ThreadRunner) -> None:
+    stay_asleep = True
 
     def sleeper() -> None:
-        time.sleep(0.5)
+        while stay_asleep:
+            pass
 
     thread_runner.start_new_thread(sleeper)
     assert thread_runner.is_thread_running()
-    time.sleep(0.4)
-    assert thread_runner.is_thread_running()
-    time.sleep(0.2)
+    stay_asleep = False
+    time.sleep(0.1)
     assert not thread_runner.is_thread_running()
 
 
