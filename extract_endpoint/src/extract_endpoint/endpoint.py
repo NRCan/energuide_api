@@ -44,8 +44,10 @@ def robots() -> None:
 
 @App.route('/timestamp', methods=['GET'])
 def timestamp() -> str:
+    azure_service = azure_utils.AzureStorage(App.config['AZURE_COORDINATES'])
+
     try:
-        timestamp = azure_utils.download_bytes_from_azure(App.config['AZURE_COORDINATES'], TIMESTAMP_FILENAME)
+        timestamp = azure_utils.download_bytes_from_azure(azure_service, TIMESTAMP_FILENAME)
     except AzureMissingResourceHttpError:
         flask.abort(HTTPStatus.BAD_GATEWAY)
     return timestamp
