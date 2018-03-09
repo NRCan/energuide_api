@@ -68,7 +68,7 @@ def test_upload_bytes(azure_storage: azure_utils.AzureStorage,
                       sample_filename: str,
                       azure_emulator_coords: azure_utils.StorageCoordinates,) -> None:
 
-    assert azure_utils.upload_bytes_to_azure(azure_storage, sample_data, sample_filename)
+    assert azure_storage.upload(sample_data, sample_filename)
     check_file_in_azure(azure_test_service, azure_emulator_coords, sample_filename, sample_stream_content)
 
 
@@ -76,7 +76,7 @@ def test_download_bytes(azure_storage: azure_utils.AzureStorage,
                         put_file_in_azure: str,
                         sample_stream_content: str) -> None:
 
-    actual_contents = azure_utils.download_bytes_from_azure(azure_storage, put_file_in_azure)
+    actual_contents = azure_storage.download(put_file_in_azure)
     assert actual_contents == sample_stream_content.encode()
 
 
@@ -84,18 +84,18 @@ def test_mock_storage_upload(mock_storage: azure_utils.MockStorage,
                              sample_data: bytes,
                              sample_filename: str) -> None:
 
-    azure_utils.upload_bytes_to_azure(mock_storage, sample_data, sample_filename)
+    mock_storage.upload(sample_data, sample_filename)
     assert mock_storage.upload_run_count == 1
 
 
 def test_mock_storage_download(mock_storage: azure_utils.MockStorage,
                                sample_filename: str) -> None:
 
-    azure_utils.download_bytes_from_azure(mock_storage, sample_filename)
+    mock_storage.download(sample_filename)
     assert mock_storage.download_run_count == 1
 
 
 @pytest.mark.usefixtures('put_file_in_azure')
 def test_download_bytes_bad_filename(azure_storage: azure_utils.AzureStorage) -> None:
     with pytest.raises(AzureMissingResourceHttpError):
-        azure_utils.download_bytes_from_azure(azure_storage, 'bad_filename')
+        azure_storage.download('bad_filename')

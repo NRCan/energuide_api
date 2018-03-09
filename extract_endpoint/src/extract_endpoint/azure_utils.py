@@ -63,13 +63,3 @@ class AzureStorage:
 
     def download(self, filename: str) -> bytes:
         return self._azure_service.get_blob_to_bytes(self._coords.container, filename).content
-
-
-def upload_bytes_to_azure(storage: StorageProtocol, data: bytes, filename: str) -> bool:
-    result = storage.upload(data, filename)
-    return result
-
-
-def download_bytes_from_azure(storage: StorageProtocol, filename: str) -> bytes:
-    result = storage.download(filename)
-    return result
