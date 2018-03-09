@@ -8,4 +8,6 @@ ADD . .
 RUN pip install -r requirements.txt
 RUN pip install -e .
 
+CMD ["python", "src/energuide/flask_app.py"]
+
 
