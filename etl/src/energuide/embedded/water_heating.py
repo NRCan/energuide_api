@@ -49,7 +49,8 @@ class WaterHeaterType(enum.Enum):
 class _WaterHeating(typing.NamedTuple):
     water_heater_type: WaterHeaterType
     tank_volume: float
-    efficiency: float
+    efficiency_ef: typing.Optional[float]
+    efficiency_percentage: typing.Optional[float]
 
 
 class WaterHeating(_WaterHeating):
@@ -281,25 +282,36 @@ class WaterHeating(_WaterHeating):
         ),
     }
 
+
     @classmethod
     def _from_data(cls, water_heating: element.Element) -> 'WaterHeating':
-        try:
-            assert water_heating.attrib['hasDrainWaterHeatRecovery'] == 'false'
+        if water_heating.attrib['hasDrainWaterHeatRecovery'] == 'true':
+            raise InvalidEmbeddedDataTypeError(WaterHeating, 'hasDrainWaterHeatRecovery is true')
 
+        try:
             energy_type = water_heating.get_text('EnergySource/English')
             tank_type = water_heating.get_text('TankType/English')
 
             water_heater_type = cls._TYPE_MAP[(energy_type, tank_type)]
             volume = water_heating.get('TankVolume/@value', float)
-            efficiency = water_heating.get('EnergyFactor/@value', float)
+        except ElementGetValueError as exc:
+            raise InvalidEmbeddedDataTypeError(WaterHeating, 'Missing/invalid attribue or text') from exc
+        except KeyError as exc:
+            raise InvalidEmbeddedDataTypeError(WaterHeating, 'Invlaid energy and tank type combination') from exc
 
-            return WaterHeating(
-                water_heater_type=water_heater_type,
-                tank_volume=volume,
-                efficiency=efficiency,
-            )
-        except (ElementGetValueError, AssertionError, KeyError) as exc:
-            raise InvalidEmbeddedDataTypeError(WaterHeating) from exc
+        efficiency_ef_node = water_heating.xpath('EnergyFactor/@value')
+        efficiency_percent_node = water_heating.xpath('EnergyFactor/@thermalEfficiency')
+
+        if not efficiency_ef_node and not efficiency_percent_node:
+            raise InvalidEmbeddedDataTypeError(WaterHeating, 'No efficiency values')
+
+        return WaterHeating(
+            water_heater_type=water_heater_type,
+            tank_volume=volume,
+            efficiency_ef=float(efficiency_ef_node[0]) if efficiency_ef_node else None,
+            efficiency_percentage=float(efficiency_percent_node[0]) if efficiency_percent_node else None,
+        )
+
 
     @classmethod
     def from_data(cls, water_heating: element.Element) -> typing.List['WaterHeating']:
@@ -312,12 +324,14 @@ class WaterHeating(_WaterHeating):
         return self.tank_volume * self._LITRE_TO_GALLON
 
 
-    def to_dict(self) -> typing.Dict[str, typing.Union[str, float]]:
+    def to_dict(self) -> typing.Dict[str, typing.Union[str, float, None]]:
         translation = self._WATER_HEATER_TYPE_TRANSLATION[self.water_heater_type]
+
         return {
             'typeEnglish': translation.english,
             'typeFrench': translation.french,
             'tankVolumeLitres': self.tank_volume,
             'tankVolumeGallon': self.tank_volume_gallon,
-            'efficiency': self.efficiency,
+            'efficiencyEf': self.efficiency_ef,
+            'efficiencyPercentage': self.efficiency_percentage,
         }

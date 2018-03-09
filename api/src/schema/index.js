@@ -100,7 +100,9 @@ const Schema = i18n => {
       # ${i18n.t`Capacity of the tank in gallons (Gal)`}
       tankVolumeGallon: I18NFloat
       # ${i18n.t`Measures how effectively your water heater is burning fuel or turning fuel into heat`}
-      efficiency: I18NFloat
+      efficiencyEf: I18NString
+      # ${i18n.t`A percentage representing the ratio of how effectively your water heater is turning fuel into heat`}
+      efficiencyPercentage: I18NString
     }
 
     # ${i18n.t`A principal heating system is either the only source of heat for the house, or is used for at least 70% of the heating load`}
@@ -406,8 +408,10 @@ const Schema = i18n => {
       waterHeatingTankVolumeLitres
       # ${i18n.t`Filter results by the dwellings containing at least one water heating system with a specific capacity in gallons (Gal)`}
       waterHeatingTankVolumeGallon
+      # ${i18n.t`Filter results by the dwellings containing at least one water heating system with a specific efficiency percentage`}
+      waterHeatingEfficiencyPercentage
       # ${i18n.t`Filter results by the dwellings containing at least one water heating system with a specific efficiency rating`}
-      waterHeatingEfficiency
+      waterHeatingEfficiencyEf
       # ${i18n.t`Filter results by the dwellings containing a heating system with a specific description`}
       heatingLabel
       # ${i18n.t`Filter results by the dwellings containing a heating system of a specific type (en)`}
