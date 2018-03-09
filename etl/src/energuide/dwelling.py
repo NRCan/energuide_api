@@ -366,7 +366,7 @@ class Dwelling:
 
     @classmethod
     def _from_parsed_group(cls, data: typing.List[ParsedDwellingDataRow]) -> 'Dwelling':
-        if 0 < len(data) < 3:
+        if len(data) == 1 or len(data) == 2:
             if len(data) == 1 and data[0].eval_type is EvaluationType.POST_RETROFIT:
                 raise InvalidInputDataError('Only Pre-retrofit evaluations are allowed a group size of 1')
 

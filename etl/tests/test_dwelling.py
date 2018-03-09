@@ -902,7 +902,7 @@ class TestDwelling:
 
     def test_single_post_evaluation(self, sample_input_e: typing.Dict[str, typing.Any]) -> None:
         with pytest.raises(InvalidInputDataError):
-            output = dwelling.Dwelling.from_group([sample_input_e])
+            dwelling.Dwelling.from_group([sample_input_e])
 
     def test_evaluations(self, sample: typing.List[typing.Dict[str, typing.Any]]) -> None:
         output = dwelling.Dwelling.from_group(sample)
