@@ -69,6 +69,11 @@ class ThreadRunner:
     def is_thread_running(cls) -> bool:
         return cls._running_thread is not None and cls._running_thread.is_alive()
 
+    @classmethod
+    def join(cls) -> None:
+        if cls._running_thread is not None:
+            cls._running_thread.join()
+
 
 @App.route('/', methods=['GET'])
 def frontend() -> str:

@@ -1,6 +1,5 @@
 from http import HTTPStatus
 import hashlib
-import time
 import typing
 import _pytest
 import pymongo
@@ -39,8 +38,7 @@ def test_client(monkeypatch: _pytest.monkeypatch.MonkeyPatch, database_name: str
 @pytest.fixture()
 def thread_runner() -> typing.Generator:
     yield flask_app.ThreadRunner
-    while flask_app.ThreadRunner.is_thread_running():
-        time.sleep(0.1)
+    flask_app.ThreadRunner.join()
 
 
 def test_threadrunner(thread_runner: flask_app.ThreadRunner) -> None:
@@ -53,7 +51,7 @@ def test_threadrunner(thread_runner: flask_app.ThreadRunner) -> None:
     thread_runner.start_new_thread(sleeper)
     assert thread_runner.is_thread_running()
     stay_asleep = False
-    time.sleep(0.1)
+    thread_runner.join()
     assert not thread_runner.is_thread_running()
 
 
@@ -83,8 +81,7 @@ def test_run_tl(test_client: testing.FlaskClient,
 
     post_return = test_client.post('/run_tl', data=dict(salt=sample_salt, signature=sample_signature))
     assert post_return.status_code == HTTPStatus.OK
-    while thread_runner.is_thread_running():
-        time.sleep(0.1)
+    thread_runner.join()
     assert mongo_client[database_name][collection].count() == 7
 
 
