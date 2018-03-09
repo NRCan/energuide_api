@@ -1,6 +1,7 @@
 import os
 import typing
 from http import HTTPStatus
+import threading
 import hashlib
 import flask
 import pymongo
@@ -32,6 +33,46 @@ DATABASE_COORDS = database.DatabaseCoordinates(
 DATABASE_NAME = os.environ.get(database.EnvVariables.database.value, default=database.EnvDefaults.database.value)
 
 COLLECTION = os.environ.get(database.EnvVariables.collection.value, default=database.EnvDefaults.collection.value)
+
+
+def _run_tl_and_verify() -> None:
+    LOGGER.info("TL starting")
+    cli.load.callback(username=DATABASE_COORDS.username,
+                      password=DATABASE_COORDS.password,
+                      host=DATABASE_COORDS.host,
+                      port=DATABASE_COORDS.port,
+                      db_name=DATABASE_NAME,
+                      collection=COLLECTION,
+                      azure=True,
+                      filename=None,
+                      append=False,
+                      progress=False)
+
+    mongo_client: pymongo.MongoClient
+    with database.mongo_client(DATABASE_COORDS) as mongo_client:
+        records_created = mongo_client[DATABASE_NAME][COLLECTION].count()
+    if records_created == 0:
+        LOGGER.warning('Error, no records created')
+    else:
+        LOGGER.info(f'Success, {records_created} created')
+
+
+class ThreadRunner:
+    _running_thread: typing.Optional[threading.Thread] = None
+
+    @classmethod
+    def start_new_thread(cls, target: typing.Callable[[], None]) -> None:
+        cls._running_thread = threading.Thread(target=target)
+        cls._running_thread.start()
+
+    @classmethod
+    def is_thread_running(cls) -> bool:
+        return cls._running_thread is not None and cls._running_thread.is_alive()
+
+    @classmethod
+    def join(cls) -> None:
+        if cls._running_thread is not None:
+            cls._running_thread.join()
 
 
 @App.route('/', methods=['GET'])
@@ -67,25 +108,12 @@ def run_tl() -> typing.Tuple[str, int]:
         LOGGER.warning("request contained incorrect signature")
         return 'bad signature', HTTPStatus.BAD_REQUEST
 
-    cli.load.callback(username=DATABASE_COORDS.username,
-                      password=DATABASE_COORDS.password,
-                      host=DATABASE_COORDS.host,
-                      port=DATABASE_COORDS.port,
-                      db_name=DATABASE_NAME,
-                      collection=COLLECTION,
-                      azure=True,
-                      filename=None,
-                      append=False,
-                      progress=False)
+    if ThreadRunner.is_thread_running():
+        LOGGER.warning("TL already running, not starting")
+        return 'TL already running', HTTPStatus.TOO_MANY_REQUESTS
 
-    mongo_client: pymongo.MongoClient
-    with database.mongo_client(DATABASE_COORDS) as mongo_client:
-        records_created = mongo_client[DATABASE_NAME][COLLECTION].count()
-    if records_created == 0:
-        LOGGER.warning('error, no records created')
-        return 'error, no records created', HTTPStatus.BAD_GATEWAY
-    LOGGER.info(f'success, {records_created} created')
-    return f'success, {records_created} created', HTTPStatus.CREATED
+    ThreadRunner.start_new_thread(target=_run_tl_and_verify)
+    return 'TL starting', HTTPStatus.OK
 
 
 if __name__ == "__main__":
