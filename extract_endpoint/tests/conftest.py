@@ -3,12 +3,14 @@ import datetime
 import zipfile
 import typing
 import pytest
+import _pytest
 import py
 from azure.storage import blob
 from extract_endpoint import azure_utils
+from extract_endpoint import endpoint
 
 
-@pytest.fixture(scope='session')
+@pytest.fixture()
 def azure_emulator_coords() -> azure_utils.StorageCoordinates:
     return azure_utils.StorageCoordinates(
         account='devstoreaccount1',
@@ -54,6 +56,12 @@ def sample_zipfile(sample_filenames: typing.Tuple[str, str],
     file_z.close()
     file.seek(0)
     return file
+
+
+@pytest.fixture
+def sample_secret_key(monkeypatch: _pytest.monkeypatch.MonkeyPatch) -> str:
+    monkeypatch.setitem(endpoint.App.config, 'SECRET_KEY', 'sample secret key')
+    return endpoint.App.config['SECRET_KEY']
 
 
 @pytest.fixture
