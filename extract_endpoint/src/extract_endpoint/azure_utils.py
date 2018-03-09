@@ -55,15 +55,9 @@ class MockStorage:
 class AzureStorage:
     def __init__(self, coords: StorageCoordinates) -> None:
         self._coords = coords
-        self._azure: typing.Optional[blob.BlockBlobService] = None
-
-    @property
-    def _azure_service(self) -> blob.BlockBlobService:
-        if self._azure is None:
-            self._azure = blob.BlockBlobService(account_name=self._coords.account,
-                                                account_key=self._coords.key,
-                                                custom_domain=self._coords.domain)
-        return self._azure
+        self._azure_service = blob.BlockBlobService(account_name=self._coords.account,
+                                                    account_key=self._coords.key,
+                                                    custom_domain=self._coords.domain)
 
     def upload(self, data: bytes, filename: str) -> bool:
         self._azure_service.create_blob_from_bytes(self._coords.container, filename, data)
