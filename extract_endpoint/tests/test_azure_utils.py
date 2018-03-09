@@ -12,6 +12,12 @@ def azure_storage(azure_emulator_coords: azure_utils.StorageCoordinates) -> azur
 
 
 @pytest.fixture
+def local_storage() -> azure_utils.LocalStorage:
+    storage = azure_utils.LocalStorage()
+    return storage
+
+
+@pytest.fixture
 def azure_test_service(azure_emulator_coords: azure_utils.StorageCoordinates) -> blob.BlockBlobService:
     azure_test_service = blob.BlockBlobService(account_name=azure_emulator_coords.account,
                                                account_key=azure_emulator_coords.key,
@@ -74,6 +80,22 @@ def test_download_bytes(azure_storage: azure_utils.AzureStorage,
 
     actual_contents = azure_utils.download_bytes_from_azure(azure_storage, put_file_in_azure)
     assert actual_contents == sample_stream_content.encode()
+
+
+def test_local_storage_upload(local_storage: azure_utils.LocalStorage,
+                              sample_data: bytes,
+                              sample_filename: str) -> None:
+
+    azure_utils.upload_bytes_to_azure(local_storage, sample_data, sample_filename)
+    assert local_storage.upload_run_count == 1
+
+
+def test_local_storage_download(local_storage: azure_utils.LocalStorage,
+                                sample_filename: str) -> None:
+
+    azure_utils.download_bytes_from_azure(local_storage, sample_filename)
+    assert local_storage.download_run_count == 1
+
 
 
 @pytest.mark.usefixtures('put_file_in_azure')
