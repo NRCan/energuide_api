@@ -3,6 +3,7 @@ import typing
 from energuide import bilingual
 from energuide import element
 from energuide.exceptions import InvalidEmbeddedDataTypeError
+from energuide.exceptions import ElementGetValueError
 
 
 class HeatingType(enum.Enum):
@@ -79,8 +80,12 @@ class Heating(_Heating):
         capacity_node = node.find('Type1/*/Specifications/OutputCapacity')
         assert capacity_node is not None
 
-        units = capacity_node.attrib['uiUnits']
-        capacity_value = float(capacity_node.attrib['value'])
+        try:
+            units = capacity_node.get('@uiUnits', str)
+            capacity_value = capacity_node.get('@value', float)
+        except ElementGetValueError as exc:
+            raise InvalidEmbeddedDataTypeError(Heating, 'Invalid/missing attribute values') from exc
+
         capacity: typing.Optional[float]
         if units == 'kW':
             capacity = capacity_value
@@ -107,7 +112,11 @@ class Heating(_Heating):
 
     @classmethod
     def _get_energy_source(cls, node: element.Element) -> EnergySource:
-        code = node.get('Type1/*/Equipment/EnergySource/@code', int)
+        try:
+            code = node.get('Type1/*/Equipment/EnergySource/@code', int)
+        except ElementGetValueError as exc:
+            raise InvalidEmbeddedDataTypeError(Heating, 'No EnergySource heating code') from exc
+
         energy_source = cls._ENERGY_SOURCE_CODES.get(code)
         if energy_source is None:
             raise InvalidEmbeddedDataTypeError(
@@ -122,20 +131,27 @@ class Heating(_Heating):
 
     @staticmethod
     def _get_steady_state(node: element.Element) -> str:
-        steady_state_value = node.get('Type1/*/Specifications/@isSteadyState', str)
+        try:
+            steady_state_value = node.get('Type1/*/Specifications/@isSteadyState', str)
+        except ElementGetValueError as exc:
+            raise InvalidEmbeddedDataTypeError(Heating, 'No isSteadyState value') from exc
+
         return 'Steady State' if steady_state_value == 'true' else 'AFUE'
 
     @classmethod
     def from_data(cls, node: element.Element) -> 'Heating':
-        return Heating(
-            label=node.get_text('Label'),
-            output_size=float(Heating._get_output_size(node)),
-            efficiency=node.get('Type1/*/Specifications/@efficiency', float),
-            steady_state=cls._get_steady_state(node),
-            heating_type=cls._get_heating_type(node),
-            energy_source=cls._get_energy_source(node),
-            equipment_type=cls._get_equipment_type(node),
-        )
+        try:
+            return Heating(
+                label=node.get_text('Label'),
+                output_size=cls._get_output_size(node),
+                efficiency=node.get('Type1/*/Specifications/@efficiency', float),
+                steady_state=cls._get_steady_state(node),
+                heating_type=cls._get_heating_type(node),
+                energy_source=cls._get_energy_source(node),
+                equipment_type=cls._get_equipment_type(node),
+            )
+        except ElementGetValueError as exc:
+            raise InvalidEmbeddedDataTypeError(Heating, 'Invalid/missing Heating values') from exc
 
     def to_dict(self) -> typing.Dict[str, typing.Any]:
         return {
