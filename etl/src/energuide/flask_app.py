@@ -55,14 +55,13 @@ def _run_tl_and_verify() -> None:
         LOGGER.warning('Error, no records created')
     else:
         LOGGER.info(f'Success, {records_created} created')
-    return records_created
 
 
 class ThreadRunner:
     _running_thread: typing.Optional[threading.Thread] = None
 
     @classmethod
-    def start_new_thread(cls, target) -> None:
+    def start_new_thread(cls, target: typing.Callable[[], None]) -> None:
         cls._running_thread = threading.Thread(target=target)
         cls._running_thread.start()
 
@@ -109,7 +108,7 @@ def run_tl() -> typing.Tuple[str, int]:
         return 'TL already running', HTTPStatus.TOO_MANY_REQUESTS
 
     ThreadRunner.start_new_thread(target=_run_tl_and_verify)
-    return 'starting ', HTTPStatus.OK
+    return 'TL starting', HTTPStatus.OK
 
 
 if __name__ == "__main__":

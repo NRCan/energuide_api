@@ -85,6 +85,7 @@ def test_run_tl_busy(test_client: testing.FlaskClient,
                      sample_salt: str,
                      sample_signature: str) -> None:
 
+    assert not flask_app.ThreadRunner.is_thread_running()
     test_client.post('/run_tl', data=dict(salt=sample_salt, signature=sample_signature))
     post_return = test_client.post('/run_tl', data=dict(salt=sample_salt, signature=sample_signature))
     assert post_return.status_code == HTTPStatus.TOO_MANY_REQUESTS
