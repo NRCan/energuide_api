@@ -8,14 +8,14 @@ from extract_endpoint import azure_utils
 @pytest.fixture
 def azure_storage(azure_emulator_coords: azure_utils.StorageCoordinates) -> azure_utils.AzureStorage:
     storage = azure_utils.AzureStorage(azure_emulator_coords)
-    yield storage
+    return storage
 
 
 @pytest.fixture
-def azure_test_service(azure_emulator_coords: azure_utils.StorageCoordinates) -> azure_utils.AzureStorage:
+def azure_test_service(azure_emulator_coords: azure_utils.StorageCoordinates) -> blob.BlockBlobService:
     azure_test_service = blob.BlockBlobService(account_name=azure_emulator_coords.account,
-                                                 account_key=azure_emulator_coords.key,
-                                                 custom_domain=azure_emulator_coords.domain)
+                                               account_key=azure_emulator_coords.key,
+                                               custom_domain=azure_emulator_coords.domain)
     azure_test_service.create_container(azure_emulator_coords.container)
     yield azure_test_service
     azure_test_service.delete_container(azure_emulator_coords.container)
@@ -77,7 +77,6 @@ def test_download_bytes(azure_storage: azure_utils.AzureStorage,
 
 
 @pytest.mark.usefixtures('put_file_in_azure')
-def test_download_bytes_bad_filename(azure_emulator_coords: azure_utils.StorageCoordinates,
-                                     azure_storage: azure_utils.AzureStorage) -> None:
+def test_download_bytes_bad_filename(azure_storage: azure_utils.AzureStorage) -> None:
     with pytest.raises(AzureMissingResourceHttpError):
         azure_utils.download_bytes_from_azure(azure_storage, 'bad_filename')

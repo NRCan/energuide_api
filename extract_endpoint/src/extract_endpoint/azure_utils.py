@@ -27,7 +27,7 @@ class StorageProtocol(typing_extensions.Protocol):
 
 
 class LocalStorage:
-    def __init__(self):
+    def __init__(self) -> None:
         self._upload_run_count = 0
         self._download_run_count = 0
 
@@ -41,21 +41,19 @@ class LocalStorage:
 
     def upload(self, data: bytes, filename: str) -> bool:
         if data and filename:
-            self.upload_run_count += 1
+            self._upload_run_count += 1
             return True
-        else:
-            return False
+        return False
 
     def download(self, filename: str) -> str:
         if filename:
-            self.download_run_count += 1
+            self._download_run_count += 1
             return filename
-        else:
-            return None
+        return 'bad_file_name'
 
 
 class AzureStorage:
-    def __init__(self, coords: StorageCoordinates):
+    def __init__(self, coords: StorageCoordinates) -> None:
         self._coords = coords
         self._azure: typing.Optional[blob.BlockBlobService] = None
 
@@ -69,7 +67,7 @@ class AzureStorage:
 
     def upload(self, data: bytes, filename: str) -> bool:
         self._azure_service.create_blob_from_bytes(self._coords.container, filename, data)
-        return filename in [blob.name for blob in self._azure.list_blobs(self._coords.container)]
+        return filename in [blob.name for blob in self._azure_service.list_blobs(self._coords.container)]
 
     def download(self, filename: str) -> str:
         return self._azure_service.get_blob_to_bytes(self._coords.container, filename).content
@@ -83,5 +81,3 @@ def upload_bytes_to_azure(storage: StorageProtocol, data: bytes, filename: str) 
 def download_bytes_from_azure(storage: StorageProtocol, filename: str) -> str:
     result = storage.download(filename)
     return result
-
-
