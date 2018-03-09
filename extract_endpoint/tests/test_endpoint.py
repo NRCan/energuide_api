@@ -113,6 +113,12 @@ def test_trigger_route(test_client: testing.FlaskClient, sample_salt: str, sampl
     assert return_val.status_code == HTTPStatus.CREATED
 
 
+@pytest.mark.usefixtures('mocked_tl_app', 'sample_secret_key')
+def test_trigger_route_no_data(test_client: testing.FlaskClient) -> None:
+    return_val = test_client.post('/trigger_tl')
+    assert return_val.status_code == HTTPStatus.BAD_REQUEST
+
+
 def test_frontend(test_client: testing.FlaskClient) -> None:
     assert test_client.get('/').status_code == HTTPStatus.OK
 

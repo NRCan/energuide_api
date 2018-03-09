@@ -73,6 +73,8 @@ def trigger(data: typing.Optional[typing.Dict[str, str]] = None) -> int:
 
 @App.route('/trigger_tl', methods=['POST'])
 def trigger_tl() -> typing.Tuple[str, int]:
+    if flask.request.form is None or any(key not in flask.request.form for key in ['signature', 'salt']):
+        flask.abort(HTTPStatus.BAD_REQUEST)
     return '', trigger(data=flask.request.form)
 
 
@@ -80,13 +82,9 @@ def trigger_tl() -> typing.Tuple[str, int]:
 def upload_file() -> typing.Tuple[str, int]:
     if App.config['SECRET_KEY'] == DEFAULT_ETL_SECRET_KEY:
         raise ValueError("Need to define environment variable ETL_SECRET_KEY")
-    if 'signature' not in flask.request.form:
-        flask.abort(HTTPStatus.BAD_REQUEST)
-    if 'salt' not in flask.request.form:
-        flask.abort(HTTPStatus.BAD_REQUEST)
-    if 'file' not in flask.request.files:
-        flask.abort(HTTPStatus.BAD_REQUEST)
-    if 'timestamp' not in flask.request.form:
+    if flask.request.form is None \
+            or any(key not in flask.request.form for key in ['signature', 'salt', 'timestamp']) \
+            or 'file' not in flask.request.files:
         flask.abort(HTTPStatus.BAD_REQUEST)
 
     file = flask.request.files['file']
