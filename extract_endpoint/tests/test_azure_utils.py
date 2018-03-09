@@ -7,14 +7,12 @@ from extract_endpoint import azure_utils
 
 @pytest.fixture
 def azure_storage(azure_emulator_coords: azure_utils.StorageCoordinates) -> azure_utils.AzureStorage:
-    storage = azure_utils.AzureStorage(azure_emulator_coords)
-    return storage
+    return azure_utils.AzureStorage(azure_emulator_coords)
 
 
 @pytest.fixture
 def mock_storage() -> azure_utils.MockStorage:
-    storage = azure_utils.MockStorage()
-    return storage
+    return azure_utils.MockStorage()
 
 
 @pytest.fixture
