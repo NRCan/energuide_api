@@ -896,6 +896,14 @@ class TestDwelling:
         assert output.region == dwelling.Region.ONTARIO
         assert output.forward_sortation_area == 'K1P'
 
+    def test_single_pre_evaluation(self, sample_input_d: typing.Dict[str, typing.Any]) -> None:
+        output = dwelling.Dwelling.from_group([sample_input_d])
+        assert len(output.evaluations) == 1
+
+    def test_single_post_evaluation(self, sample_input_e: typing.Dict[str, typing.Any]) -> None:
+        with pytest.raises(InvalidInputDataError):
+            dwelling.Dwelling.from_group([sample_input_e])
+
     def test_evaluations(self, sample: typing.List[typing.Dict[str, typing.Any]]) -> None:
         output = dwelling.Dwelling.from_group(sample)
         assert len(output.evaluations) == 2
