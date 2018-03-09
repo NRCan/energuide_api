@@ -26,7 +26,7 @@ class StorageProtocol(typing_extensions.Protocol):
         pass
 
 
-class LocalStorage:
+class MockStorage:
     def __init__(self) -> None:
         self._upload_run_count = 0
         self._download_run_count = 0

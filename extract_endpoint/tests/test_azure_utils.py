@@ -12,8 +12,8 @@ def azure_storage(azure_emulator_coords: azure_utils.StorageCoordinates) -> azur
 
 
 @pytest.fixture
-def local_storage() -> azure_utils.LocalStorage:
-    storage = azure_utils.LocalStorage()
+def mock_storage() -> azure_utils.MockStorage:
+    storage = azure_utils.MockStorage()
     return storage
 
 
@@ -82,19 +82,19 @@ def test_download_bytes(azure_storage: azure_utils.AzureStorage,
     assert actual_contents == sample_stream_content.encode()
 
 
-def test_local_storage_upload(local_storage: azure_utils.LocalStorage,
+def test_local_storage_upload(mock_storage: azure_utils.MockStorage,
                               sample_data: bytes,
                               sample_filename: str) -> None:
 
-    azure_utils.upload_bytes_to_azure(local_storage, sample_data, sample_filename)
-    assert local_storage.upload_run_count == 1
+    azure_utils.upload_bytes_to_azure(mock_storage, sample_data, sample_filename)
+    assert mock_storage.upload_run_count == 1
 
 
-def test_local_storage_download(local_storage: azure_utils.LocalStorage,
+def test_local_storage_download(mock_storage: azure_utils.MockStorage,
                                 sample_filename: str) -> None:
 
-    azure_utils.download_bytes_from_azure(local_storage, sample_filename)
-    assert local_storage.download_run_count == 1
+    azure_utils.download_bytes_from_azure(mock_storage, sample_filename)
+    assert mock_storage.download_run_count == 1
 
 
 
