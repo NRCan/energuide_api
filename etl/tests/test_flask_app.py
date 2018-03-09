@@ -1,6 +1,7 @@
 from http import HTTPStatus
 import hashlib
 import time
+import typing
 import _pytest
 import pymongo
 import pytest
@@ -35,18 +36,24 @@ def test_client(monkeypatch: _pytest.monkeypatch.MonkeyPatch, database_name: str
     return flask_app.App.test_client()
 
 
-def test_threadrunner() -> None:
+@pytest.fixture()
+def thread_runner() -> typing.Generator:
+    yield flask_app.ThreadRunner
+    while flask_app.ThreadRunner.is_thread_running():
+        time.sleep(0.1)
+
+
+def test_threadrunner(thread_runner: flask_app.ThreadRunner) -> None:
 
     def sleeper() -> None:
         time.sleep(0.5)
 
-    assert not flask_app.ThreadRunner.is_thread_running()
-    flask_app.ThreadRunner.start_new_thread(sleeper)
-    assert flask_app.ThreadRunner.is_thread_running()
+    thread_runner.start_new_thread(sleeper)
+    assert thread_runner.is_thread_running()
     time.sleep(0.4)
-    assert flask_app.ThreadRunner.is_thread_running()
+    assert thread_runner.is_thread_running()
     time.sleep(0.2)
-    assert not flask_app.ThreadRunner.is_thread_running()
+    assert not thread_runner.is_thread_running()
 
 
 def test_frontend(test_client: testing.FlaskClient) -> None:
@@ -66,6 +73,7 @@ def test_robots(test_client: testing.FlaskClient) -> None:
 @pytest.mark.timeout(10)
 @pytest.mark.usefixtures('populated_azure_emulator')
 def test_run_tl(test_client: testing.FlaskClient,
+                thread_runner: flask_app.ThreadRunner,
                 mongo_client: pymongo.MongoClient,
                 database_name: str,
                 collection: str,
@@ -74,23 +82,20 @@ def test_run_tl(test_client: testing.FlaskClient,
 
     post_return = test_client.post('/run_tl', data=dict(salt=sample_salt, signature=sample_signature))
     assert post_return.status_code == HTTPStatus.OK
-    while flask_app.ThreadRunner.is_thread_running():
+    while thread_runner.is_thread_running():
         time.sleep(0.1)
     assert mongo_client[database_name][collection].count() == 7
 
 
 @pytest.mark.timeout(10)
-@pytest.mark.usefixtures('populated_azure_emulator')
+@pytest.mark.usefixtures('populated_azure_emulator', 'thread_runner')
 def test_run_tl_busy(test_client: testing.FlaskClient,
                      sample_salt: str,
                      sample_signature: str) -> None:
 
-    assert not flask_app.ThreadRunner.is_thread_running()
     test_client.post('/run_tl', data=dict(salt=sample_salt, signature=sample_signature))
     post_return = test_client.post('/run_tl', data=dict(salt=sample_salt, signature=sample_signature))
     assert post_return.status_code == HTTPStatus.TOO_MANY_REQUESTS
-    while flask_app.ThreadRunner.is_thread_running():
-        time.sleep(0.1)
 
 
 def test_run_tl_no_salt(test_client: testing.FlaskClient, energuide_zip_fixture: str, sample_signature: str) -> None:
