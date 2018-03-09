@@ -366,10 +366,10 @@ class Dwelling:
 
     @classmethod
     def _from_parsed_group(cls, data: typing.List[ParsedDwellingDataRow]) -> 'Dwelling':
-        if len(data) == 1 or len(data) == 2:
-            if len(data) == 1 and data[0].eval_type is EvaluationType.POST_RETROFIT:
-                raise InvalidInputDataError('Only Pre-retrofit evaluations are allowed a group size of 1')
+        if len(data) == 1 and data[0].eval_type is EvaluationType.POST_RETROFIT:
+            raise InvalidInputDataError('Only Pre-retrofit evaluations are allowed a group size of 1')
 
+        if len(data) == 1 or len(data) == 2:
             evaluations = [Evaluation.from_data(row) for row in data]
             return Dwelling(
                 house_id=data[0].eval_id,
