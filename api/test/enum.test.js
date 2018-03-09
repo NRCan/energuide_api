@@ -52,7 +52,7 @@ describe('Enum values', () => {
     waterHeatingTypeFrench: { testValue: 'Réservoir au gaz naturel' },
     waterHeatingTankVolumeLitres: { testValue: 151.4 },
     waterHeatingTankVolumeGallon: { testValue: 39.995640800000004 },
-    waterHeatingEfficiency: { testValue: 0.554 },
+    waterHeatingEfficiencyEf: { testValue: 0.554 },
     heatingLabel: { testValue: 'Heating/Cooling System' },
     heatingHeatingTypeEnglish: { testValue: 'Furnace' },
     heatingHeatingTypeFrench: { testValue: 'Fournaise' },

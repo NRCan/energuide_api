@@ -433,19 +433,22 @@ describe('queries', () => {
                   typeFrench
                   tankVolumeLitres
                   tankVolumeGallon
-                  efficiency
+                  efficiencyEf
+                  efficiencyPercentage
                 }
             }
           }
         }`,
         })
 
+      expect(response.body).not.toHaveProperty('errors')
       let { dwelling: { evaluations } } = response.body.data
       let [first] = evaluations
       let [waterHeatings] = first.waterHeatings
       expect(waterHeatings).toEqual({
+        efficiencyEf: 0.554,
+        efficiencyPercentage: null,
         tankVolumeGallon: 39.995640800000004,
-        efficiency: 0.554,
         tankVolumeLitres: 151.4,
         typeEnglish: 'Natural gas storage tank',
         typeFrench: 'Réservoir au gaz naturel',
