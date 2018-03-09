@@ -248,7 +248,7 @@ workflows:
       - extract_endpoint
       - python_integration
       - deploy_endpoint
-      - node_integration:
+      - node_integration
       - deploy_endpoint:
           filters:
             branches:
