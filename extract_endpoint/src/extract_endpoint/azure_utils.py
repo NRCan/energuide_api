@@ -1,7 +1,7 @@
 import enum
 import typing
-import typing_extensions
 from azure.storage import blob
+import typing_extensions
 
 
 class StorageCoordinates(typing.NamedTuple):
