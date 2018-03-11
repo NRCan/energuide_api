@@ -84,15 +84,22 @@ def test_mock_storage_upload(mock_storage: azure_utils.MockStorage,
                              sample_data: bytes,
                              sample_filename: str) -> None:
 
-    mock_storage.upload(sample_data, sample_filename)
-    assert mock_storage.upload_run_count == 1
+    assert mock_storage.upload(sample_data, sample_filename)
 
 
 def test_mock_storage_download(mock_storage: azure_utils.MockStorage,
+                               sample_data: bytes,
                                sample_filename: str) -> None:
 
-    mock_storage.download(sample_filename)
-    assert mock_storage.download_run_count == 1
+    mock_storage.upload(sample_data, sample_filename)
+    actual_contents = mock_storage.download(sample_filename)
+    assert actual_contents == sample_data
+
+
+def test_mock_storage_download_bad_filename(mock_storage: azure_utils.MockStorage) -> None:
+
+    with pytest.raises(ValueError):
+        mock_storage.download('bad_filename')
 
 
 @pytest.mark.usefixtures('put_file_in_azure')

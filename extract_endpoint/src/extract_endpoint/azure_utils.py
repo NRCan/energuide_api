@@ -28,26 +28,17 @@ class StorageProtocol(typing_extensions.Protocol):
 
 class MockStorage:
     def __init__(self) -> None:
-        self._upload_run_count = 0
-        self._download_run_count = 0
-
-    @property
-    def upload_run_count(self) -> int:
-        return self._upload_run_count
-
-    @property
-    def download_run_count(self) -> int:
-        return self._download_run_count
+        self._data: typing.Dict[str, bytes] = {}
 
     def upload(self, data: bytes, filename: str) -> bool:
-        if data and filename:
-            self._upload_run_count += 1
+        self._data.update({filename: data})
         return True
 
-    def download(self, filename: str) -> bytes:
-        if filename:
-            self._download_run_count += 1
-        return filename.encode()
+    def download(self, filename: str) -> typing.Optional[bytes]:
+        if filename in self._data:
+            return self._data.get(filename)
+        else:
+            raise ValueError('File does not exist')
 
 
 class AzureStorage:
