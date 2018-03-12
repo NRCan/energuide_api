@@ -705,6 +705,7 @@ class TestParsedDwellingDataRow:
                     tank_volume=189.3001,
                     efficiency_ef=0.8217,
                     efficiency_percentage=None,
+                    drain_water_heat_recovery_efficiency_percentage=None,
                 )
             ],
             heating_system=heating.Heating(
