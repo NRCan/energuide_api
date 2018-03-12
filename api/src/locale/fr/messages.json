@@ -2383,7 +2383,7 @@
     ]
   },
   "Filter results for dwellings with a specific foundation label": {
-    "translation": "Trier les résultats pour les logements avec une étiquette de fondation spécifique",
+    "translation": "Trier les résultats par logements avec une étiquette de fondation spécifique",
     "origin": [
       [
         "src/schema/index.js",
@@ -2392,7 +2392,7 @@
     ]
   },
   "Filter results for dwellings with a specific foundation configuration": {
-    "translation": "Trier les résultats pour les logements avec une configuration de fondation spécifique",
+    "translation": "Trier les résultats par logements avec une configuration de fondation spécifique",
     "origin": [
       [
         "src/schema/index.js",
@@ -2413,8 +2413,8 @@
       ]
     ]
   },
-  "Filter results for dwellings wiht a specific foundation header insulation nominal RSI (R-value Systeme International)": {
-    "translation": "Trier des filtres pour les habitations avec un isolant de tête de fondation avec une RSI nominale spécifique (valeur R Système international)",
+  "Filter results for dwellings with a specific foundation header insulation nominal RSI (R-value Systeme International)": {
+    "translation": "Trier les résultats par logements dont l'isolation d'une solive de fondation correspont à une valeur RSI spécifique (valeur R Système international)",
     "origin": [
       [
         "src/schema/index.js",
@@ -2423,7 +2423,7 @@
     ]
   },
   "Filter results for dwellings with a specific foundation header insulation nominal R-value": {
-    "translation": "Résultats des filtres pour les habitations avec une valeur nominale R de l'isolation de la tête de fondation spécifique",
+    "translation": "Trier les résultats par logements dont l'isolation d'une solive de fondation correspont à une valeur nominale R spécifique",
     "origin": [
       [
         "src/schema/index.js",
@@ -2684,7 +2684,7 @@
     ]
   },
   "Filter results for dwellings with a section of its foundation wall with a specific percentage of the overall amount": {
-    "translation": "Filtrer les résultats par logements avec une section de son mur de fondation avec un pourcentage spécifique de la quantité totale",
+    "translation": "Trier les résultats par logements avec une section de son mur de fondation avec un pourcentage spécifique de la quantité totale",
     "origin": [
       [
         "src/schema/index.js",
@@ -2693,7 +2693,7 @@
     ]
   },
   "Filter results for dwellings with a foundation wall has specific area in square metres (m2)": {
-    "translation": "Filtrer les résultats par logements ayant au moins un mur de fondation ont une surface spécifique en mètres carrés (m2)",
+    "translation": "Trier les résultats par logements ayant au moins un mur de fondation d'une surface spécifique en mètres carrés (m2)",
     "origin": [
       [
         "src/schema/index.js",
@@ -2702,7 +2702,7 @@
     ]
   },
   "Filter results for dwellings with a foundation wall has specific area in square feet (ft)": {
-    "translation": "Filtrer les résultats par logements ayant au moins un mur de fondation ont une surface spécifique en pieds carrés (pi)",
+    "translation": "Trier les résultats par logements ayant au moins un mur de fondation d'une surface spécifique en pieds carrés (pi)",
     "origin": [
       [
         "src/schema/index.js",
@@ -2720,7 +2720,7 @@
     ]
   },
   "A 'dateRange' must include a 'startDate' or an 'endDate'.": {
-    "translation": "Un 'dateRange' doit inclure un 'startDate' ou un 'endDate'.",
+    "translation": "Une 'dateRange' doit inclure une 'startDate' ou une 'endDate'.",
     "origin": [
       [
         "src/schema/resolvers.js",
@@ -2729,7 +2729,7 @@
     ]
   },
   "The 'endDate' cannot be equal to or earlier than the 'startDate'.": {
-    "translation": "Le 'endDate' ne peut pas être égal ou plus tôt que le 'startDate'.",
+    "translation": "La 'endDate' ne peut pas être égal ou précéder la 'startDate'.",
     "origin": [
       [
         "src/schema/resolvers.js",
@@ -2765,7 +2765,7 @@
     ]
   },
   "A descriptive label for the foundation": {
-    "translation": "Un label descriptif pour la fondation",
+    "translation": "Une étiquette descriptive pour la fondation",
     "origin": [
       [
         "src/schema/types/Foundation.js",
@@ -2819,7 +2819,7 @@
     ]
   },
   "The details of the foundationn header": {
-    "translation": "Les détails de linteau de la fondation",
+    "translation": "Les détails de la solive de fondation",
     "origin": [
       [
         "src/schema/types/Foundation.js",
@@ -2828,7 +2828,7 @@
     ]
   },
   "A floor below ground that represents the usable area of the house": {
-    "translation": "Un plancher sous terre qui représente la surface utilisable de la maison",
+    "translation": "Un plancher au-dessous du niveau du sol qui représente la superficie utilisable de la maison",
     "origin": [
       [
         "src/schema/types/FoundationFloor.js",
@@ -2837,7 +2837,7 @@
     ]
   },
   "Type of foundation floor (en)": {
-    "translation": "Type de plancher de fondation (en)",
+    "translation": "Type de plancher pour la fondation (en)",
     "origin": [
       [
         "src/schema/types/FoundationFloor.js",
@@ -2846,7 +2846,7 @@
     ]
   },
   "Type of foundation floor (fr)": {
-    "translation": "Type de plancher de fondation",
+    "translation": "Type de plancher pour la fondation",
     "origin": [
       [
         "src/schema/types/FoundationFloor.js",
@@ -2855,7 +2855,7 @@
     ]
   },
   "The insulation nominal RSI (R-value Systeme International) of the foundation floor": {
-    "translation": "Valeur nominale RSI (valeur R Système international) de l'isolation du plancherIsolation nominale RSI (valeur R Systeme International) du sol de la fondation",
+    "translation": "Valeur nominale RSI (valeur R Système international) de l'isolation du plancher",
     "origin": [
       [
         "src/schema/types/FoundationFloor.js",
@@ -2918,7 +2918,7 @@
     ]
   },
   "The perimeter of the foundation floor in feet (ft)": {
-    "translation": "Périmètre du plancer de fondation en pieds (pi)",
+    "translation": "Périmètre du plancher de la fondation en pieds (pi)",
     "origin": [
       [
         "src/schema/types/FoundationFloor.js",
@@ -2927,7 +2927,7 @@
     ]
   },
   "The width of the foundation floor in metres (m)": {
-    "translation": "Largeur du plancher de fondation en mètres (m)",
+    "translation": "Largeur du plancher de la fondation en mètres (m)",
     "origin": [
       [
         "src/schema/types/FoundationFloor.js",
@@ -2990,7 +2990,7 @@
     ]
   },
   "A date string, such as 2007-12-03, compliant with the 'full-date' format outlined in section 5.6 of the RFC 3339 profile of the ISO 8601 standard for representation of dates and times using the Gregorian calendar.": {
-    "translation": "Une chaîne de date, telle que 2007-12-03, conforme au format' full-date 'décrit dans la section 5.6 du profil RFC 3339 de la norme ISO 8601 pour la représentation des dates et des heures en utilisant le calendrier grégorien.",
+    "translation": "Une date, telle que 2007-12-03, conforme au format' full-date 'décrit dans la section 5.6 du profil RFC 3339 de la norme ISO 8601 pour la nomenclature des dates et des heures du calendrier grégorien.",
     "origin": [
       [
         "src/schema/types/I18NDate.js",
