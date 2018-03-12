@@ -94,35 +94,31 @@ class WaterHeating(_WaterHeating):
         ("propane", "direct vent (sealed)"): WaterHeaterType.PROPANE_DIRECT_VENT_SEALED,
         ("propane", "direct vent (sealed, pilot)"): WaterHeaterType.PROPANE_DIRECT_VENT_SEALED_PILOT,
         ("propane", "condensing"): WaterHeaterType.PROPANE_CONDENSING,
-        (
-            "wood space heating (mixed wood, hardwood, soft wood or wood pellets)",
-            "not applicable"
-        ): WaterHeaterType.NOT_APPLICABLE,
 
-        (
-            "wood space heating (mixed wood, hardwood, soft wood or wood pellets)",
-            "fireplace"
-        ): WaterHeaterType.WOOD_SPACE_HEATING_FIREPLACE,
-
-        (
-            "wood space heating (mixed wood, hardwood, soft wood or wood pellets)",
-            "wood stove water coil"
-        ): WaterHeaterType.WOOD_SPACE_HEATING_WOOD_STOVE_WATER_COIL,
-
-        (
-            "wood space heating (mixed wood, hardwood, soft wood or wood pellets)",
-            "indoor wood boiler"
-        ): WaterHeaterType.WOOD_SPACE_HEATING_INDOOR_WOOD_BOILER,
-
-        (
-            "wood space heating (mixed wood, hardwood, soft wood or wood pellets)",
-            "outdoor wood boiler"
-        ): WaterHeaterType.WOOD_SPACE_HEATING_OUTDOOR_WOOD_BOILER,
-
-        (
-            "wood space heating (mixed wood, hardwood, soft wood or wood pellets)",
-            "wood hot water tank"
-        ): WaterHeaterType.WOOD_SPACE_HEATING_WOOD_HOT_WATER_TANK,
+        ("mixed wood", "not applicable"): WaterHeaterType.NOT_APPLICABLE,
+        ("mixed wood", "fireplace"): WaterHeaterType.WOOD_SPACE_HEATING_FIREPLACE,
+        ("mixed wood", "wood stove water coil"): WaterHeaterType.WOOD_SPACE_HEATING_WOOD_STOVE_WATER_COIL,
+        ("mixed wood", "indoor wood boiler"): WaterHeaterType.WOOD_SPACE_HEATING_INDOOR_WOOD_BOILER,
+        ("mixed wood", "outdoor wood boiler"): WaterHeaterType.WOOD_SPACE_HEATING_OUTDOOR_WOOD_BOILER,
+        ("mixed wood", "wood hot water tank"): WaterHeaterType.WOOD_SPACE_HEATING_WOOD_HOT_WATER_TANK,
+        ("hardwood", "not applicable"): WaterHeaterType.NOT_APPLICABLE,
+        ("hardwood", "fireplace"): WaterHeaterType.WOOD_SPACE_HEATING_FIREPLACE,
+        ("hardwood", "wood stove water coil"): WaterHeaterType.WOOD_SPACE_HEATING_WOOD_STOVE_WATER_COIL,
+        ("hardwood", "indoor wood boiler"): WaterHeaterType.WOOD_SPACE_HEATING_INDOOR_WOOD_BOILER,
+        ("hardwood", "outdoor wood boiler"): WaterHeaterType.WOOD_SPACE_HEATING_OUTDOOR_WOOD_BOILER,
+        ("hardwood", "wood hot water tank"): WaterHeaterType.WOOD_SPACE_HEATING_WOOD_HOT_WATER_TANK,
+        ("soft wood", "not applicable"): WaterHeaterType.NOT_APPLICABLE,
+        ("soft wood", "fireplace"): WaterHeaterType.WOOD_SPACE_HEATING_FIREPLACE,
+        ("soft wood", "wood stove water coil"): WaterHeaterType.WOOD_SPACE_HEATING_WOOD_STOVE_WATER_COIL,
+        ("soft wood", "indoor wood boiler"): WaterHeaterType.WOOD_SPACE_HEATING_INDOOR_WOOD_BOILER,
+        ("soft wood", "outdoor wood boiler"): WaterHeaterType.WOOD_SPACE_HEATING_OUTDOOR_WOOD_BOILER,
+        ("soft wood", "wood hot water tank"): WaterHeaterType.WOOD_SPACE_HEATING_WOOD_HOT_WATER_TANK,
+        ("wood pellets", "not applicable"): WaterHeaterType.NOT_APPLICABLE,
+        ("wood pellets", "fireplace"): WaterHeaterType.WOOD_SPACE_HEATING_FIREPLACE,
+        ("wood pellets", "wood stove water coil"): WaterHeaterType.WOOD_SPACE_HEATING_WOOD_STOVE_WATER_COIL,
+        ("wood pellets", "indoor wood boiler"): WaterHeaterType.WOOD_SPACE_HEATING_INDOOR_WOOD_BOILER,
+        ("wood pellets", "outdoor wood boiler"): WaterHeaterType.WOOD_SPACE_HEATING_OUTDOOR_WOOD_BOILER,
+        ("wood pellets", "wood hot water tank"): WaterHeaterType.WOOD_SPACE_HEATING_WOOD_HOT_WATER_TANK,
 
         ("solar", "solar collector system"): WaterHeaterType.SOLAR_COLLECTOR_SYSTEM,
         ("csa p9-11 tested combo heat/dhw", "csa p9-11 tested combo heat/dhw"): WaterHeaterType.CSA_DHW,
