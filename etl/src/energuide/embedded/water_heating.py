@@ -49,7 +49,7 @@ class WaterHeaterType(enum.Enum):
 
 class _WaterHeating(typing.NamedTuple):
     water_heater_type: WaterHeaterType
-    tank_volume: typing.Optional[float]
+    tank_volume: float
     efficiency_ef: typing.Optional[float]
     efficiency_percentage: typing.Optional[float]
     drain_water_heat_recovery_efficiency_percentage: typing.Optional[float]
@@ -280,19 +280,8 @@ class WaterHeating(_WaterHeating):
     }
 
     @classmethod
-    def _get_drain_water_heat_recovery(cls, drain_heat_node: element.Element) -> 'WaterHeating':
-        efficiency = drain_heat_node.get('@effectivenessAt9.5', float)
-
-        return WaterHeating(
-            water_heater_type=WaterHeaterType.DRAIN_WATER_HEAT_RECOVERY,
-            tank_volume=None,
-            efficiency_ef=None,
-            efficiency_percentage=efficiency,
-        )
-
-    @classmethod
     def _from_data(cls, water_heating: element.Element) -> 'WaterHeating':
-        drain_water_efficiency: type.Optional[float] = None
+        drain_water_efficiency: typing.Optional[float] = None
         if water_heating.get('@hasDrainWaterHeatRecovery', str) == 'true':
             drain_water_efficiency = water_heating.get('DrainWaterHeatRecovery/@effectivenessAt9.5', float)
 
