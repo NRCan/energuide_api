@@ -2412,7 +2412,7 @@
         561
       ]
     ]
-  },avec une RSI nominale sp
+  },
   "Filter results for dwellings with a specific foundation header insulation nominal RSI (R-value Systeme International)": {
     "translation": "Trier les résultats par logements dont l'isolation d'une solive de fondation correspont à une valeur RSI spécifique (valeur R Système international)",
     "origin": [
@@ -2684,7 +2684,7 @@
     ]
   },
   "Filter results for dwellings with a section of its foundation wall with a specific percentage of the overall amount": {
-    "translation": "Filtrer les résultats par logements avec une section de son mur de fondation avec un pourcentage spécifique de la quantité totale",
+    "translation": "Trier les résultats par logements avec une section de son mur de fondation avec un pourcentage spécifique de la quantité totale",
     "origin": [
       [
         "src/schema/index.js",
@@ -2693,7 +2693,7 @@
     ]
   },
   "Filter results for dwellings with a foundation wall has specific area in square metres (m2)": {
-    "translation": "Filtrer les résultats par logements ayant au moins un mur de fondation d'une surface spécifique en mètres carrés (m2)",
+    "translation": "Trier les résultats par logements ayant au moins un mur de fondation d'une surface spécifique en mètres carrés (m2)",
     "origin": [
       [
         "src/schema/index.js",
@@ -2702,7 +2702,7 @@
     ]
   },
   "Filter results for dwellings with a foundation wall has specific area in square feet (ft)": {
-    "translation": "Filtrer les résultats par logements ayant au moins un mur de fondation d'une surface spécifique en pieds carrés (pi)",
+    "translation": "Trier les résultats par logements ayant au moins un mur de fondation d'une surface spécifique en pieds carrés (pi)",
     "origin": [
       [
         "src/schema/index.js",
