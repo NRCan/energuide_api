@@ -1,3 +1,4 @@
+import typing
 import _pytest
 import pytest
 from energuide import transform
@@ -27,9 +28,9 @@ def test_reader(local_reader: transform.LocalExtractReader) -> None:
 
 
 def test_reader_sorted_by_eval_id(local_reader: transform.LocalExtractReader) -> None:
-    output = list(local_reader.extracted_rows())
+    output= list(local_reader.extracted_rows())
 
-    assert all(output[i].get('EVAL_ID') <= output[i+1].get('EVAL_ID') for i in range(len(output)-1))
+    assert all(typing.cast(str, output[i].get('EVAL_ID')) <= typing.cast(str, output[i+1].get('EVAL_ID')) for i in range(len(output)-1))
 
 
 def test_reader_num_rows(local_reader: transform.LocalExtractReader) -> None:
