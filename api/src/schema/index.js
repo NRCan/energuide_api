@@ -564,7 +564,7 @@ const Schema = i18n => {
       foundationMaterialEnglish
       # ${i18n.t`Filter results for dwellings whose foundation was constructed with a specific material (en)`}
       foundationMaterialFrench
-      # ${i18n.t`Filter results for dwellings wiht a specific foundation header insulation nominal RSI (R-value Systeme International)`}
+      # ${i18n.t`Filter results for dwellings with a specific foundation header insulation nominal RSI (R-value Systeme International)`}
       foundationHeaderInsulationNominalRsi
       # ${i18n.t`Filter results for dwellings with a specific foundation header insulation nominal R-value`}
       foundationHeaderInsulationNominalR
