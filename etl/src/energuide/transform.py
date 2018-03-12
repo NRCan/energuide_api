@@ -104,12 +104,18 @@ def _generate_dwellings(grouped: typing.List[typing.Dict[str, typing.Any]]) -> t
         failing_type = exc.data_class
         full_message = logger.unwrap_exception_message(exc)
 
-        LOGGER.error(f'Files: "{", ".join(files)}": {failing_type.__name__}' + f' - {full_message}' if full_message else '')
+        LOGGER.error(
+            f'Files: "{", ".join(files)}": {failing_type.__name__}'
+            f' - {full_message}' if full_message else ''
+        )
     except EnerguideError as exc:
         files = [str(file.get('jsonFileName')) for file in grouped]
         full_message = logger.unwrap_exception_message(exc)
 
-        LOGGER.error(f'Files: "{", ".join(files)}"' + f': {full_message}' if full_message else '')
+        LOGGER.error(
+            f'Files: "{", ".join(files)}"'
+            f': {full_message}' if full_message else ''
+        )
     return None
 
 

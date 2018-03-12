@@ -1,4 +1,3 @@
-import pytest
 from energuide import logger
 
 

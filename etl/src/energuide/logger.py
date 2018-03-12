@@ -6,14 +6,12 @@ logging.basicConfig(level=logging.INFO,
                     datefmt='%Y-%m-%dT%H:%M:%S%z')
 
 
-def unwrap_exception_message(exc: typing.Type[Exception], join: str = ' - ') -> str:
+def unwrap_exception_message(exc: BaseException, join: str = ' - ') -> str:
     if exc.__context__:
         if exc.args:
             return f'{exc}{join}{unwrap_exception_message(exc.__context__)}'
-        else:
-            return f'{unwrap_exception_message(exc.__context__)}'
-    else:
-        return f'{exc}'
+        return f'{unwrap_exception_message(exc.__context__)}'
+    return f'{exc}'
 
 
 def get_logger(name: str) -> logging.Logger:
