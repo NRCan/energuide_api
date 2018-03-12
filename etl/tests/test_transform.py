@@ -31,8 +31,8 @@ def test_reader_sorted_by_eval_id(local_reader: transform.LocalExtractReader) ->
     output = list(local_reader.extracted_rows())
 
     assert all(
-        typing.cast(str, row.get('EVAL_ID')) <= typing.cast(str, next.get('EVAL_ID'))
-        for row, next in zip(output, output[1:])
+        typing.cast(str, current_row.get('EVAL_ID')) <= typing.cast(str, next_row.get('EVAL_ID'))
+        for current_row, next_row in zip(output, output[1:])
     )
 
 
