@@ -7,7 +7,6 @@ from energuide.exceptions import InvalidEmbeddedDataTypeError, ElementGetValueEr
 
 class WaterHeaterType(enum.Enum):
     NOT_APPLICABLE = enum.auto()
-    DRAIN_WATER_HEAT_RECOVERY = enum.auto()
     ELECTRICITY_CONVENTIONAL_TANK = enum.auto()
     ELECTRICITY_CONSERVER_TANK = enum.auto()
     ELECTRICITY_INSTANTANEOUS = enum.auto()
