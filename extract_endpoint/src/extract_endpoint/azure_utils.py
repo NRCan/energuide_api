@@ -34,7 +34,7 @@ class MockStorage:
         self._data.update({filename: data})
         return True
 
-    def download(self, filename: str) -> typing.Optional[bytes]:
+    def download(self, filename: str) -> bytes:
         if filename in self._data:
             return self._data[filename]
         else:
