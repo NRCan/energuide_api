@@ -38,9 +38,10 @@ const replaceBackTicksWithSingleQuotes = function(str) {
 describe('configuration', () => {
   describe('graphql default scalar value', () => {
     it('GraphQLInt returns the same description as I18NInt', async () => {
-      let response = await makeRequest({ typeName: 'I18NInt' })
+      let response = await makeRequest({ typeName: 'Int' })
 
-      let { __type: { description } } = response.body.data
+      let { __type: { name, description } } = response.body.data
+      expect(name).toEqual(GraphQLInt.name)
       expect(description).toEqual(
         replaceBackTicksWithSingleQuotes(GraphQLInt.description),
       )

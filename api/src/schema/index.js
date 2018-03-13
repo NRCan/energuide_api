@@ -9,7 +9,7 @@ import { createHeader } from './types/Header'
 const Schema = i18n => {
   const typeDefs = [
     `
-    scalar I18NInt
+    scalar Int
     scalar I18NFloat
     scalar I18NString
     scalar Boolean
@@ -50,9 +50,9 @@ const Schema = i18n => {
       # ${i18n.t`Part of the dwelling to be upgraded`}
       upgradeType: I18NString
       # ${i18n.t`Estimated cost of upgrade`}
-      cost: I18NInt
+      cost: Int
       # ${i18n.t`Order of importance of upgrade recommendation (lower number means a higher priority)`}
-      priority: I18NInt
+      priority: Int
     }
 
     # ${i18n.t`Ventilation systems draw exterior air into the house, exhaust interior air to the exterior, or both`}
@@ -324,9 +324,9 @@ const Schema = i18n => {
     # ${i18n.t`A residential building evaluted under the Energuide program`}
     type Dwelling @cacheControl(maxAge: 90) {
       # ${i18n.t`Unique identification number for a dwelling`}
-      houseId: I18NInt
+      houseId: Int
       # ${i18n.t`Year of construction`}
-      yearBuilt: I18NInt
+      yearBuilt: Int
       # ${i18n.t`Name of city where dwelling is located`}
       city: I18NString
       # ${i18n.t`Region of country for dwelling (province/territory)`}
@@ -340,9 +340,9 @@ const Schema = i18n => {
     # ${i18n.t`The root query type`}
     type Query @cacheControl(maxAge: 90) {
       # ${i18n.t`Details for a specific dwelling`}
-      dwelling(houseId: I18NInt!): Dwelling
+      dwelling(houseId: Int!): Dwelling
       # ${i18n.t`Details for all dwellings, optionally filtered by one or more values`}
-      dwellings(filters: [Filter!] dateRange: DateRange limit: I18NInt next: I18NString previous: I18NString): PaginatedResultSet
+      dwellings(filters: [Filter!] dateRange: DateRange limit: Int next: I18NString previous: I18NString): PaginatedResultSet
     }
 
     # ${i18n.t`An ISO date value, formatted 'YYYY-MM-DD'`}
