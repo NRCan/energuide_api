@@ -136,8 +136,8 @@ class Heating(_Heating):
     def _get_steady_state(node: element.Element) -> str:
         try:
             steady_state_value = node.get('Type1/*/Specifications/@isSteadyState', str)
-        except ElementGetValueError:
-            return 'Steady State'
+        except ElementGetValueError as exc:
+            raise InvalidEmbeddedDataTypeError('No isSteadyState property value') from exc
 
         return 'Steady State' if steady_state_value == 'true' else 'AFUE'
 
