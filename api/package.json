@@ -15,7 +15,7 @@
     "extract": "./node_modules/lingui-cli/dist/lingui.js extract",
     "compile": "./node_modules/lingui-cli/dist/lingui.js compile",
     "lint": "eslint src/** test/** --ignore-pattern src/locale",
-    "watch": "nodemon --watch \"src\" --ignore \"src/__tests__\" --exec \"yarn build && yarn start\""
+    "watch": "nodemon --watch \"src\" --ignore \"src/__tests__\" --ignore \"src/locale\" --exec \"yarn build && yarn start\""
   },
   "repository": {
     "type": "git",
