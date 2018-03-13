@@ -510,7 +510,7 @@ const Schema = i18n => {
       doorAreaMetres
       # ${i18n.t`Filter results by dwellings where the area of the doors have certain value in square feet (ft2)`}
       doorAreaFeet
-      # ${i18n.t`Filter results by dwellings have window with a matching label`}
+      # ${i18n.t`Filter results by dwellings that have a window with a specific label`}
       windowLabel
       # ${i18n.t`Filter results by dwellings with a specific window RSI (R-value Systeme International)`}
       windowInsulationRsi
@@ -626,9 +626,9 @@ const Schema = i18n => {
       foundationWallInsulationEffectiveR
       # ${i18n.t`Filter results for dwellings with a section of its foundation wall with a specific percentage of the overall amount`}
       foundationWallPercentage
-      # ${i18n.t`Filter results for dwellings with a foundation wall has specific area in square metres (m2)`}
+      # ${i18n.t`Filter results for dwellings with a specific foundation wall area in square metres (m2)`}
       foundationWallAreaMetres
-      # ${i18n.t`Filter results for dwellings with a foundation wall has specific area in square feet (ft)`}
+      # ${i18n.t`Filter results for dwellings with a specific foundation wall area in square feet (ft2)`}
       foundationWallAreaFeet
     }
   `,
