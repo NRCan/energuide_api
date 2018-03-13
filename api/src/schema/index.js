@@ -100,9 +100,9 @@ const Schema = i18n => {
       # ${i18n.t`Capacity of the tank in gallons (Gal)`}
       tankVolumeGallon: Float
       # ${i18n.t`Measures how effectively your water heater is burning fuel or turning fuel into heat`}
-      efficiencyEf: String
+      efficiencyEf: Float
       # ${i18n.t`A percentage representing the ratio of how effectively your water heater is turning fuel into heat`}
-      efficiencyPercentage: String
+      efficiencyPercentage: Float
     }
 
     # ${i18n.t`A principal heating system is either the only source of heat for the house, or is used for at least 70% of the heating load`}
@@ -318,7 +318,7 @@ const Schema = i18n => {
       # ${i18n.t`The details of the foundation`}
       foundations: [Foundation]
       # ${i18n.t`The EnerGuide Rating calculated for this evaluation`}
-      ersRating: String
+      ersRating: Int
     }
 
     # ${i18n.t`A residential building evaluted under the Energuide program`}
