@@ -1,8 +1,8 @@
 import typing
-import typing_extensions
-import zipfile
-from werkzeug import utils
 from http import HTTPStatus
+import zipfile
+import typing_extensions
+from werkzeug import utils
 from extract_endpoint import azure_utils
 
 
@@ -35,7 +35,11 @@ class MockTriggerTL(EndpointTrigger):
 
 
 class UploadFilesToAzure(EndpointTrigger):
-    def __init__(self, data: typing.IO[bytes], timestamp: str, timestamp_filename: str, coords: azure_utils.StorageCoordinates) -> None:
+    def __init__(self, data: typing.IO[bytes],
+                 timestamp: str,
+                 timestamp_filename: str,
+                 coords: azure_utils.StorageCoordinates) -> None:
+
         self._data = data
         self._coords = coords
         self._timestamp = timestamp
