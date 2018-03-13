@@ -141,17 +141,20 @@ class Heating(_Heating):
     @classmethod
     def from_data(cls, node: element.Element) -> 'Heating':
         try:
-            return Heating(
-                label=node.get_text('Label'),
-                output_size=cls._get_output_size(node),
-                efficiency=node.get('Type1/*/Specifications/@efficiency', float),
-                steady_state=cls._get_steady_state(node),
-                heating_type=cls._get_heating_type(node),
-                energy_source=cls._get_energy_source(node),
-                equipment_type=cls._get_equipment_type(node),
-            )
+            label = node.get_text('Label')
+            efficiency = node.get('Type1/*/Specifications/@efficiency', float)
         except ElementGetValueError as exc:
             raise InvalidEmbeddedDataTypeError(Heating, 'Invalid/missing Heating values') from exc
+
+        return Heating(
+            label=label,
+            output_size=cls._get_output_size(node),
+            efficiency=efficiency,
+            steady_state=cls._get_steady_state(node),
+            heating_type=cls._get_heating_type(node),
+            energy_source=cls._get_energy_source(node),
+            equipment_type=cls._get_equipment_type(node),
+        )
 
     def to_dict(self) -> typing.Dict[str, typing.Any]:
         return {
