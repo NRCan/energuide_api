@@ -11,7 +11,7 @@ const Schema = i18n => {
     `
     scalar Int
     scalar I18NFloat
-    scalar I18NString
+    scalar String
     scalar Boolean
     scalar Date
 
@@ -32,7 +32,7 @@ const Schema = i18n => {
       # ${i18n.t`An operator to describe how results will be filtered`}
       comparator: Comparator!
       # ${i18n.t`Results will be compared to this value`}
-      value: I18NString!
+      value: String!
     }
 
     # ${i18n.t`Filter by dwellings containing evaluations that were entered, created, or modified between a range of dates`}
@@ -48,7 +48,7 @@ const Schema = i18n => {
     # ${i18n.t`An improvement that could increase the energy efficiency of the dwelling`}
     type Upgrade @cacheControl(maxAge: 90) {
       # ${i18n.t`Part of the dwelling to be upgraded`}
-      upgradeType: I18NString
+      upgradeType: String
       # ${i18n.t`Estimated cost of upgrade`}
       cost: Int
       # ${i18n.t`Order of importance of upgrade recommendation (lower number means a higher priority)`}
@@ -58,9 +58,9 @@ const Schema = i18n => {
     # ${i18n.t`Ventilation systems draw exterior air into the house, exhaust interior air to the exterior, or both`}
     type Ventilation @cacheControl(maxAge: 90) {
       # ${i18n.t`Ventilation type installed (en)`}
-      typeEnglish: I18NString
+      typeEnglish: String
       # ${i18n.t`Ventilation type installed (fr)`}
-      typeFrench: I18NString
+      typeFrench: String
       # ${i18n.t`Air flow rate in litres per second (L/s)`}
       airFlowRateLps: I18NFloat
       # ${i18n.t`Air flow rate in cubic feet per minute (f3/m)`}
@@ -70,7 +70,7 @@ const Schema = i18n => {
     # ${i18n.t`Floors represents the usable area of the house`}
     type Floor @cacheControl(maxAge: 90) {
       # ${i18n.t`Description of floor location`}
-      label: I18NString
+      label: String
       # ${i18n.t`Floor insulation nominal RSI (R-value Systeme International)`}
       insulationNominalRsi: I18NFloat
       # ${i18n.t`Floor insulation nominal R-value`}
@@ -92,35 +92,35 @@ const Schema = i18n => {
     # ${i18n.t`Water heaters heat the domestic water in a house`}
     type WaterHeater @cacheControl(maxAge: 90) {
       # ${i18n.t`Type of tank being used to heat the domestic water in the house (en)`}
-      typeEnglish: I18NString
+      typeEnglish: String
       # ${i18n.t`Type of tank being used to heat the domestic water in the house (fr)`}
-      typeFrench: I18NString
+      typeFrench: String
       # ${i18n.t`Capacity of the tank in litres (L)`}
       tankVolumeLitres: I18NFloat
       # ${i18n.t`Capacity of the tank in gallons (Gal)`}
       tankVolumeGallon: I18NFloat
       # ${i18n.t`Measures how effectively your water heater is burning fuel or turning fuel into heat`}
-      efficiencyEf: I18NString
+      efficiencyEf: String
       # ${i18n.t`A percentage representing the ratio of how effectively your water heater is turning fuel into heat`}
-      efficiencyPercentage: I18NString
+      efficiencyPercentage: String
     }
 
     # ${i18n.t`A principal heating system is either the only source of heat for the house, or is used for at least 70% of the heating load`}
     type Heating @cacheControl(maxAge: 90) {
       # ${i18n.t`Description of heating system`}
-      label: I18NString
+      label: String
       # ${i18n.t`Type of heating system (en)`}
-      heatingTypeEnglish: I18NString
+      heatingTypeEnglish: String
       # ${i18n.t`Type of heating system (fr)`}
-      heatingTypeFrench: I18NString
+      heatingTypeFrench: String
       # ${i18n.t`The source of fuel for the heating system (en)`}
-      energySourceEnglish: I18NString
+      energySourceEnglish: String
       # ${i18n.t`The source of fuel for the heating system (fr)`}
-      energySourceFrench: I18NString
+      energySourceFrench: String
       # ${i18n.t`Equipment type of heating system (en)`}
-      equipmentTypeEnglish: I18NString
+      equipmentTypeEnglish: String
       # ${i18n.t`Equipment type of heating system (fr)`}
-      equipmentTypeFrench: I18NString
+      equipmentTypeFrench: String
       # ${i18n.t`Output capacity of the heating system in kilowatt hours (kWh)`}
       outputSizeKW: I18NFloat
       # ${i18n.t`Output capacity of the heating system in British Thermal Units per hour (BTU/h)`}
@@ -129,7 +129,7 @@ const Schema = i18n => {
       efficiency: I18NFloat
       # ${i18n.t`Steady-state efficiency is the combustion efficiency of the equipment at peak performance.
         The Annual Fuel Utilization Efficiency (AFUE) is a measure of efficiency based on average usage, accounting for the fact that most heating systems rarely run long enough to reach peak performance.`}
-      steadyState: I18NString
+      steadyState: String
     }
 
     # ${i18n.t`One page of results`}
@@ -139,9 +139,9 @@ const Schema = i18n => {
       # ${i18n.t`If true, a previous page of results can be returned`}
       hasPrevious: Boolean
       # ${i18n.t`Identifier used to return the next page of results`}
-      next: I18NString
+      next: String
       # ${i18n.t`Identifier cursor used to return the previous page of results`}
-      previous: I18NString
+      previous: String
       # ${i18n.t`A list of dwellings`}
       results: [Dwelling]
     }
@@ -161,15 +161,15 @@ const Schema = i18n => {
     # ${i18n.t`Walls separate the interior heated space from the outside (interior partition walls are not considered walls)`}
     type Wall @cacheControl(maxAge: 90) {
       # ${i18n.t`Description of wall location`}
-      label: I18NString
+      label: String
       # ${i18n.t`Wall construction being used (en)`}
-      structureTypeEnglish: I18NString
+      structureTypeEnglish: String
       # ${i18n.t`Wall construction being used (fr)`}
-      structureTypeFrench: I18NString
+      structureTypeFrench: String
       # ${i18n.t`Size of the component type (en)`}
-      componentTypeSizeEnglish: I18NString
+      componentTypeSizeEnglish: String
       # ${i18n.t`Size of the component type (fr)`}
-      componentTypeSizeFrench: I18NString
+      componentTypeSizeFrench: String
       # ${i18n.t`Wall insulation nominal RSI (R-value Systeme International)`}
       insulationNominalRsi: I18NFloat
       # ${i18n.t`Wall insulation nominal R-value`}
@@ -195,9 +195,9 @@ const Schema = i18n => {
     # ${i18n.t`Doors are on outside walls, separating the interior heated space from the outside`}
     type Door @cacheControl(maxAge: 90) {
       # ${i18n.t`Describes the construction of the door (en)`}
-      typeEnglish: I18NString
+      typeEnglish: String
       # ${i18n.t`Describes the construction of the door (fr)`}
-      typeFrench: I18NString
+      typeFrench: String
       # ${i18n.t`Door RSI (R-value Systeme International)`}
       insulationRsi: I18NFloat
       # ${i18n.t`Door R-value`}
@@ -215,35 +215,35 @@ const Schema = i18n => {
     # ${i18n.t`Windows separate the interior heated space from the outside`}
     type Window @cacheControl(maxAge: 90) {
       # ${i18n.t`Used to identify the window component in the house`}
-      label: I18NString
+      label: String
       # ${i18n.t`Window RSI (R-value Systeme International)`}
       insulationRsi: I18NFloat
       # ${i18n.t`Window R-value`}
       insulationR: I18NFloat
       # ${i18n.t`Number of panes of transparent material in a window (en)`}
-      glazingTypesEnglish: I18NString
+      glazingTypesEnglish: String
       # ${i18n.t`Number of panes of transparent material in a window (fr)`}
-      glazingTypesFrench: I18NString
+      glazingTypesFrench: String
       # ${i18n.t`Type of coating and tint on a window pane (en)`}
-      coatingsTintsEnglish: I18NString
+      coatingsTintsEnglish: String
       # ${i18n.t`Type of coating and tint on a window pane (fr)`}
-      coatingsTintsFrench: I18NString
+      coatingsTintsFrench: String
       # ${i18n.t`Type of gas injected between the glass layers (en)`}
-      fillTypeEnglish: I18NString
+      fillTypeEnglish: String
       # ${i18n.t`Type of gas injected between the glass layers (fr)`}
-      fillTypeFrench: I18NString
+      fillTypeFrench: String
       # ${i18n.t`Spacer systems used between the glass layers (en)`}
-      spacerTypeEnglish: I18NString
+      spacerTypeEnglish: String
       # ${i18n.t`Spacer systems used between the glass layers (fr)`}
-      spacerTypeFrench: I18NString
+      spacerTypeFrench: String
       # ${i18n.t`Describes the construction of the window (en)`}
-      typeEnglish: I18NString
+      typeEnglish: String
       # ${i18n.t`Describes the construction of the window (fr)`}
-      typeFrench: I18NString
+      typeFrench: String
       # ${i18n.t`Material type of the window frame (en)`}
-      frameMaterialEnglish: I18NString
+      frameMaterialEnglish: String
       # ${i18n.t`Material type of the window frame (fr)`}
-      frameMaterialFrench: I18NString
+      frameMaterialFrench: String
       # ${i18n.t`Window area in square metres (m2)`}
       areaMetres: I18NFloat
       # ${i18n.t`Window area in square feet (ft2)`}
@@ -261,11 +261,11 @@ const Schema = i18n => {
     # ${i18n.t`Ceilings are the upper interior surface of a room`}
     type Ceiling @cacheControl(maxAge: 90) {
       # ${i18n.t`Used to identify the ceiling in the house`}
-      label: I18NString
+      label: String
       # ${i18n.t`Describes the construction of the ceiling (en)`}
-      typeEnglish: I18NString
+      typeEnglish: String
       # ${i18n.t`Describes the construction of the ceiling (fr)`}
-      typeFrench: I18NString
+      typeFrench: String
       # ${i18n.t`Ceiling insulation nominal RSI (R-value Systeme International)`}
       insulationNominalRsi: I18NFloat
       # ${i18n.t`Ceiling insulation nominal R-value`}
@@ -287,14 +287,14 @@ const Schema = i18n => {
     # ${i18n.t`Detailed information about specific features of a given dwelling`}
     type Evaluation @cacheControl(maxAge: 90) {
       # ${i18n.t`Evaluation type codes are used to define the type of evaluation performed and to distinguish the house type (i.e. newly built or existing)`}
-      evaluationType: I18NString
+      evaluationType: String
       # ${i18n.t`Date the evaluation was made`}
-      entryDate: I18NString
-      fileId: I18NString
+      entryDate: String
+      fileId: String
       # ${i18n.t`Date the record was first created`}
-      creationDate: I18NString
+      creationDate: String
       # ${i18n.t`Date the record was last modified`}
-      modificationDate: I18NString
+      modificationDate: String
       # ${i18n.t`A list of ceiling data entries for a dwelling`}
       ceilings: [Ceiling]
       # ${i18n.t`A list of wall data entries for a dwelling`}
@@ -318,7 +318,7 @@ const Schema = i18n => {
       # ${i18n.t`The details of the foundation`}
       foundations: [Foundation]
       # ${i18n.t`The EnerGuide Rating calculated for this evaluation`}
-      ersRating: I18NString
+      ersRating: String
     }
 
     # ${i18n.t`A residential building evaluted under the Energuide program`}
@@ -328,11 +328,11 @@ const Schema = i18n => {
       # ${i18n.t`Year of construction`}
       yearBuilt: Int
       # ${i18n.t`Name of city where dwelling is located`}
-      city: I18NString
+      city: String
       # ${i18n.t`Region of country for dwelling (province/territory)`}
-      region: I18NString
+      region: String
       # ${i18n.t`The first three characters of a Canadian postal code, which correspond to a geographical area defined by Canada Post`}
-      forwardSortationArea: I18NString
+      forwardSortationArea: String
       # ${i18n.t`A list of evaluations of specific features of the dwelling`}
       evaluations: [Evaluation]
     }
@@ -342,7 +342,7 @@ const Schema = i18n => {
       # ${i18n.t`Details for a specific dwelling`}
       dwelling(houseId: Int!): Dwelling
       # ${i18n.t`Details for all dwellings, optionally filtered by one or more values`}
-      dwellings(filters: [Filter!] dateRange: DateRange limit: Int next: I18NString previous: I18NString): PaginatedResultSet
+      dwellings(filters: [Filter!] dateRange: DateRange limit: Int next: String previous: String): PaginatedResultSet
     }
 
     # ${i18n.t`An ISO date value, formatted 'YYYY-MM-DD'`}

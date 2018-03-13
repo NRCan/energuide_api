@@ -3,9 +3,9 @@ export const createFoundationFloor = i18n => {
     # ${i18n.t`A floor below ground that represents the usable area of the house`}
     type FoundationFloor @cacheControl(maxAge: 90) {
       # ${i18n.t`Type of foundation floor (en)`}
-      floorTypeEnglish: I18NString
+      floorTypeEnglish: String
       # ${i18n.t`Type of foundation floor (fr)`}
-      floorTypeFrench: I18NString
+      floorTypeFrench: String
       # ${i18n.t`The insulation nominal RSI (R-value Systeme International) of the foundation floor`}
       insulationNominalRsi: I18NFloat
       # ${i18n.t`The insulation nominal R-value of the foundation floor`}

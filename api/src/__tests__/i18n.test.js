@@ -57,9 +57,10 @@ describe('configuration', () => {
     })
 
     it('GraphQLString returns the same description as I18NString', async () => {
-      let response = await makeRequest({ typeName: 'I18NString' })
+      let response = await makeRequest({ typeName: 'String' })
 
-      let { __type: { description } } = response.body.data
+      let { __type: { name, description } } = response.body.data
+      expect(name).toEqual(GraphQLString.name)
       expect(description).toEqual(
         replaceBackTicksWithSingleQuotes(GraphQLString.description),
       )

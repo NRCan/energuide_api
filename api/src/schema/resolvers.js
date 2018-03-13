@@ -155,7 +155,7 @@ import { createI18NDate } from './types/I18NDate'
 const Resolvers = i18n => {
   return {
     Int: createI18NInt(i18n),
-    I18NString: createI18NString(i18n),
+    String: createI18NString(i18n),
     I18NFloat: createI18NFloat(i18n),
     Boolean: createI18NBoolean(i18n),
     Date: createI18NDate(i18n),
