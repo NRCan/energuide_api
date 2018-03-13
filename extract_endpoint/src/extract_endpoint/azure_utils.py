@@ -26,7 +26,7 @@ class StorageProtocol(typing_extensions.Protocol):
         pass
 
 
-class MockStorage:
+class MockStorage(StorageProtocol):
     def __init__(self) -> None:
         self._data: typing.Dict[str, bytes] = {}
 
@@ -41,7 +41,7 @@ class MockStorage:
             raise LookupError('File does not exist')
 
 
-class AzureStorage:
+class AzureStorage(StorageProtocol):
     def __init__(self, coords: StorageCoordinates) -> None:
         self._coords = coords
         self._azure_service = blob.BlockBlobService(account_name=self._coords.account,
