@@ -10,7 +10,7 @@ const Schema = i18n => {
   const typeDefs = [
     `
     scalar Int
-    scalar I18NFloat
+    scalar Float
     scalar String
     scalar Boolean
     scalar Date
@@ -62,9 +62,9 @@ const Schema = i18n => {
       # ${i18n.t`Ventilation type installed (fr)`}
       typeFrench: String
       # ${i18n.t`Air flow rate in litres per second (L/s)`}
-      airFlowRateLps: I18NFloat
+      airFlowRateLps: Float
       # ${i18n.t`Air flow rate in cubic feet per minute (f3/m)`}
-      airFlowRateCfm: I18NFloat
+      airFlowRateCfm: Float
     }
 
     # ${i18n.t`Floors represents the usable area of the house`}
@@ -72,21 +72,21 @@ const Schema = i18n => {
       # ${i18n.t`Description of floor location`}
       label: String
       # ${i18n.t`Floor insulation nominal RSI (R-value Systeme International)`}
-      insulationNominalRsi: I18NFloat
+      insulationNominalRsi: Float
       # ${i18n.t`Floor insulation nominal R-value`}
-      insulationNominalR: I18NFloat
+      insulationNominalR: Float
       # ${i18n.t`Floor insulation effective RSI (R-value Systeme International)`}
-      insulationEffectiveRsi: I18NFloat
+      insulationEffectiveRsi: Float
       # ${i18n.t`Floor insulation effective R-value`}
-      insulationEffectiveR: I18NFloat
+      insulationEffectiveR: Float
       # ${i18n.t`Floor area of the house in square metres (m2)`}
-      areaMetres: I18NFloat
+      areaMetres: Float
       # ${i18n.t`Floor area of the house in square feet (ft2)`}
-      areaFeet: I18NFloat
+      areaFeet: Float
       # ${i18n.t`Floor length of the house in metres (m)`}
-      lengthMetres: I18NFloat
+      lengthMetres: Float
       # ${i18n.t`Floor area of the house in square feet (ft2)`}
-      lengthFeet: I18NFloat
+      lengthFeet: Float
     }
 
     # ${i18n.t`Water heaters heat the domestic water in a house`}
@@ -96,9 +96,9 @@ const Schema = i18n => {
       # ${i18n.t`Type of tank being used to heat the domestic water in the house (fr)`}
       typeFrench: String
       # ${i18n.t`Capacity of the tank in litres (L)`}
-      tankVolumeLitres: I18NFloat
+      tankVolumeLitres: Float
       # ${i18n.t`Capacity of the tank in gallons (Gal)`}
-      tankVolumeGallon: I18NFloat
+      tankVolumeGallon: Float
       # ${i18n.t`Measures how effectively your water heater is burning fuel or turning fuel into heat`}
       efficiencyEf: String
       # ${i18n.t`A percentage representing the ratio of how effectively your water heater is turning fuel into heat`}
@@ -122,11 +122,11 @@ const Schema = i18n => {
       # ${i18n.t`Equipment type of heating system (fr)`}
       equipmentTypeFrench: String
       # ${i18n.t`Output capacity of the heating system in kilowatt hours (kWh)`}
-      outputSizeKW: I18NFloat
+      outputSizeKW: Float
       # ${i18n.t`Output capacity of the heating system in British Thermal Units per hour (BTU/h)`}
-      outputSizeBtu: I18NFloat
+      outputSizeBtu: Float
       # ${i18n.t`Measures how effectively your heating system is burning fuel or turning fuel into heat`}
-      efficiency: I18NFloat
+      efficiency: Float
       # ${i18n.t`Steady-state efficiency is the combustion efficiency of the equipment at peak performance.
         The Annual Fuel Utilization Efficiency (AFUE) is a measure of efficiency based on average usage, accounting for the fact that most heating systems rarely run long enough to reach peak performance.`}
       steadyState: String
@@ -149,13 +149,13 @@ const Schema = i18n => {
     # ${i18n.t`Heated floor areas represents the usable areas of a house that is conditioned to a specified temperature during the whole heating season`}
     type HeatedFloorArea @cacheControl(maxAge: 90) {
       # ${i18n.t`Above-grade heated area of the house in square metres (m2), i.e. the ground floor`}
-      areaAboveGradeMetres: I18NFloat
+      areaAboveGradeMetres: Float
       # ${i18n.t`Above-grade heated area of the house in square feet (ft2), i.e. the ground floor`}
-      areaAboveGradeFeet: I18NFloat
+      areaAboveGradeFeet: Float
       # ${i18n.t`Below-grade heated area of the house in square metres (m2), i.e. the basement`}
-      areaBelowGradeMetres: I18NFloat
+      areaBelowGradeMetres: Float
       # ${i18n.t`Below-grade heated area of the house in square feet (ft2), i.e. the basement`}
-      areaBelowGradeFeet: I18NFloat
+      areaBelowGradeFeet: Float
     }
 
     # ${i18n.t`Walls separate the interior heated space from the outside (interior partition walls are not considered walls)`}
@@ -171,25 +171,25 @@ const Schema = i18n => {
       # ${i18n.t`Size of the component type (fr)`}
       componentTypeSizeFrench: String
       # ${i18n.t`Wall insulation nominal RSI (R-value Systeme International)`}
-      insulationNominalRsi: I18NFloat
+      insulationNominalRsi: Float
       # ${i18n.t`Wall insulation nominal R-value`}
-      insulationNominalR: I18NFloat
+      insulationNominalR: Float
       # ${i18n.t`Wall insulation effective RSI (R-value Systeme International)`}
-      insulationEffectiveRsi: I18NFloat
+      insulationEffectiveRsi: Float
       # ${i18n.t`Wall insulation nominal R-value`}
-      insulationEffectiveR: I18NFloat
+      insulationEffectiveR: Float
       # ${i18n.t`Wall area of the house in square metres (m2)`}
-      areaMetres: I18NFloat
+      areaMetres: Float
       # ${i18n.t`Wall area of the house in square feet (ft2)`}
-      areaFeet: I18NFloat
+      areaFeet: Float
       # ${i18n.t`Wall perimeter of the house in metres (m)`}
-      perimeterMetres: I18NFloat
+      perimeterMetres: Float
       # ${i18n.t`Wall perimeter of the house in feet (ft)`}
-      perimeterFeet: I18NFloat
+      perimeterFeet: Float
       # ${i18n.t`Wall height of the house in metres (m)`}
-      heightMetres: I18NFloat
+      heightMetres: Float
       # ${i18n.t`Wall height of the house in feet (ft)`}
-      heightFeet: I18NFloat
+      heightFeet: Float
     }
 
     # ${i18n.t`Doors are on outside walls, separating the interior heated space from the outside`}
@@ -199,17 +199,17 @@ const Schema = i18n => {
       # ${i18n.t`Describes the construction of the door (fr)`}
       typeFrench: String
       # ${i18n.t`Door RSI (R-value Systeme International)`}
-      insulationRsi: I18NFloat
+      insulationRsi: Float
       # ${i18n.t`Door R-value`}
-      insulationR: I18NFloat
+      insulationR: Float
       # ${i18n.t`Door U-factor in metric: watts per square metre per degree Celcius (W/m2C)`}
-      uFactor: I18NFloat
+      uFactor: Float
       # ${i18n.t`Door U-factor in imperial: British Thermal Units per square feet per degree Fahrenheit (BTU/ft2F)`}
-      uFactorImperial: I18NFloat
+      uFactorImperial: Float
       # ${i18n.t`Door area in square metres (m2)`}
-      areaMetres: I18NFloat
+      areaMetres: Float
       # ${i18n.t`Door area in square feet (ft2)`}
-      areaFeet: I18NFloat
+      areaFeet: Float
     }
 
     # ${i18n.t`Windows separate the interior heated space from the outside`}
@@ -217,9 +217,9 @@ const Schema = i18n => {
       # ${i18n.t`Used to identify the window component in the house`}
       label: String
       # ${i18n.t`Window RSI (R-value Systeme International)`}
-      insulationRsi: I18NFloat
+      insulationRsi: Float
       # ${i18n.t`Window R-value`}
-      insulationR: I18NFloat
+      insulationR: Float
       # ${i18n.t`Number of panes of transparent material in a window (en)`}
       glazingTypesEnglish: String
       # ${i18n.t`Number of panes of transparent material in a window (fr)`}
@@ -245,17 +245,17 @@ const Schema = i18n => {
       # ${i18n.t`Material type of the window frame (fr)`}
       frameMaterialFrench: String
       # ${i18n.t`Window area in square metres (m2)`}
-      areaMetres: I18NFloat
+      areaMetres: Float
       # ${i18n.t`Window area in square feet (ft2)`}
-      areaFeet: I18NFloat
+      areaFeet: Float
       # ${i18n.t`Window width in metres (m)`}
-      widthMetres: I18NFloat
+      widthMetres: Float
       # ${i18n.t`Window width in feet (ft)`}
-      widthFeet: I18NFloat
+      widthFeet: Float
       # ${i18n.t`Window height in metres (m)`}
-      heightMetres: I18NFloat
+      heightMetres: Float
       # ${i18n.t`Window height in feet (ft)`}
-      heightFeet: I18NFloat
+      heightFeet: Float
     }
 
     # ${i18n.t`Ceilings are the upper interior surface of a room`}
@@ -267,21 +267,21 @@ const Schema = i18n => {
       # ${i18n.t`Describes the construction of the ceiling (fr)`}
       typeFrench: String
       # ${i18n.t`Ceiling insulation nominal RSI (R-value Systeme International)`}
-      insulationNominalRsi: I18NFloat
+      insulationNominalRsi: Float
       # ${i18n.t`Ceiling insulation nominal R-value`}
-      insulationNominalR: I18NFloat
+      insulationNominalR: Float
       # ${i18n.t`Ceiling insulation effective RSI (R-value Systeme International)`}
-      insulationEffectiveRsi: I18NFloat
+      insulationEffectiveRsi: Float
       # ${i18n.t`Ceiling insulation effective R-value`}
-      insulationEffectiveR: I18NFloat
+      insulationEffectiveR: Float
       # ${i18n.t`Ceiling area in square metres (m2)`}
-      areaMetres: I18NFloat
+      areaMetres: Float
       # ${i18n.t`Ceiling area in square feet (ft2)`}
-      areaFeet: I18NFloat
+      areaFeet: Float
       # ${i18n.t`Ceiling length in metres (m)`}
-      lengthMetres: I18NFloat
+      lengthMetres: Float
       # ${i18n.t`Ceiling length in feet (ft)`}
-      lengthFeet: I18NFloat
+      lengthFeet: Float
     }
 
     # ${i18n.t`Detailed information about specific features of a given dwelling`}

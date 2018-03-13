@@ -48,9 +48,10 @@ describe('configuration', () => {
     })
 
     it('GraphQLFloat returns the same description as I18NFloat', async () => {
-      let response = await makeRequest({ typeName: 'I18NFloat' })
+      let response = await makeRequest({ typeName: 'Float' })
 
-      let { __type: { description } } = response.body.data
+      let { __type: { name, description } } = response.body.data
+      expect(name).toEqual(GraphQLFloat.name)
       expect(description).toEqual(
         replaceBackTicksWithSingleQuotes(GraphQLFloat.description),
       )

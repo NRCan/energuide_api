@@ -2,25 +2,25 @@ export const createHeader = i18n => {
   const Header = `
     type Header @cacheControl(maxAge: 90) {
       # ${i18n.t`Header insulation nominal RSI (R-value Systeme International)`}
-      insulationNominalRsi: I18NFloat
+      insulationNominalRsi: Float
       # ${i18n.t`Header insulation nominal R-value`}
-      insulationNominalR: I18NFloat
+      insulationNominalR: Float
       # ${i18n.t`Header insulation effective RSI (R-value Systeme International)`}
-      insulationEffectiveRsi: I18NFloat
+      insulationEffectiveRsi: Float
       # ${i18n.t`Header insulation effective R-value`}
-      insulationEffectiveR: I18NFloat
+      insulationEffectiveR: Float
       # ${i18n.t`Header area in square metres (m2)`}
-      areaMetres: I18NFloat
+      areaMetres: Float
       # ${i18n.t`Header area in square feet (ft2)`}
-      areaFeet: I18NFloat
+      areaFeet: Float
       # ${i18n.t`Header perimeter of the house in metres (m)`}
-      perimeterMetres: I18NFloat
+      perimeterMetres: Float
       # ${i18n.t`Header perimeter of the house in feet (ft)`}
-      perimeterFeet: I18NFloat
+      perimeterFeet: Float
       # ${i18n.t`Header height in metres (m)`}
-      heightMetres: I18NFloat
+      heightMetres: Float
       # ${i18n.t`Header height in feet (ft)`}
-      heightFeet: I18NFloat
+      heightFeet: Float
     }
   `
   return Header
