@@ -98,7 +98,7 @@ def test_mock_storage_download(mock_storage: azure_utils.MockStorage,
 
 def test_mock_storage_download_bad_filename(mock_storage: azure_utils.MockStorage) -> None:
 
-    with pytest.raises(ValueError):
+    with pytest.raises(LookupError):
         mock_storage.download('bad_filename')
 
 

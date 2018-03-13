@@ -36,9 +36,9 @@ class MockStorage:
 
     def download(self, filename: str) -> typing.Optional[bytes]:
         if filename in self._data:
-            return self._data.get(filename)
+            return self._data[filename]
         else:
-            raise ValueError('File does not exist')
+            raise LookupError('File does not exist')
 
 
 class AzureStorage:
