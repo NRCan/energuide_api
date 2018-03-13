@@ -145,7 +145,7 @@ def test_wood_energy_source(energy_code: int) -> None:
 
 
 def test_unknown_energy_source_code() -> None:
-    equipment_node = sample_equipment(energy_source_code=7)
+    equipment_node = sample_equipment(energy_source_code=9)
     node = sample_node(equipment_node=equipment_node)
 
     with pytest.raises(InvalidEmbeddedDataTypeError) as ex:
