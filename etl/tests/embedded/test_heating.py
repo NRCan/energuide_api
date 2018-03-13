@@ -136,7 +136,7 @@ def test_boiler() -> None:
     assert output.heating_type == heating.HeatingType.BOILER
 
 
-@pytest.mark.parametrize("energy_code", [5, 6])
+@pytest.mark.parametrize("energy_code", [5, 6, 7, 8])
 def test_wood_energy_source(energy_code: int) -> None:
     equipment_node = sample_equipment(energy_source_code=energy_code)
     node = sample_node(equipment_node=equipment_node)
