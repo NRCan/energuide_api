@@ -13,7 +13,7 @@ const Schema = i18n => {
     scalar I18NFloat
     scalar I18NString
     scalar I18NBoolean
-    scalar I18NDate
+    scalar Date
 
     # ${i18n.t`An operator to describe how results will be filtered`}
     enum Comparator {
@@ -40,9 +40,9 @@ const Schema = i18n => {
       # ${i18n.t`Name of the date field results will be filtered by`}
       field: DateField!
       # ${i18n.t`Evaluation dates must be equal to or later than this value`}
-      startDate: I18NDate
+      startDate: Date
       # ${i18n.t`Evaluation dates must be equal to or earlier than this value`}
-      endDate: I18NDate
+      endDate: Date
     }
 
     # ${i18n.t`An improvement that could increase the energy efficiency of the dwelling`}

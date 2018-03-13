@@ -76,9 +76,11 @@ describe('configuration', () => {
 
   describe('graphql iso date field', () => {
     it('GraphQLDate returns the same description as I18NDate', async () => {
-      let response = await makeRequest({ typeName: 'I18NDate' })
+      let response = await makeRequest({ typeName: 'Date' })
 
-      let { __type: { description } } = response.body.data
+      let { __type: { name, description } } = response.body.data
+      // name is overwritten (we are not using Object.create()) so this assertion is useless
+      // expect(name).toEqual(GraphQLDate.name)
       expect(description).toEqual(
         replaceBackTicksWithSingleQuotes(GraphQLDate.description),
       )
