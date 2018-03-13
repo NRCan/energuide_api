@@ -12,7 +12,7 @@ const Schema = i18n => {
     scalar I18NInt
     scalar I18NFloat
     scalar I18NString
-    scalar I18NBoolean
+    scalar Boolean
     scalar Date
 
     # ${i18n.t`An operator to describe how results will be filtered`}
@@ -135,9 +135,9 @@ const Schema = i18n => {
     # ${i18n.t`One page of results`}
     type PaginatedResultSet @cacheControl(maxAge: 90) {
       # ${i18n.t`If true, a further page of results can be returned`}
-      hasNext: I18NBoolean
+      hasNext: Boolean
       # ${i18n.t`If true, a previous page of results can be returned`}
-      hasPrevious: I18NBoolean
+      hasPrevious: Boolean
       # ${i18n.t`Identifier used to return the next page of results`}
       next: I18NString
       # ${i18n.t`Identifier cursor used to return the previous page of results`}

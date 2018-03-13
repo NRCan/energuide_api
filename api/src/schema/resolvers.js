@@ -157,7 +157,7 @@ const Resolvers = i18n => {
     I18NInt: createI18NInt(i18n),
     I18NString: createI18NString(i18n),
     I18NFloat: createI18NFloat(i18n),
-    I18NBoolean: createI18NBoolean(i18n),
+    Boolean: createI18NBoolean(i18n),
     Date: createI18NDate(i18n),
     Query: {
       dwelling: async (root, { houseId }, { client }) => {

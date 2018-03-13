@@ -65,9 +65,10 @@ describe('configuration', () => {
     })
 
     it('GraphQLBoolean returns the same description as I18NBoolean', async () => {
-      let response = await makeRequest({ typeName: 'I18NBoolean' })
+      let response = await makeRequest({ typeName: 'Boolean' })
 
-      let { __type: { description } } = response.body.data
+      let { __type: { name, description } } = response.body.data
+      expect(name).toEqual(GraphQLBoolean.name)
       expect(description).toEqual(
         replaceBackTicksWithSingleQuotes(GraphQLBoolean.description),
       )
