@@ -10,6 +10,10 @@ SAMPLE_FILENAME = "sample_file.txt"
 
 
 class EndpointTrigger(typing_extensions.Protocol):
+
+    def run_count(self) -> int:
+        pass
+
     def run(self) -> int:
         pass
 
@@ -19,18 +23,28 @@ class MockUploadToAzure(EndpointTrigger):
         self._data = data
         self._timestamp = timestamp
         self._timestamp_filename = timestamp_filename
+        self._run_count = 0
+
+    @property
+    def run_count(self) -> int:
+        return self._run_count
 
     def run(self) -> int:
         mock_service = azure_utils.MockStorage()
+        self._run_count += 1
         return upload_to_storage(mock_service, self._data, self._timestamp, self._timestamp_filename)
 
 
 class MockTriggerTL(EndpointTrigger):
-    def __init__(self, data: typing.IO[bytes]) -> None:
-        self._data = data
+    def __init__(self) -> None:
+        self._run_count = 0
+
+    @property
+    def run_count(self) -> int:
+        return self._run_count
 
     def run(self) -> int:
-        print("Mock trigger for Transform process is triggered, Huzzah!")
+        self._run_count += 1
         return HTTPStatus.CREATED
 
 
@@ -51,8 +65,8 @@ class UploadFilesToAzure(EndpointTrigger):
 
 
 class TriggerTL(EndpointTrigger):
-    def __init__(self, data: typing.IO[bytes]) -> None:
-        self._data = data
+    def __init__(self) -> None:
+        self._placeholder = True
 
     def run(self) -> int:
         print("Transform process is triggered, huzzah!")
