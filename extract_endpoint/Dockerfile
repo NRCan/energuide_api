@@ -8,4 +8,4 @@ ADD . .
 RUN pip install -r requirements.txt 
 RUN pip install -e .
 
-CMD ["python", "src/extract_endpoint/endpoint.py"]
+CMD ["gunicorn", "--pythonpath=src/extract_endpoint", "--bind=0.0.0.0:5000", "endpoint:App"]
