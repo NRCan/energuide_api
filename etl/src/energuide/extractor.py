@@ -6,12 +6,12 @@ import zipfile
 import cerberus
 from tqdm import tqdm
 from energuide import element
-from energuide import logging
+from energuide import logger
 from energuide import snippets
 from energuide.exceptions import InvalidInputDataError, EnerguideError
 
 
-LOGGER = logging.get_logger(__name__)
+LOGGER = logger.get_logger(__name__)
 
 
 REQUIRED_FIELDS = [
@@ -80,16 +80,22 @@ def _extract_snippets(row: typing.Dict[str, typing.Any]) -> typing.Dict[str, typ
     if house_node:
         house_snippets = snippets.snip_house(house_node[0])
         row = _safe_merge(row, house_snippets.to_dict())
+    else:
+        row = _safe_merge(row, snippets.HouseSnippet.EMPTY_SNIPPET)
 
     code_node = doc.xpath('Codes')
     if code_node:
         code_snippets = snippets.snip_codes(code_node[0])
         row = _safe_merge(row, code_snippets.to_dict())
+    else:
+        row = _safe_merge(row, snippets.Codes.EMPTY_SNIPPET)
 
     upgrades_node = doc.xpath('EnergyUpgrades')
     if upgrades_node:
         energy_snippets = snippets.snip_energy_upgrades(upgrades_node[0])
         row = _safe_merge(row, energy_snippets.to_dict())
+    else:
+        row = _safe_merge(row, snippets.EnergyUpgradesSnippet.EMPTY_SNIPPET)
 
     tsv_fields = snippets.snip_other_data(doc)
     row = _safe_merge(row, tsv_fields.to_dict())
@@ -121,7 +127,8 @@ def write_data(data: typing.Iterable[typing.Optional[typing.Dict[str, typing.Any
                 records_failed += 1
             else:
                 blob_id: str = blob['BUILDER']
-                output_zip.writestr(blob_id, json.dumps(blob))
+                eval_id: str = blob['EVAL_ID']
+                output_zip.writestr(f'{eval_id}-{blob_id}', json.dumps(blob))
                 records_written += 1
 
     return records_written, records_failed

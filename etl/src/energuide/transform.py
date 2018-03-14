@@ -7,12 +7,12 @@ from tqdm import tqdm
 import typing_extensions
 from azure.storage import blob
 from energuide import dwelling
-from energuide import logging
+from energuide import logger
 from energuide.exceptions import InvalidEmbeddedDataTypeError
 from energuide.exceptions import EnerguideError
 
 
-LOGGER = logging.get_logger(__name__)
+LOGGER = logger.get_logger(__name__)
 
 
 class _AzureCoordinates(typing.NamedTuple):
@@ -102,10 +102,20 @@ def _generate_dwellings(grouped: typing.List[typing.Dict[str, typing.Any]]) -> t
     except InvalidEmbeddedDataTypeError as exc:
         files = [str(file.get('jsonFileName')) for file in grouped]
         failing_type = exc.data_class
-        LOGGER.error(f'Files: "{", ".join(files)}": {failing_type.__name__}')
+        full_message = logger.unwrap_exception_message(exc)
+
+        LOGGER.error(
+            f'Files: "{", ".join(files)}": {failing_type.__name__}'
+            f' - {full_message}' if full_message else ''
+        )
     except EnerguideError as exc:
         files = [str(file.get('jsonFileName')) for file in grouped]
-        LOGGER.error(f'Files: "{", ".join(files)}" - {exc}')
+        full_message = logger.unwrap_exception_message(exc)
+
+        LOGGER.error(
+            f'Files: "{", ".join(files)}"'
+            f': {full_message}' if full_message else ''
+        )
     return None
 
 

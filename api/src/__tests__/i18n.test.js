@@ -6,7 +6,6 @@ import {
   GraphQLString,
   GraphQLBoolean,
 } from 'graphql'
-import { GraphQLDate } from 'graphql-iso-date'
 
 let mockServer = new Server({
   client: jest.fn(),
@@ -38,52 +37,47 @@ const replaceBackTicksWithSingleQuotes = function(str) {
 describe('configuration', () => {
   describe('graphql default scalar value', () => {
     it('GraphQLInt returns the same description as I18NInt', async () => {
-      let response = await makeRequest({ typeName: 'I18NInt' })
+      let response = await makeRequest({ typeName: 'Int' })
 
-      let { __type: { description } } = response.body.data
+      let { __type: { name, description } } = response.body.data
+      expect(name).toEqual(GraphQLInt.name)
       expect(description).toEqual(
         replaceBackTicksWithSingleQuotes(GraphQLInt.description),
       )
     })
 
     it('GraphQLFloat returns the same description as I18NFloat', async () => {
-      let response = await makeRequest({ typeName: 'I18NFloat' })
+      let response = await makeRequest({ typeName: 'Float' })
 
-      let { __type: { description } } = response.body.data
+      let { __type: { name, description } } = response.body.data
+      expect(name).toEqual(GraphQLFloat.name)
       expect(description).toEqual(
         replaceBackTicksWithSingleQuotes(GraphQLFloat.description),
       )
     })
 
     it('GraphQLString returns the same description as I18NString', async () => {
-      let response = await makeRequest({ typeName: 'I18NString' })
+      let response = await makeRequest({ typeName: 'String' })
 
-      let { __type: { description } } = response.body.data
+      let { __type: { name, description } } = response.body.data
+      expect(name).toEqual(GraphQLString.name)
       expect(description).toEqual(
         replaceBackTicksWithSingleQuotes(GraphQLString.description),
       )
     })
 
     it('GraphQLBoolean returns the same description as I18NBoolean', async () => {
-      let response = await makeRequest({ typeName: 'I18NBoolean' })
+      let response = await makeRequest({ typeName: 'Boolean' })
 
-      let { __type: { description } } = response.body.data
+      let { __type: { name, description } } = response.body.data
+      expect(name).toEqual(GraphQLBoolean.name)
       expect(description).toEqual(
         replaceBackTicksWithSingleQuotes(GraphQLBoolean.description),
       )
     })
   })
 
-  describe('graphql iso date field', () => {
-    it('GraphQLDate returns the same description as I18NDate', async () => {
-      let response = await makeRequest({ typeName: 'I18NDate' })
-
-      let { __type: { description } } = response.body.data
-      expect(description).toEqual(
-        replaceBackTicksWithSingleQuotes(GraphQLDate.description),
-      )
-    })
-  })
+  // We are deliberately *not* testing GraphQLDate, unlike the other scalars
 
   describe('i18n', () => {
     it('returns french description when french language header sent', async () => {

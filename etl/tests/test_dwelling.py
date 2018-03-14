@@ -526,6 +526,17 @@ def sample_input_e(sample_input_d: typing.Dict[str, typing.Any]) -> typing.Dict[
 
 
 @pytest.fixture
+def sample_input_missing(sample_input_d: typing.Dict[str, typing.Any]) -> typing.Dict[str, typing.Any]:
+    output = copy.deepcopy(sample_input_d)
+    output['MODIFICATIONDATE'] = None
+    output['ersRating'] = None
+    output['heatedFloorArea'] = None
+    output['heating_cooling'] = None
+    output['waterHeatings'] = None
+    return output
+
+
+@pytest.fixture
 def sample_parsed_d(sample_input_d: typing.Dict[str, typing.Any]) -> dwelling.ParsedDwellingDataRow:
     return dwelling.ParsedDwellingDataRow.from_row(sample_input_d)
 
@@ -692,7 +703,9 @@ class TestParsedDwellingDataRow:
                 water_heating.WaterHeating(
                     water_heater_type=water_heating.WaterHeaterType.ELECTRICITY_CONVENTIONAL_TANK,
                     tank_volume=189.3001,
-                    efficiency=0.8217,
+                    efficiency_ef=0.8217,
+                    efficiency_percentage=None,
+                    drain_water_heat_recovery_efficiency_percentage=None,
                 )
             ],
             heating_system=heating.Heating(
@@ -813,6 +826,11 @@ class TestParsedDwellingDataRow:
             ]
         )
 
+    def test_null_fields_are_accepted(self, sample_input_missing: typing.Dict[str, typing.Any]) -> None:
+        output = dwelling.ParsedDwellingDataRow.from_row(sample_input_missing)
+
+        assert output.modification_date == output.ers_rating == output.heating_system == output.heated_floor == None
+
     def test_bad_postal_code(self, sample_input_d: typing.Dict[str, typing.Any]) -> None:
         sample_input_d['forwardSortationArea'] = 'K16'
         with pytest.raises(InvalidInputDataError):
@@ -878,6 +896,14 @@ class TestDwelling:
         assert output.city == 'Ottawa'
         assert output.region == dwelling.Region.ONTARIO
         assert output.forward_sortation_area == 'K1P'
+
+    def test_single_pre_evaluation(self, sample_input_d: typing.Dict[str, typing.Any]) -> None:
+        output = dwelling.Dwelling.from_group([sample_input_d])
+        assert len(output.evaluations) == 1
+
+    def test_single_post_evaluation(self, sample_input_e: typing.Dict[str, typing.Any]) -> None:
+        with pytest.raises(InvalidInputDataError):
+            dwelling.Dwelling.from_group([sample_input_e])
 
     def test_evaluations(self, sample: typing.List[typing.Dict[str, typing.Any]]) -> None:
         output = dwelling.Dwelling.from_group(sample)

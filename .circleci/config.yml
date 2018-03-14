@@ -1,92 +1,79 @@
-version: 2
 jobs:
   deploy_api:
     docker:
-      -
-        image: docker
-    environment:
-      -
-        VERSION: "0.1.2"
+      - image: docker
     steps:
-      -
-        checkout:
+      - checkout:
           path: ~/repo
-      -
-        attach_workspace:
-          at: /tmp/workspace
       - setup_remote_docker
-      -
-        run:
+      - run:
           command: |
-              mkdir ~/repo/api/dist
-              cp -pr /tmp/workspace/dist/* ~/repo/api/dist
-              cp -pr /tmp/workspace/node_modules ~/repo/api/node_modules
-              chmod 755 ~/repo/api/node_modules
-              chmod 755 ~/repo/api/dist
               docker login -u "$DOCKER_USERNAME" -p "$DOCKER_PASSWORD"
-              docker build --build-arg VERSION="${VERSION}" -t "${DOCKER_REGISTRY}"/"${NAMESPACE}"/"${CIRCLE_PROJECT_REPONAME}":"${VERSION}" -t "${DOCKER_REGISTRY}"/"${NAMESPACE}"/"${CIRCLE_PROJECT_REPONAME}":"latest" .
-              docker push "${DOCKER_REGISTRY}"/"${NAMESPACE}"/"${CIRCLE_PROJECT_REPONAME}":"${VERSION}"
-              docker push "${DOCKER_REGISTRY}"/"${NAMESPACE}"/"${CIRCLE_PROJECT_REPONAME}":"latest"
-          name: "Build and Deploy Docker Image"
-      -
-        run:
+              docker build  -t "${DOCKER_REGISTRY}/${NAMESPACE}/${CIRCLE_PROJECT_REPONAME}:${CIRCLE_SHA1}" -t "${DOCKER_REGISTRY}/${NAMESPACE}/${CIRCLE_PROJECT_REPONAME}:latest" .
+              docker push "${DOCKER_REGISTRY}/${NAMESPACE}/${CIRCLE_PROJECT_REPONAME}:${CIRCLE_SHA1}"
+              docker push "${DOCKER_REGISTRY}/${NAMESPACE}/${CIRCLE_PROJECT_REPONAME}:latest"
+          name: "Build and Deploy API Docker Image"
+      - run:
           command: ~/repo/scripts/notify_failure.sh
           name: "Report failing Master"
           when: on_fail
     working_directory: ~/repo/api
   deploy_endpoint:
     docker:
-      -
-        image: docker
+      - image: docker
     environment:
-      -
-        VERSION: "0.1.3"
     steps:
-      -
-        checkout:
+      - checkout:
           path: ~/repo
       - setup_remote_docker
-      -
-        run:
+      - run:
           command: |
               docker login -u "$DOCKER_USERNAME" -p "$DOCKER_PASSWORD"
-              docker build --build-arg VERSION="${VERSION}" -t "${DOCKER_REGISTRY}"/"${NAMESPACE}"/"nrcan_endpoint":"${VERSION}" -t "${DOCKER_REGISTRY}"/"${NAMESPACE}"/"nrcan_endpoint":"latest" .
-              docker push "${DOCKER_REGISTRY}"/"${NAMESPACE}"/"nrcan_endpoint":"${VERSION}"
-              docker push "${DOCKER_REGISTRY}"/"${NAMESPACE}"/"nrcan_endpoint":"latest"
-          name: "Build and Deploy ETL Docker Image"
+              docker build -t "${DOCKER_REGISTRY}/${NAMESPACE}/nrcan_endpoint:${CIRCLE_SHA1}" -t "${DOCKER_REGISTRY}/${NAMESPACE}/nrcan_endpoint:latest" .
+              docker push "${DOCKER_REGISTRY}/${NAMESPACE}/nrcan_endpoint:${CIRCLE_SHA1}"
+              docker push "${DOCKER_REGISTRY}/${NAMESPACE}/nrcan_endpoint:latest"
+          name: "Build and Deploy Endpoint Docker Image"
     working_directory: ~/repo/extract_endpoint
+  deploy_etl:
+    docker:
+      - image: docker
+    environment:
+    steps:
+      - checkout:
+          path: ~/repo
+      - setup_remote_docker
+      - run:
+          command: |
+              docker login -u "$DOCKER_USERNAME" -p "$DOCKER_PASSWORD"
+              docker build -t "${DOCKER_REGISTRY}/${NAMESPACE}/nrcan_etl:${CIRCLE_SHA1}" -t "${DOCKER_REGISTRY}/${NAMESPACE}/nrcan_etl:latest" .
+              docker push "${DOCKER_REGISTRY}/${NAMESPACE}/nrcan_etl:${CIRCLE_SHA1}"
+              docker push "${DOCKER_REGISTRY}/${NAMESPACE}/nrcan_etl:latest"
+          name: "Build and Deploy ETL Docker Image"
+    working_directory: ~/repo/etl
   etl:
     docker:
-      -
-        image: "circleci/python:3.6.1"
-      -
-        image: "arafato/azurite"
+      - image: "circleci/python:3.6.1"
+      - image: "arafato/azurite"
         environment:
           executable=blob
-      -
-        image: "mongo:3.6.2"
+      - image: "mongo:3.6.2"
     steps:
-      -
-        checkout:
+      - checkout:
           path: ~/repo
-      -
-        restore_cache:
+      - restore_cache:
           key: "deps1-{{ .Branch }}-{{ checksum \"requirements.txt\" }}"
-      -
-        run:
+      - run:
           command: |
               python3 -m venv ~/.venv
               . ~/.venv/bin/activate
               pip install -r requirements.txt
               pip install -e .
           name: "Installing dependencies"
-      -
-        save_cache:
+      - save_cache:
           key: "deps1-{{ .Branch }}-{{ checksum \"requirements.txt\" }}"
           paths:
             - ~/.venv
-      -
-        run:
+      - run:
           command: |
               . ~/.venv/bin/activate
               pylint src tests
@@ -100,28 +87,22 @@ jobs:
                 exit 1
               fi
           name: "Running tests"
-      -
-        run:
+      - run:
           command: ~/repo/scripts/notify_failure.sh
           name: "Report failing Master"
           when: on_fail
     working_directory: ~/repo/etl
   extract_endpoint:
     docker:
-      -
-        image: "circleci/python:3.6.1"
-      -
-        environment: executable=blob
+      - image: "circleci/python:3.6.1"
+      - environment: executable=blob
         image: arafato/azurite
     steps:
-      -
-        checkout:
+      - checkout:
           path: ~/repo
-      -
-        restore_cache:
+      - restore_cache:
           key: "deps2-{{ .Branch }}-{{ checksum \"requirements.txt\" }}"
-      -
-        run:
+      - run:
           command: |
               sudo apt-get update
               echo "deb [arch=amd64] https://packages.microsoft.com/repos/azure-cli/ wheezy main" | sudo tee /etc/apt/sources.list.d/azure-cli.list
@@ -129,87 +110,69 @@ jobs:
               sudo apt-get install apt-transport-https
               sudo apt-get update && sudo apt-get install azure-cli
           name: "Install packages"
-      -
-        run:
+      - run:
           command: |
               python3 -m venv ~/.venv
               . ~/.venv/bin/activate
               pip install -r requirements.txt
               pip install -e .
           name: "Installing dependencies"
-      -
-        save_cache:
+      - save_cache:
           key: "deps2-{{ .Branch }}-{{ checksum \"requirements.txt\" }}"
           paths:
             - ~/.venv
-      -
-        run:
+      - run:
           command: |
               . ~/.venv/bin/activate
               pylint src tests
               mypy src tests
               pytest tests
           name: "Running tests"
-      -
-        run:
+      - run:
           command: ~/repo/scripts/notify_failure.sh
           name: "Report failing Master"
           when: on_fail
     working_directory: ~/repo/extract_endpoint
   node:
     docker:
-      -
-        image: "circleci/node:8.9.4"
-      -
-        image: "mongo:3.6.2"
+      - image: "circleci/node:8.9.4"
+      - image: "mongo:3.6.2"
     steps:
-      -
-        checkout:
+      - checkout:
           path: ~/repo
-      -
-        restore_cache:
+      - restore_cache:
           keys:
             - "v1-dependencies-{{ checksum \"package.json\" }}"
             - v1-dependencies-
-      -
-        run: "yarn install"
-      -
-        save_cache:
+      - run: "yarn install"
+      - save_cache:
           key: "v1-dependencies-{{ checksum \"package.json\" }}"
           paths:
             - node_modules
-      -
-        run:
+      - run:
           command: |
               yarn test
               yarn lint
           name: "Running tests & linter"
-      -
-        run:
+      - run:
           command: ~/repo/scripts/notify_failure.sh
           name: "Report failing Master"
           when: on_fail
     working_directory: ~/repo/api
   node_integration:
     docker:
-      -
-        image: "circleci/node:8.9.4"
-      -
-        image: "mongo:3.6.2"
+      - image: "circleci/node:8.9.4"
+      - image: "mongo:3.6.2"
     steps:
-      -
-        checkout:
+      - checkout:
           path: ~/repo
-      -
-        attach_workspace:
+      - attach_workspace:
           at: /tmp/workspace
-      -
-        restore_cache:
+      - restore_cache:
           keys:
             - "v1-dependencies-{{ checksum \"package.json\" }}"
             - v1-dependencies-
-      -
-        run:
+      - run:
           command: |
               sudo apt-get install apt-transport-https
               sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv 2930ADAE8CAF5059EE73BB4B58712A2291FA4AD5
@@ -217,42 +180,32 @@ jobs:
               sudo apt-get update
               sudo apt-get install -y mongodb-org-tools=3.6.2
           name: "Installing packages"
-      -
-        run: "yarn install"
-      -
-        save_cache:
+      - run: "yarn install"
+      - save_cache:
           key: "v1-dependencies-{{ checksum \"package.json\" }}"
           paths:
             - node_modules
-      -
-        run:
+      - run:
           command: "mongoimport --db energuide --collection dwellings --file /tmp/workspace/mongo_dump\n"
           name: "Importing database"
-      -
-        run:
+      - run:
           command: "yarn integration\n"
           name: "Running integration tests"
-      -
-        run:
+      - run:
           command: ~/repo/scripts/notify_failure.sh
           name: "Report failing Master"
           when: on_fail
     working_directory: ~/repo/api
   python_integration:
     docker:
-      -
-        image: "circleci/python:3.6.1"
-      -
-        image: "mongo:3.6.2"
+      - image: "circleci/python:3.6.1"
+      - image: "mongo:3.6.2"
     steps:
-      -
-        checkout:
+      - checkout:
           path: ~/repo
-      -
-        restore_cache:
+      - restore_cache:
           key: "deps1-{{ .Branch }}-{{ checksum \"requirements.txt\" }}"
-      -
-        run:
+      - run:
           command: |
               sudo apt-get install apt-transport-https
               sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv 2930ADAE8CAF5059EE73BB4B58712A2291FA4AD5
@@ -260,70 +213,35 @@ jobs:
               sudo apt-get update
               sudo apt-get install -y mongodb-org-tools=3.6.2
           name: "Installing packages"
-      -
-        run:
+      - run:
           command: |
               python3 -m venv ~/.venv
               . ~/.venv/bin/activate
               pip install -r requirements.txt
               pip install -e .
           name: "Installing dependencies"
-      -
-        save_cache:
+      - save_cache:
           key: "deps1-{{ .Branch }}-{{ checksum \"requirements.txt\" }}"
           paths:
             - ~/.venv
-      -
-        run:
+      - run:
           command: |
               . ~/.venv/bin/activate
               energuide extract --infile tests/randomized_energuide_data.csv --outfile tests/randomized_energuide_data.zip
               energuide load  --db_name energuide --collection dwellings --filename tests/randomized_energuide_data.zip
           name: "Loading data"
-      -
-        run: "mkdir -p workspace"
-      -
-        run:
+      - run: "mkdir -p workspace"
+      - run:
           command: "mongoexport --db energuide --collection dwellings --out workspace/mongo_dump\n"
           name: "Exporting database"
-      -
-        persist_to_workspace:
+      - persist_to_workspace:
           paths:
             - mongo_dump
           root: workspace
-      -
-        run:
           command: ~/repo/scripts/notify_failure.sh
           name: "Report failing Master"
           when: on_fail
     working_directory: ~/repo/etl
-  yarn_build:
-    docker:
-      -
-        image: "circleci/node:8.9.4"
-    steps:
-      -
-        checkout:
-          path: ~/repo
-      -
-        run:
-          command: |
-              echo 'export PATH=/home/circleci/repo/api/node_modules/.bin:$PATH' >> $BASH_ENV
-              yarn install
-              yarn build
-          name: "Yarn Build"
-      -
-        persist_to_workspace:
-          paths:
-            - dist
-            - node_modules
-          root: /home/circleci/repo/api
-      -
-        run:
-          command: ~/repo/scripts/notify_failure.sh
-          name: "Report failing Master"
-          when: on_fail
-    working_directory: ~/repo/api
 workflows:
   version: 2
   node_and_python:
@@ -332,23 +250,40 @@ workflows:
       - etl
       - extract_endpoint
       - python_integration
-      - deploy_endpoint
-      -
-        node_integration:
-          requires:
-            - python_integration
-      -
-        yarn_build:
+      - node_integration
+      - deploy_endpoint:
           filters:
             branches:
               only:
                 - master
           requires:
+            - extract_endpoint
+            - node_integration
+            - etl
+            - node
+      - node_integration:
+          requires:
+            - node
+            - etl
+            - extract_endpoint
+            - python_integration
+      - deploy_api:
+          requires:
             - node
             - etl
             - extract_endpoint
             - node_integration
-      -
-        deploy_api:
+          filters:
+            branches:
+              only:
+                - master
+      - deploy_etl:
           requires:
-            - yarn_build
+            - node
+            - etl
+            - extract_endpoint
+            - node_integration
+          filters:
+            branches:
+             only:
+               - master

@@ -49,7 +49,9 @@ class WaterHeaterType(enum.Enum):
 class _WaterHeating(typing.NamedTuple):
     water_heater_type: WaterHeaterType
     tank_volume: float
-    efficiency: float
+    efficiency_ef: typing.Optional[float]
+    efficiency_percentage: typing.Optional[float]
+    drain_water_heat_recovery_efficiency_percentage: typing.Optional[float]
 
 
 class WaterHeating(_WaterHeating):
@@ -57,73 +59,68 @@ class WaterHeating(_WaterHeating):
     _LITRE_TO_GALLON = 0.264172
 
     _TYPE_MAP = {
-        ("Electricity", "Not applicable"): WaterHeaterType.NOT_APPLICABLE,
-        ("Electricity", "Conventional tank"): WaterHeaterType.ELECTRICITY_CONVENTIONAL_TANK,
-        ("Electricity", "Conserver tank"): WaterHeaterType.ELECTRICITY_CONSERVER_TANK,
-        ("Electricity", "Instantaneous"): WaterHeaterType.ELECTRICITY_INSTANTANEOUS,
-        ("Electricity", "Tankless heat pump"): WaterHeaterType.ELECTRICITY_TANKLESS_HEAT_PUMP,
-        ("Electricity", "Heat pump"): WaterHeaterType.ELECTRICITY_HEAT_PUMP,
-        ("Electricity", "Add-on heat pump"): WaterHeaterType.ELECTRICITY_ADDON_HEAT_PUMP,
-        ("Natural gas", "Not applicable"): WaterHeaterType.NOT_APPLICABLE,
-        ("Natural gas", "Conventional tank"): WaterHeaterType.NATURAL_GAS_CONVENTIONAL_TANK,
-        ("Natural gas", "Conventional tank (pilot)"): WaterHeaterType.NATURAL_GAS_CONVENTIONAL_TANK_PILOT,
-        ("Natural gas", "Tankless coil"): WaterHeaterType.NATURAL_GAS_TANKLESS_COIL,
-        ("Natural gas", "Instantaneous"): WaterHeaterType.NATURAL_GAS_INSTANTANEOUS,
-        ("Natural gas", "Instantaneous (condensing)"): WaterHeaterType.NATURAL_GAS_INSTANTANEOUS_CONDENSING,
-        ("Natural gas", "Instantaneous (pilot)"): WaterHeaterType.NATURAL_GAS_INSTANTANEOUS_PILOT,
-        ("Natural gas", "Induced draft fan"): WaterHeaterType.NATURAL_GAS_INDUCED_DRAFT_FAN,
-        ("Natural gas", "Induced draft fan (pilot)"): WaterHeaterType.NATURAL_GAS_INDUCED_DRAFT_FAN_PILOT,
-        ("Natural gas", "Direct vent (sealed)"): WaterHeaterType.NATURAL_GAS_DIRECT_VENT_SEALED,
-        ("Natural gas", "Direct vent (sealed, pilot)"): WaterHeaterType.NATURAL_GAS_DIRECT_VENT_SEALED_PILOT,
-        ("Natural gas", "Condensing"): WaterHeaterType.NATURAL_GAS_CONDENSING,
-        ("Oil", "Not applicable"): WaterHeaterType.NOT_APPLICABLE,
-        ("Oil", "Conventional tank"): WaterHeaterType.OIL_CONVENTIONAL_TANK,
-        ("Oil", "Tankless coil"): WaterHeaterType.OIL_TANKLESS_COIL,
-        ("Propane", "Not applicable"): WaterHeaterType.NOT_APPLICABLE,
-        ("Propane", "Conventional tank"): WaterHeaterType.PROPANE_CONVENTIONAL_TANK,
-        ("Propane", "Conventional tank (pilot)"): WaterHeaterType.PROPANE_CONVENTIONAL_TANK_PILOT,
-        ("Propane", "Tankless coil"): WaterHeaterType.PROPANE_TANKLESS_COIL,
-        ("Propane", "Instantaneous"): WaterHeaterType.PROPANE_INSTANTANEOUS,
-        ("Propane", "Instantaneous (condensing)"): WaterHeaterType.PROPANE_INSTANTANEOUS_CONDENSING,
-        ("Propane", "Instantaneous (pilot)"): WaterHeaterType.PROPANE_INSTANTANEOUS_PILOT,
-        ("Propane", "Induced draft fan"): WaterHeaterType.PROPANE_INDUCED_DRAFT_FAN,
-        ("Propane", "Induced draft fan (pilot)"): WaterHeaterType.PROPANE_INDUCED_DRAFT_FAN_PILOT,
-        ("Propane", "Direct vent (sealed)"): WaterHeaterType.PROPANE_DIRECT_VENT_SEALED,
-        ("Propane", "Direct vent (sealed, pilot)"): WaterHeaterType.PROPANE_DIRECT_VENT_SEALED_PILOT,
-        ("Propane", "Condensing"): WaterHeaterType.PROPANE_CONDENSING,
-
-        (
-            "Wood Space Heating (Mixed Wood, Hardwood, Soft Wood or Wood Pellets)",
-            "Not applicable"
-        ): WaterHeaterType.NOT_APPLICABLE,
-
-        (
-            "Wood Space Heating (Mixed Wood, Hardwood, Soft Wood or Wood Pellets)",
-            "Fireplace"
-        ): WaterHeaterType.WOOD_SPACE_HEATING_FIREPLACE,
-
-        (
-            "Wood Space Heating (Mixed Wood, Hardwood, Soft Wood or Wood Pellets)",
-            "Wood stove water coil"
-        ): WaterHeaterType.WOOD_SPACE_HEATING_WOOD_STOVE_WATER_COIL,
-
-        (
-            "Wood Space Heating (Mixed Wood, Hardwood, Soft Wood or Wood Pellets)",
-            "Indoor wood boiler"
-        ): WaterHeaterType.WOOD_SPACE_HEATING_INDOOR_WOOD_BOILER,
-
-        (
-            "Wood Space Heating (Mixed Wood, Hardwood, Soft Wood or Wood Pellets)",
-            "Outdoor wood boiler"
-        ): WaterHeaterType.WOOD_SPACE_HEATING_OUTDOOR_WOOD_BOILER,
-
-        (
-            "Wood Space Heating (Mixed Wood, Hardwood, Soft Wood or Wood Pellets)",
-            "Wood hot water tank"
-        ): WaterHeaterType.WOOD_SPACE_HEATING_WOOD_HOT_WATER_TANK,
-
-        ("Solar", "Solar Collector System"): WaterHeaterType.SOLAR_COLLECTOR_SYSTEM,
-        ("CSA P9-11 tested Combo Heat/DHW", "CSA P9-11 tested Combo Heat/DHW"): WaterHeaterType.CSA_DHW,
+        ("not applicable", "not applicable"): WaterHeaterType.NOT_APPLICABLE,
+        ("electricity", "not applicable"): WaterHeaterType.NOT_APPLICABLE,
+        ("electricity", "conventional tank"): WaterHeaterType.ELECTRICITY_CONVENTIONAL_TANK,
+        ("electricity", "conserver tank"): WaterHeaterType.ELECTRICITY_CONSERVER_TANK,
+        ("electricity", "instantaneous"): WaterHeaterType.ELECTRICITY_INSTANTANEOUS,
+        ("electricity", "tankless heat pump"): WaterHeaterType.ELECTRICITY_TANKLESS_HEAT_PUMP,
+        ("electricity", "heat pump"): WaterHeaterType.ELECTRICITY_HEAT_PUMP,
+        ("electricity", "add-on heat pump"): WaterHeaterType.ELECTRICITY_ADDON_HEAT_PUMP,
+        ("electricity", "integrated heat pump"): WaterHeaterType.ELECTRICITY_ADDON_HEAT_PUMP,
+        ("natural gas", "not applicable"): WaterHeaterType.NOT_APPLICABLE,
+        ("natural gas", "conventional tank"): WaterHeaterType.NATURAL_GAS_CONVENTIONAL_TANK,
+        ("natural gas", "conventional tank (pilot)"): WaterHeaterType.NATURAL_GAS_CONVENTIONAL_TANK_PILOT,
+        ("natural gas", "tankless coil"): WaterHeaterType.NATURAL_GAS_TANKLESS_COIL,
+        ("natural gas", "instantaneous"): WaterHeaterType.NATURAL_GAS_INSTANTANEOUS,
+        ("natural gas", "instantaneous (condensing)"): WaterHeaterType.NATURAL_GAS_INSTANTANEOUS_CONDENSING,
+        ("natural gas", "instantaneous (pilot)"): WaterHeaterType.NATURAL_GAS_INSTANTANEOUS_PILOT,
+        ("natural gas", "induced draft fan"): WaterHeaterType.NATURAL_GAS_INDUCED_DRAFT_FAN,
+        ("natural gas", "induced draft fan (pilot)"): WaterHeaterType.NATURAL_GAS_INDUCED_DRAFT_FAN_PILOT,
+        ("natural gas", "direct vent (sealed)"): WaterHeaterType.NATURAL_GAS_DIRECT_VENT_SEALED,
+        ("natural gas", "direct vent (sealed, pilot)"): WaterHeaterType.NATURAL_GAS_DIRECT_VENT_SEALED_PILOT,
+        ("natural gas", "condensing"): WaterHeaterType.NATURAL_GAS_CONDENSING,
+        ("oil", "not applicable"): WaterHeaterType.NOT_APPLICABLE,
+        ("oil", "conventional tank"): WaterHeaterType.OIL_CONVENTIONAL_TANK,
+        ("oil", "tankless coil"): WaterHeaterType.OIL_TANKLESS_COIL,
+        ("propane", "not applicable"): WaterHeaterType.NOT_APPLICABLE,
+        ("propane", "conventional tank"): WaterHeaterType.PROPANE_CONVENTIONAL_TANK,
+        ("propane", "conventional tank (pilot)"): WaterHeaterType.PROPANE_CONVENTIONAL_TANK_PILOT,
+        ("propane", "tankless coil"): WaterHeaterType.PROPANE_TANKLESS_COIL,
+        ("propane", "instantaneous"): WaterHeaterType.PROPANE_INSTANTANEOUS,
+        ("propane", "instantaneous (condensing)"): WaterHeaterType.PROPANE_INSTANTANEOUS_CONDENSING,
+        ("propane", "instantaneous (pilot)"): WaterHeaterType.PROPANE_INSTANTANEOUS_PILOT,
+        ("propane", "induced draft fan"): WaterHeaterType.PROPANE_INDUCED_DRAFT_FAN,
+        ("propane", "induced draft fan (pilot)"): WaterHeaterType.PROPANE_INDUCED_DRAFT_FAN_PILOT,
+        ("propane", "direct vent (sealed)"): WaterHeaterType.PROPANE_DIRECT_VENT_SEALED,
+        ("propane", "direct vent (sealed, pilot)"): WaterHeaterType.PROPANE_DIRECT_VENT_SEALED_PILOT,
+        ("propane", "condensing"): WaterHeaterType.PROPANE_CONDENSING,
+        ("mixed wood", "not applicable"): WaterHeaterType.NOT_APPLICABLE,
+        ("mixed wood", "fireplace"): WaterHeaterType.WOOD_SPACE_HEATING_FIREPLACE,
+        ("mixed wood", "wood stove water coil"): WaterHeaterType.WOOD_SPACE_HEATING_WOOD_STOVE_WATER_COIL,
+        ("mixed wood", "indoor wood boiler"): WaterHeaterType.WOOD_SPACE_HEATING_INDOOR_WOOD_BOILER,
+        ("mixed wood", "outdoor wood boiler"): WaterHeaterType.WOOD_SPACE_HEATING_OUTDOOR_WOOD_BOILER,
+        ("mixed wood", "wood hot water tank"): WaterHeaterType.WOOD_SPACE_HEATING_WOOD_HOT_WATER_TANK,
+        ("hardwood", "not applicable"): WaterHeaterType.NOT_APPLICABLE,
+        ("hardwood", "fireplace"): WaterHeaterType.WOOD_SPACE_HEATING_FIREPLACE,
+        ("hardwood", "wood stove water coil"): WaterHeaterType.WOOD_SPACE_HEATING_WOOD_STOVE_WATER_COIL,
+        ("hardwood", "indoor wood boiler"): WaterHeaterType.WOOD_SPACE_HEATING_INDOOR_WOOD_BOILER,
+        ("hardwood", "outdoor wood boiler"): WaterHeaterType.WOOD_SPACE_HEATING_OUTDOOR_WOOD_BOILER,
+        ("hardwood", "wood hot water tank"): WaterHeaterType.WOOD_SPACE_HEATING_WOOD_HOT_WATER_TANK,
+        ("soft wood", "not applicable"): WaterHeaterType.NOT_APPLICABLE,
+        ("soft wood", "fireplace"): WaterHeaterType.WOOD_SPACE_HEATING_FIREPLACE,
+        ("soft wood", "wood stove water coil"): WaterHeaterType.WOOD_SPACE_HEATING_WOOD_STOVE_WATER_COIL,
+        ("soft wood", "indoor wood boiler"): WaterHeaterType.WOOD_SPACE_HEATING_INDOOR_WOOD_BOILER,
+        ("soft wood", "outdoor wood boiler"): WaterHeaterType.WOOD_SPACE_HEATING_OUTDOOR_WOOD_BOILER,
+        ("soft wood", "wood hot water tank"): WaterHeaterType.WOOD_SPACE_HEATING_WOOD_HOT_WATER_TANK,
+        ("wood pellets", "not applicable"): WaterHeaterType.NOT_APPLICABLE,
+        ("wood pellets", "fireplace"): WaterHeaterType.WOOD_SPACE_HEATING_FIREPLACE,
+        ("wood pellets", "wood stove water coil"): WaterHeaterType.WOOD_SPACE_HEATING_WOOD_STOVE_WATER_COIL,
+        ("wood pellets", "indoor wood boiler"): WaterHeaterType.WOOD_SPACE_HEATING_INDOOR_WOOD_BOILER,
+        ("wood pellets", "outdoor wood boiler"): WaterHeaterType.WOOD_SPACE_HEATING_OUTDOOR_WOOD_BOILER,
+        ("wood pellets", "wood hot water tank"): WaterHeaterType.WOOD_SPACE_HEATING_WOOD_HOT_WATER_TANK,
+        ("solar", "solar collector system"): WaterHeaterType.SOLAR_COLLECTOR_SYSTEM,
+        ("csa p9-11 tested combo heat/dhw", "csa p9-11 tested combo heat/dhw"): WaterHeaterType.CSA_DHW,
     }
 
     _WATER_HEATER_TYPE_TRANSLATION = {
@@ -283,41 +280,54 @@ class WaterHeating(_WaterHeating):
 
     @classmethod
     def _from_data(cls, water_heating: element.Element) -> 'WaterHeating':
-        try:
-            assert water_heating.attrib['hasDrainWaterHeatRecovery'] == 'false'
+        drain_water_efficiency: typing.Optional[float] = None
+        if water_heating.get('@hasDrainWaterHeatRecovery', str) == 'true':
+            drain_water_efficiency = water_heating.get('DrainWaterHeatRecovery/@effectivenessAt9.5', float)
 
+        try:
             energy_type = water_heating.get_text('EnergySource/English')
             tank_type = water_heating.get_text('TankType/English')
 
-            water_heater_type = cls._TYPE_MAP[(energy_type, tank_type)]
+            water_heater_type = cls._TYPE_MAP[(energy_type.lower(), tank_type.lower())]
             volume = water_heating.get('TankVolume/@value', float)
-            efficiency = water_heating.get('EnergyFactor/@value', float)
+        except ElementGetValueError as exc:
+            raise InvalidEmbeddedDataTypeError(WaterHeating, 'Missing/invalid attribue or text') from exc
+        except KeyError as exc:
+            raise InvalidEmbeddedDataTypeError(WaterHeating, 'Invlaid energy and tank type combination') from exc
 
-            return WaterHeating(
-                water_heater_type=water_heater_type,
-                tank_volume=volume,
-                efficiency=efficiency,
-            )
-        except (ElementGetValueError, AssertionError, KeyError) as exc:
-            raise InvalidEmbeddedDataTypeError(WaterHeating) from exc
+        efficiency_ef_node = water_heating.xpath('EnergyFactor/@value')
+        efficiency_percent_node = water_heating.xpath('EnergyFactor/@thermalEfficiency')
+
+        if not efficiency_ef_node and not efficiency_percent_node:
+            raise InvalidEmbeddedDataTypeError(WaterHeating, 'No efficiency values')
+
+        return WaterHeating(
+            water_heater_type=water_heater_type,
+            tank_volume=volume,
+            efficiency_ef=float(efficiency_ef_node[0]) if efficiency_ef_node else None,
+            efficiency_percentage=float(efficiency_percent_node[0]) if efficiency_percent_node else None,
+            drain_water_heat_recovery_efficiency_percentage=drain_water_efficiency,
+        )
 
     @classmethod
     def from_data(cls, water_heating: element.Element) -> typing.List['WaterHeating']:
         water_heatings = water_heating.xpath("*[self::Primary or self::Secondary]")
-        return [cls._from_data(water_heating) for water_heating in water_heatings]
 
+        return [cls._from_data(heater) for heater in water_heatings]
 
     @property
     def tank_volume_gallon(self) -> float:
         return self.tank_volume * self._LITRE_TO_GALLON
 
-
-    def to_dict(self) -> typing.Dict[str, typing.Union[str, float]]:
+    def to_dict(self) -> typing.Dict[str, typing.Union[str, float, None]]:
         translation = self._WATER_HEATER_TYPE_TRANSLATION[self.water_heater_type]
+
         return {
             'typeEnglish': translation.english,
             'typeFrench': translation.french,
             'tankVolumeLitres': self.tank_volume,
             'tankVolumeGallon': self.tank_volume_gallon,
-            'efficiency': self.efficiency,
+            'efficiencyEf': self.efficiency_ef,
+            'efficiencyPercentage': self.efficiency_percentage,
+            'drainWaterHeatRecoveryEfficiencyPercentage': self.drain_water_heat_recovery_efficiency_percentage,
         }

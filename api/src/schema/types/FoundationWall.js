@@ -3,23 +3,23 @@ export const createFoundationWall = i18n => {
     # ${i18n.t`Foundation Walls are below-ground walls separating the interior heated space from the outside (interior partition walls are not considered walls)`}
     type FoundationWall @cacheControl(maxAge: 90) {
       # ${i18n.t`Wall construction being used (en)`}
-      wallTypeEnglish: I18NString
+      wallTypeEnglish: String
       # ${i18n.t`Wall construction being used (fr)`}
-      wallTypeFrench: I18NString
+      wallTypeFrench: String
       # ${i18n.t`Wall insulation nominal RSI (R-value Systeme International)`}
-      insulationNominalRsi: I18NFloat
+      insulationNominalRsi: Float
       # ${i18n.t`Wall insulation nominal R-value`}
-      insulationNominalR: I18NFloat
+      insulationNominalR: Float
       # ${i18n.t`Wall insulation effective RSI (R-value Systeme International)`}
-      insulationEffectiveRsi: I18NFloat
+      insulationEffectiveRsi: Float
       # ${i18n.t`Wall insulation nominal R-value`}
-      insulationEffectiveR: I18NFloat
+      insulationEffectiveR: Float
       # ${i18n.t`Wall area of the house in square metres (m2)`}
-      areaMetres: I18NFloat
+      areaMetres: Float
       # ${i18n.t`Wall area of the house in square feet (ft2)`}
-      areaFeet: I18NFloat
+      areaFeet: Float
       # ${i18n.t`The percentage of the total wall area this section accounts for`}
-      percentage: I18NFloat
+      percentage: Float
     }
   `
   return FoundationWall

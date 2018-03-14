@@ -106,7 +106,8 @@ const waterHeatingFields = [
   'typeFrench',
   'tankVolumeLitres',
   'tankVolumeGallon',
-  'efficiency',
+  'efficiencyEf',
+  'efficiencyPercentage',
 ]
 
 waterHeatingFields.forEach(attr => {

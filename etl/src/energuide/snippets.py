@@ -10,6 +10,13 @@ class _Codes(typing.NamedTuple):
 
 class Codes(_Codes):
 
+    EMPTY_SNIPPET: typing.Dict[str, typing.Dict[str, typing.List[str]]] = {
+        'codes': {
+            'wall': [],
+            'window': [],
+        }
+    }
+
     def to_dict(self) -> typing.Dict[str, typing.Dict[str, typing.List[str]]]:
         return {
             'codes': {
@@ -36,6 +43,21 @@ class _HouseSnippet(typing.NamedTuple):
 
 class HouseSnippet(_HouseSnippet):
 
+    EMPTY_SNIPPET: typing.Dict[str, typing.Union[typing.List[str], typing.Optional[str]]] = {
+        'ceilings': [],
+        'floors': [],
+        'walls': [],
+        'doors': [],
+        'windows': [],
+        'heatedFloorArea': None,
+        'heating_cooling': None,
+        'ventilations': [],
+        'waterHeatings': None,
+        'basements': [],
+        'crawlspaces': [],
+        'slabs': [],
+    }
+
     def to_dict(self) -> typing.Dict[str, typing.Any]:
         return {
             'ceilings': self.ceilings,
@@ -58,6 +80,10 @@ class _EnergyUpgradesSnippet(typing.NamedTuple):
 
 
 class EnergyUpgradesSnippet(_EnergyUpgradesSnippet):
+
+    EMPTY_SNIPPET: typing.Dict[str, typing.List[str]] = {
+        'upgrades': [],
+    }
 
     def to_dict(self) -> typing.Dict[str, typing.Any]:
         return {
