@@ -8,6 +8,4 @@ ADD . .
 RUN pip install -r requirements.txt
 RUN pip install -e .
 
-CMD ["python", "src/energuide/flask_app.py"]
-
-
+CMD ["gunicorn", "--pythonpath=src/energuide", "--bind=0.0.0.0:5010", "flask_app:App"]
