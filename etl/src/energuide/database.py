@@ -2,7 +2,6 @@ from contextlib import contextmanager
 import enum
 import typing
 
-import os
 import pymongo
 
 from energuide import dwelling
@@ -15,6 +14,7 @@ class EnvVariables(enum.Enum):
     port = 'ENERGUIDE_PORT'
     database = 'ENERGUIDE_DBNAME'
     collection = 'ENERGUIDE_COLLECTION'
+    production = 'ENERGUIDE_PRODUCTION'
 
 
 class EnvDefaults(enum.Enum):
@@ -24,35 +24,32 @@ class EnvDefaults(enum.Enum):
     port = 27017
     database = 'energuide'
     collection = 'dwellings'
+    production = False
 
 
-class DatabaseCoordinates(typing.NamedTuple):
+
+class _DatabaseCoordinates(typing.NamedTuple):
     username: str
     password: str
     host: str
     port: int
+    production: bool = False
 
 
-def _is_prod() -> bool:
-    return bool(os.environ.get('PROD'))
-
-
-def _build_connection_string(coords: DatabaseCoordinates) -> str:
-    username, password, host, port = coords
-
-    if _is_prod():
-        connection_string = f'mongodb+srv://{username}:{password}@{host}'
-    else:
-        prefix = f'{username}:{password}@' if username and password else ''
-        connection_string = f'{prefix}{host}:{port}'
-
-    return connection_string
+class DatabaseCoordinates(_DatabaseCoordinates):
+    @property
+    def connection_string(self) -> str:
+        if self.production:
+            connection_string = f'mongodb+srv://{self.username}:{self.password}@{self.host}'
+        else:
+            prefix = f'{self.username}:{self.password}@' if self.username and self.password else ''
+            connection_string = f'{prefix}{self.host}:{self.port}'
+        return connection_string
 
 
 @contextmanager  # type: ignore
 def mongo_client(database_coordinates: DatabaseCoordinates) -> typing.Iterable[pymongo.MongoClient]:
-    connection_string = _build_connection_string(database_coordinates)
-    with pymongo.MongoClient(f'{connection_string}') as client:
+    with pymongo.MongoClient(f'{database_coordinates.connection_string}') as client:
         yield client
 
 
@@ -83,6 +80,7 @@ def load(coords: DatabaseCoordinates,
          collection_name: str,
          data: typing.Iterable[dwelling.Dwelling],
          append: bool = False) -> None:
+
     client: pymongo.MongoClient
     with mongo_client(coords) as client:
         database = client[database_name]

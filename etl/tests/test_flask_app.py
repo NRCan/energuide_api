@@ -6,6 +6,7 @@ import pymongo
 import pytest
 from flask import testing
 from energuide import flask_app
+from energuide import database
 
 
 flask_app.App.testing = True
@@ -41,6 +42,16 @@ def thread_runner() -> typing.Generator:
     flask_app.ThreadRunner.join()
 
 
+@pytest.fixture
+def fake_db_coords(monkeypatch: _pytest.monkeypatch.MonkeyPatch) -> typing.Generator:
+    def connection_string(self) -> str:
+        prefix = f'{self.username}:{self.password}@' if self.username and self.password else ''
+        return f'{prefix}{self.host}:{self.port}'
+    connection_string = property(connection_string)
+
+    monkeypatch.setattr(database.DatabaseCoordinates, 'connection_string', connection_string)
+
+
 def test_threadrunner(thread_runner: flask_app.ThreadRunner) -> None:
     stay_asleep = True
 
@@ -70,7 +81,7 @@ def test_robots(test_client: testing.FlaskClient) -> None:
 
 
 @pytest.mark.timeout(10)
-@pytest.mark.usefixtures('populated_azure_emulator')
+@pytest.mark.usefixtures('populated_azure_emulator', 'fake_db_coords')
 def test_run_tl(test_client: testing.FlaskClient,
                 thread_runner: flask_app.ThreadRunner,
                 mongo_client: pymongo.MongoClient,
