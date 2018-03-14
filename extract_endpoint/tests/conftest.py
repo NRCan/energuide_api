@@ -74,3 +74,8 @@ def sample_zipfile_fixture(tmpdir: py._path.local.LocalPath,
         file_z.writestr(name, contents)
     file_z.close()
     return file
+
+
+@pytest.fixture
+def sample_nonzipfile() -> io.BytesIO:
+    return io.BytesIO(b'Not a zipfile')

@@ -4,11 +4,6 @@ import pytest
 from extract_endpoint import endpoint_triggers, endpoint, azure_utils
 
 
-@pytest.fixture
-def sample_nonzipfile() -> io.BytesIO:
-    return io.BytesIO(b'Not a zipfile')
-
-
 def test_mock_upload_trigger(sample_zipfile: io.BytesIO, sample_timestamp: str):
 
     mock_upload = endpoint_triggers.MockUploadToAzure(sample_zipfile, sample_timestamp, endpoint.TIMESTAMP_FILENAME)
