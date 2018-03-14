@@ -64,10 +64,10 @@ pip install -r requirements.txt
 pip install -e .
 ```
 
-#### Running the app
+## Tests
 
 
-#### Running tests locally
+### Running tests locally
 Many of the tests require an Azure emulator running locally. Please refer to the [Azure](#azure-emulator) section for more information on how to download
 and run an emulator.
 
@@ -86,12 +86,12 @@ To run the mypy type checker, run:
 mypy src tests --ignore-missing-imports
 ```
 
-#### Automated Testing
+### Automated testing
 
 This repo is connected to CircleCI, and all tests, linters, and static type checking must pass before merging to master.
 
 
-## Run Locally
+## Running locally
 
 For development purposes we can run the web apps on our local machine. 
 First open four terminal windows:
