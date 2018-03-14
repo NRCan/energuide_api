@@ -54,7 +54,6 @@ def fake_db_coords(monkeypatch: _pytest.monkeypatch.MonkeyPatch) -> typing.Gener
     yield
 
 
-
 def test_threadrunner(thread_runner: flask_app.ThreadRunner) -> None:
     stay_asleep = True
 
