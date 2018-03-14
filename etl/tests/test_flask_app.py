@@ -44,12 +44,15 @@ def thread_runner() -> typing.Generator:
 
 @pytest.fixture
 def fake_db_coords(monkeypatch: _pytest.monkeypatch.MonkeyPatch) -> typing.Generator:
-    def connection_string(self) -> str:
+    def connection_string(self: database.DatabaseCoordinates) -> str:
         prefix = f'{self.username}:{self.password}@' if self.username and self.password else ''
         return f'{prefix}{self.host}:{self.port}'
-    connection_string = property(connection_string)
 
-    monkeypatch.setattr(database.DatabaseCoordinates, 'connection_string', connection_string)
+    connection_string_propery = property(connection_string)
+
+    monkeypatch.setattr(database.DatabaseCoordinates, 'connection_string', connection_string_propery)
+    yield
+
 
 
 def test_threadrunner(thread_runner: flask_app.ThreadRunner) -> None:
