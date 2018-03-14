@@ -40,6 +40,7 @@ class Heating(_Heating):
         'Baseboards': HeatingType.BASEBOARD,
         'Furnace': HeatingType.FURNACE,
         'Boiler': HeatingType.BOILER,
+        'ComboHeatDhw': HeatingType.COMBO_HEAT_DHW
     }
 
     _HEATING_TYPE_TRANSLATIONS = {
@@ -61,6 +62,8 @@ class Heating(_Heating):
         4: EnergySource.PROPANE,
         5: EnergySource.WOOD,
         6: EnergySource.WOOD,
+        7: EnergySource.WOOD,
+        8: EnergySource.WOOD,
     }
 
     _ENERGY_SOURCE_TRANSLATIONS = {
@@ -134,7 +137,7 @@ class Heating(_Heating):
         try:
             steady_state_value = node.get('Type1/*/Specifications/@isSteadyState', str)
         except ElementGetValueError as exc:
-            raise InvalidEmbeddedDataTypeError(Heating, 'No isSteadyState value') from exc
+            raise InvalidEmbeddedDataTypeError(Heating, 'No isSteadyState property value') from exc
 
         return 'Steady State' if steady_state_value == 'true' else 'AFUE'
 
@@ -146,14 +149,26 @@ class Heating(_Heating):
         except ElementGetValueError as exc:
             raise InvalidEmbeddedDataTypeError(Heating, 'Invalid/missing Heating values') from exc
 
+        heating_type = cls._get_heating_type(node)
+        output_size = cls._get_output_size(node)
+
+        if heating_type is HeatingType.BASEBOARD:
+            steady_state = 'Steady State'
+            energy_source = EnergySource.ELECTRIC
+            equipment_type = cls._HEATING_TYPE_TRANSLATIONS[HeatingType.BASEBOARD]
+        else:
+            steady_state = cls._get_steady_state(node)
+            energy_source = cls._get_energy_source(node)
+            equipment_type = cls._get_equipment_type(node)
+
         return Heating(
             label=label,
-            output_size=cls._get_output_size(node),
+            output_size=output_size,
             efficiency=efficiency,
-            steady_state=cls._get_steady_state(node),
-            heating_type=cls._get_heating_type(node),
-            energy_source=cls._get_energy_source(node),
-            equipment_type=cls._get_equipment_type(node),
+            steady_state=steady_state,
+            heating_type=heating_type,
+            energy_source=energy_source,
+            equipment_type=equipment_type,
         )
 
     def to_dict(self) -> typing.Dict[str, typing.Any]:
