@@ -94,4 +94,3 @@ def load(coords: DatabaseCoordinates,
         for row in data:
             data = row.to_dict()
             collection.update({'houseId': data['houseId']}, data, upsert=True)
-

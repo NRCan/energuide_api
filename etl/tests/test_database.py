@@ -60,6 +60,3 @@ def test_load_update(database_coordinates: database.DatabaseCoordinates,
         update=True
     )
     assert mongo_client[database_name][collection].count() == 4
-
-
-
