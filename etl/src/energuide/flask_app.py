@@ -45,7 +45,7 @@ def _run_tl_and_verify() -> None:
                       collection=COLLECTION,
                       azure=True,
                       filename=None,
-                      update=False,
+                      update=True,
                       progress=False)
 
     mongo_client: pymongo.MongoClient
