@@ -82,14 +82,16 @@ def load(coords: DatabaseCoordinates,
          database_name: str,
          collection_name: str,
          data: typing.Iterable[dwelling.Dwelling],
-         append: bool = False) -> None:
+         update: bool = True) -> None:
     client: pymongo.MongoClient
     with mongo_client(coords) as client:
         database = client[database_name]
         collection = database[collection_name]
 
-        if not append:
+        if not update:
             collection.drop()
 
-        for data_to_load in _chunk_data(data):
-            collection.insert_many(data_to_load)
+        for row in data:
+            data = row.to_dict()
+            collection.update({'houseId': data['houseId']}, data, upsert=True)
+
