@@ -1,6 +1,9 @@
 import typing
+import hashlib
+import secrets
 from http import HTTPStatus
 import zipfile
+import requests
 import typing_extensions
 from werkzeug import utils
 from extract_endpoint import azure_utils
@@ -36,8 +39,18 @@ class MockUploadToAzure(EndpointTrigger):
 
 
 class MockTriggerTL(EndpointTrigger):
-    def __init__(self) -> None:
+    def __init__(self, key: str, url: str, data: typing.Optional[typing.Dict[str, str]] = None) -> None:
         self._run_count = 0
+        self._key = key
+        self._url = url
+        if data is None:
+            salt = secrets.token_hex(16)
+            hasher = hashlib.new('sha3_256')
+            hasher.update((salt + self._key).encode())
+            signature = hasher.hexdigest()
+            self._data = dict(salt=salt, signature=signature)
+        else:
+            self._data = data
 
     @property
     def run_count(self) -> int:
@@ -45,6 +58,16 @@ class MockTriggerTL(EndpointTrigger):
 
     def run(self) -> int:
         self._run_count += 1
+
+        if 'salt' not in self._data:
+            return HTTPStatus.BAD_REQUEST
+        if 'signature' not in self._data:
+            return HTTPStatus.BAD_REQUEST
+        hasher = hashlib.new('sha3_256')
+        hasher.update((self._data['salt'] + self._key).encode())
+        actual_signature = hasher.hexdigest()
+        if self._data['signature'] != actual_signature:
+            return HTTPStatus.BAD_REQUEST
         return HTTPStatus.CREATED
 
 
@@ -65,12 +88,20 @@ class UploadFilesToAzure(EndpointTrigger):
 
 
 class TriggerTL(EndpointTrigger):
-    def __init__(self) -> None:
-        self._placeholder = True
+    def __init__(self, key: str, url: str, data: typing.Optional[typing.Dict[str, str]] = None) -> None:
+        self._key = key
+        self._url = url
+        if data is None:
+            salt = secrets.token_hex(16)
+            hasher = hashlib.new('sha3_256')
+            hasher.update((salt + self._key).encode())
+            signature = hasher.hexdigest()
+            self._data = dict(salt=salt, signature=signature)
+        else:
+            self._data = data
 
     def run(self) -> int:
-        print("Transform process is triggered, huzzah!")
-        return HTTPStatus.CREATED
+        return requests.post(self._url, data=self._data).status_code
 
 
 def upload_to_storage(storage_service: azure_utils.StorageProtocol,
