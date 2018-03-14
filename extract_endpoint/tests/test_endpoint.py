@@ -44,11 +44,6 @@ def sample_zipfile_signature(sample_salt: str, sample_secret_key: str, sample_zi
 
 
 @pytest.fixture
-def sample_nonzipfile() -> io.BytesIO:
-    return io.BytesIO(b'Not a zipfile')
-
-
-@pytest.fixture
 def sample_nonzipfile_signature(sample_salt: str, sample_secret_key: str, sample_nonzipfile: io.BytesIO) -> str:
     hasher = hashlib.new('sha3_256')
     hasher.update((sample_salt + sample_secret_key).encode())

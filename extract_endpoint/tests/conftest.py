@@ -1,5 +1,6 @@
 import io
 import datetime
+import hashlib
 import zipfile
 import typing
 import pytest
@@ -74,3 +75,37 @@ def sample_zipfile_fixture(tmpdir: py._path.local.LocalPath,
         file_z.writestr(name, contents)
     file_z.close()
     return file
+
+
+@pytest.fixture
+def sample_nonzipfile() -> io.BytesIO:
+    return io.BytesIO(b'Not a zipfile')
+
+
+@pytest.fixture
+def sample_salt() -> str:
+    return 'sample salt'
+
+
+@pytest.fixture
+def sample_salt_signature(sample_salt: str, sample_secret_key: str) -> str:
+    hasher = hashlib.new('sha3_256')
+    hasher.update((sample_salt + sample_secret_key).encode())
+    return hasher.hexdigest()
+
+
+@pytest.fixture
+def sample_trigger_url() -> str:
+    return 'https://www.nrcan.ca:4000/run_tl'
+
+
+@pytest.fixture
+def sample_trigger_data(sample_salt: str, sample_salt_signature: str) -> typing.Dict[str, str]:
+    sample_trigger_data = {'salt': sample_salt, 'signature': sample_salt_signature}
+    return sample_trigger_data
+
+
+@pytest.fixture
+def sample_trigger_bad_data(sample_salt: str, sample_salt_signature: str) -> typing.Dict[str, str]:
+    sample_trigger_bad_data = {'not-salt': sample_salt, 'signature': sample_salt_signature}
+    return sample_trigger_bad_data
