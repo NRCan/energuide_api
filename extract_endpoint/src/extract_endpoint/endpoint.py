@@ -58,8 +58,10 @@ def timestamp() -> str:
 
 
 def send_to_trigger(data: typing.Dict[str, str]) -> int:
-    return requests.post(_trigger_url(), data=data).status_code
-
+    try:
+        return requests.post(_trigger_url(), data=data).status_code
+    except requests.exceptions.ConnectionError:
+        return HTTPStatus.BAD_GATEWAY
 
 def trigger(data: typing.Optional[typing.Dict[str, str]] = None) -> int:
     if data is None:
@@ -71,10 +73,16 @@ def trigger(data: typing.Optional[typing.Dict[str, str]] = None) -> int:
     return send_to_trigger(data)
 
 
-@App.route('/trigger_tl', methods=['POST'])
+@App.route('/run_tl', methods=['POST'])
 def trigger_tl() -> typing.Tuple[str, int]:
     if flask.request.form is None or any(key not in flask.request.form for key in ['signature', 'salt']):
         flask.abort(HTTPStatus.BAD_REQUEST)
+    hasher = hashlib.new('sha3_256')
+    hasher.update((flask.request.form['salt'] + App.config['SECRET_KEY']).encode())
+    signature = hasher.hexdigest()
+    if flask.request.form['signature'] != signature:
+        flask.abort(HTTPStatus.BAD_REQUEST)
+
     return '', trigger(data=flask.request.form)
 
 
@@ -94,7 +102,6 @@ def upload_file() -> typing.Tuple[str, int]:
     hasher.update(file.read())
     file.seek(0)
     signature = hasher.hexdigest()
-
     if flask.request.form['signature'] != signature:
         flask.abort(HTTPStatus.BAD_REQUEST)
 
