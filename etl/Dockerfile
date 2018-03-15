@@ -7,4 +7,4 @@ RUN pip install -r requirements.txt
 
 COPY . .
 RUN pip install -e .
-CMD ["gunicorn", "--pythonpath=src/energuide", "--bind=0.0.0.0:5010", "flask_app:App"]
+CMD ["gunicorn", "--pythonpath=src/energuide", "--bind=0.0.0.0:5010", "--worker-class=gevent", "flask_app:App"]
