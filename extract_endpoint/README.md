@@ -214,7 +214,15 @@ To configure them to work correctly, both apps must have environment variables s
 * EXTRACT_ENDPOINT_CONTAINER
 
 The two apps and the local machine that will be running `extract_endpoint upload` must share a common environment
-variable ETL_SECRET_KEY.
+variable ETL_SECRET_KEY. This should be a random string of length at least 30 characters.
 
 The `extract_endpoint/endpoint.py` app needs to have the environment variable TL_ADDRESS set to the url and port
 of the `energuide/flask_app.py` app (by default the port is 5010). For example, 'https://0.0.0.0:5010'
+
+The `energuide/flask_app.py` app must also have environment variables set pointing to the production Mongo database.
+* ENERGUIDE_USERNAME
+* ENERGUIDE_PASSWORD
+* ENERGUIDE_HOST
+* ENERGUIDE_PORT
+* ENERGUIDE_DBNAME
+* ENERGUIDE_COLLECTION
