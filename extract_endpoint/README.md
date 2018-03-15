@@ -201,3 +201,20 @@ GET /devstoreaccount1/energuide-extracted-data/55622-11W2E00606 206 3.025 ms - 2
 2018-03-14T12:22:04-0400 - INFO - __main__: Success, 7 created
 
 ```
+
+
+## Deploying
+
+The two web apps `extract_endpoint/endpoint.py` and `energuide/flask_app.py`
+run in Microsoft Azure.
+To configure them to work correctly, both apps must have environment variables set pointing to the production Azure Storage.
+* EXTRACT_ENDPOINT_STORAGE_DOMAIN
+* EXTRACT_ENDPOINT_STORAGE_ACCOUNT
+* EXTRACT_ENDPOINT_STORAGE_KEY
+* EXTRACT_ENDPOINT_CONTAINER
+
+The two apps and the local machine that will be running `extract_endpoint upload` must share a common environment
+variable ETL_SECRET_KEY.
+
+The `extract_endpoint/endpoint.py` app needs to have the environment variable TL_ADDRESS set to the url and port
+of the `energuide/flask_app.py` app (by default the port is 5010). For example, 'https://0.0.0.0:5010'
