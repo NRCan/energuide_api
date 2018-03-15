@@ -246,7 +246,7 @@ jobs:
       - save_cache:
           key: "deps1-{{ .Branch }}-{{ checksum \"etl/requirements.txt\" }}"
           paths:
-            - ~/etl/.venv
+            - ~/.venv
       - run:
           command: |
               cd extract_endpoint
@@ -258,7 +258,7 @@ jobs:
       - save_cache:
           key: "deps2-{{ .Branch }}-{{ checksum \"extract_endpoint/requirements.txt\" }}"
           paths:
-            - ~/extract_endpoint/.venv
+            - ~/.venv
       - run:
           command: |
               cd extract_endpoint
