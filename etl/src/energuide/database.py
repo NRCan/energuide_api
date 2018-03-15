@@ -56,28 +56,6 @@ def mongo_client(database_coordinates: DatabaseCoordinates) -> typing.Iterable[p
         yield client
 
 
-_DEFAULT_CHUNK_SIZE = 1000
-
-
-def _chunk_data(data: typing.Iterable[dwelling.Dwelling],
-                max_chunk_size: int = _DEFAULT_CHUNK_SIZE
-               ) -> typing.Iterator[typing.List[typing.Dict[str, typing.Any]]]:
-
-    chunked_list: typing.List[typing.Dict[str, typing.Any]] = []
-    load_size = 0
-
-    for row in data:
-        if load_size >= max_chunk_size:
-            yield chunked_list
-            chunked_list = []
-            load_size = 0
-        chunked_list.append(row.to_dict())
-        load_size += 1
-
-    if chunked_list:
-        yield chunked_list
-
-
 def load(coords: DatabaseCoordinates,
          database_name: str,
          collection_name: str,
@@ -91,6 +69,11 @@ def load(coords: DatabaseCoordinates,
         if not update:
             collection.drop()
 
+        existing = set(collection.distinct('houseId'))
+
         for row in data:
+            existing.discard(row.house_id)
             data_row = row.to_dict()
             collection.update({'houseId': data_row['houseId']}, data_row, upsert=True)
+
+        collection.remove({'houseId': {'$in': list(existing)}})
