@@ -70,7 +70,7 @@ def upload_timestamp_file(azure_emulator_coords: azure_utils.StorageCoordinates,
 
 @pytest.fixture
 def mocked_tl_app(monkeypatch: _pytest.monkeypatch.MonkeyPatch, sample_secret_key: str):
-    def mock_send_to_trigger(data: typing.Dict[str, str]) -> int:
+    def mock_send_to_tl(data: typing.Dict[str, str]) -> int:
         if 'salt' not in data:
             return HTTPStatus.BAD_REQUEST
         if 'signature' not in data:
@@ -81,41 +81,41 @@ def mocked_tl_app(monkeypatch: _pytest.monkeypatch.MonkeyPatch, sample_secret_ke
         if data['signature'] != actual_signature:
             return HTTPStatus.BAD_REQUEST
         return HTTPStatus.CREATED
-    monkeypatch.setattr(endpoint, 'send_to_trigger', mock_send_to_trigger)
+    monkeypatch.setattr(endpoint, 'send_to_tl', mock_send_to_tl)
 
 
-def test_trigger_url(monkeypatch: _pytest.monkeypatch.MonkeyPatch) -> None:
-    monkeypatch.setenv('TRIGGER_ADDRESS', 'https://www.nrcan.ca:4000')
-    assert endpoint._trigger_url() == 'https://www.nrcan.ca:4000/run_tl'
+def test_run_tl_url(monkeypatch: _pytest.monkeypatch.MonkeyPatch) -> None:
+    monkeypatch.setenv('TL_ADDRESS', 'https://www.nrcan.ca:4000')
+    assert endpoint._run_tl_url() == 'https://www.nrcan.ca:4000/run_tl'
 
 
 @pytest.mark.usefixtures('mocked_tl_app')
-def test_trigger(sample_salt: str, sample_salt_signature: str) -> None:
-    return_val = endpoint.trigger(dict(salt=sample_salt, signature=sample_salt_signature))
+def test_run_tl(sample_salt: str, sample_salt_signature: str) -> None:
+    return_val = endpoint.run_tl(dict(salt=sample_salt, signature=sample_salt_signature))
     assert return_val == HTTPStatus.CREATED
 
 
 @pytest.mark.usefixtures('mocked_tl_app')
-def test_trigger_no_data() -> None:
-    return_val = endpoint.trigger()
+def test_run_tl_no_data() -> None:
+    return_val = endpoint.run_tl()
     assert return_val == HTTPStatus.CREATED
 
 
 @pytest.mark.usefixtures('mocked_tl_app')
-def test_trigger_bad_data() -> None:
-    return_val = endpoint.trigger(dict(salt='bad salt', signature='bad signature'))
+def test_run_tl_bad_data() -> None:
+    return_val = endpoint.run_tl(dict(salt='bad salt', signature='bad signature'))
     assert return_val == HTTPStatus.BAD_REQUEST
 
 
 @pytest.mark.usefixtures('mocked_tl_app')
-def test_trigger_route(test_client: testing.FlaskClient, sample_salt: str, sample_salt_signature: str) -> None:
-    return_val = test_client.post('/trigger_tl', data=dict(salt=sample_salt, signature=sample_salt_signature))
+def test_run_tl_route(test_client: testing.FlaskClient, sample_salt: str, sample_salt_signature: str) -> None:
+    return_val = test_client.post('/run_tl', data=dict(salt=sample_salt, signature=sample_salt_signature))
     assert return_val.status_code == HTTPStatus.CREATED
 
 
 @pytest.mark.usefixtures('mocked_tl_app', 'sample_secret_key')
-def test_trigger_route_no_data(test_client: testing.FlaskClient) -> None:
-    return_val = test_client.post('/trigger_tl')
+def test_run_tl_route_no_data(test_client: testing.FlaskClient) -> None:
+    return_val = test_client.post('/run_tl')
     assert return_val.status_code == HTTPStatus.BAD_REQUEST
 
 
