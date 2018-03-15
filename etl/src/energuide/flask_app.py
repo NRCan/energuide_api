@@ -27,7 +27,10 @@ DATABASE_COORDS = database.DatabaseCoordinates(
     username=os.environ.get(database.EnvVariables.username.value, default=database.EnvDefaults.username.value),
     password=os.environ.get(database.EnvVariables.password.value, default=database.EnvDefaults.password.value),
     host=os.environ.get(database.EnvVariables.host.value, default=database.EnvDefaults.host.value),
-    port=int(os.environ.get(database.EnvVariables.port.value, default=database.EnvDefaults.port.value))
+    port=int(os.environ.get(database.EnvVariables.port.value, default=database.EnvDefaults.port.value)),
+    production=bool(
+        os.environ.get(database.EnvVariables.production.value, default=database.EnvDefaults.production.value)
+    ),
 )
 
 DATABASE_NAME = os.environ.get(database.EnvVariables.database.value, default=database.EnvDefaults.database.value)
@@ -46,7 +49,8 @@ def _run_tl_and_verify() -> None:
                       azure=True,
                       filename=None,
                       append=False,
-                      progress=False)
+                      progress=False,
+                      production=True)
 
     mongo_client: pymongo.MongoClient
     with database.mongo_client(DATABASE_COORDS) as mongo_client:

@@ -28,6 +28,10 @@ def main() -> None:
 @click.option('--filename', type=click.Path(exists=True), required=False)
 @click.option('-a', '--append', is_flag=True, help='Append data instead of overwriting')
 @click.option('--progress/--no-progress', default=True)
+@click.option('--production/--local',
+              envvar=database.EnvVariables.production.value,
+              default=False,
+              help='Generate a connection string to an Atlas managed MongoDB instance')
 def load(username: str,
          password: str,
          host: str,
@@ -37,12 +41,16 @@ def load(username: str,
          azure: bool,
          filename: typing.Optional[str],
          append: bool,
-         progress: bool) -> None:
+         progress: bool,
+         production: bool,
+        ) -> None:
+
     coords = database.DatabaseCoordinates(
         username=username,
         password=password,
         host=host,
-        port=port
+        port=port,
+        production=production
     )
 
     reader: transform.ExtractProtocol
