@@ -96,8 +96,14 @@ def load(username: str,
 
 
 @main.command()
-@click.option('--infile', required=True)
-@click.option('--outfile', required=True)
+@click.option('--infile',
+              type=click.Path(exists=True),
+              required=True,
+              help='CSV files to extract data from')
+@click.option('--outfile',
+              required=True,
+              type=click.Path(),
+              help='Path to output file')
 @click.option('--progress/--no-progress', default=True)
 def extract(infile: str, outfile: str, progress: bool) -> None:
     LOGGER.info(f'Extracting data from {infile} into {outfile}')
