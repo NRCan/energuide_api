@@ -202,6 +202,10 @@ GET /devstoreaccount1/energuide-extracted-data/55622-11W2E00606 206 3.025 ms - 2
 
 ```
 
+You can also rerun the ETL app without uploading new files:
+```
+extract_endpoint run_tl
+```
 
 ## Deploying
 
@@ -226,3 +230,9 @@ The `energuide/flask_app.py` app must also have environment variables set pointi
 * ENERGUIDE_PORT
 * ENERGUIDE_DBNAME
 * ENERGUIDE_COLLECTION
+
+Finally, to upload files to production (or trigger the tl manually) we need to specify the url of the endpoint app
+```
+extract_endpoint upload ../etl/extract_out.zip 2018-03-14 --url=https://127.0.0.1:5000/upload_file
+extract_endpoint run_tl --url=https://127.0.0.1:5000/upload_file
+```
