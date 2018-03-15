@@ -14,14 +14,9 @@ def _etl_secret_key() -> str:
     return os.environ.get('ETL_SECRET_KEY', DEFAULT_ETL_SECRET_KEY)
 
 
-@click.group()
-def main() -> None:
-    pass
-
-
 def post_stream(stream: typing.IO[bytes],
                 timestamp: str,
-                url: str) -> requests.models.Response:
+                url: str) -> int:
 
     data = stream.read()
     salt = secrets.token_hex(16)
@@ -31,13 +26,13 @@ def post_stream(stream: typing.IO[bytes],
     hasher.update(data)
     signature = hasher.hexdigest()
 
-    return requests.post(url=url,
-                         files={'file': data},
-                         data={'salt': salt, 'signature': signature, 'timestamp': timestamp})
-
-
-def send_to_tl_app(url: str, data: typing.Dict[str, str]) -> int:
-    return requests.post(url, data=data).status_code
+    try:
+        post_return = requests.post(url=url,
+                                    files={'file': data},
+                                    data={'salt': salt, 'signature': signature, 'timestamp': timestamp})
+        return post_return.status_code
+    except requests.exceptions.ConnectionError:
+        return HTTPStatus.BAD_GATEWAY
 
 
 def trigger_tl(url) -> int:
@@ -46,7 +41,15 @@ def trigger_tl(url) -> int:
     hasher.update((salt + _etl_secret_key()).encode())
     signature = hasher.hexdigest()
     data = dict(salt=salt, signature=signature)
-    return send_to_tl_app(url, data)
+    try:
+        return requests.post(url, data=data).status_code
+    except requests.exceptions.ConnectionError:
+        return HTTPStatus.BAD_GATEWAY
+
+
+@click.group()
+def main() -> None:
+    pass
 
 
 @main.command()
@@ -54,14 +57,16 @@ def trigger_tl(url) -> int:
 @click.argument('timestamp')
 @click.option('--url', default='http://127.0.0.1:5000/upload_file')
 def upload(stream: typing.IO[bytes], timestamp: str, url: str) -> None:
-    post_return = post_stream(stream=stream, timestamp=timestamp, url=url)
-    click.echo(f"Response: {post_return.status_code}, {post_return.content}")
+    return_code = post_stream(stream=stream, timestamp=timestamp, url=url)
+    click.echo(f"Response: {return_code}")
+    if return_code != HTTPStatus.OK:
+        exit(return_code)
 
 
 @main.command()
 @click.option('--url', default='http://127.0.0.1:5000/run_tl')
 def run_tl(url: str) -> None:
-    trigger_return_code = trigger_tl(url)
-    click.echo(f"Response: {trigger_return_code}")
-    if trigger_return_code != HTTPStatus.OK:
-        exit(trigger_return_code)
+    return_code = trigger_tl(url)
+    click.echo(f"Response: {return_code}")
+    if return_code != HTTPStatus.OK:
+        exit(return_code)
