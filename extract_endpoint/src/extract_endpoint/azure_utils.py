@@ -1,6 +1,7 @@
 import enum
 import typing
 from azure.storage import blob
+import typing_extensions
 
 
 class StorageCoordinates(typing.NamedTuple):
@@ -17,16 +18,39 @@ class EnvVariables(enum.Enum):
     domain = 'EXTRACT_ENDPOINT_STORAGE_DOMAIN'
 
 
-def upload_bytes_to_azure(coords: StorageCoordinates, data: bytes, filename: str) -> bool:
-    azure_service = blob.BlockBlobService(account_name=coords.account,
-                                          account_key=coords.key,
-                                          custom_domain=coords.domain)
-    azure_service.create_blob_from_bytes(coords.container, filename, data)
-    return filename in [blob.name for blob in azure_service.list_blobs(coords.container)]
+class StorageProtocol(typing_extensions.Protocol):
+    def upload(self, data: bytes, filename: str) -> bool:
+        pass
+
+    def download(self, filename: str) -> bytes:
+        pass
 
 
-def download_bytes_from_azure(coords: StorageCoordinates, filename: str) -> str:
-    azure_service = blob.BlockBlobService(account_name=coords.account,
-                                          account_key=coords.key,
-                                          custom_domain=coords.domain)
-    return azure_service.get_blob_to_bytes(coords.container, filename).content
+class MockStorage:
+    def __init__(self) -> None:
+        self._data: typing.Dict[str, bytes] = {}
+
+    def upload(self, data: bytes, filename: str) -> bool:
+        self._data.update({filename: data})
+        return True
+
+    def download(self, filename: str) -> bytes:
+        if filename in self._data:
+            return self._data[filename]
+        else:
+            raise LookupError('File does not exist')
+
+
+class AzureStorage:
+    def __init__(self, coords: StorageCoordinates) -> None:
+        self._coords = coords
+        self._azure_service = blob.BlockBlobService(account_name=self._coords.account,
+                                                    account_key=self._coords.key,
+                                                    custom_domain=self._coords.domain)
+
+    def upload(self, data: bytes, filename: str) -> bool:
+        self._azure_service.create_blob_from_bytes(self._coords.container, filename, data)
+        return filename in [blob.name for blob in self._azure_service.list_blobs(self._coords.container)]
+
+    def download(self, filename: str) -> bytes:
+        return self._azure_service.get_blob_to_bytes(self._coords.container, filename).content

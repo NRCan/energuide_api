@@ -9,3 +9,4 @@ pytest-cov==2.5.1
 mypy==0.560
 requests==2.18.4
 setuptools==38.4.0
+typing-extensions==3.6.2.1

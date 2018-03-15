@@ -49,9 +49,11 @@ def robots() -> None:
 
 
 @App.route('/timestamp', methods=['GET'])
-def timestamp() -> str:
+def timestamp() -> bytes:
+    azure_service = azure_utils.AzureStorage(App.config['AZURE_COORDINATES'])
+
     try:
-        timestamp = azure_utils.download_bytes_from_azure(App.config['AZURE_COORDINATES'], TIMESTAMP_FILENAME)
+        timestamp = azure_service.download(TIMESTAMP_FILENAME)
     except AzureMissingResourceHttpError:
         flask.abort(HTTPStatus.BAD_GATEWAY)
     return timestamp
@@ -111,14 +113,15 @@ def upload_file() -> typing.Tuple[str, int]:
     except zipfile.BadZipFile:
         return "Bad Zipfile", HTTPStatus.BAD_REQUEST
 
+    azure_service = azure_utils.AzureStorage(App.config['AZURE_COORDINATES'])
+
     for json_file in [file_z.open(zipinfo) for zipinfo in file_z.infolist()]:
-        if not azure_utils.upload_bytes_to_azure(App.config['AZURE_COORDINATES'], json_file.read(),
-                                                 utils.secure_filename(json_file.name)):
+        if not azure_service.upload(json_file.read(), utils.secure_filename(json_file.name)):
             flask.abort(HTTPStatus.BAD_GATEWAY)
 
     timestamp = flask.request.form['timestamp']
 
-    if not azure_utils.upload_bytes_to_azure(App.config['AZURE_COORDINATES'], timestamp.encode(), TIMESTAMP_FILENAME):
+    if not azure_service.upload(timestamp.encode(), TIMESTAMP_FILENAME):
         flask.abort(HTTPStatus.BAD_GATEWAY)
 
     return '', run_tl()
