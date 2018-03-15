@@ -42,7 +42,8 @@ def load(username: str,
          filename: typing.Optional[str],
          append: bool,
          progress: bool,
-         production: bool,) -> None:
+         production: bool,
+        ) -> None:
 
     coords = database.DatabaseCoordinates(
         username=username,

@@ -5,6 +5,10 @@ import typing
 import pymongo
 
 from energuide import dwelling
+from energuide import logger
+
+
+LOGGER = logger.get_logger(__name__)
 
 
 class EnvVariables(enum.Enum):
@@ -49,7 +53,11 @@ class DatabaseCoordinates(_DatabaseCoordinates):
 
 @contextmanager  # type: ignore
 def mongo_client(database_coordinates: DatabaseCoordinates) -> typing.Iterable[pymongo.MongoClient]:
-    with pymongo.MongoClient(f'{database_coordinates.connection_string}') as client:
+    connection_string = database_coordinates.connection_string
+
+    LOGGER.info(f'Connecting to {connection_string}')
+
+    with pymongo.MongoClient(f'{connection_string}') as client:
         yield client
 
 
