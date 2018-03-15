@@ -48,9 +48,10 @@ def _run_tl_and_verify() -> None:
                       collection=COLLECTION,
                       azure=True,
                       filename=None,
-                      append=False,
+                      update=True,
                       progress=False,
-                      production=True)
+                      production=True
+                     )
 
     mongo_client: pymongo.MongoClient
     with database.mongo_client(DATABASE_COORDS) as mongo_client:
