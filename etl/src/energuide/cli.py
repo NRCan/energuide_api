@@ -16,18 +16,44 @@ def main() -> None:
 
 
 @main.command()
-@click.option('--username', envvar=database.EnvVariables.username.value, default=database.EnvDefaults.username.value)
-@click.option('--password', envvar=database.EnvVariables.password.value, default=database.EnvDefaults.password.value)
-@click.option('--host', envvar=database.EnvVariables.host.value, default=database.EnvDefaults.host.value)
-@click.option('--port', envvar=database.EnvVariables.port.value, default=database.EnvDefaults.port.value, type=int)
-@click.option('--db_name', envvar=database.EnvVariables.database.value, default=database.EnvDefaults.database.value)
+@click.option('--username',
+              envvar=database.EnvVariables.username.value,
+              default=database.EnvDefaults.username.value,
+              help='Username for MongoDB Server')
+@click.option('--password',
+              envvar=database.EnvVariables.password.value,
+              default=database.EnvDefaults.password.value,
+              help='Password for MongoDB Server')
+@click.option('--host',
+              envvar=database.EnvVariables.host.value,
+              default=database.EnvDefaults.host.value,
+              help='Hostname for MongoDB Server')
+@click.option('--port',
+              envvar=database.EnvVariables.port.value,
+              default=database.EnvDefaults.port.value,
+              type=int,
+              help='Port for MongoDB Server')
+@click.option('--db_name',
+              envvar=database.EnvVariables.database.value,
+              default=database.EnvDefaults.database.value,
+              help='Database name for MongoDB Server')
 @click.option('--collection',
               envvar=database.EnvVariables.collection.value,
-              default=database.EnvDefaults.collection.value)
-@click.option('--azure', is_flag=True, help='Download data from Azure')
-@click.option('--filename', type=click.Path(exists=True), required=False)
-@click.option('-a', '--append', is_flag=True, help='Append data instead of overwriting')
-@click.option('--progress/--no-progress', default=True)
+              default=database.EnvDefaults.collection.value,
+              help='Collection to load data into in Database')
+@click.option('--azure',
+              is_flag=True,
+              help='Download data from Azure')
+@click.option('--filename',
+              type=click.Path(exists=True),
+              required=False,
+              help='Filename to load data from')
+@click.option('-a', '--append',
+              is_flag=True,
+              help='Append data instead of overwriting')
+@click.option('--progress/--no-progress',
+              default=True,
+              help='Enable/Disable progress bar')
 @click.option('--production/--local',
               envvar=database.EnvVariables.production.value,
               default=False,
