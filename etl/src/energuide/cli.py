@@ -48,12 +48,12 @@ def main() -> None:
               type=click.Path(exists=True),
               required=False,
               help='Filename to load data from')
-@click.option('-a', '--append',
-              is_flag=True,
-              help='Append data instead of overwriting')
 @click.option('--progress/--no-progress',
               default=True,
               help='Enable/Disable progress bar')
+@click.option('--update/--no-update',
+              default=True,
+              help='Update data instead of rebuilding from empty')
 @click.option('--production/--local',
               envvar=database.EnvVariables.production.value,
               default=False,
@@ -66,7 +66,7 @@ def load(username: str,
          collection: str,
          azure: bool,
          filename: typing.Optional[str],
-         append: bool,
+         update: bool,
          progress: bool,
          production: bool,
         ) -> None:
@@ -91,7 +91,7 @@ def load(username: str,
         LOGGER.error('Must supply a filename or use azure')
         raise ValueError('Must supply a filename or use azure')
     data = transform.transform(reader, progress)
-    database.load(coords, db_name, collection, data, append)
+    database.load(coords, db_name, collection, data, update)
     LOGGER.info(f'Finished loading data')
 
 
