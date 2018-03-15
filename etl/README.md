@@ -23,6 +23,8 @@ source env/bin/activate
 ```
 This will create a new virtualenv in a  folder called `env`, and activate the virutalenv. To deactivate the virtualenv, run `deactivate`
 
+**WINDOWS NOTE** To activate a virtual environment on Windows instead run `env\Scripts\activate.bat`
+
 #### Installing the app
 
 Inside an activated virtualenv, and from the python folder of the project, run:
@@ -35,7 +37,7 @@ pip install -e .
 
 The ETL application is accessed from the `energuide` CLI. Run `energuide --help` for help.
 
-There are currently two commands for energuide: 
+There are currently two commands for energuide:
 ```
 energuide extract --infile /path/to/file --outfile /path/to/other/file
 ```
@@ -83,9 +85,14 @@ pylint src tests
 
 To run the mypy type checker, run:
 ```
-mypy src tests --ignore-missing-imports
+mypy src tests
 ```
 
 #### Automated Testing
 
 This repo is connected to CircleCI, and all tests, linters, and static type checking must pass before merging to master.
+
+
+### Running Locally
+
+The system can be run locally using the CLI commands that are described above, but to run all the components behaving as they do when deployed to Azure, follow instructions in the **Running Locally** section of the `extract_endpoint` module.
