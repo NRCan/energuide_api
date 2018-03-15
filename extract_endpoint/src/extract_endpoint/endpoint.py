@@ -29,8 +29,8 @@ App.config.update(dict(
 ))
 
 
-def _trigger_url() -> str:
-    return os.environ.get('TRIGGER_ADDRESS', 'http://0.0.0.0:5010') + '/run_tl'
+def _run_tl_url() -> str:
+    return os.environ.get('TL_ADDRESS', 'http://0.0.0.0:5010') + '/run_tl'
 
 
 @App.route('/', methods=['GET'])
@@ -57,25 +57,34 @@ def timestamp() -> str:
     return timestamp
 
 
-def send_to_trigger(data: typing.Dict[str, str]) -> int:
-    return requests.post(_trigger_url(), data=data).status_code
+def send_to_tl(data: typing.Dict[str, str]) -> int:
+    try:
+        return requests.post(_run_tl_url(), data=data).status_code
+    except requests.exceptions.ConnectionError:
+        return HTTPStatus.BAD_GATEWAY
 
 
-def trigger(data: typing.Optional[typing.Dict[str, str]] = None) -> int:
+def run_tl(data: typing.Optional[typing.Dict[str, str]] = None) -> int:
     if data is None:
         salt = secrets.token_hex(16)
         hasher = hashlib.new('sha3_256')
         hasher.update((salt + App.config['SECRET_KEY']).encode())
         signature = hasher.hexdigest()
         data = dict(salt=salt, signature=signature)
-    return send_to_trigger(data)
+    return send_to_tl(data)
 
 
-@App.route('/trigger_tl', methods=['POST'])
-def trigger_tl() -> typing.Tuple[str, int]:
+@App.route('/run_tl', methods=['POST'])
+def run_tl_route() -> typing.Tuple[str, int]:
     if flask.request.form is None or any(key not in flask.request.form for key in ['signature', 'salt']):
         flask.abort(HTTPStatus.BAD_REQUEST)
-    return '', trigger(data=flask.request.form)
+    hasher = hashlib.new('sha3_256')
+    hasher.update((flask.request.form['salt'] + App.config['SECRET_KEY']).encode())
+    signature = hasher.hexdigest()
+    if flask.request.form['signature'] != signature:
+        flask.abort(HTTPStatus.BAD_REQUEST)
+
+    return '', run_tl(data=flask.request.form)
 
 
 @App.route('/upload_file', methods=['POST'])
@@ -94,7 +103,6 @@ def upload_file() -> typing.Tuple[str, int]:
     hasher.update(file.read())
     file.seek(0)
     signature = hasher.hexdigest()
-
     if flask.request.form['signature'] != signature:
         flask.abort(HTTPStatus.BAD_REQUEST)
 
@@ -113,7 +121,7 @@ def upload_file() -> typing.Tuple[str, int]:
     if not azure_utils.upload_bytes_to_azure(App.config['AZURE_COORDINATES'], timestamp.encode(), TIMESTAMP_FILENAME):
         flask.abort(HTTPStatus.BAD_GATEWAY)
 
-    return '', trigger()
+    return '', run_tl()
 
 
 if __name__ == "__main__":
