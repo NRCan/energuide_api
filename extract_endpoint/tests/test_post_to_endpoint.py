@@ -161,4 +161,3 @@ def test_run_tl() -> None:
         '--url', None
     ])
     assert result.exit_code == HTTPStatus.BAD_GATEWAY
-    print(result)

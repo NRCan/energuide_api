@@ -6,6 +6,7 @@ from http import HTTPStatus
 import requests
 import click
 
+
 DEFAULT_ETL_SECRET_KEY = 'no key'
 
 
