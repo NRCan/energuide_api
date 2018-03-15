@@ -9,6 +9,10 @@ import flask
 from werkzeug import utils
 from azure.common import AzureMissingResourceHttpError
 from extract_endpoint import azure_utils
+from extract_endpoint import logger
+
+
+LOGGER = logger.get_logger(__name__)
 
 
 DEFAULT_ETL_SECRET_KEY = 'no key'
@@ -50,14 +54,17 @@ def robots() -> None:
 
 @App.route('/timestamp', methods=['GET'])
 def timestamp() -> str:
+    LOGGER.info("Fetching timestamp")
     try:
         timestamp = azure_utils.download_bytes_from_azure(App.config['AZURE_COORDINATES'], TIMESTAMP_FILENAME)
-    except AzureMissingResourceHttpError:
+    except AzureMissingResourceHttpError as exc:
+        LOGGER.warning(f"Error contacting Azure: {logger.unwrap_exception_message(exc)}")
         flask.abort(HTTPStatus.BAD_GATEWAY)
     return timestamp
 
 
 def send_to_trigger(data: typing.Dict[str, str]) -> int:
+    LOGGER.info("Telling TL to start")
     return requests.post(_trigger_url(), data=data).status_code
 
 
@@ -74,17 +81,21 @@ def trigger(data: typing.Optional[typing.Dict[str, str]] = None) -> int:
 @App.route('/trigger_tl', methods=['POST'])
 def trigger_tl() -> typing.Tuple[str, int]:
     if flask.request.form is None or any(key not in flask.request.form for key in ['signature', 'salt']):
+        LOGGER.warning("Missing salt or signature in trigger request")
         flask.abort(HTTPStatus.BAD_REQUEST)
     return '', trigger(data=flask.request.form)
 
 
 @App.route('/upload_file', methods=['POST'])
 def upload_file() -> typing.Tuple[str, int]:
+    LOGGER.info("Received upload request")
     if App.config['SECRET_KEY'] == DEFAULT_ETL_SECRET_KEY:
+        LOGGER.error("Need to define environment variable ETL_SECRET_KEY")
         raise ValueError("Need to define environment variable ETL_SECRET_KEY")
     if flask.request.form is None \
             or any(key not in flask.request.form for key in ['signature', 'salt', 'timestamp']) \
             or 'file' not in flask.request.files:
+        LOGGER.warning("Missing signature, salt, or timestamp")
         flask.abort(HTTPStatus.BAD_REQUEST)
 
     file = flask.request.files['file']
@@ -96,21 +107,25 @@ def upload_file() -> typing.Tuple[str, int]:
     signature = hasher.hexdigest()
 
     if flask.request.form['signature'] != signature:
+        LOGGER.warning("Bad signature")
         flask.abort(HTTPStatus.BAD_REQUEST)
 
     try:
         file_z = zipfile.ZipFile(file)
     except zipfile.BadZipFile:
+        LOGGER.warning("Bad zipfile")
         return "Bad Zipfile", HTTPStatus.BAD_REQUEST
 
     for json_file in [file_z.open(zipinfo) for zipinfo in file_z.infolist()]:
         if not azure_utils.upload_bytes_to_azure(App.config['AZURE_COORDINATES'], json_file.read(),
                                                  utils.secure_filename(json_file.name)):
+            LOGGER.warning("File upload to Azure storage failed")
             flask.abort(HTTPStatus.BAD_GATEWAY)
+    LOGGER.info(f"{len(file_z.infolist())} json files uploaded to Azure")
 
     timestamp = flask.request.form['timestamp']
-
     if not azure_utils.upload_bytes_to_azure(App.config['AZURE_COORDINATES'], timestamp.encode(), TIMESTAMP_FILENAME):
+        LOGGER.warning("Timestamp upload to Azure storage failed")
         flask.abort(HTTPStatus.BAD_GATEWAY)
 
     return '', trigger()
