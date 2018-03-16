@@ -227,7 +227,6 @@ The `energuide/flask_app.py` app must also have environment variables set pointi
 * ENERGUIDE_USERNAME
 * ENERGUIDE_PASSWORD
 * ENERGUIDE_HOST
-* ENERGUIDE_PORT
 * ENERGUIDE_DBNAME
 * ENERGUIDE_COLLECTION
 * ENERGUIDE_PRODUCTION
