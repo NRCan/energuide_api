@@ -80,7 +80,7 @@ def mocked_tl_app(monkeypatch: _pytest.monkeypatch.MonkeyPatch, sample_secret_ke
         actual_signature = hasher.hexdigest()
         if data['signature'] != actual_signature:
             return HTTPStatus.BAD_REQUEST
-        return HTTPStatus.CREATED
+        return HTTPStatus.OK
     monkeypatch.setattr(endpoint, 'send_to_tl', mock_send_to_tl)
 
 
@@ -92,13 +92,13 @@ def test_run_tl_url(monkeypatch: _pytest.monkeypatch.MonkeyPatch) -> None:
 @pytest.mark.usefixtures('mocked_tl_app')
 def test_run_tl(sample_salt: str, sample_salt_signature: str) -> None:
     return_val = endpoint.run_tl(dict(salt=sample_salt, signature=sample_salt_signature))
-    assert return_val == HTTPStatus.CREATED
+    assert return_val == HTTPStatus.OK
 
 
 @pytest.mark.usefixtures('mocked_tl_app')
 def test_run_tl_no_data() -> None:
     return_val = endpoint.run_tl()
-    assert return_val == HTTPStatus.CREATED
+    assert return_val == HTTPStatus.OK
 
 
 @pytest.mark.usefixtures('mocked_tl_app')
@@ -110,7 +110,7 @@ def test_run_tl_bad_data() -> None:
 @pytest.mark.usefixtures('mocked_tl_app')
 def test_run_tl_route(test_client: testing.FlaskClient, sample_salt: str, sample_salt_signature: str) -> None:
     return_val = test_client.post('/run_tl', data=dict(salt=sample_salt, signature=sample_salt_signature))
-    assert return_val.status_code == HTTPStatus.CREATED
+    assert return_val.status_code == HTTPStatus.OK
 
 
 @pytest.mark.usefixtures('mocked_tl_app', 'sample_secret_key')
@@ -154,7 +154,7 @@ def test_upload_with_timestamp(test_client: testing.FlaskClient,
     post_return = test_client.post('/upload_file', data=dict(salt=sample_salt, signature=sample_zipfile_signature,
                                                              timestamp=sample_timestamp,
                                                              file=(sample_zipfile, 'zipfile')))
-    assert post_return.status_code == HTTPStatus.CREATED
+    assert post_return.status_code == HTTPStatus.OK
 
 
 def test_upload_without_timestamp(test_client: testing.FlaskClient,
