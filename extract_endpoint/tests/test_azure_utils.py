@@ -31,6 +31,7 @@ def put_file_in_azure(azure_emulator_coords: azure_utils.StorageCoordinates,
     azure_service.delete_blob(azure_emulator_coords.container, filename)
 
 
+@pytest.mark.usefixtures('azure_service')
 def check_file_in_azure(azure_service: blob.BlockBlobService,
                         azure_emulator_coords: azure_utils.StorageCoordinates,
                         filename: str,
@@ -41,6 +42,7 @@ def check_file_in_azure(azure_service: blob.BlockBlobService,
     assert actual_blob.content == contents
 
 
+@pytest.mark.usefixtures('azure_service')
 def test_upload_bytes(azure_emulator_coords: azure_utils.StorageCoordinates,
                       azure_service: blob.BlockBlobService,
                       sample_data: bytes,
@@ -51,6 +53,7 @@ def test_upload_bytes(azure_emulator_coords: azure_utils.StorageCoordinates,
     check_file_in_azure(azure_service, azure_emulator_coords, sample_filename, sample_stream_content)
 
 
+@pytest.mark.usefixtures('azure_service')
 def test_download_bytes(azure_emulator_coords: azure_utils.StorageCoordinates,
                         put_file_in_azure: str,
                         sample_stream_content: str) -> None:
