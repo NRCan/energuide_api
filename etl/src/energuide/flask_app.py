@@ -50,7 +50,7 @@ def _run_tl_and_verify() -> None:
                       filename=None,
                       update=True,
                       progress=False,
-                      production=True
+                      production=DATABASE_COORDS.production
                      )
 
     mongo_client: pymongo.MongoClient
