@@ -9,4 +9,4 @@ RUN pip install -r requirements.txt
 
 COPY . .
 RUN pip install -e .
-CMD ["gunicorn", "--pythonpath=src/extract_endpoint", "--bind=0.0.0.0:5000", "endpoint:App"]
+CMD ["gunicorn", "--pythonpath=src/extract_endpoint", "--bind=0.0.0.0:5000", "--worker-class=gevent", "endpoint:App"]
