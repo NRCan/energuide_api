@@ -69,8 +69,8 @@ def send_to_tl(data: typing.Dict[str, str]) -> int:
         tl_return_code = requests.post(_run_tl_url(), data=data).status_code
         LOGGER.info(f"TL return code: {tl_return_code}")
         return tl_return_code
-    except Exception as exc: # pylint: disable=W0703
-        LOGGER.warning(f"Exception {logger.unwrap_exception_message(exc)}")
+    except requests.exceptions.RequestException as exc:
+        LOGGER.error(f"Exception {logger.unwrap_exception_message(exc)}")
         return HTTPStatus.BAD_GATEWAY
 
 
