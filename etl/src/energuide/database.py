@@ -55,7 +55,10 @@ class DatabaseCoordinates(_DatabaseCoordinates):
 def mongo_client(database_coordinates: DatabaseCoordinates) -> typing.Iterable[pymongo.MongoClient]:
     connection_string = database_coordinates.connection_string
 
-    LOGGER.info(f'Connecting to {connection_string}')
+    LOGGER.info(
+        f'Connecting to {database_coordinates.host}, using method '
+        f"{['local', 'production'][database_coordinates.production]}"
+    )
 
     with pymongo.MongoClient(f'{connection_string}') as client:
         yield client
