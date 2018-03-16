@@ -95,7 +95,11 @@ def run_tl_route() -> typing.Tuple[str, int]:
     if flask.request.form['signature'] != signature:
         flask.abort(HTTPStatus.BAD_REQUEST)
 
-    return '', run_tl(data=flask.request.form)
+    run_tl_return_code = run_tl(data=flask.request.form)
+    LOGGER.info(f"TL returned {run_tl_return_code}")
+    if run_tl_return_code in [HTTPStatus.OK, HTTPStatus.TOO_MANY_REQUESTS]:
+        return '', run_tl_return_code
+    return '', HTTPStatus.BAD_GATEWAY
 
 
 @App.route('/upload_file', methods=['POST'])
@@ -139,7 +143,11 @@ def upload_file() -> typing.Tuple[str, int]:
         LOGGER.warning("Timestamp upload to Azure storage failed")
         flask.abort(HTTPStatus.BAD_GATEWAY)
 
-    return '', run_tl()
+    run_tl_return_code = run_tl()
+    LOGGER.info(f"TL returned {run_tl_return_code}")
+    if run_tl_return_code in [HTTPStatus.OK, HTTPStatus.TOO_MANY_REQUESTS]:
+        return '', run_tl_return_code
+    return '', HTTPStatus.BAD_GATEWAY
 
 
 if __name__ == "__main__":
