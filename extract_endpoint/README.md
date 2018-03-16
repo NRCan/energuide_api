@@ -230,9 +230,10 @@ The `energuide/flask_app.py` app must also have environment variables set pointi
 * ENERGUIDE_PORT
 * ENERGUIDE_DBNAME
 * ENERGUIDE_COLLECTION
+* ENERGUIDE_PRODUCTION
 
-Finally, to upload files to production (or trigger the tl manually) we need to specify the url of the endpoint app
+Finally, to upload files to production (or trigger the tl manually) we need to specify the url of the endpoint route
 ```
-extract_endpoint upload ../etl/extract_out.zip 2018-03-14 --url=https://127.0.0.1:5000/upload_file
-extract_endpoint run_tl --url=https://127.0.0.1:5000/upload_file
+extract_endpoint upload ../etl/extract_out.zip 2018-03-14 --url=https://nrcan-endpoint.azurewebsites.net/upload_file
+extract_endpoint run_tl --url=https://nrcan-endpoint.azurewebsites.net/run_tl
 ```
