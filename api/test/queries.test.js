@@ -40,10 +40,10 @@ describe('queries', () => {
       expect(response.body).not.toHaveProperty('errors')
       let { evaluations } = response.body.data
       expect(evaluations).toEqual({
-        city: 'Charlottetown',
-        forwardSortationArea: 'C1A',
+        city: 'Dartmouth',
+        forwardSortationArea: 'T1L',
         houseId: 189250,
-        region: 'PE',
+        region: 'NS',
         yearBuilt: 1900,
       })
     })
@@ -70,12 +70,12 @@ describe('queries', () => {
       let { dwelling } = response.body.data
       let [first] = dwelling.evaluations
       expect(first).toEqual({
-        creationDate: '2012-10-01T15:08:41',
-        entryDate: '2011-11-18',
-        ersRating: 120,
-        evaluationType: 'E',
+        creationDate: '2012-10-01T15:08:39',
+        entryDate: '2011-08-18',
+        ersRating: 295,
+        evaluationType: 'D',
         modificationDate: '2012-06-09T11:20:20',
-        fileId: '3C10E11075',
+        fileId: '3C10D11075',
       })
     })
 
@@ -689,7 +689,7 @@ describe('queries', () => {
         .send({
           query: `{
            dwellings(
-             filters: [{field: dwellingForwardSortationArea comparator: eq value: "C1A"}]
+             filters: [{field: dwellingForwardSortationArea comparator: eq value: "T1L"}]
            ) {
           results {
             yearBuilt
@@ -703,33 +703,13 @@ describe('queries', () => {
     })
 
     describe('pagination', () => {
-      beforeEach(async () => {
-        await collection.save({
-          houseId: 1000000,
-          yearBuilt: 3000,
-          city: 'Charlottetown',
-          region: 'PE',
-          forwardSortationArea: 'C1A',
-        })
-      })
-
-      afterEach(async () => {
-        await collection.deleteOne({
-          houseId: 1000000,
-          yearBuilt: 3000,
-          city: 'Charlottetown',
-          region: 'PE',
-          forwardSortationArea: 'C1A',
-        })
-      })
-
       const makeRequestForOnePage = function({
         next = '',
         previous = '',
       } = {}) {
         let query = `{
           dwellings(
-           filters: [{field: dwellingForwardSortationArea comparator: eq value: "C1A"}]
+           filters: [{field: dwellingForwardSortationArea comparator: eq value: "T1L"}]
            limit: 1
            ${next}
            ${previous}
@@ -762,11 +742,11 @@ describe('queries', () => {
 
         let { dwellings: first } = response.body.data
         let { dwellings: second } = response2.body.data
-        expect(first.results[0].yearBuilt).toEqual(3000)
-        expect(second.results[0].yearBuilt).toEqual(1900)
+        expect(first.results[0].yearBuilt).toEqual(1900)
+        expect(second.results[0].yearBuilt).toEqual(1976)
 
         expect(first.hasNext).toBe(true)
-        expect(second.hasNext).toBe(false)
+        expect(second.hasNext).toBe(true)
       })
 
       it('uses limit and previous to paginate results', async () => {
@@ -785,7 +765,7 @@ describe('queries', () => {
         let { dwellings: second } = response2.body.data
         let { dwellings: third } = response3.body.data
         expect(first).toEqual(third)
-        expect(second.results[0].yearBuilt).toEqual(1900)
+        expect(second.results[0].yearBuilt).toEqual(1976)
 
         expect(first.hasPrevious).toBe(false)
         expect(second.hasPrevious).toBe(true)
@@ -801,7 +781,7 @@ describe('queries', () => {
         })
 
         let { dwellings: first } = response.body.data
-        expect(first.results[0].yearBuilt).toEqual(3000)
+        expect(first.results[0].yearBuilt).toEqual(1900)
 
         expect(response2.body.data.dwellings).toBe(null)
         expect(response2.body.errors).not.toBe(null)
@@ -820,7 +800,7 @@ describe('queries', () => {
         .send({
           query: `{
           dwellings(
-            filters: [{field: dwellingForwardSortationArea comparator: eq value: "C1A"}]
+            filters: [{field: dwellingForwardSortationArea comparator: eq value: "T1L"}]
           ) {
             results {
               yearBuilt
@@ -830,7 +810,7 @@ describe('queries', () => {
         })
 
       let { dwellings } = response.body.data
-      expect(dwellings.results.length).toEqual(1)
+      expect(dwellings.results.length).toEqual(7)
     })
 
     describe('filters', () => {
@@ -842,7 +822,7 @@ describe('queries', () => {
             query: `{
                dwellings(
                 filters: [
-                  {field: dwellingCity comparator: eq value: "Charlottetown"}
+                  {field: dwellingCity comparator: eq value: "Dartmouth"}
                   {field: dwellingYearBuilt comparator: eq value: "1900"}
                 ]
                ) {
@@ -854,7 +834,7 @@ describe('queries', () => {
              }`,
           })
         let { dwellings: { results: [first] } } = response.body.data
-        expect(first.city).toEqual('Charlottetown')
+        expect(first.city).toEqual('Dartmouth')
         expect(first.yearBuilt).toEqual(1900)
       })
 
@@ -867,7 +847,7 @@ describe('queries', () => {
               query: `{
                  dwellings(
                    filters: [
-                    {field: dwellingForwardSortationArea comparator: eq value: "C1A"}
+                    {field: dwellingForwardSortationArea comparator: eq value: "T1L"}
                     {field: dwellingYearBuilt comparator: gt value: "1900"}
                    ]
                   ) {
@@ -879,7 +859,7 @@ describe('queries', () => {
             })
 
           let { dwellings } = response.body.data
-          expect(dwellings.results.length).toEqual(0)
+          expect(dwellings.results.length).toEqual(4)
         })
 
         it('works on string fields', async () => {
@@ -890,8 +870,8 @@ describe('queries', () => {
               query: `{
                  dwellings(
                    filters: [
-                    {field: dwellingForwardSortationArea comparator: eq value: "C1A"}
-                    {field: dwellingCity comparator: eq value: "Charlottetown"}
+                    {field: dwellingForwardSortationArea comparator: eq value: "T1L"}
+                    {field: dwellingCity comparator: eq value: "Dartmouth"}
                    ]
                   ) {
                    results {
@@ -902,7 +882,7 @@ describe('queries', () => {
             })
 
           let { dwellings: { results: [first] } } = response.body.data
-          expect(first.city).toEqual('Charlottetown')
+          expect(first.city).toEqual('Dartmouth')
         })
 
         it('correctly handles integer values', async () => {
@@ -913,7 +893,7 @@ describe('queries', () => {
               query: `{
                  dwellings(
                    filters: [
-                    {field: dwellingForwardSortationArea comparator: eq value: "C1A"}
+                    {field: dwellingForwardSortationArea comparator: eq value: "T1L"}
                     {field: dwellingYearBuilt comparator: gt value: "1" }
                    ]
                  ) {
@@ -939,7 +919,7 @@ describe('queries', () => {
               query: `{
                  dwellings(
                    filters: [
-                     {field: dwellingForwardSortationArea comparator: eq value: "C1A"}
+                     {field: dwellingForwardSortationArea comparator: eq value: "T1L"}
                      {field: dwellingYearBuilt comparator: lt value: "2000"}
                    ]
                  ) {
@@ -963,7 +943,7 @@ describe('queries', () => {
               query: `{
                  dwellings(
                    filters: [
-                     {field: dwellingForwardSortationArea comparator: eq value: "C1A"}
+                     {field: dwellingForwardSortationArea comparator: eq value: "T1L"}
                      {field: dwellingYearBuilt comparator: eq value: "1900"}
                    ]
                  ) {
@@ -986,8 +966,8 @@ describe('queries', () => {
               query: `{
                  dwellings(
                   filters: [
-                    {field: dwellingForwardSortationArea comparator: eq value: "C1A"}
-                    {field: dwellingCity comparator: eq value: "Charlottetown"}
+                    {field: dwellingForwardSortationArea comparator: eq value: "T1L"}
+                    {field: dwellingCity comparator: eq value: "Dartmouth"}
                   ]
                  ) {
                    results {
@@ -997,7 +977,7 @@ describe('queries', () => {
                }`,
             })
           let { dwellings: { results: [first] } } = response.body.data
-          expect(first.city).toEqual('Charlottetown')
+          expect(first.city).toEqual('Dartmouth')
         })
       })
     })
@@ -1010,7 +990,7 @@ describe('queries', () => {
         // default creationDate is "2012-10-01T15:08:41"
         let query = `{
           dwellings(
-           filters: [{field: dwellingForwardSortationArea comparator: eq value: "C1A"}]
+           filters: [{field: dwellingForwardSortationArea comparator: eq value: "T1L"}]
            dateRange: {
              field: evaluationCreationDate
              ${startDate}
@@ -1039,8 +1019,8 @@ describe('queries', () => {
           creationDate,
           fileId,
         } = _response.body.data.dwellings.results[0].evaluations[0]
-        expect(creationDate).toEqual('2012-10-01T15:08:41')
-        expect(fileId).toEqual('3C10E11075')
+        expect(creationDate).toEqual('2012-10-01T15:08:39')
+        expect(fileId).toEqual('3C10D11075')
       }
 
       function expectEvaluationIsNotReturned(_response) {
@@ -1084,9 +1064,9 @@ describe('queries', () => {
       "2012-10-01" <= "2012-10-01T15:08:41" is true, but
       "2012-10-01" >= "2012-10-01T15:08:41" is false
       */
-      const invalidEndDates = ['2012-10-01', '2012-09-30', '2012-01-01']
+      const invalidEndDates = ['2012-04-01', '2012-03-30', '2012-01-01']
       invalidEndDates.forEach(_endDate => {
-        it(`will not return results for a endDate earlier than or equal to 2012-10-01: ${_endDate}`, async () => {
+        it(`will not return results for a endDate earlier than or equal to 2012-05-09: ${_endDate}`, async () => {
           let response = await makeRequestForDateRange({
             startDate: '',
             endDate: `endDate: "${_endDate}"`,
