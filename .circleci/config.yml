@@ -286,7 +286,7 @@ jobs:
               extract_endpoint upload ../etl/tests/randomized_energuide_data.zip 2018-03-14
           name: "Send data to azure, trigger TL process"
       - run:
-          sleep 10
+          sleep 5
       - run: "mkdir -p workspace"
       - run:
           command: "mongoexport --db energuide --collection dwellings --out workspace/mongo_dump\n"
