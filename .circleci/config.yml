@@ -162,7 +162,7 @@ jobs:
   node_integration:
     docker:
       - image: "circleci/node:8.9.4"
-      - image: "mongo:3.6.3"
+      - image: "mongo:3.6.2"
     steps:
       - checkout:
           path: ~/repo
