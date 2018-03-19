@@ -1,5 +1,6 @@
 import io
 import subprocess
+from http import HTTPStatus
 import typing
 import psutil
 import pytest
@@ -103,7 +104,7 @@ def test_post_stream_cli(azure_service: blob.BlockBlobService,
         sample_timestamp,
         '--url', upload_url
     ])
-    assert result.exit_code == 0
+    assert result.exit_code != HTTPStatus.BAD_REQUEST
     check_file_in_azure(azure_service, azure_emulator_coords, endpoint.TIMESTAMP_FILENAME, sample_timestamp)
     for name, contents in zip(sample_filenames, sample_file_contents):
         check_file_in_azure(azure_service, azure_emulator_coords, name, contents)
@@ -146,7 +147,17 @@ def test_post_stream_cli_no_url(azure_service: blob.BlockBlobService,
         sample_timestamp,
         '--url', None
     ])
-    assert result.exit_code == 0
+    assert result.exit_code != HTTPStatus.BAD_REQUEST
     check_file_in_azure(azure_service, azure_emulator_coords, endpoint.TIMESTAMP_FILENAME, sample_timestamp)
     for name, contents in zip(sample_filenames, sample_file_contents):
         check_file_in_azure(azure_service, azure_emulator_coords, name, contents)
+
+
+@pytest.mark.usefixtures('run_endpoint')
+def test_run_tl() -> None:
+    runner = testing.CliRunner()
+    result = runner.invoke(post_to_endpoint.main, args=[
+        'run_tl',
+        '--url', None
+    ])
+    assert result.exit_code != HTTPStatus.BAD_REQUEST

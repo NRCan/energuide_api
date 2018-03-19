@@ -48,6 +48,11 @@ def port() -> int:
 
 
 @pytest.fixture
+def production() -> bool:
+    return bool(os.environ.get(database.EnvVariables.production.value, database.EnvDefaults.production.value))
+
+
+@pytest.fixture
 def database_name(database_coordinates: database.DatabaseCoordinates) -> typing.Iterable[str]:
     db_name = os.environ.get(database.EnvVariables.database.value, database.EnvDefaults.database.value)
     db_name = f'{db_name}_test_{random.randint(1000, 9999)}'
@@ -68,12 +73,14 @@ def collection() -> str:
 def database_coordinates(username: str,
                          password: str,
                          host: str,
-                         port: int) -> database.DatabaseCoordinates:
+                         port: int,
+                         production: bool) -> database.DatabaseCoordinates:
     return database.DatabaseCoordinates(
         username=username,
         password=password,
         host=host,
         port=port,
+        production=production,
     )
 
 

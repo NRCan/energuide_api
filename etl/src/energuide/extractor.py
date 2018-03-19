@@ -121,7 +121,7 @@ def extract_data(input_path: str,
 def write_data(data: typing.Iterable[typing.Optional[typing.Dict[str, typing.Any]]],
                output_path: str) -> typing.Tuple[int, int]:
     records_written, records_failed = 0, 0
-    with zipfile.ZipFile(output_path, mode='w') as output_zip:
+    with zipfile.ZipFile(output_path, mode='w', compression=zipfile.ZIP_DEFLATED) as output_zip:
         for blob in data:
             if blob is None or not blob.get('BUILDER'):
                 records_failed += 1

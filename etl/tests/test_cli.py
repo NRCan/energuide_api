@@ -1,4 +1,5 @@
 import csv
+import os
 import typing
 import zipfile
 import py
@@ -113,7 +114,7 @@ def test_load_azure(database_name: str,
     assert coll.count() == 7
 
 
-def test_load_append(energuide_zip_fixture: str,
+def test_load_update(energuide_zip_fixture: str,
                      database_name: str,
                      collection: str,
                      mongo_client: pymongo.MongoClient) -> None:
@@ -122,6 +123,7 @@ def test_load_append(energuide_zip_fixture: str,
         'load',
         '--db_name', database_name,
         '--filename', energuide_zip_fixture,
+        '--no-update',
     ])
 
     assert result.exit_code == 0
@@ -130,13 +132,13 @@ def test_load_append(energuide_zip_fixture: str,
         'load',
         '--db_name', database_name,
         '--filename', energuide_zip_fixture,
-        '--append',
+        '--update',
     ])
 
     assert result.exit_code == 0
 
     coll = mongo_client.get_database(database_name).get_collection(collection)
-    assert coll.count() == 14
+    assert coll.count() == 7
 
 
 def test_extract_valid(valid_filepath: str, tmpdir: py._path.local.LocalPath) -> None:
@@ -170,8 +172,8 @@ def test_extract_invalid(invalid_filepath: str, tmpdir: py._path.local.LocalPath
 
 
 def test_extract_missing(tmpdir: py._path.local.LocalPath) -> None:
-    outfile = f'{tmpdir}/output.zip'
-    infile = f'{tmpdir}/idontexist.csv'
+    outfile = os.path.join(tmpdir, 'output.zip')
+    infile = os.path.join(tmpdir, 'idontexist.csv')
     runner = testing.CliRunner()
     result = runner.invoke(cli.main, args=[
         'extract',
@@ -180,6 +182,4 @@ def test_extract_missing(tmpdir: py._path.local.LocalPath) -> None:
     ])
 
     assert result.exit_code != 0
-
-    with zipfile.ZipFile(outfile, 'r') as output:
-        assert not output.namelist()
+    assert not os.path.exists(outfile)
