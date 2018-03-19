@@ -682,6 +682,26 @@ describe('queries', () => {
   })
 
   describe('dwellingsInFSA', () => {
+    beforeEach(async () => {
+      await collection.save({
+        houseId: 1000000,
+        yearBuilt: 3000,
+        city: 'Charlottetown',
+        region: 'PE',
+        forwardSortationArea: 'C1A',
+      })
+    })
+
+    afterEach(async () => {
+      await collection.deleteOne({
+        houseId: 1000000,
+        yearBuilt: 3000,
+        city: 'Charlottetown',
+        region: 'PE',
+        forwardSortationArea: 'C1A',
+      })
+    })
+
     it('gets evalutations within a Forward Sortation Area', async () => {
       let response = await request(server)
         .post('/graphql')
@@ -689,7 +709,7 @@ describe('queries', () => {
         .send({
           query: `{
            dwellings(
-             filters: [{field: dwellingForwardSortationArea comparator: eq value: "T1L"}]
+             filters: [{field: dwellingForwardSortationArea comparator: eq value: "C1A"}]
            ) {
           results {
             yearBuilt
@@ -699,17 +719,51 @@ describe('queries', () => {
         })
 
       let { dwellings: { results: [first] } } = response.body.data
-      expect(first.yearBuilt).toEqual(1900)
+      expect(first.yearBuilt).toEqual(3000)
     })
 
     describe('pagination', () => {
+      beforeEach(async () => {
+        await collection.save({
+          houseId: 1000000,
+          yearBuilt: 3000,
+          city: 'Charlottetown',
+          region: 'PE',
+          forwardSortationArea: 'A2A',
+        })
+        await collection.save({
+          houseId: 2000000,
+          yearBuilt: 3100,
+          city: 'Charlottetown',
+          region: 'PE',
+          forwardSortationArea: 'A2A',
+        })
+      })
+
+      afterEach(async () => {
+        await collection.deleteOne({
+          houseId: 1000000,
+          yearBuilt: 3000,
+          city: 'Charlottetown',
+          region: 'PE',
+          forwardSortationArea: 'A2A',
+        })
+        await collection.deleteOne({
+          houseId: 2000000,
+          yearBuilt: 3100,
+          city: 'Charlottetown',
+          region: 'PE',
+          forwardSortationArea: 'A2A',
+        })
+      })
+
       const makeRequestForOnePage = function({
         next = '',
         previous = '',
       } = {}) {
         let query = `{
           dwellings(
-           filters: [{field: dwellingForwardSortationArea comparator: eq value: "T1L"}]
+           filters: [{field: dwellingForwardSortationArea comparator: eq value: "A2A"}]
            limit: 1
            ${next}
            ${previous}
@@ -742,11 +796,11 @@ describe('queries', () => {
 
         let { dwellings: first } = response.body.data
         let { dwellings: second } = response2.body.data
-        expect(first.results[0].yearBuilt).toEqual(1900)
-        expect(second.results[0].yearBuilt).toEqual(1976)
+        expect(first.results[0].yearBuilt).toEqual(3100)
+        expect(second.results[0].yearBuilt).toEqual(3000)
 
         expect(first.hasNext).toBe(true)
-        expect(second.hasNext).toBe(true)
+        expect(second.hasNext).toBe(false)
       })
 
       it('uses limit and previous to paginate results', async () => {
@@ -765,7 +819,7 @@ describe('queries', () => {
         let { dwellings: second } = response2.body.data
         let { dwellings: third } = response3.body.data
         expect(first).toEqual(third)
-        expect(second.results[0].yearBuilt).toEqual(1976)
+        expect(second.results[0].yearBuilt).toEqual(3000)
 
         expect(first.hasPrevious).toBe(false)
         expect(second.hasPrevious).toBe(true)
@@ -781,7 +835,7 @@ describe('queries', () => {
         })
 
         let { dwellings: first } = response.body.data
-        expect(first.results[0].yearBuilt).toEqual(1900)
+        expect(first.results[0].yearBuilt).toEqual(3100)
 
         expect(response2.body.data.dwellings).toBe(null)
         expect(response2.body.errors).not.toBe(null)
@@ -911,6 +965,26 @@ describe('queries', () => {
       })
 
       describe('lt: less than', () => {
+        beforeEach(async () => {
+          await collection.save({
+            houseId: 1000000,
+            yearBuilt: 1800,
+            city: 'Charlottetown',
+            region: 'PE',
+            forwardSortationArea: 'B3A',
+          })
+        })
+
+        afterEach(async () => {
+          await collection.deleteOne({
+            houseId: 1000000,
+            yearBuilt: 1800,
+            city: 'Charlottetown',
+            region: 'PE',
+            forwardSortationArea: 'B3A',
+          })
+        })
+
         it('returns dwellings where the field is less than the given value', async () => {
           let response = await request(server)
             .post('/graphql')
@@ -919,7 +993,7 @@ describe('queries', () => {
               query: `{
                  dwellings(
                    filters: [
-                     {field: dwellingForwardSortationArea comparator: eq value: "T1L"}
+                     {field: dwellingForwardSortationArea comparator: eq value: "B3A"}
                      {field: dwellingYearBuilt comparator: lt value: "2000"}
                    ]
                  ) {
@@ -930,7 +1004,7 @@ describe('queries', () => {
                }`,
             })
           let { dwellings: { results: [first] } } = response.body.data
-          expect(first.yearBuilt).toEqual(1900)
+          expect(first.yearBuilt).toEqual(1800)
         })
       })
 
@@ -1035,7 +1109,9 @@ describe('queries', () => {
             startDate: `startDate: "${_startDate}"`,
           })
 
-          expectEvaluationIsReturned(response)
+          let { data } = response.body
+          let { dwellings } = data
+          expect(dwellings.results.length).toBeGreaterThan(0)
         })
       })
 
@@ -1055,7 +1131,9 @@ describe('queries', () => {
             endDate: `endDate: "${_endDate}"`,
           })
 
-          expectEvaluationIsReturned(response)
+          let { data } = response.body
+          let { dwellings } = data
+          expect(dwellings.results.length).toBeGreaterThan(0)
         })
       })
 
