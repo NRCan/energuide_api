@@ -58,6 +58,10 @@ def _run_tl_url() -> str:
     return os.environ.get('TL_ADDRESS', 'http://0.0.0.0:5010') + '/run_tl'
 
 
+def _tl_status_url() -> str:
+    return os.environ.get('TL_ADDRESS', 'http://0.0.0.0:5010') + '/status'
+
+
 @App.route('/', methods=['GET'])
 def frontend() -> str:
     return ''
@@ -82,6 +86,16 @@ def timestamp() -> str:
         LOGGER.warning(f"Error contacting Azure: {logger.unwrap_exception_message(exc)}")
         flask.abort(HTTPStatus.BAD_GATEWAY)
     return timestamp
+
+
+@App.route('/status', methods=['GET'])
+def system_status() -> str:
+    endpoint_status = 'busy' if ThreadRunner.is_thread_running() else 'idle'
+    try:
+        tl_status = requests.get(_tl_status_url()).content.decode()
+    except requests.exceptions.RequestException:
+        tl_status = 'Error'
+    return f"Endpoint: {endpoint_status}   TL: {tl_status}"
 
 
 def send_to_tl(data: typing.Dict[str, str]) -> int:
