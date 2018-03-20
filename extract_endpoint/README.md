@@ -229,7 +229,7 @@ The `energuide/flask_app.py` app must also have environment variables set pointi
 * ENERGUIDE_HOST
 * ENERGUIDE_DBNAME
 * ENERGUIDE_COLLECTION
-* ENERGUIDE_PRODUCTION
+* ENERGUIDE_PRODUCTION (just set to '1')
 
 Finally, to upload files to production (or trigger the tl manually) we need to specify the url of the endpoint route
 ```
