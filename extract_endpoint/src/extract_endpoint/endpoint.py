@@ -1,5 +1,8 @@
 import os
+import io
+import threading
 import hashlib
+import functools
 import secrets
 import typing
 from http import HTTPStatus
@@ -31,6 +34,24 @@ App.config.update(dict(
         domain=os.environ.get(azure_utils.EnvVariables.domain.value, None)
     )
 ))
+
+
+class ThreadRunner:
+    _running_thread: typing.Optional[threading.Thread] = None
+
+    @classmethod
+    def start_new_thread(cls, target: typing.Callable[[], None]) -> None:
+        cls._running_thread = threading.Thread(target=target)
+        cls._running_thread.start()
+
+    @classmethod
+    def is_thread_running(cls) -> bool:
+        return cls._running_thread is not None and cls._running_thread.is_alive()
+
+    @classmethod
+    def join(cls) -> None:
+        if cls._running_thread is not None:
+            cls._running_thread.join()
 
 
 def _run_tl_url() -> str:
@@ -102,6 +123,16 @@ def run_tl_route() -> typing.Tuple[str, int]:
     return '', HTTPStatus.BAD_GATEWAY
 
 
+def unzip_upload_run_tl(data: bytes) -> None:
+    file_z = zipfile.ZipFile(io.BytesIO(data))
+    for json_file in [file_z.open(zipinfo) for zipinfo in file_z.infolist()]:
+        if not azure_utils.upload_bytes_to_azure(App.config['AZURE_COORDINATES'], json_file.read(),
+                                                 utils.secure_filename(json_file.name)):
+            LOGGER.warning("File upload to Azure storage failed")
+    LOGGER.info(f"{len(file_z.infolist())} json files uploaded to Azure")
+    run_tl()
+
+
 @App.route('/upload_file', methods=['POST'])
 def upload_file() -> typing.Tuple[str, int]:
     LOGGER.info("Received upload request")
@@ -126,28 +157,23 @@ def upload_file() -> typing.Tuple[str, int]:
         flask.abort(HTTPStatus.BAD_REQUEST)
 
     try:
-        file_z = zipfile.ZipFile(file)
+        zipfile.ZipFile(file)
+        file.seek(0)
     except zipfile.BadZipFile:
         LOGGER.warning("Bad zipfile")
         return "Bad Zipfile", HTTPStatus.BAD_REQUEST
 
-    for json_file in [file_z.open(zipinfo) for zipinfo in file_z.infolist()]:
-        if not azure_utils.upload_bytes_to_azure(App.config['AZURE_COORDINATES'], json_file.read(),
-                                                 utils.secure_filename(json_file.name)):
-            LOGGER.warning("File upload to Azure storage failed")
-            flask.abort(HTTPStatus.BAD_GATEWAY)
-    LOGGER.info(f"{len(file_z.infolist())} json files uploaded to Azure")
+    if ThreadRunner.is_thread_running():
+        LOGGER.warning("Still uploading to Azure, ignoring current upload")
+        flask.abort(HTTPStatus.TOO_MANY_REQUESTS)
 
     timestamp = flask.request.form['timestamp']
     if not azure_utils.upload_bytes_to_azure(App.config['AZURE_COORDINATES'], timestamp.encode(), TIMESTAMP_FILENAME):
         LOGGER.warning("Timestamp upload to Azure storage failed")
         flask.abort(HTTPStatus.BAD_GATEWAY)
 
-    run_tl_return_code = run_tl()
-    LOGGER.info(f"TL returned {run_tl_return_code}")
-    if run_tl_return_code in [HTTPStatus.OK, HTTPStatus.TOO_MANY_REQUESTS]:
-        return '', run_tl_return_code
-    return '', HTTPStatus.BAD_GATEWAY
+    ThreadRunner.start_new_thread(target=functools.partial(unzip_upload_run_tl, data=file.read()))
+    return 'Azure upload starting', HTTPStatus.OK
 
 
 if __name__ == "__main__":
