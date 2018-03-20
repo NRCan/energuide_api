@@ -291,8 +291,6 @@ jobs:
       - run:
           command: "mongoexport --db energuide --collection dwellings --out workspace/mongo_dump\n"
           name: "Exporting database"
-      - store_artifacts:
-          path: workspace/mongo_dump
       - persist_to_workspace:
           paths:
             - mongo_dump
