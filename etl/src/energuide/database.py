@@ -84,5 +84,3 @@ def load(coords: DatabaseCoordinates,
             existing.discard(row.house_id)
             data_row = row.to_dict()
             collection.update({'houseId': data_row['houseId']}, data_row, upsert=True)
-
-        collection.remove({'houseId': {'$in': list(existing)}})
