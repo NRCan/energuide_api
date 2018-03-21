@@ -154,11 +154,11 @@ import { createI18NDate } from './types/I18NDate'
 
 const Resolvers = i18n => {
   return {
-    I18NInt: createI18NInt(i18n),
-    I18NString: createI18NString(i18n),
-    I18NFloat: createI18NFloat(i18n),
-    I18NBoolean: createI18NBoolean(i18n),
-    I18NDate: createI18NDate(i18n),
+    Int: createI18NInt(i18n),
+    String: createI18NString(i18n),
+    Float: createI18NFloat(i18n),
+    Boolean: createI18NBoolean(i18n),
+    Date: createI18NDate(i18n),
     Query: {
       dwelling: async (root, { houseId }, { client }) => {
         let query = {

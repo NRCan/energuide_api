@@ -51,6 +51,7 @@ class _WaterHeating(typing.NamedTuple):
     tank_volume: float
     efficiency_ef: typing.Optional[float]
     efficiency_percentage: typing.Optional[float]
+    drain_water_heat_recovery_efficiency_percentage: typing.Optional[float]
 
 
 class WaterHeating(_WaterHeating):
@@ -94,7 +95,6 @@ class WaterHeating(_WaterHeating):
         ("propane", "direct vent (sealed)"): WaterHeaterType.PROPANE_DIRECT_VENT_SEALED,
         ("propane", "direct vent (sealed, pilot)"): WaterHeaterType.PROPANE_DIRECT_VENT_SEALED_PILOT,
         ("propane", "condensing"): WaterHeaterType.PROPANE_CONDENSING,
-
         ("mixed wood", "not applicable"): WaterHeaterType.NOT_APPLICABLE,
         ("mixed wood", "fireplace"): WaterHeaterType.WOOD_SPACE_HEATING_FIREPLACE,
         ("mixed wood", "wood stove water coil"): WaterHeaterType.WOOD_SPACE_HEATING_WOOD_STOVE_WATER_COIL,
@@ -119,7 +119,6 @@ class WaterHeating(_WaterHeating):
         ("wood pellets", "indoor wood boiler"): WaterHeaterType.WOOD_SPACE_HEATING_INDOOR_WOOD_BOILER,
         ("wood pellets", "outdoor wood boiler"): WaterHeaterType.WOOD_SPACE_HEATING_OUTDOOR_WOOD_BOILER,
         ("wood pellets", "wood hot water tank"): WaterHeaterType.WOOD_SPACE_HEATING_WOOD_HOT_WATER_TANK,
-
         ("solar", "solar collector system"): WaterHeaterType.SOLAR_COLLECTOR_SYSTEM,
         ("csa p9-11 tested combo heat/dhw", "csa p9-11 tested combo heat/dhw"): WaterHeaterType.CSA_DHW,
     }
@@ -279,11 +278,11 @@ class WaterHeating(_WaterHeating):
         ),
     }
 
-
     @classmethod
     def _from_data(cls, water_heating: element.Element) -> 'WaterHeating':
-        if water_heating.attrib['hasDrainWaterHeatRecovery'] == 'true':
-            raise InvalidEmbeddedDataTypeError(WaterHeating, 'hasDrainWaterHeatRecovery is true')
+        drain_water_efficiency: typing.Optional[float] = None
+        if water_heating.get('@hasDrainWaterHeatRecovery', str) == 'true':
+            drain_water_efficiency = water_heating.get('DrainWaterHeatRecovery/@effectivenessAt9.5', float)
 
         try:
             energy_type = water_heating.get_text('EnergySource/English')
@@ -307,19 +306,18 @@ class WaterHeating(_WaterHeating):
             tank_volume=volume,
             efficiency_ef=float(efficiency_ef_node[0]) if efficiency_ef_node else None,
             efficiency_percentage=float(efficiency_percent_node[0]) if efficiency_percent_node else None,
+            drain_water_heat_recovery_efficiency_percentage=drain_water_efficiency,
         )
-
 
     @classmethod
     def from_data(cls, water_heating: element.Element) -> typing.List['WaterHeating']:
         water_heatings = water_heating.xpath("*[self::Primary or self::Secondary]")
-        return [cls._from_data(water_heating) for water_heating in water_heatings]
 
+        return [cls._from_data(heater) for heater in water_heatings]
 
     @property
     def tank_volume_gallon(self) -> float:
         return self.tank_volume * self._LITRE_TO_GALLON
-
 
     def to_dict(self) -> typing.Dict[str, typing.Union[str, float, None]]:
         translation = self._WATER_HEATER_TYPE_TRANSLATION[self.water_heater_type]
@@ -331,4 +329,5 @@ class WaterHeating(_WaterHeating):
             'tankVolumeGallon': self.tank_volume_gallon,
             'efficiencyEf': self.efficiency_ef,
             'efficiencyPercentage': self.efficiency_percentage,
+            'drainWaterHeatRecoveryEfficiencyPercentage': self.drain_water_heat_recovery_efficiency_percentage,
         }

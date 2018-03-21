@@ -156,7 +156,7 @@ del allthedata.zip
 Unit tests for the python code.
 ```sh
 pytest tests
-mypy src tests --ignore-missing-imports
+mypy src tests
 ```
 
 #### using the mongodb command-line client

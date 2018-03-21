@@ -15,11 +15,11 @@ describe('Schema Types', () => {
     beforeEach(() => {
       const FoundationWall = createFoundationWall(i18n)
       schema = makeExecutableSchema({
-        typeDefs: [FoundationWall, `scalar I18NFloat`, `scalar I18NString`],
+        typeDefs: [FoundationWall, `scalar I18NFloat`, `scalar String`],
         resolvers: [
           {
             I18NFloat: createI18NFloat(i18n),
-            I18NString: createI18NString(i18n),
+            String: createI18NString(i18n),
           },
         ],
       })

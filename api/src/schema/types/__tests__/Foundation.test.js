@@ -19,7 +19,7 @@ describe('Schema Types', () => {
       schema = makeExecutableSchema({
         typeDefs: [
           createFoundation(i18n),
-          `scalar I18NString`,
+          `scalar String`,
           `scalar I18NFloat`,
           createFoundationFloor(i18n),
           createFoundationWall(i18n),
@@ -28,7 +28,7 @@ describe('Schema Types', () => {
         resolvers: [
           {
             I18NFloat: createI18NFloat(i18n),
-            I18NString: createI18NString(i18n),
+            String: createI18NString(i18n),
           },
         ],
       })

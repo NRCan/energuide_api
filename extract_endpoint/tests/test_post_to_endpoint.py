@@ -1,5 +1,6 @@
 import io
 import subprocess
+from http import HTTPStatus
 import typing
 import psutil
 import pytest
@@ -88,11 +89,7 @@ def check_file_in_azure(azure_service: blob.BlockBlobService,
 
 
 @pytest.mark.usefixtures('run_endpoint')
-def test_post_stream_cli(azure_service: blob.BlockBlobService,
-                         azure_emulator_coords: azure_utils.StorageCoordinates,
-                         sample_timestamp: str,
-                         sample_file_contents: str,
-                         sample_filenames: str,
+def test_post_stream_cli(sample_timestamp: str,
                          sample_zipfile_fixture: str,
                          upload_url: str) -> None:
 
@@ -103,10 +100,7 @@ def test_post_stream_cli(azure_service: blob.BlockBlobService,
         sample_timestamp,
         '--url', upload_url
     ])
-    assert result.exit_code == 0
-    check_file_in_azure(azure_service, azure_emulator_coords, endpoint.TIMESTAMP_FILENAME, sample_timestamp)
-    for name, contents in zip(sample_filenames, sample_file_contents):
-        check_file_in_azure(azure_service, azure_emulator_coords, name, contents)
+    assert result.exit_code != HTTPStatus.BAD_REQUEST
 
 
 def test_post_stream_cli_no_stream(upload_url: str, sample_timestamp: str) -> None:
@@ -133,11 +127,7 @@ def test_post_stream_cli_no_timestamp(sample_zipfile_fixture: str, upload_url: s
 
 
 @pytest.mark.usefixtures('run_endpoint')
-def test_post_stream_cli_no_url(azure_service: blob.BlockBlobService,
-                                azure_emulator_coords: azure_utils.StorageCoordinates,
-                                sample_timestamp: str,
-                                sample_file_contents: str,
-                                sample_filenames: str,
+def test_post_stream_cli_no_url(sample_timestamp: str,
                                 sample_zipfile_fixture: str) -> None:
     runner = testing.CliRunner()
     result = runner.invoke(post_to_endpoint.main, args=[
@@ -146,7 +136,26 @@ def test_post_stream_cli_no_url(azure_service: blob.BlockBlobService,
         sample_timestamp,
         '--url', None
     ])
+    assert result.exit_code != HTTPStatus.BAD_REQUEST
+
+
+@pytest.mark.usefixtures('run_endpoint')
+def test_run_tl() -> None:
+    runner = testing.CliRunner()
+    result = runner.invoke(post_to_endpoint.main, args=[
+        'run_tl',
+        '--url', None
+    ])
+    assert result.exit_code != HTTPStatus.BAD_REQUEST
+
+
+@pytest.mark.usefixtures('run_endpoint')
+def test_status() -> None:
+    runner = testing.CliRunner()
+    result = runner.invoke(post_to_endpoint.main, args=[
+        'status',
+        '--url', None
+    ])
+
     assert result.exit_code == 0
-    check_file_in_azure(azure_service, azure_emulator_coords, endpoint.TIMESTAMP_FILENAME, sample_timestamp)
-    for name, contents in zip(sample_filenames, sample_file_contents):
-        check_file_in_azure(azure_service, azure_emulator_coords, name, contents)
+    assert 'System Status' in result.output
