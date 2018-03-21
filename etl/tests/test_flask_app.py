@@ -43,6 +43,19 @@ def thread_runner() -> typing.Generator:
 
 
 @pytest.fixture
+def busy_thread_runner(thread_runner: flask_app.ThreadRunner) -> typing.Generator:
+    stay_asleep = True
+
+    def sleeper() -> None:
+        while stay_asleep:
+            pass
+
+    thread_runner.start_new_thread(sleeper)
+    yield thread_runner
+    stay_asleep = False
+
+
+@pytest.fixture
 def fake_db_coords(monkeypatch: _pytest.monkeypatch.MonkeyPatch) -> typing.Generator:
     def connection_string(self: database.DatabaseCoordinates) -> str:
         prefix = f'{self.username}:{self.password}@' if self.username and self.password else ''
@@ -128,3 +141,16 @@ def test_run_tl_bad_signature(test_client: testing.FlaskClient, energuide_zip_fi
                                              signature='bad signature'))
     assert post_return.status_code == HTTPStatus.BAD_REQUEST
     assert b'bad signature' in post_return.data
+
+
+def test_status_idle(test_client: testing.FlaskClient) -> None:
+    status = test_client.get('/status')
+    assert status.status_code == HTTPStatus.OK
+    assert status.data == b'idle'
+
+
+@pytest.mark.usefixtures('busy_thread_runner')
+def test_status_busy(test_client: testing.FlaskClient) -> None:
+    status = test_client.get('/status')
+    assert status.status_code == HTTPStatus.OK
+    assert status.data == b'busy'

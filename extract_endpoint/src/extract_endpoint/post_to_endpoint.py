@@ -70,3 +70,13 @@ def run_tl(url: str) -> None:
     click.echo(f"Response: {return_code}")
     if return_code != HTTPStatus.OK:
         exit(return_code)
+
+
+@main.command()
+@click.option('--url', default='http://127.0.0.1:5000/status')
+def status(url: str) -> None:
+    try:
+        system_status = requests.get(url).content.decode()
+    except requests.exceptions.RequestException:
+        system_status = "Endpoint: Error   TL: Unknown"
+    click.echo(f"System Status: {system_status}")

@@ -95,6 +95,11 @@ def robots() -> None:
     flask.abort(HTTPStatus.NOT_FOUND)
 
 
+@App.route('/status', methods=['GET'])
+def system_status() -> str:
+    return 'busy' if ThreadRunner.is_thread_running() else 'idle'
+
+
 @App.route('/run_tl', methods=['POST'])
 def run_tl() -> typing.Tuple[str, int]:
     if 'salt' not in flask.request.form:
