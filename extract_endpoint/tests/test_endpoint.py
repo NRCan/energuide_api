@@ -90,6 +90,19 @@ def thread_runner() -> typing.Generator:
     endpoint.ThreadRunner.join()
 
 
+@pytest.fixture
+def busy_thread_runner(thread_runner: endpoint.ThreadRunner) -> typing.Generator:
+    stay_asleep = True
+
+    def sleeper() -> None:
+        while stay_asleep:
+            pass
+
+    thread_runner.start_new_thread(sleeper)
+    yield thread_runner
+    stay_asleep = False
+
+
 def test_threadrunner(thread_runner: endpoint.ThreadRunner) -> None:
     stay_asleep = True
 
@@ -283,3 +296,16 @@ def test_upload_with_non_zipfile(test_client: testing.FlaskClient,
                                                              file=(sample_nonzipfile, 'zipfile')))
     assert post_return.status_code == HTTPStatus.BAD_REQUEST
     assert b"Bad Zipfile" in post_return.data
+
+
+def test_status_idle(test_client: testing.FlaskClient) -> None:
+    status = test_client.get('/status')
+    assert status.status_code == HTTPStatus.OK
+    assert b'Endpoint: idle' in status.data
+
+
+@pytest.mark.usefixtures('busy_thread_runner')
+def test_status_busy(test_client: testing.FlaskClient) -> None:
+    status = test_client.get('/status')
+    assert status.status_code == HTTPStatus.OK
+    assert b'Endpoint: busy' in status.data

@@ -147,3 +147,15 @@ def test_run_tl() -> None:
         '--url', None
     ])
     assert result.exit_code != HTTPStatus.BAD_REQUEST
+
+
+@pytest.mark.usefixtures('run_endpoint')
+def test_status() -> None:
+    runner = testing.CliRunner()
+    result = runner.invoke(post_to_endpoint.main, args=[
+        'status',
+        '--url', None
+    ])
+
+    assert result.exit_code == 0
+    assert 'System Status' in result.output
