@@ -28,9 +28,9 @@ describe('Enum values', () => {
   const testFields = {
     dwellingHouseId: { testValue: 189250 },
     dwellingYearBuilt: { testValue: 1900 },
-    dwellingCity: { testValue: 'Dartmouth' },
-    dwellingRegion: { testValue: 'NS' },
-    dwellingForwardSortationArea: { testValue: 'T1L' },
+    dwellingCity: { testValue: 'Charlottetown' },
+    dwellingRegion: { testValue: 'PE' },
+    dwellingForwardSortationArea: { testValue: 'C1A' },
     evaluationEvaluationType: { testValue: 'E' },
     evaluationFileId: { testValue: '3C10E11075' },
     evaluationErsRating: { testValue: 120 },
