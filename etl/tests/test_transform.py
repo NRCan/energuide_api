@@ -30,7 +30,7 @@ def test_reader_num_rows(local_reader: transform.LocalExtractReader) -> None:
     assert local_reader.num_rows() == 14
 
 
-def test_azure_reader(azure_reader: transform.AzureExtractReader,) -> None:
+def test_azure_reader_extracted_rows(azure_reader: transform.AzureExtractReader,) -> None:
     output = list(azure_reader.extracted_rows())
     output = sorted(output, key=lambda row: row['BUILDER'])
     unique_builders = {row['BUILDER'] for row in output}
@@ -48,14 +48,14 @@ def touch_one_file_in_azure(azure_emulator: transform.AzureCoordinates, energuid
     service.create_blob_from_bytes(azure_emulator.container, json_file.name, json_file.read())
 
 
-def test_azure_reader_new_data(azure_reader: transform.AzureExtractReader,
-                               azure_emulator: transform.AzureCoordinates,
-                               energuide_zip_fixture: str) -> None:
+def test_azure_reader_extracted_rows_new_data(azure_reader: transform.AzureExtractReader,
+                                              azure_emulator: transform.AzureCoordinates,
+                                              energuide_zip_fixture: str) -> None:
     time.sleep(1)  # otherwise the files created in Azure will have the same modification time as timestamp_tl_start.txt
     output = list(azure_reader.extracted_rows())
     assert len(output) == 14
 
-    azure_reader._new_files = None
+    azure_reader._new_file_list = None
     touch_one_file_in_azure(azure_emulator, energuide_zip_fixture)
     output = list(azure_reader.extracted_rows())
     assert len(output) == 2
@@ -68,7 +68,7 @@ def test_azure_reader_num_rows(azure_reader: transform.AzureExtractReader) -> No
 def test_azure_reader_num_rows_new_data(azure_reader: transform.AzureExtractReader) -> None:
     time.sleep(1)  # otherwise the files created in Azure will have the same modification time as timestamp_tl_start.txt
     azure_reader.num_rows()
-    azure_reader._new_files = None
+    azure_reader._new_file_list = None
     assert azure_reader.num_rows() == 0
 
 

@@ -65,7 +65,7 @@ class AzureExtractReader:
     def __init__(self, coords: AzureCoordinates) -> None:
         self._coords = coords
         self._azure: typing.Optional[blob.BlockBlobService] = None
-        self._new_files: typing.Optional[typing.List[str]] = None
+        self._new_file_list: typing.Optional[typing.List[str]] = None
 
     @property
     def _azure_service(self) -> blob.BlockBlobService:
@@ -75,35 +75,31 @@ class AzureExtractReader:
                                                 custom_domain=self._coords.domain)
         return self._azure
 
-    def _all_files(self) -> typing.List[str]:
-        # itertools.groupby() needs its input sorted by the groupby key. We are assuming that that key is the filename
-        files = sorted([blob_.name for blob_ in self._azure_service.list_blobs(self._coords.container)
-                        if 'timestamp' not in blob_.name])
-        return files
+    @property
+    def _new_files(self) -> typing.List[str]:
+        if self._new_file_list is None:
+            if self._azure_service.exists(self._coords.container, self.tl_start_filename):
+                etl_start_properties = self._azure_service.get_blob_properties(self._coords.container,
+                                                                               self.tl_start_filename)
+                last_etl_start = etl_start_properties.properties.last_modified
 
-    def _get_new_files(self) -> typing.List[str]:
-        if self._azure_service.exists(self._coords.container, self.tl_start_filename):
-            etl_start_properties = self._azure_service.get_blob_properties(self._coords.container,
-                                                                           self.tl_start_filename)
-            last_etl_start = etl_start_properties.properties.last_modified
+                self._azure_service.create_blob_from_text(self._coords.container, self.tl_start_filename, 'TL start')
 
-            self._azure_service.create_blob_from_text(self._coords.container, self.tl_start_filename, 'TL start')
+                new_blobs = [blob_ for blob_ in self._azure_service.list_blobs(self._coords.container)
+                             if 'timestamp' not in blob_.name and blob_.properties.last_modified >= last_etl_start]
+                new_eval_ids = set(blob_.name.split('-')[0] for blob_ in new_blobs if '-' in blob_.name)
 
-            new_blobs = [blob_ for blob_ in self._azure_service.list_blobs(self._coords.container)
-                         if 'timestamp' not in blob_.name and blob_.properties.last_modified >= last_etl_start]
-            new_eval_ids = set(blob_.name.split('-')[0] for blob_ in new_blobs if '-' in blob_.name)
-
-            files = sorted([blob_.name for blob_ in self._azure_service.list_blobs(self._coords.container)
-                            if '-' in blob_.name and blob_.name.split('-')[0] in new_eval_ids])
-        else:
-            self._azure_service.create_blob_from_text(self._coords.container, self.tl_start_filename, 'TL start')
-            files = self._all_files()
-        return files
+                self._new_file_list = sorted([blob_.name
+                                              for blob_ in self._azure_service.list_blobs(self._coords.container)
+                                              if '-' in blob_.name and blob_.name.split('-')[0] in new_eval_ids])
+            else:
+                self._azure_service.create_blob_from_text(self._coords.container, self.tl_start_filename, 'TL start')
+                self._new_file_list = sorted([blob_.name
+                                              for blob_ in self._azure_service.list_blobs(self._coords.container)
+                                              if 'timestamp' not in blob_.name])
+        return self._new_file_list
 
     def extracted_rows(self) -> typing.Iterator[typing.Dict[str, typing.Any]]:
-        if self._new_files is None:
-            self._new_files = self._get_new_files()
-
         for file in self._new_files:
             content = self._azure_service.get_blob_to_bytes(self._coords.container, file).content
             house = json.loads(content)
@@ -111,8 +107,6 @@ class AzureExtractReader:
             yield house
 
     def num_rows(self) -> int:
-        if self._new_files is None:
-            self._new_files = self._get_new_files()
         return len(self._new_files)
 
 
