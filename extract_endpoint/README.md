@@ -231,10 +231,24 @@ The `energuide/flask_app.py` app must also have environment variables set pointi
 * ENERGUIDE_COLLECTION
 * ENERGUIDE_PRODUCTION (just set to '1')
 
-Finally, to upload files to production, trigger the tl manually, or check the status of the web apps we need to specify the url of the endpoint route
-```
-extract_endpoint upload ../etl/extract_out.zip 2018-03-14 --url=https://nrcan-endpoint.azurewebsites.net/upload_file
-extract_endpoint run_tl --url=https://nrcan-endpoint.azurewebsites.net/run_tl
-extract_endpoint status --url=https://nrcan-endpoint.azurewebsites.net/status
 
+There are three commands you can use on your local machine to interact with the web apps.
+First set the `ENERGUIDE_ENDPOINT_ADDRESS` variable on your local machine, for example
 ```
+export ENERGUIDE_ENDPOINT_ADDRESS=https://nrcan-endpoint.azurewebsites.net
+```
+
+To upload a new set of extracted data:
+```
+extract_endpoint upload ../etl/extract_out.zip 2018-03-14
+```
+The TL app runs when the files have finished uploading to Azure. If you want to start it manually:
+```
+extract_endpoint run_tl
+```
+To check the status of the web apps:
+```
+extract_endpoint status
+```
+
+Once the status of both Endpoint and TL are idle, the data you have uploaded should be available in the Mongo database.
