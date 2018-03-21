@@ -251,4 +251,4 @@ To check the status of the web apps:
 extract_endpoint status
 ```
 
-Once the status of both Endpoint and TL are idle, the data you have uploaded should be available in the Mongo database.
+Once both Endpoint and TL are idle the data you have uploaded should be available in the Mongo database.
