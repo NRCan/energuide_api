@@ -1,6 +1,4 @@
 import os
-import typing
-import zipfile
 import py
 import pytest
 from energuide import extractor
