@@ -234,37 +234,98 @@ jobs:
   python_integration:
     docker:
       - image: "circleci/python:3.6.1"
+        environment:
+          ETL_SECRET_KEY: test_key
+          EXTRACT_ENDPOINT_STORAGE_DOMAIN: http://127.0.0.1:10000/devstoreaccount1
+          EXTRACT_ENDPOINT_STORAGE_ACCOUNT: devstoreaccount1
+          EXTRACT_ENDPOINT_STORAGE_KEY: Eby8vdM02xNOcqFlqUwJPLlmEtlCDXJ1OUzFT50uSRZ6IFsuFq2UVErCz4I6tq/K1SZFPTOtr/KBHBeksoGMGw==
+          EXTRACT_ENDPOINT_CONTAINER: energuide-extracted-data
       - image: "mongo:3.6.2"
+      - environment: executable=blob
+        image: arafato/azurite
     steps:
       - checkout:
           path: ~/repo
       - restore_cache:
-          key: "deps1-{{ .Branch }}-{{ checksum \"requirements.txt\" }}"
+          key: "deps1-{{ .Branch }}-{{ checksum \"etl/requirements.txt\" }}"
+      - restore_cache:
+          key: "deps2-{{ .Branch }}-{{ checksum \"extract_endpoint/requirements.txt\" }}"
       - run:
           command: |
               sudo apt-get install apt-transport-https
               sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv 2930ADAE8CAF5059EE73BB4B58712A2291FA4AD5
               echo "deb http://repo.mongodb.org/apt/debian jessie/mongodb-org/3.6 main" | sudo tee /etc/apt/sources.list.d/mongodb-org-3.6.list
               sudo apt-get update
-              sudo apt-get install -y mongodb-org-tools=3.6.2
+              sudo apt-get install -y mongodb-org-tools=3.6.2 mongodb-org-shell=3.6.2
+              echo "deb [arch=amd64] https://packages.microsoft.com/repos/azure-cli/ wheezy main" | sudo tee /etc/apt/sources.list.d/azure-cli.list
+              sudo apt-key adv --keyserver packages.microsoft.com --recv-keys 52E16F86FEE04B979B07E28DB02C46DF417A0893
+              sudo apt-get install apt-transport-https
+              sudo apt-get update && sudo apt-get install azure-cli
           name: "Installing packages"
       - run:
           command: |
+              az storage container create --name energuide-extracted-data --connection-string 'DefaultEndpointsProtocol=http;AccountName=devstoreaccount1;AccountKey=Eby8vdM02xNOcqFlqUwJPLlmEtlCDXJ1OUzFT50uSRZ6IFsuFq2UVErCz4I6tq/K1SZFPTOtr/KBHBeksoGMGw==;BlobEndpoint=http://127.0.0.1:10000/devstoreaccount1;'
+          name: "Create azure container"
+      - run:
+          command: |
+              cd etl
               python3 -m venv ~/.venv
               . ~/.venv/bin/activate
               pip install -r requirements.txt
               pip install -e .
-          name: "Installing dependencies"
+          name: "Installing dependencies for energuide"
       - save_cache:
-          key: "deps1-{{ .Branch }}-{{ checksum \"requirements.txt\" }}"
+          key: "deps1-{{ .Branch }}-{{ checksum \"etl/requirements.txt\" }}"
           paths:
             - ~/.venv
       - run:
           command: |
+              cd extract_endpoint
+              python3 -m venv ~/.venv
+              . ~/.venv/bin/activate
+              pip install -r requirements.txt
+              pip install -e .
+          name: "Installing dependencies for endpoint"
+      - save_cache:
+          key: "deps2-{{ .Branch }}-{{ checksum \"extract_endpoint/requirements.txt\" }}"
+          paths:
+            - ~/.venv
+      - run:
+          command: |
+              cd extract_endpoint
+              . ~/.venv/bin/activate
+              python3 src/extract_endpoint/endpoint.py
+          background: true
+          name: "Start flask endpoint app"
+      - run:
+          command: |
+              cd etl
+              . ~/.venv/bin/activate
+              python3 src/energuide/flask_app.py
+          background: true
+          name: "Start flask etl app"
+      - run:
+          command: |
+              cd etl
               . ~/.venv/bin/activate
               energuide extract --infile tests/randomized_energuide_data.csv --outfile tests/randomized_energuide_data.zip
-              energuide load  --db_name energuide --collection dwellings --filename tests/randomized_energuide_data.zip
-          name: "Loading data"
+          name: "Extracting data"
+      - run:
+          command: |
+              cd extract_endpoint
+              ./tests/check_flask_apps.sh
+          name: "Wait for flask apps to start"
+      - run:
+          command: |
+              cd extract_endpoint
+              . ~/.venv/bin/activate
+              extract_endpoint upload ../etl/tests/randomized_energuide_data.zip 2018-03-14
+          name: "Send data to azure, trigger TL process"
+      - run:
+          command: |
+              cd extract_endpoint
+              ./tests/check_mongo.sh
+          name: "wait for background process to complete"
       - run: "mkdir -p workspace"
       - run:
           command: "mongoexport --db energuide --collection dwellings --out workspace/mongo_dump\n"
@@ -276,7 +337,7 @@ jobs:
           command: ~/repo/scripts/notify_failure.sh
           name: "Report failing Master"
           when: on_fail
-    working_directory: ~/repo/etl
+    working_directory: ~/repo
 workflows:
   version: 2
   node_and_python:
