@@ -1,4 +1,4 @@
-from click import testing
+from click import testing # type: ignore
 from energuide import cli
 
 def test_nothing() -> None:
