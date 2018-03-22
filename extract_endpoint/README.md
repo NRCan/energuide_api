@@ -168,7 +168,7 @@ We should have three apps running: Azure, the endpoint, and the ETL web app.
 
 In the **Endpoint Post** terminal upload the extracted records (and a timestamp) via
 ```
-extract_endpoint upload ../etl/extract_out.zip 2018-03-14
+extract_endpoint upload ../etl/extract_out.zip "2011-03-08 15:47"
 ```
 
 All terminals should produce output.
@@ -201,3 +201,54 @@ GET /devstoreaccount1/energuide-extracted-data/55622-11W2E00606 206 3.025 ms - 2
 2018-03-14T12:22:04-0400 - INFO - __main__: Success, 7 created
 
 ```
+
+You can also rerun the ETL app without uploading new files:
+```
+extract_endpoint run_tl
+```
+
+## Deploying
+
+The two web apps `extract_endpoint/endpoint.py` and `energuide/flask_app.py`
+run in Microsoft Azure.
+To configure them to work correctly, both apps must have environment variables set pointing to the production Azure Storage.
+* EXTRACT_ENDPOINT_STORAGE_DOMAIN
+* EXTRACT_ENDPOINT_STORAGE_ACCOUNT
+* EXTRACT_ENDPOINT_STORAGE_KEY
+* EXTRACT_ENDPOINT_CONTAINER
+
+The two apps and the local machine that will be running `extract_endpoint upload` must share a common environment
+variable ETL_SECRET_KEY. This should be a random string of length at least 30 characters.
+
+The `extract_endpoint/endpoint.py` app needs to have the environment variable TL_ADDRESS set to the url
+of the `energuide/flask_app.py` app. For example, 'https://nrcan-etl.azurewebsites.net'
+
+The `energuide/flask_app.py` app must also have environment variables set pointing to the production Mongo database.
+* ENERGUIDE_USERNAME
+* ENERGUIDE_PASSWORD
+* ENERGUIDE_HOST
+* ENERGUIDE_DBNAME
+* ENERGUIDE_COLLECTION
+* ENERGUIDE_PRODUCTION (just set to '1')
+
+
+There are three commands you can use on your local machine to interact with the web apps.
+First set the `ENERGUIDE_ENDPOINT_ADDRESS` variable on your local machine, for example
+```
+export ENERGUIDE_ENDPOINT_ADDRESS=https://nrcan-endpoint.azurewebsites.net
+```
+
+To upload a new set of extracted data:
+```
+extract_endpoint upload ../etl/extract_out.zip "2011-03-08 15:47"
+```
+The TL app runs when the files have finished uploading to Azure. If you want to start it manually:
+```
+extract_endpoint run_tl
+```
+To check the status of the web apps:
+```
+extract_endpoint status
+```
+
+Once both Endpoint and TL are idle the data you have uploaded should be available in the Mongo database.
