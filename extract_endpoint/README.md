@@ -168,7 +168,7 @@ We should have three apps running: Azure, the endpoint, and the ETL web app.
 
 In the **Endpoint Post** terminal upload the extracted records (and a timestamp) via
 ```
-extract_endpoint upload ../etl/extract_out.zip 2018-03-14
+extract_endpoint upload ../etl/extract_out.zip "2011-03-08 15:47"
 ```
 
 All terminals should produce output.
@@ -240,7 +240,7 @@ export ENERGUIDE_ENDPOINT_ADDRESS=https://nrcan-endpoint.azurewebsites.net
 
 To upload a new set of extracted data:
 ```
-extract_endpoint upload ../etl/extract_out.zip 2018-03-14
+extract_endpoint upload ../etl/extract_out.zip "2011-03-08 15:47"
 ```
 The TL app runs when the files have finished uploading to Azure. If you want to start it manually:
 ```
