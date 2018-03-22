@@ -2,7 +2,6 @@ import copy
 import datetime
 import typing
 import pytest
-from energuide import bilingual
 from energuide import dwelling
 from energuide.embedded import upgrade
 from energuide.exceptions import InvalidInputDataError

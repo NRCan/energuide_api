@@ -89,7 +89,9 @@ def _safe_merge(data: typing.Dict[str, typing.Any],
 
 def _snip_upgrade_order(row: typing.Dict[str, typing.Optional[str]]) -> typing.Dict[str, typing.Optional[str]]:
     if row.get('RAW_XML'):
-        doc = element.Element.from_string(row['RAW_XML'])
+        xml = typing.cast(str, row['RAW_XML'])
+
+        doc = element.Element.from_string(xml)
         upgrade_order = snippets.snip_energy_upgrade_order(doc)
         _safe_merge(row, upgrade_order.to_dict())
     else:
@@ -145,9 +147,9 @@ def write_data(data: typing.Iterable[typing.Optional[typing.Dict[str, typing.Any
             if blob is None or not all((blob.get('BUILDER'), blob.get('EVAL_ID'), blob.get('HOUSE_ID'))):
                 records_failed += 1
             else:
-                blob_id: str = blob.get('BUILDER')
-                eval_id: str = blob.get('EVAL_ID')
-                house_id: str = blob.get('HOUSE_ID')
+                blob_id = blob.get('BUILDER')
+                eval_id = blob.get('EVAL_ID')
+                house_id = blob.get('HOUSE_ID')
                 output_zip.writestr(f'{house_id}-{eval_id}-{blob_id}', json.dumps(blob))
                 records_written += 1
 

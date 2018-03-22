@@ -149,7 +149,7 @@ class Evaluation:
                  entry_date: datetime.date,
                  creation_date: datetime.datetime,
                  modification_date: typing.Optional[datetime.datetime],
-                 ers_rating: int,
+                 ers_rating: typing.Optional[int],
                  energy_upgrades: typing.List[upgrade.Upgrade],
                 ) -> None:
         self._file_id = file_id

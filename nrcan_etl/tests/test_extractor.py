@@ -38,7 +38,7 @@ def base_data() -> typing.Dict[str, str]:
         'UGRERSGHG': '5.4',
         'ERSENERGYINTENSITY': '0.82',
 
-        'RAW_XML': None,
+        'RAW_XML': '',
     }
 
 
