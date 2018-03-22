@@ -278,6 +278,11 @@ jobs:
       - run:
           command: |
               cd extract_endpoint
+              ./tests/check_flask_apps.sh
+          name: "Wait for flask apps to start"
+      - run:
+          command: |
+              cd extract_endpoint
               . ~/.venv/bin/activate
               extract_endpoint upload ../etl/tests/randomized_energuide_data.zip 2018-03-14
           name: "Send data to azure, trigger TL process"
