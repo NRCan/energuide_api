@@ -1,4 +1,4 @@
-import typing
+import click
 
 @click.group()
 def main() -> None:
