@@ -30,7 +30,7 @@ def test_reader_num_rows(local_reader: transform.LocalExtractReader) -> None:
     assert local_reader.num_rows() == 14
 
 
-def test_azure_reader_extracted_rows(azure_reader: transform.AzureExtractReader,) -> None:
+def test_azure_reader_extracted_rows(azure_reader: transform.AzureExtractReader) -> None:
     output = list(azure_reader.extracted_rows())
     output = sorted(output, key=lambda row: row['BUILDER'])
     unique_builders = {row['BUILDER'] for row in output}
