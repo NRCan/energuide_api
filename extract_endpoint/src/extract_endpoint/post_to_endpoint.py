@@ -9,9 +9,15 @@ import click
 
 DEFAULT_ETL_SECRET_KEY = 'no key'
 
+DEFAULT_ENERGUIDE_ENDPOINT_ADDRESS = 'http://127.0.0.1:5000'
+
 
 def _etl_secret_key() -> str:
     return os.environ.get('ETL_SECRET_KEY', DEFAULT_ETL_SECRET_KEY)
+
+
+def _endpoint_address() -> str:
+    return os.environ.get('ENERGUIDE_ENDPOINT_ADDRESS', DEFAULT_ENERGUIDE_ENDPOINT_ADDRESS)
 
 
 def post_stream(stream: typing.IO[bytes],
@@ -55,7 +61,7 @@ def main() -> None:
 @main.command()
 @click.argument('stream', type=click.File('rb'))
 @click.argument('timestamp')
-@click.option('--url', default='http://127.0.0.1:5000/upload_file')
+@click.option('--url', default=_endpoint_address() + '/upload_file')
 def upload(stream: typing.IO[bytes], timestamp: str, url: str) -> None:
     return_code = post_stream(stream=stream, timestamp=timestamp, url=url)
     click.echo(f"Response: {return_code}")
@@ -64,7 +70,7 @@ def upload(stream: typing.IO[bytes], timestamp: str, url: str) -> None:
 
 
 @main.command()
-@click.option('--url', default='http://127.0.0.1:5000/run_tl')
+@click.option('--url', default=_endpoint_address() + '/run_tl')
 def run_tl(url: str) -> None:
     return_code = trigger_tl(url)
     click.echo(f"Response: {return_code}")
@@ -73,7 +79,7 @@ def run_tl(url: str) -> None:
 
 
 @main.command()
-@click.option('--url', default='http://127.0.0.1:5000/status')
+@click.option('--url', default=_endpoint_address() + '/status')
 def status(url: str) -> None:
     try:
         system_status = requests.get(url).content.decode()

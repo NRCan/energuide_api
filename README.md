@@ -86,7 +86,7 @@ This will
 - serve it up locally
 - rebuild when files are changed
 
-## Windows installation
+## Windows installation and setup
 
 ### Install required software
 
@@ -111,38 +111,49 @@ NOTE: If you're having problems, make sure that you are not adding the library t
 <br>
 <img src="resource/system_path.png" width="500" alt="System 'PATH' is highlighted">
 
-### Run python extractor
+### Clone the repo
 
-Installing Python applications in a `virtualenv` is considered best practice. To do so, run:
+To work with the system, a copy will need to be cloned to the developers local machine using `git`, there are many different git clients that can be used, but for simplicity sake we recommend [Git for Windows](https://git-scm.com/download/win).
+
+Copy the repository link, and use it in the following command:
 ```sh
-cd \etl
+git clone <<repository link>>
+```
+
+Once the repository has been downloded, change directories into the folder created (`cd nrcan_api`).
+
+### MongoDB Local Setup
+
+`Mongodb` must be started before going to the next step. Open new terminal window and run the follow commands from your root directory:
+```sh
+# this directory is required when running mongod for the first time
+md data\db
+mongod
+```
+This window needs to remain open (it is running the database), but can be minimized as it will no longer be used.
+
+In a new terminal window run the following command drop existing `energuide mongodb` test data, if any exists.
+```
+mongo energuide --eval "db.dwellings.drop()"
+```
+
+### Setup ETL environment
+
+Installing Python applications in a `virtualenv` is considered best practice. To do so, navigate to the cloned git repository and run the following:
+```sh
+cd etl
 python -m venv env
 env\Scripts\activate.bat
-```
-Inside an activated `virtualenv`, and from the etl folder of the project, run:
-
-```sh
 pip install -r requirements.txt
 pip install -e .
 ```
 *Note: "." is part of the command*
 
-`Mongodb` must be started before going to the next step. Open new terminal window and type
-```sh
-# this directory is required when running mongod for the first time
-md \data\db
-mongod
-```
-Keep this window open to continue running the database and open a new one to finish extracting the data.
 
-Finish python part of installation.
+### Run python extractor
 
-Run the following command drop existing `energuide mongodb` test data.
-```
-mongo energuide --eval "db.dwellings.drop()"
-```
 
-Run the following python commands:
+Run the following commands:
 ```sh
 # extract from csv to zip file
 energuide extract --infile tests/randomized_energuide_data.csv --outfile allthedata.zip
@@ -159,7 +170,7 @@ pytest tests
 mypy src tests
 ```
 
-#### using the mongodb command-line client
+#### Using the mongodb command-line client
 We can verify the data has actually been imported by using the mongodb command-line client. [More detailed docs exist](https://docs.mongodb.com/manual/reference/mongo-shell/), but these should get you going.
 
 Run following command to connect to `energuide`db:

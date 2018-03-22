@@ -103,6 +103,18 @@ def test_post_stream_cli(sample_timestamp: str,
     assert result.exit_code != HTTPStatus.BAD_REQUEST
 
 
+def test_etl_secret_key(monkeypatch: _pytest.monkeypatch.MonkeyPatch) -> None:
+    assert post_to_endpoint._etl_secret_key() == post_to_endpoint.DEFAULT_ETL_SECRET_KEY
+    monkeypatch.setenv('ETL_SECRET_KEY', 'test_key')
+    assert post_to_endpoint._etl_secret_key() == 'test_key'
+
+
+def test_endpoint_address(monkeypatch: _pytest.monkeypatch.MonkeyPatch) -> None:
+    assert post_to_endpoint._endpoint_address() == post_to_endpoint.DEFAULT_ENERGUIDE_ENDPOINT_ADDRESS
+    monkeypatch.setenv('ENERGUIDE_ENDPOINT_ADDRESS', 'test_address')
+    assert post_to_endpoint._endpoint_address() == 'test_address'
+
+
 def test_post_stream_cli_no_stream(upload_url: str, sample_timestamp: str) -> None:
 
     runner = testing.CliRunner()
