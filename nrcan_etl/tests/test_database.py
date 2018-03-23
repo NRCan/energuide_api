@@ -8,12 +8,33 @@ from energuide import dwelling
 @pytest.fixture
 def load_data() -> typing.List[dwelling.Dwelling]:
     return [
-        dwelling.Dwelling(house_id=1, year_built=2000, city='Ottawa', region=dwelling.Region.ONTARIO,
-                          forward_sortation_area='K1P', evaluations=[]),
-        dwelling.Dwelling(house_id=2, year_built=2000, city='Ottawa', region=dwelling.Region.ONTARIO,
-                          forward_sortation_area='K1P', evaluations=[]),
-        dwelling.Dwelling(house_id=3, year_built=2000, city='Ottawa', region=dwelling.Region.ONTARIO,
-                          forward_sortation_area='K1P', evaluations=[]),
+        dwelling.Dwelling(
+            house_id=1,
+            house_type='Single detached',
+            year_built=2000,
+            city='Ottawa',
+            region=dwelling.Region.ONTARIO,
+            forward_sortation_area='K1P',
+            evaluations=[]
+        ),
+        dwelling.Dwelling(
+            house_id=2,
+            house_type='Single detached',
+            year_built=2000,
+            city='Ottawa',
+            region=dwelling.Region.ONTARIO,
+            forward_sortation_area='K1P',
+            evaluations=[]
+        ),
+        dwelling.Dwelling(
+            house_id=3,
+            house_type='Single detached',
+            year_built=2000,
+            city='Ottawa',
+            region=dwelling.Region.ONTARIO,
+            forward_sortation_area='K1P',
+            evaluations=[]
+        ),
     ]
 
 
@@ -46,11 +67,24 @@ def test_load_update(database_coordinates: database.DatabaseCoordinates,
     )
 
     assert mongo_client[database_name][collection].count() == 3
-    load_data[0] = dwelling.Dwelling(house_id=1, year_built=2001, city='Ottawa', region=dwelling.Region.ONTARIO,
-                                     forward_sortation_area='K1P', evaluations=[])
+    load_data[0] = dwelling.Dwelling(
+        house_id=1,
+        house_type='Single detached',
+        year_built=2001, city='Ottawa',
+        region=dwelling.Region.ONTARIO,
+        forward_sortation_area='K1P',
+        evaluations=[]
+    )
     load_data.append(
-        dwelling.Dwelling(house_id=4, year_built=2001, city='Ottawa', region=dwelling.Region.ONTARIO,
-                          forward_sortation_area='K1P', evaluations=[])
+        dwelling.Dwelling(
+            house_id=4,
+            house_type='Single detached',
+            year_built=2001,
+            city='Ottawa',
+            region=dwelling.Region.ONTARIO,
+            forward_sortation_area='K1P',
+            evaluations=[]
+        )
     )
 
     database.load(
