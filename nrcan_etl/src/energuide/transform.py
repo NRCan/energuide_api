@@ -62,7 +62,6 @@ class LocalExtractReader:
 class AzureExtractReader:
     tl_start_filename = 'timestamp_tl_start.txt'
 
-
     def __init__(self, coords: AzureCoordinates) -> None:
         self._coords = coords
         self._azure: typing.Optional[blob.BlockBlobService] = None
@@ -110,7 +109,6 @@ class AzureExtractReader:
 
     def num_rows(self) -> int:
         return len(self._new_files)
-
 
 
 def _read_groups(extracted_rows: typing.Iterable[typing.Dict[str, typing.Any]]
