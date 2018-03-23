@@ -20,5 +20,5 @@ class Measurement(_Measurement):
 
         return {
             'measurement': measurement,
-            'upgrade': measurement,
+            'upgrade': upgrade,
         }
