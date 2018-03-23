@@ -1,3 +1,4 @@
+import typing
 import time
 import zipfile
 import _pytest
@@ -19,11 +20,22 @@ def azure_reader(populated_azure_emulator: transform.AzureCoordinates) -> transf
 
 def test_reader(local_reader: transform.LocalExtractReader) -> None:
     output = list(local_reader.extracted_rows())
+
     output = sorted(output, key=lambda row: row['BUILDER'])
     unique_builders = {row['BUILDER'] for row in output}
+
     assert len(output) == 14
     assert output[0]['BUILDER'] == '11W2D00606'
     assert len(unique_builders) == 14
+
+
+def test_reader_sorted_by_eval_id(local_reader: transform.LocalExtractReader) -> None:
+    output = list(local_reader.extracted_rows())
+
+    assert all(
+        typing.cast(str, current_row.get('EVAL_ID')) <= typing.cast(str, next_row.get('EVAL_ID'))
+        for current_row, next_row in zip(output, output[1:])
+    )
 
 
 def test_reader_num_rows(local_reader: transform.LocalExtractReader) -> None:

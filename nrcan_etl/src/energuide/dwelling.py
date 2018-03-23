@@ -89,7 +89,6 @@ class _ParsedDwellingDataRow(typing.NamedTuple):
     walls: measurement.Measurement
 
 
-
 class ParsedDwellingDataRow(_ParsedDwellingDataRow):
 
     _SCHEMA = {
@@ -231,6 +230,7 @@ class Evaluation(_Evaluation):
             greenhouse_gas_emissions=data.greenhouse_gas_emissions,
             energy_intensity=data.energy_intensity,
             walls=data.walls,
+
         )
 
     def to_dict(self) -> typing.Dict[str, typing.Any]:
@@ -247,7 +247,7 @@ class Evaluation(_Evaluation):
             'ers_rating': self.ers_rating.to_dict(),
             'greenhouse_gas_emissions': self.greenhouse_gas_emissions.to_dict(),
             'energy_intensity': self.energy_intensity.to_dict(),
-            'walls': self.walls.to_dict()
+            'walls': self.walls.to_dict(),
         }
 
 

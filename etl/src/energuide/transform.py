@@ -48,7 +48,7 @@ class LocalExtractReader:
 
     def extracted_rows(self) -> typing.Iterator[typing.Dict[str, typing.Any]]:
         with zipfile.ZipFile(self._zip_filename) as zip_input:
-            for file in zip_input.namelist():
+            for file in sorted(zip_input.namelist()):
                 content = zip_input.read(file)
                 house = json.loads(content)
                 house['jsonFileName'] = file
