@@ -5,6 +5,7 @@ from dateutil import parser
 from energuide import validator
 from energuide.embedded import upgrade
 from energuide.embedded import measurement
+from energuide.embedded import walls
 from energuide.exceptions import InvalidGroupSizeError
 from energuide.exceptions import InvalidInputDataError
 
@@ -85,6 +86,7 @@ class _ParsedDwellingDataRow(typing.NamedTuple):
     greenhouse_gas_emissions: measurement.Measurement
     energy_intensity: measurement.Measurement
 
+    walls: measurement.Measurement
 
 
 class ParsedDwellingDataRow(_ParsedDwellingDataRow):
@@ -126,6 +128,11 @@ class ParsedDwellingDataRow(_ParsedDwellingDataRow):
 
         'ERSENERGYINTENSITY': {'type': 'float', 'nullable': True, 'coerce': float},
         'UGRERSENERGYINTENSITY': {'type': 'float', 'nullable': True, 'coerce': float},
+
+        'WALLDEF': {'type': 'string', 'nullable': True, 'required': True},
+        'UGRWALLDEF': {'type': 'string', 'nullable': True, 'required': True},
+        'EGHHLWALLS': {'type': 'float', 'nullable': True, 'required': True, 'coerce': float},
+        'UGRHLWALLS': {'type': 'float', 'nullable': True, 'required': True, 'coerce': float},
     }
 
     @classmethod
@@ -173,6 +180,17 @@ class ParsedDwellingDataRow(_ParsedDwellingDataRow):
                 measurement=parsed['ERSENERGYINTENSITY'],
                 upgrade=parsed['UGRERSENERGYINTENSITY'],
             ),
+
+            walls=measurement.Measurement(
+                measurement=walls.from_data(
+                    parsed['WALLDEF'],
+                    parsed['EGHHLWALLS'],
+                ),
+                upgrade=walls.from_data(
+                    parsed['UGRWALLDEF'],
+                    parsed['UGRHLWALLS'],
+                ),
+            )
         )
 
 
@@ -190,6 +208,7 @@ class _Evaluation(typing.NamedTuple):
     ers_rating: measurement.Measurement
     greenhouse_gas_emissions: measurement.Measurement
     energy_intensity: measurement.Measurement
+    walls: measurement.Measurement
 
 
 class Evaluation(_Evaluation):
@@ -210,6 +229,8 @@ class Evaluation(_Evaluation):
             ers_rating=data.ers_rating,
             greenhouse_gas_emissions=data.greenhouse_gas_emissions,
             energy_intensity=data.energy_intensity,
+            walls=data.walls,
+
         )
 
     def to_dict(self) -> typing.Dict[str, typing.Any]:
@@ -226,6 +247,7 @@ class Evaluation(_Evaluation):
             'ers_rating': self.ers_rating.to_dict(),
             'greenhouse_gas_emissions': self.greenhouse_gas_emissions.to_dict(),
             'energy_intensity': self.energy_intensity.to_dict(),
+            'walls': self.walls.to_dict(),
         }
 
 

@@ -42,6 +42,11 @@ def base_data() -> typing.Dict[str, str]:
         'EGHRATING': '50',
         'UGRRATING': '49',
 
+        'WALLDEF': '45.3;12;50;12;4.7;12',
+        'UGRWALLDEF': '45.3;12;50;12;4.7;10',
+        'EGHHLWALLS': '27799.9',
+        'UGRHLWALLS': '27799.9',
+
         'RAW_XML': '',
     }
 
