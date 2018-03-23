@@ -1,6 +1,6 @@
 import itertools
 import typing
-from energuide.exceptions import InvalidEmbeddedDataTypeError
+
 
 def from_data(insulation: typing.Optional[str], heat_lost: typing.Optional[float]) -> typing.Dict[str, typing.Any]:
     args = [iter(insulation.split(';'))] * 2
