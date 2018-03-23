@@ -11,8 +11,8 @@ class Wall(_Wall):
 
     @classmethod
     def from_data(cls,
-            insulation: typing.Optional[str],
-            heat_lost: typing.Optional[float]) -> 'Wall':
+                  insulation: typing.Optional[str],
+                  heat_lost: typing.Optional[float]) -> 'Wall':
 
         if insulation:
             args = [iter(insulation.split(';'))] * 2
