@@ -40,6 +40,11 @@ NULLABLE_FIELDS = [
     'UGRERSGHG',
     'ERSENERGYINTENSITY',
     'UGRERSENERGYINTENSITY',
+
+    'WALLDEF',
+    'UGRWALLDEF',
+    'EGHHLWALLS',
+    'UGRHLWALLS',
 ]
 
 INPUT_SCHEMA = {field: {'type': 'string', 'required': True} for field in REQUIRED_FIELDS}

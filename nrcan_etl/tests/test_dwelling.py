@@ -47,6 +47,11 @@ def sample_input_d(upgrades_input: typing.List[str]) -> typing.Dict[str, typing.
         'UGRERSENERGYINTENSITY': '0.80',
         'EGHRATING': '50',
         'UGRRATING': '49',
+
+        'WALLDEF': '45.3;12;50;12;4.7;12',
+        'UGRWALLDEF': '45.3;12;50;12;4.7;10',
+        'EGHHLWALLS': '27799.9',
+        'UGRHLWALLS': '27799.9',
     }
 
 
@@ -173,6 +178,38 @@ class TestParsedDwellingDataRow:
                 measurement=0.82,
                 upgrade=0.80,
             ),
+            walls=measurement.Measurement(
+                measurement={
+                    'insulation': [
+                        {
+                            'percentage': '45.3',
+                            'rValue': '12',
+                        }, {
+                            'percentage': '50',
+                            'rValue': '12',
+                        }, {
+                            'percentage': '4.7',
+                            'rValue': '12'
+                        }
+                    ],
+                    'heatLost': 27799.9
+                },
+                upgrade={
+                    'insulation': [
+                        {
+                            'percentage': '45.3',
+                            'rValue': '12',
+                        }, {
+                            'percentage': '50',
+                            'rValue': '12',
+                        }, {
+                            'percentage': '4.7',
+                            'rValue': '10'
+                        }
+                    ],
+                    'heatLost': 27799.9
+                },
+            )
         )
 
     def test_null_fields_are_accepted(self, sample_input_missing: typing.Dict[str, typing.Any]) -> None:
