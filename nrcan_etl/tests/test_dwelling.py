@@ -5,6 +5,8 @@ import pytest
 from energuide import dwelling
 from energuide.embedded import upgrade
 from energuide.embedded import measurement
+from energuide.embedded import composite
+from energuide.embedded import walls
 from energuide.exceptions import InvalidInputDataError
 from energuide.exceptions import InvalidGroupSizeError
 
@@ -179,36 +181,46 @@ class TestParsedDwellingDataRow:
                 upgrade=0.80,
             ),
             walls=measurement.Measurement(
-                measurement={
-                    'insulation': [
-                        {
-                            'percentage': 45.3,
-                            'rValue': 12.0,
-                        }, {
-                            'percentage': 50.0,
-                            'rValue': 12.0,
-                        }, {
-                            'percentage': 4.7,
-                            'rValue': 12.0,
-                        }
+                measurement=walls.Wall(
+                    insulation=[
+                        composite.CompositeValue(
+                            percentage=45.3,
+                            value=12.0,
+                            value_name='rValue'
+                        ),
+                        composite.CompositeValue(
+                            percentage=50.0,
+                            value=12.0,
+                            value_name='rValue'
+                        ),
+                        composite.CompositeValue(
+                            percentage=4.7,
+                            value=12.0,
+                            value_name='rValue'
+                        ),
                     ],
-                    'heatLost': 27799.9
-                },
-                upgrade={
-                    'insulation': [
-                        {
-                            'percentage': 45.3,
-                            'rValue': 12.0,
-                        }, {
-                            'percentage': 50.0,
-                            'rValue': 12.0,
-                        }, {
-                            'percentage': 4.7,
-                            'rValue': 10.0,
-                        }
+                    heat_lost=27799.9
+                ),
+                upgrade=walls.Wall(
+                    insulation=[
+                        composite.CompositeValue(
+                            percentage=45.3,
+                            value=12.0,
+                            value_name='rValue'
+                        ),
+                        composite.CompositeValue(
+                            percentage=50.0,
+                            value=12.0,
+                            value_name='rValue'
+                        ),
+                        composite.CompositeValue(
+                            percentage=4.7,
+                            value=10.0,
+                            value_name='rValue'
+                        ),
                     ],
-                    'heatLost': 27799.9
-                },
+                    heat_lost=27799.9
+                )
             )
         )
 
