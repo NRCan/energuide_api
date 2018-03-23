@@ -42,7 +42,6 @@ def sample_input_d(upgrades_input: typing.List[str]) -> typing.Dict[str, typing.
         'UGRERSRATING': '565',
         'ERSGHG': None,
         'UGRERSGHG': None,
-        'ERSENERGYINTENSITY': None,
         'upgrades': upgrades_input,
         'ERSENERGYINTENSITY': '0.82',
         'UGRERSENERGYINTENSITY': '0.80',
@@ -179,7 +178,7 @@ class TestParsedDwellingDataRow:
     def test_null_fields_are_accepted(self, sample_input_missing: typing.Dict[str, typing.Any]) -> None:
         output = dwelling.ParsedDwellingDataRow.from_row(sample_input_missing)
 
-        assert output.modification_date == None
+        assert output.modification_date is None
         assert output.ers_rating == measurement.Measurement(None, None)
 
     def test_bad_postal_code(self, sample_input_d: typing.Dict[str, typing.Any]) -> None:

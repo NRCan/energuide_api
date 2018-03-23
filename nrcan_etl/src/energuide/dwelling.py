@@ -1,7 +1,6 @@
 import datetime
 import enum
 import typing
-import itertools
 from dateutil import parser
 from energuide import validator
 from energuide.embedded import upgrade
