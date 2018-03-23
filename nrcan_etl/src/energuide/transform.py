@@ -67,6 +67,7 @@ class AzureExtractReader:
         self._azure: typing.Optional[blob.BlockBlobService] = None
         self._new_file_list: typing.Optional[typing.List[str]] = None
 
+
     @property
     def _azure_service(self) -> blob.BlockBlobService:
         if self._azure is None:
