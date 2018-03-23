@@ -1,7 +1,7 @@
 import os
-import py
 import random
 import typing
+import py
 import pymongo
 import pytest
 from energuide import database
