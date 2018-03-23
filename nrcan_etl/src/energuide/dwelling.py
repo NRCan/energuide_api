@@ -182,11 +182,11 @@ class ParsedDwellingDataRow(_ParsedDwellingDataRow):
             ),
 
             walls=measurement.Measurement(
-                measurement=walls.from_data(
+                measurement=walls.Wall.from_data(
                     parsed['WALLDEF'],
                     parsed['EGHHLWALLS'],
                 ),
-                upgrade=walls.from_data(
+                upgrade=walls.Wall.from_data(
                     parsed['UGRWALLDEF'],
                     parsed['UGRHLWALLS'],
                 ),

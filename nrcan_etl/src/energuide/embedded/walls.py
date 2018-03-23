@@ -1,19 +1,42 @@
 import itertools
 import typing
+from energuide.embedded import composite
 
 
-def from_data(insulation: typing.Optional[str], heat_lost: typing.Optional[float]) -> typing.Dict[str, typing.Any]:
-    args = [iter(insulation.split(';'))] * 2
-    groups = itertools.zip_longest(fillvalue='0', *args)
+class _Wall(typing.NamedTuple):
+    insulation: typing.List[composite.CompositeValue]
+    heat_lost: typing.Optional[float]
 
-    wall_info = {
-        'insulation': [
-            {
-                'percentage': float(percentage),
-                'rValue': float(r_value),
-            } for percentage, r_value in groups
-        ],
-        'heatLost': heat_lost
-    }
+class Wall(_Wall):
 
-    return wall_info
+    @classmethod
+    def from_data(cls,
+                  insulation: typing.Optional[str],
+                  heat_lost: typing.Optional[float]) -> 'Wall':
+
+        if insulation:
+            args = [iter(insulation.split(';'))] * 2
+            groups = itertools.zip_longest(fillvalue='0', *args)
+
+            composition_insulation = [
+                composite.CompositeValue(
+                    percentage=float(percentage),
+                    value=float(r_value),
+                    value_name='rValue',
+                ) for percentage, r_value in groups
+            ]
+        else:
+            composition_insulation = []
+
+        return Wall(
+            insulation=composition_insulation,
+            heat_lost=heat_lost
+        )
+
+    def to_dict(self) -> typing.Dict[str, typing.Any]:
+        return {
+            'insulation': [
+                insulation.to_dict() for insulation in self.insulation
+            ],
+            'heatLost': self.heat_lost,
+        }
