@@ -31,6 +31,11 @@ def data1() -> typing.Dict[str, typing.Optional[str]]:
         'UGRERSGHG': '5.4',
         'ERSENERGYINTENSITY': '0.82',
 
+        'UGRRATING': '49',
+        'EGHRATING': '50',
+
+        'UGRERSENERGYINTENSITY': '0.80',
+
         'RAW_XML': '',
     }
 
@@ -49,7 +54,8 @@ def data_dict(request: _pytest.fixtures.SubRequest) -> typing.Dict[str, str]:
 
 @pytest.fixture
 def valid_filepath(tmpdir: py._path.local.LocalPath, data_dict: typing.Dict[str, str]) -> str:
-    filepath = f'{tmpdir}/sample.csv'
+    filepath = os.path.join(tmpdir, 'sample.csv')
+
     with open(filepath, 'w') as file:
         writer = csv.DictWriter(file, fieldnames=list(data_dict.keys()))
         writer.writeheader()
@@ -132,7 +138,7 @@ def test_load_update(energuide_zip_fixture: str,
 
 
 def test_extract_valid(valid_filepath: str, tmpdir: py._path.local.LocalPath) -> None:
-    outfile = f'{tmpdir}/output.zip'
+    outfile = os.path.join(tmpdir, 'output.zip')
     runner = testing.CliRunner()
     result = runner.invoke(cli.main, args=[
         'extract',
