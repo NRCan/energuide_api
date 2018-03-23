@@ -4,6 +4,7 @@ import typing
 from dateutil import parser
 from energuide import validator
 from energuide.embedded import upgrade
+from energuide.embedded import measurement
 from energuide.exceptions import InvalidGroupSizeError
 from energuide.exceptions import InvalidInputDataError
 
@@ -75,8 +76,15 @@ class _ParsedDwellingDataRow(typing.NamedTuple):
     city: str
     region: Region
     forward_sortation_area: str
-    ers_rating: typing.Optional[int]
+    house_type: str
+
     energy_upgrades: typing.List[upgrade.Upgrade]
+    heated_floor_area: typing.Optional[float]
+    egh_rating: measurement.Measurement
+    ers_rating: measurement.Measurement
+    greenhouse_gas_emissions: measurement.Measurement
+    energy_intensity: measurement.Measurement
+
 
 
 class ParsedDwellingDataRow(_ParsedDwellingDataRow):
@@ -106,11 +114,18 @@ class ParsedDwellingDataRow(_ParsedDwellingDataRow):
 
         'HEATEDFLOORAREA': {'type': 'float', 'nullable': True, 'coerce': float},
         'TYPEOFHOUSE': {'type': 'string', 'nullable': True},
+
+        'EGHRATING': {'type': 'integer', 'nullable': True, 'coerce': int},
+        'UGRRATING': {'type': 'integer', 'nullable': True, 'coerce': int},
+
         'ERSRATING': {'type': 'integer', 'nullable': True, 'coerce': int},
         'UGRERSRATING': {'type': 'integer', 'nullable': True, 'coerce': int},
+
         'ERSGHG': {'type': 'float', 'nullable': True, 'coerce': float},
         'UGRERSGHG': {'type': 'float', 'nullable': True, 'coerce': float},
+
         'ERSENERGYINTENSITY': {'type': 'float', 'nullable': True, 'coerce': float},
+        'UGRERSENERGYINTENSITY': {'type': 'float', 'nullable': True, 'coerce': float},
     }
 
     @classmethod
@@ -135,32 +150,49 @@ class ParsedDwellingDataRow(_ParsedDwellingDataRow):
             region=Region.from_data(parsed['HOUSEREGION']),
             forward_sortation_area=parsed['forwardSortationArea'],
 
-            ers_rating=parsed['ERSRATING'],
             energy_upgrades=[upgrade.Upgrade.from_data(upgrade_node) for upgrade_node in parsed['upgrades']],
+            heated_floor_area=parsed['HEATEDFLOORAREA'],
+            house_type=parsed['TYPEOFHOUSE'],
+
+            egh_rating=measurement.Measurement(
+                measurement=parsed['EGHRATING'],
+                upgrade=parsed['UGRRATING'],
+            ),
+
+            ers_rating=measurement.Measurement(
+                measurement=parsed['ERSRATING'],
+                upgrade=parsed['UGRERSRATING'],
+            ),
+
+            greenhouse_gas_emissions=measurement.Measurement(
+                measurement=parsed['ERSGHG'],
+                upgrade=parsed['UGRERSGHG'],
+            ),
+
+            energy_intensity=measurement.Measurement(
+                measurement=parsed['ERSENERGYINTENSITY'],
+                upgrade=parsed['UGRERSENERGYINTENSITY'],
+            ),
         )
 
 
-class Evaluation:
+class _Evaluation(typing.NamedTuple):
+    file_id: str
+    evaluation_id: int
+    evaluation_type: EvaluationType
+    entry_date: datetime.date
+    creation_date: datetime.datetime
+    modification_date: typing.Optional[datetime.datetime]
+    house_type: str
+    energy_upgrades: typing.List[upgrade.Upgrade]
+    heated_floor_area: measurement.Measurement
+    egh_rating: measurement.Measurement
+    ers_rating: measurement.Measurement
+    greenhouse_gas_emissions: measurement.Measurement
+    energy_intensity: measurement.Measurement
 
-    def __init__(self, *,
-                 file_id: str,
-                 evaluation_id: int,
-                 evaluation_type: EvaluationType,
-                 entry_date: datetime.date,
-                 creation_date: datetime.datetime,
-                 modification_date: typing.Optional[datetime.datetime],
-                 ers_rating: typing.Optional[int],
-                 energy_upgrades: typing.List[upgrade.Upgrade],
-                ) -> None:
-        self._file_id = file_id
-        self._evaluation_id = evaluation_id
-        self._evaluation_type = evaluation_type
-        self._entry_date = entry_date
-        self._creation_date = creation_date
-        self._modification_date = modification_date
-        self._ers_rating = ers_rating
-        self._energy_upgrades = energy_upgrades
 
+class Evaluation(_Evaluation):
 
     @classmethod
     def from_data(cls, data: ParsedDwellingDataRow) -> 'Evaluation':
@@ -171,42 +203,14 @@ class Evaluation:
             entry_date=data.entry_date,
             creation_date=data.creation_date,
             modification_date=data.modification_date,
-            ers_rating=data.ers_rating,
             energy_upgrades=data.energy_upgrades,
+            heated_floor_area=data.heated_floor_area,
+            house_type=data.house_type,
+            egh_rating=data.egh_rating,
+            ers_rating=data.ers_rating,
+            greenhouse_gas_emissions=data.greenhouse_gas_emissions,
+            energy_intensity=data.energy_intensity,
         )
-
-    @property
-    def evaluation_type(self) -> EvaluationType:
-        return self._evaluation_type
-
-    @property
-    def evaluation_id(self) -> int:
-        return self._evaluation_id
-
-    @property
-    def entry_date(self) -> datetime.date:
-        return self._entry_date
-
-    @property
-    def ers_rating(self) -> typing.Optional[int]:
-        return self._ers_rating
-
-    @property
-    def creation_date(self) -> datetime.datetime:
-        return self._creation_date
-
-    @property
-    def modification_date(self) -> typing.Optional[datetime.datetime]:
-        return self._modification_date
-
-    @property
-    def file_id(self) -> str:
-        return self._file_id
-
-    @property
-    def energy_upgrades(self) -> typing.List[upgrade.Upgrade]:
-        return self._energy_upgrades
-
 
     def to_dict(self) -> typing.Dict[str, typing.Any]:
         return {
@@ -216,36 +220,54 @@ class Evaluation:
             'entryDate': self.entry_date.isoformat(),
             'creationDate': self.creation_date.isoformat(),
             'modificationDate': self.modification_date.isoformat() if self.modification_date is not None else None,
-            'ersRating': self.ers_rating,
             'energyUpgrades': [upgrade.to_dict() for upgrade in self.energy_upgrades],
+            'heated_floor_area': self.heated_floor_area,
+            'egh_rating': self.egh_rating.to_dict(),
+            'ers_rating': self.ers_rating.to_dict(),
+            'greenhouse_gas_emissions': self.greenhouse_gas_emissions.to_dict(),
+            'energy_intensity': self.energy_intensity.to_dict(),
         }
 
 
-class Dwelling:
+def _filter_dummy_evaluations(data: typing.List[ParsedDwellingDataRow]) -> typing.List[ParsedDwellingDataRow]:
+    pre_evals = {
+        evaluation.entry_date: evaluation
+        for evaluation in data if evaluation.eval_type is EvaluationType.PRE_RETROFIT
+    }
+    post_evals = {
+        evaluation.entry_date: evaluation
+        for evaluation in data if evaluation.eval_type is EvaluationType.POST_RETROFIT
+    }
+
+    return list(post_evals.values()) + \
+           [evaluation for date, evaluation in pre_evals.items() if date not in post_evals.keys()]
+
+
+class _Dwelling(typing.NamedTuple):
+    house_id: int
+    house_type: str
+    year_built: int
+    city: str
+    region: Region
+    forward_sortation_area: str
+    evaluations: typing.List[Evaluation]
+
+
+class Dwelling(_Dwelling):
 
     GROUPING_FIELD = 'HOUSE_ID'
 
-    def __init__(self, *,
-                 house_id: int,
-                 year_built: int,
-                 city: str,
-                 region: Region,
-                 forward_sortation_area: str,
-                 evaluations: typing.List[Evaluation]) -> None:
-        self._house_id = house_id
-        self._year_built = year_built
-        self._city = city
-        self._region = region
-        self._forward_sortation_area = forward_sortation_area
-        self._evaluations = evaluations
 
     @classmethod
     def _from_parsed_group(cls, data: typing.List[ParsedDwellingDataRow]) -> 'Dwelling':
         if not data:
             raise InvalidGroupSizeError('Empty groups are invalid')
-        evaluations = [Evaluation.from_data(row) for row in data]
+
+
+        evaluations = [Evaluation.from_data(row) for row in _filter_dummy_evaluations(data)]
         return Dwelling(
             house_id=data[0].house_id,
+            house_type=data[0].house_type,
             year_built=data[0].year_built,
             city=data[0].city,
             region=data[0].region,
@@ -258,33 +280,11 @@ class Dwelling:
         parsed_data = [ParsedDwellingDataRow.from_row(row) for row in data]
         return cls._from_parsed_group(parsed_data)
 
-    @property
-    def house_id(self) -> int:
-        return self._house_id
-
-    @property
-    def year_built(self) -> int:
-        return self._year_built
-
-    @property
-    def city(self) -> str:
-        return self._city
-
-    @property
-    def region(self) -> Region:
-        return self._region
-
-    @property
-    def forward_sortation_area(self) -> str:
-        return self._forward_sortation_area
-
-    @property
-    def evaluations(self) -> typing.List[Evaluation]:
-        return self._evaluations
 
     def to_dict(self) -> typing.Dict[str, typing.Any]:
         return {
             'houseId': self.house_id,
+            'houseType': self.house_type,
             'yearBuilt': self.year_built,
             'city': self.city,
             'region': self.region.value,

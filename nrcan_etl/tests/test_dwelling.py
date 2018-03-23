@@ -4,6 +4,7 @@ import typing
 import pytest
 from energuide import dwelling
 from energuide.embedded import upgrade
+from energuide.embedded import measurement
 from energuide.exceptions import InvalidInputDataError
 from energuide.exceptions import InvalidGroupSizeError
 
@@ -41,8 +42,11 @@ def sample_input_d(upgrades_input: typing.List[str]) -> typing.Dict[str, typing.
         'UGRERSRATING': '565',
         'ERSGHG': None,
         'UGRERSGHG': None,
-        'ERSENERGYINTENSITY': None,
         'upgrades': upgrades_input,
+        'ERSENERGYINTENSITY': '0.82',
+        'UGRERSENERGYINTENSITY': '0.80',
+        'EGHRATING': '50',
+        'UGRRATING': '49',
     }
 
 
@@ -50,6 +54,7 @@ def sample_input_d(upgrades_input: typing.List[str]) -> typing.Dict[str, typing.
 def sample_input_e(sample_input_d: typing.Dict[str, typing.Any]) -> typing.Dict[str, typing.Any]:
     output = copy.deepcopy(sample_input_d)
     output['EVAL_TYPE'] = 'E'
+    output['ENTRYDATE'] = '2018-01-02'
     return output
 
 
@@ -58,6 +63,7 @@ def sample_input_missing(sample_input_d: typing.Dict[str, typing.Any]) -> typing
     output = copy.deepcopy(sample_input_d)
     output['MODIFICATIONDATE'] = None
     output['ERSRATING'] = None
+    output['UGRERSRATING'] = None
     return output
 
 
@@ -132,7 +138,6 @@ class TestParsedDwellingDataRow:
             city='Ottawa',
             region=dwelling.Region.ONTARIO,
             forward_sortation_area='K1P',
-            ers_rating=567,
             energy_upgrades=[
                 upgrade.Upgrade(
                     upgrade_type='Ceilings',
@@ -149,13 +154,32 @@ class TestParsedDwellingDataRow:
                     cost=2,
                     priority=3,
                 ),
-            ]
+            ],
+            house_type='Single detached',
+            heated_floor_area=None,
+            egh_rating=measurement.Measurement(
+                measurement=50,
+                upgrade=49,
+            ),
+            ers_rating=measurement.Measurement(
+                measurement=567,
+                upgrade=565,
+            ),
+            greenhouse_gas_emissions=measurement.Measurement(
+                measurement=None,
+                upgrade=None,
+            ),
+            energy_intensity=measurement.Measurement(
+                measurement=0.82,
+                upgrade=0.80,
+            ),
         )
 
     def test_null_fields_are_accepted(self, sample_input_missing: typing.Dict[str, typing.Any]) -> None:
         output = dwelling.ParsedDwellingDataRow.from_row(sample_input_missing)
 
-        assert output.modification_date == output.ers_rating == None
+        assert output.modification_date is None
+        assert output.ers_rating == measurement.Measurement(None, None)
 
     def test_bad_postal_code(self, sample_input_d: typing.Dict[str, typing.Any]) -> None:
         sample_input_d['forwardSortationArea'] = 'K16'
@@ -170,11 +194,6 @@ class TestParsedDwellingDataRow:
             dwelling.ParsedDwellingDataRow.from_row(input_data)
         assert 'EVAL_TYPE' in ex.exconly()
         assert 'EVAL_ID' not in ex.exconly()
-
-    def test_missing_ers(self, sample_input_d: typing.Dict[str, typing.Any]) -> None:
-        sample_input_d['ERSRATING'] = None
-        output = dwelling.ParsedDwellingDataRow.from_row(sample_input_d)
-        assert output.ers_rating is None
 
 
 class TestDwellingEvaluation:

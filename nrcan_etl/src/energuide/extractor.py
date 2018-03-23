@@ -34,9 +34,12 @@ NULLABLE_FIELDS = [
     'TYPEOFHOUSE',
     'ERSRATING',
     'UGRERSRATING',
+    'EGHRATING',
+    'UGRRATING',
     'ERSGHG',
     'UGRERSGHG',
     'ERSENERGYINTENSITY',
+    'UGRERSENERGYINTENSITY',
 ]
 
 INPUT_SCHEMA = {field: {'type': 'string', 'required': True} for field in REQUIRED_FIELDS}
