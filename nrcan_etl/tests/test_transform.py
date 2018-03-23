@@ -43,7 +43,7 @@ def touch_one_file_in_azure(azure_emulator: transform.AzureCoordinates, energuid
     service = blob.BlockBlobService(account_name=azure_emulator.account,
                                     account_key=azure_emulator.key,
                                     custom_domain=azure_emulator.domain)
-    json_file = [file_z.open(zipinfo) for zipinfo in file_z.infolist()][0]
+    json_file = [file_z.open(zipinfo) for zipinfo in file_z.infolist()][1]
     service.create_blob_from_bytes(azure_emulator.container, json_file.name, json_file.read())
 
 
