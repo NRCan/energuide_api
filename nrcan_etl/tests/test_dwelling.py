@@ -182,14 +182,14 @@ class TestParsedDwellingDataRow:
                 measurement={
                     'insulation': [
                         {
-                            'percentage': '45.3',
-                            'rValue': '12',
+                            'percentage': 45.3,
+                            'rValue': 12.0,
                         }, {
-                            'percentage': '50',
-                            'rValue': '12',
+                            'percentage': 50.0,
+                            'rValue': 12.0,
                         }, {
-                            'percentage': '4.7',
-                            'rValue': '12'
+                            'percentage': 4.7,
+                            'rValue': 12.0,
                         }
                     ],
                     'heatLost': 27799.9
@@ -197,14 +197,14 @@ class TestParsedDwellingDataRow:
                 upgrade={
                     'insulation': [
                         {
-                            'percentage': '45.3',
-                            'rValue': '12',
+                            'percentage': 45.3,
+                            'rValue': 12.0,
                         }, {
-                            'percentage': '50',
-                            'rValue': '12',
+                            'percentage': 50.0,
+                            'rValue': 12.0,
                         }, {
-                            'percentage': '4.7',
-                            'rValue': '10'
+                            'percentage': 4.7,
+                            'rValue': 10.0,
                         }
                     ],
                     'heatLost': 27799.9
