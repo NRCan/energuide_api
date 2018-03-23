@@ -57,9 +57,9 @@ def _run_tl_and_verify() -> None:
     with database.mongo_client(DATABASE_COORDS) as mongo_client:
         records_created = mongo_client[DATABASE_NAME][COLLECTION].count()
     if records_created == 0:
-        LOGGER.warning('Error, no records created')
+        LOGGER.warning('TL App Error, no records created')
     else:
-        LOGGER.info(f'Success, {records_created} created')
+        LOGGER.info(f'TL App success, {records_created} rows now in the database')
 
 
 class ThreadRunner:
