@@ -78,11 +78,9 @@ def load(coords: DatabaseCoordinates,
         if not update:
             collection.drop()
 
-        existing = set(collection.distinct('houseId'))
-
+        num_rows = 0
         for row in data:
-            existing.discard(row.house_id)
+            num_rows += 1
             data_row = row.to_dict()
             collection.update({'houseId': data_row['houseId']}, data_row, upsert=True)
-
-        collection.remove({'houseId': {'$in': list(existing)}})
+        LOGGER.info(f"updated {num_rows} rows in the database")
