@@ -242,11 +242,11 @@ class Evaluation(_Evaluation):
             'creationDate': self.creation_date.isoformat(),
             'modificationDate': self.modification_date.isoformat() if self.modification_date is not None else None,
             'energyUpgrades': [upgrade.to_dict() for upgrade in self.energy_upgrades],
-            'heated_floor_area': self.heated_floor_area,
-            'egh_rating': self.egh_rating.to_dict(),
-            'ers_rating': self.ers_rating.to_dict(),
-            'greenhouse_gas_emissions': self.greenhouse_gas_emissions.to_dict(),
-            'energy_intensity': self.energy_intensity.to_dict(),
+            'heatedFloorArea': self.heated_floor_area,
+            'eghRating': self.egh_rating.to_dict(),
+            'ersRating': self.ers_rating.to_dict(),
+            'greenhouseGasEmissions': self.greenhouse_gas_emissions.to_dict(),
+            'energyIntensity': self.energy_intensity.to_dict(),
             'walls': self.walls.to_dict(),
         }
 
