@@ -1,4 +1,5 @@
 import enum
+from energuide.exceptions import InvalidInputDataError
 
 @enum.unique
 class EvaluationType(enum.Enum):

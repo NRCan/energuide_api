@@ -1,5 +1,4 @@
 import datetime
-import enum
 import typing
 from dateutil import parser
 from energuide import validator
