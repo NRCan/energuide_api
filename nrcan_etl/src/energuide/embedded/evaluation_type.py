@@ -1,6 +1,7 @@
 import enum
 from energuide.exceptions import InvalidInputDataError
 
+
 @enum.unique
 class EvaluationType(enum.Enum):
     PRE_RETROFIT = 'D'
@@ -14,3 +15,4 @@ class EvaluationType(enum.Enum):
             return EvaluationType.POST_RETROFIT
         else:
             raise InvalidInputDataError(f'Invalid code: {code}')
+
