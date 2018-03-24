@@ -5,8 +5,8 @@ from energuide import validator
 from energuide.embedded import upgrade
 from energuide.embedded import measurement
 from energuide.embedded import walls
-from energuide.embedded import region
-from energuide.embedded import evaluation_type
+from energuide.embedded.region import Region
+from energuide.embedded.evaluation_type import EvaluationType
 from energuide.exceptions import InvalidGroupSizeError
 from energuide.exceptions import InvalidInputDataError
 
@@ -15,13 +15,13 @@ class _ParsedDwellingDataRow(typing.NamedTuple):
     house_id: int
     eval_id: int
     file_id: str
-    eval_type: evaluation_type.EvaluationType
+    eval_type: EvaluationType
     entry_date: datetime.date
     creation_date: datetime.datetime
     modification_date: typing.Optional[datetime.datetime]
     year_built: int
     city: str
-    region: region.Region
+    region: Region
     forward_sortation_area: str
     house_type: str
 
@@ -43,7 +43,7 @@ class ParsedDwellingDataRow(_ParsedDwellingDataRow):
         'EVAL_TYPE': {
             'type': 'string',
             'required': True,
-            'allowed': [eval_type.value for eval_type in evaluation_type.EvaluationType]
+            'allowed': [eval_type.value for eval_type in EvaluationType]
         },
         'ENTRYDATE': {'type': 'date', 'required': True, 'coerce': parser.parse},
         'CREATIONDATE': {'type': 'datetime', 'required': True, 'coerce': parser.parse},
@@ -98,13 +98,13 @@ class ParsedDwellingDataRow(_ParsedDwellingDataRow):
             house_id=parsed['HOUSE_ID'],
             eval_id=parsed['EVAL_ID'],
             file_id=parsed['BUILDER'],
-            eval_type=evaluation_type.EvaluationType.from_code(parsed['EVAL_TYPE']),
+            eval_type=EvaluationType.from_code(parsed['EVAL_TYPE']),
             entry_date=parsed['ENTRYDATE'].date(),
             creation_date=parsed['CREATIONDATE'],
             modification_date=parsed['MODIFICATIONDATE'],
             year_built=parsed['YEARBUILT'],
             city=parsed['CLIENTCITY'],
-            region=region.Region.from_data(parsed['HOUSEREGION']),
+            region=Region.from_data(parsed['HOUSEREGION']),
             forward_sortation_area=parsed['forwardSortationArea'],
 
             energy_upgrades=[upgrade.Upgrade.from_data(upgrade_node) for upgrade_node in parsed['upgrades']],
@@ -147,7 +147,7 @@ class ParsedDwellingDataRow(_ParsedDwellingDataRow):
 class _Evaluation(typing.NamedTuple):
     file_id: str
     evaluation_id: int
-    evaluation_type: evaluation_type.EvaluationType
+    evaluation_type: EvaluationType
     entry_date: datetime.date
     creation_date: datetime.datetime
     modification_date: typing.Optional[datetime.datetime]
@@ -204,11 +204,11 @@ class Evaluation(_Evaluation):
 def _filter_dummy_evaluations(data: typing.List[ParsedDwellingDataRow]) -> typing.List[ParsedDwellingDataRow]:
     pre_evals = {
         evaluation.entry_date: evaluation
-        for evaluation in data if evaluation.eval_type is evaluation_type.EvaluationType.PRE_RETROFIT
+        for evaluation in data if evaluation.eval_type is EvaluationType.PRE_RETROFIT
     }
     post_evals = {
         evaluation.entry_date: evaluation
-        for evaluation in data if evaluation.eval_type is evaluation_type.EvaluationType.POST_RETROFIT
+        for evaluation in data if evaluation.eval_type is EvaluationType.POST_RETROFIT
     }
 
     return list(post_evals.values()) + \
@@ -220,7 +220,7 @@ class _Dwelling(typing.NamedTuple):
     house_type: str
     year_built: int
     city: str
-    region: region.Region
+    region: Region
     forward_sortation_area: str
     evaluations: typing.List[Evaluation]
 
