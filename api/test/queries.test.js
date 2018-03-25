@@ -420,41 +420,6 @@ describe('queries', () => {
       })
     })
 
-    it('retrieves all top level keys of the waterheater data', async () => {
-      let response = await request(server)
-        .post('/graphql')
-        .set('Content-Type', 'application/json; charset=utf-8')
-        .send({
-          query: `{
-          dwelling(houseId: 189250) {
-            evaluations {
-               waterHeatings {
-                  typeEnglish
-                  typeFrench
-                  tankVolumeLitres
-                  tankVolumeGallon
-                  efficiencyEf
-                  efficiencyPercentage
-                }
-            }
-          }
-        }`,
-        })
-
-      expect(response.body).not.toHaveProperty('errors')
-      let { dwelling: { evaluations } } = response.body.data
-      let [first] = evaluations
-      let [waterHeatings] = first.waterHeatings
-      expect(waterHeatings).toEqual({
-        efficiencyEf: 0.554,
-        efficiencyPercentage: null,
-        tankVolumeGallon: 39.995640800000004,
-        tankVolumeLitres: 151.4,
-        typeEnglish: 'Natural gas storage tank',
-        typeFrench: 'Réservoir au gaz naturel',
-      })
-    })
-
     it('retrieves all top level keys of the heating data', async () => {
       let response = await request(server)
         .post('/graphql')
@@ -499,46 +464,6 @@ describe('queries', () => {
       })
     })
 
-    it('retrieves all top level keys of the floor data', async () => {
-      let response = await request(server)
-        .post('/graphql')
-        .set('Content-Type', 'application/json; charset=utf-8')
-        .send({
-          query: `{
-          dwelling(houseId: 189250) {
-            evaluations {
-              floors {
-                label
-                insulationNominalRsi
-                insulationNominalR
-                insulationEffectiveRsi
-                insulationEffectiveR
-                areaMetres
-                areaFeet
-                lengthMetres
-                lengthFeet
-              }
-            }
-          }
-        }`,
-        })
-
-      let { dwelling: { evaluations } } = response.body.data
-      let [first] = evaluations
-      let [floor] = first.floors
-      expect(floor).toEqual({
-        areaFeet: 99.99996334435568,
-        areaMetres: 9.2903,
-        insulationEffectiveR: 14.82026730957,
-        insulationEffectiveRsi: 2.61,
-        insulationNominalR: 11.981135641069999,
-        insulationNominalRsi: 2.11,
-        label: 'Rm over garage',
-        lengthFeet: 10.00000032,
-        lengthMetres: 3.048,
-      })
-    })
-
     it('retrieves all top level keys of the heated floor area data', async () => {
       let response = await request(server)
         .post('/graphql')
@@ -567,36 +492,6 @@ describe('queries', () => {
         areaBelowGradeMetres: 600,
         areaAboveGradeFeet: 6458.34666336,
         areaBelowGradeFeet: 6458.34666336,
-      })
-    })
-
-    it('retrieves all top level keys of the ventilations data', async () => {
-      let response = await request(server)
-        .post('/graphql')
-        .set('Content-Type', 'application/json; charset=utf-8')
-        .send({
-          query: `{
-          dwelling(houseId: 189250) {
-            evaluations {
-              ventilations {
-                typeEnglish
-                typeFrench
-                airFlowRateLps
-                airFlowRateCfm
-              }
-            }
-          }
-        }`,
-        })
-
-      let { dwelling: { evaluations } } = response.body.data
-      let [first] = evaluations
-      let [ventilations] = first.ventilations
-      expect(ventilations).toEqual({
-        airFlowRateCfm: 466.1536,
-        airFlowRateLps: 220,
-        typeEnglish: 'Heat recovery ventilator',
-        typeFrench: 'Ventilateur-récupérateur de chaleur',
       })
     })
 

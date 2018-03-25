@@ -116,12 +116,9 @@ describe('Schema', () => {
         'modificationDate',
         'ceilings',
         'walls',
-        'floors',
         'doors',
         'windows',
         'heatedFloorArea',
-        'ventilations',
-        'waterHeatings',
         'heating',
         'energyUpgrades',
         'foundations',
@@ -199,42 +196,6 @@ describe('Schema', () => {
     })
   })
 
-  describe('Ventilation', () => {
-    it('is defined', () => {
-      expect(typeMap).toHaveProperty('Ventilation')
-    })
-
-    it('has the expected fields', () => {
-      const { Ventilation } = typeMap
-      const fields = Object.keys(Ventilation.getFields())
-      expect(fields).toEqual([
-        'typeEnglish',
-        'typeFrench',
-        'airFlowRateLps',
-        'airFlowRateCfm',
-      ])
-    })
-  })
-
-  describe('WaterHeater', () => {
-    it('is defined', () => {
-      expect(typeMap).toHaveProperty('WaterHeater')
-    })
-
-    it('has the expected fields', () => {
-      const { WaterHeater } = typeMap
-      const fields = Object.keys(WaterHeater.getFields())
-      expect(fields).toEqual([
-        'typeEnglish',
-        'typeFrench',
-        'tankVolumeLitres',
-        'tankVolumeGallon',
-        'efficiencyEf',
-        'efficiencyPercentage',
-      ])
-    })
-  })
-
   describe('Heating', () => {
     it('is defined', () => {
       expect(typeMap).toHaveProperty('Heating')
@@ -255,28 +216,6 @@ describe('Schema', () => {
         'outputSizeBtu',
         'efficiency',
         'steadyState',
-      ])
-    })
-  })
-
-  describe('Floor', () => {
-    it('is defined', () => {
-      expect(typeMap).toHaveProperty('Floor')
-    })
-
-    it('has the expected fields', () => {
-      const { Floor } = typeMap
-      const fields = Object.keys(Floor.getFields())
-      expect(fields).toEqual([
-        'label',
-        'insulationNominalRsi',
-        'insulationNominalR',
-        'insulationEffectiveRsi',
-        'insulationEffectiveR',
-        'areaMetres',
-        'areaFeet',
-        'lengthMetres',
-        'lengthFeet',
       ])
     })
   })

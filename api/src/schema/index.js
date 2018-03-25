@@ -55,56 +55,6 @@ const Schema = i18n => {
       priority: Int
     }
 
-    # ${i18n.t`Ventilation systems draw exterior air into the house, exhaust interior air to the exterior, or both`}
-    type Ventilation @cacheControl(maxAge: 90) {
-      # ${i18n.t`Ventilation type installed (en)`}
-      typeEnglish: String
-      # ${i18n.t`Ventilation type installed (fr)`}
-      typeFrench: String
-      # ${i18n.t`Air flow rate in litres per second (L/s)`}
-      airFlowRateLps: Float
-      # ${i18n.t`Air flow rate in cubic feet per minute (f3/m)`}
-      airFlowRateCfm: Float
-    }
-
-    # ${i18n.t`Floors represents the usable area of the house`}
-    type Floor @cacheControl(maxAge: 90) {
-      # ${i18n.t`Description of floor location`}
-      label: String
-      # ${i18n.t`Floor insulation nominal RSI (R-value Systeme International)`}
-      insulationNominalRsi: Float
-      # ${i18n.t`Floor insulation nominal R-value`}
-      insulationNominalR: Float
-      # ${i18n.t`Floor insulation effective RSI (R-value Systeme International)`}
-      insulationEffectiveRsi: Float
-      # ${i18n.t`Floor insulation effective R-value`}
-      insulationEffectiveR: Float
-      # ${i18n.t`Floor area of the house in square metres (m2)`}
-      areaMetres: Float
-      # ${i18n.t`Floor area of the house in square feet (ft2)`}
-      areaFeet: Float
-      # ${i18n.t`Floor length of the house in metres (m)`}
-      lengthMetres: Float
-      # ${i18n.t`Floor area of the house in square feet (ft2)`}
-      lengthFeet: Float
-    }
-
-    # ${i18n.t`Water heaters heat the domestic water in a house`}
-    type WaterHeater @cacheControl(maxAge: 90) {
-      # ${i18n.t`Type of tank being used to heat the domestic water in the house (en)`}
-      typeEnglish: String
-      # ${i18n.t`Type of tank being used to heat the domestic water in the house (fr)`}
-      typeFrench: String
-      # ${i18n.t`Capacity of the tank in litres (L)`}
-      tankVolumeLitres: Float
-      # ${i18n.t`Capacity of the tank in gallons (Gal)`}
-      tankVolumeGallon: Float
-      # ${i18n.t`Measures how effectively your water heater is burning fuel or turning fuel into heat`}
-      efficiencyEf: Float
-      # ${i18n.t`A percentage representing the ratio of how effectively your water heater is turning fuel into heat`}
-      efficiencyPercentage: Float
-    }
-
     # ${i18n.t`A principal heating system is either the only source of heat for the house, or is used for at least 70% of the heating load`}
     type Heating @cacheControl(maxAge: 90) {
       # ${i18n.t`Description of heating system`}
@@ -299,18 +249,12 @@ const Schema = i18n => {
       ceilings: [Ceiling]
       # ${i18n.t`A list of wall data entries for a dwelling`}
       walls: [Wall]
-      # ${i18n.t`A list of floor data entries for a dwelling`}
-      floors: [Floor]
       # ${i18n.t`A list of door data entries for a dwelling`}
       doors: [Door]
       # ${i18n.t`A list of window data entries for a dwelling`}
       windows: [Window]
       # ${i18n.t`A heated floor area entry for a dwelling`}
       heatedFloorArea: HeatedFloorArea
-      # ${i18n.t`A list of ventilation data entries for a dwelling`}
-      ventilations: [Ventilation]
-      # ${i18n.t`A list of water heater data entries for a dwelling`}
-      waterHeatings: [WaterHeater]
       # ${i18n.t`A principal heating system for a dwelling`}
       heating: Heating
       # ${i18n.t`A list of upgrades that would improve energy efficiency`}
@@ -372,46 +316,6 @@ const Schema = i18n => {
       evaluationFileId
       # ${i18n.t`Filter results by the dwellings containing at least one evaluation with a specific ERS rating`}
       evaluationErsRating
-      # ${i18n.t`Filter results by the dwellings containing at least one ventilation system with a specific type (en)`}
-      ventilationTypeEnglish
-      # ${i18n.t`Filter results by the dwellings containing at least one ventilation system with a specific type (fr)`}
-      ventilationTypeFrench
-      # ${i18n.t`Filter results by the dwellings containing at least one ventilation system with a specific air flow rate in litres per second (L/s)`}
-      ventilationAirFlowRateLps
-      # ${i18n.t`Filter results by the dwellings containing at least one ventilation system with a specific air flow rate in cubic feet per minute (f3/m)`}
-      ventilationAirFlowRateCfm
-      # ${i18n.t`Filter results by the dwellings containing at least one ventilation system with a specific efficiency rating`}
-      ventilationEfficiency
-      # ${i18n.t`Filter results by the dwellings containing at least one floor with a specific location`}
-      floorLabel
-      # ${i18n.t`Filter results by the dwellings containing at least one floor with a specific nominal RSI (R-value Systeme International)`}
-      floorInsulationNominalRsi
-      # ${i18n.t`Filter results by the dwellings containing at least one floor with a specific nominal R-value`}
-      floorInsulationNominalR
-      # ${i18n.t`Filter results by the dwellings containing at least one floor with a specific effective R-value`}
-      floorInsulationEffectiveRsi
-      # ${i18n.t`Filter results by the dwellings containing at least one floor with a specific effective R-value`}
-      floorInsulationEffectiveR
-      # ${i18n.t`Filter results by the dwellings containing at least one floor with a specific area in square metres (m2)`}
-      floorAreaMetres
-      # ${i18n.t`Filter results by the dwellings containing at least one floor with a specific area in square feet (ft2)`}
-      floorAreaFeet
-      # ${i18n.t`Filter results by the dwellings containing at least one floor with a specific length in metres (m)`}
-      floorLengthMetres
-      # ${i18n.t`Filter results by the dwellings containing at least one floor with a specific length in feet (ft)`}
-      floorLengthFeet
-      # ${i18n.t`Filter results by the dwellings containing at least one water heating system of a specific type (en)`}
-      waterHeatingTypeEnglish
-      # ${i18n.t`Filter results by the dwellings containing at least one water heating system of a specific type (fr)`}
-      waterHeatingTypeFrench
-      # ${i18n.t`Filter results by the dwellings containing at least one water heating system with a specific capacity in litres (L)`}
-      waterHeatingTankVolumeLitres
-      # ${i18n.t`Filter results by the dwellings containing at least one water heating system with a specific capacity in gallons (Gal)`}
-      waterHeatingTankVolumeGallon
-      # ${i18n.t`Filter results by the dwellings containing at least one water heating system with a specific efficiency percentage`}
-      waterHeatingEfficiencyPercentage
-      # ${i18n.t`Filter results by the dwellings containing at least one water heating system with a specific efficiency rating`}
-      waterHeatingEfficiencyEf
       # ${i18n.t`Filter results by the dwellings containing a heating system with a specific description`}
       heatingLabel
       # ${i18n.t`Filter results by the dwellings containing a heating system of a specific type (en)`}
