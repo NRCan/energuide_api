@@ -56,30 +56,6 @@ describe('Schema', () => {
     })
   })
 
-  describe('Ceiling Type', () => {
-    it('is defined', () => {
-      expect(typeMap).toHaveProperty('Ceiling')
-    })
-
-    it('has the expected fields', () => {
-      const Ceiling = typeMap.Ceiling
-      const fields = Object.keys(Ceiling.getFields())
-      expect(fields).toEqual([
-        'label',
-        'typeEnglish',
-        'typeFrench',
-        'insulationNominalRsi',
-        'insulationNominalR',
-        'insulationEffectiveRsi',
-        'insulationEffectiveR',
-        'areaMetres',
-        'areaFeet',
-        'lengthMetres',
-        'lengthFeet',
-      ])
-    })
-  })
-
   describe('Evaluation Type', () => {
     it('is defined', () => {
       expect(typeMap).toHaveProperty('Evaluation')
@@ -94,7 +70,6 @@ describe('Schema', () => {
         'fileId',
         'creationDate',
         'modificationDate',
-        'ceilings',
         'walls',
         'heatedFloorArea',
         'energyUpgrades',

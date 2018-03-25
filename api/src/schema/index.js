@@ -115,32 +115,6 @@ const Schema = i18n => {
       heightFeet: Float
     }
 
-    # ${i18n.t`Ceilings are the upper interior surface of a room`}
-    type Ceiling @cacheControl(maxAge: 90) {
-      # ${i18n.t`Used to identify the ceiling in the house`}
-      label: String
-      # ${i18n.t`Describes the construction of the ceiling (en)`}
-      typeEnglish: String
-      # ${i18n.t`Describes the construction of the ceiling (fr)`}
-      typeFrench: String
-      # ${i18n.t`Ceiling insulation nominal RSI (R-value Systeme International)`}
-      insulationNominalRsi: Float
-      # ${i18n.t`Ceiling insulation nominal R-value`}
-      insulationNominalR: Float
-      # ${i18n.t`Ceiling insulation effective RSI (R-value Systeme International)`}
-      insulationEffectiveRsi: Float
-      # ${i18n.t`Ceiling insulation effective R-value`}
-      insulationEffectiveR: Float
-      # ${i18n.t`Ceiling area in square metres (m2)`}
-      areaMetres: Float
-      # ${i18n.t`Ceiling area in square feet (ft2)`}
-      areaFeet: Float
-      # ${i18n.t`Ceiling length in metres (m)`}
-      lengthMetres: Float
-      # ${i18n.t`Ceiling length in feet (ft)`}
-      lengthFeet: Float
-    }
-
     # ${i18n.t`Detailed information about specific features of a given dwelling`}
     type Evaluation @cacheControl(maxAge: 90) {
       # ${i18n.t`Evaluation type codes are used to define the type of evaluation performed and to distinguish the house type (i.e. newly built or existing)`}
@@ -152,8 +126,6 @@ const Schema = i18n => {
       creationDate: String
       # ${i18n.t`Date the record was last modified`}
       modificationDate: String
-      # ${i18n.t`A list of ceiling data entries for a dwelling`}
-      ceilings: [Ceiling]
       # ${i18n.t`A list of wall data entries for a dwelling`}
       walls: [Wall]
       # ${i18n.t`A heated floor area entry for a dwelling`}
@@ -255,28 +227,6 @@ const Schema = i18n => {
       wallHeightMetres
       # ${i18n.t`Filter results by the dwellings containing at least one wall with a specific height in feet (ft)`}
       wallHeightFeet
-      # ${i18n.t`Filter results by the dwellings where at least one ceiling has a matching label`}
-      ceilingLabel
-      # ${i18n.t`Filter results by the dwellings where at least one ceiling has a matching type (en)`}
-      ceilingTypeEnglish
-      # ${i18n.t`Filter results by the dwellings where at least one ceiling has a matching type (fr)`}
-      ceilingTypeFrench
-      # ${i18n.t`Filter results by the dwellings where at least one ceiling has a specific nominal RSI (R-value Systeme International)`}
-      ceilingInsulationNominalRsi
-      # ${i18n.t`Filter results by the dwellings containing at least one ceiling with a specific nominal R-value`}
-      ceilingInsulationNominalR
-      # ${i18n.t`Filter results by the dwellings containing at least one ceiling with a specific effective RSI (R-value Systeme International)`}
-      ceilingInsulationEffectiveRsi
-      # ${i18n.t`Filter results by the dwellings containing at least one ceiling with a specific effective R-value`}
-      ceilingInsulationEffectiveR
-      # ${i18n.t`Filter results by the dwellings containing at least one ceiling with a specific area in square metres (m2)`}
-      ceilingAreaMetres
-      # ${i18n.t`Filter results by the dwellings containing at least one ceiling with a specific area in square feet (ft2)`}
-      ceilingAreaFeet
-      # ${i18n.t`Filter results by the dwellings containing at least one ceiling with a specific length in metres (m)`}
-      ceilingLengthMetres
-      # ${i18n.t`Filter results by the dwellings containing at least one ceiling with a specific length in feet (ft)`}
-      ceilingLengthFeet
       # ${i18n.t`Filter results for dwellings with matching foundation type (en)`}
       foundationFoundationTypeEnglish
       # ${i18n.t`Filter results for dwellings with matching foundation type (fr)`}

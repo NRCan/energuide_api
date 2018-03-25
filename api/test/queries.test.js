@@ -286,50 +286,6 @@ describe('queries', () => {
       })
     })
 
-    it('retrieves all top level keys of the ceiling data', async () => {
-      let response = await request(server)
-        .post('/graphql')
-        .set('Content-Type', 'application/json; charset=utf-8')
-        .send({
-          query: `{
-          dwelling(houseId: 189250) {
-            evaluations {
-              ceilings {
-                label
-                typeEnglish
-                typeFrench
-                insulationNominalRsi
-                insulationNominalR
-                insulationEffectiveRsi
-                insulationEffectiveR
-                areaMetres
-                areaFeet
-                lengthMetres
-                lengthFeet
-              }
-            }
-          }
-        }`,
-        })
-
-      let { dwelling: { evaluations } } = response.body.data
-      let [first] = evaluations
-      let [ceiling] = first.ceilings
-      expect(ceiling).toEqual({
-        areaFeet: 830.1171300283143,
-        areaMetres: 77.1204,
-        insulationEffectiveR: 36.3397497041326,
-        insulationEffectiveRsi: 6.3998,
-        insulationNominalR: 36.3397497041326,
-        insulationNominalRsi: 6.3998,
-        label: 'Ceiling01',
-        lengthFeet: 47.66404352,
-        lengthMetres: 14.528,
-        typeEnglish: 'Attic/gable',
-        typeFrench: 'Combles/pignon',
-      })
-    })
-
     it('retrieves all top level keys of the wall data', async () => {
       let response = await request(server)
         .post('/graphql')
