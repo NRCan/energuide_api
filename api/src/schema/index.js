@@ -1,11 +1,6 @@
 import { Resolvers } from './resolvers'
 import { makeExecutableSchema } from 'graphql-tools'
 
-import { createFoundation } from './types/Foundation'
-import { createFoundationFloor } from './types/FoundationFloor'
-import { createFoundationWall } from './types/FoundationWall'
-import { createHeader } from './types/Header'
-
 const Schema = i18n => {
   const typeDefs = [
     `
@@ -132,8 +127,6 @@ const Schema = i18n => {
       heatedFloorArea: HeatedFloorArea
       # ${i18n.t`A list of upgrades that would improve energy efficiency`}
       energyUpgrades: [Upgrade]
-      # ${i18n.t`The details of the foundation`}
-      foundations: [Foundation]
       # ${i18n.t`The EnerGuide Rating calculated for this evaluation`}
       ersRating: Int
     }
@@ -227,91 +220,8 @@ const Schema = i18n => {
       wallHeightMetres
       # ${i18n.t`Filter results by the dwellings containing at least one wall with a specific height in feet (ft)`}
       wallHeightFeet
-      # ${i18n.t`Filter results for dwellings with matching foundation type (en)`}
-      foundationFoundationTypeEnglish
-      # ${i18n.t`Filter results for dwellings with matching foundation type (fr)`}
-      foundationFoundationTypeFrench
-      # ${i18n.t`Filter results for dwellings with a specific foundation label`}
-      foundationLabel
-      # ${i18n.t`Filter results for dwellings with a specific foundation configuration`}
-      foundationConfigurationType
-      # ${i18n.t`Filter results for dwellings whose foundation was constructed with a specific material (en)`}
-      foundationMaterialEnglish
-      # ${i18n.t`Filter results for dwellings whose foundation was constructed with a specific material (en)`}
-      foundationMaterialFrench
-      # ${i18n.t`Filter results for dwellings with a specific foundation header insulation nominal RSI (R-value Systeme International)`}
-      foundationHeaderInsulationNominalRsi
-      # ${i18n.t`Filter results for dwellings with a specific foundation header insulation nominal R-value`}
-      foundationHeaderInsulationNominalR
-      # ${i18n.t`Filter results for dwellings with a specific foundation header insulation effective RSI (R-value Systeme International)`}
-      foundationHeaderInsulationEffectiveRsi
-      # ${i18n.t`Filter results for dwellings with a specific foundationn header insulation effective R-value`}
-      foundationHeaderInsulationEffectiveR
-      # ${i18n.t`Filter results for dwellings with a specific foundation header area in square metres (m2)`}
-      foundationHeaderAreaMetres
-      # ${i18n.t`Filter results for dwellings with a specific foundation header area in square feet (ft2)`}
-      foundationHeaderAreaFeet
-      # ${i18n.t`Filter results for dwellings with a specific foundation header perimeter in metres (m)`}
-      foundationHeaderPerimeterMetres
-      # ${i18n.t`Filter results for dwellings with a specific foundation header perimeter in feet (ft)`}
-      foundationHeaderPerimeterFeet
-      # ${i18n.t`Filter results for dwellings with a specific foundation header height in metres (m)`}
-      foundationHeaderHeightMetres
-      # ${i18n.t`Filter results for dwellings with a specific header height in feet (ft)`}
-      foundationHeaderHeightFeet
-      # ${i18n.t`Filter for dwellings with a specific type of foundation floor type (en)`}
-      foundationFloorFloorTypeEnglish
-      # ${i18n.t`Filter for dwellings with a specific type of foundation floor type (fr)`}
-      foundationFloorFloorTypeFrench
-      # ${i18n.t`Filter for dwellings where the foundation floor has a specific insulation nominal RSI (R-value Systeme International)`}
-      foundationFloorInsulationNominalRsi
-      # ${i18n.t`Filter for dwellings with a specific insulation nominal R-value on the foundation floor`}
-      foundationFloorInsulationNominalR
-      # ${i18n.t`Filter for dwellings with a specific insulation effective RSI (R-value Systeme International) for the foundation floor`}
-      foundationFloorInsulationEffectiveRsi
-      # ${i18n.t`Filter for dwellings with a specific insulation effective R-value for the foundation floor`}
-      foundationFloorInsulationEffectiveR
-      # ${i18n.t`Filter for dwellings where the foundation floor has a specific area in square metres (m2)`}
-      foundationFloorAreaMetres
-      # ${i18n.t`Filter for dwellings where the foundation floor has a specific area in square feet (ft2)`}
-      foundationFloorAreaFeet
-      # ${i18n.t`Filter for dwellings where the foundation floor has a specific perimeter in metres (m)`}
-      foundationFloorPerimeterMetres
-      # ${i18n.t`Filter for dwellings where the foundation floor has a specific perimeter in feet (ft)`}
-      foundationFloorPerimeterFeet
-      # ${i18n.t`Filter for dwellings where the foundation floor has a specific width in metres (m)`}
-      foundationFloorWidthMetres
-      # ${i18n.t`Filter for dwellings where the foundation floor has a specific width in feet (ft)`}
-      foundationFloorWidthFeet
-      # ${i18n.t`Filter for dwellings where the foundation floor has a specific length in metres (m)`}
-      foundationFloorLengthMetres
-      # ${i18n.t`Filter for dwellings where the foundation floor has a specific length in feet (ft)`}
-      foundationFloorLengthFeet
-      # ${i18n.t`Filter results for dwellings whose foundation wall has a specific type (en)`}
-      foundationWallWallTypeEnglish
-      # ${i18n.t`Filter results for dwellings whose foundation wall has a specific type (fr)`}
-      foundationWallWallTypeFrench
-      # ${i18n.t`Filter results for dwellings with a specific foundation wall insulation nominal RSI (R-value Systeme International)`}
-      foundationWallInsulationNominalRsi
-      # ${i18n.t`Filter results for dwellings with a specific foundation wall insulation nominal R-value`}
-      foundationWallInsulationNominalR
-      # ${i18n.t`Filter results for dwellings with a specific foundation wall insulation effective RSI (R-value Systeme International)`}
-      foundationWallInsulationEffectiveRsi
-      # ${i18n.t`Filter results for dwellings with a specific foundation wall insulation effective R-value`}
-      foundationWallInsulationEffectiveR
-      # ${i18n.t`Filter results for dwellings with a section of its foundation wall with a specific percentage of the overall amount`}
-      foundationWallPercentage
-      # ${i18n.t`Filter results for dwellings with a specific foundation wall area in square metres (m2)`}
-      foundationWallAreaMetres
-      # ${i18n.t`Filter results for dwellings with a specific foundation wall area in square feet (ft2)`}
-      foundationWallAreaFeet
     }
   `,
-
-    createFoundation(i18n),
-    createFoundationFloor(i18n),
-    createFoundationWall(i18n),
-    createHeader(i18n),
   ]
 
   return makeExecutableSchema({ typeDefs, resolvers: new Resolvers(i18n) })
