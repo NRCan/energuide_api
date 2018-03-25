@@ -115,52 +115,6 @@ const Schema = i18n => {
       heightFeet: Float
     }
 
-    # ${i18n.t`Windows separate the interior heated space from the outside`}
-    type Window @cacheControl(maxAge: 90) {
-      # ${i18n.t`Used to identify the window component in the house`}
-      label: String
-      # ${i18n.t`Window RSI (R-value Systeme International)`}
-      insulationRsi: Float
-      # ${i18n.t`Window R-value`}
-      insulationR: Float
-      # ${i18n.t`Number of panes of transparent material in a window (en)`}
-      glazingTypesEnglish: String
-      # ${i18n.t`Number of panes of transparent material in a window (fr)`}
-      glazingTypesFrench: String
-      # ${i18n.t`Type of coating and tint on a window pane (en)`}
-      coatingsTintsEnglish: String
-      # ${i18n.t`Type of coating and tint on a window pane (fr)`}
-      coatingsTintsFrench: String
-      # ${i18n.t`Type of gas injected between the glass layers (en)`}
-      fillTypeEnglish: String
-      # ${i18n.t`Type of gas injected between the glass layers (fr)`}
-      fillTypeFrench: String
-      # ${i18n.t`Spacer systems used between the glass layers (en)`}
-      spacerTypeEnglish: String
-      # ${i18n.t`Spacer systems used between the glass layers (fr)`}
-      spacerTypeFrench: String
-      # ${i18n.t`Describes the construction of the window (en)`}
-      typeEnglish: String
-      # ${i18n.t`Describes the construction of the window (fr)`}
-      typeFrench: String
-      # ${i18n.t`Material type of the window frame (en)`}
-      frameMaterialEnglish: String
-      # ${i18n.t`Material type of the window frame (fr)`}
-      frameMaterialFrench: String
-      # ${i18n.t`Window area in square metres (m2)`}
-      areaMetres: Float
-      # ${i18n.t`Window area in square feet (ft2)`}
-      areaFeet: Float
-      # ${i18n.t`Window width in metres (m)`}
-      widthMetres: Float
-      # ${i18n.t`Window width in feet (ft)`}
-      widthFeet: Float
-      # ${i18n.t`Window height in metres (m)`}
-      heightMetres: Float
-      # ${i18n.t`Window height in feet (ft)`}
-      heightFeet: Float
-    }
-
     # ${i18n.t`Ceilings are the upper interior surface of a room`}
     type Ceiling @cacheControl(maxAge: 90) {
       # ${i18n.t`Used to identify the ceiling in the house`}
@@ -202,8 +156,6 @@ const Schema = i18n => {
       ceilings: [Ceiling]
       # ${i18n.t`A list of wall data entries for a dwelling`}
       walls: [Wall]
-      # ${i18n.t`A list of window data entries for a dwelling`}
-      windows: [Window]
       # ${i18n.t`A heated floor area entry for a dwelling`}
       heatedFloorArea: HeatedFloorArea
       # ${i18n.t`A list of upgrades that would improve energy efficiency`}
@@ -325,48 +277,6 @@ const Schema = i18n => {
       ceilingLengthMetres
       # ${i18n.t`Filter results by the dwellings containing at least one ceiling with a specific length in feet (ft)`}
       ceilingLengthFeet
-      # ${i18n.t`Filter results by dwellings that have a window with a specific label`}
-      windowLabel
-      # ${i18n.t`Filter results by dwellings with a specific window RSI (R-value Systeme International)`}
-      windowInsulationRsi
-      # ${i18n.t`Filter results by dwellings with a specific window R-value`}
-      windowInsulationR
-      # ${i18n.t`Filter results by dwellings with a matching number of panes of transparent material in a window (en)`}
-      windowGlazingTypesEnglish
-      # ${i18n.t`Filter results by dwellings with a matching number of panes of transparent material in a window (fr)`}
-      windowGlazingTypesFrench
-      # ${i18n.t`Filter results for dwellings with a specific type of coating and tint on a window pane (en)`}
-      windowCoatingsTintsEnglish
-      # ${i18n.t`Filter results for dwellings with a specific type of coating and tint on a window pane (fr)`}
-      windowCoatingsTintsFrench
-      # ${i18n.t`Filter results for dwellings with windows containing a specific type of gas injected between the glass layers (en)`}
-      windowFillTypeEnglish
-      # ${i18n.t`Filter results for dwellings with windows containing a specific type of gas injected between the glass layers (fr)`}
-      windowFillTypeFrench
-      # ${i18n.t`Filter results for dwellings with a specific spacer system used between the glass layers (en)`}
-      windowSpacerTypeEnglish
-      # ${i18n.t`Filter results for dwellings with a specific spacer system used between the glass layers (fr)`}
-      windowSpacerTypeFrench
-      # ${i18n.t`Filter results for dwellings with a particular type of window construction (en)`}
-      windowTypeEnglish
-      # ${i18n.t`Filter results for dwellings with a particular type of window construction (fr)`}
-      windowTypeFrench
-      # ${i18n.t`Filter results for dwellings with window frames matching a specific material (en)`}
-      windowFrameMaterialEnglish
-      # ${i18n.t`Filter results for dwellings with window frames matching a specific material (fr)`}
-      windowFrameMaterialFrench
-      # ${i18n.t`Filter results for dwellings with a window matching a specific area in square metres (m2)`}
-      windowAreaMetres
-      # ${i18n.t`Filter results for dwellings with a window matching a specific area in square feet (ft2)`}
-      windowAreaFeet
-      # ${i18n.t`Filter results for dwellings with a window matching a specific width in metres (m)`}
-      windowWidthMetres
-      # ${i18n.t`Filter results for dwellings with a window matching a specific width in feet (ft)`}
-      windowWidthFeet
-      # ${i18n.t`Filter results for dwellings with a window matching a specific height in metres (m)`}
-      windowHeightMetres
-      # ${i18n.t`Filter results for dwellings with a window matching a specific height in feet (ft)`}
-      windowHeightFeet
       # ${i18n.t`Filter results for dwellings with matching foundation type (en)`}
       foundationFoundationTypeEnglish
       # ${i18n.t`Filter results for dwellings with matching foundation type (fr)`}

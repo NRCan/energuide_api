@@ -412,69 +412,6 @@ describe('queries', () => {
         areaBelowGradeFeet: 6458.34666336,
       })
     })
-
-    it('retrieves all top level keys of the window data', async () => {
-      let response = await request(server)
-        .post('/graphql')
-        .set('Content-Type', 'application/json; charset=utf-8')
-        .send({
-          query: `{
-          evaluations:dwelling(houseId: 189250) {
-            evaluations {
-              windows {
-                label
-                insulationRsi
-                insulationR
-                glazingTypesEnglish
-                glazingTypesFrench
-                coatingsTintsEnglish
-                coatingsTintsFrench
-                fillTypeEnglish
-                fillTypeFrench
-                spacerTypeEnglish
-                spacerTypeFrench
-                typeEnglish
-                typeFrench
-                frameMaterialEnglish
-                frameMaterialFrench
-                areaMetres
-                areaFeet
-                widthMetres
-                widthFeet
-                heightMetres
-                heightFeet
-              }
-            }
-          }
-        }`,
-        })
-
-      let { evaluations: { evaluations: [first] } } = response.body.data
-      let [eastWindow] = first.windows
-      expect(eastWindow).toEqual({
-        areaFeet: 14.111997194858986,
-        areaMetres: 1.31104735596684,
-        coatingsTintsEnglish: 'Clear',
-        coatingsTintsFrench: 'Transparent',
-        fillTypeEnglish: '13 mm Air',
-        fillTypeFrench: "13 mm d'air",
-        frameMaterialEnglish: 'Aluminum',
-        frameMaterialFrench: 'Aluminium',
-        glazingTypesEnglish: 'Double/double with 1 coat',
-        glazingTypesFrench: 'Double/double, 1 couche',
-        heightFeet: 4.002377424664,
-        heightMetres: 1.2199246000000001,
-        insulationR: 1.5246137059845,
-        insulationRsi: 0.2685,
-        label: 'East0001',
-        spacerTypeEnglish: 'Metal',
-        spacerTypeFrench: 'Métal',
-        typeEnglish: 'Picture',
-        typeFrench: 'Fixe',
-        widthFeet: 3.5259036561359998,
-        widthMetres: 1.0746954,
-      })
-    })
   })
 
   describe('dwelling', () => {

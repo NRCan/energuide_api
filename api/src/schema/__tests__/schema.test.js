@@ -96,45 +96,10 @@ describe('Schema', () => {
         'modificationDate',
         'ceilings',
         'walls',
-        'windows',
         'heatedFloorArea',
         'energyUpgrades',
         'foundations',
         'ersRating',
-      ])
-    })
-  })
-
-  describe('Window Type', () => {
-    it('is defined', () => {
-      expect(typeMap).toHaveProperty('Window')
-    })
-
-    it('has the expected fields', () => {
-      const Window = typeMap.Window
-      const fields = Object.keys(Window.getFields())
-      expect(fields).toEqual([
-        'label',
-        'insulationRsi',
-        'insulationR',
-        'glazingTypesEnglish',
-        'glazingTypesFrench',
-        'coatingsTintsEnglish',
-        'coatingsTintsFrench',
-        'fillTypeEnglish',
-        'fillTypeFrench',
-        'spacerTypeEnglish',
-        'spacerTypeFrench',
-        'typeEnglish',
-        'typeFrench',
-        'frameMaterialEnglish',
-        'frameMaterialFrench',
-        'areaMetres',
-        'areaFeet',
-        'widthMetres',
-        'widthFeet',
-        'heightMetres',
-        'heightFeet',
       ])
     })
   })
