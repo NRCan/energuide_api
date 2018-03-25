@@ -28,26 +28,6 @@ describe('Schema', () => {
     })
   })
 
-  describe('Door Type', () => {
-    it('is defined', () => {
-      expect(typeMap).toHaveProperty('Door')
-    })
-    it('has the expected fields', () => {
-      const Door = typeMap.Door
-      const fields = Object.keys(Door.getFields())
-      expect(fields).toEqual([
-        'typeEnglish',
-        'typeFrench',
-        'insulationRsi',
-        'insulationR',
-        'uFactor',
-        'uFactorImperial',
-        'areaMetres',
-        'areaFeet',
-      ])
-    })
-  })
-
   describe('Wall Type', () => {
     it('is defined', () => {
       expect(typeMap).toHaveProperty('Wall')
@@ -116,7 +96,6 @@ describe('Schema', () => {
         'modificationDate',
         'ceilings',
         'walls',
-        'doors',
         'windows',
         'heatedFloorArea',
         'energyUpgrades',

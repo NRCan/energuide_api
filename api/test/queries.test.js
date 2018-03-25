@@ -382,44 +382,6 @@ describe('queries', () => {
       })
     })
 
-    it('retrieves all top level keys of the door data', async () => {
-      let response = await request(server)
-        .post('/graphql')
-        .set('Content-Type', 'application/json; charset=utf-8')
-        .send({
-          query: `{
-          dwelling(houseId: 189250) {
-            evaluations {
-              doors {
-                typeEnglish
-                typeFrench
-                insulationRsi
-                insulationR
-                uFactor
-                uFactorImperial
-                areaMetres
-                areaFeet
-              }
-            }
-          }
-        }`,
-        })
-
-      let { dwelling: { evaluations } } = response.body.data
-      let [first] = evaluations
-      let [door] = first.doors
-      expect(door).toEqual({
-        areaFeet: 18.9875391902784,
-        areaMetres: 1.764,
-        insulationR: 6.4732202041799995,
-        insulationRsi: 1.14,
-        typeEnglish: 'Steel Medium density spray foam core',
-        typeFrench: 'Acier / âme en mousse à vaporiser de densité moyenne',
-        uFactor: 0.8771929824561404,
-        uFactorImperial: 0.15448261737709199,
-      })
-    })
-
     it('retrieves all top level keys of the heated floor area data', async () => {
       let response = await request(server)
         .post('/graphql')

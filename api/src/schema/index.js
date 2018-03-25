@@ -115,26 +115,6 @@ const Schema = i18n => {
       heightFeet: Float
     }
 
-    # ${i18n.t`Doors are on outside walls, separating the interior heated space from the outside`}
-    type Door @cacheControl(maxAge: 90) {
-      # ${i18n.t`Describes the construction of the door (en)`}
-      typeEnglish: String
-      # ${i18n.t`Describes the construction of the door (fr)`}
-      typeFrench: String
-      # ${i18n.t`Door RSI (R-value Systeme International)`}
-      insulationRsi: Float
-      # ${i18n.t`Door R-value`}
-      insulationR: Float
-      # ${i18n.t`Door U-factor in metric: watts per square metre per degree Celcius (W/m2C)`}
-      uFactor: Float
-      # ${i18n.t`Door U-factor in imperial: British Thermal Units per square feet per degree Fahrenheit (BTU/ft2F)`}
-      uFactorImperial: Float
-      # ${i18n.t`Door area in square metres (m2)`}
-      areaMetres: Float
-      # ${i18n.t`Door area in square feet (ft2)`}
-      areaFeet: Float
-    }
-
     # ${i18n.t`Windows separate the interior heated space from the outside`}
     type Window @cacheControl(maxAge: 90) {
       # ${i18n.t`Used to identify the window component in the house`}
@@ -222,8 +202,6 @@ const Schema = i18n => {
       ceilings: [Ceiling]
       # ${i18n.t`A list of wall data entries for a dwelling`}
       walls: [Wall]
-      # ${i18n.t`A list of door data entries for a dwelling`}
-      doors: [Door]
       # ${i18n.t`A list of window data entries for a dwelling`}
       windows: [Window]
       # ${i18n.t`A heated floor area entry for a dwelling`}
@@ -347,22 +325,6 @@ const Schema = i18n => {
       ceilingLengthMetres
       # ${i18n.t`Filter results by the dwellings containing at least one ceiling with a specific length in feet (ft)`}
       ceilingLengthFeet
-      # ${i18n.t`Filter results by the dwellings containing at least one door with a specific type (en)`}
-      doorTypeEnglish
-      # ${i18n.t`Filter results by the dwellings containing at least one door with a specific type (fr)`}
-      doorTypeFrench
-      # ${i18n.t`Filter results by the dwellings where at least one door has a specific RSI (R-value Systeme International) value`}
-      doorInsulationRsi
-      # ${i18n.t`Filter results by the dwellings containing at least one door with a specific effective R-value`}
-      doorInsulationR
-      # ${i18n.t`Filter results for dwellings which have at least one door with a matching U-factor in metric: watts per square metre per degree Celcius (W/m2C)`}
-      doorUFactor
-      # ${i18n.t`Filter results for dwellings which have at least one door with a matching U-factor in imperial: British Thermal Units per square feet per degree Fahrenheit (BTU/ft2F)`}
-      doorUFactorImperial
-      # ${i18n.t`Filter results by dwellings where the area of the doors have certain value in square metres (m2)`}
-      doorAreaMetres
-      # ${i18n.t`Filter results by dwellings where the area of the doors have certain value in square feet (ft2)`}
-      doorAreaFeet
       # ${i18n.t`Filter results by dwellings that have a window with a specific label`}
       windowLabel
       # ${i18n.t`Filter results by dwellings with a specific window RSI (R-value Systeme International)`}
