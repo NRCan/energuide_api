@@ -420,50 +420,6 @@ describe('queries', () => {
       })
     })
 
-    it('retrieves all top level keys of the heating data', async () => {
-      let response = await request(server)
-        .post('/graphql')
-        .set('Content-Type', 'application/json; charset=utf-8')
-        .send({
-          query: `{
-          dwelling(houseId: 189250) {
-            evaluations {
-              heating {
-                label
-                heatingTypeEnglish
-                heatingTypeFrench
-                energySourceEnglish
-                energySourceFrench
-                equipmentTypeEnglish
-                equipmentTypeFrench
-                outputSizeKW
-                outputSizeBtu
-                efficiency
-                steadyState
-              }
-            }
-          }
-        }`,
-        })
-
-      let { dwelling: { evaluations } } = response.body.data
-      let [first] = evaluations
-      let heating = first.heating
-      expect(heating).toEqual({
-        efficiency: 80,
-        energySourceEnglish: 'Natural Gas',
-        energySourceFrench: 'Chauffage au gaz naturel',
-        equipmentTypeEnglish: 'Induced draft fan furnace',
-        equipmentTypeFrench: 'Fournaise à tirage induit',
-        heatingTypeEnglish: 'Furnace',
-        heatingTypeFrench: 'Fournaise',
-        label: 'Heating/Cooling System',
-        outputSizeBtu: 29003.207,
-        outputSizeKW: 8.5,
-        steadyState: 'Steady State',
-      })
-    })
-
     it('retrieves all top level keys of the heated floor area data', async () => {
       let response = await request(server)
         .post('/graphql')

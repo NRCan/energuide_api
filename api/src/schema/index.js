@@ -55,33 +55,6 @@ const Schema = i18n => {
       priority: Int
     }
 
-    # ${i18n.t`A principal heating system is either the only source of heat for the house, or is used for at least 70% of the heating load`}
-    type Heating @cacheControl(maxAge: 90) {
-      # ${i18n.t`Description of heating system`}
-      label: String
-      # ${i18n.t`Type of heating system (en)`}
-      heatingTypeEnglish: String
-      # ${i18n.t`Type of heating system (fr)`}
-      heatingTypeFrench: String
-      # ${i18n.t`The source of fuel for the heating system (en)`}
-      energySourceEnglish: String
-      # ${i18n.t`The source of fuel for the heating system (fr)`}
-      energySourceFrench: String
-      # ${i18n.t`Equipment type of heating system (en)`}
-      equipmentTypeEnglish: String
-      # ${i18n.t`Equipment type of heating system (fr)`}
-      equipmentTypeFrench: String
-      # ${i18n.t`Output capacity of the heating system in kilowatt hours (kWh)`}
-      outputSizeKW: Float
-      # ${i18n.t`Output capacity of the heating system in British Thermal Units per hour (BTU/h)`}
-      outputSizeBtu: Float
-      # ${i18n.t`Measures how effectively your heating system is burning fuel or turning fuel into heat`}
-      efficiency: Float
-      # ${i18n.t`Steady-state efficiency is the combustion efficiency of the equipment at peak performance.
-        The Annual Fuel Utilization Efficiency (AFUE) is a measure of efficiency based on average usage, accounting for the fact that most heating systems rarely run long enough to reach peak performance.`}
-      steadyState: String
-    }
-
     # ${i18n.t`One page of results`}
     type PaginatedResultSet @cacheControl(maxAge: 90) {
       # ${i18n.t`If true, a further page of results can be returned`}
@@ -255,8 +228,6 @@ const Schema = i18n => {
       windows: [Window]
       # ${i18n.t`A heated floor area entry for a dwelling`}
       heatedFloorArea: HeatedFloorArea
-      # ${i18n.t`A principal heating system for a dwelling`}
-      heating: Heating
       # ${i18n.t`A list of upgrades that would improve energy efficiency`}
       energyUpgrades: [Upgrade]
       # ${i18n.t`The details of the foundation`}
@@ -316,28 +287,6 @@ const Schema = i18n => {
       evaluationFileId
       # ${i18n.t`Filter results by the dwellings containing at least one evaluation with a specific ERS rating`}
       evaluationErsRating
-      # ${i18n.t`Filter results by the dwellings containing a heating system with a specific description`}
-      heatingLabel
-      # ${i18n.t`Filter results by the dwellings containing a heating system of a specific type (en)`}
-      heatingHeatingTypeEnglish
-      # ${i18n.t`Filter results by the dwellings containing a heating system of a specific type (fr)`}
-      heatingHeatingTypeFrench
-      # ${i18n.t`Filter results by the dwellings containing a heating system with a specific fuel source (en)`}
-      heatingEnergySourceEnglish
-      # ${i18n.t`Filter results by the dwellings containing a heating system with a specific fuel source (fr)`}
-      heatingEnergySourceFrench
-      # ${i18n.t`Filter results by the dwellings containing a heating system with a specific type of equipment (en)`}
-      heatingEquipmentTypeEnglish
-      # ${i18n.t`Filter results by the dwellings containing a heating system with a specific type of equipment (fr)`}
-      heatingEquipmentTypeFrench
-      # ${i18n.t`Filter results by the dwellings containing a heating system with a specific output capacity in kilowatt hours (kWh)`}
-      heatingOutputSizeKW
-      # ${i18n.t`Filter results by the dwellings containing a heating system with a specific output capacity in British Thermal Units per hour (BTU/h)`}
-      heatingOutputSizeBtu
-      # ${i18n.t`Filter results by the dwellings containing a heating system with a specific efficiency rating`}
-      heatingEfficiency
-      # ${i18n.t`Filter results by the dwellings containing a heating system efficiency measurement that is either 'Steady State' or 'AFUE'`}
-      heatingSteadyState
       # ${i18n.t`Filter results by the dwellings containing an above-grade heated floor area with a specific area in square metres (m2)`}
       heatedFloorAreaAreaAboveGradeMetres
       # ${i18n.t`Filter results by the dwellings containing an above-grade heated floor area with a specific area in square feet (ft2)`}

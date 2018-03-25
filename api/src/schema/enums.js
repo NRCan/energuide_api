@@ -40,30 +40,6 @@ evaluationFields.concat(evaluationDateFields).forEach(attr => {
   module.exports[generateName('evaluation', attr)] = attachToString(fn)
 })
 
-// The fields on the Heating type
-const HeatingFields = [
-  'label',
-  'heatingTypeEnglish',
-  'heatingTypeFrench',
-  'energySourceEnglish',
-  'energySourceFrench',
-  'equipmentTypeEnglish',
-  'equipmentTypeFrench',
-  'outputSizeKW',
-  'outputSizeBtu',
-  'efficiency',
-  'steadyState',
-]
-
-HeatingFields.forEach(attr => {
-  // eslint-disable-next-line no-new-func
-  let fn = new Function(
-    'matcher',
-    `return {"evaluations.heating.${attr}": matcher}`,
-  )
-  module.exports[generateName('heating', attr)] = attachToString(fn)
-})
-
 // The fields on the HeatedFloorArea  type
 const heatedFloorAreaFields = [
   'areaAboveGradeMetres',
