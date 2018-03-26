@@ -44,6 +44,7 @@ describe('Schema', () => {
         'modificationDate',
         'energyUpgrades',
         'ersRating',
+        'walls',
       ])
     })
   })
@@ -63,6 +64,42 @@ describe('Schema', () => {
         'previous',
         'results',
       ])
+    })
+  })
+
+  describe('Wall Type', () => {
+    it('is defined', () => {
+      expect(typeMap).toHaveProperty('Wall')
+    })
+
+    it('has the expected fields', () => {
+      const Wall = typeMap.Wall
+      const fields = Object.keys(Wall.getFields())
+      expect(fields).toEqual(['measurement'])
+    })
+  })
+
+  describe('WallMeasurement Type', () => {
+    it('is defined', () => {
+      expect(typeMap).toHaveProperty('WallMeasurement')
+    })
+
+    it('has the expected fields', () => {
+      const WallMeasurement = typeMap.WallMeasurement
+      const fields = Object.keys(WallMeasurement.getFields())
+      expect(fields).toEqual(['insulation', 'heatLost'])
+    })
+  })
+
+  describe('Insulation Type', () => {
+    it('is defined', () => {
+      expect(typeMap).toHaveProperty('Insulation')
+    })
+
+    it('has the expected fields', () => {
+      const Insulation = typeMap.Insulation
+      const fields = Object.keys(Insulation.getFields())
+      expect(fields).toEqual(['percentage', 'rValue'])
     })
   })
 
