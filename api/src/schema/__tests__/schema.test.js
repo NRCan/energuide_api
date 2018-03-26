@@ -75,7 +75,7 @@ describe('Schema', () => {
     it('has the expected fields', () => {
       const Wall = typeMap.Wall
       const fields = Object.keys(Wall.getFields())
-      expect(fields).toEqual(['measurement'])
+      expect(fields).toEqual(['measurement', 'upgrade'])
     })
   })
 

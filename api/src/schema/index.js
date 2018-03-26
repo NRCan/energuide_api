@@ -78,6 +78,7 @@ const Schema = i18n => {
 
     type Wall @cacheControl(maxAge: 90) {
       measurement: WallMeasurement
+      upgrade: WallMeasurement
     }
 
     type WallMeasurement @cacheControl(maxAge: 90) {
