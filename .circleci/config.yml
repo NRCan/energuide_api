@@ -247,7 +247,7 @@ jobs:
       - checkout:
           path: ~/repo
       - restore_cache:
-          key: "deps1-{{ .Branch }}-{{ checksum \"etl/requirements.txt\" }}"
+          key: "deps1-{{ .Branch }}-{{ checksum \"nrcan_etl/requirements.txt\" }}"
       - restore_cache:
           key: "deps2-{{ .Branch }}-{{ checksum \"extract_endpoint/requirements.txt\" }}"
       - run:
@@ -268,14 +268,14 @@ jobs:
           name: "Create azure container"
       - run:
           command: |
-              cd etl
+              cd nrcan_etl
               python3 -m venv ~/.venv
               . ~/.venv/bin/activate
               pip install -r requirements.txt
               pip install -e .
           name: "Installing dependencies for energuide"
       - save_cache:
-          key: "deps1-{{ .Branch }}-{{ checksum \"etl/requirements.txt\" }}"
+          key: "deps1-{{ .Branch }}-{{ checksum \"nrcan_etl/requirements.txt\" }}"
           paths:
             - ~/.venv
       - run:
@@ -299,16 +299,16 @@ jobs:
           name: "Start flask endpoint app"
       - run:
           command: |
-              cd etl
+              cd nrcan_etl
               . ~/.venv/bin/activate
               python3 src/energuide/flask_app.py
           background: true
           name: "Start flask etl app"
       - run:
           command: |
-              cd etl
+              cd nrcan_etl
               . ~/.venv/bin/activate
-              energuide extract --infile tests/randomized_energuide_data.csv --outfile tests/randomized_energuide_data.zip
+              energuide extract --infile tests/scrubbed_random_sample_xml.csv --outfile tests/randomized_energuide_data.zip
           name: "Extracting data"
       - run:
           command: |
@@ -319,7 +319,7 @@ jobs:
           command: |
               cd extract_endpoint
               . ~/.venv/bin/activate
-              extract_endpoint upload ../etl/tests/randomized_energuide_data.zip 2018-03-14
+              extract_endpoint upload ../nrcan_etl/tests/randomized_energuide_data.zip 2018-03-14
           name: "Send data to azure, trigger TL process"
       - run:
           command: |
