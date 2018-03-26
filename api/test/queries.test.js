@@ -77,6 +77,61 @@ describe('queries', () => {
       })
     })
 
+    it('retrieves all keys for wall data', async () => {
+      let response = await request(server)
+        .post('/graphql')
+        .set('Content-Type', 'application/json; charset=utf-8')
+        .send({
+          query: `{
+            dwelling(houseId: 1024170) {
+            evaluations {
+              walls {
+                measurement {
+                  insulation {
+                    percentage
+                    rValue
+                  }
+                  heatLost
+                }
+                upgrade {
+                  insulation {
+                    percentage
+                    rValue
+                  }
+                  heatLost
+                }
+              }
+            }
+          }
+        }`,
+        })
+
+      expect(response.body).not.toHaveProperty('errors')
+      let { dwelling: { evaluations } } = response.body.data
+      let [first] = evaluations
+      let wall = first.walls
+      expect(wall).toEqual({
+        measurement: {
+          heatLost: 16997.4,
+          insulation: [
+            {
+              percentage: 100,
+              rValue: 12,
+            },
+          ],
+        },
+        upgrade: {
+          heatLost: 11082.7,
+          insulation: [
+            {
+              percentage: 100,
+              rValue: 18,
+            },
+          ],
+        },
+      })
+    })
+
     it('retrieves all top level keys of the upgrade data', async () => {
       let response = await request(server)
         .post('/graphql')
