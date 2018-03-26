@@ -5,7 +5,7 @@ from energuide.exceptions import InvalidInputDataError
 class EvaluationType(enum.Enum):
     PRE_RETROFIT = 'D'
     POST_RETROFIT = 'E'
-    INSENTIVE_PROGRAM = 'F'
+    INCENTIVE_PROGRAM = 'F'
 
     @classmethod
     def from_code(cls, code: str) -> 'EvaluationType':
