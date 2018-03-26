@@ -1,7 +1,7 @@
 #!/bin/bash
 TIMEOUT=0
 RESULT=$(mongo energuide --eval 'db.dwellings.count()' --quiet)
-until [  $RESULT -eq 7 ]; do
+until [  $RESULT -eq 11 ]; do
  echo 'mongo not populated'
  sleep 5
  let TIMEOUT=TIMEOUT+1
