@@ -7,6 +7,8 @@ from energuide.embedded import upgrade
 from energuide.embedded import measurement
 from energuide.embedded import composite
 from energuide.embedded import walls
+from energuide.embedded import region
+from energuide.embedded import evaluation_type
 from energuide.exceptions import InvalidInputDataError
 from energuide.exceptions import InvalidGroupSizeError
 
@@ -54,6 +56,8 @@ def sample_input_d(upgrades_input: typing.List[str]) -> typing.Dict[str, typing.
         'UGRWALLDEF': '45.3;12;50;12;4.7;10',
         'EGHHLWALLS': '27799.9',
         'UGRHLWALLS': '27799.9',
+        'EGHDESHTLOSS': '11242.1',
+        'UGRDESHTLOSS': '10757.3',
     }
 
 
@@ -84,49 +88,6 @@ def sample_parsed_e(sample_input_e: typing.Dict[str, typing.Any]) -> dwelling.Pa
     return dwelling.ParsedDwellingDataRow.from_row(sample_input_e)
 
 
-class TestEvaluationType:
-
-    def test_from_code(self):
-        code = dwelling.EvaluationType.PRE_RETROFIT.value
-        output = dwelling.EvaluationType.from_code(code)
-        assert output == dwelling.EvaluationType.PRE_RETROFIT
-
-
-class TestRegion:
-
-    def test_from_name(self):
-        data = [
-            'Ontario',
-            'british columbia',
-            'NOVA SCOTIA',
-        ]
-        output = [dwelling.Region.from_data(row) for row in data]
-
-        assert output == [
-            dwelling.Region.ONTARIO,
-            dwelling.Region.BRITISH_COLUMBIA,
-            dwelling.Region.NOVA_SCOTIA,
-        ]
-
-    def test_from_unknown_name(self):
-        assert dwelling.Region.from_data('foo') == dwelling.Region.UNKNOWN
-
-    def test_from_code(self):
-        data = [
-            'ON',
-            'bc',
-            'Ns',
-        ]
-        output = [dwelling.Region.from_data(row) for row in data]
-        assert output == [
-            dwelling.Region.ONTARIO,
-            dwelling.Region.BRITISH_COLUMBIA,
-            dwelling.Region.NOVA_SCOTIA,
-        ]
-
-    def test_from_unknown_code(self):
-        assert dwelling.Region.from_data('CA') == dwelling.Region.UNKNOWN
-
 
 class TestParsedDwellingDataRow:
 
@@ -137,13 +98,13 @@ class TestParsedDwellingDataRow:
             house_id=456,
             eval_id=123,
             file_id='4K13D01404',
-            eval_type=dwelling.EvaluationType.PRE_RETROFIT,
+            eval_type=evaluation_type.EvaluationType.PRE_RETROFIT,
             entry_date=datetime.date(2018, 1, 1),
             creation_date=datetime.datetime(2018, 1, 8, 9),
             modification_date=datetime.datetime(2018, 6, 1, 9),
             year_built=2000,
             city='Ottawa',
-            region=dwelling.Region.ONTARIO,
+            region=region.Region.ONTARIO,
             forward_sortation_area='K1P',
             energy_upgrades=[
                 upgrade.Upgrade(
@@ -221,7 +182,11 @@ class TestParsedDwellingDataRow:
                     ],
                     heat_lost=27799.9
                 )
-            )
+            ),
+            design_heat_loss=measurement.Measurement(
+                measurement=11242.1,
+                upgrade=10757.3,
+            ),
         )
 
     def test_null_fields_are_accepted(self, sample_input_missing: typing.Dict[str, typing.Any]) -> None:
@@ -249,7 +214,7 @@ class TestDwellingEvaluation:
 
     def test_eval_type(self, sample_parsed_d: dwelling.ParsedDwellingDataRow) -> None:
         output = dwelling.Evaluation.from_data(sample_parsed_d)
-        assert output.evaluation_type == dwelling.EvaluationType.PRE_RETROFIT
+        assert output.evaluation_type == evaluation_type.EvaluationType.PRE_RETROFIT
 
     def test_entry_date(self, sample_parsed_d: dwelling.ParsedDwellingDataRow) -> None:
         output = dwelling.Evaluation.from_data(sample_parsed_d)
@@ -265,7 +230,7 @@ class TestDwellingEvaluation:
 
     def test_to_dict(self, sample_parsed_d: dwelling.ParsedDwellingDataRow) -> None:
         output = dwelling.Evaluation.from_data(sample_parsed_d).to_dict()
-        assert output['evaluationType'] == dwelling.EvaluationType.PRE_RETROFIT.value
+        assert output['evaluationType'] == evaluation_type.EvaluationType.PRE_RETROFIT.value
 
 
 class TestDwelling:
@@ -288,7 +253,7 @@ class TestDwelling:
     def test_address_data(self, sample: typing.List[typing.Dict[str, typing.Any]]) -> None:
         output = dwelling.Dwelling.from_group(sample)
         assert output.city == 'Ottawa'
-        assert output.region == dwelling.Region.ONTARIO
+        assert output.region == region.Region.ONTARIO
         assert output.forward_sortation_area == 'K1P'
 
     def test_evaluations(self, sample: typing.List[typing.Dict[str, typing.Any]]) -> None:
@@ -305,4 +270,4 @@ class TestDwelling:
         assert output['houseId'] == 456
         assert len(output['evaluations']) == 2
         assert 'postalCode' not in output
-        assert output['region'] == dwelling.Region.ONTARIO.value
+        assert output['region'] == region.Region.ONTARIO.value

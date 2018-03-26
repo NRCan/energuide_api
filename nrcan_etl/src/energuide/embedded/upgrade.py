@@ -14,8 +14,8 @@ class Upgrade(_Upgrade):
     def from_data(cls, setting: element.Element) -> 'Upgrade':
         return Upgrade(
             upgrade_type=setting.tag,
-            cost=int(setting.attrib['cost']),
-            priority=int(setting.attrib['priority'])
+            cost=setting.get('@cost', int),
+            priority=setting.get('@priority', int)
         )
 
     def to_dict(self) -> typing.Dict[str, typing.Any]:

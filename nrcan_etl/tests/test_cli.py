@@ -31,7 +31,8 @@ def data1() -> typing.Dict[str, typing.Optional[str]]:
         'UGRERSGHG': '5.4',
         'ERSENERGYINTENSITY': '0.82',
         'UGRERSENERGYINTENSITY': '0.80',
-
+        'EGHDESHTLOSS': '11242.1',
+        'UGRDESHTLOSS': '10757.3',
         'EGHRATING': '50',
         'UGRRATING': '49',
 

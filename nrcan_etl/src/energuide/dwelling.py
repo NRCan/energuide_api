@@ -1,68 +1,14 @@
 import datetime
-import enum
 import typing
 from dateutil import parser
 from energuide import validator
 from energuide.embedded import upgrade
 from energuide.embedded import measurement
 from energuide.embedded import walls
+from energuide.embedded.region import Region
+from energuide.embedded.evaluation_type import EvaluationType
 from energuide.exceptions import InvalidGroupSizeError
 from energuide.exceptions import InvalidInputDataError
-
-
-@enum.unique
-class EvaluationType(enum.Enum):
-    PRE_RETROFIT = 'D'
-    POST_RETROFIT = 'E'
-
-    @classmethod
-    def from_code(cls, code: str) -> 'EvaluationType':
-        if code == cls.PRE_RETROFIT.value:
-            return EvaluationType.PRE_RETROFIT
-        elif code == cls.POST_RETROFIT.value:
-            return EvaluationType.POST_RETROFIT
-        else:
-            raise InvalidInputDataError(f'Invalid code: {code}')
-
-
-@enum.unique
-class Region(enum.Enum):
-    BRITISH_COLUMBIA = 'BC'
-    ALBERTA = 'AB'
-    SASKATCHEWAN = 'SK'
-    MANITOBA = 'MB'
-    ONTARIO = 'ON'
-    QUEBEC = 'QC'
-    NEW_BRUNSWICK = 'NB'
-    PRINCE_EDWARD_ISLAND = 'PE'
-    NOVA_SCOTIA = 'NS'
-    NEWFOUNDLAND_AND_LABRADOR = 'NL'
-    YUKON = 'YT'
-    NORTHWEST_TERRITORIES = 'NT'
-    NUNAVUT = 'NU'
-    UNKNOWN = '??'
-
-    @classmethod
-    def _from_name(cls, name: str) -> typing.Optional['Region']:
-        snake_name = name.upper().replace(' ', '_')
-        return Region[snake_name] if snake_name in Region.__members__ else None
-
-    @classmethod
-    def _from_code(cls, code: str) -> typing.Optional['Region']:
-        code = code.upper()
-        for region in Region:
-            if code == region.value:
-                return region
-        return None
-
-    @classmethod
-    def from_data(cls, data: str) -> 'Region':
-        output = cls._from_name(data)
-        if not output:
-            output = cls._from_code(data)
-        if not output:
-            output = Region.UNKNOWN
-        return output
 
 
 class _ParsedDwellingDataRow(typing.NamedTuple):
@@ -87,6 +33,7 @@ class _ParsedDwellingDataRow(typing.NamedTuple):
     energy_intensity: measurement.Measurement
 
     walls: measurement.Measurement
+    design_heat_loss: measurement.Measurement
 
 
 class ParsedDwellingDataRow(_ParsedDwellingDataRow):
@@ -94,7 +41,11 @@ class ParsedDwellingDataRow(_ParsedDwellingDataRow):
     _SCHEMA = {
         'EVAL_ID': {'type': 'integer', 'required': True, 'coerce': int},
         'HOUSE_ID': {'type': 'integer', 'required': True, 'coerce': int},
-        'EVAL_TYPE': {'type': 'string', 'required': True, 'allowed': [eval_type.value for eval_type in EvaluationType]},
+        'EVAL_TYPE': {
+            'type': 'string',
+            'required': True,
+            'allowed': [eval_type.value for eval_type in EvaluationType]
+        },
         'ENTRYDATE': {'type': 'date', 'required': True, 'coerce': parser.parse},
         'CREATIONDATE': {'type': 'datetime', 'required': True, 'coerce': parser.parse},
         'YEARBUILT': {'type': 'integer', 'required': True, 'coerce': int},
@@ -128,6 +79,9 @@ class ParsedDwellingDataRow(_ParsedDwellingDataRow):
 
         'ERSENERGYINTENSITY': {'type': 'float', 'nullable': True, 'coerce': float},
         'UGRERSENERGYINTENSITY': {'type': 'float', 'nullable': True, 'coerce': float},
+
+        'EGHDESHTLOSS': {'type': 'float', 'nullable': True, 'coerce': float},
+        'UGRDESHTLOSS': {'type': 'float', 'nullable': True, 'coerce': float},
 
         'WALLDEF': {'type': 'string', 'nullable': True, 'required': True},
         'UGRWALLDEF': {'type': 'string', 'nullable': True, 'required': True},
@@ -190,7 +144,11 @@ class ParsedDwellingDataRow(_ParsedDwellingDataRow):
                     parsed['UGRWALLDEF'],
                     parsed['UGRHLWALLS'],
                 ),
-            )
+            ),
+            design_heat_loss=measurement.Measurement(
+                measurement=parsed['EGHDESHTLOSS'],
+                upgrade=parsed['UGRDESHTLOSS'],
+            ),
         )
 
 
@@ -209,7 +167,7 @@ class _Evaluation(typing.NamedTuple):
     greenhouse_gas_emissions: measurement.Measurement
     energy_intensity: measurement.Measurement
     walls: measurement.Measurement
-
+    design_heat_loss: measurement.Measurement
 
 class Evaluation(_Evaluation):
 
@@ -230,6 +188,7 @@ class Evaluation(_Evaluation):
             greenhouse_gas_emissions=data.greenhouse_gas_emissions,
             energy_intensity=data.energy_intensity,
             walls=data.walls,
+            design_heat_loss=data.design_heat_loss,
 
         )
 
@@ -242,12 +201,13 @@ class Evaluation(_Evaluation):
             'creationDate': self.creation_date.isoformat(),
             'modificationDate': self.modification_date.isoformat() if self.modification_date is not None else None,
             'energyUpgrades': [upgrade.to_dict() for upgrade in self.energy_upgrades],
-            'heated_floor_area': self.heated_floor_area,
-            'egh_rating': self.egh_rating.to_dict(),
-            'ers_rating': self.ers_rating.to_dict(),
-            'greenhouse_gas_emissions': self.greenhouse_gas_emissions.to_dict(),
-            'energy_intensity': self.energy_intensity.to_dict(),
+            'heatedFloorArea': self.heated_floor_area,
+            'eghRating': self.egh_rating.to_dict(),
+            'ersRating': self.ers_rating.to_dict(),
+            'greenhouseGasEmissions': self.greenhouse_gas_emissions.to_dict(),
+            'energyIntensity': self.energy_intensity.to_dict(),
             'walls': self.walls.to_dict(),
+            'designHeatLoss': self.design_heat_loss.to_dict(),
         }
 
 
