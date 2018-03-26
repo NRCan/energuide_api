@@ -26,14 +26,13 @@ describe('Enum values', () => {
   })
 
   const testFields = {
-    dwellingHouseId: { testValue: 189250 },
-    dwellingYearBuilt: { testValue: 1900 },
-    dwellingCity: { testValue: 'Dartmouth' },
-    dwellingRegion: { testValue: 'NS' },
-    dwellingForwardSortationArea: { testValue: 'T1L' },
-    evaluationEvaluationType: { testValue: 'E' },
-    evaluationFileId: { testValue: '3C10E11075' },
-    evaluationErsRating: { testValue: 120 },
+    dwellingHouseId: { testValue: 1024170 },
+    dwellingYearBuilt: { testValue: 1921 },
+    dwellingCity: { testValue: 'Anagance' },
+    dwellingRegion: { testValue: 'NB' },
+    dwellingForwardSortationArea: { testValue: 'O7I' },
+    evaluationEvaluationType: { testValue: 'D' },
+    evaluationFileId: { testValue: '1B07D10023' },
   }
 
   Object.keys(testFields).forEach(functionName => {
@@ -73,9 +72,9 @@ describe('Enum values', () => {
   })
 
   const testDates = {
-    evaluationEntryDate: { testValue: '2011-11-18' },
-    evaluationCreationDate: { testValue: '2012-10-01T15:08:41' },
-    evaluationModificationDate: { testValue: '2012-06-09T11:20:20' },
+    evaluationEntryDate: { testValue: '2010-10-12' },
+    evaluationCreationDate: { testValue: '2011-03-14T14:26:52' },
+    evaluationModificationDate: { testValue: null },
   }
 
   Object.keys(testDates).forEach(functionName => {
