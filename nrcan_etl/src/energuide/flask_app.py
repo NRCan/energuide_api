@@ -85,11 +85,6 @@ def frontend() -> str:
     return ''
 
 
-@App.route('/test_alive', methods=['GET'])
-def test_alive() -> str:
-    return 'Alive!'
-
-
 @App.route('/robots933456.txt', methods=['GET'])
 def robots() -> None:
     flask.abort(HTTPStatus.NOT_FOUND)

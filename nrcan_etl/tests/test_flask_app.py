@@ -85,11 +85,6 @@ def test_frontend(test_client: testing.FlaskClient) -> None:
     assert test_client.get('/').status_code == HTTPStatus.OK
 
 
-def test_alive(test_client: testing.FlaskClient) -> None:
-    get_return = test_client.get('/test_alive')
-    assert b'Alive' in get_return.data
-
-
 def test_robots(test_client: testing.FlaskClient) -> None:
     get_return = test_client.get('/robots933456.txt')
     assert get_return.status_code == HTTPStatus.NOT_FOUND
