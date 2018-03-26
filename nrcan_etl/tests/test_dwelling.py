@@ -56,6 +56,8 @@ def sample_input_d(upgrades_input: typing.List[str]) -> typing.Dict[str, typing.
         'UGRWALLDEF': '45.3;12;50;12;4.7;10',
         'EGHHLWALLS': '27799.9',
         'UGRHLWALLS': '27799.9',
+        'EGHDESHTLOSS': '11242.1',
+        'UGRDESHTLOSS': '10757.3',
     }
 
 
@@ -180,7 +182,11 @@ class TestParsedDwellingDataRow:
                     ],
                     heat_lost=27799.9
                 )
-            )
+            ),
+            design_heat_loss=measurement.Measurement(
+                measurement=11242.1,
+                upgrade=10757.3,
+            ),
         )
 
     def test_null_fields_are_accepted(self, sample_input_missing: typing.Dict[str, typing.Any]) -> None:

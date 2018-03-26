@@ -33,6 +33,7 @@ class _ParsedDwellingDataRow(typing.NamedTuple):
     energy_intensity: measurement.Measurement
 
     walls: measurement.Measurement
+    design_heat_loss: measurement.Measurement
 
 
 class ParsedDwellingDataRow(_ParsedDwellingDataRow):
@@ -78,6 +79,9 @@ class ParsedDwellingDataRow(_ParsedDwellingDataRow):
 
         'ERSENERGYINTENSITY': {'type': 'float', 'nullable': True, 'coerce': float},
         'UGRERSENERGYINTENSITY': {'type': 'float', 'nullable': True, 'coerce': float},
+
+        'EGHDESHTLOSS': {'type': 'float', 'nullable': True, 'coerce': float},
+        'UGRDESHTLOSS': {'type': 'float', 'nullable': True, 'coerce': float},
 
         'WALLDEF': {'type': 'string', 'nullable': True, 'required': True},
         'UGRWALLDEF': {'type': 'string', 'nullable': True, 'required': True},
@@ -140,7 +144,11 @@ class ParsedDwellingDataRow(_ParsedDwellingDataRow):
                     parsed['UGRWALLDEF'],
                     parsed['UGRHLWALLS'],
                 ),
-            )
+            ),
+            design_heat_loss=measurement.Measurement(
+                measurement=parsed['EGHDESHTLOSS'],
+                upgrade=parsed['UGRDESHTLOSS'],
+            ),
         )
 
 
@@ -159,7 +167,7 @@ class _Evaluation(typing.NamedTuple):
     greenhouse_gas_emissions: measurement.Measurement
     energy_intensity: measurement.Measurement
     walls: measurement.Measurement
-
+    design_heat_loss: measurement.Measurement
 
 class Evaluation(_Evaluation):
 
@@ -180,6 +188,7 @@ class Evaluation(_Evaluation):
             greenhouse_gas_emissions=data.greenhouse_gas_emissions,
             energy_intensity=data.energy_intensity,
             walls=data.walls,
+            design_heat_loss=data.design_heat_loss,
 
         )
 
@@ -198,6 +207,7 @@ class Evaluation(_Evaluation):
             'greenhouseGasEmissions': self.greenhouse_gas_emissions.to_dict(),
             'energyIntensity': self.energy_intensity.to_dict(),
             'walls': self.walls.to_dict(),
+            'designHeatLoss': self.design_heat_loss.to_dict(),
         }
 
 
