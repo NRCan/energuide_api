@@ -76,40 +76,6 @@ const Schema = i18n => {
       areaBelowGradeFeet: Float
     }
 
-    # ${i18n.t`Walls separate the interior heated space from the outside (interior partition walls are not considered walls)`}
-    type Wall @cacheControl(maxAge: 90) {
-      # ${i18n.t`Description of wall location`}
-      label: String
-      # ${i18n.t`Wall construction being used (en)`}
-      structureTypeEnglish: String
-      # ${i18n.t`Wall construction being used (fr)`}
-      structureTypeFrench: String
-      # ${i18n.t`Size of the component type (en)`}
-      componentTypeSizeEnglish: String
-      # ${i18n.t`Size of the component type (fr)`}
-      componentTypeSizeFrench: String
-      # ${i18n.t`Wall insulation nominal RSI (R-value Systeme International)`}
-      insulationNominalRsi: Float
-      # ${i18n.t`Wall insulation nominal R-value`}
-      insulationNominalR: Float
-      # ${i18n.t`Wall insulation effective RSI (R-value Systeme International)`}
-      insulationEffectiveRsi: Float
-      # ${i18n.t`Wall insulation nominal R-value`}
-      insulationEffectiveR: Float
-      # ${i18n.t`Wall area of the house in square metres (m2)`}
-      areaMetres: Float
-      # ${i18n.t`Wall area of the house in square feet (ft2)`}
-      areaFeet: Float
-      # ${i18n.t`Wall perimeter of the house in metres (m)`}
-      perimeterMetres: Float
-      # ${i18n.t`Wall perimeter of the house in feet (ft)`}
-      perimeterFeet: Float
-      # ${i18n.t`Wall height of the house in metres (m)`}
-      heightMetres: Float
-      # ${i18n.t`Wall height of the house in feet (ft)`}
-      heightFeet: Float
-    }
-
     # ${i18n.t`Detailed information about specific features of a given dwelling`}
     type Evaluation @cacheControl(maxAge: 90) {
       # ${i18n.t`Evaluation type codes are used to define the type of evaluation performed and to distinguish the house type (i.e. newly built or existing)`}
@@ -121,10 +87,6 @@ const Schema = i18n => {
       creationDate: String
       # ${i18n.t`Date the record was last modified`}
       modificationDate: String
-      # ${i18n.t`A list of wall data entries for a dwelling`}
-      walls: [Wall]
-      # ${i18n.t`A heated floor area entry for a dwelling`}
-      heatedFloorArea: HeatedFloorArea
       # ${i18n.t`A list of upgrades that would improve energy efficiency`}
       energyUpgrades: [Upgrade]
       # ${i18n.t`The EnerGuide Rating calculated for this evaluation`}
@@ -182,44 +144,6 @@ const Schema = i18n => {
       evaluationFileId
       # ${i18n.t`Filter results by the dwellings containing at least one evaluation with a specific ERS rating`}
       evaluationErsRating
-      # ${i18n.t`Filter results by the dwellings containing an above-grade heated floor area with a specific area in square metres (m2)`}
-      heatedFloorAreaAreaAboveGradeMetres
-      # ${i18n.t`Filter results by the dwellings containing an above-grade heated floor area with a specific area in square feet (ft2)`}
-      heatedFloorAreaAreaAboveGradeFeet
-      # ${i18n.t`Filter results by the dwellings containing a below-grade heated floor area with a specific area in square metres (m2)`}
-      heatedFloorAreaAreaBelowGradeMetres
-      # ${i18n.t`Filter results by the dwellings containing a below-grade heated floor area with a specific area in square feet (ft2)`}
-      heatedFloorAreaAreaBelowGradeFeet
-      # ${i18n.t`Filter results by the dwellings containing at least one wall with a specific location`}
-      wallLabel
-      # ${i18n.t`Filter results by the dwellings containing at least one wall of a specific type (en)`}
-      wallStructureTypeEnglish
-      # ${i18n.t`Filter results by the dwellings containing at least one wall of a specific type (fr)`}
-      wallStructureTypeFrench
-      # ${i18n.t`Filter results by the dwellings containing at least one wall with a component of a specific size (en)`}
-      wallComponentTypeSizeEnglish
-      # ${i18n.t`Filter results by the dwellings containing at least one wall with a component of a specific size (fr)`}
-      wallComponentTypeSizeFrench
-      # ${i18n.t`Filter results by the dwellings containing at least one wall with a specific nominal RSI (R-value Systeme International)`}
-      wallInsulationNominalRsi
-      # ${i18n.t`Filter results by the dwellings containing at least one wall with a specific nominal R-value`}
-      wallInsulationNominalR
-      # ${i18n.t`Filter results by the dwellings containing at least one wall with a specific effective RSI (R-value Systeme International)`}
-      wallInsulationEffectiveRsi
-      # ${i18n.t`Filter results by the dwellings containing at least one wall with a specific effective R-value`}
-      wallInsulationEffectiveR
-      # ${i18n.t`Filter results by the dwellings containing at least one wall with a specific area in square metres (m2)`}
-      wallAreaMetres
-      # ${i18n.t`Filter results by the dwellings containing at least one wall with a specific area in square feet (ft2)`}
-      wallAreaFeet
-      # ${i18n.t`Filter results by the dwellings containing at least one wall with a specific perimeter in metres (m)`}
-      wallPerimeterMetres
-      # ${i18n.t`Filter results by the dwellings containing at least one wall with a specific perimeter in feet (ft)`}
-      wallPerimeterFeet
-      # ${i18n.t`Filter results by the dwellings containing at least one wall with a specific height in metres (m)`}
-      wallHeightMetres
-      # ${i18n.t`Filter results by the dwellings containing at least one wall with a specific height in feet (ft)`}
-      wallHeightFeet
     }
   `,
   ]

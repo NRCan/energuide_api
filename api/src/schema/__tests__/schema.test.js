@@ -28,34 +28,6 @@ describe('Schema', () => {
     })
   })
 
-  describe('Wall Type', () => {
-    it('is defined', () => {
-      expect(typeMap).toHaveProperty('Wall')
-    })
-
-    it('has the expected fields', () => {
-      const Wall = typeMap.Wall
-      const fields = Object.keys(Wall.getFields())
-      expect(fields).toEqual([
-        'label',
-        'structureTypeEnglish',
-        'structureTypeFrench',
-        'componentTypeSizeEnglish',
-        'componentTypeSizeFrench',
-        'insulationNominalRsi',
-        'insulationNominalR',
-        'insulationEffectiveRsi',
-        'insulationEffectiveR',
-        'areaMetres',
-        'areaFeet',
-        'perimeterMetres',
-        'perimeterFeet',
-        'heightMetres',
-        'heightFeet',
-      ])
-    })
-  })
-
   describe('Evaluation Type', () => {
     it('is defined', () => {
       expect(typeMap).toHaveProperty('Evaluation')
@@ -70,8 +42,6 @@ describe('Schema', () => {
         'fileId',
         'creationDate',
         'modificationDate',
-        'walls',
-        'heatedFloorArea',
         'energyUpgrades',
         'ersRating',
       ])
@@ -92,23 +62,6 @@ describe('Schema', () => {
         'next',
         'previous',
         'results',
-      ])
-    })
-  })
-
-  describe('HeatedFloorArea', () => {
-    it('is defined', () => {
-      expect(typeMap).toHaveProperty('HeatedFloorArea')
-    })
-
-    it('has the expected fields', () => {
-      const { HeatedFloorArea } = typeMap
-      const fields = Object.keys(HeatedFloorArea.getFields())
-      expect(fields).toEqual([
-        'areaAboveGradeMetres',
-        'areaAboveGradeFeet',
-        'areaBelowGradeMetres',
-        'areaBelowGradeFeet',
       ])
     })
   })
