@@ -31,7 +31,7 @@ class Wall(_Wall):
 
         return Wall(
             insulation=composition_insulation,
-            heat_loss=heat_lost
+            heat_loss=heat_loss
         )
 
     def to_dict(self) -> typing.Dict[str, typing.Any]:
@@ -39,5 +39,5 @@ class Wall(_Wall):
             'insulation': [
                 insulation.to_dict() for insulation in self.insulation
             ],
-            'heatLoss': self.heat_lost,
+            'heatLoss': self.heat_loss,
         }
