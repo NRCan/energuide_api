@@ -230,7 +230,88 @@ class TestDwellingEvaluation:
 
     def test_to_dict(self, sample_parsed_d: dwelling.ParsedDwellingDataRow) -> None:
         output = dwelling.Evaluation.from_data(sample_parsed_d).to_dict()
-        assert output['evaluationType'] == evaluation_type.EvaluationType.PRE_RETROFIT.value
+        assert output == {
+            'fileId': '4K13D01404',
+            'evaluationId': 123,
+            'evaluationType': evaluation_type.EvaluationType.PRE_RETROFIT.value,
+            'entryDate': '2018-01-01',
+            'creationDate': '2018-01-08T09:00:00',
+            'modificationDate': '2018-06-01T09:00:00',
+            'energyUpgrades': [
+                {
+                    'upgradeType': 'Ceilings',
+                    'cost': 0,
+                    'priority': 12,
+                },
+                {
+                    'upgradeType': 'MainWalls',
+                    'cost': 1,
+                    'priority': 2,
+                },
+                {
+                    'upgradeType': 'Foundation',
+                    'cost': 2,
+                    'priority': 3,
+                },
+            ],
+            'heatedFloorArea': None,
+            'eghRating': {
+                'measurement': 50,
+                'upgrade': 49,
+            },
+            'ersRating': {
+                'measurement': 567,
+                'upgrade': 565,
+            },
+            'greenhouseGasEmissions': {
+                'measurement': None,
+                'upgrade': None,
+            },
+            'energyIntensity': {
+                'measurement': 0.82,
+                'upgrade': 0.80,
+            },
+            'walls': {
+                'measurement': {
+                    'insulation': [
+                        {
+                            'percentage': 45.3,
+                            'rValue': 12.0,
+                        },
+                        {
+                            'percentage': 50.0,
+                            'rValue': 12.0,
+                        },
+                        {
+                            'percentage': 4.7,
+                            'rValue': 12.0,
+                        },
+                    ],
+                    'heatLost': 27799.9
+                },
+                'upgrade': {
+                    'insulation': [
+                        {
+                            'percentage': 45.3,
+                            'rValue': 12.0,
+                        },
+                        {
+                            'percentage': 50.0,
+                            'rValue': 12.0,
+                        },
+                        {
+                            'percentage': 4.7,
+                            'rValue': 10.0,
+                        },
+                    ],
+                    'heatLost': 27799.9
+                }
+            },
+            'designHeatLoss': {
+                'measurement': 11242.1,
+                'upgrade': 10757.3,
+            }
+        }
 
 
 class TestDwelling:
@@ -267,7 +348,16 @@ class TestDwelling:
 
     def test_to_dict(self, sample: typing.List[typing.Dict[str, typing.Any]]) -> None:
         output = dwelling.Dwelling.from_group(sample).to_dict()
-        assert output['houseId'] == 456
-        assert len(output['evaluations']) == 2
+        evaluations = output.pop('evaluations')
+
+        assert {k: output[k] for k in output.keys()} == {
+            'houseId': 456,
+            'houseType': 'Single detached',
+            'yearBuilt': 2000,
+            'city': 'Ottawa',
+            'region': region.Region.ONTARIO.value,
+            'forwardSortationArea': 'K1P',
+        }
+
         assert 'postalCode' not in output
-        assert output['region'] == region.Region.ONTARIO.value
+        assert len(evaluations) == 2
