@@ -141,7 +141,7 @@ mongo energuide --eval "db.dwellings.drop()"
 
 Installing Python applications in a `virtualenv` is considered best practice. To do so, navigate to the cloned git repository and run the following:
 ```sh
-cd etl
+cd nrcan_etl
 python -m venv env
 env\Scripts\activate.bat
 pip install -r requirements.txt
@@ -156,7 +156,7 @@ pip install -e .
 Run the following commands:
 ```sh
 # extract from csv to zip file
-energuide extract --infile tests/randomized_energuide_data.csv --outfile allthedata.zip
+energuide extract --infile tests/scrubbed_random_sample_xml.csv --outfile allthedata.zip
 
 # load data into mongodb
 energuide load --filename allthedata.zip
@@ -190,7 +190,7 @@ db.dwellings.count()
 # select 'forwardSortationArea' value of each dwelling
 db.dwellings.find({}, {'forwardSortationArea': 1})
 
-# result should  look like:
+# result should look like:
 { "_id" : ObjectId("5a848002e349de06d4bc8205"), "forwardSortationArea" : "T0J" }
 { "_id" : ObjectId("5a848002e349de06d4bc8206"), "forwardSortationArea" : "A2H" }
 { "_id" : ObjectId("5a848002e349de06d4bc8207"), "forwardSortationArea" : "Y1A" }
