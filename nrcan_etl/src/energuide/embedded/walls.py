@@ -18,7 +18,7 @@ class Wall(_Wall):
             args = [iter(insulation.split(';'))] * 2
             groups = itertools.zip_longest(fillvalue='0', *args)
 
-            composition_insulation = [
+            composite_insulation = [
                 composite.CompositeValue(
                     percentage=float(percentage),
                     value=float(r_value),
@@ -26,10 +26,10 @@ class Wall(_Wall):
                 ) for percentage, r_value in groups
             ]
         else:
-            composition_insulation = []
+            composite_insulation = []
 
         return Wall(
-            insulation=composition_insulation,
+            insulation=composite_insulation,
             heat_lost=heat_lost
         )
 
