@@ -212,20 +212,20 @@ class Evaluation(_Evaluation):
 
 
 def _filter_dummy_evaluations(data: typing.List[ParsedDwellingDataRow]) -> typing.List[ParsedDwellingDataRow]:
-    pre_evals = {
-        evaluation.entry_date: evaluation
-        for evaluation in data if evaluation.eval_type is EvaluationType.PRE_RETROFIT
-    }
-    post_evals = {
-        evaluation.entry_date: evaluation
-        for evaluation in data if evaluation.eval_type is EvaluationType.POST_RETROFIT
-    }
-    incentive_evals = [
-        evaluation
-        for evaluation in data if evaluation.eval_type is EvaluationType.INCENTIVE_PROGRAM
-    ]
+    def split(data: typing.List[ParsedDwellingDataRow]) -> typing.List[typing.List[ParsedDwellingDataRow]]:
+        groups = {
+            eval_type: {}
+            for eval_type in EvaluationType
+        }
 
-    return incentive_evals + list(post_evals.values()) + \
+        for evaluation in data:
+            groups[evaluation.eval_type][evaluation.entry_date] = evaluation
+
+        return [groups[eval_type] for eval_type in EvaluationType]
+
+    pre_evals, post_evals, incentive_evals = split(data)
+
+    return list(incentive_evals.values()) + list(post_evals.values()) + \
            [evaluation for date, evaluation in pre_evals.items() if date not in post_evals.keys()]
 
 
