@@ -76,6 +76,21 @@ const Schema = i18n => {
       areaBelowGradeFeet: Float
     }
 
+    type Wall @cacheControl(maxAge: 90) {
+      measurement: WallMeasurement
+      upgrade: WallMeasurement
+    }
+
+    type WallMeasurement @cacheControl(maxAge: 90) {
+      insulation: [Insulation]
+      heatLost: Float
+    }
+
+    type Insulation @cacheControl(maxAge: 90) {
+      percentage: Float
+      rValue: Float
+    }
+
     # ${i18n.t`Detailed information about specific features of a given dwelling`}
     type Evaluation @cacheControl(maxAge: 90) {
       # ${i18n.t`Evaluation type codes are used to define the type of evaluation performed and to distinguish the house type (i.e. newly built or existing)`}
@@ -91,6 +106,7 @@ const Schema = i18n => {
       energyUpgrades: [Upgrade]
       # ${i18n.t`The EnerGuide Rating calculated for this evaluation`}
       ersRating: Int
+      walls: Wall
     }
 
     # ${i18n.t`A residential building evaluted under the Energuide program`}
