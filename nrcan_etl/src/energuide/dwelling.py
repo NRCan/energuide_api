@@ -162,7 +162,7 @@ class _Evaluation(typing.NamedTuple):
     modification_date: typing.Optional[datetime.datetime]
     house_type: str
     energy_upgrades: typing.List[upgrade.Upgrade]
-    heated_floor_area: measurement.Measurement
+    heated_floor_area: typing.Optional[float]
     egh_rating: measurement.Measurement
     ers_rating: measurement.Measurement
     greenhouse_gas_emissions: measurement.Measurement
@@ -190,7 +190,6 @@ class Evaluation(_Evaluation):
             energy_intensity=data.energy_intensity,
             walls=data.walls,
             design_heat_loss=data.design_heat_loss,
-
         )
 
     def to_dict(self) -> typing.Dict[str, typing.Any]:
