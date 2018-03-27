@@ -212,8 +212,11 @@ class Evaluation(_Evaluation):
 
 
 def _filter_dummy_evaluations(data: typing.List[ParsedDwellingDataRow]) -> typing.List[ParsedDwellingDataRow]:
-    def split(data: typing.List[ParsedDwellingDataRow]) -> typing.List[typing.List[ParsedDwellingDataRow]]:
-        groups = {
+
+    def split(data: typing.List[ParsedDwellingDataRow]
+        ) -> typing.List[typing.Dict[datetime.date, ParsedDwellingDataRow]]:
+
+        groups: typing.Dict[EvaluationType, typing.Dict[datetime.date, ParsedDwellingDataRow]] = {
             eval_type: {}
             for eval_type in EvaluationType
         }
