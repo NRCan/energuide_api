@@ -5,14 +5,15 @@ from energuide.embedded import composite
 
 class _Wall(typing.NamedTuple):
     insulation: typing.List[composite.CompositeValue]
-    heat_lost: typing.Optional[float]
+    heat_loss: typing.Optional[float]
+
 
 class Wall(_Wall):
 
     @classmethod
     def from_data(cls,
                   insulation: typing.Optional[str],
-                  heat_lost: typing.Optional[float]) -> 'Wall':
+                  heat_loss: typing.Optional[float]) -> 'Wall':
 
         if insulation:
             args = [iter(insulation.split(';'))] * 2
@@ -30,7 +31,7 @@ class Wall(_Wall):
 
         return Wall(
             insulation=composition_insulation,
-            heat_lost=heat_lost
+            heat_loss=heat_lost
         )
 
     def to_dict(self) -> typing.Dict[str, typing.Any]:
@@ -38,5 +39,5 @@ class Wall(_Wall):
             'insulation': [
                 insulation.to_dict() for insulation in self.insulation
             ],
-            'heatLost': self.heat_lost,
+            'heatLoss': self.heat_lost,
         }

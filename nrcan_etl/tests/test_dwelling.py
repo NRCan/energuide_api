@@ -160,7 +160,7 @@ class TestParsedDwellingDataRow:
                             value_name='rValue'
                         ),
                     ],
-                    heat_lost=27799.9
+                    heat_loss=27799.9
                 ),
                 upgrade=walls.Wall(
                     insulation=[
@@ -180,7 +180,7 @@ class TestParsedDwellingDataRow:
                             value_name='rValue'
                         ),
                     ],
-                    heat_lost=27799.9
+                    heat_loss=27799.9
                 )
             ),
             design_heat_loss=measurement.Measurement(
@@ -287,7 +287,7 @@ class TestDwellingEvaluation:
                             'rValue': 12.0,
                         },
                     ],
-                    'heatLost': 27799.9
+                    'heatLoss': 27799.9
                 },
                 'upgrade': {
                     'insulation': [
@@ -304,7 +304,7 @@ class TestDwellingEvaluation:
                             'rValue': 10.0,
                         },
                     ],
-                    'heatLost': 27799.9
+                    'heatLoss': 27799.9
                 }
             },
             'designHeatLoss': {
