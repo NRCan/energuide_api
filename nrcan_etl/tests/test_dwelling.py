@@ -233,6 +233,7 @@ class TestDwellingEvaluation:
         assert output == {
             'fileId': '4K13D01404',
             'evaluationId': 123,
+            'houseType': 'Single detached',
             'evaluationType': evaluation_type.EvaluationType.PRE_RETROFIT.value,
             'entryDate': '2018-01-01',
             'creationDate': '2018-01-08T09:00:00',
@@ -254,7 +255,7 @@ class TestDwellingEvaluation:
                     'priority': 3,
                 },
             ],
-            'heatedFloorArea': None,
+            'heatedFloorArea': 12.34,
             'eghRating': {
                 'measurement': 50,
                 'upgrade': 49,
@@ -264,8 +265,8 @@ class TestDwellingEvaluation:
                 'upgrade': 565,
             },
             'greenhouseGasEmissions': {
-                'measurement': None,
-                'upgrade': None,
+                'measurement': 12.5,
+                'upgrade': 12.34,
             },
             'energyIntensity': {
                 'measurement': 0.82,
@@ -352,7 +353,6 @@ class TestDwelling:
 
         assert {key: output[key] for key in output} == {
             'houseId': 456,
-            'houseType': 'Single detached',
             'yearBuilt': 2000,
             'city': 'Ottawa',
             'region': region.Region.ONTARIO.value,
