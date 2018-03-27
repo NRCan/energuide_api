@@ -220,8 +220,12 @@ def _filter_dummy_evaluations(data: typing.List[ParsedDwellingDataRow]) -> typin
         evaluation.entry_date: evaluation
         for evaluation in data if evaluation.eval_type is EvaluationType.POST_RETROFIT
     }
+    incentive_evals = [
+        evaluation
+        for evaluation in data if evaluation.eval_type is EvaluationType.INCENTIVE_PROGRAM
+    ]
 
-    return list(post_evals.values()) + \
+    return incentive_evals + list(post_evals.values()) + \
            [evaluation for date, evaluation in pre_evals.items() if date not in post_evals.keys()]
 
 
