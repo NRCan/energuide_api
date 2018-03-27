@@ -189,7 +189,6 @@ class Evaluation(_Evaluation):
             energy_intensity=data.energy_intensity,
             walls=data.walls,
             design_heat_loss=data.design_heat_loss,
-
         )
 
     def to_dict(self) -> typing.Dict[str, typing.Any]:
