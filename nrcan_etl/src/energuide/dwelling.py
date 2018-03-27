@@ -89,14 +89,15 @@ class ParsedDwellingDataRow(_ParsedDwellingDataRow):
         'UGRHLWALLS': {'type': 'float', 'nullable': True, 'required': True, 'coerce': float},
     }
 
+    _CHECKER = validator.DwellingValidator(_SCHEMA, allow_unknown=True)
+
     @classmethod
     def from_row(cls, row: typing.Dict[str, typing.Any]) -> 'ParsedDwellingDataRow':
-        checker = validator.DwellingValidator(cls._SCHEMA, allow_unknown=True)
-        if not checker.validate(row):
-            error_keys = ', '.join(checker.errors.keys())
+        if not cls._CHECKER.validate(row):
+            error_keys = ', '.join(cls._CHECKER.errors.keys())
             raise InvalidInputDataError(f'Validator failed on keys: {error_keys}')
 
-        parsed = checker.document
+        parsed = cls._CHECKER.document
 
         return ParsedDwellingDataRow(
             house_id=parsed['HOUSE_ID'],
