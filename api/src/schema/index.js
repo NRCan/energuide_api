@@ -105,7 +105,7 @@ const Schema = i18n => {
       # ${i18n.t`A list of upgrades that would improve energy efficiency`}
       energyUpgrades: [Upgrade]
       # ${i18n.t`The EnerGuide Rating calculated for this evaluation`}
-      ersRating: Int
+      ersRating: ErsRating
       walls: Wall
     }
 
@@ -123,6 +123,11 @@ const Schema = i18n => {
       forwardSortationArea: String
       # ${i18n.t`A list of evaluations of specific features of the dwelling`}
       evaluations: [Evaluation]
+    }
+
+    type ErsRating @cacheControl(maxAge: 90) {
+      measurement: Int
+      upgrade: Int
     }
 
     # ${i18n.t`The root query type`}
