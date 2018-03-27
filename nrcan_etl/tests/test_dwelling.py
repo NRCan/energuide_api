@@ -351,7 +351,7 @@ class TestDwelling:
         output = dwelling.Dwelling.from_group(sample).to_dict()
         evaluations = output.pop('evaluations')
 
-        assert {key: output[key] for key in output} == {
+        assert output == {
             'houseId': 456,
             'yearBuilt': 2000,
             'city': 'Ottawa',
