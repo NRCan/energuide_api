@@ -11,7 +11,6 @@ def load_data() -> typing.List[dwelling.Dwelling]:
     return [
         dwelling.Dwelling(
             house_id=1,
-            house_type='Single detached',
             year_built=2000,
             city='Ottawa',
             region=region.Region.ONTARIO,
@@ -20,7 +19,6 @@ def load_data() -> typing.List[dwelling.Dwelling]:
         ),
         dwelling.Dwelling(
             house_id=2,
-            house_type='Single detached',
             year_built=2000,
             city='Ottawa',
             region=region.Region.ONTARIO,
@@ -29,7 +27,6 @@ def load_data() -> typing.List[dwelling.Dwelling]:
         ),
         dwelling.Dwelling(
             house_id=3,
-            house_type='Single detached',
             year_built=2000,
             city='Ottawa',
             region=region.Region.ONTARIO,
@@ -70,7 +67,6 @@ def test_load_update(database_coordinates: database.DatabaseCoordinates,
     assert mongo_client[database_name][collection].count() == 3
     load_data[0] = dwelling.Dwelling(
         house_id=1,
-        house_type='Single detached',
         year_built=2001, city='Ottawa',
         region=region.Region.ONTARIO,
         forward_sortation_area='K1P',
@@ -79,7 +75,6 @@ def test_load_update(database_coordinates: database.DatabaseCoordinates,
     load_data.append(
         dwelling.Dwelling(
             house_id=4,
-            house_type='Single detached',
             year_built=2001,
             city='Ottawa',
             region=region.Region.ONTARIO,

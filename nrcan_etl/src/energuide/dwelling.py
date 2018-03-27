@@ -197,6 +197,7 @@ class Evaluation(_Evaluation):
             'fileId': self.file_id,
             'evaluationId': self.evaluation_id,
             'evaluationType': self.evaluation_type.value,
+            'houseType': self.house_type,
             'entryDate': self.entry_date.isoformat(),
             'creationDate': self.creation_date.isoformat(),
             'modificationDate': self.modification_date.isoformat() if self.modification_date is not None else None,
@@ -227,7 +228,6 @@ def _filter_dummy_evaluations(data: typing.List[ParsedDwellingDataRow]) -> typin
 
 class _Dwelling(typing.NamedTuple):
     house_id: int
-    house_type: str
     year_built: int
     city: str
     region: Region
@@ -249,7 +249,6 @@ class Dwelling(_Dwelling):
         evaluations = [Evaluation.from_data(row) for row in _filter_dummy_evaluations(data)]
         return Dwelling(
             house_id=data[0].house_id,
-            house_type=data[0].house_type,
             year_built=data[0].year_built,
             city=data[0].city,
             region=data[0].region,
@@ -266,7 +265,6 @@ class Dwelling(_Dwelling):
     def to_dict(self) -> typing.Dict[str, typing.Any]:
         return {
             'houseId': self.house_id,
-            'houseType': self.house_type,
             'yearBuilt': self.year_built,
             'city': self.city,
             'region': self.region.value,
