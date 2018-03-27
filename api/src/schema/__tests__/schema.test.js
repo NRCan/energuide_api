@@ -44,6 +44,7 @@ describe('Schema', () => {
         'modificationDate',
         'energyUpgrades',
         'ersRating',
+        'eghRating',
         'walls',
       ])
     })
@@ -78,6 +79,20 @@ describe('Schema', () => {
       expect(fields).toEqual(['measurement', 'upgrade'])
     })
   })
+
+
+  describe('EghRating Type', () => {
+    it('is defined', () => {
+      expect(typeMap).toHaveProperty('EghRating')
+    })
+
+    it('has the expected fields', () => {
+      const EghRating = typeMap.EghRating
+      const fields = Object.keys(EghRating.getFields())
+      expect(fields).toEqual(['measurement', 'upgrade'])
+    })
+  })
+
 
   describe('Wall Type', () => {
     it('is defined', () => {
