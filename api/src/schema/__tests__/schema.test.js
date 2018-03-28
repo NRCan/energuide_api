@@ -46,11 +46,8 @@ describe('Schema', () => {
         'energyUpgrades',
         'heatedFloorArea',
         'ersRating',
-<<<<<<< HEAD
-        'greenhouseGasEmissions',
-=======
         'eghRating',
->>>>>>> 4805bdb98807c7484026ee0cd6836a97614813e5
+        'greenhouseGasEmissions',
         'walls',
       ])
     })
