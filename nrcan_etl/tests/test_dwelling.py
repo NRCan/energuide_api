@@ -326,9 +326,9 @@ class TestDwelling:
 
     @pytest.fixture
     def dummy_sample(self,
-               sample_input_d: typing.Dict[str, typing.Any],
-               sample_input_e: typing.Dict[str, typing.Any],
-              ) -> typing.List[typing.Dict[str, typing.Any]]:
+                     sample_input_d: typing.Dict[str, typing.Any],
+                     sample_input_e: typing.Dict[str, typing.Any],
+                    ) -> typing.List[typing.Dict[str, typing.Any]]:
         dummy_d = sample_input_e.copy()
         dummy_d['EVAL_TYPE'] = 'D'
 
