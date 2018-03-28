@@ -97,6 +97,7 @@ const Schema = i18n => {
       # ${i18n.t`The EnerGuide Rating calculated for this evaluation`}
       ersRating: Rating
       eghRating: Rating
+      greenhouseGasEmissions: Rating
       walls: Wall
     }
 
