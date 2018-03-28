@@ -94,6 +94,7 @@ class ParsedDwellingDataRow(_ParsedDwellingDataRow):
     @classmethod
     def from_row(cls, row: typing.Dict[str, typing.Any]) -> 'ParsedDwellingDataRow':
         if not cls._CHECKER.validate(row):
+            # import pdb; pdb.set_trace()
             error_keys = ', '.join(cls._CHECKER.errors.keys())
             raise InvalidInputDataError(f'Validator failed on keys: {error_keys}')
 

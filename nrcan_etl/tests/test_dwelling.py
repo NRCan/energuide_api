@@ -49,8 +49,8 @@ def sample_input_d(upgrades_input: typing.List[str]) -> typing.Dict[str, typing.
         'upgrades': upgrades_input,
         'ERSENERGYINTENSITY': '0.82',
         'UGRERSENERGYINTENSITY': '0.80',
-        'EGHRATING': '50',
-        'UGRRATING': '49',
+        'EGHRATING': '50.5',
+        'UGRRATING': '49.0',
 
         'WALLDEF': '45.3;12;50;12;4.7;12',
         'UGRWALLDEF': '45.3;12;50;12;4.7;10',
@@ -126,8 +126,8 @@ class TestParsedDwellingDataRow:
             house_type='Single detached',
             heated_floor_area=12.34,
             egh_rating=measurement.Measurement(
-                measurement=50,
-                upgrade=49,
+                measurement=50.5,
+                upgrade=49.0,
             ),
             ers_rating=measurement.Measurement(
                 measurement=567,
@@ -257,8 +257,8 @@ class TestDwellingEvaluation:
             ],
             'heatedFloorArea': 12.34,
             'eghRating': {
-                'measurement': 50,
-                'upgrade': 49,
+                'measurement': 50.5,
+                'upgrade': 49.0,
             },
             'ersRating': {
                 'measurement': 567,
