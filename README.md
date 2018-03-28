@@ -46,7 +46,7 @@ Once the script runs through, you'll need to import the data into your database,
 
 #### importing data
 
-The Python code in `/etl` transforms the data from the default formatting set by NRCAN, and then inserts it into our Mongo database. More details can be found in the [README](https://github.com/cds-snc/nrcan_api/blob/master/etl/README.md).
+The Python code in `/nrcan_etl` transforms the data from the default formatting set by NRCAN, and then inserts it into our Mongo database. More details can be found in the [README](https://github.com/cds-snc/nrcan_api/blob/master/nrcan_etl/README.md).
 
 For local development, run
 ```

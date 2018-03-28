@@ -8,11 +8,11 @@ check_mongodb:
 		[ "`command -v brew`" ] && [ "`brew ls mongodb --versions`" ] && brew services start mongo || (echo "ERROR: You need to install MongoDB to run the API." && exit 1); \
 	fi
 setup_python:
-	$(MAKE) -C etl setup_python
+	$(MAKE) -C nrcan_etl setup_python
 import_data:
-	$(MAKE) -C etl import_data
+	$(MAKE) -C nrcan_etl import_data
 setup: check_mongodb
-	$(MAKE) -C etl setup_python import_data
+	$(MAKE) -C nrcan_etl setup_python import_data
 
 .PHONY: run build test watch
 run:
