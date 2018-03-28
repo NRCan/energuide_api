@@ -48,6 +48,7 @@ describe('Schema', () => {
         'ersRating',
         'eghRating',
         'greenhouseGasEmissions',
+        'energyIntensity',
         'walls',
       ])
     })

@@ -98,6 +98,7 @@ const Schema = i18n => {
       ersRating: Rating
       eghRating: Rating
       greenhouseGasEmissions: Rating
+      energyIntensity: Rating
       walls: Wall
     }
 

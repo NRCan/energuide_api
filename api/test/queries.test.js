@@ -151,6 +151,30 @@ describe('queries', () => {
       expect(greenhouseGasEmissions.upgrade).toEqual(6.3)
     })
 
+    it('retrieves all keys for energy intensity data', async () => {
+      let response = await request(server)
+        .post('/graphql')
+        .set('Content-Type', 'application/json; charset=utf-8')
+        .send({
+          query: `{
+            dwelling(houseId:1499786){
+              evaluations {
+                energyIntensity {
+                  measurement
+                  upgrade
+                }
+              }
+            }
+          }`,
+        })
+      expect(response.body).not.toHaveProperty('errors')
+      let { dwelling: { evaluations } } = response.body.data
+      let [first] = evaluations
+      let energyIntensity = first.energyIntensity
+      expect(energyIntensity.measurement).toEqual(0.66)
+      expect(energyIntensity.upgrade).toEqual(0.66)
+    })
+
     it('retrieves all keys for wall data', async () => {
       let response = await request(server)
         .post('/graphql')
