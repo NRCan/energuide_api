@@ -83,7 +83,7 @@ def _validated(
 
 
 def _truncate_postal_code(row: typing.Dict[str, typing.Optional[str]]) -> typing.Dict[str, typing.Optional[str]]:
-    postal = row.get('MAIL_PCODE')
+    postal = row.get('CLIENTPCODE')
     row['forwardSortationArea'] = postal[0:3] if postal else None
     return row
 
