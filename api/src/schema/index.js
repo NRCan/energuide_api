@@ -98,6 +98,7 @@ const Schema = i18n => {
       # ${i18n.t`Date the evaluation was made`}
       entryDate: String
       fileId: String
+      houseType: String
       # ${i18n.t`Date the record was first created`}
       creationDate: String
       # ${i18n.t`Date the record was last modified`}

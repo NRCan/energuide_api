@@ -40,6 +40,7 @@ describe('Schema', () => {
         'evaluationType',
         'entryDate',
         'fileId',
+        'houseType',
         'creationDate',
         'modificationDate',
         'energyUpgrades',
