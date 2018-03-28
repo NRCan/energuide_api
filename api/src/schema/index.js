@@ -105,8 +105,8 @@ const Schema = i18n => {
       # ${i18n.t`A list of upgrades that would improve energy efficiency`}
       energyUpgrades: [Upgrade]
       # ${i18n.t`The EnerGuide Rating calculated for this evaluation`}
-      ersRating: ErsRating
-      eghRating: EghRating
+      ersRating: Rating
+      eghRating: Rating
       walls: Wall
     }
 
@@ -126,12 +126,7 @@ const Schema = i18n => {
       evaluations: [Evaluation]
     }
 
-    type ErsRating @cacheControl(maxAge: 90) {
-      measurement: Float
-      upgrade: Float
-    }
-
-    type EghRating @cacheControl(maxAge: 90) {
+    type Rating @cacheControl(maxAge: 90) {
       measurement: Float
       upgrade: Float
     }
