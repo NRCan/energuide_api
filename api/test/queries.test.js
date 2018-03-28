@@ -104,6 +104,30 @@ describe('queries', () => {
       expect(ersRating.measurement).toEqual(133)
     })
 
+    it('retrieves all keys for greenhouse gas emission data', async () => {
+      let response = await request(server)
+        .post('/graphql')
+        .set('Content-Type', 'application/json; charset=utf-8')
+        .send({
+          query: `{
+            dwelling(houseId:1499786){
+              evaluations {
+                greenhouseGasEmissions {
+                  measurement
+                  upgrade
+                }
+              }
+            }
+          }`,
+        })
+      expect(response.body).not.toHaveProperty('errors')
+      let { dwelling: { evaluations } } = response.body.data
+      let [first] = evaluations
+      let greenhouseGasEmissions = first.greenhouseGasEmissions
+      expect(greenhouseGasEmissions.measurement).toEqual(6.3)
+      expect(greenhouseGasEmissions.upgrade).toEqual(6.3)
+    })
+
     it('retrieves all keys for wall data', async () => {
       let response = await request(server)
         .post('/graphql')

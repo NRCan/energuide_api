@@ -96,6 +96,7 @@ const Schema = i18n => {
       heatedFloorArea: Float
       # ${i18n.t`The EnerGuide Rating calculated for this evaluation`}
       ersRating: ErsRating
+      greenhouseGasEmissions: GreenhouseGasEmissions
       walls: Wall
     }
 
@@ -113,6 +114,11 @@ const Schema = i18n => {
       forwardSortationArea: String
       # ${i18n.t`A list of evaluations of specific features of the dwelling`}
       evaluations: [Evaluation]
+    }
+
+    type GreenhouseGasEmissions @cacheControl(maxAge: 90) {
+      measurement: Float
+      upgrade: Float
     }
 
     type ErsRating @cacheControl(maxAge: 90) {
