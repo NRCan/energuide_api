@@ -68,8 +68,8 @@ class ParsedDwellingDataRow(_ParsedDwellingDataRow):
         'HEATEDFLOORAREA': {'type': 'float', 'nullable': True, 'coerce': float},
         'TYPEOFHOUSE': {'type': 'string', 'nullable': True},
 
-        'EGHRATING': {'type': 'integer', 'nullable': True, 'coerce': int},
-        'UGRRATING': {'type': 'integer', 'nullable': True, 'coerce': int},
+        'EGHRATING': {'type': 'float', 'nullable': True, 'coerce': float},
+        'UGRRATING': {'type': 'float', 'nullable': True, 'coerce': float},
 
         'ERSRATING': {'type': 'integer', 'nullable': True, 'coerce': int},
         'UGRERSRATING': {'type': 'integer', 'nullable': True, 'coerce': int},
