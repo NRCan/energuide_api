@@ -16,4 +16,3 @@ extract_endpoint/tests/azure_emulator
 .vs
 package-lock.json
 yarn-error.log
-api/yarn-error.log
