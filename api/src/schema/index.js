@@ -132,8 +132,8 @@ const Schema = i18n => {
     }
 
     type EghRating @cacheControl(maxAge: 90) {
-      measurement: Int
-      upgrade: Int
+      measurement: Float
+      upgrade: Float
     }
 
     # ${i18n.t`The root query type`}
