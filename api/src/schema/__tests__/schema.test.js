@@ -83,18 +83,6 @@ describe('Schema', () => {
     })
   })
 
-  describe('GreenhouseGasEmissions Type', () => {
-    it('is defined', () => {
-      expect(typeMap).toHaveProperty('GreenhouseGasEmissions')
-    })
-
-    it('has the expected fields', () => {
-      const GreenhouseGasEmissions = typeMap.GreenhouseGasEmissions
-      const fields = Object.keys(GreenhouseGasEmissions.getFields())
-      expect(fields).toEqual(['measurement', 'upgrade'])
-    })
-  })
-
   describe('Wall Type', () => {
     it('is defined', () => {
       expect(typeMap).toHaveProperty('Wall')
