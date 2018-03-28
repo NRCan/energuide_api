@@ -95,8 +95,13 @@ const Schema = i18n => {
       energyUpgrades: [Upgrade]
       heatedFloorArea: Float
       # ${i18n.t`The EnerGuide Rating calculated for this evaluation`}
+<<<<<<< HEAD
       ersRating: ErsRating
       greenhouseGasEmissions: GreenhouseGasEmissions
+=======
+      ersRating: Rating
+      eghRating: Rating
+>>>>>>> 4805bdb98807c7484026ee0cd6836a97614813e5
       walls: Wall
     }
 
@@ -116,12 +121,16 @@ const Schema = i18n => {
       evaluations: [Evaluation]
     }
 
+<<<<<<< HEAD
     type GreenhouseGasEmissions @cacheControl(maxAge: 90) {
       measurement: Float
       upgrade: Float
     }
 
     type ErsRating @cacheControl(maxAge: 90) {
+=======
+    type Rating @cacheControl(maxAge: 90) {
+>>>>>>> 4805bdb98807c7484026ee0cd6836a97614813e5
       measurement: Float
       upgrade: Float
     }

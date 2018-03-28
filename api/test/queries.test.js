@@ -104,15 +104,15 @@ describe('queries', () => {
       expect(ersRating.measurement).toEqual(133)
     })
 
-    it('retrieves all keys for greenhouse gas emission data', async () => {
+    it('retrieves all keys for eghRating data', async () => {
       let response = await request(server)
         .post('/graphql')
         .set('Content-Type', 'application/json; charset=utf-8')
         .send({
           query: `{
-            dwelling(houseId:1499786){
+            dwelling(houseId:1024170){
               evaluations {
-                greenhouseGasEmissions {
+                eghRating {
                   measurement
                   upgrade
                 }
@@ -123,9 +123,8 @@ describe('queries', () => {
       expect(response.body).not.toHaveProperty('errors')
       let { dwelling: { evaluations } } = response.body.data
       let [first] = evaluations
-      let greenhouseGasEmissions = first.greenhouseGasEmissions
-      expect(greenhouseGasEmissions.measurement).toEqual(6.3)
-      expect(greenhouseGasEmissions.upgrade).toEqual(6.3)
+      let eghRating = first.eghRating
+      expect(eghRating.measurement).toEqual(64)
     })
 
     it('retrieves all keys for wall data', async () => {

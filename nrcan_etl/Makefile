@@ -14,7 +14,7 @@ setup_python:  virtualenv requirements.txt
 import_data: virtualenv
 	echo "Removing all NRCAN data"
 	mongo energuide --eval "db.dwellings.drop()"
-	${VIRTUALENV_ROOT}/bin/energuide extract --infile tests/randomized_energuide_data.csv --outfile allthedata.zip
+	${VIRTUALENV_ROOT}/bin/energuide extract --infile tests/scrubbed_random_sample_xml.csv --outfile allthedata.zip
 	echo "Importing new NRCAN data"
 	${VIRTUALENV_ROOT}/bin/energuide load --filename allthedata.zip
 	rm allthedata.zip
