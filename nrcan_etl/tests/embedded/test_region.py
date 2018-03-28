@@ -22,15 +22,36 @@ class TestRegion:
 
     def test_from_code(self):
         data = [
-            'ON',
-            'bc',
-            'Ns',
+            'bC',
+            'AB',
+            'sk',
+            'MB',
+            'on',
+            'Qc',
+            'NB',
+            'pE',
+            'NS',
+            'NL',
+            'Yt',
+            'NT',
+            'nU',
         ]
+
         output = [region.Region.from_data(row) for row in data]
         assert output == [
-            region.Region.ONTARIO,
             region.Region.BRITISH_COLUMBIA,
+            region.Region.ALBERTA,
+            region.Region.SASKATCHEWAN,
+            region.Region.MANITOBA,
+            region.Region.ONTARIO,
+            region.Region.QUEBEC,
+            region.Region.NEW_BRUNSWICK,
+            region.Region.PRINCE_EDWARD_ISLAND,
             region.Region.NOVA_SCOTIA,
+            region.Region.NEWFOUNDLAND_AND_LABRADOR,
+            region.Region.YUKON,
+            region.Region.NORTHWEST_TERRITORIES,
+            region.Region.NUNAVUT,
         ]
 
     def test_from_unknown_code(self):
