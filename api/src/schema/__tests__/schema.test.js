@@ -44,6 +44,7 @@ describe('Schema', () => {
         'creationDate',
         'modificationDate',
         'energyUpgrades',
+        'heatedFloorArea',
         'ersRating',
         'walls',
       ])
