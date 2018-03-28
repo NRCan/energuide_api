@@ -1,9 +1,11 @@
 import typing
 
+
 T = typing.TypeVar('T')
 class _Measurement(typing.NamedTuple):
     measurement: T
     upgrade: T
+
 
 class Measurement(_Measurement):
 

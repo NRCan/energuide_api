@@ -170,6 +170,7 @@ class _Evaluation(typing.NamedTuple):
     walls: measurement.Measurement
     design_heat_loss: measurement.Measurement
 
+
 class Evaluation(_Evaluation):
 
     @classmethod
@@ -245,7 +246,6 @@ class _Dwelling(typing.NamedTuple):
 class Dwelling(_Dwelling):
 
     GROUPING_FIELD = 'HOUSE_ID'
-
 
     @classmethod
     def _from_parsed_group(cls, data: typing.List[ParsedDwellingDataRow]) -> 'Dwelling':
