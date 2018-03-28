@@ -61,6 +61,7 @@ describe('queries', () => {
               creationDate
               modificationDate
               fileId
+              houseType
             }
           }
         }`,
@@ -74,6 +75,7 @@ describe('queries', () => {
         evaluationType: 'D',
         modificationDate: null,
         fileId: '1B07D10023',
+        houseType: 'Single detached',
       })
     })
 
