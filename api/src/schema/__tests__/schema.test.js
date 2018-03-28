@@ -80,7 +80,6 @@ describe('Schema', () => {
     })
   })
 
-
   describe('EghRating Type', () => {
     it('is defined', () => {
       expect(typeMap).toHaveProperty('EghRating')
@@ -92,7 +91,6 @@ describe('Schema', () => {
       expect(fields).toEqual(['measurement', 'upgrade'])
     })
   })
-
 
   describe('Wall Type', () => {
     it('is defined', () => {

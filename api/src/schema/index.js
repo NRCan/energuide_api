@@ -127,8 +127,8 @@ const Schema = i18n => {
     }
 
     type ErsRating @cacheControl(maxAge: 90) {
-      measurement: Int
-      upgrade: Int
+      measurement: Float
+      upgrade: Float
     }
 
     type EghRating @cacheControl(maxAge: 90) {
