@@ -14,6 +14,6 @@ class EvaluationType(enum.Enum):
             return EvaluationType.PRE_RETROFIT
         elif code == cls.POST_RETROFIT.value:
             return EvaluationType.POST_RETROFIT
-        elif code == cls.INCENTIVE_PROGRAM:
+        elif code == cls.INCENTIVE_PROGRAM.value:
             return EvaluationType.INCENTIVE_PROGRAM
         raise InvalidInputDataError(f'Invalid code: {code}')

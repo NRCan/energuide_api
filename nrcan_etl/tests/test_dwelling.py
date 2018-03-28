@@ -336,6 +336,7 @@ class TestDwelling:
         new_e['ENTRYDATE'] = '2018-06-01'
 
         new_f = sample_input_e.copy()
+        new_f['EVAL_TYPE'] = 'F'
         new_f['ENTRYDATE'] = '2018-08-01'
 
         return [sample_input_d, sample_input_e, dummy_d, new_e, new_f].copy()
