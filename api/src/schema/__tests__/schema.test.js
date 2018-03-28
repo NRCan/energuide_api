@@ -67,6 +67,18 @@ describe('Schema', () => {
     })
   })
 
+  describe('ErsRating Type', () => {
+    it('is defined', () => {
+      expect(typeMap).toHaveProperty('ErsRating')
+    })
+
+    it('has the expected fields', () => {
+      const ErsRating = typeMap.ErsRating
+      const fields = Object.keys(ErsRating.getFields())
+      expect(fields).toEqual(['measurement', 'upgrade'])
+    })
+  })
+
   describe('Wall Type', () => {
     it('is defined', () => {
       expect(typeMap).toHaveProperty('Wall')
