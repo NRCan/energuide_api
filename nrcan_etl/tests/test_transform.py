@@ -26,7 +26,7 @@ def test_reader(local_reader: transform.LocalExtractReader) -> None:
     assert len(unique_builders) == 21
 
 
-def test_reader_sorted_by_eval_id(local_reader: transform.LocalExtractReader) -> None:
+def test_reader_sorted_by_house_id(local_reader: transform.LocalExtractReader) -> None:
     output = list(local_reader.extracted_rows())
 
     assert all(
