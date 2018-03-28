@@ -95,7 +95,8 @@ const Schema = i18n => {
       energyUpgrades: [Upgrade]
       heatedFloorArea: Float
       # ${i18n.t`The EnerGuide Rating calculated for this evaluation`}
-      ersRating: ErsRating
+      ersRating: Rating
+      eghRating: Rating
       walls: Wall
     }
 
@@ -115,7 +116,7 @@ const Schema = i18n => {
       evaluations: [Evaluation]
     }
 
-    type ErsRating @cacheControl(maxAge: 90) {
+    type Rating @cacheControl(maxAge: 90) {
       measurement: Float
       upgrade: Float
     }

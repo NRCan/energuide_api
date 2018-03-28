@@ -104,6 +104,29 @@ describe('queries', () => {
       expect(ersRating.measurement).toEqual(133)
     })
 
+    it('retrieves all keys for eghRating data', async () => {
+      let response = await request(server)
+        .post('/graphql')
+        .set('Content-Type', 'application/json; charset=utf-8')
+        .send({
+          query: `{
+            dwelling(houseId:1024170){
+              evaluations {
+                eghRating {
+                  measurement
+                  upgrade
+                }
+              }
+            }
+          }`,
+        })
+      expect(response.body).not.toHaveProperty('errors')
+      let { dwelling: { evaluations } } = response.body.data
+      let [first] = evaluations
+      let eghRating = first.eghRating
+      expect(eghRating.measurement).toEqual(64)
+    })
+
     it('retrieves all keys for wall data', async () => {
       let response = await request(server)
         .post('/graphql')
