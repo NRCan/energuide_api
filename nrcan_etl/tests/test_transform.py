@@ -1,4 +1,5 @@
 import time
+import typing
 import zipfile
 import _pytest
 import pytest
@@ -23,6 +24,15 @@ def test_reader(local_reader: transform.LocalExtractReader) -> None:
     assert len(output) == 21
     assert output[0]['BUILDER'] == '1521D00144'
     assert len(unique_builders) == 21
+
+
+def test_reader_sorted_by_eval_id(local_reader: transform.LocalExtractReader) -> None:
+    output = list(local_reader.extracted_rows())
+
+    assert all(
+        typing.cast(str, current_row.get('HOUSE_ID')) <= typing.cast(str, next_row.get('HOUSE_ID'))
+        for current_row, next_row in zip(output, output[1:])
+    )
 
 
 def test_reader_num_rows(local_reader: transform.LocalExtractReader) -> None:
