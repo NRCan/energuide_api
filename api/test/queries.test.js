@@ -62,6 +62,7 @@ describe('queries', () => {
               modificationDate
               fileId
               houseType
+              heatedFloorArea
             }
           }
         }`,
@@ -76,6 +77,7 @@ describe('queries', () => {
         modificationDate: null,
         fileId: '1B07D10023',
         houseType: 'Single detached',
+        heatedFloorArea: null,
       })
     })
 

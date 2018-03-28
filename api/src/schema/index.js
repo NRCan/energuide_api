@@ -64,18 +64,6 @@ const Schema = i18n => {
       results: [Dwelling]
     }
 
-    # ${i18n.t`Heated floor areas represents the usable areas of a house that is conditioned to a specified temperature during the whole heating season`}
-    type HeatedFloorArea @cacheControl(maxAge: 90) {
-      # ${i18n.t`Above-grade heated area of the house in square metres (m2), i.e. the ground floor`}
-      areaAboveGradeMetres: Float
-      # ${i18n.t`Above-grade heated area of the house in square feet (ft2), i.e. the ground floor`}
-      areaAboveGradeFeet: Float
-      # ${i18n.t`Below-grade heated area of the house in square metres (m2), i.e. the basement`}
-      areaBelowGradeMetres: Float
-      # ${i18n.t`Below-grade heated area of the house in square feet (ft2), i.e. the basement`}
-      areaBelowGradeFeet: Float
-    }
-
     type Wall @cacheControl(maxAge: 90) {
       measurement: WallMeasurement
       upgrade: WallMeasurement
@@ -105,6 +93,7 @@ const Schema = i18n => {
       modificationDate: String
       # ${i18n.t`A list of upgrades that would improve energy efficiency`}
       energyUpgrades: [Upgrade]
+      heatedFloorArea: Float
       # ${i18n.t`The EnerGuide Rating calculated for this evaluation`}
       ersRating: ErsRating
       walls: Wall
