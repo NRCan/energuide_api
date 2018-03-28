@@ -324,6 +324,23 @@ class TestDwelling:
               ) -> typing.List[typing.Dict[str, typing.Any]]:
         return [sample_input_d, sample_input_e].copy()
 
+    @pytest.fixture
+    def dummy_sample(self,
+                     sample_input_d: typing.Dict[str, typing.Any],
+                     sample_input_e: typing.Dict[str, typing.Any],
+                    ) -> typing.List[typing.Dict[str, typing.Any]]:
+        dummy_d = sample_input_e.copy()
+        dummy_d['EVAL_TYPE'] = 'D'
+
+        new_e = sample_input_e.copy()
+        new_e['ENTRYDATE'] = '2018-06-01'
+
+        new_f = sample_input_e.copy()
+        new_f['EVAL_TYPE'] = 'F'
+        new_f['ENTRYDATE'] = '2018-08-01'
+
+        return [sample_input_d, sample_input_e, dummy_d, new_e, new_f].copy()
+
     def test_house_id(self, sample: typing.List[typing.Dict[str, typing.Any]]) -> None:
         output = dwelling.Dwelling.from_group(sample)
         assert output.house_id == 456
@@ -361,3 +378,7 @@ class TestDwelling:
 
         assert 'postalCode' not in output
         assert len(evaluations) == 2
+
+    def test_filter_dummies(self, dummy_sample: typing.List[typing.Dict[str, typing.Any]]) -> None:
+        output = dwelling.Dwelling.from_group(dummy_sample)
+        assert len(output.evaluations) == 4
