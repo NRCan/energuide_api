@@ -89,14 +89,15 @@ class ParsedDwellingDataRow(_ParsedDwellingDataRow):
         'UGRHLWALLS': {'type': 'float', 'nullable': True, 'required': True, 'coerce': float},
     }
 
+    _CHECKER = validator.DwellingValidator(_SCHEMA, allow_unknown=True)
+
     @classmethod
     def from_row(cls, row: typing.Dict[str, typing.Any]) -> 'ParsedDwellingDataRow':
-        checker = validator.DwellingValidator(cls._SCHEMA, allow_unknown=True)
-        if not checker.validate(row):
-            error_keys = ', '.join(checker.errors.keys())
+        if not cls._CHECKER.validate(row):
+            error_keys = ', '.join(cls._CHECKER.errors.keys())
             raise InvalidInputDataError(f'Validator failed on keys: {error_keys}')
 
-        parsed = checker.document
+        parsed = cls._CHECKER.document
 
         return ParsedDwellingDataRow(
             house_id=parsed['HOUSE_ID'],
@@ -161,13 +162,14 @@ class _Evaluation(typing.NamedTuple):
     modification_date: typing.Optional[datetime.datetime]
     house_type: str
     energy_upgrades: typing.List[upgrade.Upgrade]
-    heated_floor_area: measurement.Measurement
+    heated_floor_area: typing.Optional[float]
     egh_rating: measurement.Measurement
     ers_rating: measurement.Measurement
     greenhouse_gas_emissions: measurement.Measurement
     energy_intensity: measurement.Measurement
     walls: measurement.Measurement
     design_heat_loss: measurement.Measurement
+
 
 class Evaluation(_Evaluation):
 
@@ -189,7 +191,6 @@ class Evaluation(_Evaluation):
             energy_intensity=data.energy_intensity,
             walls=data.walls,
             design_heat_loss=data.design_heat_loss,
-
         )
 
     def to_dict(self) -> typing.Dict[str, typing.Any]:
@@ -197,6 +198,7 @@ class Evaluation(_Evaluation):
             'fileId': self.file_id,
             'evaluationId': self.evaluation_id,
             'evaluationType': self.evaluation_type.value,
+            'houseType': self.house_type,
             'entryDate': self.entry_date.isoformat(),
             'creationDate': self.creation_date.isoformat(),
             'modificationDate': self.modification_date.isoformat() if self.modification_date is not None else None,
@@ -212,22 +214,28 @@ class Evaluation(_Evaluation):
 
 
 def _filter_dummy_evaluations(data: typing.List[ParsedDwellingDataRow]) -> typing.List[ParsedDwellingDataRow]:
-    pre_evals = {
-        evaluation.entry_date: evaluation
-        for evaluation in data if evaluation.eval_type is EvaluationType.PRE_RETROFIT
-    }
-    post_evals = {
-        evaluation.entry_date: evaluation
-        for evaluation in data if evaluation.eval_type is EvaluationType.POST_RETROFIT
-    }
 
-    return list(post_evals.values()) + \
+    def split(data: typing.List[ParsedDwellingDataRow]
+             ) -> typing.List[typing.Dict[datetime.date, ParsedDwellingDataRow]]:
+
+        groups: typing.Dict[EvaluationType, typing.Dict[datetime.date, ParsedDwellingDataRow]] = {
+            eval_type: {}
+            for eval_type in EvaluationType
+        }
+
+        for evaluation in data:
+            groups[evaluation.eval_type][evaluation.entry_date] = evaluation
+
+        return [groups[eval_type] for eval_type in EvaluationType]
+
+    pre_evals, post_evals, incentive_evals = split(data)
+
+    return list(incentive_evals.values()) + list(post_evals.values()) + \
            [evaluation for date, evaluation in pre_evals.items() if date not in post_evals.keys()]
 
 
 class _Dwelling(typing.NamedTuple):
     house_id: int
-    house_type: str
     year_built: int
     city: str
     region: Region
@@ -239,7 +247,6 @@ class Dwelling(_Dwelling):
 
     GROUPING_FIELD = 'HOUSE_ID'
 
-
     @classmethod
     def _from_parsed_group(cls, data: typing.List[ParsedDwellingDataRow]) -> 'Dwelling':
         if not data:
@@ -249,7 +256,6 @@ class Dwelling(_Dwelling):
         evaluations = [Evaluation.from_data(row) for row in _filter_dummy_evaluations(data)]
         return Dwelling(
             house_id=data[0].house_id,
-            house_type=data[0].house_type,
             year_built=data[0].year_built,
             city=data[0].city,
             region=data[0].region,
@@ -266,7 +272,6 @@ class Dwelling(_Dwelling):
     def to_dict(self) -> typing.Dict[str, typing.Any]:
         return {
             'houseId': self.house_id,
-            'houseType': self.house_type,
             'yearBuilt': self.year_built,
             'city': self.city,
             'region': self.region.value,

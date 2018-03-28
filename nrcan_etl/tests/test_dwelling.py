@@ -40,12 +40,12 @@ def sample_input_d(upgrades_input: typing.List[str]) -> typing.Dict[str, typing.
         'HOUSEREGION': 'Ontario',
         'YEARBUILT': '2000',
         'BUILDER': '4K13D01404',
-        'HEATEDFLOORAREA': None,
+        'HEATEDFLOORAREA': '12.34',
         'TYPEOFHOUSE': 'Single detached',
         'ERSRATING': '567',
         'UGRERSRATING': '565',
-        'ERSGHG': None,
-        'UGRERSGHG': None,
+        'ERSGHG': '12.5',
+        'UGRERSGHG': '12.34',
         'upgrades': upgrades_input,
         'ERSENERGYINTENSITY': '0.82',
         'UGRERSENERGYINTENSITY': '0.80',
@@ -124,7 +124,7 @@ class TestParsedDwellingDataRow:
                 ),
             ],
             house_type='Single detached',
-            heated_floor_area=None,
+            heated_floor_area=12.34,
             egh_rating=measurement.Measurement(
                 measurement=50,
                 upgrade=49,
@@ -134,8 +134,8 @@ class TestParsedDwellingDataRow:
                 upgrade=565,
             ),
             greenhouse_gas_emissions=measurement.Measurement(
-                measurement=None,
-                upgrade=None,
+                measurement=12.5,
+                upgrade=12.34,
             ),
             energy_intensity=measurement.Measurement(
                 measurement=0.82,
@@ -230,7 +230,89 @@ class TestDwellingEvaluation:
 
     def test_to_dict(self, sample_parsed_d: dwelling.ParsedDwellingDataRow) -> None:
         output = dwelling.Evaluation.from_data(sample_parsed_d).to_dict()
-        assert output['evaluationType'] == evaluation_type.EvaluationType.PRE_RETROFIT.value
+        assert output == {
+            'fileId': '4K13D01404',
+            'evaluationId': 123,
+            'houseType': 'Single detached',
+            'evaluationType': evaluation_type.EvaluationType.PRE_RETROFIT.value,
+            'entryDate': '2018-01-01',
+            'creationDate': '2018-01-08T09:00:00',
+            'modificationDate': '2018-06-01T09:00:00',
+            'energyUpgrades': [
+                {
+                    'upgradeType': 'Ceilings',
+                    'cost': 0,
+                    'priority': 12,
+                },
+                {
+                    'upgradeType': 'MainWalls',
+                    'cost': 1,
+                    'priority': 2,
+                },
+                {
+                    'upgradeType': 'Foundation',
+                    'cost': 2,
+                    'priority': 3,
+                },
+            ],
+            'heatedFloorArea': 12.34,
+            'eghRating': {
+                'measurement': 50,
+                'upgrade': 49,
+            },
+            'ersRating': {
+                'measurement': 567,
+                'upgrade': 565,
+            },
+            'greenhouseGasEmissions': {
+                'measurement': 12.5,
+                'upgrade': 12.34,
+            },
+            'energyIntensity': {
+                'measurement': 0.82,
+                'upgrade': 0.80,
+            },
+            'walls': {
+                'measurement': {
+                    'insulation': [
+                        {
+                            'percentage': 45.3,
+                            'rValue': 12.0,
+                        },
+                        {
+                            'percentage': 50.0,
+                            'rValue': 12.0,
+                        },
+                        {
+                            'percentage': 4.7,
+                            'rValue': 12.0,
+                        },
+                    ],
+                    'heatLost': 27799.9
+                },
+                'upgrade': {
+                    'insulation': [
+                        {
+                            'percentage': 45.3,
+                            'rValue': 12.0,
+                        },
+                        {
+                            'percentage': 50.0,
+                            'rValue': 12.0,
+                        },
+                        {
+                            'percentage': 4.7,
+                            'rValue': 10.0,
+                        },
+                    ],
+                    'heatLost': 27799.9
+                }
+            },
+            'designHeatLoss': {
+                'measurement': 11242.1,
+                'upgrade': 10757.3,
+            }
+        }
 
 
 class TestDwelling:
@@ -241,6 +323,23 @@ class TestDwelling:
                sample_input_e: typing.Dict[str, typing.Any],
               ) -> typing.List[typing.Dict[str, typing.Any]]:
         return [sample_input_d, sample_input_e].copy()
+
+    @pytest.fixture
+    def dummy_sample(self,
+                     sample_input_d: typing.Dict[str, typing.Any],
+                     sample_input_e: typing.Dict[str, typing.Any],
+                    ) -> typing.List[typing.Dict[str, typing.Any]]:
+        dummy_d = sample_input_e.copy()
+        dummy_d['EVAL_TYPE'] = 'D'
+
+        new_e = sample_input_e.copy()
+        new_e['ENTRYDATE'] = '2018-06-01'
+
+        new_f = sample_input_e.copy()
+        new_f['EVAL_TYPE'] = 'F'
+        new_f['ENTRYDATE'] = '2018-08-01'
+
+        return [sample_input_d, sample_input_e, dummy_d, new_e, new_f].copy()
 
     def test_house_id(self, sample: typing.List[typing.Dict[str, typing.Any]]) -> None:
         output = dwelling.Dwelling.from_group(sample)
@@ -267,7 +366,19 @@ class TestDwelling:
 
     def test_to_dict(self, sample: typing.List[typing.Dict[str, typing.Any]]) -> None:
         output = dwelling.Dwelling.from_group(sample).to_dict()
-        assert output['houseId'] == 456
-        assert len(output['evaluations']) == 2
+        evaluations = output.pop('evaluations')
+
+        assert output == {
+            'houseId': 456,
+            'yearBuilt': 2000,
+            'city': 'Ottawa',
+            'region': region.Region.ONTARIO.value,
+            'forwardSortationArea': 'K1P',
+        }
+
         assert 'postalCode' not in output
-        assert output['region'] == region.Region.ONTARIO.value
+        assert len(evaluations) == 2
+
+    def test_filter_dummies(self, dummy_sample: typing.List[typing.Dict[str, typing.Any]]) -> None:
+        output = dwelling.Dwelling.from_group(dummy_sample)
+        assert len(output.evaluations) == 4
