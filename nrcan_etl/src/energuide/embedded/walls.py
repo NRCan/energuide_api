@@ -1,11 +1,13 @@
 import itertools
 import typing
 from energuide.embedded import composite
+from energuide.exceptions import InvalidEmbeddedDataTypeError
 
 
 class _Wall(typing.NamedTuple):
     insulation: typing.List[composite.CompositeValue]
     heat_lost: typing.Optional[float]
+
 
 class Wall(_Wall):
 
@@ -18,13 +20,17 @@ class Wall(_Wall):
             args = [iter(insulation.split(';'))] * 2
             groups = itertools.zip_longest(fillvalue='0', *args)
 
-            composite_insulation = [
-                composite.CompositeValue(
-                    percentage=float(percentage),
-                    value=float(r_value),
-                    value_name='rValue',
-                ) for percentage, r_value in groups
-            ]
+            try:
+                composite_insulation = [
+                    composite.CompositeValue(
+                        percentage=float(percentage),
+                        value=float(r_value),
+                        value_name='rValue',
+                    ) for percentage, r_value in groups
+                ]
+            except ValueError as exc:
+                raise InvalidEmbeddedDataTypeError(Wall, 'Invalid composite insulation string') from exc
+
         else:
             composite_insulation = []
 
