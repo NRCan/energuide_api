@@ -1,10 +1,19 @@
 {
-  "Heat loss through walls in MJ": {
+  "[Deprecated] The EnerGuide Rating calculated for this evaluation": {
     "translation": "",
     "origin": [
       [
         "src/schema/index.js",
-        79
+        111
+      ]
+    ]
+  },
+  "Proposed upgrade value of rating calculated for this evaluation": {
+    "translation": "",
+    "origin": [
+      [
+        "src/schema/index.js",
+        141
       ]
     ]
   },
@@ -241,6 +250,15 @@
       ]
     ]
   },
+  "Heat loss through walls in MJ": {
+    "translation": "",
+    "origin": [
+      [
+        "src/schema/index.js",
+        79
+      ]
+    ]
+  },
   "Material used to insulate something": {
     "translation": "",
     "origin": [
@@ -358,15 +376,6 @@
       ]
     ]
   },
-  "The EnerGuide Rating calculated for this evaluation, actual rating": {
-    "translation": "",
-    "origin": [
-      [
-        "src/schema/index.js",
-        111
-      ]
-    ]
-  },
   "Rated greenhouse gas emissions in tonnes/year": {
     "translation": "",
     "origin": [
@@ -472,15 +481,6 @@
       [
         "src/schema/index.js",
         139
-      ]
-    ]
-  },
-  "Proposed upgrade value of rating calculated for this evalutation": {
-    "translation": "",
-    "origin": [
-      [
-        "src/schema/index.js",
-        141
       ]
     ]
   },

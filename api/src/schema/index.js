@@ -108,7 +108,7 @@ const Schema = i18n => {
       heatedFloorArea: Float
       # ${i18n.t`The EnerGuide Rating calculated for this evaluation, in GJ`}
       ersRating: Rating
-      # ${i18n.t`The EnerGuide Rating calculated for this evaluation, actual rating`}
+      # ${i18n.t`[Deprecated] The EnerGuide Rating calculated for this evaluation`}
       eghRating: Rating
       # ${i18n.t`Rated greenhouse gas emissions in tonnes/year`}
       greenhouseGasEmissions: Rating
