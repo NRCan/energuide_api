@@ -44,7 +44,8 @@ Commit and push your changes, and make a Pull Request
 ### `nrcan_etl/src/energuide/dwelling.py`
 1. Add a new property to `_ParsedDwellingDataRow` for the air leakage
 
-This class is a container for all the fields, both dwelling and evaluation level, that the input data is parsed into at the beginning so the rest of the pipeline has a dependable known structure to use.
+This class is a container for all the fields at both the dwelling and evaluation levels.
+The input data is parsed into this container at the beginning of the process so the rest of the pipeline has a dependable known structure to use.
 ```
 class _ParsedDwellingDataRow(typing.NamedTuple):
     ...
@@ -53,7 +54,7 @@ class _ParsedDwellingDataRow(typing.NamedTuple):
 
 ```
 
-2. Add new elements to the `_SCHEMA` directionary in the `Dwelling` class
+2. Add new elements to the `_SCHEMA` directionary in the `Dwelling` class.
 This is a description of each data element for validation and very simple processing purposes.
 `type`: the datatype that the element will be
 `nullable`: specificies that while the key must be present, it's value is allowed to be `None`
@@ -154,3 +155,6 @@ Add new element to the dict in `TestDwellingEvaluation.test_to_dict`
             ...
         }
 ```
+
+
+Commit and push your changes, and make a Pull Request
