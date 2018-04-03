@@ -102,7 +102,7 @@ describe('Evaluation Type', () => {
 
 ```
 
-If you are adding a new `Dwelling` field, you would add it to the `Dwelling Type` test instead/
+If you are adding a new `Dwelling` field, you would add it to the `Dwelling Type` test instead.
 
 2. In your console, run `yarn test`. All your tests should pass.
 
@@ -186,7 +186,7 @@ type Evaluation @cacheControl(maxAge: 90) {
 
 Note: This description was just pulled directly from the TSV field.
 
-2. Run `yarn extract` to load your new description into the English & French description locals.
+2. Run `yarn extract` to load your new description into the English & French description locales.
 
 3. Time to add your French description! Open up `api/src/locale/fr/messages.json` and search for your english description.
 You should find something that looks like this:
@@ -213,4 +213,4 @@ wait a bit, and then navigate to the live api to check out your new field, yay! 
 
 ## If you have any issues with the process...
 
-Please open an issue in our github issues tracker at https://github.com/cds-snc/nrcan_api/issues 
+Please open an issue in our github issues tracker at https://github.com/cds-snc/nrcan_api/issues
