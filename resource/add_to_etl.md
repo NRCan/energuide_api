@@ -55,10 +55,15 @@ class _ParsedDwellingDataRow(typing.NamedTuple):
 ```
 
 2. Add new elements to the `_SCHEMA` directionary in the `Dwelling` class.
+
 This is a description of each data element for validation and very simple processing purposes.
+
 `type`: the datatype that the element will be
+
 `nullable`: specificies that while the key must be present, it's value is allowed to be `None`
+
 `coerce`: A function to pass the value through before the type check, for simple transformations such as data type casting
+
 
 ```
     _SCHEMA = {
