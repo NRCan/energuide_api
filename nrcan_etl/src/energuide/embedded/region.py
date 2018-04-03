@@ -1,5 +1,7 @@
 import enum
 import typing
+import unicodedata
+
 
 @enum.unique
 class Region(enum.Enum):
@@ -21,7 +23,9 @@ class Region(enum.Enum):
     @classmethod
     def _from_name(cls, name: str) -> typing.Optional['Region']:
         snake_name = name.upper().replace(' ', '_')
-        return Region[snake_name] if snake_name in Region.__members__ else None
+        ascii_name = unicodedata.normalize('NFD', snake_name).encode('ascii', 'ignore').decode()
+
+        return Region[ascii_name] if ascii_name in Region.__members__ else None
 
     @classmethod
     def _from_code(cls, code: str) -> typing.Optional['Region']:

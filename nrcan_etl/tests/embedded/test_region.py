@@ -40,6 +40,9 @@ class TestRegion:
     def test_from_unknown_name(self):
         assert region.Region.from_data('foo') == region.Region.UNKNOWN
 
+    def test_from_accent(self):
+        assert region.Region.from_data('QUÉBEC') == region.Region.QUEBEC
+
     def test_from_code(self):
         data = [
             'bC',
