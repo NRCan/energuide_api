@@ -67,7 +67,7 @@ def mongo_client(database_coordinates: DatabaseCoordinates) -> typing.Iterable[p
 CHUNKSIZE = 1000
 
 T = typing.TypeVar('T')
-def _chunk(data: typing.Iterable[T], size=CHUNKSIZE) -> typing.Iterable[typing.List[T]]:
+def _chunk(data: typing.Iterable[T], size: int = CHUNKSIZE) -> typing.Iterable[typing.List[T]]:
     iterator = iter(data)
     chunk = list(islice(iterator, size))
 
