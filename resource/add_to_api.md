@@ -3,6 +3,7 @@ This guide follows the instructions provided in the add_to_etl.md file. In order
 need to add it to the ETL. If you've already added your field to the ETL, you're good to go, read on!
 
 ## Loading your new data to your local mongoDB
+
 In order to access your new field, you will need data that includes it it in your database. Start by running your updated energuide `extract` & `load`
 functions with the test data. From the root folder:
 
@@ -16,7 +17,9 @@ energuide load --filename tests/sample_data.zip
 You should receive the message `updated 11 rows in the database`.
 
 ## Adding the new field to the schema
+
 ### `api/src/schema/index.js`
+
 1. Figure out which type (Evaluation or Dwelling) your new field should be added to. In this case, airLeakage is part of the Evaluation class, so we'll
 add it to our Evaluation query.
 
@@ -75,7 +78,9 @@ query {
 Next lets write some tests!
 
 ## Adding a unit test for the new field
+
 ### `api/src/schema/__tests__/schema.test.js`
+
 1. Add your new field to the `'Evaluation Type'` test. It should look like this:
 
 ```
@@ -102,7 +107,9 @@ If you are adding a new `Dwelling` field, you would add it to the `Dwelling Type
 2. In your console, run `yarn test`. All your tests should pass.
 
 ## Adding an integration test for the new field
+
 ### `api/test/queries.test.js`
+
 1. We need to test to make sure the field returns the data we expect. To do this, we need to pick a `houseID` and matching `airLeakage` values. You can get these values
 by looking at the data in the database, or you can start up the api as described earlier and run the following query:
 
@@ -163,3 +170,47 @@ it('retrieves all keys for ersRating data', async () => {
 3. In your console, run `yarn integration`, all your tests should pass.
 
 ## Adding an English & French description for the new field
+
+### `api/src/schema/index.js`
+
+1. Above your new field, add an i18n formatted string with the field description, like so:
+
+```
+type Evaluation @cacheControl(maxAge: 90) {
+  ...
+  # ${i18n.t`Air leakage at 50 pascals`}
+  airLeakage: Rating
+  ...
+}
+```
+
+Note: This description was just pulled directly from the TSV field.
+
+2. Run `yarn extract` to load your new description into the English & French description locals.
+
+3. Time to add your French description! Open up `api/src/locale/fr/messages.json` and search for your english description.
+You should find something that looks like this:
+
+```
+"Air leakage at 50 pascals": {
+  "translation": "",
+```
+
+In the empty translation space, add your French translation. For airLeakage, it would look like this:
+
+```
+"Air leakage at 50 pascals": {
+  "translation": "Fuite d'air à 50 Pa",
+```
+
+4. Run `yarn compile` to compile your new messages. Note that this step can potentially cause errors
+on a windows machine. We are currently investigating the issue.
+
+## Push all the things to github!
+
+Last step! Commit all your changed files to github & push your branch up for a code review. Once your tests pass & your code is reviewed, merge to master,
+wait a bit, and then navigate to the live api to check out your new field, yay! :tada: :tada:
+
+## If you have any issues with the process...
+
+Please open an issue in our github issues tracker at https://github.com/cds-snc/nrcan_api/issues 
