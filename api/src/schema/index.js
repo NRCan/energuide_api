@@ -64,18 +64,27 @@ const Schema = i18n => {
       results: [Dwelling]
     }
 
+    # ${i18n.t`Walls separate the interior heated space from the outside (interior partition walls are not considered walls)`}
     type Wall @cacheControl(maxAge: 90) {
+      # ${i18n.t`Wall measurements calculated for this evaluation`}
       measurement: WallMeasurement
+      # ${i18n.t`Proposed upgrade wall measurements calculated for this evaluation`}
       upgrade: WallMeasurement
     }
 
+    # ${i18n.t`Wall measurements calculated for this evaluation`}
     type WallMeasurement @cacheControl(maxAge: 90) {
+      # ${i18n.t`Description of wall insulation`}
       insulation: [Insulation]
+      # ${i18n.t`Heat loss through walls`}
       heatLost: Float
     }
 
+    # ${i18n.t`Material used to insulate something`}
     type Insulation @cacheControl(maxAge: 90) {
+      # ${i18n.t`The amount of total element that insulation makes up`}
       percentage: Float
+      # ${i18n.t`The insulation rValue of the element`}
       rValue: Float
     }
 
@@ -85,7 +94,9 @@ const Schema = i18n => {
       evaluationType: String
       # ${i18n.t`Date the evaluation was made`}
       entryDate: String
+      # ${i18n.t`Compound field with service organization, advisor and file sequence`}
       fileId: String
+      # ${i18n.t`Type of house`}
       houseType: String
       # ${i18n.t`Date the record was first created`}
       creationDate: String
@@ -93,12 +104,17 @@ const Schema = i18n => {
       modificationDate: String
       # ${i18n.t`A list of upgrades that would improve energy efficiency`}
       energyUpgrades: [Upgrade]
+      # ${i18n.t`Heated floor area in m2`}
       heatedFloorArea: Float
-      # ${i18n.t`The EnerGuide Rating calculated for this evaluation`}
+      # ${i18n.t`The EnerGuide Rating calculated for this evaluation, in GJ`}
       ersRating: Rating
+      # ${i18n.t`The EnerGuide Rating calculated for this evaluation, actual rating`}
       eghRating: Rating
+      # ${i18n.t`Rated greenhouse gas emissions in tonnes/year`}
       greenhouseGasEmissions: Rating
+      # ${i18n.t`Calculated as HeatedFloorArea/ERSRating, units of GJ/m2`}
       energyIntensity: Rating
+      # ${i18n.t`Wall data entry for a dwelling`}
       walls: Wall
     }
 
@@ -118,8 +134,11 @@ const Schema = i18n => {
       evaluations: [Evaluation]
     }
 
+    # ${i18n.t`A rating value for a given field`}
     type Rating @cacheControl(maxAge: 90) {
+      # ${i18n.t`Value of rating calculated for this evaluation`}
       measurement: Float
+      # ${i18n.t`Proposed upgrade value of rating calculated for this evalutation`}
       upgrade: Float
     }
 
