@@ -76,7 +76,7 @@ const Schema = i18n => {
     type WallMeasurement @cacheControl(maxAge: 90) {
       # ${i18n.t`Description of wall insulation`}
       insulation: [Insulation]
-      # ${i18n.t`Heat loss through walls`}
+      # ${i18n.t`Heat loss through walls in MJ`}
       heatLost: Float
     }
 
@@ -138,7 +138,7 @@ const Schema = i18n => {
     type Rating @cacheControl(maxAge: 90) {
       # ${i18n.t`Value of rating calculated for this evaluation`}
       measurement: Float
-      # ${i18n.t`Proposed upgrade value of rating calculated for this evalutation`}
+      # ${i18n.t`Proposed upgrade value of rating calculated for this evaluation`}
       upgrade: Float
     }
 

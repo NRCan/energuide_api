@@ -1,4 +1,13 @@
 {
+  "Heat loss through walls in MJ": {
+    "translation": "",
+    "origin": [
+      [
+        "src/schema/index.js",
+        79
+      ]
+    ]
+  },
   "An operator to describe how results will be filtered": {
     "translation": "",
     "origin": [
@@ -192,7 +201,7 @@
       ]
     ]
   },
-  "Heated floor areas represents the usable areas of a house that is conditioned to a specified temperature during the whole heating season": {
+  "Walls separate the interior heated space from the outside (interior partition walls are not considered walls)": {
     "translation": "",
     "origin": [
       [
@@ -201,16 +210,20 @@
       ]
     ]
   },
-  "Above-grade heated area of the house in square metres (m2), i.e. the ground floor": {
+  "Wall measurements calculated for this evaluation": {
     "translation": "",
     "origin": [
       [
         "src/schema/index.js",
         69
+      ],
+      [
+        "src/schema/index.js",
+        75
       ]
     ]
   },
-  "Above-grade heated area of the house in square feet (ft2), i.e. the ground floor": {
+  "Proposed upgrade wall measurements calculated for this evaluation": {
     "translation": "",
     "origin": [
       [
@@ -219,43 +232,16 @@
       ]
     ]
   },
-  "Below-grade heated area of the house in square metres (m2), i.e. the basement": {
+  "Description of wall insulation": {
     "translation": "",
     "origin": [
       [
         "src/schema/index.js",
-        73
+        77
       ]
     ]
   },
-  "Below-grade heated area of the house in square feet (ft2), i.e. the basement": {
-    "translation": "",
-    "origin": [
-      [
-        "src/schema/index.js",
-        75
-      ]
-    ]
-  },
-  "Detailed information about specific features of a given dwelling": {
-    "translation": "",
-    "origin": [
-      [
-        "src/schema/index.js",
-        79
-      ]
-    ]
-  },
-  "Evaluation type codes are used to define the type of evaluation performed and to distinguish the house type (i.e. newly built or existing)": {
-    "translation": "",
-    "origin": [
-      [
-        "src/schema/index.js",
-        81
-      ]
-    ]
-  },
-  "Date the evaluation was made": {
+  "Material used to insulate something": {
     "translation": "",
     "origin": [
       [
@@ -264,12 +250,75 @@
       ]
     ]
   },
+  "The amount of total element that insulation makes up": {
+    "translation": "",
+    "origin": [
+      [
+        "src/schema/index.js",
+        85
+      ]
+    ]
+  },
+  "The insulation rValue of the element": {
+    "translation": "",
+    "origin": [
+      [
+        "src/schema/index.js",
+        87
+      ]
+    ]
+  },
+  "Detailed information about specific features of a given dwelling": {
+    "translation": "",
+    "origin": [
+      [
+        "src/schema/index.js",
+        91
+      ]
+    ]
+  },
+  "Evaluation type codes are used to define the type of evaluation performed and to distinguish the house type (i.e. newly built or existing)": {
+    "translation": "",
+    "origin": [
+      [
+        "src/schema/index.js",
+        93
+      ]
+    ]
+  },
+  "Date the evaluation was made": {
+    "translation": "",
+    "origin": [
+      [
+        "src/schema/index.js",
+        95
+      ]
+    ]
+  },
+  "Compound field with service organization, advisor and file sequence": {
+    "translation": "",
+    "origin": [
+      [
+        "src/schema/index.js",
+        97
+      ]
+    ]
+  },
+  "Type of house": {
+    "translation": "",
+    "origin": [
+      [
+        "src/schema/index.js",
+        99
+      ]
+    ]
+  },
   "Date the record was first created": {
     "translation": "",
     "origin": [
       [
         "src/schema/index.js",
-        86
+        101
       ]
     ]
   },
@@ -278,7 +327,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        88
+        103
       ]
     ]
   },
@@ -287,16 +336,61 @@
     "origin": [
       [
         "src/schema/index.js",
-        90
+        105
       ]
     ]
   },
-  "The EnerGuide Rating calculated for this evaluation": {
+  "Heated floor area in m2": {
     "translation": "",
     "origin": [
       [
         "src/schema/index.js",
-        92
+        107
+      ]
+    ]
+  },
+  "The EnerGuide Rating calculated for this evaluation, in GJ": {
+    "translation": "",
+    "origin": [
+      [
+        "src/schema/index.js",
+        109
+      ]
+    ]
+  },
+  "The EnerGuide Rating calculated for this evaluation, actual rating": {
+    "translation": "",
+    "origin": [
+      [
+        "src/schema/index.js",
+        111
+      ]
+    ]
+  },
+  "Rated greenhouse gas emissions in tonnes/year": {
+    "translation": "",
+    "origin": [
+      [
+        "src/schema/index.js",
+        113
+      ]
+    ]
+  },
+  "Calculated as HeatedFloorArea/ERSRating, units of GJ/m2": {
+    "translation": "",
+    "origin": [
+      [
+        "src/schema/index.js",
+        115
+      ]
+    ]
+  },
+  "Wall data entry for a dwelling": {
+    "translation": "",
+    "origin": [
+      [
+        "src/schema/index.js",
+        117
       ]
     ]
   },
@@ -305,7 +399,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        96
+        121
       ]
     ]
   },
@@ -314,7 +408,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        98
+        123
       ]
     ]
   },
@@ -323,7 +417,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        100
+        125
       ]
     ]
   },
@@ -332,7 +426,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        102
+        127
       ]
     ]
   },
@@ -341,7 +435,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        104
+        129
       ]
     ]
   },
@@ -350,7 +444,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        106
+        131
       ]
     ]
   },
@@ -359,101 +453,11 @@
     "origin": [
       [
         "src/schema/index.js",
-        108
-      ]
-    ]
-  },
-  "The root query type": {
-    "translation": "",
-    "origin": [
-      [
-        "src/schema/index.js",
-        112
-      ]
-    ]
-  },
-  "Details for a specific dwelling": {
-    "translation": "",
-    "origin": [
-      [
-        "src/schema/index.js",
-        114
-      ]
-    ]
-  },
-  "Details for all dwellings, optionally filtered by one or more values": {
-    "translation": "",
-    "origin": [
-      [
-        "src/schema/index.js",
-        116
-      ]
-    ]
-  },
-  "An ISO date value, formatted 'YYYY-MM-DD'": {
-    "translation": "",
-    "origin": [
-      [
-        "src/schema/index.js",
-        120
-      ]
-    ]
-  },
-  "Filter results by the dwellings containing at least one evaluation with a specific entry date": {
-    "translation": "",
-    "origin": [
-      [
-        "src/schema/index.js",
-        122
-      ]
-    ]
-  },
-  "Filter results by the dwellings containing at least one evaluation with a specific record creation date": {
-    "translation": "",
-    "origin": [
-      [
-        "src/schema/index.js",
-        124
-      ]
-    ]
-  },
-  "Filter results by the dwellings containing at least one evaluation with a specific record modification date": {
-    "translation": "",
-    "origin": [
-      [
-        "src/schema/index.js",
-        126
-      ]
-    ]
-  },
-  "Filter results by the house ID of a dwelling": {
-    "translation": "",
-    "origin": [
-      [
-        "src/schema/index.js",
-        131
-      ]
-    ]
-  },
-  "Filter results by dwellings built in a specific year": {
-    "translation": "",
-    "origin": [
-      [
-        "src/schema/index.js",
         133
       ]
     ]
   },
-  "Filter results by the dwellings in a specific city": {
-    "translation": "",
-    "origin": [
-      [
-        "src/schema/index.js",
-        135
-      ]
-    ]
-  },
-  "Filter results by the dwellings in a specific region": {
+  "A rating value for a given field": {
     "translation": "",
     "origin": [
       [
@@ -462,7 +466,7 @@
       ]
     ]
   },
-  "Filter results by the dwellings in a specific forward sortation area": {
+  "Value of rating calculated for this evaluation": {
     "translation": "",
     "origin": [
       [
@@ -471,7 +475,7 @@
       ]
     ]
   },
-  "Filter results by the dwellings containing at least one evaluation with a specific evaluation type code": {
+  "Proposed upgrade value of rating calculated for this evalutation": {
     "translation": "",
     "origin": [
       [
@@ -480,12 +484,129 @@
       ]
     ]
   },
+  "The root query type": {
+    "translation": "",
+    "origin": [
+      [
+        "src/schema/index.js",
+        145
+      ]
+    ]
+  },
+  "Details for a specific dwelling": {
+    "translation": "",
+    "origin": [
+      [
+        "src/schema/index.js",
+        147
+      ]
+    ]
+  },
+  "Details for all dwellings, optionally filtered by one or more values": {
+    "translation": "",
+    "origin": [
+      [
+        "src/schema/index.js",
+        149
+      ]
+    ]
+  },
+  "An ISO date value, formatted 'YYYY-MM-DD'": {
+    "translation": "",
+    "origin": [
+      [
+        "src/schema/index.js",
+        153
+      ]
+    ]
+  },
+  "Filter results by the dwellings containing at least one evaluation with a specific entry date": {
+    "translation": "",
+    "origin": [
+      [
+        "src/schema/index.js",
+        155
+      ]
+    ]
+  },
+  "Filter results by the dwellings containing at least one evaluation with a specific record creation date": {
+    "translation": "",
+    "origin": [
+      [
+        "src/schema/index.js",
+        157
+      ]
+    ]
+  },
+  "Filter results by the dwellings containing at least one evaluation with a specific record modification date": {
+    "translation": "",
+    "origin": [
+      [
+        "src/schema/index.js",
+        159
+      ]
+    ]
+  },
+  "Filter results by the house ID of a dwelling": {
+    "translation": "",
+    "origin": [
+      [
+        "src/schema/index.js",
+        164
+      ]
+    ]
+  },
+  "Filter results by dwellings built in a specific year": {
+    "translation": "",
+    "origin": [
+      [
+        "src/schema/index.js",
+        166
+      ]
+    ]
+  },
+  "Filter results by the dwellings in a specific city": {
+    "translation": "",
+    "origin": [
+      [
+        "src/schema/index.js",
+        168
+      ]
+    ]
+  },
+  "Filter results by the dwellings in a specific region": {
+    "translation": "",
+    "origin": [
+      [
+        "src/schema/index.js",
+        170
+      ]
+    ]
+  },
+  "Filter results by the dwellings in a specific forward sortation area": {
+    "translation": "",
+    "origin": [
+      [
+        "src/schema/index.js",
+        172
+      ]
+    ]
+  },
+  "Filter results by the dwellings containing at least one evaluation with a specific evaluation type code": {
+    "translation": "",
+    "origin": [
+      [
+        "src/schema/index.js",
+        174
+      ]
+    ]
+  },
   "Filter results by the dwellings containing at least one evaluation with a specific evaluation ID": {
     "translation": "",
     "origin": [
       [
         "src/schema/index.js",
-        143
+        176
       ]
     ]
   },
@@ -494,7 +615,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        145
+        178
       ]
     ]
   },
