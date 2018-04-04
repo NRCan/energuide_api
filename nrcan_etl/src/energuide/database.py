@@ -1,5 +1,6 @@
 from contextlib import contextmanager
 import enum
+from itertools import islice
 import typing
 
 import pymongo
@@ -29,7 +30,6 @@ class EnvDefaults(enum.Enum):
     database = 'energuide'
     collection = 'dwellings'
     production = False
-
 
 
 class _DatabaseCoordinates(typing.NamedTuple):
@@ -64,6 +64,23 @@ def mongo_client(database_coordinates: DatabaseCoordinates) -> typing.Iterable[p
         yield client
 
 
+CHUNKSIZE = 1000
+
+T = typing.TypeVar('T')
+def _chunk(data: typing.Iterable[T], size: int = CHUNKSIZE) -> typing.Iterable[typing.List[T]]:
+    iterator = iter(data)
+    chunk = list(islice(iterator, size))
+
+    while len(chunk) == size:
+        yield chunk
+        chunk = list(islice(iterator, size))
+
+    if not chunk:
+        return
+    else:
+        yield chunk
+
+
 def load(coords: DatabaseCoordinates,
          database_name: str,
          collection_name: str,
@@ -79,8 +96,11 @@ def load(coords: DatabaseCoordinates,
             collection.drop()
 
         num_rows = 0
-        for row in data:
-            num_rows += 1
-            data_row = row.to_dict()
-            collection.update({'houseId': data_row['houseId']}, data_row, upsert=True)
+        request = lambda document: pymongo.ReplaceOne({'houseId': document['houseId']}, document, upsert=True)
+
+        for chunk in _chunk(data):
+            num_rows += len(chunk)
+            requests = [request(document.to_dict()) for document in chunk]
+            collection.bulk_write(requests, ordered=False)
+
         LOGGER.info(f"updated {num_rows} rows in the database")
