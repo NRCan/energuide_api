@@ -37,8 +37,66 @@ class TestRegion:
             region.Region.NUNAVUT,
         ]
 
+    def test_alternative_name(self):
+        data = [
+            'YUKON_TERRITORY',
+            'NORTHWEST_TERRITORY',
+        ]
+
+        output = [region.Region.from_data(row) for row in data]
+
+        assert output == [
+            region.Region.YUKON,
+            region.Region.NORTHWEST_TERRITORIES,
+        ]
+
     def test_from_unknown_name(self):
         assert region.Region.from_data('foo') == region.Region.UNKNOWN
+
+
+    def test_fuzzy_names(self):
+        data = [
+            'Qubec',
+            'ONT',
+            'Ontarioq',
+            'Quibec',
+            'Yukon Terr.',
+            'Queebc',
+            'Manitobal',
+            'Aberta'
+        ]
+        output = [region.Region.from_data(row) for row in data]
+
+        assert output == [
+            region.Region.QUEBEC,
+            region.Region.ONTARIO,
+            region.Region.ONTARIO,
+            region.Region.QUEBEC,
+            region.Region.YUKON,
+            region.Region.QUEBEC,
+            region.Region.MANITOBA,
+            region.Region.ALBERTA
+        ]
+
+    def test_french_name(self):
+        data = [
+            'Colombie-Britannique',
+            'Terre-Neuve-et-Labrador',
+            'Nouveau-Brunswick',
+            'Nouvelle-Écosse',
+            'Territoires du Nord-Ouest',
+            'Île-du-Prince-Édouard',
+        ]
+        output = [region.Region.from_data(row) for row in data]
+
+        assert output == [
+            region.Region.BRITISH_COLUMBIA,
+            region.Region.NEWFOUNDLAND_AND_LABRADOR,
+            region.Region.NEW_BRUNSWICK,
+            region.Region.NOVA_SCOTIA,
+            region.Region.NORTHWEST_TERRITORIES,
+            region.Region.PRINCE_EDWARD_ISLAND,
+        ]
 
     def test_from_code(self):
         data = [
@@ -72,6 +130,17 @@ class TestRegion:
             region.Region.YUKON,
             region.Region.NORTHWEST_TERRITORIES,
             region.Region.NUNAVUT,
+        ]
+
+    def test_alternative_code(self):
+        data = [
+            'PEI',
+            'NWT',
+        ]
+        output = [region.Region.from_data(row) for row in data]
+        assert output == [
+            region.Region.PRINCE_EDWARD_ISLAND,
+            region.Region.NORTHWEST_TERRITORIES,
         ]
 
     def test_from_unknown_code(self):
