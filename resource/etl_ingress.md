@@ -2,7 +2,7 @@
 
 See the following diagram for an architechural overview of the system
 
-<img src="resource/architectural_diagram.png" width="500" >
+<img src="architectural_diagram.png" width="500" >
 
 To generate the input to the system this describes, a script will have to be written to generate the CSV dumps of the database
 
@@ -16,9 +16,9 @@ the `/timestamp` endpoint, and pass along the latest `MODIFICATIONDATE` in the r
 Something along the lines of the following
 
 ```
-url=""https://nrcan-endpoint.azurewebsites.net"
+url="https://nrcan-endpoint.azurewebsites.net"
 modification_date=$(curl "$url/timestamp") 
-dump_from_date.sh $modification_date
+new_date = $(dump_from_date.sh $modification_date)
 energuide extract --infile generated.csv --outfile extract.zip
-extract_endpoint extract.zip $modification_date --url $url
+extract_endpoint extract.zip $modification_date --url $new_date
 ```
