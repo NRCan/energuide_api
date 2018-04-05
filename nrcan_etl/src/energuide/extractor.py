@@ -25,11 +25,11 @@ REQUIRED_FIELDS = [
     'CLIENTCITY',
     'HOUSEREGION',
     'HOUSE_ID',
+    'forwardSortationArea',
 ]
 
 NULLABLE_FIELDS = [
     'MODIFICATIONDATE',
-    'forwardSortationArea',
     'HEATEDFLOORAREA',
     'TYPEOFHOUSE',
     'ERSRATING',

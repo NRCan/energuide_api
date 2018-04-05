@@ -29,7 +29,7 @@ def base_data() -> typing.Dict[str, str]:
         'YEARBUILT': '1894',
         'CLIENTCITY': 'Brooks',
         'HOUSEREGION': 'AB',
-        'MAIL_PCODE': 'L1R5C7',
+        'CLIENTPCODE': 'L1R5C7',
         'HEATEDFLOORAREA': '201.1351',
         'TYPEOFHOUSE': 'Single detached',
         'ERSRATING': '164',
@@ -41,8 +41,8 @@ def base_data() -> typing.Dict[str, str]:
         'EGHDESHTLOSS': '11242.1',
         'UGRDESHTLOSS': '10757.3',
 
-        'EGHRATING': '50',
-        'UGRRATING': '49',
+        'EGHRATING': '50.0',
+        'UGRRATING': '49.5',
 
         'WALLDEF': '45.3;12;50;12;4.7;12',
         'UGRWALLDEF': '45.3;12;50;12;4.7;10',
