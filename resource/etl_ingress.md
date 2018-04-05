@@ -20,5 +20,5 @@ url="https://nrcan-endpoint.azurewebsites.net"
 modification_date=$(curl "$url/timestamp") 
 new_date = $(dump_from_date.sh $modification_date)
 energuide extract --infile generated.csv --outfile extract.zip
-extract_endpoint extract.zip $modification_date --url $new_date
+extract_endpoint extract.zip $new_date --url $url
 ```
