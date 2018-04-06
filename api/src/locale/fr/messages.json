@@ -192,8 +192,8 @@
       ]
     ]
   },
-  "Heated floor areas represents the usable areas of a house that is conditioned to a specified temperature during the whole heating season": {
-    "translation": "Les superficies de plancher chauffé représentent les surfaces utilisables d'une maison tempérée à une température donnée durant toute la saison de chauffage",
+  "Walls separate the interior heated space from the outside (interior partition walls are not considered walls)": {
+    "translation": "Les murs séparent l'espace intérieur chauffé de l'extérieur (les cloisons intérieures ne sont pas considérées comme des murs)",
     "origin": [
       [
         "src/schema/index.js",
@@ -201,17 +201,21 @@
       ]
     ]
   },
-  "Above-grade heated area of the house in square metres (m2), i.e. the ground floor": {
-    "translation": "Superficie chauffée d'un plancher au-dessus du niveau du sol en mètres carrés (m2), c'est-à-dire le rez-de-chaussée",
+  "Wall measurements calculated for this evaluation": {
+    "translation": "Mesures des murs calculées aux fins de cette évaluation",
     "origin": [
       [
         "src/schema/index.js",
         69
+      ],
+      [
+        "src/schema/index.js",
+        75
       ]
     ]
   },
-  "Above-grade heated area of the house in square feet (ft2), i.e. the ground floor": {
-    "translation": "Superficie chauffée d'un plancher au-dessus du niveau du sol en pieds carrés (pi2), c'est-à-dire le rez-de-chaussée",
+  "Proposed upgrade wall measurements calculated for this evaluation": {
+    "translation": "Mesures des murs liées à l’amélioration proposée calculées aux fins de cette évaluation",
     "origin": [
       [
         "src/schema/index.js",
@@ -219,21 +223,48 @@
       ]
     ]
   },
-  "Below-grade heated area of the house in square metres (m2), i.e. the basement": {
-    "translation": "Superficie chauffée au-dessous du niveau du sol en mètres carrés (m2), c'est-à-dire le sous-sol",
+  "Description of wall insulation": {
+    "translation": "Description de l'isolation des murs",
     "origin": [
       [
         "src/schema/index.js",
-        73
+        77
       ]
     ]
   },
-  "Below-grade heated area of the house in square feet (ft2), i.e. the basement": {
-    "translation": "Superficie chauffée au-dessous du niveau du sol en pieds carrés (pi2), c'est-à-dire le sous-sol",
+  "Heat loss through walls in MJ": {
+    "translation": "Pertes de chaleur par les murs en MJ",
     "origin": [
       [
         "src/schema/index.js",
-        75
+        79
+      ]
+    ]
+  },
+  "Material used to insulate something": {
+    "translation": "Matériau utilisé pour isoler quelque chose ",
+    "origin": [
+      [
+        "src/schema/index.js",
+        83
+      ]
+    ]
+  },
+  "The proportion of total element that insulation makes up": {
+    "translation": "La proportion de l’élément total que représente l’isolation",
+    "origin": [
+      [
+        "src/schema/index.js",
+        85
+      ]
+    ]
+  },
+  "The insulation rValue of the element": {
+    "translation": "La valeur R de l’isolation de l’élément ",
+    "origin": [
+      [
+        "src/schema/index.js",
+        87
       ]
     ]
   },
@@ -242,7 +273,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        79
+        91
       ]
     ]
   },
@@ -251,7 +282,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        81
+        93
       ]
     ]
   },
@@ -260,7 +291,25 @@
     "origin": [
       [
         "src/schema/index.js",
-        83
+        95
+      ]
+    ]
+  },
+  "Compound field with service organization, advisor and file sequence": {
+    "translation": "Champ composé avec l'organisme de service, conseiller et évaluation avec la version",
+    "origin": [
+      [
+        "src/schema/index.js",
+        97
+      ]
+    ]
+  },
+  "Type of house": {
+    "translation": "Type de maison",
+    "origin": [
+      [
+        "src/schema/index.js",
+        99
       ]
     ]
   },
@@ -269,7 +318,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        86
+        101
       ]
     ]
   },
@@ -278,7 +327,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        88
+        103
       ]
     ]
   },
@@ -287,16 +336,61 @@
     "origin": [
       [
         "src/schema/index.js",
-        90
+        105
       ]
     ]
   },
-  "The EnerGuide Rating calculated for this evaluation": {
-    "translation": "La cote EnerGuide calculée pour cette évaluation",
+  "Heated floor area in m2": {
+    "translation": "Surface de plancher chauffé en m2",
     "origin": [
       [
         "src/schema/index.js",
-        92
+        107
+      ]
+    ]
+  },
+  "The EnerGuide Rating calculated for this evaluation, in GJ": {
+    "translation": "La cote EnerGuide calculée pour cette évaluation, en GJ",
+    "origin": [
+      [
+        "src/schema/index.js",
+        109
+      ]
+    ]
+  },
+  "[Deprecated] The EnerGuide Rating calculated for this evaluation": {
+    "translation": "[plus valide] La cote ÉnerGuide calculée aux fins de l’évaluation ",
+    "origin": [
+      [
+        "src/schema/index.js",
+        111
+      ]
+    ]
+  },
+  "Rated greenhouse gas emissions in tonnes/year": {
+    "translation": "Cote liée aux émissions de gaz à effet de serre en tonnes/an",
+    "origin": [
+      [
+        "src/schema/index.js",
+        113
+      ]
+    ]
+  },
+  "Calculated as Heated Floor Area/ERS Rating, units of GJ/m2": {
+    "translation": "Calculé comme Surface de plancher chauffé/Cote ERS, unités de GJ/m2",
+    "origin": [
+      [
+        "src/schema/index.js",
+        115
+      ]
+    ]
+  },
+  "Wall data entry for a dwelling": {
+    "translation": "Entrée de données pour les murs d’un logement ",
+    "origin": [
+      [
+        "src/schema/index.js",
+        117
       ]
     ]
   },
@@ -305,7 +399,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        96
+        121
       ]
     ]
   },
@@ -314,7 +408,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        98
+        123
       ]
     ]
   },
@@ -323,7 +417,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        100
+        125
       ]
     ]
   },
@@ -332,7 +426,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        102
+        127
       ]
     ]
   },
@@ -341,7 +435,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        104
+        129
       ]
     ]
   },
@@ -350,7 +444,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        106
+        131
       ]
     ]
   },
@@ -359,7 +453,34 @@
     "origin": [
       [
         "src/schema/index.js",
-        108
+        133
+      ]
+    ]
+  },
+  "A rating value for a given field": {
+    "translation": "Une valeur R pour un champ donné ",
+    "origin": [
+      [
+        "src/schema/index.js",
+        137
+      ]
+    ]
+  },
+  "Value of rating calculated for this evaluation": {
+    "translation": "Valeur de la cote calculée aux fins de cette évaluation ",
+    "origin": [
+      [
+        "src/schema/index.js",
+        139
+      ]
+    ]
+  },
+  "Proposed upgrade value of rating calculated for this evaluation": {
+    "translation": "Valeur de la cote de l’amélioration proposée calculée aux fins de cette évaluation ",
+    "origin": [
+      [
+        "src/schema/index.js",
+        141
       ]
     ]
   },
@@ -368,7 +489,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        112
+        145
       ]
     ]
   },
@@ -377,7 +498,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        114
+        147
       ]
     ]
   },
@@ -386,7 +507,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        116
+        149
       ]
     ]
   },
@@ -395,7 +516,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        120
+        153
       ]
     ]
   },
@@ -404,7 +525,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        122
+        155
       ]
     ]
   },
@@ -413,7 +534,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        124
+        157
       ]
     ]
   },
@@ -422,7 +543,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        126
+        159
       ]
     ]
   },
@@ -431,7 +552,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        131
+        164
       ]
     ]
   },
@@ -440,7 +561,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        133
+        166
       ]
     ]
   },
@@ -449,7 +570,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        135
+        168
       ]
     ]
   },
@@ -458,7 +579,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        137
+        170
       ]
     ]
   },
@@ -467,7 +588,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        139
+        172
       ]
     ]
   },
@@ -476,7 +597,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        141
+        174
       ]
     ]
   },
@@ -485,7 +606,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        143
+        176
       ]
     ]
   },
@@ -494,7 +615,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        145
+        178
       ]
     ]
   },
