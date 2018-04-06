@@ -1,22 +1,4 @@
 {
-  "[Deprecated] The EnerGuide Rating calculated for this evaluation": {
-    "translation": "",
-    "origin": [
-      [
-        "src/schema/index.js",
-        111
-      ]
-    ]
-  },
-  "Proposed upgrade value of rating calculated for this evaluation": {
-    "translation": "",
-    "origin": [
-      [
-        "src/schema/index.js",
-        141
-      ]
-    ]
-  },
   "An operator to describe how results will be filtered": {
     "translation": "",
     "origin": [
@@ -268,7 +250,7 @@
       ]
     ]
   },
-  "The amount of total element that insulation makes up": {
+  "The proportion of total element that insulation makes up": {
     "translation": "",
     "origin": [
       [
@@ -376,6 +358,15 @@
       ]
     ]
   },
+  "[Deprecated] The EnerGuide Rating calculated for this evaluation": {
+    "translation": "",
+    "origin": [
+      [
+        "src/schema/index.js",
+        111
+      ]
+    ]
+  },
   "Rated greenhouse gas emissions in tonnes/year": {
     "translation": "",
     "origin": [
@@ -385,7 +376,7 @@
       ]
     ]
   },
-  "Calculated as HeatedFloorArea/ERSRating, units of GJ/m2": {
+  "Calculated as Heated Floor Area/ERS Rating, units of GJ/m2": {
     "translation": "",
     "origin": [
       [
@@ -481,6 +472,15 @@
       [
         "src/schema/index.js",
         139
+      ]
+    ]
+  },
+  "Proposed upgrade value of rating calculated for this evaluation": {
+    "translation": "",
+    "origin": [
+      [
+        "src/schema/index.js",
+        141
       ]
     ]
   },

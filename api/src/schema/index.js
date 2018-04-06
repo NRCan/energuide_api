@@ -82,7 +82,7 @@ const Schema = i18n => {
 
     # ${i18n.t`Material used to insulate something`}
     type Insulation @cacheControl(maxAge: 90) {
-      # ${i18n.t`The amount of total element that insulation makes up`}
+      # ${i18n.t`The proportion of total element that insulation makes up`}
       percentage: Float
       # ${i18n.t`The insulation rValue of the element`}
       rValue: Float
@@ -112,7 +112,7 @@ const Schema = i18n => {
       eghRating: Rating
       # ${i18n.t`Rated greenhouse gas emissions in tonnes/year`}
       greenhouseGasEmissions: Rating
-      # ${i18n.t`Calculated as HeatedFloorArea/ERSRating, units of GJ/m2`}
+      # ${i18n.t`Calculated as Heated Floor Area/ERS Rating, units of GJ/m2`}
       energyIntensity: Rating
       # ${i18n.t`Wall data entry for a dwelling`}
       walls: Wall
