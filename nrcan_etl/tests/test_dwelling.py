@@ -8,6 +8,7 @@ from energuide.embedded import measurement
 from energuide.embedded import composite
 from energuide.embedded import walls
 from energuide.embedded import region
+from energuide.embedded import house_type
 from energuide.embedded import evaluation_type
 from energuide.exceptions import InvalidInputDataError
 from energuide.exceptions import InvalidGroupSizeError

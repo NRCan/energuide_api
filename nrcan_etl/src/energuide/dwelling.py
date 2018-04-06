@@ -6,6 +6,7 @@ from energuide.embedded import upgrade
 from energuide.embedded import measurement
 from energuide.embedded import walls
 from energuide.embedded.region import Region
+from energuide.embedded.house_type import HouseType
 from energuide.embedded.evaluation_type import EvaluationType
 from energuide.exceptions import InvalidGroupSizeError
 from energuide.exceptions import InvalidInputDataError
@@ -23,7 +24,7 @@ class _ParsedDwellingDataRow(typing.NamedTuple):
     city: str
     region: Region
     forward_sortation_area: str
-    house_type: str
+    house_type: str 
 
     energy_upgrades: typing.List[upgrade.Upgrade]
     heated_floor_area: typing.Optional[float]
@@ -114,7 +115,7 @@ class ParsedDwellingDataRow(_ParsedDwellingDataRow):
 
             energy_upgrades=[upgrade.Upgrade.from_data(upgrade_node) for upgrade_node in parsed['upgrades']],
             heated_floor_area=parsed['HEATEDFLOORAREA'],
-            house_type=parsed['TYPEOFHOUSE'],
+            house_type=HouseType.normalize(parsed['TYPEOFHOUSE']),
 
             egh_rating=measurement.Measurement(
                 measurement=parsed['EGHRATING'],
@@ -160,7 +161,7 @@ class _Evaluation(typing.NamedTuple):
     entry_date: datetime.date
     creation_date: datetime.datetime
     modification_date: typing.Optional[datetime.datetime]
-    house_type: str
+    house_type: str 
     energy_upgrades: typing.List[upgrade.Upgrade]
     heated_floor_area: typing.Optional[float]
     egh_rating: measurement.Measurement
