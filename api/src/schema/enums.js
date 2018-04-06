@@ -25,7 +25,7 @@ dwellingFields.forEach(attr => {
 })
 
 // The fields on the evaluation type
-const evaluationFields = ['evaluationType', 'fileId', 'ersRating']
+const evaluationFields = ['evaluationType', 'fileId', 'ersRating', 'houseType']
 // The date-specific fields on the evaluation type
 const evaluationDateFields = ['entryDate', 'creationDate', 'modificationDate']
 

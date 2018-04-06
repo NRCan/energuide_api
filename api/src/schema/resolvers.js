@@ -11,6 +11,7 @@ import {
   evaluationEvaluationType,
   evaluationFileId,
   evaluationErsRating,
+  evaluationHouseType,
   evaluationEntryDate,
   evaluationCreationDate,
   evaluationModificationDate,
@@ -143,6 +144,7 @@ const Resolvers = i18n => {
       evaluationEvaluationType: evaluationEvaluationType.toString(),
       evaluationFileId: evaluationFileId.toString(),
       evaluationErsRating: evaluationErsRating.toString(),
+      evaluationHouseType: evaluationHouseType.toString(),
     },
     Comparator: {
       gt: '$gt',

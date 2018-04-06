@@ -33,6 +33,7 @@ describe('Enum values', () => {
     dwellingForwardSortationArea: { testValue: 'O7I' },
     evaluationEvaluationType: { testValue: 'D' },
     evaluationFileId: { testValue: '1B07D10023' },
+    evaluationHouseType: { testValue: 'Single detached' },
   }
 
   Object.keys(testFields).forEach(functionName => {
@@ -56,7 +57,7 @@ describe('Enum values', () => {
             query: `{
                  dwellings(
                   filters: [
-                    {field: dwellingForwardSortationArea comparator: eq value: "C1A"}
+                    {field: dwellingForwardSortationArea comparator: eq value: "O7I"}
                     {field: ${functionName} comparator: eq value: "${testValue}"}
                   ]
                  ) {

@@ -175,6 +175,8 @@ const Schema = i18n => {
       evaluationEvaluationType
       # ${i18n.t`Filter results by the dwellings containing at least one evaluation with a specific evaluation ID`}
       evaluationFileId
+      # ${i18n.t`Filter results by the dwellings of a specific type`}
+      evaluationHouseType
       # ${i18n.t`Filter results by the dwellings containing at least one evaluation with a specific ERS rating`}
       evaluationErsRating
     }
