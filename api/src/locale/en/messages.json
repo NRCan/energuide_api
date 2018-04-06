@@ -1,4 +1,13 @@
 {
+  "Filter results by the dwellings of a specific type": {
+    "translation": "",
+    "origin": [
+      [
+        "src/schema/index.js",
+        178
+      ]
+    ]
+  },
   "An operator to describe how results will be filtered": {
     "translation": "",
     "origin": [
@@ -615,7 +624,7 @@
     "origin": [
       [
         "src/schema/index.js",
-        178
+        180
       ]
     ]
   },
@@ -624,7 +633,7 @@
     "origin": [
       [
         "src/schema/resolvers.js",
-        51
+        52
       ]
     ]
   },
@@ -633,7 +642,7 @@
     "origin": [
       [
         "src/schema/resolvers.js",
-        74
+        75
       ]
     ]
   },
@@ -642,7 +651,7 @@
     "origin": [
       [
         "src/schema/resolvers.js",
-        86
+        87
       ]
     ]
   },
