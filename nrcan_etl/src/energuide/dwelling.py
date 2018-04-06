@@ -24,7 +24,7 @@ class _ParsedDwellingDataRow(typing.NamedTuple):
     city: str
     region: Region
     forward_sortation_area: str
-    house_type: str 
+    house_type: str
 
     energy_upgrades: typing.List[upgrade.Upgrade]
     heated_floor_area: typing.Optional[float]
@@ -161,7 +161,7 @@ class _Evaluation(typing.NamedTuple):
     entry_date: datetime.date
     creation_date: datetime.datetime
     modification_date: typing.Optional[datetime.datetime]
-    house_type: str 
+    house_type: str
     energy_upgrades: typing.List[upgrade.Upgrade]
     heated_floor_area: typing.Optional[float]
     egh_rating: measurement.Measurement

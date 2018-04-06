@@ -32,4 +32,4 @@ def house_types() -> typing.List[typing.Tuple[str, str]]:
 def test_normalize(dirty, clean):
 
     assert house_type.HouseType.normalize(dirty) == clean
-    
+

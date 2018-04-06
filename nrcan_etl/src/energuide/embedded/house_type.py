@@ -2,7 +2,7 @@ import re
 
 
 class HouseType():
-    
+
     @classmethod
     def normalize(cls, unclean_string) -> str:
         lowercase = unclean_string.lower()
