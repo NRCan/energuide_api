@@ -18,7 +18,9 @@ Something along the lines of the following
 ```
 url="https://nrcan-endpoint.azurewebsites.net"
 modification_date=$(curl "$url/timestamp") 
-new_date = $(dump_from_date.sh $modification_date)
+new_date = $(dump_from_datebase.sh $modification_date)
 energuide extract --infile generated.csv --outfile extract.zip
 extract_endpoint extract.zip $new_date --url $url
 ```
+
+Where `dump_from_database.sh` is some script that dumps all rows who's `MODIFICATIONDATE` field is after the date passed in, and outputs the max `MODIFICATIONDATE` in the returned data.
