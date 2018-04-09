@@ -198,12 +198,20 @@ Date the evaluation was made
 <tr>
 <td colspan="2" valign="top"><strong>fileId</strong></td>
 <td valign="top"><a href="#string">String</a></td>
-<td></td>
+<td>
+
+Compound field with service organization, advisor and file sequence
+
+</td>
 </tr>
 <tr>
 <td colspan="2" valign="top"><strong>houseType</strong></td>
 <td valign="top"><a href="#string">String</a></td>
-<td></td>
+<td>
+
+Type of house
+
+</td>
 </tr>
 <tr>
 <td colspan="2" valign="top"><strong>creationDate</strong></td>
@@ -235,41 +243,63 @@ A list of upgrades that would improve energy efficiency
 <tr>
 <td colspan="2" valign="top"><strong>heatedFloorArea</strong></td>
 <td valign="top"><a href="#float">Float</a></td>
-<td></td>
+<td>
+
+Heated floor area in m2
+
+</td>
 </tr>
 <tr>
 <td colspan="2" valign="top"><strong>ersRating</strong></td>
 <td valign="top"><a href="#rating">Rating</a></td>
 <td>
 
-The EnerGuide Rating calculated for this evaluation
+The EnerGuide Rating calculated for this evaluation, in GJ
 
 </td>
 </tr>
 <tr>
 <td colspan="2" valign="top"><strong>eghRating</strong></td>
 <td valign="top"><a href="#rating">Rating</a></td>
-<td></td>
+<td>
+
+[Deprecated] The EnerGuide Rating calculated for this evaluation
+
+</td>
 </tr>
 <tr>
 <td colspan="2" valign="top"><strong>greenhouseGasEmissions</strong></td>
 <td valign="top"><a href="#rating">Rating</a></td>
-<td></td>
+<td>
+
+Rated greenhouse gas emissions in tonnes/year
+
+</td>
 </tr>
 <tr>
 <td colspan="2" valign="top"><strong>energyIntensity</strong></td>
 <td valign="top"><a href="#rating">Rating</a></td>
-<td></td>
+<td>
+
+Calculated as Heated Floor Area/ERS Rating, units of GJ/m2
+
+</td>
 </tr>
 <tr>
 <td colspan="2" valign="top"><strong>walls</strong></td>
 <td valign="top"><a href="#wall">Wall</a></td>
-<td></td>
+<td>
+
+Wall data entry for a dwelling
+
+</td>
 </tr>
 </tbody>
 </table>
 
 ### Insulation
+
+Material used to insulate something
 
 <table>
 <thead>
@@ -284,12 +314,20 @@ The EnerGuide Rating calculated for this evaluation
 <tr>
 <td colspan="2" valign="top"><strong>percentage</strong></td>
 <td valign="top"><a href="#float">Float</a></td>
-<td></td>
+<td>
+
+The proportion of total element that insulation makes up
+
+</td>
 </tr>
 <tr>
 <td colspan="2" valign="top"><strong>rValue</strong></td>
 <td valign="top"><a href="#float">Float</a></td>
-<td></td>
+<td>
+
+The insulation rValue of the element
+
+</td>
 </tr>
 </tbody>
 </table>
@@ -358,6 +396,8 @@ A list of dwellings
 
 ### Rating
 
+A rating value for a given field
+
 <table>
 <thead>
 <tr>
@@ -371,12 +411,20 @@ A list of dwellings
 <tr>
 <td colspan="2" valign="top"><strong>measurement</strong></td>
 <td valign="top"><a href="#float">Float</a></td>
-<td></td>
+<td>
+
+Value of rating calculated for this evaluation
+
+</td>
 </tr>
 <tr>
 <td colspan="2" valign="top"><strong>upgrade</strong></td>
 <td valign="top"><a href="#float">Float</a></td>
-<td></td>
+<td>
+
+Proposed upgrade value of rating calculated for this evaluation
+
+</td>
 </tr>
 </tbody>
 </table>
@@ -427,6 +475,8 @@ Order of importance of upgrade recommendation (lower number means a higher prior
 
 ### Wall
 
+Walls separate the interior heated space from the outside (interior partition walls are not considered walls)
+
 <table>
 <thead>
 <tr>
@@ -440,17 +490,27 @@ Order of importance of upgrade recommendation (lower number means a higher prior
 <tr>
 <td colspan="2" valign="top"><strong>measurement</strong></td>
 <td valign="top"><a href="#wallmeasurement">WallMeasurement</a></td>
-<td></td>
+<td>
+
+Wall measurements calculated for this evaluation
+
+</td>
 </tr>
 <tr>
 <td colspan="2" valign="top"><strong>upgrade</strong></td>
 <td valign="top"><a href="#wallmeasurement">WallMeasurement</a></td>
-<td></td>
+<td>
+
+Proposed upgrade wall measurements calculated for this evaluation
+
+</td>
 </tr>
 </tbody>
 </table>
 
 ### WallMeasurement
+
+Wall measurements calculated for this evaluation
 
 <table>
 <thead>
@@ -465,12 +525,20 @@ Order of importance of upgrade recommendation (lower number means a higher prior
 <tr>
 <td colspan="2" valign="top"><strong>insulation</strong></td>
 <td valign="top">[<a href="#insulation">Insulation</a>]</td>
-<td></td>
+<td>
+
+Description of wall insulation
+
+</td>
 </tr>
 <tr>
 <td colspan="2" valign="top"><strong>heatLost</strong></td>
 <td valign="top"><a href="#float">Float</a></td>
-<td></td>
+<td>
+
+Heat loss through walls in MJ
+
+</td>
 </tr>
 </tbody>
 </table>
@@ -612,6 +680,14 @@ Filter results by the dwellings containing at least one evaluation with a specif
 <td>
 
 Filter results by the dwellings containing at least one evaluation with a specific evaluation ID
+
+</td>
+</tr>
+<tr>
+<td valign="top"><strong>evaluationHouseType</strong></td>
+<td>
+
+Filter results by the dwellings of a specific type
 
 </td>
 </tr>
