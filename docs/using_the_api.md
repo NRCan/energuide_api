@@ -9,7 +9,7 @@ All queries in this guide can be run at the [EnerGuide API Graphiql interface](h
 You're encouraged to test them out as you read along :tada:
 
 You can find a list with descriptions of all the fields currently available to query in our
-[API schema documentation](https://github.com/cds-snc/nrcan_api/blob/master/api/docs.md).
+[API schema documentation](https://github.com/cds-snc/nrcan_api/blob/master/api/docs-en.md).
 
 ## Basic queries
 
@@ -133,7 +133,7 @@ You should now be able to access any field you want from the API :tada:
 The API includes filters to help narrow down data sets when querying for multiple
 dwellings. You can chain multiple filters together to narrow down the results
 as specifically as you would like. All filterable fields are documented in our
-in our [API schema documentation](https://github.com/cds-snc/nrcan_api/blob/master/api/docs.md).
+in our [API schema documentation](https://github.com/cds-snc/nrcan_api/blob/master/api/docs-en.md).
 
 For example, if you want to retrieve the `eghRating` for dwellings in a specific `forward sortation area`, you
 can query the following:
