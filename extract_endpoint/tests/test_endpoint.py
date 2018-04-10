@@ -182,6 +182,7 @@ def test_timestamp(test_client: testing.FlaskClient, sample_timestamp: str) -> N
     assert get_return.data == sample_timestamp.encode()
 
 
+@pytest.mark.usefixtures('azure_service')
 def test_timestamp_no_file(test_client: testing.FlaskClient) -> None:
     get_return = test_client.get('/timestamp')
     assert get_return.status_code == HTTPStatus.BAD_GATEWAY

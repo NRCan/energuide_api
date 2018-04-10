@@ -1,5 +1,7 @@
-import io
 import datetime
+import io
+import os
+import socket
 import zipfile
 import typing
 import pytest
@@ -8,6 +10,21 @@ import py
 from azure.storage import blob
 from extract_endpoint import azure_utils
 from extract_endpoint import endpoint
+
+
+@pytest.fixture
+def azure_emulator_is_running() -> bool:
+    if 'CIRCLECI' in os.environ:
+        return True
+
+    sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    try:
+        sock.bind(("127.0.0.1", 10000))
+    except socket.error:
+        return True
+    else:
+        sock.close()
+        return False
 
 
 @pytest.fixture()
@@ -22,6 +39,9 @@ def azure_emulator_coords() -> azure_utils.StorageCoordinates:
 
 @pytest.fixture
 def azure_service(azure_emulator_coords) -> blob.BlockBlobService:
+    if not azure_emulator_is_running():
+        pytest.skip("Azure emulator is not running")
+
     azure_service = blob.BlockBlobService(account_name=azure_emulator_coords.account,
                                           account_key=azure_emulator_coords.key,
                                           custom_domain=azure_emulator_coords.domain)
