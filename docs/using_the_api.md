@@ -191,7 +191,7 @@ query {
 ```
 
 **Important note:** The limit applies to the dwellings returned, not evaluations. Since a dwelling can have multiple evaluations, you will likely receive more
-than 30. The default limit set by the pagination is 50 dwellings.
+than 30. The default limit set by the pagination is 50 dwellings. The maximum you can set the limit is 300 results.
 
 ## Using the data with an application
 
