@@ -128,7 +128,7 @@ query {
 
 You should now be able to access any field you want from the API :tada:
 
-## Filters
+## Filters & limits
 
 The API includes filters to help narrow down data sets when querying for multiple
 dwellings. You can chain multiple filters together to narrow down the results
@@ -171,7 +171,27 @@ query {
 }
 ```
 
-And that's how filters work :tada:
+You can also limit the number of results returned by your query using the `limit` flag. For example, lets say you wanted to fetch the first 30 dwellings of the
+last query:
+
+```
+query {
+  dwellings(limit:30 filters:[{field:dwellingForwardSortationArea comparator:eq value:"V5V"}, {field:evaluationHouseType comparator:eq value:"Single detached"}]) {
+    results {
+      forwardSortationArea
+      evaluations {
+        eghRating {
+          measurement
+          upgrade
+        }
+      }
+    }
+  }
+}
+```
+
+**Important note:** The limit applies to the dwellings returned, not evaluations. Since a dwelling can have multiple evaluations, you will likely receive more
+than 30. The default limit set by the pagination is 50 dwellings.
 
 ## Using the data with an application
 
