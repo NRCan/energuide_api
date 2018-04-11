@@ -128,7 +128,7 @@ query {
 
 You should now be able to access any field you want from the API :tada:
 
-## Filters & limits
+## Filters, Limits & Pagination
 
 The API includes filters to help narrow down data sets when querying for multiple
 dwellings. You can chain multiple filters together to narrow down the results
@@ -193,11 +193,67 @@ query {
 **Important note:** The limit applies to the dwellings returned, not evaluations. Since a dwelling can have multiple evaluations, you will likely receive more
 than 30. The default limit set by the pagination is 50 dwellings. The maximum you can set the limit is 300 results.
 
+If you want to access results from the next or previous set of paginated data, you can use the `next` or `previous` values from your query. For example if you query
+the following:
+
+```
+query {
+  dwellings {
+    next
+    results {
+      forwardSortationArea
+      evaluations {
+        eghRating {
+          measurement
+          upgrade
+        }
+      }
+    }
+  }
+}
+```
+
+You'll get a result back that looks something like this:
+
+```
+"data": {
+  "dwellings": {
+    "next": "eyIkb2lkIjoiNWFiZjIxZDhlZTUzZWE1MmFiZmJjMjU3In0",
+    "results": [
+      {
+        "evaluations":
+        ...
+      }
+   }
+}
+```
+
+To query the next set of paginated data, take the value from the `next` field and plug it into the query. In this example,
+it would look like this:
+
+```
+query {
+  dwellings(next: "eyIkb2lkIjoiNWFiZjIxZDhlZTUzZWE1MmFiZmJjMjU3In0") {
+    results {
+      forwardSortationArea
+      evaluations {
+        eghRating {
+          measurement
+          upgrade
+        }
+      }
+    }
+  }
+}
+```
+
+The results you receive will be for the next set of data.
+
+Congratulations! Now you know how to filter, limit & navigate through your results :tada:
+
 ## Using the data with an application
 
-There are a wide variety of ways to build applications that can talk to Graphql APIs! [How to Graphql](https://www.howtographql.com/) is a fantastic resource to check out. They provide a number of
-tutorials for building front end applications using data from a Graphql API. You can even learn how to
-build your own Graphql API if you're super keen.
+There are a wide variety of ways to build applications that can talk to Graphql APIs! [How to Graphql](https://www.howtographql.com/) is a fantastic resource to check out. They provide a number of tutorials for building front end applications using data from a Graphql API. You can even learn how to build your own Graphql API if you're super keen.
 
 ## Have issues?
 
