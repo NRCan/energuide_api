@@ -216,15 +216,15 @@ query {
 You'll get a result back that looks something like this:
 
 ```
-{
-  "data": {
-    "dwellings": {
-      "hasNext": true,
-      "hasPrevious": false,
-      "next": "eyIkb2lkIjoiNWFiZjIxZDhlZTUzZWE1MmFiZmJjMjU3In0",
-      "previous": "eyIkb2lkIjoiNWFiZjIxZDhlZTUzZWE1MmFiZmJjMjk5In0"
-    }
-  }
+"data": {
+  "dwellings": {
+    "next": "eyIkb2lkIjoiNWFiZjIxZDhlZTUzZWE1MmFiZmJjMjU3In0",
+    "results": [
+      {
+        "evaluations":
+        ...
+      }
+   }
 }
 ```
 
