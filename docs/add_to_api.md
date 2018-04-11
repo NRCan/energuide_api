@@ -205,6 +205,11 @@ In the empty translation space, add your French translation. For airLeakage, it 
 4. Run `yarn compile` to compile your new messages. Note that this step can potentially cause errors
    on a windows machine. We are currently investigating the issue.
 
+## Document the new field
+
+Make sure to add your new field & description to the existing API documentation. This way the documentation stays up
+to date for future developers. You can find the [English documentation here](https://github.com/cds-snc/nrcan_api/blob/master/api/docs-en.md), and the [French documentation here](https://github.com/cds-snc/nrcan_api/blob/master/api/docs-fr.md).
+
 ## Push all the things to github!
 
 Last step! Commit all your changed files to github & push your branch up for a code review. Once your tests pass & your code is reviewed, merge to master,
