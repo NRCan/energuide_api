@@ -36,8 +36,8 @@ fields. Since the database contains a large amount of data, the API was built
 to return a paginated set of results, which improves performance. There are
 various ways to filter the results you receive, but more on that later!
 
-**Important note:** For simplicity sake, this guide uses queries that don't specify
-return subfields. This works with the GraphiQl interface because it auto fills
+**Important note:** For simplicity's sake, this guide uses queries that don't specify
+return subfields. This works with the GraphiQL interface because it auto fills
 subfields if none are specified, but when working with other interfaces or writing your
 own, you will need to specify which subfields you want returned in your query. For example:
 
@@ -189,12 +189,12 @@ query {
 Lets say you want an even more specific set of data: the `eghRating` for all the `Single detached`
 dwellings in a specific `forwardSortationArea`. You can add an additional filter to the original
 query. Filters are always **AND**, never **OR**, which means you can query all the dwellings built in Ottawa in 1970,
-but you can't query all dwellings built in Ottawa or Toronto in 1970 (you would have to split this query in two):
+but you can't query all dwellings built in Ottawa or Toronto in 1970 (you would have to split this query in two).
 
 **Important note:**  All filters work by looking for at least one matching value and then returning a matching
 dwelling with all of its data. This means that even if you're applying a filter specific to evaluations, you
 will still receive dwellings that contain that evaluation, along with all the other evaluations belonging to that
-dwelling. This behavior should be kept in mind when using the api.
+dwelling. This behavior should be kept in mind when using the API.
 
 ```
 query {
@@ -212,13 +212,13 @@ query {
 }
 ```
 
-The comparator flag allows you to specify how you want your filter applied. Specifically, we let you use the use:
+The comparator flag allows you to specify how you want your filter applied. Specifically, we let you use:
 
 * greater than (gt)
 * equal to (eq)
 * less than (lt)
 
-All comparators need to be passed in as strings. For example, to filter by the year `1970`, you would pass it as:
+All filter values need to be passed in as strings. For example, to filter by the year `1970`, you would pass it as:
 
 `dwellings(filters:[{field:dwellingYearBuilt comparator:eq value:"1970"}])`
 
