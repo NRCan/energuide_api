@@ -1,7 +1,7 @@
 jobs:
   deploy_api:
     docker:
-      - image: docker:18.03-ce
+      - image: docker:18.03.0
     steps:
       - checkout:
           path: ~/repo
@@ -20,7 +20,7 @@ jobs:
     working_directory: ~/repo/api
   deploy_endpoint:
     docker:
-      - image: docker:18.03-ce
+      - image: docker:18.03.0
     environment:
     steps:
       - checkout:
@@ -36,7 +36,7 @@ jobs:
     working_directory: ~/repo/extract_endpoint
   deploy_etl:
     docker:
-      - image: docker:18.03-ce
+      - image: docker:18.03.0
     environment:
     steps:
       - checkout:
