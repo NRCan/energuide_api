@@ -218,6 +218,10 @@ The comparator flag allows you to specify how you want your filter applied. Spec
 * equal to (eq)
 * less than (lt)
 
+All comparators need to be passed in as strings. For example, to filter by the year `1970`, you would pass it as:
+
+`dwellings(filters:[{field:dwellingYearBuilt comparator:eq value:"1970"}])`
+
 You can also limit the number of results returned by your query using the `limit` flag. For example, lets say you wanted to fetch the first 30 dwellings of the
 last query:
 
