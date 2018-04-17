@@ -1,4 +1,4 @@
-**ALPHA** This is a new service – your [feedback](cds-snc@tbs-sct.gc.ca) will help us to improve it.
+**ALPHA** This is a new service – your [feedback](mailto:cds-snc@tbs-sct.gc.ca) will help us to improve it.
 
 # NRCAN's Energuide API
 
@@ -12,7 +12,7 @@ There are further details in the READMEs for each of the respective portions of 
 - [Windows Installation Instructions](#windows-installation)
 - [MacOS Installation Instructions](#tldr)
 
-You can also explore the live API using [GraphiQL](http://energuideapi.ca/graphiql). 
+You can also explore the live API using [GraphiQL](http://energuideapi.ca/graphiql).
 
 ## Quickstart
 
