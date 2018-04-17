@@ -1,3 +1,5 @@
+**ALPHA** This is a new service – your [feedback](cds-snc@tbs-sct.gc.ca) will help us to improve it.
+
 # NRCAN's Energuide API
 
 CircleCI Status: [![CircleCI](https://circleci.com/gh/cds-snc/nrcan_api.svg?style=svg)](https://circleci.com/gh/cds-snc/nrcan_api)
@@ -9,6 +11,8 @@ There are further details in the READMEs for each of the respective portions of 
 
 - [Windows Installation Instructions](#windows-installation)
 - [MacOS Installation Instructions](#tldr)
+
+You can also explore the live API using [GraphiQL](http://energuideapi.ca/graphiql). 
 
 ## Quickstart
 
@@ -256,4 +260,3 @@ Try out this query to get you going.
 ```
 
 <sup>Or just [click here](http://localhost:3000/graphiql?query=%7B%0A%20%20dwellings(%0A%20%20%20%20filters%3A%20%5B%0A%20%20%20%20%20%20%7Bfield%3A%20dwellingForwardSortationArea%20comparator%3A%20eq%20value%3A%20%22C1A%22%7D%0A%20%20%20%20%5D%0A%20%20)%20%7B%0A%20%20%20%20results%20%7B%0A%20%20%20%20%20%20yearBuilt%0A%20%20%20%20%20%20city%0A%20%20%20%20%7D%0A%20%20%7D%0A%7D)</sup>
-
