@@ -1,4 +1,4 @@
-**ALPHA** This is a new service – your [feedback](mailto:cds-snc@tbs-sct.gc.ca) will help us to improve it.
+**ALPHA** This is a new service – your [feedback](https://github.com/cds-snc/nrcan_api/issues) will help us to improve it.
 
 # NRCAN's Energuide API
 
