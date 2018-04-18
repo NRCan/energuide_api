@@ -1,4 +1,4 @@
-<img src="resource/alpha_badge.png" alt="Alpha"> This is a new service – your [feedback](https://github.com/cds-snc/nrcan_api/issues) will help us to improve it.
+<img src="resource/alpha-badge.png" alt="Alpha"> This is a new service – your [feedback](https://github.com/cds-snc/nrcan_api/issues) will help us to improve it.
 
 # NRCAN's Energuide API
 
