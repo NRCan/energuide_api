@@ -16,7 +16,7 @@
     "compile": "./node_modules/lingui-cli/dist/lingui.js compile",
     "lint": "eslint src/** test/** --ignore-pattern src/locale",
     "watch": "nodemon --watch \"src\" --ignore \"src/__tests__\" --ignore \"src/locale\" --exec \"yarn build && yarn start\"",
-    "docs": "./node_modules/graphql-markdown/src/index.js http://localhost:3000/graphql > docs.md"
+    "docs": "./node_modules/graphql-markdown/src/index.js http://localhost:3000/graphql > docs-fr.md"
   },
   "repository": {
     "type": "git",
