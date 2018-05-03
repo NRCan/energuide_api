@@ -429,7 +429,7 @@ mypy src tests
 
 ## Utilisation de la ligne de commande du client de mongodb 
 
-Nous pouvons vérifier que les données ont été vraiment importées en utilisant la ligne de commande du client de mongodb. [Des documents plus détaillés se trouvent ici](https://docs.mongodb.com/manual/reference/mongo-shell/), mais ceux-là devraient vous aider.
+Nous pouvons vérifier que les données ont été vraiment importées en utilisant la ligne de commande du client de mongodb. [Des documents plus détaillés se trouvent ici](https://docs.mongodb.com/manual/reference/mongo-shell/) (en anglais seulement), mais ceux-là devraient vous aider.
 
 Exécutez la commande suivante afin de se connecter à la base de données d’Énerguide:
 ```
