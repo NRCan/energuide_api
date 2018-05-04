@@ -82,7 +82,7 @@ yarn integration
 ```
 #---------------------------------------------------------------------
 
-# NRCAN's Energuide API
+# API Énerguide de RNCAN
 
 CircleCI Status: [![CircleCI](https://circleci.com/gh/cds-snc/nrcan_api.svg?style=svg)](https://circleci.com/gh/cds-snc/nrcan_api)
 
