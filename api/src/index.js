@@ -1,35 +1,12 @@
 import { MongoClient } from 'mongodb'
 import Server from './server'
-import { Engine } from 'apollo-engine'
+import { ApolloEngine } from 'apollo-engine'
 
 const apiKey = process.env.NRCAN_ENGINE_API_KEY
 if (!apiKey) throw new Error('No Apollo Engine API key was found in the ENV.')
 
-const engine = new Engine({
-  engineConfig: {
-    apiKey,
-    logging: {
-      level: 'ERROR',
-    },
-    stores: [
-      {
-        name: 'publicResponseCache',
-        inMemory: {
-          cacheSize: 10485760,
-        },
-      },
-    ],
-    queryCache: {
-      publicFullQueryStore: 'publicResponseCache',
-    },
-  },
-  graphqlPort: 3000,
-  endpoint: '/graphql',
-  frontend: {
-    extensions: {
-      strip: ['cacheControl', 'tracing'], // Extensions to remove from responses served to clients
-    },
-  },
+const engine = new ApolloEngine({
+  apiKey,
 })
 
 const url = process.env.NRCAN_DB_CONNECTION_STRING
@@ -46,16 +23,20 @@ if (!dbName)
 MongoClient.connect(url)
   .then(async client => {
     // start Apollo Engine
-    await engine.start()
     const db = client.db(dbName)
     const collection = db.collection(collectionName)
-    const server = new Server(
-      {
-        client: collection,
+    const server = new Server({
+      client: collection,
+    })
+
+    engine.listen({
+      port: 3000,
+      graphqlPaths: ['/graphql'],
+      expressApp: server,
+      launcherOptions: {
+        startupTimeout: 3000,
       },
-      engine.expressMiddleware(),
-    )
-    server.listen(3000)
+    })
   })
   .catch(console.log)
 
