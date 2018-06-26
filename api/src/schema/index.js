@@ -179,6 +179,14 @@ const Schema = i18n => {
       evaluationHouseType
       # ${i18n.t`Filter results by the dwellings containing at least one evaluation with a specific ERS rating`}
       evaluationErsRating
+      # ${i18n.t`Filter results by the dwellings containing at least one evaluation with a specific ERS rating`}
+      evaluationCreationDate
+      # ${i18n.t`Filter results by the dwellings containing at least one evaluation with a specific evaluation creation date`}
+      evaluationEntryDate
+      # ${i18n.t`Filter results by the dwellings containing at least one evaluation with a specific entry date`}
+      evaluationModificationDate
+      # ${i18n.t`Filter results by the dwellings containing at least one evaluation with a specific heated floor area`}
+      evaluationHeatedFloorArea
     }
   `,
   ]

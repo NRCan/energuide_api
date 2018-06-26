@@ -25,16 +25,14 @@ dwellingFields.forEach(attr => {
 })
 
 // The fields on the evaluation type
-const evaluationFields = ['evaluationType', 'fileId', 'ersRating', 'houseType']
-// The date-specific fields on the evaluation type
-const evaluationDateFields = ['entryDate', 'creationDate', 'modificationDate']
+const evaluationFields = ['evaluationType', 'fileId', 'houseType', 'entryDate', 'creationDate', 'modificationDate', 'heatedFloorArea']
 
 /*
   Since our date fields are just represented as strings in the database, we
   are using identical logic to match on them as we do when we match on our
   other string fields.
 */
-evaluationFields.concat(evaluationDateFields).forEach(attr => {
+evaluationFields.forEach(attr => {
   // eslint-disable-next-line no-new-func
   let fn = new Function('matcher', `return {"evaluations.${attr}": matcher}`)
   module.exports[generateName('evaluation', attr)] = attachToString(fn)

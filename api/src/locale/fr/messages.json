@@ -1,10 +1,19 @@
 {
-  "Filter results by the dwellings of a specific type": {
-    "translation": "Trier les résultats par type de logement",
+  "Filter results by the dwellings containing at least one evaluation with a specific evaluation creation date": {
+    "translation": "Filtrer les résultats par les logements contenant au moins une évaluation avec une date de création d'évaluation spécifique.",
     "origin": [
       [
         "src/schema/index.js",
-        178
+        184
+      ]
+    ]
+  },
+  "Filter results by the dwellings containing at least one evaluation with a specific heated floor area": {
+    "translation": "Filtrer les résultats par les logements contenant au moins une évaluation avec une surface de plancher chauffé spécifique.",
+    "origin": [
+      [
+        "src/schema/index.js",
+        188
       ]
     ]
   },
@@ -535,6 +544,10 @@
       [
         "src/schema/index.js",
         155
+      ],
+      [
+        "src/schema/index.js",
+        186
       ]
     ]
   },
@@ -619,12 +632,25 @@
       ]
     ]
   },
+  "Filter results by the dwellings of a specific type": {
+    "translation": "Trier les résultats par type de logement",
+    "origin": [
+      [
+        "src/schema/index.js",
+        178
+      ]
+    ]
+  },
   "Filter results by the dwellings containing at least one evaluation with a specific ERS rating": {
     "translation": "Trier les résultats des logements contenant au moins une évaluation avec un classement ERS spécifique",
     "origin": [
       [
         "src/schema/index.js",
         180
+      ],
+      [
+        "src/schema/index.js",
+        182
       ]
     ]
   },
@@ -652,406 +678,6 @@
       [
         "src/schema/resolvers.js",
         87
-      ]
-    ]
-  },
-  "The lowest load-bearing part of a dwelling": {
-    "translation": "La partie portante la plus basse d'un logement",
-    "origin": [
-      [
-        "src/schema/types/Foundation.js",
-        3
-      ]
-    ]
-  },
-  "The type of foundation (en)": {
-    "translation": "Le type de fondation (en)",
-    "origin": [
-      [
-        "src/schema/types/Foundation.js",
-        5
-      ]
-    ]
-  },
-  "The type of foundation (fr)": {
-    "translation": "Le type de fondation",
-    "origin": [
-      [
-        "src/schema/types/Foundation.js",
-        7
-      ]
-    ]
-  },
-  "A descriptive label for the foundation": {
-    "translation": "Une étiquette descriptive de la fondation",
-    "origin": [
-      [
-        "src/schema/types/Foundation.js",
-        9
-      ]
-    ]
-  },
-  "The type of configuration for the foundation": {
-    "translation": "Le type de configuration pour la fondation",
-    "origin": [
-      [
-        "src/schema/types/Foundation.js",
-        11
-      ]
-    ]
-  },
-  "The material used in the construction of this foundation (en)": {
-    "translation": "Le matériau utilisé dans la construction de cette fondation (en)",
-    "origin": [
-      [
-        "src/schema/types/Foundation.js",
-        13
-      ]
-    ]
-  },
-  "The material used in the construction of this foundation (fr)": {
-    "translation": "Le matériau utilisé dans la construction de cette fondation",
-    "origin": [
-      [
-        "src/schema/types/Foundation.js",
-        15
-      ]
-    ]
-  },
-  "The details of the floors associated with this foundation": {
-    "translation": "Les détails des planchers associés à cette fondation",
-    "origin": [
-      [
-        "src/schema/types/Foundation.js",
-        17
-      ]
-    ]
-  },
-  "The details of the walls associated with this foundation": {
-    "translation": "Les détails des murs associés à cette fondation",
-    "origin": [
-      [
-        "src/schema/types/Foundation.js",
-        19
-      ]
-    ]
-  },
-  "The details of the foundationn header": {
-    "translation": "Les détails de la solive de fondation",
-    "origin": [
-      [
-        "src/schema/types/Foundation.js",
-        21
-      ]
-    ]
-  },
-  "A floor below ground that represents the usable area of the house": {
-    "translation": "Un plancher au-dessous du niveau du sol qui représente la superficie utilisable de la maison",
-    "origin": [
-      [
-        "src/schema/types/FoundationFloor.js",
-        3
-      ]
-    ]
-  },
-  "Type of foundation floor (en)": {
-    "translation": "Type de plancher pour la fondation (en)",
-    "origin": [
-      [
-        "src/schema/types/FoundationFloor.js",
-        5
-      ]
-    ]
-  },
-  "Type of foundation floor (fr)": {
-    "translation": "Type de plancher pour la fondation",
-    "origin": [
-      [
-        "src/schema/types/FoundationFloor.js",
-        7
-      ]
-    ]
-  },
-  "The insulation nominal RSI (R-value Systeme International) of the foundation floor": {
-    "translation": "Valeur nominale RSI (valeur R Système international) de l'isolation du plancher",
-    "origin": [
-      [
-        "src/schema/types/FoundationFloor.js",
-        9
-      ]
-    ]
-  },
-  "The insulation nominal R-value of the foundation floor": {
-    "translation": "Valeur R nominale de l'isolation du plancher",
-    "origin": [
-      [
-        "src/schema/types/FoundationFloor.js",
-        11
-      ]
-    ]
-  },
-  "The insulation effective RSI (R-value Systeme International) of the foundation floor": {
-    "translation": "Valeur efficace RSI (valeur R Système international) de l'isolation du plancher de la fondation",
-    "origin": [
-      [
-        "src/schema/types/FoundationFloor.js",
-        13
-      ]
-    ]
-  },
-  "The insulation effective R-value of the foundation floor": {
-    "translation": "Valeur R efficace de l'isolation du plancher",
-    "origin": [
-      [
-        "src/schema/types/FoundationFloor.js",
-        15
-      ]
-    ]
-  },
-  "The area of the foundation floor in square metres (m2)": {
-    "translation": "Superficie du plancher de la fondation en mètres carrés (m2)",
-    "origin": [
-      [
-        "src/schema/types/FoundationFloor.js",
-        17
-      ]
-    ]
-  },
-  "The area of the foundation floor in square feet (ft2)": {
-    "translation": "Superficie du plancher de la fondation en pieds carrés (pi2)",
-    "origin": [
-      [
-        "src/schema/types/FoundationFloor.js",
-        19
-      ]
-    ]
-  },
-  "The perimeter of the foundation floor in metres (m)": {
-    "translation": "Périmètre du plancher de la fondation en mètres (m)",
-    "origin": [
-      [
-        "src/schema/types/FoundationFloor.js",
-        21
-      ]
-    ]
-  },
-  "The perimeter of the foundation floor in feet (ft)": {
-    "translation": "Périmètre du plancher de la fondation en pieds (pi)",
-    "origin": [
-      [
-        "src/schema/types/FoundationFloor.js",
-        23
-      ]
-    ]
-  },
-  "The width of the foundation floor in metres (m)": {
-    "translation": "Largeur du plancher de la fondation en mètres (m)",
-    "origin": [
-      [
-        "src/schema/types/FoundationFloor.js",
-        25
-      ]
-    ]
-  },
-  "The width of the foundation floor in feet (ft)": {
-    "translation": "Largeur du plancher de la fondation en pieds (pi)",
-    "origin": [
-      [
-        "src/schema/types/FoundationFloor.js",
-        27
-      ]
-    ]
-  },
-  "The length of the foundation floor in metres (m)": {
-    "translation": "Longueur du plancher de la fondation en mètres (m)",
-    "origin": [
-      [
-        "src/schema/types/FoundationFloor.js",
-        29
-      ]
-    ]
-  },
-  "The length of the foundation floor in feet (ft)": {
-    "translation": "Longueur du plancher de la fondation en pieds (pi)",
-    "origin": [
-      [
-        "src/schema/types/FoundationFloor.js",
-        31
-      ]
-    ]
-  },
-  "Foundation Walls are below-ground walls separating the interior heated space from the outside (interior partition walls are not considered walls)": {
-    "translation": "Les murs de fondation sont des murs souterrains qui séparent l'espace intérieur chauffé de l'extérieur (les cloisons intérieures ne sont pas considérées comme des murs)",
-    "origin": [
-      [
-        "src/schema/types/FoundationWall.js",
-        3
-      ]
-    ]
-  },
-  "Wall construction being used (en)": {
-    "translation": "Construction d'un mur utilisée (en)",
-    "origin": [
-      [
-        "src/schema/types/FoundationWall.js",
-        5
-      ]
-    ]
-  },
-  "Wall construction being used (fr)": {
-    "translation": "Construction d'un mur utilisée (fr)",
-    "origin": [
-      [
-        "src/schema/types/FoundationWall.js",
-        7
-      ]
-    ]
-  },
-  "Wall insulation nominal RSI (R-value Systeme International)": {
-    "translation": "Valeur nominale RSI (valeur R Système international) de l'isolation du mur",
-    "origin": [
-      [
-        "src/schema/types/FoundationWall.js",
-        9
-      ]
-    ]
-  },
-  "Wall insulation nominal R-value": {
-    "translation": "Valeur nominale R de l'isolation du mur",
-    "origin": [
-      [
-        "src/schema/types/FoundationWall.js",
-        11
-      ],
-      [
-        "src/schema/types/FoundationWall.js",
-        15
-      ]
-    ]
-  },
-  "Wall insulation effective RSI (R-value Systeme International)": {
-    "translation": "RSI (valeur R Système international) pour l'isolation efficace du mur",
-    "origin": [
-      [
-        "src/schema/types/FoundationWall.js",
-        13
-      ]
-    ]
-  },
-  "Wall area of the house in square metres (m2)": {
-    "translation": "Superficie du mur de la maison en mètres carrés (m2)",
-    "origin": [
-      [
-        "src/schema/types/FoundationWall.js",
-        17
-      ]
-    ]
-  },
-  "Wall area of the house in square feet (ft2)": {
-    "translation": "Superficie du mur de la maison en pieds carrés (pi2)",
-    "origin": [
-      [
-        "src/schema/types/FoundationWall.js",
-        19
-      ]
-    ]
-  },
-  "The percentage of the total wall area this section accounts for": {
-    "translation": "Le pourcentage de la superficie de mur de cette section totalise",
-    "origin": [
-      [
-        "src/schema/types/FoundationWall.js",
-        21
-      ]
-    ]
-  },
-  "Header insulation nominal RSI (R-value Systeme International)": {
-    "translation": "Valeur nominale RSI (valeur R Système international) de l'isolation du linteau",
-    "origin": [
-      [
-        "src/schema/types/Header.js",
-        4
-      ]
-    ]
-  },
-  "Header insulation nominal R-value": {
-    "translation": "Valeur R nominale de l'isolation du linteau",
-    "origin": [
-      [
-        "src/schema/types/Header.js",
-        6
-      ]
-    ]
-  },
-  "Header insulation effective RSI (R-value Systeme International)": {
-    "translation": "RSI (valeur R Système international) pour l'isolation efficace du linteau",
-    "origin": [
-      [
-        "src/schema/types/Header.js",
-        8
-      ]
-    ]
-  },
-  "Header insulation effective R-value": {
-    "translation": "Valeur R pour l'isolation efficace du linteau",
-    "origin": [
-      [
-        "src/schema/types/Header.js",
-        10
-      ]
-    ]
-  },
-  "Header area in square metres (m2)": {
-    "translation": "Superficie du linteau en mètres carrés (m2)",
-    "origin": [
-      [
-        "src/schema/types/Header.js",
-        12
-      ]
-    ]
-  },
-  "Header area in square feet (ft2)": {
-    "translation": "Superficie du linteau en pieds carrés (pi2)",
-    "origin": [
-      [
-        "src/schema/types/Header.js",
-        14
-      ]
-    ]
-  },
-  "Header perimeter of the house in metres (m)": {
-    "translation": "Le périmètre du linteau de la maison en mètres (m)",
-    "origin": [
-      [
-        "src/schema/types/Header.js",
-        16
-      ]
-    ]
-  },
-  "Header perimeter of the house in feet (ft)": {
-    "translation": "Le périmètre du linteau de la maison en pieds (pi)",
-    "origin": [
-      [
-        "src/schema/types/Header.js",
-        18
-      ]
-    ]
-  },
-  "Header height in metres (m)": {
-    "translation": "Hauteur du linteau en mètres (m)",
-    "origin": [
-      [
-        "src/schema/types/Header.js",
-        20
-      ]
-    ]
-  },
-  "Header height in feet (ft)": {
-    "translation": "Hauteur du linteau en pieds (pi)",
-    "origin": [
-      [
-        "src/schema/types/Header.js",
-        22
       ]
     ]
   },
@@ -1099,5 +725,449 @@
         5
       ]
     ]
+  },
+  "The lowest load-bearing part of a dwelling": {
+    "translation": "La partie portante la plus basse d'un logement",
+    "origin": [
+      [
+        "src/schema/types/Foundation.js",
+        3
+      ]
+    ],
+    "obsolete": true
+  },
+  "The type of foundation (en)": {
+    "translation": "Le type de fondation (en)",
+    "origin": [
+      [
+        "src/schema/types/Foundation.js",
+        5
+      ]
+    ],
+    "obsolete": true
+  },
+  "The type of foundation (fr)": {
+    "translation": "Le type de fondation",
+    "origin": [
+      [
+        "src/schema/types/Foundation.js",
+        7
+      ]
+    ],
+    "obsolete": true
+  },
+  "A descriptive label for the foundation": {
+    "translation": "Une étiquette descriptive de la fondation",
+    "origin": [
+      [
+        "src/schema/types/Foundation.js",
+        9
+      ]
+    ],
+    "obsolete": true
+  },
+  "The type of configuration for the foundation": {
+    "translation": "Le type de configuration pour la fondation",
+    "origin": [
+      [
+        "src/schema/types/Foundation.js",
+        11
+      ]
+    ],
+    "obsolete": true
+  },
+  "The material used in the construction of this foundation (en)": {
+    "translation": "Le matériau utilisé dans la construction de cette fondation (en)",
+    "origin": [
+      [
+        "src/schema/types/Foundation.js",
+        13
+      ]
+    ],
+    "obsolete": true
+  },
+  "The material used in the construction of this foundation (fr)": {
+    "translation": "Le matériau utilisé dans la construction de cette fondation",
+    "origin": [
+      [
+        "src/schema/types/Foundation.js",
+        15
+      ]
+    ],
+    "obsolete": true
+  },
+  "The details of the floors associated with this foundation": {
+    "translation": "Les détails des planchers associés à cette fondation",
+    "origin": [
+      [
+        "src/schema/types/Foundation.js",
+        17
+      ]
+    ],
+    "obsolete": true
+  },
+  "The details of the walls associated with this foundation": {
+    "translation": "Les détails des murs associés à cette fondation",
+    "origin": [
+      [
+        "src/schema/types/Foundation.js",
+        19
+      ]
+    ],
+    "obsolete": true
+  },
+  "The details of the foundationn header": {
+    "translation": "Les détails de la solive de fondation",
+    "origin": [
+      [
+        "src/schema/types/Foundation.js",
+        21
+      ]
+    ],
+    "obsolete": true
+  },
+  "A floor below ground that represents the usable area of the house": {
+    "translation": "Un plancher au-dessous du niveau du sol qui représente la superficie utilisable de la maison",
+    "origin": [
+      [
+        "src/schema/types/FoundationFloor.js",
+        3
+      ]
+    ],
+    "obsolete": true
+  },
+  "Type of foundation floor (en)": {
+    "translation": "Type de plancher pour la fondation (en)",
+    "origin": [
+      [
+        "src/schema/types/FoundationFloor.js",
+        5
+      ]
+    ],
+    "obsolete": true
+  },
+  "Type of foundation floor (fr)": {
+    "translation": "Type de plancher pour la fondation",
+    "origin": [
+      [
+        "src/schema/types/FoundationFloor.js",
+        7
+      ]
+    ],
+    "obsolete": true
+  },
+  "The insulation nominal RSI (R-value Systeme International) of the foundation floor": {
+    "translation": "Valeur nominale RSI (valeur R Système international) de l'isolation du plancher",
+    "origin": [
+      [
+        "src/schema/types/FoundationFloor.js",
+        9
+      ]
+    ],
+    "obsolete": true
+  },
+  "The insulation nominal R-value of the foundation floor": {
+    "translation": "Valeur R nominale de l'isolation du plancher",
+    "origin": [
+      [
+        "src/schema/types/FoundationFloor.js",
+        11
+      ]
+    ],
+    "obsolete": true
+  },
+  "The insulation effective RSI (R-value Systeme International) of the foundation floor": {
+    "translation": "Valeur efficace RSI (valeur R Système international) de l'isolation du plancher de la fondation",
+    "origin": [
+      [
+        "src/schema/types/FoundationFloor.js",
+        13
+      ]
+    ],
+    "obsolete": true
+  },
+  "The insulation effective R-value of the foundation floor": {
+    "translation": "Valeur R efficace de l'isolation du plancher",
+    "origin": [
+      [
+        "src/schema/types/FoundationFloor.js",
+        15
+      ]
+    ],
+    "obsolete": true
+  },
+  "The area of the foundation floor in square metres (m2)": {
+    "translation": "Superficie du plancher de la fondation en mètres carrés (m2)",
+    "origin": [
+      [
+        "src/schema/types/FoundationFloor.js",
+        17
+      ]
+    ],
+    "obsolete": true
+  },
+  "The area of the foundation floor in square feet (ft2)": {
+    "translation": "Superficie du plancher de la fondation en pieds carrés (pi2)",
+    "origin": [
+      [
+        "src/schema/types/FoundationFloor.js",
+        19
+      ]
+    ],
+    "obsolete": true
+  },
+  "The perimeter of the foundation floor in metres (m)": {
+    "translation": "Périmètre du plancher de la fondation en mètres (m)",
+    "origin": [
+      [
+        "src/schema/types/FoundationFloor.js",
+        21
+      ]
+    ],
+    "obsolete": true
+  },
+  "The perimeter of the foundation floor in feet (ft)": {
+    "translation": "Périmètre du plancher de la fondation en pieds (pi)",
+    "origin": [
+      [
+        "src/schema/types/FoundationFloor.js",
+        23
+      ]
+    ],
+    "obsolete": true
+  },
+  "The width of the foundation floor in metres (m)": {
+    "translation": "Largeur du plancher de la fondation en mètres (m)",
+    "origin": [
+      [
+        "src/schema/types/FoundationFloor.js",
+        25
+      ]
+    ],
+    "obsolete": true
+  },
+  "The width of the foundation floor in feet (ft)": {
+    "translation": "Largeur du plancher de la fondation en pieds (pi)",
+    "origin": [
+      [
+        "src/schema/types/FoundationFloor.js",
+        27
+      ]
+    ],
+    "obsolete": true
+  },
+  "The length of the foundation floor in metres (m)": {
+    "translation": "Longueur du plancher de la fondation en mètres (m)",
+    "origin": [
+      [
+        "src/schema/types/FoundationFloor.js",
+        29
+      ]
+    ],
+    "obsolete": true
+  },
+  "The length of the foundation floor in feet (ft)": {
+    "translation": "Longueur du plancher de la fondation en pieds (pi)",
+    "origin": [
+      [
+        "src/schema/types/FoundationFloor.js",
+        31
+      ]
+    ],
+    "obsolete": true
+  },
+  "Foundation Walls are below-ground walls separating the interior heated space from the outside (interior partition walls are not considered walls)": {
+    "translation": "Les murs de fondation sont des murs souterrains qui séparent l'espace intérieur chauffé de l'extérieur (les cloisons intérieures ne sont pas considérées comme des murs)",
+    "origin": [
+      [
+        "src/schema/types/FoundationWall.js",
+        3
+      ]
+    ],
+    "obsolete": true
+  },
+  "Wall construction being used (en)": {
+    "translation": "Construction d'un mur utilisée (en)",
+    "origin": [
+      [
+        "src/schema/types/FoundationWall.js",
+        5
+      ]
+    ],
+    "obsolete": true
+  },
+  "Wall construction being used (fr)": {
+    "translation": "Construction d'un mur utilisée (fr)",
+    "origin": [
+      [
+        "src/schema/types/FoundationWall.js",
+        7
+      ]
+    ],
+    "obsolete": true
+  },
+  "Wall insulation nominal RSI (R-value Systeme International)": {
+    "translation": "Valeur nominale RSI (valeur R Système international) de l'isolation du mur",
+    "origin": [
+      [
+        "src/schema/types/FoundationWall.js",
+        9
+      ]
+    ],
+    "obsolete": true
+  },
+  "Wall insulation nominal R-value": {
+    "translation": "Valeur nominale R de l'isolation du mur",
+    "origin": [
+      [
+        "src/schema/types/FoundationWall.js",
+        11
+      ],
+      [
+        "src/schema/types/FoundationWall.js",
+        15
+      ]
+    ],
+    "obsolete": true
+  },
+  "Wall insulation effective RSI (R-value Systeme International)": {
+    "translation": "RSI (valeur R Système international) pour l'isolation efficace du mur",
+    "origin": [
+      [
+        "src/schema/types/FoundationWall.js",
+        13
+      ]
+    ],
+    "obsolete": true
+  },
+  "Wall area of the house in square metres (m2)": {
+    "translation": "Superficie du mur de la maison en mètres carrés (m2)",
+    "origin": [
+      [
+        "src/schema/types/FoundationWall.js",
+        17
+      ]
+    ],
+    "obsolete": true
+  },
+  "Wall area of the house in square feet (ft2)": {
+    "translation": "Superficie du mur de la maison en pieds carrés (pi2)",
+    "origin": [
+      [
+        "src/schema/types/FoundationWall.js",
+        19
+      ]
+    ],
+    "obsolete": true
+  },
+  "The percentage of the total wall area this section accounts for": {
+    "translation": "Le pourcentage de la superficie de mur de cette section totalise",
+    "origin": [
+      [
+        "src/schema/types/FoundationWall.js",
+        21
+      ]
+    ],
+    "obsolete": true
+  },
+  "Header insulation nominal RSI (R-value Systeme International)": {
+    "translation": "Valeur nominale RSI (valeur R Système international) de l'isolation du linteau",
+    "origin": [
+      [
+        "src/schema/types/Header.js",
+        4
+      ]
+    ],
+    "obsolete": true
+  },
+  "Header insulation nominal R-value": {
+    "translation": "Valeur R nominale de l'isolation du linteau",
+    "origin": [
+      [
+        "src/schema/types/Header.js",
+        6
+      ]
+    ],
+    "obsolete": true
+  },
+  "Header insulation effective RSI (R-value Systeme International)": {
+    "translation": "RSI (valeur R Système international) pour l'isolation efficace du linteau",
+    "origin": [
+      [
+        "src/schema/types/Header.js",
+        8
+      ]
+    ],
+    "obsolete": true
+  },
+  "Header insulation effective R-value": {
+    "translation": "Valeur R pour l'isolation efficace du linteau",
+    "origin": [
+      [
+        "src/schema/types/Header.js",
+        10
+      ]
+    ],
+    "obsolete": true
+  },
+  "Header area in square metres (m2)": {
+    "translation": "Superficie du linteau en mètres carrés (m2)",
+    "origin": [
+      [
+        "src/schema/types/Header.js",
+        12
+      ]
+    ],
+    "obsolete": true
+  },
+  "Header area in square feet (ft2)": {
+    "translation": "Superficie du linteau en pieds carrés (pi2)",
+    "origin": [
+      [
+        "src/schema/types/Header.js",
+        14
+      ]
+    ],
+    "obsolete": true
+  },
+  "Header perimeter of the house in metres (m)": {
+    "translation": "Le périmètre du linteau de la maison en mètres (m)",
+    "origin": [
+      [
+        "src/schema/types/Header.js",
+        16
+      ]
+    ],
+    "obsolete": true
+  },
+  "Header perimeter of the house in feet (ft)": {
+    "translation": "Le périmètre du linteau de la maison en pieds (pi)",
+    "origin": [
+      [
+        "src/schema/types/Header.js",
+        18
+      ]
+    ],
+    "obsolete": true
+  },
+  "Header height in metres (m)": {
+    "translation": "Hauteur du linteau en mètres (m)",
+    "origin": [
+      [
+        "src/schema/types/Header.js",
+        20
+      ]
+    ],
+    "obsolete": true
+  },
+  "Header height in feet (ft)": {
+    "translation": "Hauteur du linteau en pieds (pi)",
+    "origin": [
+      [
+        "src/schema/types/Header.js",
+        22
+      ]
+    ],
+    "obsolete": true
   }
 }
