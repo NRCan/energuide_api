@@ -34,6 +34,10 @@ describe('Enum values', () => {
     evaluationEvaluationType: { testValue: 'D' },
     evaluationFileId: { testValue: '1B07D10023' },
     evaluationHouseType: { testValue: 'Single detached' },
+    evaluationCreationDate: { testValue: '2011-03-14T14:26:52' },
+    evaluationModificationDate: { testValue: '2008-11-25T18:44:30' },
+    evaluationHeatedFloorArea: { testValue: null }, // Need better test data
+    evaluationEntryDate: { testValue: '2009-03-28' },
   }
 
   Object.keys(testFields).forEach(functionName => {
@@ -55,7 +59,7 @@ describe('Enum values', () => {
           .set('Content-Type', 'application/json; charset=utf-8')
           .send({
             query: `{
-                 dwellings(
+            dwellings(
                   filters: [
                     {field: dwellingForwardSortationArea comparator: eq value: "O7I"}
                     {field: ${functionName} comparator: eq value: "${testValue}"}
@@ -68,23 +72,6 @@ describe('Enum values', () => {
                }`,
           })
         expect(response.body).not.toHaveProperty('errors')
-      })
-    })
-  })
-
-  const testDates = {
-    evaluationEntryDate: { testValue: '2010-10-12' },
-    evaluationCreationDate: { testValue: '2011-03-14T14:26:52' },
-    evaluationModificationDate: { testValue: null },
-  }
-
-  Object.keys(testDates).forEach(functionName => {
-    describe(functionName, () => {
-      it('returns a query object capable of returning data', async () => {
-        let { testValue } = testDates[functionName] // eslint-disable-line
-        let query = enumFunctions[functionName](testValue) //eslint-disable-line
-        let result = await collection.findOne(query)
-        expect(result).not.toBe(null)
       })
     })
   })

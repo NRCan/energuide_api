@@ -10,11 +10,11 @@ import {
   dwellingForwardSortationArea,
   evaluationEvaluationType,
   evaluationFileId,
-  evaluationErsRating,
   evaluationHouseType,
   evaluationEntryDate,
   evaluationCreationDate,
   evaluationModificationDate,
+  evaluationHeatedFloorArea,
 } from './enums'
 /* eslint-enable import/named */
 
@@ -143,8 +143,11 @@ const Resolvers = i18n => {
       dwellingForwardSortationArea: dwellingForwardSortationArea.toString(),
       evaluationEvaluationType: evaluationEvaluationType.toString(),
       evaluationFileId: evaluationFileId.toString(),
-      evaluationErsRating: evaluationErsRating.toString(),
       evaluationHouseType: evaluationHouseType.toString(),
+      evaluationEntryDate: evaluationEntryDate.toString(),
+      evaluationCreationDate: evaluationCreationDate.toString(),
+      evaluationModificationDate: evaluationModificationDate.toString(),
+      evaluationHeatedFloorArea: evaluationHeatedFloorArea.toString(),
     },
     Comparator: {
       gt: '$gt',
