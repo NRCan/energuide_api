@@ -9,7 +9,7 @@ This is the API for NRCAN's Energuide data.
 This project is composed of two parts: the API itself and the ETL process that produces the data the API will serve.
 There are further details in the READMEs for each of the respective portions of the project.
 
-- [Windows Installation Instructions](#windows-installation)
+- [Windows Installation Instructions](#windows-installation-and-setup)
 - [MacOS Installation Instructions](#tldr)
 
 You can also explore the live API using [GraphiQL](http://energuideapi.ca/graphiql).
@@ -36,7 +36,7 @@ make run
 
 ### bootstrap.sh
 
-The [bootstrap.sh]() file is a quick way to get up-and-running on a macOS environment. It relies on [Homebrew](https://brew.sh/) to install both Python 3 (using [pyenv](https://github.com/pyenv/pyenv#homebrew-on-mac-os-x)) and [MongoDB](https://docs.mongodb.com/manual/tutorial/install-mongodb-on-os-x/#install-mongodb-community-edition-with-homebrew).
+The [bootstrap.sh](bootstrap.sh) file is a quick way to get up-and-running on a macOS environment. It relies on [Homebrew](https://brew.sh/) to install both Python 3 (using [pyenv](https://github.com/pyenv/pyenv#homebrew-on-mac-os-x)) and [MongoDB](https://docs.mongodb.com/manual/tutorial/install-mongodb-on-os-x/#install-mongodb-community-edition-with-homebrew).
 
 To get started, run
 
