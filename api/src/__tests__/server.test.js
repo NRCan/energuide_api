@@ -2,7 +2,7 @@ import request from 'supertest'
 import Server from '../server'
 
 let server = new Server({
-  client: jest.fn(),
+  client: { findOne: jest.fn(() => Promise.resolve({ foo: 'bar' })) },
 })
 
 describe('Server config', () => {
@@ -11,6 +11,51 @@ describe('Server config', () => {
       let response = await request(server).get('/')
       expect(response.headers.location).toEqual('/graphiql')
       expect(response.status).toEqual(302)
+    })
+  })
+
+  describe('/alive', () => {
+    it('simply returns yes if the server is running', async () => {
+      // for use with Kubernetes liveness probes.
+      let response = await request(server).get('/alive')
+      expect(response.status).toEqual(200)
+      expect(response.text).toEqual('yes')
+    })
+  })
+
+  describe('/ready', () => {
+    it('checks to see if it can return data from the database', async () => {
+      // for use with Kubernetes readiness probes.
+      let response = await request(server).get('/ready')
+      expect(response.status).toEqual(200)
+      expect(response.text).toEqual('yes')
+    })
+
+    it('returns 500 if no data is returned', async () => {
+      // for use with Kubernetes readiness probes.
+      let noData = new Server({
+        client: { findOne: jest.fn(() => Promise.resolve(null)) },
+      })
+
+      let response = await request(noData).get('/ready')
+      expect(response.status).toEqual(500)
+      let { error } = response.body
+      expect(error).toMatch(/no data/i)
+    })
+
+    it('returns 500 if an exception is raised', async () => {
+      // for use with Kubernetes readiness probes.
+      let broken = new Server({
+        client: {
+          findOne: jest.fn(() => {
+            throw new Error('sadness')
+          }),
+        },
+      })
+      let response = await request(broken).get('/ready')
+      expect(response.status).toEqual(500)
+      let { error } = response.body
+      expect(error).toMatch(/sadness/i)
     })
   })
 
