@@ -38,6 +38,23 @@ function Server(context = {}, ...middlewares) {
   server.get('/', function(req, res) {
     res.redirect('/graphiql')
   })
+  server.get('/alive', (req, res) => {
+    res.send('yes')
+  })
+  server.get('/ready', async (req, res) => {
+    try {
+      const result = await context.client.findOne()
+      if (result) {
+        res.send('yes')
+      } else {
+        res.status(500).json({
+          error: 'Database check failed. No data returned.',
+        })
+      }
+    } catch (error) {
+      res.status(500).json({ error: error.toString() })
+    }
+  })
   return server
 }
 
