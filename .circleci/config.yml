@@ -170,7 +170,7 @@ jobs:
     working_directory: ~/repo/extract_endpoint
   node:
     docker:
-      - image: "circleci/node:8.9.4"
+      - image: "circleci/node:9"
       - image: "mongo:3.6.2"
     steps:
       - checkout:
@@ -196,7 +196,7 @@ jobs:
     working_directory: ~/repo/api
   node_integration:
     docker:
-      - image: "circleci/node:8.9.4"
+      - image: "circleci/node:9"
       - image: "mongo:3.6.2"
     steps:
       - checkout:
